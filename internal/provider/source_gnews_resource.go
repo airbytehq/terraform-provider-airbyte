@@ -7,6 +7,8 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -38,7 +40,6 @@ type SourceGnewsResourceModel struct {
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -52,13 +53,23 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						Description: `API Key`,
 					},
 					"country": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -98,15 +109,27 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							`This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)`,
 					},
 					"in": schema.ListAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.`,
 					},
 					"language": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -137,11 +160,18 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]`,
 					},
 					"nullable": schema.ListAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes`,
 					},
 					"query": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						MarkdownDescription: `This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by ` + "\n" +
 							`  quotation marks are used to search for articles with the exact same keyword sequence. ` + "\n" +
@@ -159,6 +189,10 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							`  iPhone`,
 					},
 					"sortby": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -172,6 +206,9 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
 					},
 					"source_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -181,10 +218,18 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `must be one of ["gnews"]`,
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)`,
 					},
 					"top_headlines_query": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						MarkdownDescription: `This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by ` + "\n" +
 							`  quotation marks are used to search for articles with the exact same keyword sequence. ` + "\n" +
@@ -202,6 +247,10 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							`  iPhone`,
 					},
 					"top_headlines_topic": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -228,16 +277,14 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
-			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
-			"source_type": schema.StringAttribute{
+			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
@@ -308,11 +355,11 @@ func (r *SourceGnewsResource) Create(ctx context.Context, req resource.CreateReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceGnewsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromCreateResponse(res.SourceGnewsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -356,11 +403,11 @@ func (r *SourceGnewsResource) Read(ctx context.Context, req resource.ReadRequest
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceGnewsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromGetResponse(res.SourceGnewsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -415,11 +462,11 @@ func (r *SourceGnewsResource) Update(ctx context.Context, req resource.UpdateReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
+	if getResponse.SourceGnewsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromGetResponse(getResponse.SourceGnewsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

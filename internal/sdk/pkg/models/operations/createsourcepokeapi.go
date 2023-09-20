@@ -10,7 +10,7 @@ import (
 type CreateSourcePokeapiResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePokeapiGetResponse *shared.SourcePokeapiGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

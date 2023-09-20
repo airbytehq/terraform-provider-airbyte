@@ -10,7 +10,7 @@ import (
 type CreateSourceFireboltResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFireboltGetResponse *shared.SourceFireboltGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

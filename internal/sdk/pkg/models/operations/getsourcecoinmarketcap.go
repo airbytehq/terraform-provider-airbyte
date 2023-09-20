@@ -14,7 +14,7 @@ type GetSourceCoinmarketcapRequest struct {
 type GetSourceCoinmarketcapResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceCoinmarketcapGetResponse *shared.SourceCoinmarketcapGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

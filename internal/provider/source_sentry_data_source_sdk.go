@@ -4,11 +4,37 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSentryDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSentryDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSentryGetResponse) {
+	r.Configuration.AuthToken = types.StringValue(resp.Configuration.AuthToken)
+	r.Configuration.DiscoverFields = nil
+	for _, discoverFieldsItem := range resp.Configuration.DiscoverFields {
+		var discoverFields1 types.String
+		discoverFields1Result, _ := json.Marshal(discoverFieldsItem)
+		discoverFields1 = types.StringValue(string(discoverFields1Result))
+		r.Configuration.DiscoverFields = append(r.Configuration.DiscoverFields, discoverFields1)
+	}
+	if resp.Configuration.Hostname != nil {
+		r.Configuration.Hostname = types.StringValue(*resp.Configuration.Hostname)
+	} else {
+		r.Configuration.Hostname = types.StringNull()
+	}
+	r.Configuration.Organization = types.StringValue(resp.Configuration.Organization)
+	r.Configuration.Project = types.StringValue(resp.Configuration.Project)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

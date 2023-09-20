@@ -10,7 +10,7 @@ import (
 type CreateSourceLinkedinAdsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLinkedinAdsGetResponse *shared.SourceLinkedinAdsGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

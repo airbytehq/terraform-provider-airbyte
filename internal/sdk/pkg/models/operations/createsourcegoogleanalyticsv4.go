@@ -10,7 +10,7 @@ import (
 type CreateSourceGoogleAnalyticsV4Response struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleAnalyticsV4GetResponse *shared.SourceGoogleAnalyticsV4GetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceInstagramRequest struct {
 type GetSourceInstagramResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceInstagramGetResponse *shared.SourceInstagramGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

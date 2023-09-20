@@ -10,7 +10,7 @@ import (
 type CreateSourceSnapchatMarketingResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSnapchatMarketingGetResponse *shared.SourceSnapchatMarketingGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
@@ -39,7 +40,6 @@ type SourceZendeskSunshineResourceModel struct {
 	Name          types.String          `tfsdk:"name"`
 	SecretID      types.String          `tfsdk:"secret_id"`
 	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
 	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
@@ -53,19 +53,36 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_zendesk_sunshine_authorization_method_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -75,19 +92,32 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Description: `must be one of ["api_token"]`,
 									},
 									"email": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
 									},
 								},
 							},
 							"source_zendesk_sunshine_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `Long-term access Token for making authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -97,10 +127,16 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
@@ -160,6 +196,9 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"source_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -169,6 +208,9 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 						Description: `must be one of ["zendesk-sunshine"]`,
 					},
 					"start_date": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -176,6 +218,9 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 						Description: `The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						Description: `The subdomain for your Zendesk Account.`,
 					},
@@ -188,16 +233,14 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
-			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
-			"source_type": schema.StringAttribute{
+			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
@@ -268,11 +311,11 @@ func (r *SourceZendeskSunshineResource) Create(ctx context.Context, req resource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceZendeskSunshineGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromCreateResponse(res.SourceZendeskSunshineGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -316,11 +359,11 @@ func (r *SourceZendeskSunshineResource) Read(ctx context.Context, req resource.R
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceZendeskSunshineGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromGetResponse(res.SourceZendeskSunshineGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -375,11 +418,11 @@ func (r *SourceZendeskSunshineResource) Update(ctx context.Context, req resource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
+	if getResponse.SourceZendeskSunshineGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromGetResponse(getResponse.SourceZendeskSunshineGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

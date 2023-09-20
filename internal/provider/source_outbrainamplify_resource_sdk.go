@@ -162,13 +162,55 @@ func (r *SourceOutbrainAmplifyResourceModel) ToDeleteSDKType() *shared.SourceOut
 	return out
 }
 
-func (r *SourceOutbrainAmplifyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceOutbrainAmplifyResourceModel) RefreshFromGetResponse(resp *shared.SourceOutbrainAmplifyGetResponse) {
+	if resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken != nil {
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken = &SourceOutbrainAmplifyAuthenticationMethodAccessToken{}
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.AccessToken)
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.Type = types.StringValue(string(resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.Type))
+	}
+	if resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword != nil {
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword = &SourceOutbrainAmplifyAuthenticationMethodUsernamePassword{}
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Password = types.StringValue(resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Password)
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Type = types.StringValue(string(resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Type))
+		r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Username = types.StringValue(resp.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Username)
+	}
+	if resp.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken != nil {
+		r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken = &SourceOutbrainAmplifyAuthenticationMethodAccessToken{}
+	}
+	if resp.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword != nil {
+		r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword = &SourceOutbrainAmplifyAuthenticationMethodUsernamePassword{}
+	}
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(*resp.Configuration.EndDate)
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	if resp.Configuration.GeoLocationBreakdown != nil {
+		r.Configuration.GeoLocationBreakdown = types.StringValue(string(*resp.Configuration.GeoLocationBreakdown))
+	} else {
+		r.Configuration.GeoLocationBreakdown = types.StringNull()
+	}
+	if resp.Configuration.ReportGranularity != nil {
+		r.Configuration.ReportGranularity = types.StringValue(string(*resp.Configuration.ReportGranularity))
+	} else {
+		r.Configuration.ReportGranularity = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOutbrainAmplifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOutbrainAmplifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceOutbrainAmplifyGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

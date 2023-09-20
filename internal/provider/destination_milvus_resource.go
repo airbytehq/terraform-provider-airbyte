@@ -7,6 +7,9 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
@@ -35,11 +38,10 @@ type DestinationMilvusResource struct {
 
 // DestinationMilvusResourceModel describes the resource data model.
 type DestinationMilvusResourceModel struct {
-	Configuration   DestinationMilvus `tfsdk:"configuration"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration DestinationMilvus `tfsdk:"configuration"`
+	DestinationID types.String      `tfsdk:"destination_id"`
+	Name          types.String      `tfsdk:"name"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationMilvusResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,9 +54,15 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"destination_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -64,15 +72,29 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 						Description: `must be one of ["milvus"]`,
 					},
 					"embedding": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_milvus_embedding_cohere": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cohere_key": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 									},
 									"mode": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -85,9 +107,17 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_milvus_embedding_fake": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -100,17 +130,31 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_milvus_embedding_from_field": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"dimensions": schema.Int64Attribute{
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The number of dimensions the embedding model is generating`,
 									},
 									"field_name": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `Name of the field in the record that contains the embedding`,
 									},
 									"mode": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -123,9 +167,17 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.`,
 							},
 							"destination_milvus_embedding_open_ai": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -135,6 +187,9 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Description: `must be one of ["openai"]`,
 									},
 									"openai_key": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 									},
 								},
@@ -221,15 +276,29 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Embedding configuration`,
 					},
 					"indexing": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"auth": schema.SingleNestedAttribute{
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Required: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_milvus_indexing_authentication_api_token": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
@@ -239,6 +308,9 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 												Description: `must be one of ["token"]`,
 											},
 											"token": schema.StringAttribute{
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(),
+												},
 												Required:    true,
 												Description: `API Token for the Milvus instance`,
 											},
@@ -246,9 +318,17 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Description: `Authenticate using an API token (suitable for Zilliz Cloud)`,
 									},
 									"destination_milvus_indexing_authentication_no_auth": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
@@ -261,9 +341,17 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Description: `Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)`,
 									},
 									"destination_milvus_indexing_authentication_username_password": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
@@ -273,10 +361,16 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 												Description: `must be one of ["username_password"]`,
 											},
 											"password": schema.StringAttribute{
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(),
+												},
 												Required:    true,
 												Description: `Password for the Milvus instance`,
 											},
 											"username": schema.StringAttribute{
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(),
+												},
 												Required:    true,
 												Description: `Username for the Milvus instance`,
 											},
@@ -347,22 +441,40 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Authentication method`,
 							},
 							"collection": schema.StringAttribute{
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(),
+								},
 								Required:    true,
 								Description: `The collection to load data into`,
 							},
 							"db": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(),
+								},
 								Optional:    true,
 								Description: `The database to connect to`,
 							},
 							"host": schema.StringAttribute{
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(),
+								},
 								Required:    true,
 								Description: `The public endpoint of the Milvus instance. `,
 							},
 							"text_field": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(),
+								},
 								Optional:    true,
 								Description: `The field in the entity that contains the embedded text`,
 							},
 							"vector_field": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(),
+								},
 								Optional:    true,
 								Description: `The field in the entity that contains the vector`,
 							},
@@ -370,22 +482,40 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Indexing configuration`,
 					},
 					"processing": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(),
+								},
 								Optional:    true,
 								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
 							},
 							"chunk_size": schema.Int64Attribute{
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(),
+								},
 								Required:    true,
 								Description: `Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)`,
 							},
 							"metadata_fields": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									speakeasy_listplanmodifier.SuppressDiff(),
+								},
 								Optional:    true,
 								ElementType: types.StringType,
 								Description: `List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.`,
 							},
 							"text_fields": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									speakeasy_listplanmodifier.SuppressDiff(),
+								},
 								Optional:    true,
 								ElementType: types.StringType,
 								Description: `List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array.`,
@@ -395,12 +525,6 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
-				},
-			},
-			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
@@ -477,11 +601,11 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationMilvusGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromCreateResponse(res.DestinationMilvusGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -525,11 +649,11 @@ func (r *DestinationMilvusResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationMilvusGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationMilvusGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -584,11 +708,11 @@ func (r *DestinationMilvusResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
+	if getResponse.DestinationMilvusGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromGetResponse(getResponse.DestinationMilvusGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

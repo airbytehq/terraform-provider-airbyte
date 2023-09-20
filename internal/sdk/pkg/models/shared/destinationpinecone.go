@@ -216,11 +216,12 @@ func (u DestinationPineconeEmbedding) MarshalJSON() ([]byte, error) {
 
 // DestinationPineconeIndexing - Pinecone is a popular vector store that can be used to store and retrieve embeddings.
 type DestinationPineconeIndexing struct {
-	// Pinecone index to use
+	// Pinecone index in your project to load data into
 	Index string `json:"index"`
-	// Pinecone environment to use
+	// Pinecone Cloud environment to use
 	PineconeEnvironment string `json:"pinecone_environment"`
-	PineconeKey         string `json:"pinecone_key"`
+	// The Pinecone API key to use matching the environment (copy from Pinecone console)
+	PineconeKey string `json:"pinecone_key"`
 }
 
 type DestinationPineconeProcessingConfigModel struct {

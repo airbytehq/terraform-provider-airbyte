@@ -53,13 +53,19 @@ func (r *DestinationConvexResourceModel) ToDeleteSDKType() *shared.DestinationCo
 	return out
 }
 
-func (r *DestinationConvexResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationConvexResourceModel) RefreshFromGetResponse(resp *shared.DestinationConvexGetResponse) {
+	r.Configuration.AccessKey = types.StringValue(resp.Configuration.AccessKey)
+	r.Configuration.DeploymentURL = types.StringValue(resp.Configuration.DeploymentURL)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationConvexResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationConvexResourceModel) RefreshFromCreateResponse(resp *shared.DestinationConvexGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceHubplannerResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceHubplannerGetResponse *shared.SourceHubplannerGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

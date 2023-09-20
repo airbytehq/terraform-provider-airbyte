@@ -7,8 +7,25 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceQualarooDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceQualarooDataSourceModel) RefreshFromGetResponse(resp *shared.SourceQualarooGetResponse) {
+	r.Configuration.Key = types.StringValue(resp.Configuration.Key)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
+	r.Configuration.SurveyIds = nil
+	for _, v := range resp.Configuration.SurveyIds {
+		r.Configuration.SurveyIds = append(r.Configuration.SurveyIds, types.StringValue(v))
+	}
+	r.Configuration.Token = types.StringValue(resp.Configuration.Token)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

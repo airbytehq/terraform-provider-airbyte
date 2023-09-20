@@ -7,6 +7,8 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
@@ -39,7 +41,6 @@ type SourceGoogleSearchConsoleResourceModel struct {
 	Name          types.String              `tfsdk:"name"`
 	SecretID      types.String              `tfsdk:"secret_id"`
 	SourceID      types.String              `tfsdk:"source_id"`
-	SourceType    types.String              `tfsdk:"source_type"`
 	WorkspaceID   types.String              `tfsdk:"workspace_id"`
 }
 
@@ -53,19 +54,36 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"authorization": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional:    true,
 										Description: `Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 									"auth_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -75,23 +93,39 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 									"client_secret": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 									"refresh_token": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 								},
 							},
 							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -101,10 +135,16 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										Description: `must be one of ["Service"]`,
 									},
 									"email": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The email of the user which has permissions to access the Google Workspace Admin APIs.`,
 									},
 									"service_account_info": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.`,
 									},
@@ -168,19 +208,33 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"custom_reports": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `(DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.`,
 					},
 					"custom_reports_array": schema.ListNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"dimensions": schema.ListAttribute{
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.SuppressDiff(),
+									},
 									Required:    true,
 									ElementType: types.StringType,
 									Description: `A list of dimensions (country, date, device, page, query)`,
 								},
 								"name": schema.StringAttribute{
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(),
+									},
 									Required:    true,
 									Description: `The name of the custom report, this name would be used as stream name`,
 								},
@@ -189,6 +243,10 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Description: `You can add your Custom Analytics report by creating one.`,
 					},
 					"data_state": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -200,6 +258,10 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 							`If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.`,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -207,11 +269,17 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Description: `UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.`,
 					},
 					"site_urls": schema.ListAttribute{
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						ElementType: types.StringType,
 						Description: `The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -221,6 +289,10 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Description: `must be one of ["google-search-console"]`,
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -236,16 +308,14 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
-			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
-			"source_type": schema.StringAttribute{
+			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
@@ -316,11 +386,11 @@ func (r *SourceGoogleSearchConsoleResource) Create(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceGoogleSearchConsoleGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromCreateResponse(res.SourceGoogleSearchConsoleGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -364,11 +434,11 @@ func (r *SourceGoogleSearchConsoleResource) Read(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceGoogleSearchConsoleGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromGetResponse(res.SourceGoogleSearchConsoleGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -423,11 +493,11 @@ func (r *SourceGoogleSearchConsoleResource) Update(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
+	if getResponse.SourceGoogleSearchConsoleGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromGetResponse(getResponse.SourceGoogleSearchConsoleGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

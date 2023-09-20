@@ -98,13 +98,38 @@ func (r *SourceZenloopResourceModel) ToDeleteSDKType() *shared.SourceZenloopCrea
 	return out
 }
 
-func (r *SourceZenloopResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZenloopResourceModel) RefreshFromGetResponse(resp *shared.SourceZenloopGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	if resp.Configuration.DateFrom != nil {
+		r.Configuration.DateFrom = types.StringValue(*resp.Configuration.DateFrom)
+	} else {
+		r.Configuration.DateFrom = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.SurveyGroupID != nil {
+		r.Configuration.SurveyGroupID = types.StringValue(*resp.Configuration.SurveyGroupID)
+	} else {
+		r.Configuration.SurveyGroupID = types.StringNull()
+	}
+	if resp.Configuration.SurveyID != nil {
+		r.Configuration.SurveyID = types.StringValue(*resp.Configuration.SurveyID)
+	} else {
+		r.Configuration.SurveyID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZenloopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZenloopResourceModel) RefreshFromCreateResponse(resp *shared.SourceZenloopGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceIterableResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceIterableGetResponse *shared.SourceIterableGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

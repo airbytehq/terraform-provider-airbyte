@@ -10,7 +10,7 @@ import (
 type CreateSourceLinnworksResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLinnworksGetResponse *shared.SourceLinnworksGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

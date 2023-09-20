@@ -14,7 +14,7 @@ type GetDestinationKinesisRequest struct {
 type GetDestinationKinesisResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationKinesisGetResponse *shared.DestinationKinesisGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

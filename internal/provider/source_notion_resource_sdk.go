@@ -129,13 +129,46 @@ func (r *SourceNotionResourceModel) ToDeleteSDKType() *shared.SourceNotionCreate
 	return out
 }
 
-func (r *SourceNotionResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceNotionResourceModel) RefreshFromGetResponse(resp *shared.SourceNotionGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceNotionAuthenticateUsing{}
+		if resp.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken != nil {
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken = &SourceNotionAuthenticateUsingAccessToken{}
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType))
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.Token = types.StringValue(resp.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.Token)
+		}
+		if resp.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20 != nil {
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20 = &SourceNotionAuthenticateUsingOAuth20{}
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AccessToken)
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType))
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientID)
+			r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientSecret)
+		}
+		if resp.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingAccessToken != nil {
+			r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingAccessToken = &SourceNotionAuthenticateUsingAccessToken{}
+		}
+		if resp.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20 != nil {
+			r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20 = &SourceNotionAuthenticateUsingOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceNotionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceNotionResourceModel) RefreshFromCreateResponse(resp *shared.SourceNotionGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

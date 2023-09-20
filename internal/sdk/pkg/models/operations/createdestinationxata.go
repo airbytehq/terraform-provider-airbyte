@@ -10,7 +10,7 @@ import (
 type CreateDestinationXataResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationXataGetResponse *shared.DestinationXataGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

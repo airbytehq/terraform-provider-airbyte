@@ -10,7 +10,7 @@ import (
 type CreateSourceEmailoctopusResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceEmailoctopusGetResponse *shared.SourceEmailoctopusGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

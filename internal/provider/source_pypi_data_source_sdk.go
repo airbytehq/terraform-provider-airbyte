@@ -7,8 +7,24 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePypiDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePypiDataSourceModel) RefreshFromGetResponse(resp *shared.SourcePypiGetResponse) {
+	r.Configuration.ProjectName = types.StringValue(resp.Configuration.ProjectName)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.Version != nil {
+		r.Configuration.Version = types.StringValue(*resp.Configuration.Version)
+	} else {
+		r.Configuration.Version = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

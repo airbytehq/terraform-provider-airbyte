@@ -5,10 +5,30 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceSenseforceDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSenseforceDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSenseforceGetResponse) {
+	r.Configuration.AccessToken = types.StringValue(resp.Configuration.AccessToken)
+	r.Configuration.BackendURL = types.StringValue(resp.Configuration.BackendURL)
+	r.Configuration.DatasetID = types.StringValue(resp.Configuration.DatasetID)
+	if resp.Configuration.SliceRange != nil {
+		r.Configuration.SliceRange = types.Int64Value(*resp.Configuration.SliceRange)
+	} else {
+		r.Configuration.SliceRange = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

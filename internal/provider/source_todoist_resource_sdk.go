@@ -56,13 +56,23 @@ func (r *SourceTodoistResourceModel) ToDeleteSDKType() *shared.SourceTodoistCrea
 	return out
 }
 
-func (r *SourceTodoistResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTodoistResourceModel) RefreshFromGetResponse(resp *shared.SourceTodoistGetResponse) {
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Token = types.StringValue(resp.Configuration.Token)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTodoistResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTodoistResourceModel) RefreshFromCreateResponse(resp *shared.SourceTodoistGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

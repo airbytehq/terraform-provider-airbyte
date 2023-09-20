@@ -73,13 +73,24 @@ func (r *DestinationDevNullResourceModel) ToDeleteSDKType() *shared.DestinationD
 	return out
 }
 
-func (r *DestinationDevNullResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationDevNullResourceModel) RefreshFromGetResponse(resp *shared.DestinationDevNullGetResponse) {
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.TestDestination.DestinationDevNullTestDestinationSilent != nil {
+		r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent = &DestinationDevNullTestDestinationSilent{}
+		r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType = types.StringValue(string(resp.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType))
+	}
+	if resp.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent != nil {
+		r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent = &DestinationDevNullTestDestinationSilent{}
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDevNullResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationDevNullResourceModel) RefreshFromCreateResponse(resp *shared.DestinationDevNullGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

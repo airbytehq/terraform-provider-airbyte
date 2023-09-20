@@ -7,8 +7,32 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSpacexAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSpacexAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSpacexAPIGetResponse) {
+	if resp.Configuration.ID != nil {
+		r.Configuration.ID = types.StringValue(*resp.Configuration.ID)
+	} else {
+		r.Configuration.ID = types.StringNull()
+	}
+	if resp.Configuration.Options != nil {
+		r.Configuration.Options = types.StringValue(*resp.Configuration.Options)
+	} else {
+		r.Configuration.Options = types.StringNull()
+	}
+	if resp.Configuration.SourceType != nil {
+		r.Configuration.SourceType = types.StringValue(string(*resp.Configuration.SourceType))
+	} else {
+		r.Configuration.SourceType = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

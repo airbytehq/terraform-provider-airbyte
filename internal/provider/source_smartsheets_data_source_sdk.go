@@ -5,10 +5,59 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceSmartsheetsDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSmartsheetsDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSmartsheetsGetResponse) {
+	if resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken = &SourceGitlabAuthorizationMethodPrivateToken{}
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken)
+		if resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType != nil {
+			r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType = types.StringNull()
+		}
+	}
+	if resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken)
+		if resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType != nil {
+			r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType = types.StringNull()
+		}
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID)
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret)
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken)
+		r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
+	}
+	if resp.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken != nil {
+		r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken = &SourceGitlabAuthorizationMethodPrivateToken{}
+	}
+	if resp.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
+	}
+	r.Configuration.MetadataFields = nil
+	for _, v := range resp.Configuration.MetadataFields {
+		r.Configuration.MetadataFields = append(r.Configuration.MetadataFields, types.StringValue(string(v)))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.SpreadsheetID = types.StringValue(resp.Configuration.SpreadsheetID)
+	if resp.Configuration.StartDatetime != nil {
+		r.Configuration.StartDatetime = types.StringValue(resp.Configuration.StartDatetime.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDatetime = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

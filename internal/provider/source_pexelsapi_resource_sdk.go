@@ -116,13 +116,44 @@ func (r *SourcePexelsAPIResourceModel) ToDeleteSDKType() *shared.SourcePexelsAPI
 	return out
 }
 
-func (r *SourcePexelsAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePexelsAPIResourceModel) RefreshFromGetResponse(resp *shared.SourcePexelsAPIGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.Color != nil {
+		r.Configuration.Color = types.StringValue(*resp.Configuration.Color)
+	} else {
+		r.Configuration.Color = types.StringNull()
+	}
+	if resp.Configuration.Locale != nil {
+		r.Configuration.Locale = types.StringValue(*resp.Configuration.Locale)
+	} else {
+		r.Configuration.Locale = types.StringNull()
+	}
+	if resp.Configuration.Orientation != nil {
+		r.Configuration.Orientation = types.StringValue(*resp.Configuration.Orientation)
+	} else {
+		r.Configuration.Orientation = types.StringNull()
+	}
+	r.Configuration.Query = types.StringValue(resp.Configuration.Query)
+	if resp.Configuration.Size != nil {
+		r.Configuration.Size = types.StringValue(*resp.Configuration.Size)
+	} else {
+		r.Configuration.Size = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePexelsAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePexelsAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourcePexelsAPIGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

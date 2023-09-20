@@ -14,7 +14,7 @@ type GetSourceBambooHrRequest struct {
 type GetSourceBambooHrResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBambooHrGetResponse *shared.SourceBambooHrGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

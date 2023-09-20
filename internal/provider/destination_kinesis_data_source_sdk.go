@@ -7,8 +7,19 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationKinesisDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationKinesisDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationKinesisGetResponse) {
+	r.Configuration.AccessKey = types.StringValue(resp.Configuration.AccessKey)
+	r.Configuration.BufferSize = types.Int64Value(resp.Configuration.BufferSize)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Endpoint = types.StringValue(resp.Configuration.Endpoint)
+	r.Configuration.PrivateKey = types.StringValue(resp.Configuration.PrivateKey)
+	r.Configuration.Region = types.StringValue(resp.Configuration.Region)
+	r.Configuration.ShardCount = types.Int64Value(resp.Configuration.ShardCount)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

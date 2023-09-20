@@ -7,8 +7,65 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePocketDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePocketDataSourceModel) RefreshFromGetResponse(resp *shared.SourcePocketGetResponse) {
+	r.Configuration.AccessToken = types.StringValue(resp.Configuration.AccessToken)
+	r.Configuration.ConsumerKey = types.StringValue(resp.Configuration.ConsumerKey)
+	if resp.Configuration.ContentType != nil {
+		r.Configuration.ContentType = types.StringValue(string(*resp.Configuration.ContentType))
+	} else {
+		r.Configuration.ContentType = types.StringNull()
+	}
+	if resp.Configuration.DetailType != nil {
+		r.Configuration.DetailType = types.StringValue(string(*resp.Configuration.DetailType))
+	} else {
+		r.Configuration.DetailType = types.StringNull()
+	}
+	if resp.Configuration.Domain != nil {
+		r.Configuration.Domain = types.StringValue(*resp.Configuration.Domain)
+	} else {
+		r.Configuration.Domain = types.StringNull()
+	}
+	if resp.Configuration.Favorite != nil {
+		r.Configuration.Favorite = types.BoolValue(*resp.Configuration.Favorite)
+	} else {
+		r.Configuration.Favorite = types.BoolNull()
+	}
+	if resp.Configuration.Search != nil {
+		r.Configuration.Search = types.StringValue(*resp.Configuration.Search)
+	} else {
+		r.Configuration.Search = types.StringNull()
+	}
+	if resp.Configuration.Since != nil {
+		r.Configuration.Since = types.StringValue(*resp.Configuration.Since)
+	} else {
+		r.Configuration.Since = types.StringNull()
+	}
+	if resp.Configuration.Sort != nil {
+		r.Configuration.Sort = types.StringValue(string(*resp.Configuration.Sort))
+	} else {
+		r.Configuration.Sort = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.State != nil {
+		r.Configuration.State = types.StringValue(string(*resp.Configuration.State))
+	} else {
+		r.Configuration.State = types.StringNull()
+	}
+	if resp.Configuration.Tag != nil {
+		r.Configuration.Tag = types.StringValue(*resp.Configuration.Tag)
+	} else {
+		r.Configuration.Tag = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

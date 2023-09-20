@@ -1,4 +1,3 @@
 data "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "623bceca-b50a-4ee5-a0da-8b9af6ad0548"
 }

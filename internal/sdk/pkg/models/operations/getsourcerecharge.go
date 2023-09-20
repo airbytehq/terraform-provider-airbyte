@@ -14,7 +14,7 @@ type GetSourceRechargeRequest struct {
 type GetSourceRechargeResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRechargeGetResponse *shared.SourceRechargeGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceAircallResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAircallGetResponse *shared.SourceAircallGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

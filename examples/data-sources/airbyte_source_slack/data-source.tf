@@ -1,4 +1,3 @@
 data "airbyte_source_slack" "my_source_slack" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "9c10c185-16fd-478b-a262-1272628fa503"
 }

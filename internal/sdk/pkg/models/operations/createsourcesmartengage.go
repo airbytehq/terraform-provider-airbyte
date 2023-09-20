@@ -10,7 +10,7 @@ import (
 type CreateSourceSmartengageResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSmartengageGetResponse *shared.SourceSmartengageGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

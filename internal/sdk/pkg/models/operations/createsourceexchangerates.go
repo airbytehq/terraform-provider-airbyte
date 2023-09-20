@@ -10,7 +10,7 @@ import (
 type CreateSourceExchangeRatesResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceExchangeRatesGetResponse *shared.SourceExchangeRatesGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

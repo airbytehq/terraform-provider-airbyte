@@ -1,4 +1,3 @@
 data "airbyte_source_metabase" "my_source_metabase" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "5f002207-e404-48f9-8009-ed290278eb4a"
 }

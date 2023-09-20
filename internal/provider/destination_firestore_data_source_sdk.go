@@ -7,8 +7,19 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationFirestoreDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationFirestoreDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationFirestoreGetResponse) {
+	if resp.Configuration.CredentialsJSON != nil {
+		r.Configuration.CredentialsJSON = types.StringValue(*resp.Configuration.CredentialsJSON)
+	} else {
+		r.Configuration.CredentialsJSON = types.StringNull()
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.ProjectID = types.StringValue(resp.Configuration.ProjectID)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

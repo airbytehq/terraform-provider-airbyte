@@ -5,10 +5,25 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceAwsCloudtrailDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAwsCloudtrailDataSourceModel) RefreshFromGetResponse(resp *shared.SourceAwsCloudtrailGetResponse) {
+	r.Configuration.AwsKeyID = types.StringValue(resp.Configuration.AwsKeyID)
+	r.Configuration.AwsRegionName = types.StringValue(resp.Configuration.AwsRegionName)
+	r.Configuration.AwsSecretKey = types.StringValue(resp.Configuration.AwsSecretKey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

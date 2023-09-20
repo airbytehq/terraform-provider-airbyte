@@ -10,7 +10,7 @@ import (
 type CreateSourceOracleResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOracleGetResponse *shared.SourceOracleGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

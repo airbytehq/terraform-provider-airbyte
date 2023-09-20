@@ -10,7 +10,7 @@ import (
 type CreateSourceMicrosoftTeamsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMicrosoftTeamsGetResponse *shared.SourceMicrosoftTeamsGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

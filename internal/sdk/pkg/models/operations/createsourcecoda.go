@@ -10,7 +10,7 @@ import (
 type CreateSourceCodaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceCodaGetResponse *shared.SourceCodaGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourcePunkAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePunkAPIGetResponse *shared.SourcePunkAPIGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

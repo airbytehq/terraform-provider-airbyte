@@ -171,13 +171,58 @@ func (r *DestinationFireboltResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationFireboltResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationFireboltResourceModel) RefreshFromGetResponse(resp *shared.DestinationFireboltGetResponse) {
+	if resp.Configuration.Account != nil {
+		r.Configuration.Account = types.StringValue(*resp.Configuration.Account)
+	} else {
+		r.Configuration.Account = types.StringNull()
+	}
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.Engine != nil {
+		r.Configuration.Engine = types.StringValue(*resp.Configuration.Engine)
+	} else {
+		r.Configuration.Engine = types.StringNull()
+	}
+	if resp.Configuration.Host != nil {
+		r.Configuration.Host = types.StringValue(*resp.Configuration.Host)
+	} else {
+		r.Configuration.Host = types.StringNull()
+	}
+	if resp.Configuration.LoadingMethod == nil {
+		r.Configuration.LoadingMethod = nil
+	} else {
+		r.Configuration.LoadingMethod = &DestinationFireboltLoadingMethod{}
+		if resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3 != nil {
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3 = &DestinationFireboltLoadingMethodExternalTableViaS3{}
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeyID = types.StringValue(resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeyID)
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeySecret = types.StringValue(resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeySecret)
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method = types.StringValue(string(resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method))
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Bucket = types.StringValue(resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Bucket)
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Region = types.StringValue(resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Region)
+		}
+		if resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts != nil {
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts = &DestinationFireboltLoadingMethodSQLInserts{}
+			r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method = types.StringValue(string(resp.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method))
+		}
+		if resp.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {
+			r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 = &DestinationFireboltLoadingMethodExternalTableViaS3{}
+		}
+		if resp.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts != nil {
+			r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts = &DestinationFireboltLoadingMethodSQLInserts{}
+		}
+	}
+	r.Configuration.Password = types.StringValue(resp.Configuration.Password)
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationFireboltResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationFireboltResourceModel) RefreshFromCreateResponse(resp *shared.DestinationFireboltGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

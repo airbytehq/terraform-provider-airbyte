@@ -14,7 +14,7 @@ type GetSourceShopifyRequest struct {
 type GetSourceShopifyResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceShopifyGetResponse *shared.SourceShopifyGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

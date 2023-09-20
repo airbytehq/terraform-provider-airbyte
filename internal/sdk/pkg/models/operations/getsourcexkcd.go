@@ -14,7 +14,7 @@ type GetSourceXkcdRequest struct {
 type GetSourceXkcdResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceXkcdGetResponse *shared.SourceXkcdGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

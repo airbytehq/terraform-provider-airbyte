@@ -1,4 +1,3 @@
 data "airbyte_source_chartmogul" "my_source_chartmogul" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "0014ef45-cea1-41ac-93eb-b6587f340414"
 }

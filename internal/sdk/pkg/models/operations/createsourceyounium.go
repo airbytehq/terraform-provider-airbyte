@@ -10,7 +10,7 @@ import (
 type CreateSourceYouniumResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceYouniumGetResponse *shared.SourceYouniumGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

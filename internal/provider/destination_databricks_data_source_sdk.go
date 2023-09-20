@@ -7,8 +7,81 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDatabricksDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationDatabricksDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationDatabricksGetResponse) {
+	r.Configuration.AcceptTerms = types.BoolValue(resp.Configuration.AcceptTerms)
+	if resp.Configuration.DataSource.DestinationDatabricksDataSourceRecommendedManagedTables != nil {
+		r.Configuration.DataSource.DestinationDatabricksDataSourceRecommendedManagedTables = &DestinationDatabricksDataSourceRecommendedManagedTables{}
+		r.Configuration.DataSource.DestinationDatabricksDataSourceRecommendedManagedTables.DataSourceType = types.StringValue(string(resp.Configuration.DataSource.DestinationDatabricksDataSourceRecommendedManagedTables.DataSourceType))
+	}
+	if resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3 != nil {
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3 = &DestinationDatabricksDataSourceAmazonS31{}
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.DataSourceType = types.StringValue(string(resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.DataSourceType))
+		if resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern != nil {
+			r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern = types.StringValue(*resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern)
+		} else {
+			r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern = types.StringNull()
+		}
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3AccessKeyID = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3AccessKeyID)
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketName = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketName)
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketPath = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketPath)
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketRegion = types.StringValue(string(resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketRegion))
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3SecretAccessKey = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3SecretAccessKey)
+	}
+	if resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage != nil {
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage = &DestinationDatabricksDataSourceAzureBlobStorage{}
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageAccountName = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageAccountName)
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageContainerName = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageContainerName)
+		if resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageEndpointDomainName != nil {
+			r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageEndpointDomainName = types.StringValue(*resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageEndpointDomainName)
+		} else {
+			r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageEndpointDomainName = types.StringNull()
+		}
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageSasToken = types.StringValue(resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageSasToken)
+		r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.DataSourceType = types.StringValue(string(resp.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.DataSourceType))
+	}
+	if resp.Configuration.DataSource.DestinationDatabricksUpdateDataSourceRecommendedManagedTables != nil {
+		r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceRecommendedManagedTables = &DestinationDatabricksDataSourceRecommendedManagedTables{}
+	}
+	if resp.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3 != nil {
+		r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3 = &DestinationDatabricksUpdateDataSourceAmazonS31{}
+	}
+	if resp.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAzureBlobStorage != nil {
+		r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAzureBlobStorage = &DestinationDatabricksDataSourceAzureBlobStorage{}
+	}
+	if resp.Configuration.Database != nil {
+		r.Configuration.Database = types.StringValue(*resp.Configuration.Database)
+	} else {
+		r.Configuration.Database = types.StringNull()
+	}
+	r.Configuration.DatabricksHTTPPath = types.StringValue(resp.Configuration.DatabricksHTTPPath)
+	r.Configuration.DatabricksPersonalAccessToken = types.StringValue(resp.Configuration.DatabricksPersonalAccessToken)
+	if resp.Configuration.DatabricksPort != nil {
+		r.Configuration.DatabricksPort = types.StringValue(*resp.Configuration.DatabricksPort)
+	} else {
+		r.Configuration.DatabricksPort = types.StringNull()
+	}
+	r.Configuration.DatabricksServerHostname = types.StringValue(resp.Configuration.DatabricksServerHostname)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.EnableSchemaEvolution != nil {
+		r.Configuration.EnableSchemaEvolution = types.BoolValue(*resp.Configuration.EnableSchemaEvolution)
+	} else {
+		r.Configuration.EnableSchemaEvolution = types.BoolNull()
+	}
+	if resp.Configuration.PurgeStagingData != nil {
+		r.Configuration.PurgeStagingData = types.BoolValue(*resp.Configuration.PurgeStagingData)
+	} else {
+		r.Configuration.PurgeStagingData = types.BoolNull()
+	}
+	if resp.Configuration.Schema != nil {
+		r.Configuration.Schema = types.StringValue(*resp.Configuration.Schema)
+	} else {
+		r.Configuration.Schema = types.StringNull()
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -14,7 +14,7 @@ type GetSourcePexelsAPIRequest struct {
 type GetSourcePexelsAPIResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePexelsAPIGetResponse *shared.SourcePexelsAPIGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

@@ -69,13 +69,26 @@ func (r *SourceYotpoResourceModel) ToDeleteSDKType() *shared.SourceYotpoCreateRe
 	return out
 }
 
-func (r *SourceYotpoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceYotpoResourceModel) RefreshFromGetResponse(resp *shared.SourceYotpoGetResponse) {
+	r.Configuration.AccessToken = types.StringValue(resp.Configuration.AccessToken)
+	r.Configuration.AppKey = types.StringValue(resp.Configuration.AppKey)
+	r.Configuration.Email = types.StringValue(resp.Configuration.Email)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceYotpoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceYotpoResourceModel) RefreshFromCreateResponse(resp *shared.SourceYotpoGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

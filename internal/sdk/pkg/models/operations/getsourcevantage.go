@@ -14,7 +14,7 @@ type GetSourceVantageRequest struct {
 type GetSourceVantageResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceVantageGetResponse *shared.SourceVantageGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

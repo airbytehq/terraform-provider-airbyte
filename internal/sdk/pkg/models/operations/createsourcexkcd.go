@@ -10,7 +10,7 @@ import (
 type CreateSourceXkcdResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceXkcdGetResponse *shared.SourceXkcdGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

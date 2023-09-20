@@ -1,4 +1,3 @@
 data "airbyte_source_yotpo" "my_source_yotpo" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "065a5074-befb-48af-a849-d2b99404363a"
 }

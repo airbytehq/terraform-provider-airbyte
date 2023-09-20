@@ -1,4 +1,3 @@
 data "airbyte_source_airtable" "my_source_airtable" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "cf2bf4f3-ded3-456d-be14-b21cd98196d5"
 }

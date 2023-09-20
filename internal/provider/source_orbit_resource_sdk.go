@@ -74,13 +74,29 @@ func (r *SourceOrbitResourceModel) ToDeleteSDKType() *shared.SourceOrbitCreateRe
 	return out
 }
 
-func (r *SourceOrbitResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbitResourceModel) RefreshFromGetResponse(resp *shared.SourceOrbitGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	r.Configuration.Workspace = types.StringValue(resp.Configuration.Workspace)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOrbitResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbitResourceModel) RefreshFromCreateResponse(resp *shared.SourceOrbitGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

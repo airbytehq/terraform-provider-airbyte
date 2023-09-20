@@ -1,4 +1,3 @@
 data "airbyte_source_dynamodb" "my_source_dynamodb" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "511cc75e-4f0c-4004-b5bb-758cc94562f0"
 }

@@ -7,8 +7,40 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePexelsAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePexelsAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourcePexelsAPIGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.Color != nil {
+		r.Configuration.Color = types.StringValue(*resp.Configuration.Color)
+	} else {
+		r.Configuration.Color = types.StringNull()
+	}
+	if resp.Configuration.Locale != nil {
+		r.Configuration.Locale = types.StringValue(*resp.Configuration.Locale)
+	} else {
+		r.Configuration.Locale = types.StringNull()
+	}
+	if resp.Configuration.Orientation != nil {
+		r.Configuration.Orientation = types.StringValue(*resp.Configuration.Orientation)
+	} else {
+		r.Configuration.Orientation = types.StringNull()
+	}
+	r.Configuration.Query = types.StringValue(resp.Configuration.Query)
+	if resp.Configuration.Size != nil {
+		r.Configuration.Size = types.StringValue(*resp.Configuration.Size)
+	} else {
+		r.Configuration.Size = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

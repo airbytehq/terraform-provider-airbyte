@@ -5,10 +5,62 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceShopifyDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceShopifyDataSourceModel) RefreshFromGetResponse(resp *shared.SourceShopifyGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceShopifyShopifyAuthorizationMethod{}
+		if resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
+			r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword = &SourceShopifyShopifyAuthorizationMethodAPIPassword{}
+			r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword = types.StringValue(resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword)
+			r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod))
+		}
+		if resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 = &SourceShopifyShopifyAuthorizationMethodOAuth20{}
+			if resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken != nil {
+				r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken = types.StringValue(*resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken)
+			} else {
+				r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod))
+			if resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID != nil {
+				r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID)
+			} else {
+				r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret != nil {
+				r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
+			r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword = &SourceShopifyShopifyAuthorizationMethodAPIPassword{}
+		}
+		if resp.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 = &SourceShopifyShopifyAuthorizationMethodOAuth20{}
+		}
+	}
+	r.Configuration.Shop = types.StringValue(resp.Configuration.Shop)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

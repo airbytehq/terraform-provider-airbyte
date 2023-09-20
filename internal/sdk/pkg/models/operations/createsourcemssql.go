@@ -10,7 +10,7 @@ import (
 type CreateSourceMssqlResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMssqlGetResponse *shared.SourceMssqlGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

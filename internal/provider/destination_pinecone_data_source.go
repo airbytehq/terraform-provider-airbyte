@@ -177,14 +177,15 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 						Attributes: map[string]schema.Attribute{
 							"index": schema.StringAttribute{
 								Computed:    true,
-								Description: `Pinecone index to use`,
+								Description: `Pinecone index in your project to load data into`,
 							},
 							"pinecone_environment": schema.StringAttribute{
 								Computed:    true,
-								Description: `Pinecone environment to use`,
+								Description: `Pinecone Cloud environment to use`,
 							},
 							"pinecone_key": schema.StringAttribute{
-								Computed: true,
+								Computed:    true,
+								Description: `The Pinecone API key to use matching the environment (copy from Pinecone console)`,
 							},
 						},
 						Description: `Pinecone is a popular vector store that can be used to store and retrieve embeddings.`,
@@ -215,7 +216,7 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
@@ -285,11 +286,11 @@ func (r *DestinationPineconeDataSource) Read(ctx context.Context, req datasource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationPineconeGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationPineconeGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

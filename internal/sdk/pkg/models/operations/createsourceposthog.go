@@ -10,7 +10,7 @@ import (
 type CreateSourcePosthogResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePosthogGetResponse *shared.SourcePosthogGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

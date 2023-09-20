@@ -14,7 +14,7 @@ type GetSourceConfigcatRequest struct {
 type GetSourceConfigcatResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceConfigcatGetResponse *shared.SourceConfigcatGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

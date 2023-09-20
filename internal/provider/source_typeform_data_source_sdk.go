@@ -5,10 +5,58 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceTypeformDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTypeformDataSourceModel) RefreshFromGetResponse(resp *shared.SourceTypeformGetResponse) {
+	if resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AccessToken)
+		if resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType != nil {
+			r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType = types.StringNull()
+		}
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.ClientID)
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.ClientSecret)
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.RefreshToken)
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
+	}
+	if resp.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken != nil {
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken = &SourceGitlabAuthorizationMethodPrivateToken{}
+		r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AccessToken)
+		if resp.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType != nil {
+			r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType = types.StringNull()
+		}
+	}
+	if resp.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
+	}
+	if resp.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken != nil {
+		r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken = &SourceGitlabAuthorizationMethodPrivateToken{}
+	}
+	r.Configuration.FormIds = nil
+	for _, v := range resp.Configuration.FormIds {
+		r.Configuration.FormIds = append(r.Configuration.FormIds, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

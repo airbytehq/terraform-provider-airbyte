@@ -7,8 +7,28 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceZuoraDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZuoraDataSourceModel) RefreshFromGetResponse(resp *shared.SourceZuoraGetResponse) {
+	r.Configuration.ClientID = types.StringValue(resp.Configuration.ClientID)
+	r.Configuration.ClientSecret = types.StringValue(resp.Configuration.ClientSecret)
+	r.Configuration.DataQuery = types.StringValue(string(resp.Configuration.DataQuery))
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
+	r.Configuration.TenantEndpoint = types.StringValue(string(resp.Configuration.TenantEndpoint))
+	if resp.Configuration.WindowInDays != nil {
+		r.Configuration.WindowInDays = types.StringValue(*resp.Configuration.WindowInDays)
+	} else {
+		r.Configuration.WindowInDays = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

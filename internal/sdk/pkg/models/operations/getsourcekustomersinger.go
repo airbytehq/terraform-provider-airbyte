@@ -14,7 +14,7 @@ type GetSourceKustomerSingerRequest struct {
 type GetSourceKustomerSingerResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceKustomerSingerGetResponse *shared.SourceKustomerSingerGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

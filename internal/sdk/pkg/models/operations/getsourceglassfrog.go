@@ -14,7 +14,7 @@ type GetSourceGlassfrogRequest struct {
 type GetSourceGlassfrogResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGlassfrogGetResponse *shared.SourceGlassfrogGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

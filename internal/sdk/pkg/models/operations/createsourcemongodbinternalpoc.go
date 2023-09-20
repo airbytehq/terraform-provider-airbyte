@@ -10,7 +10,7 @@ import (
 type CreateSourceMongodbInternalPocResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMongodbInternalPocGetResponse *shared.SourceMongodbInternalPocGetResponse
+	StatusCode                          int
+	RawResponse                         *http.Response
 }

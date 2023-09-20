@@ -14,7 +14,7 @@ type GetSourceClickupAPIRequest struct {
 type GetSourceClickupAPIResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceClickupAPIGetResponse *shared.SourceClickupAPIGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

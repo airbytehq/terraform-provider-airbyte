@@ -14,7 +14,7 @@ type GetDestinationMysqlRequest struct {
 type GetDestinationMysqlResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationMysqlGetResponse *shared.DestinationMysqlGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

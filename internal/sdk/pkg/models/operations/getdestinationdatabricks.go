@@ -14,7 +14,7 @@ type GetDestinationDatabricksRequest struct {
 type GetDestinationDatabricksResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationDatabricksGetResponse *shared.DestinationDatabricksGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

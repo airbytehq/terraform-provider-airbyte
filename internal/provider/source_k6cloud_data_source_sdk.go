@@ -7,8 +7,19 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceK6CloudDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceK6CloudDataSourceModel) RefreshFromGetResponse(resp *shared.SourceK6CloudGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

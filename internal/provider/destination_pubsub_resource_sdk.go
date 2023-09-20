@@ -107,13 +107,37 @@ func (r *DestinationPubsubResourceModel) ToDeleteSDKType() *shared.DestinationPu
 	return out
 }
 
-func (r *DestinationPubsubResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationPubsubResourceModel) RefreshFromGetResponse(resp *shared.DestinationPubsubGetResponse) {
+	if resp.Configuration.BatchingDelayThreshold != nil {
+		r.Configuration.BatchingDelayThreshold = types.Int64Value(*resp.Configuration.BatchingDelayThreshold)
+	} else {
+		r.Configuration.BatchingDelayThreshold = types.Int64Null()
+	}
+	if resp.Configuration.BatchingElementCountThreshold != nil {
+		r.Configuration.BatchingElementCountThreshold = types.Int64Value(*resp.Configuration.BatchingElementCountThreshold)
+	} else {
+		r.Configuration.BatchingElementCountThreshold = types.Int64Null()
+	}
+	r.Configuration.BatchingEnabled = types.BoolValue(resp.Configuration.BatchingEnabled)
+	if resp.Configuration.BatchingRequestBytesThreshold != nil {
+		r.Configuration.BatchingRequestBytesThreshold = types.Int64Value(*resp.Configuration.BatchingRequestBytesThreshold)
+	} else {
+		r.Configuration.BatchingRequestBytesThreshold = types.Int64Null()
+	}
+	r.Configuration.CredentialsJSON = types.StringValue(resp.Configuration.CredentialsJSON)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.OrderingEnabled = types.BoolValue(resp.Configuration.OrderingEnabled)
+	r.Configuration.ProjectID = types.StringValue(resp.Configuration.ProjectID)
+	r.Configuration.TopicID = types.StringValue(resp.Configuration.TopicID)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationPubsubResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationPubsubResourceModel) RefreshFromCreateResponse(resp *shared.DestinationPubsubGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

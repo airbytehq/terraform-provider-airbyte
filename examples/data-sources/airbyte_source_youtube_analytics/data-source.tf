@@ -1,4 +1,3 @@
 data "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "cb949770-17a2-4620-8bb2-6ca4e9998287"
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "ea32201d-ec37-49c5-98ea-1d48c5c2f9e2"
 }

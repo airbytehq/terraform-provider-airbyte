@@ -10,7 +10,7 @@ import (
 type CreateSourceAwsCloudtrailResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAwsCloudtrailGetResponse *shared.SourceAwsCloudtrailGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

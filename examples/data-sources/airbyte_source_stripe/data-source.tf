@@ -1,4 +1,3 @@
 data "airbyte_source_stripe" "my_source_stripe" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "32bb6586-2d2a-431f-9b14-aa6bdec7f444"
 }

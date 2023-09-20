@@ -74,13 +74,29 @@ func (r *SourceClockifyResourceModel) ToDeleteSDKType() *shared.SourceClockifyCr
 	return out
 }
 
-func (r *SourceClockifyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceClockifyResourceModel) RefreshFromGetResponse(resp *shared.SourceClockifyGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.APIURL != nil {
+		r.Configuration.APIURL = types.StringValue(*resp.Configuration.APIURL)
+	} else {
+		r.Configuration.APIURL = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.WorkspaceID = types.StringValue(resp.Configuration.WorkspaceID)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceClockifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceClockifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceClockifyGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -163,13 +163,55 @@ func (r *SourceTrustpilotResourceModel) ToDeleteSDKType() *shared.SourceTrustpil
 	return out
 }
 
-func (r *SourceTrustpilotResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTrustpilotResourceModel) RefreshFromGetResponse(resp *shared.SourceTrustpilotGetResponse) {
+	r.Configuration.BusinessUnits = nil
+	for _, v := range resp.Configuration.BusinessUnits {
+		r.Configuration.BusinessUnits = append(r.Configuration.BusinessUnits, types.StringValue(v))
+	}
+	if resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey != nil {
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey = &SourceTrustpilotAuthorizationMethodAPIKey{}
+		if resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType != nil {
+			r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType = types.StringNull()
+		}
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID = types.StringValue(resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID)
+	}
+	if resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken)
+		if resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType != nil {
+			r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType = types.StringNull()
+		}
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID)
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret)
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken)
+		r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
+	}
+	if resp.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey != nil {
+		r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey = &SourceTrustpilotAuthorizationMethodAPIKey{}
+	}
+	if resp.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTrustpilotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTrustpilotResourceModel) RefreshFromCreateResponse(resp *shared.SourceTrustpilotGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

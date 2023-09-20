@@ -14,7 +14,7 @@ type GetSourceTodoistRequest struct {
 type GetSourceTodoistResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTodoistGetResponse *shared.SourceTodoistGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

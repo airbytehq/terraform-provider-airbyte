@@ -14,7 +14,7 @@ type GetSourceTwilioTaskrouterRequest struct {
 type GetSourceTwilioTaskrouterResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTwilioTaskrouterGetResponse *shared.SourceTwilioTaskrouterGetResponse
+	StatusCode                        int
+	RawResponse                       *http.Response
 }

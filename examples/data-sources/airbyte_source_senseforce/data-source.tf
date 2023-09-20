@@ -1,4 +1,3 @@
 data "airbyte_source_senseforce" "my_source_senseforce" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "aa9118b3-8f1b-461a-b31a-54dc10294f92"
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_recruitee" "my_source_recruitee" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "1cf6796e-d3d7-424c-98f5-81e98cce3f71"
 }

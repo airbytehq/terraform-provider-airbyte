@@ -1,4 +1,3 @@
 data "airbyte_source_todoist" "my_source_todoist" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "076ff5f6-ed29-4814-8882-69b6a70b0dd8"
 }

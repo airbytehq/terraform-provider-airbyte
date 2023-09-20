@@ -10,7 +10,7 @@ import (
 type CreateSourceClickupAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceClickupAPIGetResponse *shared.SourceClickupAPIGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

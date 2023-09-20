@@ -14,7 +14,7 @@ type GetSourceGoogleDirectoryRequest struct {
 type GetSourceGoogleDirectoryResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleDirectoryGetResponse *shared.SourceGoogleDirectoryGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

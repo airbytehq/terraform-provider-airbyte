@@ -7,8 +7,32 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceRedshiftDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceRedshiftDataSourceModel) RefreshFromGetResponse(resp *shared.SourceRedshiftGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	r.Configuration.Password = types.StringValue(resp.Configuration.Password)
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	r.Configuration.Schemas = nil
+	for _, v := range resp.Configuration.Schemas {
+		r.Configuration.Schemas = append(r.Configuration.Schemas, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceDixaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDixaGetResponse *shared.SourceDixaGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceZendeskSupportResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZendeskSupportGetResponse *shared.SourceZendeskSupportGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

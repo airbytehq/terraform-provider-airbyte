@@ -10,7 +10,7 @@ import (
 type CreateSourceRechargeResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRechargeGetResponse *shared.SourceRechargeGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

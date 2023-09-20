@@ -14,7 +14,7 @@ type GetSourceMongodbRequest struct {
 type GetSourceMongodbResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMongodbGetResponse *shared.SourceMongodbGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

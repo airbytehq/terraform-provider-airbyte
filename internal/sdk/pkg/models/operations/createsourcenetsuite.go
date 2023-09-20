@@ -10,7 +10,7 @@ import (
 type CreateSourceNetsuiteResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceNetsuiteGetResponse *shared.SourceNetsuiteGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

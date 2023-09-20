@@ -7,8 +7,54 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMailchimpDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMailchimpDataSourceModel) RefreshFromGetResponse(resp *shared.SourceMailchimpGetResponse) {
+	if resp.Configuration.CampaignID != nil {
+		r.Configuration.CampaignID = types.StringValue(*resp.Configuration.CampaignID)
+	} else {
+		r.Configuration.CampaignID = types.StringNull()
+	}
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceMailchimpAuthentication{}
+		if resp.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey != nil {
+			r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey = &SourceMailchimpAuthenticationAPIKey{}
+			r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.Apikey = types.StringValue(resp.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.Apikey)
+			r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType))
+		}
+		if resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20 = &SourceMailchimpAuthenticationOAuth20{}
+			r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AccessToken)
+			r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType))
+			if resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID != nil {
+				r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID = types.StringValue(*resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID)
+			} else {
+				r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret != nil {
+				r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey != nil {
+			r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey = &SourceMailchimpAuthenticationAPIKey{}
+		}
+		if resp.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20 = &SourceMailchimpAuthenticationOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

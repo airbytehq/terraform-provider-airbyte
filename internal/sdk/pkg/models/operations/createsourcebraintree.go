@@ -10,7 +10,7 @@ import (
 type CreateSourceBraintreeResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBraintreeGetResponse *shared.SourceBraintreeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

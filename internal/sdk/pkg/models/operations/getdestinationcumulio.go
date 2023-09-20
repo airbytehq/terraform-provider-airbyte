@@ -14,7 +14,7 @@ type GetDestinationCumulioRequest struct {
 type GetDestinationCumulioResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationCumulioGetResponse *shared.DestinationCumulioGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

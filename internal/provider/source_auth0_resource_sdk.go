@@ -138,13 +138,46 @@ func (r *SourceAuth0ResourceModel) ToDeleteSDKType() *shared.SourceAuth0CreateRe
 	return out
 }
 
-func (r *SourceAuth0ResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAuth0ResourceModel) RefreshFromGetResponse(resp *shared.SourceAuth0GetResponse) {
+	r.Configuration.BaseURL = types.StringValue(resp.Configuration.BaseURL)
+	if resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken = &SourceAuth0AuthenticationMethodOAuth2AccessToken{}
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken)
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType))
+	}
+	if resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = &SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication{}
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience = types.StringValue(resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience)
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType))
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID = types.StringValue(resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID)
+		r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret)
+	}
+	if resp.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
+		r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken = &SourceAuth0AuthenticationMethodOAuth2AccessToken{}
+	}
+	if resp.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
+		r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication = &SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication{}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAuth0ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAuth0ResourceModel) RefreshFromCreateResponse(resp *shared.SourceAuth0GetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

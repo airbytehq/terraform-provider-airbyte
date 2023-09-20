@@ -10,7 +10,7 @@ import (
 type CreateSourceSentryResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSentryGetResponse *shared.SourceSentryGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

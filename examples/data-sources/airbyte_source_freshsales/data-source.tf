@@ -1,4 +1,3 @@
 data "airbyte_source_freshsales" "my_source_freshsales" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "089e871f-db4d-4697-bdd9-c985e43734a5"
 }

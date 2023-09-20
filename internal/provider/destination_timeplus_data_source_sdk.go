@@ -7,8 +7,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationTimeplusDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationTimeplusDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationTimeplusGetResponse) {
+	r.Configuration.Apikey = types.StringValue(resp.Configuration.Apikey)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Endpoint = types.StringValue(resp.Configuration.Endpoint)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

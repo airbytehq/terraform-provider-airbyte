@@ -75,13 +75,29 @@ func (r *SourceTrelloResourceModel) ToDeleteSDKType() *shared.SourceTrelloCreate
 	return out
 }
 
-func (r *SourceTrelloResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTrelloResourceModel) RefreshFromGetResponse(resp *shared.SourceTrelloGetResponse) {
+	r.Configuration.BoardIds = nil
+	for _, v := range resp.Configuration.BoardIds {
+		r.Configuration.BoardIds = append(r.Configuration.BoardIds, types.StringValue(v))
+	}
+	r.Configuration.Key = types.StringValue(resp.Configuration.Key)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	r.Configuration.Token = types.StringValue(resp.Configuration.Token)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTrelloResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTrelloResourceModel) RefreshFromCreateResponse(resp *shared.SourceTrelloGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

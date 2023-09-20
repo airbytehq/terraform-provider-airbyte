@@ -197,11 +197,11 @@ func (r *SourceMicrosoftTeamsDataSource) Schema(ctx context.Context, req datasou
 				Computed: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional:    true,
+				Computed:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
@@ -268,11 +268,11 @@ func (r *SourceMicrosoftTeamsDataSource) Read(ctx context.Context, req datasourc
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceMicrosoftTeamsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromGetResponse(res.SourceMicrosoftTeamsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

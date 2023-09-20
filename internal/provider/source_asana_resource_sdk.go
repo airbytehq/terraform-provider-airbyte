@@ -149,13 +149,57 @@ func (r *SourceAsanaResourceModel) ToDeleteSDKType() *shared.SourceAsanaCreateRe
 	return out
 }
 
-func (r *SourceAsanaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAsanaResourceModel) RefreshFromGetResponse(resp *shared.SourceAsanaGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceAsanaAuthenticationMechanism{}
+		if resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
+			r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth = &SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth{}
+			r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID)
+			r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret)
+			if resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle != nil {
+				r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle))
+			} else {
+				r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+			r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken = &SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken{}
+			if resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle != nil {
+				r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle))
+			} else {
+				r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.PersonalAccessToken = types.StringValue(resp.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.PersonalAccessToken)
+		}
+		if resp.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
+			r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth = &SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth{}
+		}
+		if resp.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+			r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken = &SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken{}
+		}
+	}
+	if resp.Configuration.SourceType != nil {
+		r.Configuration.SourceType = types.StringValue(string(*resp.Configuration.SourceType))
+	} else {
+		r.Configuration.SourceType = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAsanaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAsanaResourceModel) RefreshFromCreateResponse(resp *shared.SourceAsanaGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -5,10 +5,42 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceSalesloftDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSalesloftDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSalesloftGetResponse) {
+	if resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey = &SourceSalesloftCredentialsAuthenticateViaAPIKey{}
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey = types.StringValue(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey)
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType))
+	}
+	if resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth = &SourceGitlabAuthorizationMethodOAuth20{}
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken)
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType))
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID)
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret)
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken)
+		r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate = types.StringValue(resp.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate.Format(time.RFC3339))
+	}
+	if resp.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
+		r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey = &SourceSalesloftCredentialsAuthenticateViaAPIKey{}
+	}
+	if resp.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
+		r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth = &SourceGitlabAuthorizationMethodOAuth20{}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

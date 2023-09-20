@@ -83,13 +83,31 @@ func (r *SourceBraintreeResourceModel) ToDeleteSDKType() *shared.SourceBraintree
 	return out
 }
 
-func (r *SourceBraintreeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceBraintreeResourceModel) RefreshFromGetResponse(resp *shared.SourceBraintreeGetResponse) {
+	r.Configuration.Environment = types.StringValue(string(resp.Configuration.Environment))
+	r.Configuration.MerchantID = types.StringValue(resp.Configuration.MerchantID)
+	r.Configuration.PrivateKey = types.StringValue(resp.Configuration.PrivateKey)
+	r.Configuration.PublicKey = types.StringValue(resp.Configuration.PublicKey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBraintreeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceBraintreeResourceModel) RefreshFromCreateResponse(resp *shared.SourceBraintreeGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

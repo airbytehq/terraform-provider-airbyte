@@ -14,7 +14,7 @@ type GetDestinationTimeplusRequest struct {
 type GetDestinationTimeplusResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationTimeplusGetResponse *shared.DestinationTimeplusGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

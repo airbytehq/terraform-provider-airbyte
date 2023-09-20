@@ -14,7 +14,7 @@ type GetSourceOrbRequest struct {
 type GetSourceOrbResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOrbGetResponse *shared.SourceOrbGetResponse
+	StatusCode           int
+	RawResponse          *http.Response
 }

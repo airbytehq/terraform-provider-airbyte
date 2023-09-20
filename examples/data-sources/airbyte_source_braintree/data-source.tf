@@ -1,4 +1,3 @@
 data "airbyte_source_braintree" "my_source_braintree" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "fc198eea-4452-4792-bcd4-40ea98becce0"
 }

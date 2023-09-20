@@ -303,13 +303,101 @@ func (r *DestinationAwsDatalakeResourceModel) ToDeleteSDKType() *shared.Destinat
 	return out
 }
 
-func (r *DestinationAwsDatalakeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationAwsDatalakeResourceModel) RefreshFromGetResponse(resp *shared.DestinationAwsDatalakeGetResponse) {
+	if resp.Configuration.AwsAccountID != nil {
+		r.Configuration.AwsAccountID = types.StringValue(*resp.Configuration.AwsAccountID)
+	} else {
+		r.Configuration.AwsAccountID = types.StringNull()
+	}
+	r.Configuration.BucketName = types.StringValue(resp.Configuration.BucketName)
+	if resp.Configuration.BucketPrefix != nil {
+		r.Configuration.BucketPrefix = types.StringValue(*resp.Configuration.BucketPrefix)
+	} else {
+		r.Configuration.BucketPrefix = types.StringNull()
+	}
+	if resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole != nil {
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole = &DestinationAwsDatalakeAuthenticationModeIAMRole{}
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole.CredentialsTitle = types.StringValue(string(resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole.CredentialsTitle))
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole.RoleArn = types.StringValue(resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole.RoleArn)
+	}
+	if resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser != nil {
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser = &DestinationAwsDatalakeAuthenticationModeIAMUser{}
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.AwsAccessKeyID = types.StringValue(resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.AwsAccessKeyID)
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.AwsSecretAccessKey = types.StringValue(resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.AwsSecretAccessKey)
+		r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.CredentialsTitle = types.StringValue(string(resp.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.CredentialsTitle))
+	}
+	if resp.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole != nil {
+		r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole = &DestinationAwsDatalakeAuthenticationModeIAMRole{}
+	}
+	if resp.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser != nil {
+		r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser = &DestinationAwsDatalakeAuthenticationModeIAMUser{}
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.Format == nil {
+		r.Configuration.Format = nil
+	} else {
+		r.Configuration.Format = &DestinationAwsDatalakeOutputFormatWildcard{}
+		if resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+			r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON{}
+			if resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec != nil {
+				r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec = types.StringValue(string(*resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec))
+			} else {
+				r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec = types.StringNull()
+			}
+			r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType))
+		}
+		if resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
+			r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage = &DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage{}
+			if resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec != nil {
+				r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec = types.StringValue(string(*resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec))
+			} else {
+				r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec = types.StringNull()
+			}
+			r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType))
+		}
+		if resp.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+			r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON{}
+		}
+		if resp.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage != nil {
+			r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage = &DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage{}
+		}
+	}
+	if resp.Configuration.GlueCatalogFloatAsDecimal != nil {
+		r.Configuration.GlueCatalogFloatAsDecimal = types.BoolValue(*resp.Configuration.GlueCatalogFloatAsDecimal)
+	} else {
+		r.Configuration.GlueCatalogFloatAsDecimal = types.BoolNull()
+	}
+	if resp.Configuration.LakeformationDatabaseDefaultTagKey != nil {
+		r.Configuration.LakeformationDatabaseDefaultTagKey = types.StringValue(*resp.Configuration.LakeformationDatabaseDefaultTagKey)
+	} else {
+		r.Configuration.LakeformationDatabaseDefaultTagKey = types.StringNull()
+	}
+	if resp.Configuration.LakeformationDatabaseDefaultTagValues != nil {
+		r.Configuration.LakeformationDatabaseDefaultTagValues = types.StringValue(*resp.Configuration.LakeformationDatabaseDefaultTagValues)
+	} else {
+		r.Configuration.LakeformationDatabaseDefaultTagValues = types.StringNull()
+	}
+	r.Configuration.LakeformationDatabaseName = types.StringValue(resp.Configuration.LakeformationDatabaseName)
+	if resp.Configuration.LakeformationGovernedTables != nil {
+		r.Configuration.LakeformationGovernedTables = types.BoolValue(*resp.Configuration.LakeformationGovernedTables)
+	} else {
+		r.Configuration.LakeformationGovernedTables = types.BoolNull()
+	}
+	if resp.Configuration.Partitioning != nil {
+		r.Configuration.Partitioning = types.StringValue(string(*resp.Configuration.Partitioning))
+	} else {
+		r.Configuration.Partitioning = types.StringNull()
+	}
+	r.Configuration.Region = types.StringValue(string(resp.Configuration.Region))
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationAwsDatalakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationAwsDatalakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationAwsDatalakeGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

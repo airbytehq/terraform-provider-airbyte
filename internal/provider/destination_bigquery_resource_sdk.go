@@ -241,13 +241,77 @@ func (r *DestinationBigqueryResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationBigqueryResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationBigqueryResourceModel) RefreshFromGetResponse(resp *shared.DestinationBigqueryGetResponse) {
+	if resp.Configuration.BigQueryClientBufferSizeMb != nil {
+		r.Configuration.BigQueryClientBufferSizeMb = types.Int64Value(*resp.Configuration.BigQueryClientBufferSizeMb)
+	} else {
+		r.Configuration.BigQueryClientBufferSizeMb = types.Int64Null()
+	}
+	if resp.Configuration.CredentialsJSON != nil {
+		r.Configuration.CredentialsJSON = types.StringValue(*resp.Configuration.CredentialsJSON)
+	} else {
+		r.Configuration.CredentialsJSON = types.StringNull()
+	}
+	r.Configuration.DatasetID = types.StringValue(resp.Configuration.DatasetID)
+	r.Configuration.DatasetLocation = types.StringValue(string(resp.Configuration.DatasetLocation))
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.LoadingMethod == nil {
+		r.Configuration.LoadingMethod = nil
+	} else {
+		r.Configuration.LoadingMethod = &DestinationBigqueryLoadingMethod{}
+		if resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging != nil {
+			r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging = &DestinationBigqueryLoadingMethodGCSStaging{}
+			if resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey != nil {
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey = &DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey{}
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.CredentialType = types.StringValue(string(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.CredentialType))
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID = types.StringValue(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID)
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret = types.StringValue(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret)
+			}
+			if resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.FileBufferCount != nil {
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.FileBufferCount = types.Int64Value(*resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.FileBufferCount)
+			} else {
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.FileBufferCount = types.Int64Null()
+			}
+			r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.GcsBucketName = types.StringValue(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.GcsBucketName)
+			r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.GcsBucketPath = types.StringValue(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.GcsBucketPath)
+			if resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket != nil {
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket = types.StringValue(string(*resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket))
+			} else {
+				r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket = types.StringNull()
+			}
+			r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method = types.StringValue(string(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method))
+		}
+		if resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
+			r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts = &DestinationBigqueryLoadingMethodStandardInserts{}
+			r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method = types.StringValue(string(resp.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method))
+		}
+		if resp.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging != nil {
+			r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging = &DestinationBigqueryUpdateLoadingMethodGCSStaging{}
+		}
+		if resp.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodStandardInserts != nil {
+			r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodStandardInserts = &DestinationBigqueryLoadingMethodStandardInserts{}
+		}
+	}
+	r.Configuration.ProjectID = types.StringValue(resp.Configuration.ProjectID)
+	if resp.Configuration.RawDataDataset != nil {
+		r.Configuration.RawDataDataset = types.StringValue(*resp.Configuration.RawDataDataset)
+	} else {
+		r.Configuration.RawDataDataset = types.StringNull()
+	}
+	if resp.Configuration.TransformationPriority != nil {
+		r.Configuration.TransformationPriority = types.StringValue(string(*resp.Configuration.TransformationPriority))
+	} else {
+		r.Configuration.TransformationPriority = types.StringNull()
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.DestinationBigqueryGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

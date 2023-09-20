@@ -14,7 +14,7 @@ type GetSourceQuickbooksRequest struct {
 type GetSourceQuickbooksResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceQuickbooksGetResponse *shared.SourceQuickbooksGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

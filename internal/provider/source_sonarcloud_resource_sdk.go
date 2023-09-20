@@ -7,6 +7,7 @@ import (
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarCloudCreateRequest {
@@ -104,13 +105,41 @@ func (r *SourceSonarCloudResourceModel) ToDeleteSDKType() *shared.SourceSonarClo
 	return out
 }
 
-func (r *SourceSonarCloudResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSonarCloudResourceModel) RefreshFromGetResponse(resp *shared.SourceSonarCloudGetResponse) {
+	r.Configuration.ComponentKeys = nil
+	for _, componentKeysItem := range resp.Configuration.ComponentKeys {
+		var componentKeys1 types.String
+		componentKeys1Result, _ := json.Marshal(componentKeysItem)
+		componentKeys1 = types.StringValue(string(componentKeys1Result))
+		r.Configuration.ComponentKeys = append(r.Configuration.ComponentKeys, componentKeys1)
+	}
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.String())
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.Organization = types.StringValue(resp.Configuration.Organization)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	r.Configuration.UserToken = types.StringValue(resp.Configuration.UserToken)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSonarCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSonarCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceSonarCloudGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

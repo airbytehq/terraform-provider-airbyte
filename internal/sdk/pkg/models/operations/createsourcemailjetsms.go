@@ -10,7 +10,7 @@ import (
 type CreateSourceMailjetSmsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMailjetSmsGetResponse *shared.SourceMailjetSmsGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

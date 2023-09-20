@@ -7,8 +7,50 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleDirectoryDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleDirectoryDataSourceModel) RefreshFromGetResponse(resp *shared.SourceGoogleDirectoryGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceGoogleDirectoryGoogleCredentials{}
+		if resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey != nil {
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey = &SourceGoogleDirectoryGoogleCredentialsServiceAccountKey{}
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsJSON = types.StringValue(resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsJSON)
+			if resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle != nil {
+				r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle))
+			} else {
+				r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.Email = types.StringValue(resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.Email)
+		}
+		if resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth != nil {
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth = &SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth{}
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.ClientID)
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.ClientSecret)
+			if resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle != nil {
+				r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle))
+			} else {
+				r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey != nil {
+			r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey = &SourceGoogleDirectoryGoogleCredentialsServiceAccountKey{}
+		}
+		if resp.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth != nil {
+			r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth = &SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

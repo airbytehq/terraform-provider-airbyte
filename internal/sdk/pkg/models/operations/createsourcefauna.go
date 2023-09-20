@@ -10,7 +10,7 @@ import (
 type CreateSourceFaunaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFaunaGetResponse *shared.SourceFaunaGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceQualarooResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceQualarooGetResponse *shared.SourceQualarooGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

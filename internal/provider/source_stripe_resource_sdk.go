@@ -103,13 +103,39 @@ func (r *SourceStripeResourceModel) ToDeleteSDKType() *shared.SourceStripeCreate
 	return out
 }
 
-func (r *SourceStripeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceStripeResourceModel) RefreshFromGetResponse(resp *shared.SourceStripeGetResponse) {
+	r.Configuration.AccountID = types.StringValue(resp.Configuration.AccountID)
+	r.Configuration.ClientSecret = types.StringValue(resp.Configuration.ClientSecret)
+	if resp.Configuration.LookbackWindowDays != nil {
+		r.Configuration.LookbackWindowDays = types.Int64Value(*resp.Configuration.LookbackWindowDays)
+	} else {
+		r.Configuration.LookbackWindowDays = types.Int64Null()
+	}
+	if resp.Configuration.SliceRange != nil {
+		r.Configuration.SliceRange = types.Int64Value(*resp.Configuration.SliceRange)
+	} else {
+		r.Configuration.SliceRange = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceStripeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceStripeResourceModel) RefreshFromCreateResponse(resp *shared.SourceStripeGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

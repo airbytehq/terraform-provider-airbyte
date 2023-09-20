@@ -14,7 +14,7 @@ type GetSourceHarvestRequest struct {
 type GetSourceHarvestResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceHarvestGetResponse *shared.SourceHarvestGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

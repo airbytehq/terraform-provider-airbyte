@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreateRequest {
@@ -157,13 +158,56 @@ func (r *SourceSquareResourceModel) ToDeleteSDKType() *shared.SourceSquareCreate
 	return out
 }
 
-func (r *SourceSquareResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSquareResourceModel) RefreshFromGetResponse(resp *shared.SourceSquareGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceSquareAuthentication{}
+		if resp.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
+			r.Configuration.Credentials.SourceSquareAuthenticationAPIKey = &SourceSquareAuthenticationAPIKey{}
+			r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.APIKey = types.StringValue(resp.Configuration.Credentials.SourceSquareAuthenticationAPIKey.APIKey)
+			r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType))
+		}
+		if resp.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
+			r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication = &SourceSquareAuthenticationOauthAuthentication{}
+			r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType))
+			r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID = types.StringValue(resp.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID)
+			r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret)
+			r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey != nil {
+			r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey = &SourceSquareAuthenticationAPIKey{}
+		}
+		if resp.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
+			r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication = &SourceSquareAuthenticationOauthAuthentication{}
+		}
+	}
+	if resp.Configuration.IncludeDeletedObjects != nil {
+		r.Configuration.IncludeDeletedObjects = types.BoolValue(*resp.Configuration.IncludeDeletedObjects)
+	} else {
+		r.Configuration.IncludeDeletedObjects = types.BoolNull()
+	}
+	r.Configuration.IsSandbox = types.BoolValue(resp.Configuration.IsSandbox)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSquareResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSquareResourceModel) RefreshFromCreateResponse(resp *shared.SourceSquareGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

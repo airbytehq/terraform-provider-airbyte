@@ -10,7 +10,7 @@ import (
 type CreateSourceK6CloudResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceK6CloudGetResponse *shared.SourceK6CloudGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

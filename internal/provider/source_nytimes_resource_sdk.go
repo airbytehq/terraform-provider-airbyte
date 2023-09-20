@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCreateRequest {
@@ -93,13 +94,35 @@ func (r *SourceNytimesResourceModel) ToDeleteSDKType() *shared.SourceNytimesCrea
 	return out
 }
 
-func (r *SourceNytimesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceNytimesResourceModel) RefreshFromGetResponse(resp *shared.SourceNytimesGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.String())
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.Period = types.Int64Value(int64(resp.Configuration.Period))
+	if resp.Configuration.ShareType != nil {
+		r.Configuration.ShareType = types.StringValue(string(*resp.Configuration.ShareType))
+	} else {
+		r.Configuration.ShareType = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceNytimesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceNytimesResourceModel) RefreshFromCreateResponse(resp *shared.SourceNytimesGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

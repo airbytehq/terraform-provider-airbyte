@@ -14,7 +14,7 @@ type GetSourceDockerhubRequest struct {
 type GetSourceDockerhubResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDockerhubGetResponse *shared.SourceDockerhubGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

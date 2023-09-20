@@ -14,7 +14,7 @@ type GetSourceE2eTestCloudRequest struct {
 type GetSourceE2eTestCloudResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceE2eTestCloudGetResponse *shared.SourceE2eTestCloudGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

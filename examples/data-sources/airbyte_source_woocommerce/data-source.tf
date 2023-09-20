@@ -1,4 +1,3 @@
 data "airbyte_source_woocommerce" "my_source_woocommerce" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "fb6daee1-9c26-4c0c-b618-c6331cabdab7"
 }

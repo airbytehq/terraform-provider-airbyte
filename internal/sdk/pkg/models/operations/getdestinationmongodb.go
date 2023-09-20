@@ -14,7 +14,7 @@ type GetDestinationMongodbRequest struct {
 type GetDestinationMongodbResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationMongodbGetResponse *shared.DestinationMongodbGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

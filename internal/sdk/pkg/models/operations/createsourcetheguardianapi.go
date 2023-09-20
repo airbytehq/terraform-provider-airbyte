@@ -10,7 +10,7 @@ import (
 type CreateSourceTheGuardianAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTheGuardianAPIGetResponse *shared.SourceTheGuardianAPIGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

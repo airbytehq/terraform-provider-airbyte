@@ -205,13 +205,66 @@ func (r *DestinationVerticaResourceModel) ToDeleteSDKType() *shared.DestinationV
 	return out
 }
 
-func (r *DestinationVerticaResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationVerticaResourceModel) RefreshFromGetResponse(resp *shared.DestinationVerticaGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	r.Configuration.Schema = types.StringValue(resp.Configuration.Schema)
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &DestinationVerticaSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationVerticaResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationVerticaResourceModel) RefreshFromCreateResponse(resp *shared.DestinationVerticaGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_file_secure" "my_source_filesecure" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "5e889d9e-f932-4e90-80a1-3ad8124208ef"
 }

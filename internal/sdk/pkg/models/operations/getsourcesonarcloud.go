@@ -14,7 +14,7 @@ type GetSourceSonarCloudRequest struct {
 type GetSourceSonarCloudResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSonarCloudGetResponse *shared.SourceSonarCloudGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

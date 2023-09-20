@@ -14,7 +14,7 @@ type GetSourceSurveySparrowRequest struct {
 type GetSourceSurveySparrowResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSurveySparrowGetResponse *shared.SourceSurveySparrowGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

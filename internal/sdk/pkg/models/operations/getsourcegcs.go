@@ -14,7 +14,7 @@ type GetSourceGcsRequest struct {
 type GetSourceGcsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGcsGetResponse *shared.SourceGcsGetResponse
+	StatusCode           int
+	RawResponse          *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceSftpBulkResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSftpBulkGetResponse *shared.SourceSftpBulkGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

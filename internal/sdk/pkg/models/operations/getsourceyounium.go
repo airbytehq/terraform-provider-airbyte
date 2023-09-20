@@ -14,7 +14,7 @@ type GetSourceYouniumRequest struct {
 type GetSourceYouniumResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceYouniumGetResponse *shared.SourceYouniumGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

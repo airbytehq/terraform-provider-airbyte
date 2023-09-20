@@ -160,13 +160,61 @@ func (r *SourceAmazonAdsResourceModel) ToDeleteSDKType() *shared.SourceAmazonAds
 	return out
 }
 
-func (r *SourceAmazonAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceAmazonAdsGetResponse) {
+	if resp.Configuration.AuthType != nil {
+		r.Configuration.AuthType = types.StringValue(string(*resp.Configuration.AuthType))
+	} else {
+		r.Configuration.AuthType = types.StringNull()
+	}
+	r.Configuration.ClientID = types.StringValue(resp.Configuration.ClientID)
+	r.Configuration.ClientSecret = types.StringValue(resp.Configuration.ClientSecret)
+	if resp.Configuration.LookBackWindow != nil {
+		r.Configuration.LookBackWindow = types.Int64Value(*resp.Configuration.LookBackWindow)
+	} else {
+		r.Configuration.LookBackWindow = types.Int64Null()
+	}
+	r.Configuration.MarketplaceIds = nil
+	for _, v := range resp.Configuration.MarketplaceIds {
+		r.Configuration.MarketplaceIds = append(r.Configuration.MarketplaceIds, types.StringValue(v))
+	}
+	r.Configuration.Profiles = nil
+	for _, v := range resp.Configuration.Profiles {
+		r.Configuration.Profiles = append(r.Configuration.Profiles, types.Int64Value(v))
+	}
+	r.Configuration.RefreshToken = types.StringValue(resp.Configuration.RefreshToken)
+	if resp.Configuration.Region != nil {
+		r.Configuration.Region = types.StringValue(string(*resp.Configuration.Region))
+	} else {
+		r.Configuration.Region = types.StringNull()
+	}
+	r.Configuration.ReportRecordTypes = nil
+	for _, v := range resp.Configuration.ReportRecordTypes {
+		r.Configuration.ReportRecordTypes = append(r.Configuration.ReportRecordTypes, types.StringValue(string(v)))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	r.Configuration.StateFilter = nil
+	for _, v := range resp.Configuration.StateFilter {
+		r.Configuration.StateFilter = append(r.Configuration.StateFilter, types.StringValue(string(v)))
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmazonAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceAmazonAdsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

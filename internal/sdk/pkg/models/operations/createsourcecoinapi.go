@@ -10,7 +10,7 @@ import (
 type CreateSourceCoinAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceCoinAPIGetResponse *shared.SourceCoinAPIGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

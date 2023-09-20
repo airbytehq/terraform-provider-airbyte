@@ -283,13 +283,92 @@ func (r *DestinationRedisResourceModel) ToDeleteSDKType() *shared.DestinationRed
 	return out
 }
 
-func (r *DestinationRedisResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationRedisResourceModel) RefreshFromGetResponse(resp *shared.DestinationRedisGetResponse) {
+	r.Configuration.CacheType = types.StringValue(string(resp.Configuration.CacheType))
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	if resp.Configuration.Ssl != nil {
+		r.Configuration.Ssl = types.BoolValue(*resp.Configuration.Ssl)
+	} else {
+		r.Configuration.Ssl = types.BoolNull()
+	}
+	if resp.Configuration.SslMode == nil {
+		r.Configuration.SslMode = nil
+	} else {
+		r.Configuration.SslMode = &DestinationRedisSSLModes{}
+		if resp.Configuration.SslMode.DestinationRedisSSLModesDisable != nil {
+			r.Configuration.SslMode.DestinationRedisSSLModesDisable = &DestinationPostgresSSLModesDisable{}
+			r.Configuration.SslMode.DestinationRedisSSLModesDisable.Mode = types.StringValue(string(resp.Configuration.SslMode.DestinationRedisSSLModesDisable.Mode))
+		}
+		if resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull != nil {
+			r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull = &DestinationPostgresSSLModesVerifyFull{}
+			r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.CaCertificate = types.StringValue(resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.CaCertificate)
+			r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientCertificate = types.StringValue(resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientCertificate)
+			r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKey = types.StringValue(resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKey)
+			if resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword != nil {
+				r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.Mode = types.StringValue(string(resp.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.Mode))
+		}
+		if resp.Configuration.SslMode.DestinationRedisUpdateSSLModesDisable != nil {
+			r.Configuration.SslMode.DestinationRedisUpdateSSLModesDisable = &DestinationPostgresSSLModesDisable{}
+		}
+		if resp.Configuration.SslMode.DestinationRedisUpdateSSLModesVerifyFull != nil {
+			r.Configuration.SslMode.DestinationRedisUpdateSSLModesVerifyFull = &DestinationPostgresSSLModesVerifyFull{}
+		}
+	}
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &DestinationRedisSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedisUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationRedisUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationRedisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationRedisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationRedisGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

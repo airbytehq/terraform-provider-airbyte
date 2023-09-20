@@ -10,7 +10,7 @@ import (
 type CreateSourceAzureTableResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAzureTableGetResponse *shared.SourceAzureTableGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceSecodaRequest struct {
 type GetSourceSecodaResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSecodaGetResponse *shared.SourceSecodaGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

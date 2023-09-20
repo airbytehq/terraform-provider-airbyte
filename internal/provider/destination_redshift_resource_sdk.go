@@ -393,13 +393,123 @@ func (r *DestinationRedshiftResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationRedshiftResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationRedshiftResourceModel) RefreshFromGetResponse(resp *shared.DestinationRedshiftGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	r.Configuration.Password = types.StringValue(resp.Configuration.Password)
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	r.Configuration.Schema = types.StringValue(resp.Configuration.Schema)
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &DestinationRedshiftSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	if resp.Configuration.UploadingMethod == nil {
+		r.Configuration.UploadingMethod = nil
+	} else {
+		r.Configuration.UploadingMethod = &DestinationRedshiftUploadingMethod{}
+		if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging != nil {
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging = &DestinationRedshiftUploadingMethodS3Staging{}
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.AccessKeyID = types.StringValue(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.AccessKeyID)
+			if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption == nil {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption = nil
+			} else {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption = &DestinationRedshiftUploadingMethodS3StagingEncryption{}
+				if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
+					r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption = &DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption{}
+					r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType = types.StringValue(string(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType))
+					if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey != nil {
+						r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey = types.StringValue(*resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey)
+					} else {
+						r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey = types.StringNull()
+					}
+				}
+				if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption != nil {
+					r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption = &DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption{}
+					r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption.EncryptionType = types.StringValue(string(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption.EncryptionType))
+				}
+			}
+			if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileBufferCount != nil {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileBufferCount = types.Int64Value(*resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileBufferCount)
+			} else {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileBufferCount = types.Int64Null()
+			}
+			if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileNamePattern != nil {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileNamePattern = types.StringValue(*resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileNamePattern)
+			} else {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.FileNamePattern = types.StringNull()
+			}
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Method = types.StringValue(string(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Method))
+			if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData != nil {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData = types.BoolValue(*resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData)
+			} else {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData = types.BoolNull()
+			}
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketName = types.StringValue(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketName)
+			if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketPath != nil {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketPath = types.StringValue(*resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketPath)
+			} else {
+				r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketPath = types.StringNull()
+			}
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketRegion = types.StringValue(string(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketRegion))
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.SecretAccessKey = types.StringValue(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.SecretAccessKey)
+		}
+		if resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodStandard != nil {
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodStandard = &DestinationRedshiftUploadingMethodStandard{}
+			r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodStandard.Method = types.StringValue(string(resp.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodStandard.Method))
+		}
+		if resp.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging != nil {
+			r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging = &DestinationRedshiftUpdateUploadingMethodS3Staging{}
+		}
+		if resp.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodStandard != nil {
+			r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodStandard = &DestinationRedshiftUploadingMethodStandard{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationRedshiftResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationRedshiftResourceModel) RefreshFromCreateResponse(resp *shared.DestinationRedshiftGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

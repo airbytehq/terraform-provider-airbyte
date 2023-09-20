@@ -14,7 +14,7 @@ type GetSourceYandexMetricaRequest struct {
 type GetSourceYandexMetricaResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceYandexMetricaGetResponse *shared.SourceYandexMetricaGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

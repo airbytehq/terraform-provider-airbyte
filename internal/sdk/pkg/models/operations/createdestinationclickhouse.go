@@ -10,7 +10,7 @@ import (
 type CreateDestinationClickhouseResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationClickhouseGetResponse *shared.DestinationClickhouseGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateDestinationMongodbResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationMongodbGetResponse *shared.DestinationMongodbGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

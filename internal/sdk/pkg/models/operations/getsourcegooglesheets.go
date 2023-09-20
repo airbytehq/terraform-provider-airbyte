@@ -14,7 +14,7 @@ type GetSourceGoogleSheetsRequest struct {
 type GetSourceGoogleSheetsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleSheetsGetResponse *shared.SourceGoogleSheetsGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

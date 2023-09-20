@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAdsCreateRequest {
@@ -169,13 +170,59 @@ func (r *SourceGoogleAdsResourceModel) ToDeleteSDKType() *shared.SourceGoogleAds
 	return out
 }
 
-func (r *SourceGoogleAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceGoogleAdsGetResponse) {
+	if resp.Configuration.ConversionWindowDays != nil {
+		r.Configuration.ConversionWindowDays = types.Int64Value(*resp.Configuration.ConversionWindowDays)
+	} else {
+		r.Configuration.ConversionWindowDays = types.Int64Null()
+	}
+	if resp.Configuration.Credentials.AccessToken != nil {
+		r.Configuration.Credentials.AccessToken = types.StringValue(*resp.Configuration.Credentials.AccessToken)
+	} else {
+		r.Configuration.Credentials.AccessToken = types.StringNull()
+	}
+	r.Configuration.Credentials.ClientID = types.StringValue(resp.Configuration.Credentials.ClientID)
+	r.Configuration.Credentials.ClientSecret = types.StringValue(resp.Configuration.Credentials.ClientSecret)
+	r.Configuration.Credentials.DeveloperToken = types.StringValue(resp.Configuration.Credentials.DeveloperToken)
+	r.Configuration.Credentials.RefreshToken = types.StringValue(resp.Configuration.Credentials.RefreshToken)
+	r.Configuration.CustomQueries = nil
+	for _, customQueriesItem := range resp.Configuration.CustomQueries {
+		var customQueries1 SourceGoogleAdsCustomQueries
+		customQueries1.Query = types.StringValue(customQueriesItem.Query)
+		customQueries1.TableName = types.StringValue(customQueriesItem.TableName)
+		r.Configuration.CustomQueries = append(r.Configuration.CustomQueries, customQueries1)
+	}
+	r.Configuration.CustomerID = types.StringValue(resp.Configuration.CustomerID)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.String())
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	if resp.Configuration.LoginCustomerID != nil {
+		r.Configuration.LoginCustomerID = types.StringValue(*resp.Configuration.LoginCustomerID)
+	} else {
+		r.Configuration.LoginCustomerID = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceGoogleAdsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

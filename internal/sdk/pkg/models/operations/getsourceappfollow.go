@@ -14,7 +14,7 @@ type GetSourceAppfollowRequest struct {
 type GetSourceAppfollowResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAppfollowGetResponse *shared.SourceAppfollowGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "76e7b21b-ad90-4d27-83fd-6c2a10e6c297"
 }

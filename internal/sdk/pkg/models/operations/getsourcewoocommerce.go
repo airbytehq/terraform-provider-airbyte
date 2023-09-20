@@ -14,7 +14,7 @@ type GetSourceWoocommerceRequest struct {
 type GetSourceWoocommerceResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWoocommerceGetResponse *shared.SourceWoocommerceGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

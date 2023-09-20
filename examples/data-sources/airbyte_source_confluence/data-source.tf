@@ -1,4 +1,3 @@
 data "airbyte_source_confluence" "my_source_confluence" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "1011a091-b3ec-48b5-b862-de1a9d14fe72"
 }

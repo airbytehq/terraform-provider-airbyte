@@ -14,7 +14,7 @@ type GetSourceLemlistRequest struct {
 type GetSourceLemlistResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLemlistGetResponse *shared.SourceLemlistGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

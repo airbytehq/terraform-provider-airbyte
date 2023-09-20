@@ -1,4 +1,3 @@
 data "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "88f74ef5-4c92-416e-8926-313bb6fc2c8d"
 }

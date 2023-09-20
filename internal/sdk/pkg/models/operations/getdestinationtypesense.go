@@ -14,7 +14,7 @@ type GetDestinationTypesenseRequest struct {
 type GetDestinationTypesenseResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationTypesenseGetResponse *shared.DestinationTypesenseGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

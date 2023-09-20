@@ -10,7 +10,7 @@ import (
 type CreateSourceSenseforceResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSenseforceGetResponse *shared.SourceSenseforceGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceNetsuiteRequest struct {
 type GetSourceNetsuiteResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceNetsuiteGetResponse *shared.SourceNetsuiteGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

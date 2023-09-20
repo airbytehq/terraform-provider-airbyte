@@ -14,7 +14,7 @@ type GetSourceBigqueryRequest struct {
 type GetSourceBigqueryResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBigqueryGetResponse *shared.SourceBigqueryGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

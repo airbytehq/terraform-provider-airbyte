@@ -14,7 +14,7 @@ type GetSourceLinkedinAdsRequest struct {
 type GetSourceLinkedinAdsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLinkedinAdsGetResponse *shared.SourceLinkedinAdsGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

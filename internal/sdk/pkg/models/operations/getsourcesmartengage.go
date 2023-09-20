@@ -14,7 +14,7 @@ type GetSourceSmartengageRequest struct {
 type GetSourceSmartengageResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSmartengageGetResponse *shared.SourceSmartengageGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

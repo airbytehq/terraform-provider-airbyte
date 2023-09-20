@@ -14,7 +14,7 @@ type GetSourceMondayRequest struct {
 type GetSourceMondayResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMondayGetResponse *shared.SourceMondayGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

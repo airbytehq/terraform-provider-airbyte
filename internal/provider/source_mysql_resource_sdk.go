@@ -484,13 +484,159 @@ func (r *SourceMysqlResourceModel) ToDeleteSDKType() *shared.SourceMysqlCreateRe
 	return out
 }
 
-func (r *SourceMysqlResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMysqlResourceModel) RefreshFromGetResponse(resp *shared.SourceMysqlGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	if resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC = &SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC{}
+		if resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds != nil {
+			r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds)
+		} else {
+			r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds = types.Int64Null()
+		}
+		r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.Method))
+		if resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone != nil {
+			r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone = types.StringValue(*resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone)
+		} else {
+			r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone = types.StringNull()
+		}
+	}
+	if resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor = &SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor{}
+		r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor.Method))
+	}
+	if resp.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = &SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC{}
+	}
+	if resp.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = &SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor{}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.SslMode == nil {
+		r.Configuration.SslMode = nil
+	} else {
+		r.Configuration.SslMode = &SourceMysqlSSLModes{}
+		if resp.Configuration.SslMode.SourceMysqlSSLModesPreferred != nil {
+			r.Configuration.SslMode.SourceMysqlSSLModesPreferred = &SourceMysqlSSLModesPreferred{}
+			r.Configuration.SslMode.SourceMysqlSSLModesPreferred.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceMysqlSSLModesPreferred.Mode))
+		}
+		if resp.Configuration.SslMode.SourceMysqlSSLModesRequired != nil {
+			r.Configuration.SslMode.SourceMysqlSSLModesRequired = &SourceMysqlSSLModesRequired{}
+			r.Configuration.SslMode.SourceMysqlSSLModesRequired.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceMysqlSSLModesRequired.Mode))
+		}
+		if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA != nil {
+			r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA = &SourceMysqlSSLModesVerifyCA{}
+			r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.CaCertificate = types.StringValue(resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.CaCertificate)
+			if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate != nil {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate = types.StringValue(*resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate)
+			} else {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey != nil {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey = types.StringValue(*resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey)
+			} else {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword != nil {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.Mode))
+		}
+		if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity != nil {
+			r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity = &SourceMysqlSSLModesVerifyIdentity{}
+			r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.CaCertificate = types.StringValue(resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.CaCertificate)
+			if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate != nil {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate = types.StringValue(*resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate)
+			} else {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey != nil {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey = types.StringValue(*resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey)
+			} else {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword != nil {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode))
+		}
+		if resp.Configuration.SslMode.SourceMysqlUpdateSSLModesPreferred != nil {
+			r.Configuration.SslMode.SourceMysqlUpdateSSLModesPreferred = &SourceMysqlSSLModesPreferred{}
+		}
+		if resp.Configuration.SslMode.SourceMysqlUpdateSSLModesRequired != nil {
+			r.Configuration.SslMode.SourceMysqlUpdateSSLModesRequired = &SourceMysqlSSLModesRequired{}
+		}
+		if resp.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA != nil {
+			r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA = &SourceMysqlSSLModesVerifyCA{}
+		}
+		if resp.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity != nil {
+			r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity = &SourceMysqlSSLModesVerifyIdentity{}
+		}
+	}
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &SourceMysqlSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMysqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMysqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceMysqlGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourcePendoResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePendoGetResponse *shared.SourcePendoGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

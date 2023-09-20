@@ -10,7 +10,7 @@ import (
 type CreateDestinationElasticsearchResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationElasticsearchGetResponse *shared.DestinationElasticsearchGetResponse
+	StatusCode                          int
+	RawResponse                         *http.Response
 }

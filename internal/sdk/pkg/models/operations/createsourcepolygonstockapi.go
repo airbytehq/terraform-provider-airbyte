@@ -10,7 +10,7 @@ import (
 type CreateSourcePolygonStockAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePolygonStockAPIGetResponse *shared.SourcePolygonStockAPIGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

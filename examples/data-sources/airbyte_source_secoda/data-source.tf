@@ -1,4 +1,3 @@
 data "airbyte_source_secoda" "my_source_secoda" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "edd4fcf7-b50c-4f87-b08f-39271076a24b"
 }

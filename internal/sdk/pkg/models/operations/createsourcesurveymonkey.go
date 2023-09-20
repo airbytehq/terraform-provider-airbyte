@@ -10,7 +10,7 @@ import (
 type CreateSourceSurveymonkeyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSurveymonkeyGetResponse *shared.SourceSurveymonkeyGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

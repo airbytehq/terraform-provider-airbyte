@@ -14,7 +14,7 @@ type GetSourceMicrosoftTeamsRequest struct {
 type GetSourceMicrosoftTeamsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMicrosoftTeamsGetResponse *shared.SourceMicrosoftTeamsGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

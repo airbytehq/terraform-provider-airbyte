@@ -1,4 +1,3 @@
 data "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "4d342ac2-99a6-4e5e-baef-13402e945f53"
 }

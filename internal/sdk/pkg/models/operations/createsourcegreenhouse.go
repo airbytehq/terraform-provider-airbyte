@@ -10,7 +10,7 @@ import (
 type CreateSourceGreenhouseResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGreenhouseGetResponse *shared.SourceGreenhouseGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

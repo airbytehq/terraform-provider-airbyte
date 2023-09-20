@@ -10,7 +10,7 @@ import (
 type CreateSourceOmnisendResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOmnisendGetResponse *shared.SourceOmnisendGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceFreshsalesRequest struct {
 type GetSourceFreshsalesResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFreshsalesGetResponse *shared.SourceFreshsalesGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

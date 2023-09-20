@@ -7,8 +7,20 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceFreshsalesDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceFreshsalesDataSourceModel) RefreshFromGetResponse(resp *shared.SourceFreshsalesGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.DomainName = types.StringValue(resp.Configuration.DomainName)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -14,7 +14,7 @@ type GetSourceAmplitudeRequest struct {
 type GetSourceAmplitudeResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAmplitudeGetResponse *shared.SourceAmplitudeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

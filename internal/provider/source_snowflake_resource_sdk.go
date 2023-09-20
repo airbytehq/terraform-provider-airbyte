@@ -196,13 +196,69 @@ func (r *SourceSnowflakeResourceModel) ToDeleteSDKType() *shared.SourceSnowflake
 	return out
 }
 
-func (r *SourceSnowflakeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSnowflakeResourceModel) RefreshFromGetResponse(resp *shared.SourceSnowflakeGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceSnowflakeAuthorizationMethod{}
+		if resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20 = &SourceSnowflakeAuthorizationMethodOAuth20{}
+			if resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken != nil {
+				r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken = types.StringValue(*resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken)
+			} else {
+				r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType))
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID)
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret)
+			if resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken != nil {
+				r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken = types.StringValue(*resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken)
+			} else {
+				r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword = &SourceSnowflakeAuthorizationMethodUsernameAndPassword{}
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType))
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password = types.StringValue(resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password)
+			r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username = types.StringValue(resp.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username)
+		}
+		if resp.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20 = &SourceSnowflakeAuthorizationMethodOAuth20{}
+		}
+		if resp.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
+			r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword = &SourceSnowflakeAuthorizationMethodUsernameAndPassword{}
+		}
+	}
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	r.Configuration.Role = types.StringValue(resp.Configuration.Role)
+	if resp.Configuration.Schema != nil {
+		r.Configuration.Schema = types.StringValue(*resp.Configuration.Schema)
+	} else {
+		r.Configuration.Schema = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Warehouse = types.StringValue(resp.Configuration.Warehouse)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.SourceSnowflakeGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -170,13 +170,73 @@ func (r *SourceRetentlyResourceModel) ToDeleteSDKType() *shared.SourceRetentlyCr
 	return out
 }
 
-func (r *SourceRetentlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceRetentlyResourceModel) RefreshFromGetResponse(resp *shared.SourceRetentlyGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceRetentlyAuthenticationMechanism{}
+		if resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+			r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = &SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{}
+			if resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType != nil {
+				r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID)
+			r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret)
+			r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken)
+			if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties == nil {
+					r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult, _ := json.Marshal(resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties)
+					r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+				}
+			}
+		}
+		if resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
+			r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken = &SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{}
+			r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey = types.StringValue(resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey)
+			if resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType != nil {
+				r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType = types.StringNull()
+			}
+			if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties == nil {
+					r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult1, _ := json.Marshal(resp.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties)
+					r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties = types.StringValue(string(additionalPropertiesResult1))
+				}
+			}
+		}
+		if resp.Configuration.Credentials.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+			r.Configuration.Credentials.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth = &SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth{}
+		}
+		if resp.Configuration.Credentials.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken != nil {
+			r.Configuration.Credentials.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken = &SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken{}
+		}
+	}
+	if resp.Configuration.SourceType != nil {
+		r.Configuration.SourceType = types.StringValue(string(*resp.Configuration.SourceType))
+	} else {
+		r.Configuration.SourceType = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRetentlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRetentlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceRetentlyGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -60,13 +60,24 @@ func (r *SourceRecruiteeResourceModel) ToDeleteSDKType() *shared.SourceRecruitee
 	return out
 }
 
-func (r *SourceRecruiteeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceRecruiteeResourceModel) RefreshFromGetResponse(resp *shared.SourceRecruiteeGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.CompanyID = types.Int64Value(resp.Configuration.CompanyID)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRecruiteeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRecruiteeResourceModel) RefreshFromCreateResponse(resp *shared.SourceRecruiteeGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

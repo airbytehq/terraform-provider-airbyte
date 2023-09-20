@@ -61,13 +61,24 @@ func (r *SourceDelightedResourceModel) ToDeleteSDKType() *shared.SourceDelighted
 	return out
 }
 
-func (r *SourceDelightedResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceDelightedResourceModel) RefreshFromGetResponse(resp *shared.SourceDelightedGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.Since = types.StringValue(resp.Configuration.Since.Format(time.RFC3339))
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceDelightedResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceDelightedResourceModel) RefreshFromCreateResponse(resp *shared.SourceDelightedGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

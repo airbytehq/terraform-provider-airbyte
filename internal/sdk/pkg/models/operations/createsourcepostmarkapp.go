@@ -10,7 +10,7 @@ import (
 type CreateSourcePostmarkappResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePostmarkappGetResponse *shared.SourcePostmarkappGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

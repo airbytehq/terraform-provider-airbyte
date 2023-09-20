@@ -7,6 +7,9 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
@@ -35,11 +38,10 @@ type DestinationGcsResource struct {
 
 // DestinationGcsResourceModel describes the resource data model.
 type DestinationGcsResourceModel struct {
-	Configuration   DestinationGcs `tfsdk:"configuration"`
-	DestinationID   types.String   `tfsdk:"destination_id"`
-	DestinationType types.String   `tfsdk:"destination_type"`
-	Name            types.String   `tfsdk:"name"`
-	WorkspaceID     types.String   `tfsdk:"workspace_id"`
+	Configuration DestinationGcs `tfsdk:"configuration"`
+	DestinationID types.String   `tfsdk:"destination_id"`
+	Name          types.String   `tfsdk:"name"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationGcsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,15 +54,28 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credential": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_gcs_authentication_hmac_key": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -70,10 +85,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `must be one of ["HMAC_KEY"]`,
 									},
 									"hmac_key_access_id": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.`,
 									},
 									"hmac_key_secret": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.`,
 									},
@@ -110,6 +131,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
 					},
 					"destination_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -119,18 +143,35 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Description: `must be one of ["gcs"]`,
 					},
 					"format": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_gcs_output_format_avro_apache_avro": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.SingleNestedAttribute{
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -143,9 +184,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -155,6 +203,10 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Description: `must be one of ["Deflate"]`,
 													},
 													"compression_level": schema.Int64Attribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.Int64{
+															speakeasy_int64planmodifier.SuppressDiff(),
+														},
 														Optional:    true,
 														Description: `0: no compression & fastest, 9: best compression & slowest.`,
 													},
@@ -162,9 +214,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -177,9 +236,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -192,9 +258,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -204,6 +277,10 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Description: `must be one of ["xz"]`,
 													},
 													"compression_level": schema.Int64Attribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.Int64{
+															speakeasy_int64planmodifier.SuppressDiff(),
+														},
 														Optional:    true,
 														Description: `The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
 													},
@@ -211,9 +288,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -223,10 +307,18 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Description: `must be one of ["zstandard"]`,
 													},
 													"compression_level": schema.Int64Attribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.Int64{
+															speakeasy_int64planmodifier.SuppressDiff(),
+														},
 														Optional:    true,
 														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
 													},
 													"include_checksum": schema.BoolAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.Bool{
+															speakeasy_boolplanmodifier.SuppressDiff(),
+														},
 														Optional:    true,
 														Description: `If true, include a checksum with each data block.`,
 													},
@@ -240,6 +332,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `The compression algorithm used to compress data. Default to no compression.`,
 									},
 									"format_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -252,15 +347,31 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -273,9 +384,17 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"destination_gcs_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -294,6 +413,10 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 									},
 									"flattening": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -305,6 +428,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 											`Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -317,15 +443,31 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -338,9 +480,17 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.SuppressDiff(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.SuppressDiff(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -359,6 +509,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 									},
 									"format_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -371,13 +524,25 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.SuppressDiff(),
+										},
 										Optional:    true,
 										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
 									},
 									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -394,14 +559,25 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 											`The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.SuppressDiff(),
+										},
 										Optional:    true,
 										Description: `Default: true.`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.SuppressDiff(),
+										},
 										Optional:    true,
 										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
 									},
 									"format_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -411,10 +587,18 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `must be one of ["Parquet"]`,
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.SuppressDiff(),
+										},
 										Optional:    true,
 										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
 									},
 									"page_size_kb": schema.Int64Attribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.SuppressDiff(),
+										},
 										Optional:    true,
 										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
 									},
@@ -728,14 +912,24 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 					},
 					"gcs_bucket_name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						Description: `You can find the bucket name in the App Engine Admin console Application Settings page, under the label Google Cloud Storage Bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.`,
 					},
 					"gcs_bucket_path": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						Description: `GCS Bucket Path string Subdirectory under the above bucket to sync the data into.`,
 					},
 					"gcs_bucket_region": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -782,12 +976,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
-				},
-			},
-			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
@@ -864,11 +1052,11 @@ func (r *DestinationGcsResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationGcsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromCreateResponse(res.DestinationGcsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -912,11 +1100,11 @@ func (r *DestinationGcsResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationGcsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationGcsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -971,11 +1159,11 @@ func (r *DestinationGcsResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
+	if getResponse.DestinationGcsGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromGetResponse(getResponse.DestinationGcsGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

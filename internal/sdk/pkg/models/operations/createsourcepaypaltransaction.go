@@ -10,7 +10,7 @@ import (
 type CreateSourcePaypalTransactionResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePaypalTransactionGetResponse *shared.SourcePaypalTransactionGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

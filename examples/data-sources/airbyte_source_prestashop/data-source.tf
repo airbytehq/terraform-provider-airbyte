@@ -1,4 +1,3 @@
 data "airbyte_source_prestashop" "my_source_prestashop" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "3b6d7658-86ee-4ae5-bd4b-39f8a1490678"
 }

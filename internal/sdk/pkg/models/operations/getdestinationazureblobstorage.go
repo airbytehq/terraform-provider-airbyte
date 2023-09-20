@@ -14,7 +14,7 @@ type GetDestinationAzureBlobStorageRequest struct {
 type GetDestinationAzureBlobStorageResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationAzureBlobStorageGetResponse *shared.DestinationAzureBlobStorageGetResponse
+	StatusCode                             int
+	RawResponse                            *http.Response
 }

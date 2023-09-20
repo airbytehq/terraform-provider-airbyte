@@ -10,7 +10,7 @@ import (
 type CreateSourceDockerhubResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDockerhubGetResponse *shared.SourceDockerhubGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

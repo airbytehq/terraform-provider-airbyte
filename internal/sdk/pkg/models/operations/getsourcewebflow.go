@@ -14,7 +14,7 @@ type GetSourceWebflowRequest struct {
 type GetSourceWebflowResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWebflowGetResponse *shared.SourceWebflowGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

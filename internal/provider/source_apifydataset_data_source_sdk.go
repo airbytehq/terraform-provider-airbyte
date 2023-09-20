@@ -7,8 +7,29 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceApifyDatasetDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceApifyDatasetDataSourceModel) RefreshFromGetResponse(resp *shared.SourceApifyDatasetGetResponse) {
+	if resp.Configuration.Clean != nil {
+		r.Configuration.Clean = types.BoolValue(*resp.Configuration.Clean)
+	} else {
+		r.Configuration.Clean = types.BoolNull()
+	}
+	if resp.Configuration.DatasetID != nil {
+		r.Configuration.DatasetID = types.StringValue(*resp.Configuration.DatasetID)
+	} else {
+		r.Configuration.DatasetID = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Token = types.StringValue(resp.Configuration.Token)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -7,8 +7,76 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationS3GlueDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationS3GlueDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationS3GlueGetResponse) {
+	if resp.Configuration.AccessKeyID != nil {
+		r.Configuration.AccessKeyID = types.StringValue(*resp.Configuration.AccessKeyID)
+	} else {
+		r.Configuration.AccessKeyID = types.StringNull()
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.FileNamePattern != nil {
+		r.Configuration.FileNamePattern = types.StringValue(*resp.Configuration.FileNamePattern)
+	} else {
+		r.Configuration.FileNamePattern = types.StringNull()
+	}
+	if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+		r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON = &DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON{}
+		if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression == nil {
+			r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression = nil
+		} else {
+			r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression = &DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression{}
+			if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{}
+				if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType != nil {
+					r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType = types.StringValue(string(*resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType))
+				} else {
+					r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType = types.StringNull()
+				}
+			}
+			if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{}
+				if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType != nil {
+					r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType = types.StringValue(string(*resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType))
+				} else {
+					r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType = types.StringNull()
+				}
+			}
+		}
+		if resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening != nil {
+			r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening = types.StringValue(string(*resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening))
+		} else {
+			r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening = types.StringNull()
+		}
+		r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType))
+	}
+	if resp.Configuration.Format.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+		r.Configuration.Format.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON = &DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON{}
+	}
+	r.Configuration.GlueDatabase = types.StringValue(resp.Configuration.GlueDatabase)
+	r.Configuration.GlueSerializationLibrary = types.StringValue(string(resp.Configuration.GlueSerializationLibrary))
+	r.Configuration.S3BucketName = types.StringValue(resp.Configuration.S3BucketName)
+	r.Configuration.S3BucketPath = types.StringValue(resp.Configuration.S3BucketPath)
+	r.Configuration.S3BucketRegion = types.StringValue(string(resp.Configuration.S3BucketRegion))
+	if resp.Configuration.S3Endpoint != nil {
+		r.Configuration.S3Endpoint = types.StringValue(*resp.Configuration.S3Endpoint)
+	} else {
+		r.Configuration.S3Endpoint = types.StringNull()
+	}
+	if resp.Configuration.S3PathFormat != nil {
+		r.Configuration.S3PathFormat = types.StringValue(*resp.Configuration.S3PathFormat)
+	} else {
+		r.Configuration.S3PathFormat = types.StringNull()
+	}
+	if resp.Configuration.SecretAccessKey != nil {
+		r.Configuration.SecretAccessKey = types.StringValue(*resp.Configuration.SecretAccessKey)
+	} else {
+		r.Configuration.SecretAccessKey = types.StringNull()
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

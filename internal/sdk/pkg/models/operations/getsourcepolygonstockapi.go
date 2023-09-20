@@ -14,7 +14,7 @@ type GetSourcePolygonStockAPIRequest struct {
 type GetSourcePolygonStockAPIResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePolygonStockAPIGetResponse *shared.SourcePolygonStockAPIGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

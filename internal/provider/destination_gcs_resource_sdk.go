@@ -657,13 +657,182 @@ func (r *DestinationGcsResourceModel) ToDeleteSDKType() *shared.DestinationGcsCr
 	return out
 }
 
-func (r *DestinationGcsResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationGcsResourceModel) RefreshFromGetResponse(resp *shared.DestinationGcsGetResponse) {
+	if resp.Configuration.Credential.DestinationGcsAuthenticationHMACKey != nil {
+		r.Configuration.Credential.DestinationGcsAuthenticationHMACKey = &DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey{}
+		r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.CredentialType = types.StringValue(string(resp.Configuration.Credential.DestinationGcsAuthenticationHMACKey.CredentialType))
+		r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeyAccessID = types.StringValue(resp.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeyAccessID)
+		r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeySecret = types.StringValue(resp.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeySecret)
+	}
+	if resp.Configuration.Credential.DestinationGcsUpdateAuthenticationHMACKey != nil {
+		r.Configuration.Credential.DestinationGcsUpdateAuthenticationHMACKey = &DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey{}
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro != nil {
+		r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro = &DestinationGcsOutputFormatAvroApacheAvro{}
+		if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 = &DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2{}
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec))
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate = &DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate{}
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec))
+			if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel)
+			} else {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel = types.Int64Null()
+			}
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression = &DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression{}
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec))
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy = &DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy{}
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec))
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz = &DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz{}
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec))
+			if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel)
+			} else {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel = types.Int64Null()
+			}
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard = &DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard{}
+			r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec))
+			if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel)
+			} else {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel = types.Int64Null()
+			}
+			if resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum = types.BoolValue(*resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum)
+			} else {
+				r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum = types.BoolNull()
+			}
+		}
+		r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.FormatType))
+	}
+	if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues != nil {
+		r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues = &DestinationGcsOutputFormatCSVCommaSeparatedValues{}
+		if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression == nil {
+			r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression = nil
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression = &DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression{}
+			if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP{}
+				if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType != nil {
+					r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType = types.StringValue(string(*resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType))
+				} else {
+					r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType = types.StringNull()
+				}
+			}
+			if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{}
+				if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType != nil {
+					r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType = types.StringValue(string(*resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType))
+				} else {
+					r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType = types.StringNull()
+				}
+			}
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening = types.StringValue(string(*resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening))
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening = types.StringNull()
+		}
+		r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.FormatType))
+	}
+	if resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+		r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON = &DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON{}
+		if resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression == nil {
+			r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression = nil
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression = &DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression{}
+			if resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{}
+				if resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType != nil {
+					r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType = types.StringValue(string(*resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType))
+				} else {
+					r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType = types.StringNull()
+				}
+			}
+			if resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{}
+				if resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType != nil {
+					r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType = types.StringValue(string(*resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType))
+				} else {
+					r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType = types.StringNull()
+				}
+			}
+		}
+		r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.FormatType))
+	}
+	if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage != nil {
+		r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage = &DestinationGcsOutputFormatParquetColumnarStorage{}
+		if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb)
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb = types.Int64Null()
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec = types.StringValue(string(*resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec))
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec = types.StringNull()
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding = types.BoolValue(*resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding)
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding = types.BoolNull()
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb)
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb = types.Int64Null()
+		}
+		r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.FormatType = types.StringValue(string(resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.FormatType))
+		if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb)
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb = types.Int64Null()
+		}
+		if resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb != nil {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb = types.Int64Value(*resp.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb)
+		} else {
+			r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb = types.Int64Null()
+		}
+	}
+	if resp.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro != nil {
+		r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro = &DestinationGcsUpdateOutputFormatAvroApacheAvro{}
+	}
+	if resp.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues != nil {
+		r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues = &DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues{}
+	}
+	if resp.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+		r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON = &DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON{}
+	}
+	if resp.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage != nil {
+		r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage = &DestinationGcsOutputFormatParquetColumnarStorage{}
+	}
+	r.Configuration.GcsBucketName = types.StringValue(resp.Configuration.GcsBucketName)
+	r.Configuration.GcsBucketPath = types.StringValue(resp.Configuration.GcsBucketPath)
+	if resp.Configuration.GcsBucketRegion != nil {
+		r.Configuration.GcsBucketRegion = types.StringValue(string(*resp.Configuration.GcsBucketRegion))
+	} else {
+		r.Configuration.GcsBucketRegion = types.StringNull()
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationGcsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationGcsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationGcsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -7,6 +7,8 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
@@ -35,11 +37,10 @@ type DestinationAwsDatalakeResource struct {
 
 // DestinationAwsDatalakeResourceModel describes the resource data model.
 type DestinationAwsDatalakeResourceModel struct {
-	Configuration   DestinationAwsDatalake `tfsdk:"configuration"`
-	DestinationID   types.String           `tfsdk:"destination_id"`
-	DestinationType types.String           `tfsdk:"destination_type"`
-	Name            types.String           `tfsdk:"name"`
-	WorkspaceID     types.String           `tfsdk:"workspace_id"`
+	Configuration DestinationAwsDatalake `tfsdk:"configuration"`
+	DestinationID types.String           `tfsdk:"destination_id"`
+	Name          types.String           `tfsdk:"name"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationAwsDatalakeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,27 +53,51 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"aws_account_id": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `target aws account id`,
 					},
 					"bucket_name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						Description: `The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.`,
 					},
 					"bucket_prefix": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `S3 prefix`,
 					},
 					"credentials": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_title": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -83,6 +108,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 											`Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `Will assume this role to write data to s3`,
 									},
@@ -90,17 +118,30 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Choose How to Authenticate to AWS.`,
 							},
 							"destination_aws_datalake_authentication_mode_iam_user": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `AWS User Access Key Id`,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required:    true,
 										Description: `Secret Access Key`,
 									},
 									"credentials_title": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -164,6 +205,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Description: `Choose How to Authenticate to AWS.`,
 					},
 					"destination_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -173,12 +217,24 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Description: `must be one of ["aws-datalake"]`,
 					},
 					"format": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -190,6 +246,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -202,9 +261,17 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Format of the data output.`,
 							},
 							"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -218,6 +285,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.SuppressDiff(),
+										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -290,26 +360,49 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Description: `Format of the data output.`,
 					},
 					"glue_catalog_float_as_decimal": schema.BoolAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.`,
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `Add a default tag key to databases created by this destination`,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `Add default values for the ` + "`" + `Tag Key` + "`" + ` to databases created by this destination. Comma separate for multiple values.`,
 					},
 					"lakeformation_database_name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required:    true,
 						Description: `The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.`,
 					},
 					"lakeformation_governed_tables": schema.BoolAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.SuppressDiff(),
+						},
 						Optional:    true,
 						Description: `Whether to create tables as LF governed tables.`,
 					},
 					"partitioning": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -326,6 +419,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							`Partition data by cursor fields when a cursor field is a date`,
 					},
 					"region": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -363,12 +459,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
-				},
-			},
-			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
@@ -445,11 +535,11 @@ func (r *DestinationAwsDatalakeResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationAwsDatalakeGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromCreateResponse(res.DestinationAwsDatalakeGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -493,11 +583,11 @@ func (r *DestinationAwsDatalakeResource) Read(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationAwsDatalakeGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationAwsDatalakeGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -552,11 +642,11 @@ func (r *DestinationAwsDatalakeResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
+	if getResponse.DestinationAwsDatalakeGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromGetResponse(getResponse.DestinationAwsDatalakeGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

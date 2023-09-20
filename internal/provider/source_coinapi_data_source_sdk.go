@@ -7,8 +7,33 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceCoinAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceCoinAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceCoinAPIGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(*resp.Configuration.EndDate)
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.Environment = types.StringValue(string(resp.Configuration.Environment))
+	if resp.Configuration.Limit != nil {
+		r.Configuration.Limit = types.Int64Value(*resp.Configuration.Limit)
+	} else {
+		r.Configuration.Limit = types.Int64Null()
+	}
+	r.Configuration.Period = types.StringValue(resp.Configuration.Period)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
+	r.Configuration.SymbolID = types.StringValue(resp.Configuration.SymbolID)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

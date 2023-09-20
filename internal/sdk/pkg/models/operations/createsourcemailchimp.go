@@ -10,7 +10,7 @@ import (
 type CreateSourceMailchimpResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMailchimpGetResponse *shared.SourceMailchimpGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

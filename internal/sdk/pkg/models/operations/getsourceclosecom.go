@@ -14,7 +14,7 @@ type GetSourceCloseComRequest struct {
 type GetSourceCloseComResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceCloseComGetResponse *shared.SourceCloseComGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

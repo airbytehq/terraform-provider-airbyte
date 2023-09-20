@@ -7,8 +7,86 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationSnowflakeDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationSnowflakeDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationSnowflakeGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &DestinationSnowflakeAuthorizationMethod{}
+		if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication = &DestinationSnowflakeAuthorizationMethodKeyPairAuthentication{}
+			if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType != nil {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType = types.StringValue(string(*resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType))
+			} else {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType = types.StringNull()
+			}
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKey = types.StringValue(resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKey)
+			if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword != nil {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword = types.StringValue(*resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword)
+			} else {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 = &DestinationSnowflakeAuthorizationMethodOAuth20{}
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AccessToken)
+			if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType != nil {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType))
+			} else {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType = types.StringNull()
+			}
+			if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID != nil {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID)
+			} else {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret != nil {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret)
+			} else {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
+			}
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.RefreshToken)
+		}
+		if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword = &DestinationSnowflakeAuthorizationMethodUsernameAndPassword{}
+			if resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType != nil {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType = types.StringValue(string(*resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType))
+			} else {
+				r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType = types.StringNull()
+			}
+			r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.Password = types.StringValue(resp.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.Password)
+		}
+		if resp.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication != nil {
+			r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication = &DestinationSnowflakeAuthorizationMethodKeyPairAuthentication{}
+		}
+		if resp.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20 = &DestinationSnowflakeAuthorizationMethodOAuth20{}
+		}
+		if resp.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
+			r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword = &DestinationSnowflakeAuthorizationMethodUsernameAndPassword{}
+		}
+	}
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.RawDataSchema != nil {
+		r.Configuration.RawDataSchema = types.StringValue(*resp.Configuration.RawDataSchema)
+	} else {
+		r.Configuration.RawDataSchema = types.StringNull()
+	}
+	r.Configuration.Role = types.StringValue(resp.Configuration.Role)
+	r.Configuration.Schema = types.StringValue(resp.Configuration.Schema)
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
+	r.Configuration.Warehouse = types.StringValue(resp.Configuration.Warehouse)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

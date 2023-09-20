@@ -14,7 +14,7 @@ type GetSourceFacebookMarketingRequest struct {
 type GetSourceFacebookMarketingResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFacebookMarketingGetResponse *shared.SourceFacebookMarketingGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

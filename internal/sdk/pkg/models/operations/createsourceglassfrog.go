@@ -10,7 +10,7 @@ import (
 type CreateSourceGlassfrogResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGlassfrogGetResponse *shared.SourceGlassfrogGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

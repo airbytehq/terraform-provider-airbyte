@@ -14,7 +14,7 @@ type GetSourceSnapchatMarketingRequest struct {
 type GetSourceSnapchatMarketingResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSnapchatMarketingGetResponse *shared.SourceSnapchatMarketingGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

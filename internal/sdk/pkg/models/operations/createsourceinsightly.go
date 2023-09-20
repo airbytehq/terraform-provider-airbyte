@@ -10,7 +10,7 @@ import (
 type CreateSourceInsightlyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceInsightlyGetResponse *shared.SourceInsightlyGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

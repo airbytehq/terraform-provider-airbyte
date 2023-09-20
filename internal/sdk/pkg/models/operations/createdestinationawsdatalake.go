@@ -10,7 +10,7 @@ import (
 type CreateDestinationAwsDatalakeResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationAwsDatalakeGetResponse *shared.DestinationAwsDatalakeGetResponse
+	StatusCode                        int
+	RawResponse                       *http.Response
 }

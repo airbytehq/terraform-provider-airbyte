@@ -10,7 +10,7 @@ import (
 type CreateSourceE2eTestCloudResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceE2eTestCloudGetResponse *shared.SourceE2eTestCloudGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

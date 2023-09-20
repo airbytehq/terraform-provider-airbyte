@@ -1,4 +1,3 @@
 data "airbyte_source_persistiq" "my_source_persistiq" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "98788398-eba1-4bbf-b143-356f6349a164"
 }

@@ -7,8 +7,43 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMongodbInternalPocDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMongodbInternalPocDataSourceModel) RefreshFromGetResponse(resp *shared.SourceMongodbInternalPocGetResponse) {
+	if resp.Configuration.AuthSource != nil {
+		r.Configuration.AuthSource = types.StringValue(*resp.Configuration.AuthSource)
+	} else {
+		r.Configuration.AuthSource = types.StringNull()
+	}
+	if resp.Configuration.ConnectionString != nil {
+		r.Configuration.ConnectionString = types.StringValue(*resp.Configuration.ConnectionString)
+	} else {
+		r.Configuration.ConnectionString = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	if resp.Configuration.ReplicaSet != nil {
+		r.Configuration.ReplicaSet = types.StringValue(*resp.Configuration.ReplicaSet)
+	} else {
+		r.Configuration.ReplicaSet = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.User != nil {
+		r.Configuration.User = types.StringValue(*resp.Configuration.User)
+	} else {
+		r.Configuration.User = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

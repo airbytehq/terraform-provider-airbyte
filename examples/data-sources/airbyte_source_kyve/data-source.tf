@@ -1,4 +1,3 @@
 data "airbyte_source_kyve" "my_source_kyve" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "ade62f6a-a558-4a65-a208-3016ca34bb87"
 }

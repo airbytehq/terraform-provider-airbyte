@@ -5,10 +5,40 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceQuickbooksDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceQuickbooksDataSourceModel) RefreshFromGetResponse(resp *shared.SourceQuickbooksGetResponse) {
+	if resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20 = &SourceQuickbooksAuthorizationMethodOAuth20{}
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AccessToken)
+		if resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType != nil {
+			r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType))
+		} else {
+			r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType = types.StringNull()
+		}
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientID)
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientSecret)
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RealmID = types.StringValue(resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RealmID)
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RefreshToken)
+		r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
+	}
+	if resp.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20 != nil {
+		r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20 = &SourceQuickbooksAuthorizationMethodOAuth20{}
+	}
+	r.Configuration.Sandbox = types.BoolValue(resp.Configuration.Sandbox)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

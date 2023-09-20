@@ -1,4 +1,3 @@
 data "airbyte_source_recurly" "my_source_recurly" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "6600da0e-3aa6-41c6-be09-d852b53b32c8"
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourcePostgresResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePostgresGetResponse *shared.SourcePostgresGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

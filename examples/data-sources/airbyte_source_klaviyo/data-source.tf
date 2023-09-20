@@ -1,4 +1,3 @@
 data "airbyte_source_klaviyo" "my_source_klaviyo" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "a11d614a-4317-4692-aa48-673d522b828a"
 }

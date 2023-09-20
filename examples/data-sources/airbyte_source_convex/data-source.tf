@@ -1,4 +1,3 @@
 data "airbyte_source_convex" "my_source_convex" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "e521f903-03df-4c33-8397-fffa6d1d3209"
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_my_hours" "my_source_myhours" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "152cf01d-0d8c-43a4-b9a5-bf935dfe974f"
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceConfluenceResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceConfluenceGetResponse *shared.SourceConfluenceGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

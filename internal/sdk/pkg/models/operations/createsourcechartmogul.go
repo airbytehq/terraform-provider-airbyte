@@ -10,7 +10,7 @@ import (
 type CreateSourceChartmogulResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceChartmogulGetResponse *shared.SourceChartmogulGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

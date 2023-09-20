@@ -56,13 +56,23 @@ func (r *SourcePendoResourceModel) ToDeleteSDKType() *shared.SourcePendoCreateRe
 	return out
 }
 
-func (r *SourcePendoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePendoResourceModel) RefreshFromGetResponse(resp *shared.SourcePendoGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePendoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePendoResourceModel) RefreshFromCreateResponse(resp *shared.SourcePendoGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

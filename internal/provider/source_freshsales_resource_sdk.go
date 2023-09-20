@@ -60,13 +60,24 @@ func (r *SourceFreshsalesResourceModel) ToDeleteSDKType() *shared.SourceFreshsal
 	return out
 }
 
-func (r *SourceFreshsalesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceFreshsalesResourceModel) RefreshFromGetResponse(resp *shared.SourceFreshsalesGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.DomainName = types.StringValue(resp.Configuration.DomainName)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFreshsalesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFreshsalesResourceModel) RefreshFromCreateResponse(resp *shared.SourceFreshsalesGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

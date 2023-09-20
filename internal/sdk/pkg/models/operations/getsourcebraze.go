@@ -14,7 +14,7 @@ type GetSourceBrazeRequest struct {
 type GetSourceBrazeResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBrazeGetResponse *shared.SourceBrazeGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

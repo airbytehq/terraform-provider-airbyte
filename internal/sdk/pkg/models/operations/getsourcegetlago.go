@@ -14,7 +14,7 @@ type GetSourceGetlagoRequest struct {
 type GetSourceGetlagoResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGetlagoGetResponse *shared.SourceGetlagoGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

@@ -7,8 +7,128 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationMilvusDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationMilvusDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationMilvusGetResponse) {
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.Embedding.DestinationMilvusEmbeddingCohere != nil {
+		r.Configuration.Embedding.DestinationMilvusEmbeddingCohere = &DestinationMilvusEmbeddingCohere{}
+		r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.CohereKey = types.StringValue(resp.Configuration.Embedding.DestinationMilvusEmbeddingCohere.CohereKey)
+		if resp.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode != nil {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Embedding.DestinationMilvusEmbeddingFake != nil {
+		r.Configuration.Embedding.DestinationMilvusEmbeddingFake = &DestinationLangchainEmbeddingFake{}
+		if resp.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode != nil {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Embedding.DestinationMilvusEmbeddingFromField != nil {
+		r.Configuration.Embedding.DestinationMilvusEmbeddingFromField = &DestinationMilvusEmbeddingFromField{}
+		r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Dimensions = types.Int64Value(resp.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Dimensions)
+		r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.FieldName = types.StringValue(resp.Configuration.Embedding.DestinationMilvusEmbeddingFromField.FieldName)
+		if resp.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode != nil {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI != nil {
+		r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI = &DestinationLangchainEmbeddingOpenAI{}
+		if resp.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode != nil {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode = types.StringNull()
+		}
+		r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.OpenaiKey = types.StringValue(resp.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.OpenaiKey)
+	}
+	if resp.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere != nil {
+		r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere = &DestinationMilvusEmbeddingCohere{}
+	}
+	if resp.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFake != nil {
+		r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFake = &DestinationLangchainEmbeddingFake{}
+	}
+	if resp.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField != nil {
+		r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField = &DestinationMilvusEmbeddingFromField{}
+	}
+	if resp.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI != nil {
+		r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI = &DestinationLangchainEmbeddingOpenAI{}
+	}
+	if resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken != nil {
+		r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken = &DestinationMilvusIndexingAuthenticationAPIToken{}
+		if resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode != nil {
+			r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode = types.StringValue(string(*resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode))
+		} else {
+			r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode = types.StringNull()
+		}
+		r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Token = types.StringValue(resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Token)
+	}
+	if resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth != nil {
+		r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth = &DestinationMilvusIndexingAuthenticationNoAuth{}
+		if resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode != nil {
+			r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode = types.StringValue(string(*resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode))
+		} else {
+			r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword != nil {
+		r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword = &DestinationMilvusIndexingAuthenticationUsernamePassword{}
+		if resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode != nil {
+			r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode = types.StringValue(string(*resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode))
+		} else {
+			r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode = types.StringNull()
+		}
+		r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Password = types.StringValue(resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Password)
+		r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Username = types.StringValue(resp.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Username)
+	}
+	if resp.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken != nil {
+		r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken = &DestinationMilvusIndexingAuthenticationAPIToken{}
+	}
+	if resp.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationNoAuth != nil {
+		r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationNoAuth = &DestinationMilvusIndexingAuthenticationNoAuth{}
+	}
+	if resp.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword != nil {
+		r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword = &DestinationMilvusIndexingAuthenticationUsernamePassword{}
+	}
+	r.Configuration.Indexing.Collection = types.StringValue(resp.Configuration.Indexing.Collection)
+	if resp.Configuration.Indexing.Db != nil {
+		r.Configuration.Indexing.Db = types.StringValue(*resp.Configuration.Indexing.Db)
+	} else {
+		r.Configuration.Indexing.Db = types.StringNull()
+	}
+	r.Configuration.Indexing.Host = types.StringValue(resp.Configuration.Indexing.Host)
+	if resp.Configuration.Indexing.TextField != nil {
+		r.Configuration.Indexing.TextField = types.StringValue(*resp.Configuration.Indexing.TextField)
+	} else {
+		r.Configuration.Indexing.TextField = types.StringNull()
+	}
+	if resp.Configuration.Indexing.VectorField != nil {
+		r.Configuration.Indexing.VectorField = types.StringValue(*resp.Configuration.Indexing.VectorField)
+	} else {
+		r.Configuration.Indexing.VectorField = types.StringNull()
+	}
+	if resp.Configuration.Processing.ChunkOverlap != nil {
+		r.Configuration.Processing.ChunkOverlap = types.Int64Value(*resp.Configuration.Processing.ChunkOverlap)
+	} else {
+		r.Configuration.Processing.ChunkOverlap = types.Int64Null()
+	}
+	r.Configuration.Processing.ChunkSize = types.Int64Value(resp.Configuration.Processing.ChunkSize)
+	r.Configuration.Processing.MetadataFields = nil
+	for _, v := range resp.Configuration.Processing.MetadataFields {
+		r.Configuration.Processing.MetadataFields = append(r.Configuration.Processing.MetadataFields, types.StringValue(v))
+	}
+	r.Configuration.Processing.TextFields = nil
+	for _, v := range resp.Configuration.Processing.TextFields {
+		r.Configuration.Processing.TextFields = append(r.Configuration.Processing.TextFields, types.StringValue(v))
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

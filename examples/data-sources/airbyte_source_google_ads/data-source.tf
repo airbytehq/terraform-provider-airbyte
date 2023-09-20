@@ -1,4 +1,3 @@
 data "airbyte_source_google_ads" "my_source_googleads" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "5837e8f2-ad6b-4b10-a255-fdc480d6e330"
 }

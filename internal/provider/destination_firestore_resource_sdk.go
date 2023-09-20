@@ -63,13 +63,23 @@ func (r *DestinationFirestoreResourceModel) ToDeleteSDKType() *shared.Destinatio
 	return out
 }
 
-func (r *DestinationFirestoreResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationFirestoreResourceModel) RefreshFromGetResponse(resp *shared.DestinationFirestoreGetResponse) {
+	if resp.Configuration.CredentialsJSON != nil {
+		r.Configuration.CredentialsJSON = types.StringValue(*resp.Configuration.CredentialsJSON)
+	} else {
+		r.Configuration.CredentialsJSON = types.StringNull()
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.ProjectID = types.StringValue(resp.Configuration.ProjectID)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationFirestoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationFirestoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationFirestoreGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

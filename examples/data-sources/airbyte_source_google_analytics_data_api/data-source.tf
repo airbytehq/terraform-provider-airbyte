@@ -1,4 +1,3 @@
 data "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "8675cbf1-8685-46a7-a82c-df9d0fc282c6"
 }

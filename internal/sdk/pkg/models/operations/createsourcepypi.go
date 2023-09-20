@@ -10,7 +10,7 @@ import (
 type CreateSourcePypiResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePypiGetResponse *shared.SourcePypiGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceNotionRequest struct {
 type GetSourceNotionResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceNotionGetResponse *shared.SourceNotionGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

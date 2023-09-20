@@ -1,4 +1,3 @@
 data "airbyte_source_github" "my_source_github" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "201a6aab-4ae7-4b1a-9b90-8d4e30491aa3"
 }

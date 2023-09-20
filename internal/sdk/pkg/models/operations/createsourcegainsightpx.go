@@ -10,7 +10,7 @@ import (
 type CreateSourceGainsightPxResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGainsightPxGetResponse *shared.SourceGainsightPxGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

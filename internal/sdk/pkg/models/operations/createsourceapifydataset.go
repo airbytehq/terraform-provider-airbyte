@@ -10,7 +10,7 @@ import (
 type CreateSourceApifyDatasetResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceApifyDatasetGetResponse *shared.SourceApifyDatasetGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

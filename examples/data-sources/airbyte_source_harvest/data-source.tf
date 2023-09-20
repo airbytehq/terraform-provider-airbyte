@@ -1,4 +1,3 @@
 data "airbyte_source_harvest" "my_source_harvest" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "508bd380-c29a-4a8d-971b-ddaa30b7b914"
 }

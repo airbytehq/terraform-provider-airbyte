@@ -14,7 +14,7 @@ type GetSourceAhaRequest struct {
 type GetSourceAhaResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAhaGetResponse *shared.SourceAhaGetResponse
+	StatusCode           int
+	RawResponse          *http.Response
 }

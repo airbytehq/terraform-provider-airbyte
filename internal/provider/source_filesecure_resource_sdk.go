@@ -446,13 +446,146 @@ func (r *SourceFileSecureResourceModel) ToDeleteSDKType() *shared.SourceFileSecu
 	return out
 }
 
-func (r *SourceFileSecureResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceFileSecureResourceModel) RefreshFromGetResponse(resp *shared.SourceFileSecureGetResponse) {
+	r.Configuration.DatasetName = types.StringValue(resp.Configuration.DatasetName)
+	r.Configuration.Format = types.StringValue(string(resp.Configuration.Format))
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage = &SourceFileSecureStorageProviderAzBlobAzureBlobStorage{}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken = types.StringNull()
+		}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey = types.StringNull()
+		}
+		r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.Storage))
+		r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.StorageAccount = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.StorageAccount)
+	}
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage = &SourceFileSecureStorageProviderGCSGoogleCloudStorage{}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON = types.StringNull()
+		}
+		r.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.Storage))
+	}
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb = &SourceFileSecureStorageProviderHTTPSPublicWeb{}
+		r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.Storage))
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent = types.BoolValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent = types.BoolNull()
+		}
+	}
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices = &SourceFileSecureStorageProviderS3AmazonWebServices{}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID = types.StringNull()
+		}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey = types.StringNull()
+		}
+		r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.Storage))
+	}
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol = &SourceFileSecureStorageProviderSCPSecureCopyProtocol{}
+		r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Host = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Host)
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password = types.StringNull()
+		}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port = types.StringNull()
+		}
+		r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Storage))
+		r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.User = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.User)
+	}
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol = &SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol{}
+		r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Host = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Host)
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password = types.StringNull()
+		}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port = types.StringNull()
+		}
+		r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Storage))
+		r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.User = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.User)
+	}
+	if resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell != nil {
+		r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell = &SourceFileSecureStorageProviderSSHSecureShell{}
+		r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Host = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Host)
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password = types.StringNull()
+		}
+		if resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port != nil {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port = types.StringValue(*resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port)
+		} else {
+			r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port = types.StringNull()
+		}
+		r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Storage = types.StringValue(string(resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Storage))
+		r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.User = types.StringValue(resp.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.User)
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage = &SourceFileSecureStorageProviderAzBlobAzureBlobStorage{}
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage = &SourceFileSecureStorageProviderGCSGoogleCloudStorage{}
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb = &SourceFileSecureStorageProviderHTTPSPublicWeb{}
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderS3AmazonWebServices != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderS3AmazonWebServices = &SourceFileSecureStorageProviderS3AmazonWebServices{}
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol = &SourceFileSecureStorageProviderSCPSecureCopyProtocol{}
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol = &SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol{}
+	}
+	if resp.Configuration.Provider.SourceFileSecureUpdateStorageProviderSSHSecureShell != nil {
+		r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSSHSecureShell = &SourceFileSecureStorageProviderSSHSecureShell{}
+	}
+	if resp.Configuration.ReaderOptions != nil {
+		r.Configuration.ReaderOptions = types.StringValue(*resp.Configuration.ReaderOptions)
+	} else {
+		r.Configuration.ReaderOptions = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.URL = types.StringValue(resp.Configuration.URL)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFileSecureResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFileSecureResourceModel) RefreshFromCreateResponse(resp *shared.SourceFileSecureGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

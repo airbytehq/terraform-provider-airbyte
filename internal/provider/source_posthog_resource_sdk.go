@@ -89,13 +89,34 @@ func (r *SourcePosthogResourceModel) ToDeleteSDKType() *shared.SourcePosthogCrea
 	return out
 }
 
-func (r *SourcePosthogResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePosthogResourceModel) RefreshFromGetResponse(resp *shared.SourcePosthogGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.BaseURL != nil {
+		r.Configuration.BaseURL = types.StringValue(*resp.Configuration.BaseURL)
+	} else {
+		r.Configuration.BaseURL = types.StringNull()
+	}
+	if resp.Configuration.EventsTimeStep != nil {
+		r.Configuration.EventsTimeStep = types.Int64Value(*resp.Configuration.EventsTimeStep)
+	} else {
+		r.Configuration.EventsTimeStep = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePosthogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePosthogResourceModel) RefreshFromCreateResponse(resp *shared.SourcePosthogGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

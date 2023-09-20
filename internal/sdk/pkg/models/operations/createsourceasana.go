@@ -10,7 +10,7 @@ import (
 type CreateSourceAsanaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAsanaGetResponse *shared.SourceAsanaGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

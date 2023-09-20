@@ -138,13 +138,46 @@ func (r *SourceGoogleSheetsResourceModel) ToDeleteSDKType() *shared.SourceGoogle
 	return out
 }
 
-func (r *SourceGoogleSheetsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleSheetsResourceModel) RefreshFromGetResponse(resp *shared.SourceGoogleSheetsGetResponse) {
+	if resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth = &SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth{}
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType))
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID)
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret)
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken)
+	}
+	if resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication != nil {
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication = &SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication{}
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType))
+		r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo = types.StringValue(resp.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo)
+	}
+	if resp.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth != nil {
+		r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth = &SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth{}
+	}
+	if resp.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication != nil {
+		r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication = &SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication{}
+	}
+	if resp.Configuration.NamesConversion != nil {
+		r.Configuration.NamesConversion = types.BoolValue(*resp.Configuration.NamesConversion)
+	} else {
+		r.Configuration.NamesConversion = types.BoolNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.SpreadsheetID = types.StringValue(resp.Configuration.SpreadsheetID)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleSheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleSheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceGoogleSheetsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

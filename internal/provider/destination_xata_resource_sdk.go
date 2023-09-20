@@ -53,13 +53,19 @@ func (r *DestinationXataResourceModel) ToDeleteSDKType() *shared.DestinationXata
 	return out
 }
 
-func (r *DestinationXataResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationXataResourceModel) RefreshFromGetResponse(resp *shared.DestinationXataGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.DbURL = types.StringValue(resp.Configuration.DbURL)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationXataResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationXataResourceModel) RefreshFromCreateResponse(resp *shared.DestinationXataGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

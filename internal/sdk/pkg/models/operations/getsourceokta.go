@@ -14,7 +14,7 @@ type GetSourceOktaRequest struct {
 type GetSourceOktaResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOktaGetResponse *shared.SourceOktaGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

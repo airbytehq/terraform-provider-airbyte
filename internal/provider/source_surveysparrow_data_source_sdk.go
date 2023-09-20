@@ -4,11 +4,57 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSurveySparrowDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSurveySparrowDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSurveySparrowGetResponse) {
+	r.Configuration.AccessToken = types.StringValue(resp.Configuration.AccessToken)
+	if resp.Configuration.Region == nil {
+		r.Configuration.Region = nil
+	} else {
+		r.Configuration.Region = &SourceSurveySparrowBaseURL{}
+		if resp.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount != nil {
+			r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount = &SourceSurveySparrowBaseURLEUBasedAccount{}
+			if resp.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase != nil {
+				r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase = types.StringValue(string(*resp.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase))
+			} else {
+				r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase = types.StringNull()
+			}
+		}
+		if resp.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount != nil {
+			r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount = &SourceSurveySparrowBaseURLGlobalAccount{}
+			if resp.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase != nil {
+				r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase = types.StringValue(string(*resp.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase))
+			} else {
+				r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase = types.StringNull()
+			}
+		}
+		if resp.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount != nil {
+			r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount = &SourceSurveySparrowBaseURLEUBasedAccount{}
+		}
+		if resp.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount != nil {
+			r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount = &SourceSurveySparrowBaseURLGlobalAccount{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.SurveyID = nil
+	for _, surveyIDItem := range resp.Configuration.SurveyID {
+		var surveyId1 types.String
+		surveyId1Result, _ := json.Marshal(surveyIDItem)
+		surveyId1 = types.StringValue(string(surveyId1Result))
+		r.Configuration.SurveyID = append(r.Configuration.SurveyID, surveyId1)
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

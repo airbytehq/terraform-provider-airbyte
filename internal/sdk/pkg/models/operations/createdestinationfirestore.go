@@ -10,7 +10,7 @@ import (
 type CreateDestinationFirestoreResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationFirestoreGetResponse *shared.DestinationFirestoreGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

@@ -14,7 +14,7 @@ type GetDestinationSnowflakeRequest struct {
 type GetDestinationSnowflakeResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationSnowflakeGetResponse *shared.DestinationSnowflakeGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

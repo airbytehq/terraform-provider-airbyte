@@ -677,13 +677,257 @@ func (r *SourceAlloydbResourceModel) ToDeleteSDKType() *shared.SourceAlloydbCrea
 	return out
 }
 
-func (r *SourceAlloydbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAlloydbResourceModel) RefreshFromGetResponse(resp *shared.SourceAlloydbGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	if resp.Configuration.ReplicationMethod == nil {
+		r.Configuration.ReplicationMethod = nil
+	} else {
+		r.Configuration.ReplicationMethod = &SourceAlloydbReplicationMethod{}
+		if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC = &SourceAlloydbReplicationMethodLogicalReplicationCDC{}
+			if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds != nil {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds)
+			} else {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Null()
+			}
+			if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour != nil {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour = types.StringValue(string(*resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour))
+			} else {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour = types.StringNull()
+			}
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method))
+			if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin != nil {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin = types.StringValue(string(*resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin))
+			} else {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin = types.StringNull()
+			}
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication = types.StringValue(resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication)
+			if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize != nil {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize = types.Int64Value(*resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize)
+			} else {
+				r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize = types.Int64Null()
+			}
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot = types.StringValue(resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot)
+			if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties == nil {
+					r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult, _ := json.Marshal(resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties)
+					r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+				}
+			}
+		}
+		if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard != nil {
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard = &SourceAlloydbReplicationMethodStandard{}
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method))
+		}
+		if resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin != nil {
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin = &SourceAlloydbReplicationMethodStandardXmin{}
+			r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin.Method))
+		}
+		if resp.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
+			r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC = &SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC{}
+		}
+		if resp.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard != nil {
+			r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard = &SourceAlloydbReplicationMethodStandard{}
+		}
+		if resp.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandardXmin != nil {
+			r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandardXmin = &SourceAlloydbReplicationMethodStandardXmin{}
+		}
+	}
+	r.Configuration.Schemas = nil
+	for _, v := range resp.Configuration.Schemas {
+		r.Configuration.Schemas = append(r.Configuration.Schemas, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.SslMode == nil {
+		r.Configuration.SslMode = nil
+	} else {
+		r.Configuration.SslMode = &SourceAlloydbSSLModes{}
+		if resp.Configuration.SslMode.SourceAlloydbSSLModesAllow != nil {
+			r.Configuration.SslMode.SourceAlloydbSSLModesAllow = &SourceAlloydbSSLModesAllow{}
+			r.Configuration.SslMode.SourceAlloydbSSLModesAllow.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceAlloydbSSLModesAllow.Mode))
+			if r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult1, _ := json.Marshal(resp.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties)
+					r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties = types.StringValue(string(additionalPropertiesResult1))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbSSLModesDisable != nil {
+			r.Configuration.SslMode.SourceAlloydbSSLModesDisable = &SourceAlloydbSSLModesDisable{}
+			r.Configuration.SslMode.SourceAlloydbSSLModesDisable.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceAlloydbSSLModesDisable.Mode))
+			if r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult2, _ := json.Marshal(resp.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties)
+					r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties = types.StringValue(string(additionalPropertiesResult2))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbSSLModesPrefer != nil {
+			r.Configuration.SslMode.SourceAlloydbSSLModesPrefer = &SourceAlloydbSSLModesPrefer{}
+			r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceAlloydbSSLModesPrefer.Mode))
+			if r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult3, _ := json.Marshal(resp.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties)
+					r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties = types.StringValue(string(additionalPropertiesResult3))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbSSLModesRequire != nil {
+			r.Configuration.SslMode.SourceAlloydbSSLModesRequire = &SourceAlloydbSSLModesRequire{}
+			r.Configuration.SslMode.SourceAlloydbSSLModesRequire.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceAlloydbSSLModesRequire.Mode))
+			if r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult4, _ := json.Marshal(resp.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties)
+					r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties = types.StringValue(string(additionalPropertiesResult4))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa != nil {
+			r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa = &SourceAlloydbSSLModesVerifyCa{}
+			r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.CaCertificate = types.StringValue(resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.CaCertificate)
+			if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate != nil {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate = types.StringValue(*resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate)
+			} else {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey != nil {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey = types.StringValue(*resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey)
+			} else {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword != nil {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.Mode))
+			if r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult5, _ := json.Marshal(resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties)
+					r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties = types.StringValue(string(additionalPropertiesResult5))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull != nil {
+			r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull = &SourceAlloydbSSLModesVerifyFull{}
+			r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.CaCertificate = types.StringValue(resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.CaCertificate)
+			if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate != nil {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate = types.StringValue(*resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate)
+			} else {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey != nil {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey = types.StringValue(*resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey)
+			} else {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword != nil {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.Mode = types.StringValue(string(resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.Mode))
+			if r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult6, _ := json.Marshal(resp.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties)
+					r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties = types.StringValue(string(additionalPropertiesResult6))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow != nil {
+			r.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow = &SourceAlloydbUpdateSSLModesAllow{}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable != nil {
+			r.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable = &SourceAlloydbUpdateSSLModesDisable{}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer != nil {
+			r.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer = &SourceAlloydbUpdateSSLModesPrefer{}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire != nil {
+			r.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire = &SourceAlloydbUpdateSSLModesRequire{}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa != nil {
+			r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa = &SourceAlloydbUpdateSSLModesVerifyCa{}
+		}
+		if resp.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull != nil {
+			r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull = &SourceAlloydbUpdateSSLModesVerifyFull{}
+		}
+	}
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &SourceAlloydbSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAlloydbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAlloydbResourceModel) RefreshFromCreateResponse(resp *shared.SourceAlloydbGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

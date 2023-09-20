@@ -7,8 +7,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationGoogleSheetsDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationGoogleSheetsDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationGoogleSheetsGetResponse) {
+	r.Configuration.Credentials.ClientID = types.StringValue(resp.Configuration.Credentials.ClientID)
+	r.Configuration.Credentials.ClientSecret = types.StringValue(resp.Configuration.Credentials.ClientSecret)
+	r.Configuration.Credentials.RefreshToken = types.StringValue(resp.Configuration.Credentials.RefreshToken)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.SpreadsheetID = types.StringValue(resp.Configuration.SpreadsheetID)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

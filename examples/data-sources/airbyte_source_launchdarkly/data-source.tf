@@ -1,4 +1,3 @@
 data "airbyte_source_launchdarkly" "my_source_launchdarkly" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "d4f62127-a607-4d16-8629-4514c3db9ca9"
 }

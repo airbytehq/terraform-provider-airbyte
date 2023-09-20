@@ -10,7 +10,7 @@ import (
 type CreateSourceSonarCloudResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSonarCloudGetResponse *shared.SourceSonarCloudGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

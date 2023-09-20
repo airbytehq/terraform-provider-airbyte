@@ -10,7 +10,7 @@ import (
 type CreateSourceWebflowResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWebflowGetResponse *shared.SourceWebflowGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

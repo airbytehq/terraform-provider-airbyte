@@ -10,7 +10,7 @@ import (
 type CreateSourceJiraResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceJiraGetResponse *shared.SourceJiraGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

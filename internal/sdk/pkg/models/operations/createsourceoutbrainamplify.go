@@ -10,7 +10,7 @@ import (
 type CreateSourceOutbrainAmplifyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOutbrainAmplifyGetResponse *shared.SourceOutbrainAmplifyGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourcePexelsAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePexelsAPIGetResponse *shared.SourcePexelsAPIGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

@@ -4,11 +4,257 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePostgresDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePostgresDataSourceModel) RefreshFromGetResponse(resp *shared.SourcePostgresGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	if resp.Configuration.ReplicationMethod == nil {
+		r.Configuration.ReplicationMethod = nil
+	} else {
+		r.Configuration.ReplicationMethod = &SourcePostgresUpdateMethod1{}
+		if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn != nil {
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn = &SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn{}
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn.Method))
+		}
+		if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC = &SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC1{}
+			if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds != nil {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds)
+			} else {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds = types.Int64Null()
+			}
+			if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour != nil {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour = types.StringValue(string(*resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour))
+			} else {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour = types.StringNull()
+			}
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Method))
+			if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin != nil {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin = types.StringValue(string(*resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin))
+			} else {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin = types.StringNull()
+			}
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Publication = types.StringValue(resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Publication)
+			if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize != nil {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize = types.Int64Value(*resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize)
+			} else {
+				r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize = types.Int64Null()
+			}
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.ReplicationSlot = types.StringValue(resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.ReplicationSlot)
+			if r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties == nil {
+					r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult, _ := json.Marshal(resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties)
+					r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+				}
+			}
+		}
+		if resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor = &SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor{}
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor.Method))
+		}
+		if resp.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn != nil {
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn = &SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn{}
+		}
+		if resp.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC = &SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC1{}
+		}
+		if resp.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor = &SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor{}
+		}
+	}
+	r.Configuration.Schemas = nil
+	for _, v := range resp.Configuration.Schemas {
+		r.Configuration.Schemas = append(r.Configuration.Schemas, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.SslMode == nil {
+		r.Configuration.SslMode = nil
+	} else {
+		r.Configuration.SslMode = &SourcePostgresSSLModes1{}
+		if resp.Configuration.SslMode.SourcePostgresSSLModesAllow != nil {
+			r.Configuration.SslMode.SourcePostgresSSLModesAllow = &SourcePostgresSSLModesAllow1{}
+			r.Configuration.SslMode.SourcePostgresSSLModesAllow.Mode = types.StringValue(string(resp.Configuration.SslMode.SourcePostgresSSLModesAllow.Mode))
+			if r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult1, _ := json.Marshal(resp.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties)
+					r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties = types.StringValue(string(additionalPropertiesResult1))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourcePostgresSSLModesDisable != nil {
+			r.Configuration.SslMode.SourcePostgresSSLModesDisable = &SourcePostgresSSLModesDisable1{}
+			r.Configuration.SslMode.SourcePostgresSSLModesDisable.Mode = types.StringValue(string(resp.Configuration.SslMode.SourcePostgresSSLModesDisable.Mode))
+			if r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult2, _ := json.Marshal(resp.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties)
+					r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties = types.StringValue(string(additionalPropertiesResult2))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourcePostgresSSLModesPrefer != nil {
+			r.Configuration.SslMode.SourcePostgresSSLModesPrefer = &SourcePostgresSSLModesPrefer1{}
+			r.Configuration.SslMode.SourcePostgresSSLModesPrefer.Mode = types.StringValue(string(resp.Configuration.SslMode.SourcePostgresSSLModesPrefer.Mode))
+			if r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult3, _ := json.Marshal(resp.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties)
+					r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties = types.StringValue(string(additionalPropertiesResult3))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourcePostgresSSLModesRequire != nil {
+			r.Configuration.SslMode.SourcePostgresSSLModesRequire = &SourcePostgresSSLModesRequire1{}
+			r.Configuration.SslMode.SourcePostgresSSLModesRequire.Mode = types.StringValue(string(resp.Configuration.SslMode.SourcePostgresSSLModesRequire.Mode))
+			if r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult4, _ := json.Marshal(resp.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties)
+					r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties = types.StringValue(string(additionalPropertiesResult4))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa != nil {
+			r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa = &SourcePostgresSSLModesVerifyCa1{}
+			r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.CaCertificate = types.StringValue(resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.CaCertificate)
+			if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate != nil {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate = types.StringValue(*resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate)
+			} else {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey != nil {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey = types.StringValue(*resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey)
+			} else {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword != nil {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.Mode = types.StringValue(string(resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.Mode))
+			if r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult5, _ := json.Marshal(resp.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties)
+					r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties = types.StringValue(string(additionalPropertiesResult5))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull != nil {
+			r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull = &SourcePostgresSSLModesVerifyFull1{}
+			r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.CaCertificate = types.StringValue(resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.CaCertificate)
+			if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate != nil {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate = types.StringValue(*resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate)
+			} else {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey != nil {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey = types.StringValue(*resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey)
+			} else {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey = types.StringNull()
+			}
+			if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword != nil {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword = types.StringValue(*resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword)
+			} else {
+				r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword = types.StringNull()
+			}
+			r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.Mode = types.StringValue(string(resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.Mode))
+			if r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties == nil {
+					r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult6, _ := json.Marshal(resp.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties)
+					r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties = types.StringValue(string(additionalPropertiesResult6))
+				}
+			}
+		}
+		if resp.Configuration.SslMode.SourcePostgresUpdateSSLModesAllow != nil {
+			r.Configuration.SslMode.SourcePostgresUpdateSSLModesAllow = &SourcePostgresUpdateSSLModesAllow1{}
+		}
+		if resp.Configuration.SslMode.SourcePostgresUpdateSSLModesDisable != nil {
+			r.Configuration.SslMode.SourcePostgresUpdateSSLModesDisable = &SourcePostgresUpdateSSLModesDisable1{}
+		}
+		if resp.Configuration.SslMode.SourcePostgresUpdateSSLModesPrefer != nil {
+			r.Configuration.SslMode.SourcePostgresUpdateSSLModesPrefer = &SourcePostgresUpdateSSLModesPrefer1{}
+		}
+		if resp.Configuration.SslMode.SourcePostgresUpdateSSLModesRequire != nil {
+			r.Configuration.SslMode.SourcePostgresUpdateSSLModesRequire = &SourcePostgresUpdateSSLModesRequire1{}
+		}
+		if resp.Configuration.SslMode.SourcePostgresUpdateSSLModesVerifyCa != nil {
+			r.Configuration.SslMode.SourcePostgresUpdateSSLModesVerifyCa = &SourcePostgresUpdateSSLModesVerifyCa1{}
+		}
+		if resp.Configuration.SslMode.SourcePostgresUpdateSSLModesVerifyFull != nil {
+			r.Configuration.SslMode.SourcePostgresUpdateSSLModesVerifyFull = &SourcePostgresUpdateSSLModesVerifyFull1{}
+		}
+	}
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &SourcePostgresSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.SourcePostgresUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourcePostgresUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

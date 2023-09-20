@@ -14,7 +14,7 @@ type GetSourceAwsCloudtrailRequest struct {
 type GetSourceAwsCloudtrailResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAwsCloudtrailGetResponse *shared.SourceAwsCloudtrailGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

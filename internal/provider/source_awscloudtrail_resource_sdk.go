@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCloudtrailCreateRequest {
@@ -69,13 +70,26 @@ func (r *SourceAwsCloudtrailResourceModel) ToDeleteSDKType() *shared.SourceAwsCl
 	return out
 }
 
-func (r *SourceAwsCloudtrailResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAwsCloudtrailResourceModel) RefreshFromGetResponse(resp *shared.SourceAwsCloudtrailGetResponse) {
+	r.Configuration.AwsKeyID = types.StringValue(resp.Configuration.AwsKeyID)
+	r.Configuration.AwsRegionName = types.StringValue(resp.Configuration.AwsRegionName)
+	r.Configuration.AwsSecretKey = types.StringValue(resp.Configuration.AwsSecretKey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAwsCloudtrailResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAwsCloudtrailResourceModel) RefreshFromCreateResponse(resp *shared.SourceAwsCloudtrailGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

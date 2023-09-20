@@ -71,13 +71,28 @@ func (r *SourceSendgridResourceModel) ToDeleteSDKType() *shared.SourceSendgridCr
 	return out
 }
 
-func (r *SourceSendgridResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSendgridResourceModel) RefreshFromGetResponse(resp *shared.SourceSendgridGetResponse) {
+	r.Configuration.Apikey = types.StringValue(resp.Configuration.Apikey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartTime != nil {
+		r.Configuration.StartTime = types.StringValue(resp.Configuration.StartTime.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartTime = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSendgridResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSendgridResourceModel) RefreshFromCreateResponse(resp *shared.SourceSendgridGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

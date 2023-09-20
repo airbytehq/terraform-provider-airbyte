@@ -10,7 +10,7 @@ import (
 type CreateSourceShortioResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceShortioGetResponse *shared.SourceShortioGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

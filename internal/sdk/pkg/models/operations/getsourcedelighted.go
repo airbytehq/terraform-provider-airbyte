@@ -14,7 +14,7 @@ type GetSourceDelightedRequest struct {
 type GetSourceDelightedResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDelightedGetResponse *shared.SourceDelightedGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

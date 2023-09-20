@@ -14,7 +14,7 @@ type GetSourceAmazonSqsRequest struct {
 type GetSourceAmazonSqsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAmazonSqsGetResponse *shared.SourceAmazonSqsGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

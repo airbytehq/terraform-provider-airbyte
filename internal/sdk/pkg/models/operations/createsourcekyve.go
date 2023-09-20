@@ -10,7 +10,7 @@ import (
 type CreateSourceKyveResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceKyveGetResponse *shared.SourceKyveGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

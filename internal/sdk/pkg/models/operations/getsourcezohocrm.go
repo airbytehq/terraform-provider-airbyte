@@ -14,7 +14,7 @@ type GetSourceZohoCrmRequest struct {
 type GetSourceZohoCrmResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZohoCrmGetResponse *shared.SourceZohoCrmGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

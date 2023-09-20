@@ -80,13 +80,29 @@ func (r *SourceWikipediaPageviewsResourceModel) ToDeleteSDKType() *shared.Source
 	return out
 }
 
-func (r *SourceWikipediaPageviewsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceWikipediaPageviewsResourceModel) RefreshFromGetResponse(resp *shared.SourceWikipediaPageviewsGetResponse) {
+	r.Configuration.Access = types.StringValue(resp.Configuration.Access)
+	r.Configuration.Agent = types.StringValue(resp.Configuration.Agent)
+	r.Configuration.Article = types.StringValue(resp.Configuration.Article)
+	r.Configuration.Country = types.StringValue(resp.Configuration.Country)
+	r.Configuration.End = types.StringValue(resp.Configuration.End)
+	r.Configuration.Project = types.StringValue(resp.Configuration.Project)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Start = types.StringValue(resp.Configuration.Start)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWikipediaPageviewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceWikipediaPageviewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceWikipediaPageviewsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

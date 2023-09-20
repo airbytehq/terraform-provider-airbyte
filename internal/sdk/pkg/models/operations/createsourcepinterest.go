@@ -10,7 +10,7 @@ import (
 type CreateSourcePinterestResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePinterestGetResponse *shared.SourcePinterestGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateDestinationS3GlueResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationS3GlueGetResponse *shared.DestinationS3GlueGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

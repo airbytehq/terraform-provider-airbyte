@@ -7,8 +7,46 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMondayDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMondayDataSourceModel) RefreshFromGetResponse(resp *shared.SourceMondayGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceMondayAuthorizationMethod{}
+		if resp.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken = &SourceMondayAuthorizationMethodAPIToken{}
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken = types.StringValue(resp.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken)
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType))
+		}
+		if resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 = &SourceMondayAuthorizationMethodOAuth20{}
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken)
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType = types.StringValue(string(resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType))
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID)
+			r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret)
+			if resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain != nil {
+				r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain = types.StringValue(*resp.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain)
+			} else {
+				r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken != nil {
+			r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken = &SourceMondayAuthorizationMethodAPIToken{}
+		}
+		if resp.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20 = &SourceMondayAuthorizationMethodOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

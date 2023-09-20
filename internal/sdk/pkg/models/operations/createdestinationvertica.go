@@ -10,7 +10,7 @@ import (
 type CreateDestinationVerticaResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationVerticaGetResponse *shared.DestinationVerticaGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

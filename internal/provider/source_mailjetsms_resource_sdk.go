@@ -84,13 +84,33 @@ func (r *SourceMailjetSmsResourceModel) ToDeleteSDKType() *shared.SourceMailjetS
 	return out
 }
 
-func (r *SourceMailjetSmsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMailjetSmsResourceModel) RefreshFromGetResponse(resp *shared.SourceMailjetSmsGetResponse) {
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.Int64Value(*resp.Configuration.EndDate)
+	} else {
+		r.Configuration.EndDate = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.Int64Value(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.Int64Null()
+	}
+	r.Configuration.Token = types.StringValue(resp.Configuration.Token)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMailjetSmsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMailjetSmsResourceModel) RefreshFromCreateResponse(resp *shared.SourceMailjetSmsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceSmartsheetsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSmartsheetsGetResponse *shared.SourceSmartsheetsGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

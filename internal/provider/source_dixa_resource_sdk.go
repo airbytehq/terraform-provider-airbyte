@@ -74,13 +74,29 @@ func (r *SourceDixaResourceModel) ToDeleteSDKType() *shared.SourceDixaCreateRequ
 	return out
 }
 
-func (r *SourceDixaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceDixaResourceModel) RefreshFromGetResponse(resp *shared.SourceDixaGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	if resp.Configuration.BatchSize != nil {
+		r.Configuration.BatchSize = types.Int64Value(*resp.Configuration.BatchSize)
+	} else {
+		r.Configuration.BatchSize = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceDixaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceDixaResourceModel) RefreshFromCreateResponse(resp *shared.SourceDixaGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

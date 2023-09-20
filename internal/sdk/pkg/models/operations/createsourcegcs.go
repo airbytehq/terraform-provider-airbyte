@@ -10,7 +10,7 @@ import (
 type CreateSourceGcsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGcsGetResponse *shared.SourceGcsGetResponse
+	StatusCode           int
+	RawResponse          *http.Response
 }

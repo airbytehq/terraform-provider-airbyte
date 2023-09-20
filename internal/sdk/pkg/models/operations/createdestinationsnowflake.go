@@ -10,7 +10,7 @@ import (
 type CreateDestinationSnowflakeResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationSnowflakeGetResponse *shared.DestinationSnowflakeGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceWikipediaPageviewsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWikipediaPageviewsGetResponse *shared.SourceWikipediaPageviewsGetResponse
+	StatusCode                          int
+	RawResponse                         *http.Response
 }

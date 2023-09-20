@@ -14,7 +14,7 @@ type GetSourceDatascopeRequest struct {
 type GetSourceDatascopeResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDatascopeGetResponse *shared.SourceDatascopeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

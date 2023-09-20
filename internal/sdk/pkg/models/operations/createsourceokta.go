@@ -10,7 +10,7 @@ import (
 type CreateSourceOktaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOktaGetResponse *shared.SourceOktaGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

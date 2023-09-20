@@ -10,7 +10,7 @@ import (
 type CreateSourceRecurlyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRecurlyGetResponse *shared.SourceRecurlyGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

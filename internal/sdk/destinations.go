@@ -145,12 +145,12 @@ func (s *destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationAwsDatalakeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationAwsDatalakeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -212,12 +212,12 @@ func (s *destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationAzureBlobStorageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationAzureBlobStorageGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -279,12 +279,12 @@ func (s *destinations) CreateDestinationBigquery(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationBigqueryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationBigqueryGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -346,12 +346,12 @@ func (s *destinations) CreateDestinationBigqueryDenormalized(ctx context.Context
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationBigqueryDenormalizedGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationBigqueryDenormalizedGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -413,12 +413,12 @@ func (s *destinations) CreateDestinationClickhouse(ctx context.Context, request 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationClickhouseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationClickhouseGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -480,12 +480,12 @@ func (s *destinations) CreateDestinationConvex(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationConvexGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationConvexGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -547,12 +547,12 @@ func (s *destinations) CreateDestinationCumulio(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationCumulioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationCumulioGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -614,12 +614,12 @@ func (s *destinations) CreateDestinationDatabend(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDatabendGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDatabendGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -681,12 +681,12 @@ func (s *destinations) CreateDestinationDatabricks(ctx context.Context, request 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDatabricksGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDatabricksGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -748,12 +748,12 @@ func (s *destinations) CreateDestinationDevNull(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDevNullGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDevNullGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -815,12 +815,12 @@ func (s *destinations) CreateDestinationDynamodb(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDynamodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDynamodbGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -882,12 +882,12 @@ func (s *destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationElasticsearchGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationElasticsearchGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -949,12 +949,12 @@ func (s *destinations) CreateDestinationFirebolt(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationFireboltGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationFireboltGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1016,12 +1016,12 @@ func (s *destinations) CreateDestinationFirestore(ctx context.Context, request s
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationFirestoreGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationFirestoreGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1083,12 +1083,12 @@ func (s *destinations) CreateDestinationGcs(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationGcsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationGcsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1150,12 +1150,12 @@ func (s *destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationGoogleSheetsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationGoogleSheetsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1217,12 +1217,12 @@ func (s *destinations) CreateDestinationKeen(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationKeenGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationKeenGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1284,12 +1284,12 @@ func (s *destinations) CreateDestinationKinesis(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationKinesisGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationKinesisGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1351,12 +1351,12 @@ func (s *destinations) CreateDestinationLangchain(ctx context.Context, request s
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationLangchainGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationLangchainGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1418,12 +1418,12 @@ func (s *destinations) CreateDestinationMilvus(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMilvusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMilvusGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1485,12 +1485,12 @@ func (s *destinations) CreateDestinationMongodb(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMongodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMongodbGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1552,12 +1552,12 @@ func (s *destinations) CreateDestinationMssql(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMssqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMssqlGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1619,12 +1619,12 @@ func (s *destinations) CreateDestinationMysql(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMysqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMysqlGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1686,12 +1686,12 @@ func (s *destinations) CreateDestinationOracle(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationOracleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationOracleGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1753,12 +1753,12 @@ func (s *destinations) CreateDestinationPinecone(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationPineconeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationPineconeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1820,12 +1820,12 @@ func (s *destinations) CreateDestinationPostgres(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationPostgresGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationPostgresGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1887,12 +1887,12 @@ func (s *destinations) CreateDestinationPubsub(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationPubsubGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationPubsubGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1954,12 +1954,12 @@ func (s *destinations) CreateDestinationRedis(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationRedisGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationRedisGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2021,12 +2021,12 @@ func (s *destinations) CreateDestinationRedshift(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationRedshiftGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationRedshiftGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2088,12 +2088,12 @@ func (s *destinations) CreateDestinationS3(ctx context.Context, request shared.D
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationS3GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationS3GetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2155,12 +2155,12 @@ func (s *destinations) CreateDestinationS3Glue(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationS3GlueGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationS3GlueGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2222,12 +2222,12 @@ func (s *destinations) CreateDestinationSftpJSON(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationSftpJSONGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationSftpJSONGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2289,12 +2289,12 @@ func (s *destinations) CreateDestinationSnowflake(ctx context.Context, request s
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationSnowflakeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationSnowflakeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2356,12 +2356,12 @@ func (s *destinations) CreateDestinationTimeplus(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationTimeplusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationTimeplusGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2423,12 +2423,12 @@ func (s *destinations) CreateDestinationTypesense(ctx context.Context, request s
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationTypesenseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationTypesenseGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2490,12 +2490,12 @@ func (s *destinations) CreateDestinationVertica(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationVerticaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationVerticaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2557,12 +2557,12 @@ func (s *destinations) CreateDestinationXata(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationXataGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationXataGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4573,12 +4573,12 @@ func (s *destinations) GetDestinationAwsDatalake(ctx context.Context, request op
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationAwsDatalakeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationAwsDatalakeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4631,12 +4631,12 @@ func (s *destinations) GetDestinationAzureBlobStorage(ctx context.Context, reque
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationAzureBlobStorageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationAzureBlobStorageGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4689,12 +4689,12 @@ func (s *destinations) GetDestinationBigquery(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationBigqueryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationBigqueryGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4747,12 +4747,12 @@ func (s *destinations) GetDestinationBigqueryDenormalized(ctx context.Context, r
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationBigqueryDenormalizedGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationBigqueryDenormalizedGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4805,12 +4805,12 @@ func (s *destinations) GetDestinationClickhouse(ctx context.Context, request ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationClickhouseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationClickhouseGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4863,12 +4863,12 @@ func (s *destinations) GetDestinationConvex(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationConvexGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationConvexGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4921,12 +4921,12 @@ func (s *destinations) GetDestinationCumulio(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationCumulioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationCumulioGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -4979,12 +4979,12 @@ func (s *destinations) GetDestinationDatabend(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDatabendGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDatabendGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5037,12 +5037,12 @@ func (s *destinations) GetDestinationDatabricks(ctx context.Context, request ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDatabricksGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDatabricksGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5095,12 +5095,12 @@ func (s *destinations) GetDestinationDevNull(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDevNullGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDevNullGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5153,12 +5153,12 @@ func (s *destinations) GetDestinationDynamodb(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationDynamodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationDynamodbGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5211,12 +5211,12 @@ func (s *destinations) GetDestinationElasticsearch(ctx context.Context, request 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationElasticsearchGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationElasticsearchGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5269,12 +5269,12 @@ func (s *destinations) GetDestinationFirebolt(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationFireboltGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationFireboltGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5327,12 +5327,12 @@ func (s *destinations) GetDestinationFirestore(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationFirestoreGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationFirestoreGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5385,12 +5385,12 @@ func (s *destinations) GetDestinationGcs(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationGcsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationGcsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5443,12 +5443,12 @@ func (s *destinations) GetDestinationGoogleSheets(ctx context.Context, request o
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationGoogleSheetsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationGoogleSheetsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5501,12 +5501,12 @@ func (s *destinations) GetDestinationKeen(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationKeenGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationKeenGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5559,12 +5559,12 @@ func (s *destinations) GetDestinationKinesis(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationKinesisGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationKinesisGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5617,12 +5617,12 @@ func (s *destinations) GetDestinationLangchain(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationLangchainGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationLangchainGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5675,12 +5675,12 @@ func (s *destinations) GetDestinationMilvus(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMilvusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMilvusGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5733,12 +5733,12 @@ func (s *destinations) GetDestinationMongodb(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMongodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMongodbGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5791,12 +5791,12 @@ func (s *destinations) GetDestinationMssql(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMssqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMssqlGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5849,12 +5849,12 @@ func (s *destinations) GetDestinationMysql(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationMysqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationMysqlGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5907,12 +5907,12 @@ func (s *destinations) GetDestinationOracle(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationOracleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationOracleGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -5965,12 +5965,12 @@ func (s *destinations) GetDestinationPinecone(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationPineconeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationPineconeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6023,12 +6023,12 @@ func (s *destinations) GetDestinationPostgres(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationPostgresGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationPostgresGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6081,12 +6081,12 @@ func (s *destinations) GetDestinationPubsub(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationPubsubGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationPubsubGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6139,12 +6139,12 @@ func (s *destinations) GetDestinationRedis(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationRedisGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationRedisGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6197,12 +6197,12 @@ func (s *destinations) GetDestinationRedshift(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationRedshiftGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationRedshiftGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6255,12 +6255,12 @@ func (s *destinations) GetDestinationS3(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationS3GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationS3GetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6313,12 +6313,12 @@ func (s *destinations) GetDestinationS3Glue(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationS3GlueGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationS3GlueGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6371,12 +6371,12 @@ func (s *destinations) GetDestinationSftpJSON(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationSftpJSONGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationSftpJSONGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6429,12 +6429,12 @@ func (s *destinations) GetDestinationSnowflake(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationSnowflakeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationSnowflakeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6487,12 +6487,12 @@ func (s *destinations) GetDestinationTimeplus(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationTimeplusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationTimeplusGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6545,12 +6545,12 @@ func (s *destinations) GetDestinationTypesense(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationTypesenseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationTypesenseGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6603,12 +6603,12 @@ func (s *destinations) GetDestinationVertica(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationVerticaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationVerticaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -6661,12 +6661,12 @@ func (s *destinations) GetDestinationXata(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DestinationResponse
+			var out *shared.DestinationXataGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DestinationResponse = out
+			res.DestinationXataGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough

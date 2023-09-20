@@ -14,7 +14,7 @@ type GetSourceTvmazeScheduleRequest struct {
 type GetSourceTvmazeScheduleResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTvmazeScheduleGetResponse *shared.SourceTvmazeScheduleGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

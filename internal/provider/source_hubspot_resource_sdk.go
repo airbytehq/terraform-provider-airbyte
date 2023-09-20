@@ -125,13 +125,41 @@ func (r *SourceHubspotResourceModel) ToDeleteSDKType() *shared.SourceHubspotCrea
 	return out
 }
 
-func (r *SourceHubspotResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceHubspotResourceModel) RefreshFromGetResponse(resp *shared.SourceHubspotGetResponse) {
+	if resp.Configuration.Credentials.SourceHubspotAuthenticationOAuth != nil {
+		r.Configuration.Credentials.SourceHubspotAuthenticationOAuth = &SourceHubspotAuthenticationOAuth{}
+		r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientID)
+		r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientSecret)
+		r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle = types.StringValue(string(resp.Configuration.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle))
+		r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceHubspotAuthenticationOAuth.RefreshToken)
+	}
+	if resp.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp != nil {
+		r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp = &SourceHubspotAuthenticationPrivateApp{}
+		r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.AccessToken)
+		r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle = types.StringValue(string(resp.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle))
+	}
+	if resp.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth != nil {
+		r.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth = &SourceHubspotAuthenticationOAuth{}
+	}
+	if resp.Configuration.Credentials.SourceHubspotUpdateAuthenticationPrivateApp != nil {
+		r.Configuration.Credentials.SourceHubspotUpdateAuthenticationPrivateApp = &SourceHubspotAuthenticationPrivateApp{}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceHubspotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceHubspotResourceModel) RefreshFromCreateResponse(resp *shared.SourceHubspotGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

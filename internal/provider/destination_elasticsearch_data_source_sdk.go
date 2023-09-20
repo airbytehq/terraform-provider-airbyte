@@ -7,8 +7,47 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationElasticsearchDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationElasticsearchDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationElasticsearchGetResponse) {
+	if resp.Configuration.AuthenticationMethod == nil {
+		r.Configuration.AuthenticationMethod = nil
+	} else {
+		r.Configuration.AuthenticationMethod = &DestinationElasticsearchAuthenticationMethod{}
+		if resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret != nil {
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret = &DestinationElasticsearchAuthenticationMethodAPIKeySecret{}
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeyID = types.StringValue(resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeyID)
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeySecret = types.StringValue(resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeySecret)
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.Method = types.StringValue(string(resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.Method))
+		}
+		if resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword != nil {
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword = &DestinationElasticsearchAuthenticationMethodUsernamePassword{}
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Method = types.StringValue(string(resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Method))
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Password = types.StringValue(resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Password)
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Username = types.StringValue(resp.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Username)
+		}
+		if resp.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret != nil {
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret = &DestinationElasticsearchAuthenticationMethodAPIKeySecret{}
+		}
+		if resp.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword != nil {
+			r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword = &DestinationElasticsearchAuthenticationMethodUsernamePassword{}
+		}
+	}
+	if resp.Configuration.CaCertificate != nil {
+		r.Configuration.CaCertificate = types.StringValue(*resp.Configuration.CaCertificate)
+	} else {
+		r.Configuration.CaCertificate = types.StringNull()
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Endpoint = types.StringValue(resp.Configuration.Endpoint)
+	if resp.Configuration.Upsert != nil {
+		r.Configuration.Upsert = types.BoolValue(*resp.Configuration.Upsert)
+	} else {
+		r.Configuration.Upsert = types.BoolNull()
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

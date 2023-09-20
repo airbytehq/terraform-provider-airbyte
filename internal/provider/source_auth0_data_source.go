@@ -172,11 +172,11 @@ func (r *SourceAuth0DataSource) Schema(ctx context.Context, req datasource.Schem
 				Computed: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional:    true,
+				Computed:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
@@ -243,11 +243,11 @@ func (r *SourceAuth0DataSource) Read(ctx context.Context, req datasource.ReadReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
+	if res.SourceAuth0GetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromGetResponse(res.SourceAuth0GetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

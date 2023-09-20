@@ -134,13 +134,47 @@ func (r *SourceAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.SourceAz
 	return out
 }
 
-func (r *SourceAzureBlobStorageResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAzureBlobStorageResourceModel) RefreshFromGetResponse(resp *shared.SourceAzureBlobStorageGetResponse) {
+	r.Configuration.AzureBlobStorageAccountKey = types.StringValue(resp.Configuration.AzureBlobStorageAccountKey)
+	r.Configuration.AzureBlobStorageAccountName = types.StringValue(resp.Configuration.AzureBlobStorageAccountName)
+	if resp.Configuration.AzureBlobStorageBlobsPrefix != nil {
+		r.Configuration.AzureBlobStorageBlobsPrefix = types.StringValue(*resp.Configuration.AzureBlobStorageBlobsPrefix)
+	} else {
+		r.Configuration.AzureBlobStorageBlobsPrefix = types.StringNull()
+	}
+	r.Configuration.AzureBlobStorageContainerName = types.StringValue(resp.Configuration.AzureBlobStorageContainerName)
+	if resp.Configuration.AzureBlobStorageEndpoint != nil {
+		r.Configuration.AzureBlobStorageEndpoint = types.StringValue(*resp.Configuration.AzureBlobStorageEndpoint)
+	} else {
+		r.Configuration.AzureBlobStorageEndpoint = types.StringNull()
+	}
+	if resp.Configuration.AzureBlobStorageSchemaInferenceLimit != nil {
+		r.Configuration.AzureBlobStorageSchemaInferenceLimit = types.Int64Value(*resp.Configuration.AzureBlobStorageSchemaInferenceLimit)
+	} else {
+		r.Configuration.AzureBlobStorageSchemaInferenceLimit = types.Int64Null()
+	}
+	if resp.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
+		r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON = &SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON{}
+		r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType = types.StringValue(string(resp.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType))
+	}
+	if resp.Configuration.Format.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
+		r.Configuration.Format.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON = &SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON{}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.SourceAzureBlobStorageGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

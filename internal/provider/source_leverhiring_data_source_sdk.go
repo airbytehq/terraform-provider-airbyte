@@ -7,8 +7,63 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceLeverHiringDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceLeverHiringDataSourceModel) RefreshFromGetResponse(resp *shared.SourceLeverHiringGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceLeverHiringAuthenticationMechanism{}
+		if resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
+			r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey = &SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey{}
+			r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.APIKey = types.StringValue(resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.APIKey)
+			if resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType != nil {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
+			r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth = &SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth{}
+			if resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType != nil {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID != nil {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID = types.StringValue(*resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID)
+			} else {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientSecret != nil {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientSecret = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
+			r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey = &SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey{}
+		}
+		if resp.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
+			r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth = &SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth{}
+		}
+	}
+	if resp.Configuration.Environment != nil {
+		r.Configuration.Environment = types.StringValue(string(*resp.Configuration.Environment))
+	} else {
+		r.Configuration.Environment = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

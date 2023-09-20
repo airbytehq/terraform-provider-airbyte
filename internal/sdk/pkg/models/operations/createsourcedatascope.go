@@ -10,7 +10,7 @@ import (
 type CreateSourceDatascopeResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDatascopeGetResponse *shared.SourceDatascopeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

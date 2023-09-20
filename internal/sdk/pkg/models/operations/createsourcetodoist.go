@@ -10,7 +10,7 @@ import (
 type CreateSourceTodoistResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTodoistGetResponse *shared.SourceTodoistGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

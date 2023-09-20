@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestashopCreateRequest {
@@ -65,13 +66,25 @@ func (r *SourcePrestashopResourceModel) ToDeleteSDKType() *shared.SourcePrestash
 	return out
 }
 
-func (r *SourcePrestashopResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePrestashopResourceModel) RefreshFromGetResponse(resp *shared.SourcePrestashopGetResponse) {
+	r.Configuration.AccessKey = types.StringValue(resp.Configuration.AccessKey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	r.Configuration.URL = types.StringValue(resp.Configuration.URL)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePrestashopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePrestashopResourceModel) RefreshFromCreateResponse(resp *shared.SourcePrestashopGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

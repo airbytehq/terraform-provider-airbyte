@@ -1,4 +1,3 @@
 data "airbyte_source_xero" "my_source_xero" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "67a444dd-0da0-4abe-98eb-3d54ba1cb3ad"
 }

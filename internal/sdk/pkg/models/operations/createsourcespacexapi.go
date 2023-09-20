@@ -10,7 +10,7 @@ import (
 type CreateSourceSpacexAPIResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSpacexAPIGetResponse *shared.SourceSpacexAPIGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

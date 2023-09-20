@@ -74,13 +74,29 @@ func (r *SourceAzureTableResourceModel) ToDeleteSDKType() *shared.SourceAzureTab
 	return out
 }
 
-func (r *SourceAzureTableResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAzureTableResourceModel) RefreshFromGetResponse(resp *shared.SourceAzureTableGetResponse) {
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StorageAccessKey = types.StringValue(resp.Configuration.StorageAccessKey)
+	r.Configuration.StorageAccountName = types.StringValue(resp.Configuration.StorageAccountName)
+	if resp.Configuration.StorageEndpointSuffix != nil {
+		r.Configuration.StorageEndpointSuffix = types.StringValue(*resp.Configuration.StorageEndpointSuffix)
+	} else {
+		r.Configuration.StorageEndpointSuffix = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAzureTableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAzureTableResourceModel) RefreshFromCreateResponse(resp *shared.SourceAzureTableGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

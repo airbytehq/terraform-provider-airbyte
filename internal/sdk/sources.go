@@ -143,12 +143,12 @@ func (s *sources) CreateSourceAha(ctx context.Context, request shared.SourceAhaC
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAhaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAhaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -210,12 +210,12 @@ func (s *sources) CreateSourceAircall(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAircallGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAircallGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -277,12 +277,12 @@ func (s *sources) CreateSourceAirtable(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAirtableGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAirtableGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -344,12 +344,12 @@ func (s *sources) CreateSourceAlloydb(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAlloydbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAlloydbGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -411,12 +411,12 @@ func (s *sources) CreateSourceAmazonAds(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmazonAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmazonAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -478,12 +478,12 @@ func (s *sources) CreateSourceAmazonSellerPartner(ctx context.Context, request s
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmazonSellerPartnerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmazonSellerPartnerGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -545,12 +545,12 @@ func (s *sources) CreateSourceAmazonSqs(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmazonSqsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmazonSqsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -612,12 +612,12 @@ func (s *sources) CreateSourceAmplitude(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmplitudeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmplitudeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -679,12 +679,12 @@ func (s *sources) CreateSourceApifyDataset(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceApifyDatasetGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceApifyDatasetGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -746,12 +746,12 @@ func (s *sources) CreateSourceAppfollow(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAppfollowGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAppfollowGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -813,12 +813,12 @@ func (s *sources) CreateSourceAsana(ctx context.Context, request shared.SourceAs
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAsanaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAsanaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -880,12 +880,12 @@ func (s *sources) CreateSourceAuth0(ctx context.Context, request shared.SourceAu
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAuth0GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAuth0GetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -947,12 +947,12 @@ func (s *sources) CreateSourceAwsCloudtrail(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAwsCloudtrailGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAwsCloudtrailGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1014,12 +1014,12 @@ func (s *sources) CreateSourceAzureBlobStorage(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAzureBlobStorageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAzureBlobStorageGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1081,12 +1081,12 @@ func (s *sources) CreateSourceAzureTable(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAzureTableGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAzureTableGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1148,12 +1148,12 @@ func (s *sources) CreateSourceBambooHr(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBambooHrGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBambooHrGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1215,12 +1215,12 @@ func (s *sources) CreateSourceBigcommerce(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBigcommerceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBigcommerceGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1282,12 +1282,12 @@ func (s *sources) CreateSourceBigquery(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBigqueryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBigqueryGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1349,12 +1349,12 @@ func (s *sources) CreateSourceBingAds(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBingAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBingAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1416,12 +1416,12 @@ func (s *sources) CreateSourceBraintree(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBraintreeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBraintreeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1483,12 +1483,12 @@ func (s *sources) CreateSourceBraze(ctx context.Context, request shared.SourceBr
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBrazeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBrazeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1550,12 +1550,12 @@ func (s *sources) CreateSourceChargebee(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceChargebeeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceChargebeeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1617,12 +1617,12 @@ func (s *sources) CreateSourceChartmogul(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceChartmogulGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceChartmogulGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1684,12 +1684,12 @@ func (s *sources) CreateSourceClickhouse(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceClickhouseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceClickhouseGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1751,12 +1751,12 @@ func (s *sources) CreateSourceClickupAPI(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceClickupAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceClickupAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1818,12 +1818,12 @@ func (s *sources) CreateSourceClockify(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceClockifyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceClockifyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1885,12 +1885,12 @@ func (s *sources) CreateSourceCloseCom(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCloseComGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCloseComGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -1952,12 +1952,12 @@ func (s *sources) CreateSourceCoda(ctx context.Context, request shared.SourceCod
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCodaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCodaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2019,12 +2019,12 @@ func (s *sources) CreateSourceCoinAPI(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCoinAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCoinAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2086,12 +2086,12 @@ func (s *sources) CreateSourceCoinmarketcap(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCoinmarketcapGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCoinmarketcapGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2153,12 +2153,12 @@ func (s *sources) CreateSourceConfigcat(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceConfigcatGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceConfigcatGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2220,12 +2220,12 @@ func (s *sources) CreateSourceConfluence(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceConfluenceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceConfluenceGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2287,12 +2287,12 @@ func (s *sources) CreateSourceConvex(ctx context.Context, request shared.SourceC
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceConvexGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceConvexGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2354,12 +2354,12 @@ func (s *sources) CreateSourceDatascope(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDatascopeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDatascopeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2421,12 +2421,12 @@ func (s *sources) CreateSourceDelighted(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDelightedGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDelightedGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2488,12 +2488,12 @@ func (s *sources) CreateSourceDixa(ctx context.Context, request shared.SourceDix
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDixaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDixaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2555,12 +2555,12 @@ func (s *sources) CreateSourceDockerhub(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDockerhubGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDockerhubGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2622,12 +2622,12 @@ func (s *sources) CreateSourceDremio(ctx context.Context, request shared.SourceD
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDremioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDremioGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2689,12 +2689,12 @@ func (s *sources) CreateSourceDynamodb(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDynamodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDynamodbGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2756,12 +2756,12 @@ func (s *sources) CreateSourceE2eTestCloud(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceE2eTestCloudGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceE2eTestCloudGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2823,12 +2823,12 @@ func (s *sources) CreateSourceEmailoctopus(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceEmailoctopusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceEmailoctopusGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2890,12 +2890,12 @@ func (s *sources) CreateSourceExchangeRates(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceExchangeRatesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceExchangeRatesGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -2957,12 +2957,12 @@ func (s *sources) CreateSourceFacebookMarketing(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFacebookMarketingGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFacebookMarketingGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3024,12 +3024,12 @@ func (s *sources) CreateSourceFacebookPages(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFacebookPagesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFacebookPagesGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3091,12 +3091,12 @@ func (s *sources) CreateSourceFaker(ctx context.Context, request shared.SourceFa
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFakerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFakerGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3158,12 +3158,12 @@ func (s *sources) CreateSourceFauna(ctx context.Context, request shared.SourceFa
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFaunaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFaunaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3225,12 +3225,12 @@ func (s *sources) CreateSourceFileSecure(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFileSecureGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFileSecureGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3292,12 +3292,12 @@ func (s *sources) CreateSourceFirebolt(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFireboltGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFireboltGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3359,12 +3359,12 @@ func (s *sources) CreateSourceFreshcaller(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFreshcallerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFreshcallerGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3426,12 +3426,12 @@ func (s *sources) CreateSourceFreshdesk(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFreshdeskGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFreshdeskGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3493,12 +3493,12 @@ func (s *sources) CreateSourceFreshsales(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFreshsalesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFreshsalesGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3560,12 +3560,12 @@ func (s *sources) CreateSourceGainsightPx(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGainsightPxGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGainsightPxGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3627,12 +3627,12 @@ func (s *sources) CreateSourceGcs(ctx context.Context, request shared.SourceGcsC
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGcsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGcsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3694,12 +3694,12 @@ func (s *sources) CreateSourceGetlago(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGetlagoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGetlagoGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3761,12 +3761,12 @@ func (s *sources) CreateSourceGithub(ctx context.Context, request shared.SourceG
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGithubGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGithubGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3828,12 +3828,12 @@ func (s *sources) CreateSourceGitlab(ctx context.Context, request shared.SourceG
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGitlabGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGitlabGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3895,12 +3895,12 @@ func (s *sources) CreateSourceGlassfrog(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGlassfrogGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGlassfrogGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -3962,12 +3962,12 @@ func (s *sources) CreateSourceGnews(ctx context.Context, request shared.SourceGn
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGnewsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGnewsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4029,12 +4029,12 @@ func (s *sources) CreateSourceGoogleAds(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4096,12 +4096,12 @@ func (s *sources) CreateSourceGoogleAnalyticsDataAPI(ctx context.Context, reques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleAnalyticsDataAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleAnalyticsDataAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4163,12 +4163,12 @@ func (s *sources) CreateSourceGoogleAnalyticsV4(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleAnalyticsV4GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleAnalyticsV4GetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4230,12 +4230,12 @@ func (s *sources) CreateSourceGoogleDirectory(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleDirectoryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleDirectoryGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4297,12 +4297,12 @@ func (s *sources) CreateSourceGooglePagespeedInsights(ctx context.Context, reque
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGooglePagespeedInsightsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGooglePagespeedInsightsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4364,12 +4364,12 @@ func (s *sources) CreateSourceGoogleSearchConsole(ctx context.Context, request s
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleSearchConsoleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleSearchConsoleGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4431,12 +4431,12 @@ func (s *sources) CreateSourceGoogleSheets(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleSheetsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleSheetsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4498,12 +4498,12 @@ func (s *sources) CreateSourceGoogleWebfonts(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleWebfontsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleWebfontsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4565,12 +4565,12 @@ func (s *sources) CreateSourceGoogleWorkspaceAdminReports(ctx context.Context, r
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleWorkspaceAdminReportsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleWorkspaceAdminReportsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4632,12 +4632,12 @@ func (s *sources) CreateSourceGreenhouse(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGreenhouseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGreenhouseGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4699,12 +4699,12 @@ func (s *sources) CreateSourceGridly(ctx context.Context, request shared.SourceG
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGridlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGridlyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4766,12 +4766,12 @@ func (s *sources) CreateSourceHarvest(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceHarvestGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceHarvestGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4833,12 +4833,12 @@ func (s *sources) CreateSourceHubplanner(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceHubplannerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceHubplannerGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4900,12 +4900,12 @@ func (s *sources) CreateSourceHubspot(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceHubspotGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceHubspotGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -4967,12 +4967,12 @@ func (s *sources) CreateSourceInsightly(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceInsightlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceInsightlyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5034,12 +5034,12 @@ func (s *sources) CreateSourceInstagram(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceInstagramGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceInstagramGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5101,12 +5101,12 @@ func (s *sources) CreateSourceInstatus(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceInstatusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceInstatusGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5168,12 +5168,12 @@ func (s *sources) CreateSourceIntercom(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceIntercomGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceIntercomGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5235,12 +5235,12 @@ func (s *sources) CreateSourceIp2whois(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceIp2whoisGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceIp2whoisGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5302,12 +5302,12 @@ func (s *sources) CreateSourceIterable(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceIterableGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceIterableGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5369,12 +5369,12 @@ func (s *sources) CreateSourceJira(ctx context.Context, request shared.SourceJir
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceJiraGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceJiraGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5436,12 +5436,12 @@ func (s *sources) CreateSourceK6Cloud(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceK6CloudGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceK6CloudGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5503,12 +5503,12 @@ func (s *sources) CreateSourceKlarna(ctx context.Context, request shared.SourceK
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKlarnaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKlarnaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5570,12 +5570,12 @@ func (s *sources) CreateSourceKlaviyo(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKlaviyoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKlaviyoGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5637,12 +5637,12 @@ func (s *sources) CreateSourceKustomerSinger(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKustomerSingerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKustomerSingerGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5704,12 +5704,12 @@ func (s *sources) CreateSourceKyve(ctx context.Context, request shared.SourceKyv
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKyveGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKyveGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5771,12 +5771,12 @@ func (s *sources) CreateSourceLaunchdarkly(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLaunchdarklyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLaunchdarklyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5838,12 +5838,12 @@ func (s *sources) CreateSourceLemlist(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLemlistGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLemlistGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5905,12 +5905,12 @@ func (s *sources) CreateSourceLeverHiring(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLeverHiringGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLeverHiringGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -5972,12 +5972,12 @@ func (s *sources) CreateSourceLinkedinAds(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLinkedinAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLinkedinAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6039,12 +6039,12 @@ func (s *sources) CreateSourceLinkedinPages(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLinkedinPagesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLinkedinPagesGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6106,12 +6106,12 @@ func (s *sources) CreateSourceLinnworks(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLinnworksGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLinnworksGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6173,12 +6173,12 @@ func (s *sources) CreateSourceLokalise(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLokaliseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLokaliseGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6240,12 +6240,12 @@ func (s *sources) CreateSourceMailchimp(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMailchimpGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMailchimpGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6307,12 +6307,12 @@ func (s *sources) CreateSourceMailgun(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMailgunGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMailgunGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6374,12 +6374,12 @@ func (s *sources) CreateSourceMailjetSms(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMailjetSmsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMailjetSmsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6441,12 +6441,12 @@ func (s *sources) CreateSourceMarketo(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMarketoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMarketoGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6508,12 +6508,12 @@ func (s *sources) CreateSourceMetabase(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMetabaseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMetabaseGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6575,12 +6575,12 @@ func (s *sources) CreateSourceMicrosoftTeams(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMicrosoftTeamsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMicrosoftTeamsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6642,12 +6642,12 @@ func (s *sources) CreateSourceMixpanel(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMixpanelGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMixpanelGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6709,12 +6709,12 @@ func (s *sources) CreateSourceMonday(ctx context.Context, request shared.SourceM
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMondayGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMondayGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6776,12 +6776,12 @@ func (s *sources) CreateSourceMongodb(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMongodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMongodbGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6843,12 +6843,12 @@ func (s *sources) CreateSourceMongodbInternalPoc(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMongodbInternalPocGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMongodbInternalPocGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6910,12 +6910,12 @@ func (s *sources) CreateSourceMssql(ctx context.Context, request shared.SourceMs
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMssqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMssqlGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -6977,12 +6977,12 @@ func (s *sources) CreateSourceMyHours(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMyHoursGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMyHoursGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7044,12 +7044,12 @@ func (s *sources) CreateSourceMysql(ctx context.Context, request shared.SourceMy
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMysqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMysqlGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7111,12 +7111,12 @@ func (s *sources) CreateSourceNetsuite(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceNetsuiteGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceNetsuiteGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7178,12 +7178,12 @@ func (s *sources) CreateSourceNotion(ctx context.Context, request shared.SourceN
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceNotionGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceNotionGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7245,12 +7245,12 @@ func (s *sources) CreateSourceNytimes(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceNytimesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceNytimesGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7312,12 +7312,12 @@ func (s *sources) CreateSourceOkta(ctx context.Context, request shared.SourceOkt
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOktaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOktaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7379,12 +7379,12 @@ func (s *sources) CreateSourceOmnisend(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOmnisendGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOmnisendGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7446,12 +7446,12 @@ func (s *sources) CreateSourceOnesignal(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOnesignalGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOnesignalGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7513,12 +7513,12 @@ func (s *sources) CreateSourceOracle(ctx context.Context, request shared.SourceO
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOracleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOracleGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7580,12 +7580,12 @@ func (s *sources) CreateSourceOrb(ctx context.Context, request shared.SourceOrbC
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOrbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOrbGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7647,12 +7647,12 @@ func (s *sources) CreateSourceOrbit(ctx context.Context, request shared.SourceOr
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOrbitGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOrbitGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7714,12 +7714,12 @@ func (s *sources) CreateSourceOutbrainAmplify(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOutbrainAmplifyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOutbrainAmplifyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7781,12 +7781,12 @@ func (s *sources) CreateSourceOutreach(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOutreachGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOutreachGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7848,12 +7848,12 @@ func (s *sources) CreateSourcePaypalTransaction(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePaypalTransactionGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePaypalTransactionGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7915,12 +7915,12 @@ func (s *sources) CreateSourcePaystack(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePaystackGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePaystackGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -7982,12 +7982,12 @@ func (s *sources) CreateSourcePendo(ctx context.Context, request shared.SourcePe
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePendoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePendoGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8049,12 +8049,12 @@ func (s *sources) CreateSourcePersistiq(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePersistiqGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePersistiqGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8116,12 +8116,12 @@ func (s *sources) CreateSourcePexelsAPI(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePexelsAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePexelsAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8183,12 +8183,12 @@ func (s *sources) CreateSourcePinterest(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePinterestGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePinterestGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8250,12 +8250,12 @@ func (s *sources) CreateSourcePipedrive(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePipedriveGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePipedriveGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8317,12 +8317,12 @@ func (s *sources) CreateSourcePocket(ctx context.Context, request shared.SourceP
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePocketGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePocketGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8384,12 +8384,12 @@ func (s *sources) CreateSourcePokeapi(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePokeapiGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePokeapiGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8451,12 +8451,12 @@ func (s *sources) CreateSourcePolygonStockAPI(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePolygonStockAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePolygonStockAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8518,12 +8518,12 @@ func (s *sources) CreateSourcePostgres(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePostgresGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePostgresGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8585,12 +8585,12 @@ func (s *sources) CreateSourcePosthog(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePosthogGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePosthogGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8652,12 +8652,12 @@ func (s *sources) CreateSourcePostmarkapp(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePostmarkappGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePostmarkappGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8719,12 +8719,12 @@ func (s *sources) CreateSourcePrestashop(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePrestashopGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePrestashopGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8786,12 +8786,12 @@ func (s *sources) CreateSourcePunkAPI(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePunkAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePunkAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8853,12 +8853,12 @@ func (s *sources) CreateSourcePypi(ctx context.Context, request shared.SourcePyp
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePypiGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePypiGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8920,12 +8920,12 @@ func (s *sources) CreateSourceQualaroo(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceQualarooGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceQualarooGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -8987,12 +8987,12 @@ func (s *sources) CreateSourceQuickbooks(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceQuickbooksGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceQuickbooksGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9054,12 +9054,12 @@ func (s *sources) CreateSourceRailz(ctx context.Context, request shared.SourceRa
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRailzGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRailzGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9121,12 +9121,12 @@ func (s *sources) CreateSourceRecharge(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRechargeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRechargeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9188,12 +9188,12 @@ func (s *sources) CreateSourceRecreation(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRecreationGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRecreationGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9255,12 +9255,12 @@ func (s *sources) CreateSourceRecruitee(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRecruiteeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRecruiteeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9322,12 +9322,12 @@ func (s *sources) CreateSourceRecurly(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRecurlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRecurlyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9389,12 +9389,12 @@ func (s *sources) CreateSourceRedshift(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRedshiftGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRedshiftGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9456,12 +9456,12 @@ func (s *sources) CreateSourceRetently(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRetentlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRetentlyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9523,12 +9523,12 @@ func (s *sources) CreateSourceRkiCovid(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRkiCovidGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRkiCovidGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9590,12 +9590,12 @@ func (s *sources) CreateSourceRss(ctx context.Context, request shared.SourceRssC
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRssGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRssGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9657,12 +9657,12 @@ func (s *sources) CreateSourceS3(ctx context.Context, request shared.SourceS3Cre
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceS3GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceS3GetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9724,12 +9724,12 @@ func (s *sources) CreateSourceSalesforce(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSalesforceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSalesforceGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9791,12 +9791,12 @@ func (s *sources) CreateSourceSalesloft(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSalesloftGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSalesloftGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9858,12 +9858,12 @@ func (s *sources) CreateSourceSapFieldglass(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSapFieldglassGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSapFieldglassGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9925,12 +9925,12 @@ func (s *sources) CreateSourceSecoda(ctx context.Context, request shared.SourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSecodaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSecodaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -9992,12 +9992,12 @@ func (s *sources) CreateSourceSendgrid(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSendgridGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSendgridGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10059,12 +10059,12 @@ func (s *sources) CreateSourceSendinblue(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSendinblueGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSendinblueGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10126,12 +10126,12 @@ func (s *sources) CreateSourceSenseforce(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSenseforceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSenseforceGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10193,12 +10193,12 @@ func (s *sources) CreateSourceSentry(ctx context.Context, request shared.SourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSentryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSentryGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10260,12 +10260,12 @@ func (s *sources) CreateSourceSftp(ctx context.Context, request shared.SourceSft
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSftpGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSftpGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10327,12 +10327,12 @@ func (s *sources) CreateSourceSftpBulk(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSftpBulkGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSftpBulkGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10394,12 +10394,12 @@ func (s *sources) CreateSourceShopify(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceShopifyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceShopifyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10461,12 +10461,12 @@ func (s *sources) CreateSourceShortio(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceShortioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceShortioGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10528,12 +10528,12 @@ func (s *sources) CreateSourceSlack(ctx context.Context, request shared.SourceSl
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSlackGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSlackGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10595,12 +10595,12 @@ func (s *sources) CreateSourceSmaily(ctx context.Context, request shared.SourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSmailyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSmailyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10662,12 +10662,12 @@ func (s *sources) CreateSourceSmartengage(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSmartengageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSmartengageGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10729,12 +10729,12 @@ func (s *sources) CreateSourceSmartsheets(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSmartsheetsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSmartsheetsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10796,12 +10796,12 @@ func (s *sources) CreateSourceSnapchatMarketing(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSnapchatMarketingGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSnapchatMarketingGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10863,12 +10863,12 @@ func (s *sources) CreateSourceSnowflake(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSnowflakeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSnowflakeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10930,12 +10930,12 @@ func (s *sources) CreateSourceSonarCloud(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSonarCloudGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSonarCloudGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -10997,12 +10997,12 @@ func (s *sources) CreateSourceSpacexAPI(ctx context.Context, request shared.Sour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSpacexAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSpacexAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11064,12 +11064,12 @@ func (s *sources) CreateSourceSquare(ctx context.Context, request shared.SourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSquareGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSquareGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11131,12 +11131,12 @@ func (s *sources) CreateSourceStrava(ctx context.Context, request shared.SourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceStravaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceStravaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11198,12 +11198,12 @@ func (s *sources) CreateSourceStripe(ctx context.Context, request shared.SourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceStripeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceStripeGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11265,12 +11265,12 @@ func (s *sources) CreateSourceSurveySparrow(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSurveySparrowGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSurveySparrowGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11332,12 +11332,12 @@ func (s *sources) CreateSourceSurveymonkey(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSurveymonkeyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSurveymonkeyGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11399,12 +11399,12 @@ func (s *sources) CreateSourceTempo(ctx context.Context, request shared.SourceTe
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTempoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTempoGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11466,12 +11466,12 @@ func (s *sources) CreateSourceTheGuardianAPI(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTheGuardianAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTheGuardianAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11533,12 +11533,12 @@ func (s *sources) CreateSourceTiktokMarketing(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTiktokMarketingGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTiktokMarketingGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11600,12 +11600,12 @@ func (s *sources) CreateSourceTodoist(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTodoistGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTodoistGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11667,12 +11667,12 @@ func (s *sources) CreateSourceTrello(ctx context.Context, request shared.SourceT
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTrelloGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTrelloGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11734,12 +11734,12 @@ func (s *sources) CreateSourceTrustpilot(ctx context.Context, request shared.Sou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTrustpilotGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTrustpilotGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11801,12 +11801,12 @@ func (s *sources) CreateSourceTvmazeSchedule(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTvmazeScheduleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTvmazeScheduleGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11868,12 +11868,12 @@ func (s *sources) CreateSourceTwilio(ctx context.Context, request shared.SourceT
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTwilioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTwilioGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -11935,12 +11935,12 @@ func (s *sources) CreateSourceTwilioTaskrouter(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTwilioTaskrouterGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTwilioTaskrouterGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12002,12 +12002,12 @@ func (s *sources) CreateSourceTwitter(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTwitterGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTwitterGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12069,12 +12069,12 @@ func (s *sources) CreateSourceTypeform(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTypeformGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTypeformGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12136,12 +12136,12 @@ func (s *sources) CreateSourceUsCensus(ctx context.Context, request shared.Sourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceUsCensusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceUsCensusGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12203,12 +12203,12 @@ func (s *sources) CreateSourceVantage(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceVantageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceVantageGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12270,12 +12270,12 @@ func (s *sources) CreateSourceWebflow(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWebflowGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWebflowGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12337,12 +12337,12 @@ func (s *sources) CreateSourceWhiskyHunter(ctx context.Context, request shared.S
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWhiskyHunterGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWhiskyHunterGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12404,12 +12404,12 @@ func (s *sources) CreateSourceWikipediaPageviews(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWikipediaPageviewsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWikipediaPageviewsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12471,12 +12471,12 @@ func (s *sources) CreateSourceWoocommerce(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWoocommerceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWoocommerceGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12538,12 +12538,12 @@ func (s *sources) CreateSourceXero(ctx context.Context, request shared.SourceXer
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceXeroGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceXeroGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12605,12 +12605,12 @@ func (s *sources) CreateSourceXkcd(ctx context.Context, request shared.SourceXkc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceXkcdGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceXkcdGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12672,12 +12672,12 @@ func (s *sources) CreateSourceYandexMetrica(ctx context.Context, request shared.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYandexMetricaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYandexMetricaGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12739,12 +12739,12 @@ func (s *sources) CreateSourceYotpo(ctx context.Context, request shared.SourceYo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYotpoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYotpoGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12806,12 +12806,12 @@ func (s *sources) CreateSourceYounium(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYouniumGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYouniumGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12873,12 +12873,12 @@ func (s *sources) CreateSourceYoutubeAnalytics(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYoutubeAnalyticsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYoutubeAnalyticsGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -12940,12 +12940,12 @@ func (s *sources) CreateSourceZendeskChat(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskChatGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskChatGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13007,12 +13007,12 @@ func (s *sources) CreateSourceZendeskSunshine(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskSunshineGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskSunshineGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13074,12 +13074,12 @@ func (s *sources) CreateSourceZendeskSupport(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskSupportGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskSupportGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13141,12 +13141,12 @@ func (s *sources) CreateSourceZendeskTalk(ctx context.Context, request shared.So
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskTalkGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskTalkGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13208,12 +13208,12 @@ func (s *sources) CreateSourceZenloop(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZenloopGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZenloopGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13275,12 +13275,12 @@ func (s *sources) CreateSourceZohoCrm(ctx context.Context, request shared.Source
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZohoCrmGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZohoCrmGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13342,12 +13342,12 @@ func (s *sources) CreateSourceZoom(ctx context.Context, request shared.SourceZoo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZoomGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZoomGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -13409,12 +13409,12 @@ func (s *sources) CreateSourceZuora(ctx context.Context, request shared.SourceZu
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZuoraGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZuoraGetResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -23525,12 +23525,12 @@ func (s *sources) GetSourceAha(ctx context.Context, request operations.GetSource
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAhaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAhaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23583,12 +23583,12 @@ func (s *sources) GetSourceAircall(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAircallGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAircallGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23641,12 +23641,12 @@ func (s *sources) GetSourceAirtable(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAirtableGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAirtableGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23699,12 +23699,12 @@ func (s *sources) GetSourceAlloydb(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAlloydbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAlloydbGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23757,12 +23757,12 @@ func (s *sources) GetSourceAmazonAds(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmazonAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmazonAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23815,12 +23815,12 @@ func (s *sources) GetSourceAmazonSellerPartner(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmazonSellerPartnerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmazonSellerPartnerGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23873,12 +23873,12 @@ func (s *sources) GetSourceAmazonSqs(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmazonSqsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmazonSqsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23931,12 +23931,12 @@ func (s *sources) GetSourceAmplitude(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAmplitudeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAmplitudeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -23989,12 +23989,12 @@ func (s *sources) GetSourceApifyDataset(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceApifyDatasetGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceApifyDatasetGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24047,12 +24047,12 @@ func (s *sources) GetSourceAppfollow(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAppfollowGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAppfollowGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24105,12 +24105,12 @@ func (s *sources) GetSourceAsana(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAsanaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAsanaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24163,12 +24163,12 @@ func (s *sources) GetSourceAuth0(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAuth0GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAuth0GetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24221,12 +24221,12 @@ func (s *sources) GetSourceAwsCloudtrail(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAwsCloudtrailGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAwsCloudtrailGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24279,12 +24279,12 @@ func (s *sources) GetSourceAzureBlobStorage(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAzureBlobStorageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAzureBlobStorageGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24337,12 +24337,12 @@ func (s *sources) GetSourceAzureTable(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceAzureTableGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceAzureTableGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24395,12 +24395,12 @@ func (s *sources) GetSourceBambooHr(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBambooHrGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBambooHrGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24453,12 +24453,12 @@ func (s *sources) GetSourceBigcommerce(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBigcommerceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBigcommerceGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24511,12 +24511,12 @@ func (s *sources) GetSourceBigquery(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBigqueryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBigqueryGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24569,12 +24569,12 @@ func (s *sources) GetSourceBingAds(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBingAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBingAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24627,12 +24627,12 @@ func (s *sources) GetSourceBraintree(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBraintreeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBraintreeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24685,12 +24685,12 @@ func (s *sources) GetSourceBraze(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceBrazeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceBrazeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24743,12 +24743,12 @@ func (s *sources) GetSourceChargebee(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceChargebeeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceChargebeeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24801,12 +24801,12 @@ func (s *sources) GetSourceChartmogul(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceChartmogulGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceChartmogulGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24859,12 +24859,12 @@ func (s *sources) GetSourceClickhouse(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceClickhouseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceClickhouseGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24917,12 +24917,12 @@ func (s *sources) GetSourceClickupAPI(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceClickupAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceClickupAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -24975,12 +24975,12 @@ func (s *sources) GetSourceClockify(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceClockifyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceClockifyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25033,12 +25033,12 @@ func (s *sources) GetSourceCloseCom(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCloseComGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCloseComGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25091,12 +25091,12 @@ func (s *sources) GetSourceCoda(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCodaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCodaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25149,12 +25149,12 @@ func (s *sources) GetSourceCoinAPI(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCoinAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCoinAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25207,12 +25207,12 @@ func (s *sources) GetSourceCoinmarketcap(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceCoinmarketcapGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceCoinmarketcapGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25265,12 +25265,12 @@ func (s *sources) GetSourceConfigcat(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceConfigcatGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceConfigcatGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25323,12 +25323,12 @@ func (s *sources) GetSourceConfluence(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceConfluenceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceConfluenceGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25381,12 +25381,12 @@ func (s *sources) GetSourceConvex(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceConvexGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceConvexGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25439,12 +25439,12 @@ func (s *sources) GetSourceDatascope(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDatascopeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDatascopeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25497,12 +25497,12 @@ func (s *sources) GetSourceDelighted(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDelightedGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDelightedGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25555,12 +25555,12 @@ func (s *sources) GetSourceDixa(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDixaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDixaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25613,12 +25613,12 @@ func (s *sources) GetSourceDockerhub(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDockerhubGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDockerhubGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25671,12 +25671,12 @@ func (s *sources) GetSourceDremio(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDremioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDremioGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25729,12 +25729,12 @@ func (s *sources) GetSourceDynamodb(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceDynamodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceDynamodbGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25787,12 +25787,12 @@ func (s *sources) GetSourceE2eTestCloud(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceE2eTestCloudGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceE2eTestCloudGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25845,12 +25845,12 @@ func (s *sources) GetSourceEmailoctopus(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceEmailoctopusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceEmailoctopusGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25903,12 +25903,12 @@ func (s *sources) GetSourceExchangeRates(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceExchangeRatesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceExchangeRatesGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -25961,12 +25961,12 @@ func (s *sources) GetSourceFacebookMarketing(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFacebookMarketingGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFacebookMarketingGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26019,12 +26019,12 @@ func (s *sources) GetSourceFacebookPages(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFacebookPagesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFacebookPagesGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26077,12 +26077,12 @@ func (s *sources) GetSourceFaker(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFakerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFakerGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26135,12 +26135,12 @@ func (s *sources) GetSourceFauna(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFaunaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFaunaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26193,12 +26193,12 @@ func (s *sources) GetSourceFileSecure(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFileSecureGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFileSecureGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26251,12 +26251,12 @@ func (s *sources) GetSourceFirebolt(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFireboltGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFireboltGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26309,12 +26309,12 @@ func (s *sources) GetSourceFreshcaller(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFreshcallerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFreshcallerGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26367,12 +26367,12 @@ func (s *sources) GetSourceFreshdesk(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFreshdeskGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFreshdeskGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26425,12 +26425,12 @@ func (s *sources) GetSourceFreshsales(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceFreshsalesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceFreshsalesGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26483,12 +26483,12 @@ func (s *sources) GetSourceGainsightPx(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGainsightPxGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGainsightPxGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26541,12 +26541,12 @@ func (s *sources) GetSourceGcs(ctx context.Context, request operations.GetSource
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGcsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGcsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26599,12 +26599,12 @@ func (s *sources) GetSourceGetlago(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGetlagoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGetlagoGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26657,12 +26657,12 @@ func (s *sources) GetSourceGithub(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGithubGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGithubGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26715,12 +26715,12 @@ func (s *sources) GetSourceGitlab(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGitlabGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGitlabGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26773,12 +26773,12 @@ func (s *sources) GetSourceGlassfrog(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGlassfrogGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGlassfrogGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26831,12 +26831,12 @@ func (s *sources) GetSourceGnews(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGnewsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGnewsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26889,12 +26889,12 @@ func (s *sources) GetSourceGoogleAds(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -26947,12 +26947,12 @@ func (s *sources) GetSourceGoogleAnalyticsDataAPI(ctx context.Context, request o
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleAnalyticsDataAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleAnalyticsDataAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27005,12 +27005,12 @@ func (s *sources) GetSourceGoogleAnalyticsV4(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleAnalyticsV4GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleAnalyticsV4GetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27063,12 +27063,12 @@ func (s *sources) GetSourceGoogleDirectory(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleDirectoryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleDirectoryGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27121,12 +27121,12 @@ func (s *sources) GetSourceGooglePagespeedInsights(ctx context.Context, request 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGooglePagespeedInsightsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGooglePagespeedInsightsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27179,12 +27179,12 @@ func (s *sources) GetSourceGoogleSearchConsole(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleSearchConsoleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleSearchConsoleGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27237,12 +27237,12 @@ func (s *sources) GetSourceGoogleSheets(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleSheetsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleSheetsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27295,12 +27295,12 @@ func (s *sources) GetSourceGoogleWebfonts(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleWebfontsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleWebfontsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27353,12 +27353,12 @@ func (s *sources) GetSourceGoogleWorkspaceAdminReports(ctx context.Context, requ
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGoogleWorkspaceAdminReportsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGoogleWorkspaceAdminReportsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27411,12 +27411,12 @@ func (s *sources) GetSourceGreenhouse(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGreenhouseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGreenhouseGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27469,12 +27469,12 @@ func (s *sources) GetSourceGridly(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceGridlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceGridlyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27527,12 +27527,12 @@ func (s *sources) GetSourceHarvest(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceHarvestGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceHarvestGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27585,12 +27585,12 @@ func (s *sources) GetSourceHubplanner(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceHubplannerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceHubplannerGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27643,12 +27643,12 @@ func (s *sources) GetSourceHubspot(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceHubspotGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceHubspotGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27701,12 +27701,12 @@ func (s *sources) GetSourceInsightly(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceInsightlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceInsightlyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27759,12 +27759,12 @@ func (s *sources) GetSourceInstagram(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceInstagramGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceInstagramGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27817,12 +27817,12 @@ func (s *sources) GetSourceInstatus(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceInstatusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceInstatusGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27875,12 +27875,12 @@ func (s *sources) GetSourceIntercom(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceIntercomGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceIntercomGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27933,12 +27933,12 @@ func (s *sources) GetSourceIp2whois(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceIp2whoisGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceIp2whoisGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -27991,12 +27991,12 @@ func (s *sources) GetSourceIterable(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceIterableGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceIterableGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28049,12 +28049,12 @@ func (s *sources) GetSourceJira(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceJiraGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceJiraGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28107,12 +28107,12 @@ func (s *sources) GetSourceK6Cloud(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceK6CloudGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceK6CloudGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28165,12 +28165,12 @@ func (s *sources) GetSourceKlarna(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKlarnaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKlarnaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28223,12 +28223,12 @@ func (s *sources) GetSourceKlaviyo(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKlaviyoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKlaviyoGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28281,12 +28281,12 @@ func (s *sources) GetSourceKustomerSinger(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKustomerSingerGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKustomerSingerGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28339,12 +28339,12 @@ func (s *sources) GetSourceKyve(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceKyveGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceKyveGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28397,12 +28397,12 @@ func (s *sources) GetSourceLaunchdarkly(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLaunchdarklyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLaunchdarklyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28455,12 +28455,12 @@ func (s *sources) GetSourceLemlist(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLemlistGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLemlistGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28513,12 +28513,12 @@ func (s *sources) GetSourceLeverHiring(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLeverHiringGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLeverHiringGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28571,12 +28571,12 @@ func (s *sources) GetSourceLinkedinAds(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLinkedinAdsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLinkedinAdsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28629,12 +28629,12 @@ func (s *sources) GetSourceLinkedinPages(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLinkedinPagesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLinkedinPagesGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28687,12 +28687,12 @@ func (s *sources) GetSourceLinnworks(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLinnworksGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLinnworksGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28745,12 +28745,12 @@ func (s *sources) GetSourceLokalise(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceLokaliseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceLokaliseGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28803,12 +28803,12 @@ func (s *sources) GetSourceMailchimp(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMailchimpGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMailchimpGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28861,12 +28861,12 @@ func (s *sources) GetSourceMailgun(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMailgunGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMailgunGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28919,12 +28919,12 @@ func (s *sources) GetSourceMailjetSms(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMailjetSmsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMailjetSmsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -28977,12 +28977,12 @@ func (s *sources) GetSourceMarketo(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMarketoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMarketoGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29035,12 +29035,12 @@ func (s *sources) GetSourceMetabase(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMetabaseGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMetabaseGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29093,12 +29093,12 @@ func (s *sources) GetSourceMicrosoftTeams(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMicrosoftTeamsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMicrosoftTeamsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29151,12 +29151,12 @@ func (s *sources) GetSourceMixpanel(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMixpanelGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMixpanelGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29209,12 +29209,12 @@ func (s *sources) GetSourceMonday(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMondayGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMondayGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29267,12 +29267,12 @@ func (s *sources) GetSourceMongodb(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMongodbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMongodbGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29325,12 +29325,12 @@ func (s *sources) GetSourceMongodbInternalPoc(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMongodbInternalPocGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMongodbInternalPocGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29383,12 +29383,12 @@ func (s *sources) GetSourceMssql(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMssqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMssqlGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29441,12 +29441,12 @@ func (s *sources) GetSourceMyHours(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMyHoursGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMyHoursGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29499,12 +29499,12 @@ func (s *sources) GetSourceMysql(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceMysqlGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceMysqlGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29557,12 +29557,12 @@ func (s *sources) GetSourceNetsuite(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceNetsuiteGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceNetsuiteGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29615,12 +29615,12 @@ func (s *sources) GetSourceNotion(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceNotionGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceNotionGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29673,12 +29673,12 @@ func (s *sources) GetSourceNytimes(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceNytimesGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceNytimesGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29731,12 +29731,12 @@ func (s *sources) GetSourceOkta(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOktaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOktaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29789,12 +29789,12 @@ func (s *sources) GetSourceOmnisend(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOmnisendGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOmnisendGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29847,12 +29847,12 @@ func (s *sources) GetSourceOnesignal(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOnesignalGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOnesignalGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29905,12 +29905,12 @@ func (s *sources) GetSourceOracle(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOracleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOracleGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -29963,12 +29963,12 @@ func (s *sources) GetSourceOrb(ctx context.Context, request operations.GetSource
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOrbGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOrbGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30021,12 +30021,12 @@ func (s *sources) GetSourceOrbit(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOrbitGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOrbitGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30079,12 +30079,12 @@ func (s *sources) GetSourceOutbrainAmplify(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOutbrainAmplifyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOutbrainAmplifyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30137,12 +30137,12 @@ func (s *sources) GetSourceOutreach(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceOutreachGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceOutreachGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30195,12 +30195,12 @@ func (s *sources) GetSourcePaypalTransaction(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePaypalTransactionGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePaypalTransactionGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30253,12 +30253,12 @@ func (s *sources) GetSourcePaystack(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePaystackGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePaystackGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30311,12 +30311,12 @@ func (s *sources) GetSourcePendo(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePendoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePendoGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30369,12 +30369,12 @@ func (s *sources) GetSourcePersistiq(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePersistiqGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePersistiqGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30427,12 +30427,12 @@ func (s *sources) GetSourcePexelsAPI(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePexelsAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePexelsAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30485,12 +30485,12 @@ func (s *sources) GetSourcePinterest(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePinterestGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePinterestGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30543,12 +30543,12 @@ func (s *sources) GetSourcePipedrive(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePipedriveGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePipedriveGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30601,12 +30601,12 @@ func (s *sources) GetSourcePocket(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePocketGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePocketGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30659,12 +30659,12 @@ func (s *sources) GetSourcePokeapi(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePokeapiGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePokeapiGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30717,12 +30717,12 @@ func (s *sources) GetSourcePolygonStockAPI(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePolygonStockAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePolygonStockAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30775,12 +30775,12 @@ func (s *sources) GetSourcePostgres(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePostgresGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePostgresGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30833,12 +30833,12 @@ func (s *sources) GetSourcePosthog(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePosthogGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePosthogGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30891,12 +30891,12 @@ func (s *sources) GetSourcePostmarkapp(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePostmarkappGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePostmarkappGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -30949,12 +30949,12 @@ func (s *sources) GetSourcePrestashop(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePrestashopGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePrestashopGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31007,12 +31007,12 @@ func (s *sources) GetSourcePunkAPI(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePunkAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePunkAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31065,12 +31065,12 @@ func (s *sources) GetSourcePypi(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourcePypiGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourcePypiGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31123,12 +31123,12 @@ func (s *sources) GetSourceQualaroo(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceQualarooGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceQualarooGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31181,12 +31181,12 @@ func (s *sources) GetSourceQuickbooks(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceQuickbooksGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceQuickbooksGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31239,12 +31239,12 @@ func (s *sources) GetSourceRailz(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRailzGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRailzGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31297,12 +31297,12 @@ func (s *sources) GetSourceRecharge(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRechargeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRechargeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31355,12 +31355,12 @@ func (s *sources) GetSourceRecreation(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRecreationGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRecreationGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31413,12 +31413,12 @@ func (s *sources) GetSourceRecruitee(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRecruiteeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRecruiteeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31471,12 +31471,12 @@ func (s *sources) GetSourceRecurly(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRecurlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRecurlyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31529,12 +31529,12 @@ func (s *sources) GetSourceRedshift(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRedshiftGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRedshiftGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31587,12 +31587,12 @@ func (s *sources) GetSourceRetently(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRetentlyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRetentlyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31645,12 +31645,12 @@ func (s *sources) GetSourceRkiCovid(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRkiCovidGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRkiCovidGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31703,12 +31703,12 @@ func (s *sources) GetSourceRss(ctx context.Context, request operations.GetSource
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceRssGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceRssGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31761,12 +31761,12 @@ func (s *sources) GetSourceS3(ctx context.Context, request operations.GetSourceS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceS3GetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceS3GetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31819,12 +31819,12 @@ func (s *sources) GetSourceSalesforce(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSalesforceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSalesforceGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31877,12 +31877,12 @@ func (s *sources) GetSourceSalesloft(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSalesloftGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSalesloftGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31935,12 +31935,12 @@ func (s *sources) GetSourceSapFieldglass(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSapFieldglassGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSapFieldglassGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -31993,12 +31993,12 @@ func (s *sources) GetSourceSecoda(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSecodaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSecodaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32051,12 +32051,12 @@ func (s *sources) GetSourceSendgrid(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSendgridGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSendgridGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32109,12 +32109,12 @@ func (s *sources) GetSourceSendinblue(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSendinblueGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSendinblueGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32167,12 +32167,12 @@ func (s *sources) GetSourceSenseforce(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSenseforceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSenseforceGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32225,12 +32225,12 @@ func (s *sources) GetSourceSentry(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSentryGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSentryGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32283,12 +32283,12 @@ func (s *sources) GetSourceSftp(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSftpGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSftpGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32341,12 +32341,12 @@ func (s *sources) GetSourceSftpBulk(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSftpBulkGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSftpBulkGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32399,12 +32399,12 @@ func (s *sources) GetSourceShopify(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceShopifyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceShopifyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32457,12 +32457,12 @@ func (s *sources) GetSourceShortio(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceShortioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceShortioGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32515,12 +32515,12 @@ func (s *sources) GetSourceSlack(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSlackGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSlackGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32573,12 +32573,12 @@ func (s *sources) GetSourceSmaily(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSmailyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSmailyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32631,12 +32631,12 @@ func (s *sources) GetSourceSmartengage(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSmartengageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSmartengageGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32689,12 +32689,12 @@ func (s *sources) GetSourceSmartsheets(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSmartsheetsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSmartsheetsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32747,12 +32747,12 @@ func (s *sources) GetSourceSnapchatMarketing(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSnapchatMarketingGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSnapchatMarketingGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32805,12 +32805,12 @@ func (s *sources) GetSourceSnowflake(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSnowflakeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSnowflakeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32863,12 +32863,12 @@ func (s *sources) GetSourceSonarCloud(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSonarCloudGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSonarCloudGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32921,12 +32921,12 @@ func (s *sources) GetSourceSpacexAPI(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSpacexAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSpacexAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -32979,12 +32979,12 @@ func (s *sources) GetSourceSquare(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSquareGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSquareGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33037,12 +33037,12 @@ func (s *sources) GetSourceStrava(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceStravaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceStravaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33095,12 +33095,12 @@ func (s *sources) GetSourceStripe(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceStripeGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceStripeGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33153,12 +33153,12 @@ func (s *sources) GetSourceSurveySparrow(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSurveySparrowGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSurveySparrowGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33211,12 +33211,12 @@ func (s *sources) GetSourceSurveymonkey(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceSurveymonkeyGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceSurveymonkeyGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33269,12 +33269,12 @@ func (s *sources) GetSourceTempo(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTempoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTempoGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33327,12 +33327,12 @@ func (s *sources) GetSourceTheGuardianAPI(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTheGuardianAPIGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTheGuardianAPIGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33385,12 +33385,12 @@ func (s *sources) GetSourceTiktokMarketing(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTiktokMarketingGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTiktokMarketingGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33443,12 +33443,12 @@ func (s *sources) GetSourceTodoist(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTodoistGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTodoistGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33501,12 +33501,12 @@ func (s *sources) GetSourceTrello(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTrelloGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTrelloGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33559,12 +33559,12 @@ func (s *sources) GetSourceTrustpilot(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTrustpilotGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTrustpilotGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33617,12 +33617,12 @@ func (s *sources) GetSourceTvmazeSchedule(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTvmazeScheduleGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTvmazeScheduleGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33675,12 +33675,12 @@ func (s *sources) GetSourceTwilio(ctx context.Context, request operations.GetSou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTwilioGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTwilioGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33733,12 +33733,12 @@ func (s *sources) GetSourceTwilioTaskrouter(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTwilioTaskrouterGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTwilioTaskrouterGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33791,12 +33791,12 @@ func (s *sources) GetSourceTwitter(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTwitterGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTwitterGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33849,12 +33849,12 @@ func (s *sources) GetSourceTypeform(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceTypeformGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceTypeformGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33907,12 +33907,12 @@ func (s *sources) GetSourceUsCensus(ctx context.Context, request operations.GetS
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceUsCensusGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceUsCensusGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33965,12 +33965,12 @@ func (s *sources) GetSourceVantage(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceVantageGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceVantageGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34023,12 +34023,12 @@ func (s *sources) GetSourceWebflow(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWebflowGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWebflowGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34081,12 +34081,12 @@ func (s *sources) GetSourceWhiskyHunter(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWhiskyHunterGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWhiskyHunterGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34139,12 +34139,12 @@ func (s *sources) GetSourceWikipediaPageviews(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWikipediaPageviewsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWikipediaPageviewsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34197,12 +34197,12 @@ func (s *sources) GetSourceWoocommerce(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceWoocommerceGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceWoocommerceGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34255,12 +34255,12 @@ func (s *sources) GetSourceXero(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceXeroGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceXeroGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34313,12 +34313,12 @@ func (s *sources) GetSourceXkcd(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceXkcdGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceXkcdGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34371,12 +34371,12 @@ func (s *sources) GetSourceYandexMetrica(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYandexMetricaGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYandexMetricaGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34429,12 +34429,12 @@ func (s *sources) GetSourceYotpo(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYotpoGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYotpoGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34487,12 +34487,12 @@ func (s *sources) GetSourceYounium(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYouniumGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYouniumGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34545,12 +34545,12 @@ func (s *sources) GetSourceYoutubeAnalytics(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceYoutubeAnalyticsGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceYoutubeAnalyticsGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34603,12 +34603,12 @@ func (s *sources) GetSourceZendeskChat(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskChatGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskChatGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34661,12 +34661,12 @@ func (s *sources) GetSourceZendeskSunshine(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskSunshineGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskSunshineGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34719,12 +34719,12 @@ func (s *sources) GetSourceZendeskSupport(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskSupportGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskSupportGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34777,12 +34777,12 @@ func (s *sources) GetSourceZendeskTalk(ctx context.Context, request operations.G
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZendeskTalkGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZendeskTalkGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34835,12 +34835,12 @@ func (s *sources) GetSourceZenloop(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZenloopGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZenloopGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34893,12 +34893,12 @@ func (s *sources) GetSourceZohoCrm(ctx context.Context, request operations.GetSo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZohoCrmGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZohoCrmGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34951,12 +34951,12 @@ func (s *sources) GetSourceZoom(ctx context.Context, request operations.GetSourc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZoomGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZoomGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35009,12 +35009,12 @@ func (s *sources) GetSourceZuora(ctx context.Context, request operations.GetSour
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SourceResponse
+			var out *shared.SourceZuoraGetResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SourceResponse = out
+			res.SourceZuoraGetResponse = out
 		}
 	case httpRes.StatusCode == 403:
 		fallthrough

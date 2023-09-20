@@ -10,7 +10,7 @@ import (
 type CreateSourceSurveySparrowResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSurveySparrowGetResponse *shared.SourceSurveySparrowGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

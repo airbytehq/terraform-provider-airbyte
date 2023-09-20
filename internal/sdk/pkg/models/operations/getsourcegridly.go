@@ -14,7 +14,7 @@ type GetSourceGridlyRequest struct {
 type GetSourceGridlyResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGridlyGetResponse *shared.SourceGridlyGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

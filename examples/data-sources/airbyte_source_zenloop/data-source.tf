@@ -1,4 +1,3 @@
 data "airbyte_source_zenloop" "my_source_zenloop" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "4b454e98-31e7-495f-8e57-f54ebf2d2b46"
 }

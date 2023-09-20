@@ -75,13 +75,26 @@ func (r *DestinationDynamodbResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationDynamodbResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationDynamodbResourceModel) RefreshFromGetResponse(resp *shared.DestinationDynamodbGetResponse) {
+	r.Configuration.AccessKeyID = types.StringValue(resp.Configuration.AccessKeyID)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.DynamodbEndpoint != nil {
+		r.Configuration.DynamodbEndpoint = types.StringValue(*resp.Configuration.DynamodbEndpoint)
+	} else {
+		r.Configuration.DynamodbEndpoint = types.StringNull()
+	}
+	r.Configuration.DynamodbRegion = types.StringValue(string(resp.Configuration.DynamodbRegion))
+	r.Configuration.DynamodbTableNamePrefix = types.StringValue(resp.Configuration.DynamodbTableNamePrefix)
+	r.Configuration.SecretAccessKey = types.StringValue(resp.Configuration.SecretAccessKey)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationDynamodbGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateDestinationConvexResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationConvexGetResponse *shared.DestinationConvexGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

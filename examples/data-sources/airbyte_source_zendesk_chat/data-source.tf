@@ -1,4 +1,3 @@
 data "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "9defc0b2-3960-46cf-90ad-989e1a34715a"
 }

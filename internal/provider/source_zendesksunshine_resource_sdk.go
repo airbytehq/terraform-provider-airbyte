@@ -137,13 +137,48 @@ func (r *SourceZendeskSunshineResourceModel) ToDeleteSDKType() *shared.SourceZen
 	return out
 }
 
-func (r *SourceZendeskSunshineResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskSunshineResourceModel) RefreshFromGetResponse(resp *shared.SourceZendeskSunshineGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceZendeskSunshineAuthorizationMethod{}
+		if resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken = &SourceZendeskSunshineAuthorizationMethodAPIToken{}
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken = types.StringValue(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken)
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod))
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email = types.StringValue(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email)
+		}
+		if resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 = &SourceZendeskSunshineAuthorizationMethodOAuth20{}
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken)
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod))
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID)
+			r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret)
+		}
+		if resp.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken != nil {
+			r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken = &SourceZendeskSunshineAuthorizationMethodAPIToken{}
+		}
+		if resp.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20 = &SourceZendeskSunshineAuthorizationMethodOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	r.Configuration.Subdomain = types.StringValue(resp.Configuration.Subdomain)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZendeskSunshineResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskSunshineResourceModel) RefreshFromCreateResponse(resp *shared.SourceZendeskSunshineGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

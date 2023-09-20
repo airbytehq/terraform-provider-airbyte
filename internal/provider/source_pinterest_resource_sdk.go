@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterestCreateRequest {
@@ -159,13 +160,58 @@ func (r *SourcePinterestResourceModel) ToDeleteSDKType() *shared.SourcePinterest
 	return out
 }
 
-func (r *SourcePinterestResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePinterestResourceModel) RefreshFromGetResponse(resp *shared.SourcePinterestGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourcePinterestAuthorizationMethod{}
+		if resp.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
+			r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
+			r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken)
+			r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod))
+		}
+		if resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 = &SourcePinterestAuthorizationMethodOAuth20{}
+			r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod))
+			if resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID != nil {
+				r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID)
+			} else {
+				r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret != nil {
+				r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
+			}
+			r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken != nil {
+			r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
+		}
+		if resp.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20 = &SourcePinterestAuthorizationMethodOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	r.Configuration.Status = nil
+	for _, v := range resp.Configuration.Status {
+		r.Configuration.Status = append(r.Configuration.Status, types.StringValue(string(v)))
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePinterestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePinterestResourceModel) RefreshFromCreateResponse(resp *shared.SourcePinterestGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

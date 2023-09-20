@@ -10,7 +10,7 @@ import (
 type CreateSourceKlaviyoResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceKlaviyoGetResponse *shared.SourceKlaviyoGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_pokeapi" "my_source_pokeapi" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "7394f25f-634b-4373-8714-e6be8c3e09c6"
 }

@@ -14,7 +14,7 @@ type GetSourceUsCensusRequest struct {
 type GetSourceUsCensusResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceUsCensusGetResponse *shared.SourceUsCensusGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_railz" "my_source_railz" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "afe60aca-ca64-45de-9867-551a9cce61ec"
 }

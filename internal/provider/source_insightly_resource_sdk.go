@@ -80,13 +80,32 @@ func (r *SourceInsightlyResourceModel) ToDeleteSDKType() *shared.SourceInsightly
 	return out
 }
 
-func (r *SourceInsightlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceInsightlyResourceModel) RefreshFromGetResponse(resp *shared.SourceInsightlyGetResponse) {
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	if resp.Configuration.Token != nil {
+		r.Configuration.Token = types.StringValue(*resp.Configuration.Token)
+	} else {
+		r.Configuration.Token = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceInsightlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceInsightlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceInsightlyGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

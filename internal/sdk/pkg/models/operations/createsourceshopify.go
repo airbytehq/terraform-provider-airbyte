@@ -10,7 +10,7 @@ import (
 type CreateSourceShopifyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceShopifyGetResponse *shared.SourceShopifyGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

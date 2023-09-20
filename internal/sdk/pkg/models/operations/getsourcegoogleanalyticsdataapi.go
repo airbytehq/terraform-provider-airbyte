@@ -14,7 +14,7 @@ type GetSourceGoogleAnalyticsDataAPIRequest struct {
 type GetSourceGoogleAnalyticsDataAPIResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleAnalyticsDataAPIGetResponse *shared.SourceGoogleAnalyticsDataAPIGetResponse
+	StatusCode                              int
+	RawResponse                             *http.Response
 }

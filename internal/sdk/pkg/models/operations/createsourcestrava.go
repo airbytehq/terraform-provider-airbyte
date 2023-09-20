@@ -10,7 +10,7 @@ import (
 type CreateSourceStravaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceStravaGetResponse *shared.SourceStravaGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateDestinationSftpJSONResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationSftpJSONGetResponse *shared.DestinationSftpJSONGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

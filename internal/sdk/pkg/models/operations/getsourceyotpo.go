@@ -14,7 +14,7 @@ type GetSourceYotpoRequest struct {
 type GetSourceYotpoResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceYotpoGetResponse *shared.SourceYotpoGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

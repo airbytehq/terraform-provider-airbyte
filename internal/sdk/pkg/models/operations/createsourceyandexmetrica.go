@@ -10,7 +10,7 @@ import (
 type CreateSourceYandexMetricaResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceYandexMetricaGetResponse *shared.SourceYandexMetricaGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

@@ -7,8 +7,31 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDatabendDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationDatabendDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationDatabendGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	if resp.Configuration.Port != nil {
+		r.Configuration.Port = types.Int64Value(*resp.Configuration.Port)
+	} else {
+		r.Configuration.Port = types.Int64Null()
+	}
+	if resp.Configuration.Table != nil {
+		r.Configuration.Table = types.StringValue(*resp.Configuration.Table)
+	} else {
+		r.Configuration.Table = types.StringNull()
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

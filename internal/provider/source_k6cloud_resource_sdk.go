@@ -56,13 +56,23 @@ func (r *SourceK6CloudResourceModel) ToDeleteSDKType() *shared.SourceK6CloudCrea
 	return out
 }
 
-func (r *SourceK6CloudResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceK6CloudResourceModel) RefreshFromGetResponse(resp *shared.SourceK6CloudGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceK6CloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceK6CloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceK6CloudGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

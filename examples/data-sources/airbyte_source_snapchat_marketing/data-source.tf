@@ -1,4 +1,3 @@
 data "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "03c2f029-4192-4518-8ee4-1c999f469f6f"
 }

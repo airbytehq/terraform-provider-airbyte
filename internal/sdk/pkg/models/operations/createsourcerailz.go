@@ -10,7 +10,7 @@ import (
 type CreateSourceRailzResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRailzGetResponse *shared.SourceRailzGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

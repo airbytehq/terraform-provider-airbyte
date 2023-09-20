@@ -72,13 +72,27 @@ func (r *SourceOutreachResourceModel) ToDeleteSDKType() *shared.SourceOutreachCr
 	return out
 }
 
-func (r *SourceOutreachResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceOutreachResourceModel) RefreshFromGetResponse(resp *shared.SourceOutreachGetResponse) {
+	r.Configuration.ClientID = types.StringValue(resp.Configuration.ClientID)
+	r.Configuration.ClientSecret = types.StringValue(resp.Configuration.ClientSecret)
+	r.Configuration.RedirectURI = types.StringValue(resp.Configuration.RedirectURI)
+	r.Configuration.RefreshToken = types.StringValue(resp.Configuration.RefreshToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOutreachResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOutreachResourceModel) RefreshFromCreateResponse(resp *shared.SourceOutreachGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

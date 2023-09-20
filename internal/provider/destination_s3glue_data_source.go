@@ -78,21 +78,6 @@ func (r *DestinationS3GlueDataSource) Schema(ctx context.Context, req datasource
 									"compression": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-														Description: `must be one of ["No Compression"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
 											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
@@ -104,6 +89,21 @@ func (r *DestinationS3GlueDataSource) Schema(ctx context.Context, req datasource
 															),
 														},
 														Description: `must be one of ["GZIP"]`,
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+														Description: `must be one of ["No Compression"]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -281,7 +281,7 @@ func (r *DestinationS3GlueDataSource) Schema(ctx context.Context, req datasource
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
@@ -351,11 +351,11 @@ func (r *DestinationS3GlueDataSource) Read(ctx context.Context, req datasource.R
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationS3GlueGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationS3GlueGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

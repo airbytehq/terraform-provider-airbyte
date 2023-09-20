@@ -10,7 +10,7 @@ import (
 type CreateSourceAmazonAdsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAmazonAdsGetResponse *shared.SourceAmazonAdsGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

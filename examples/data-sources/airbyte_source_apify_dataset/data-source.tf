@@ -1,4 +1,3 @@
 data "airbyte_source_apify_dataset" "my_source_apifydataset" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "815aae99-fcde-49e7-a9c9-d4f2d8a44640"
 }

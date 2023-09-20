@@ -148,13 +148,55 @@ func (r *SourceAmazonSqsResourceModel) ToDeleteSDKType() *shared.SourceAmazonSqs
 	return out
 }
 
-func (r *SourceAmazonSqsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonSqsResourceModel) RefreshFromGetResponse(resp *shared.SourceAmazonSqsGetResponse) {
+	if resp.Configuration.AccessKey != nil {
+		r.Configuration.AccessKey = types.StringValue(*resp.Configuration.AccessKey)
+	} else {
+		r.Configuration.AccessKey = types.StringNull()
+	}
+	if resp.Configuration.AttributesToReturn != nil {
+		r.Configuration.AttributesToReturn = types.StringValue(*resp.Configuration.AttributesToReturn)
+	} else {
+		r.Configuration.AttributesToReturn = types.StringNull()
+	}
+	r.Configuration.DeleteMessages = types.BoolValue(resp.Configuration.DeleteMessages)
+	if resp.Configuration.MaxBatchSize != nil {
+		r.Configuration.MaxBatchSize = types.Int64Value(*resp.Configuration.MaxBatchSize)
+	} else {
+		r.Configuration.MaxBatchSize = types.Int64Null()
+	}
+	if resp.Configuration.MaxWaitTime != nil {
+		r.Configuration.MaxWaitTime = types.Int64Value(*resp.Configuration.MaxWaitTime)
+	} else {
+		r.Configuration.MaxWaitTime = types.Int64Null()
+	}
+	r.Configuration.QueueURL = types.StringValue(resp.Configuration.QueueURL)
+	r.Configuration.Region = types.StringValue(string(resp.Configuration.Region))
+	if resp.Configuration.SecretKey != nil {
+		r.Configuration.SecretKey = types.StringValue(*resp.Configuration.SecretKey)
+	} else {
+		r.Configuration.SecretKey = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.VisibilityTimeout != nil {
+		r.Configuration.VisibilityTimeout = types.Int64Value(*resp.Configuration.VisibilityTimeout)
+	} else {
+		r.Configuration.VisibilityTimeout = types.Int64Null()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.SourceAmazonSqsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

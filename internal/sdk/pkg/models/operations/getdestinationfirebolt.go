@@ -14,7 +14,7 @@ type GetDestinationFireboltRequest struct {
 type GetDestinationFireboltResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationFireboltGetResponse *shared.DestinationFireboltGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

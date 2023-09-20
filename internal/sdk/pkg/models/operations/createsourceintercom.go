@@ -10,7 +10,7 @@ import (
 type CreateSourceIntercomResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceIntercomGetResponse *shared.SourceIntercomGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

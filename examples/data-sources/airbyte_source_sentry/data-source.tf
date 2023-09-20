@@ -1,4 +1,3 @@
 data "airbyte_source_sentry" "my_source_sentry" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "fed939ba-8f71-4e29-92c2-0ee1228ac3ad"
 }

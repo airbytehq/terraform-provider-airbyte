@@ -96,13 +96,39 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToDeleteSDKType() *shared.S
 	return out
 }
 
-func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromGetResponse(resp *shared.SourceGooglePagespeedInsightsGetResponse) {
+	if resp.Configuration.APIKey != nil {
+		r.Configuration.APIKey = types.StringValue(*resp.Configuration.APIKey)
+	} else {
+		r.Configuration.APIKey = types.StringNull()
+	}
+	r.Configuration.Categories = nil
+	for _, v := range resp.Configuration.Categories {
+		r.Configuration.Categories = append(r.Configuration.Categories, types.StringValue(string(v)))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Strategies = nil
+	for _, v := range resp.Configuration.Strategies {
+		r.Configuration.Strategies = append(r.Configuration.Strategies, types.StringValue(string(v)))
+	}
+	r.Configuration.Urls = nil
+	for _, v := range resp.Configuration.Urls {
+		r.Configuration.Urls = append(r.Configuration.Urls, types.StringValue(v))
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromCreateResponse(resp *shared.SourceGooglePagespeedInsightsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

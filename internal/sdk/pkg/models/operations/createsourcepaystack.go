@@ -10,7 +10,7 @@ import (
 type CreateSourcePaystackResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePaystackGetResponse *shared.SourcePaystackGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

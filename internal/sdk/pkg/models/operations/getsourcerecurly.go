@@ -14,7 +14,7 @@ type GetSourceRecurlyRequest struct {
 type GetSourceRecurlyResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRecurlyGetResponse *shared.SourceRecurlyGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

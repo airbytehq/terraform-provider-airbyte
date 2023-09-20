@@ -14,7 +14,7 @@ type GetSourcePunkAPIRequest struct {
 type GetSourcePunkAPIResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePunkAPIGetResponse *shared.SourcePunkAPIGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

@@ -56,13 +56,23 @@ func (r *SourceRkiCovidResourceModel) ToDeleteSDKType() *shared.SourceRkiCovidCr
 	return out
 }
 
-func (r *SourceRkiCovidResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceRkiCovidResourceModel) RefreshFromGetResponse(resp *shared.SourceRkiCovidGetResponse) {
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRkiCovidResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRkiCovidResourceModel) RefreshFromCreateResponse(resp *shared.SourceRkiCovidGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

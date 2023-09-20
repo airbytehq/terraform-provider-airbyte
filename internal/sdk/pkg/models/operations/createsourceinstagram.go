@@ -10,7 +10,7 @@ import (
 type CreateSourceInstagramResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceInstagramGetResponse *shared.SourceInstagramGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

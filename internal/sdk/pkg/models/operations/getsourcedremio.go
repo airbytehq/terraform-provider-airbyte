@@ -14,7 +14,7 @@ type GetSourceDremioRequest struct {
 type GetSourceDremioResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDremioGetResponse *shared.SourceDremioGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

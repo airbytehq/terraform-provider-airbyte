@@ -1,4 +1,3 @@
 data "airbyte_source_omnisend" "my_source_omnisend" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "243afa69-87a4-472b-b09a-153e22301068"
 }

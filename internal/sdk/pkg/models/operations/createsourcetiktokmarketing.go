@@ -10,7 +10,7 @@ import (
 type CreateSourceTiktokMarketingResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTiktokMarketingGetResponse *shared.SourceTiktokMarketingGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceFakerResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFakerGetResponse *shared.SourceFakerGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

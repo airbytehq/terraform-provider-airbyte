@@ -10,7 +10,7 @@ import (
 type CreateSourceFileSecureResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFileSecureGetResponse *shared.SourceFileSecureGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

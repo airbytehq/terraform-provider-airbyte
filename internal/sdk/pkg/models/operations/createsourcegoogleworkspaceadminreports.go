@@ -10,7 +10,7 @@ import (
 type CreateSourceGoogleWorkspaceAdminReportsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleWorkspaceAdminReportsGetResponse *shared.SourceGoogleWorkspaceAdminReportsGetResponse
+	StatusCode                                   int
+	RawResponse                                  *http.Response
 }

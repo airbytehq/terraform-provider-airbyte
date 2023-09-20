@@ -122,13 +122,47 @@ func (r *SourceOrbResourceModel) ToDeleteSDKType() *shared.SourceOrbCreateReques
 	return out
 }
 
-func (r *SourceOrbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbResourceModel) RefreshFromGetResponse(resp *shared.SourceOrbGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.LookbackWindowDays != nil {
+		r.Configuration.LookbackWindowDays = types.Int64Value(*resp.Configuration.LookbackWindowDays)
+	} else {
+		r.Configuration.LookbackWindowDays = types.Int64Null()
+	}
+	r.Configuration.NumericEventPropertiesKeys = nil
+	for _, v := range resp.Configuration.NumericEventPropertiesKeys {
+		r.Configuration.NumericEventPropertiesKeys = append(r.Configuration.NumericEventPropertiesKeys, types.StringValue(v))
+	}
+	if resp.Configuration.PlanID != nil {
+		r.Configuration.PlanID = types.StringValue(*resp.Configuration.PlanID)
+	} else {
+		r.Configuration.PlanID = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
+	r.Configuration.StringEventPropertiesKeys = nil
+	for _, v := range resp.Configuration.StringEventPropertiesKeys {
+		r.Configuration.StringEventPropertiesKeys = append(r.Configuration.StringEventPropertiesKeys, types.StringValue(v))
+	}
+	if resp.Configuration.SubscriptionUsageGroupingKey != nil {
+		r.Configuration.SubscriptionUsageGroupingKey = types.StringValue(*resp.Configuration.SubscriptionUsageGroupingKey)
+	} else {
+		r.Configuration.SubscriptionUsageGroupingKey = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOrbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbResourceModel) RefreshFromCreateResponse(resp *shared.SourceOrbGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

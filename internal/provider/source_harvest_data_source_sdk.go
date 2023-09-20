@@ -4,11 +4,77 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceHarvestDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceHarvestDataSourceModel) RefreshFromGetResponse(resp *shared.SourceHarvestGetResponse) {
+	r.Configuration.AccountID = types.StringValue(resp.Configuration.AccountID)
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceHarvestAuthenticationMechanism1{}
+		if resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
+			r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth = &SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth1{}
+			if resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType != nil {
+				r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID)
+			r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret)
+			r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken)
+			if r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties == nil {
+					r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult, _ := json.Marshal(resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties)
+					r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+				}
+			}
+		}
+		if resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+			r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken = &SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken1{}
+			r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken = types.StringValue(resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken)
+			if resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType != nil {
+				r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType = types.StringNull()
+			}
+			if r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties == nil {
+					r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult1, _ := json.Marshal(resp.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties)
+					r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties = types.StringValue(string(additionalPropertiesResult1))
+				}
+			}
+		}
+		if resp.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
+			r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth = &SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth1{}
+		}
+		if resp.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+			r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken = &SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken1{}
+		}
+	}
+	if resp.Configuration.ReplicationEndDate != nil {
+		r.Configuration.ReplicationEndDate = types.StringValue(resp.Configuration.ReplicationEndDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.ReplicationEndDate = types.StringNull()
+	}
+	r.Configuration.ReplicationStartDate = types.StringValue(resp.Configuration.ReplicationStartDate.Format(time.RFC3339))
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceQuickbooksResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceQuickbooksGetResponse *shared.SourceQuickbooksGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

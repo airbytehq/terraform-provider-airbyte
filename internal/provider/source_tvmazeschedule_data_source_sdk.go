@@ -7,8 +7,30 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceTvmazeScheduleDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTvmazeScheduleDataSourceModel) RefreshFromGetResponse(resp *shared.SourceTvmazeScheduleGetResponse) {
+	r.Configuration.DomesticScheduleCountryCode = types.StringValue(resp.Configuration.DomesticScheduleCountryCode)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(*resp.Configuration.EndDate)
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
+	if resp.Configuration.WebScheduleCountryCode != nil {
+		r.Configuration.WebScheduleCountryCode = types.StringValue(*resp.Configuration.WebScheduleCountryCode)
+	} else {
+		r.Configuration.WebScheduleCountryCode = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

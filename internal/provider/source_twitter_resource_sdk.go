@@ -89,13 +89,34 @@ func (r *SourceTwitterResourceModel) ToDeleteSDKType() *shared.SourceTwitterCrea
 	return out
 }
 
-func (r *SourceTwitterResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTwitterResourceModel) RefreshFromGetResponse(resp *shared.SourceTwitterGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.Query = types.StringValue(resp.Configuration.Query)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTwitterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTwitterResourceModel) RefreshFromCreateResponse(resp *shared.SourceTwitterGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

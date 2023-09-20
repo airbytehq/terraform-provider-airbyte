@@ -10,7 +10,7 @@ import (
 type CreateSourceBingAdsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBingAdsGetResponse *shared.SourceBingAdsGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

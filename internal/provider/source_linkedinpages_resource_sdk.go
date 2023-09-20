@@ -148,13 +148,54 @@ func (r *SourceLinkedinPagesResourceModel) ToDeleteSDKType() *shared.SourceLinke
 	return out
 }
 
-func (r *SourceLinkedinPagesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceLinkedinPagesResourceModel) RefreshFromGetResponse(resp *shared.SourceLinkedinPagesGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceLinkedinPagesAuthentication{}
+		if resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
+			r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
+			r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken)
+			if resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod != nil {
+				r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod = types.StringValue(string(*resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod))
+			} else {
+				r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 = &SourceLinkedinAdsAuthenticationOAuth20{}
+			if resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod != nil {
+				r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod = types.StringValue(string(*resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod))
+			} else {
+				r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientID)
+			r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientSecret)
+			r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken != nil {
+			r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
+		}
+		if resp.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20 = &SourceLinkedinAdsAuthenticationOAuth20{}
+		}
+	}
+	r.Configuration.OrgID = types.StringValue(resp.Configuration.OrgID)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLinkedinPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLinkedinPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceLinkedinPagesGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

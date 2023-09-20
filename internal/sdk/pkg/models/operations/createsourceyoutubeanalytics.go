@@ -10,7 +10,7 @@ import (
 type CreateSourceYoutubeAnalyticsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceYoutubeAnalyticsGetResponse *shared.SourceYoutubeAnalyticsGetResponse
+	StatusCode                        int
+	RawResponse                       *http.Response
 }

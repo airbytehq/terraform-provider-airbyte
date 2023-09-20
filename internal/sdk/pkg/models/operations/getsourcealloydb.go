@@ -14,7 +14,7 @@ type GetSourceAlloydbRequest struct {
 type GetSourceAlloydbResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAlloydbGetResponse *shared.SourceAlloydbGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

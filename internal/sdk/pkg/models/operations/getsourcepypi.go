@@ -14,7 +14,7 @@ type GetSourcePypiRequest struct {
 type GetSourcePypiResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePypiGetResponse *shared.SourcePypiGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

@@ -5,10 +5,51 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceSlackDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSlackDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSlackGetResponse) {
+	r.Configuration.ChannelFilter = nil
+	for _, v := range resp.Configuration.ChannelFilter {
+		r.Configuration.ChannelFilter = append(r.Configuration.ChannelFilter, types.StringValue(v))
+	}
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceSlackAuthenticationMechanism{}
+		if resp.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken = &SourceSlackAuthenticationMechanismAPIToken{}
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken = types.StringValue(resp.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken)
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle = types.StringValue(string(resp.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle))
+		}
+		if resp.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth = &SourceSlackAuthenticationMechanismSignInViaSlackOAuth{}
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken)
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID)
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret)
+			r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle = types.StringValue(string(resp.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle))
+		}
+		if resp.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismAPIToken != nil {
+			r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismAPIToken = &SourceSlackAuthenticationMechanismAPIToken{}
+		}
+		if resp.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth != nil {
+			r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth = &SourceSlackAuthenticationMechanismSignInViaSlackOAuth{}
+		}
+	}
+	r.Configuration.JoinChannels = types.BoolValue(resp.Configuration.JoinChannels)
+	r.Configuration.LookbackWindow = types.Int64Value(resp.Configuration.LookbackWindow)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

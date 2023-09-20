@@ -74,13 +74,29 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToDeleteSDKType() *shar
 	return out
 }
 
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromGetResponse(resp *shared.SourceGoogleWorkspaceAdminReportsGetResponse) {
+	r.Configuration.CredentialsJSON = types.StringValue(resp.Configuration.CredentialsJSON)
+	r.Configuration.Email = types.StringValue(resp.Configuration.Email)
+	if resp.Configuration.Lookback != nil {
+		r.Configuration.Lookback = types.Int64Value(*resp.Configuration.Lookback)
+	} else {
+		r.Configuration.Lookback = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromCreateResponse(resp *shared.SourceGoogleWorkspaceAdminReportsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

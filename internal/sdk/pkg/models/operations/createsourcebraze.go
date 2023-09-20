@@ -10,7 +10,7 @@ import (
 type CreateSourceBrazeResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBrazeGetResponse *shared.SourceBrazeGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

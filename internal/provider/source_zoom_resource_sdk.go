@@ -56,13 +56,23 @@ func (r *SourceZoomResourceModel) ToDeleteSDKType() *shared.SourceZoomCreateRequ
 	return out
 }
 
-func (r *SourceZoomResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZoomResourceModel) RefreshFromGetResponse(resp *shared.SourceZoomGetResponse) {
+	r.Configuration.JwtToken = types.StringValue(resp.Configuration.JwtToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZoomResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZoomResourceModel) RefreshFromCreateResponse(resp *shared.SourceZoomGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceMixpanelResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMixpanelGetResponse *shared.SourceMixpanelGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

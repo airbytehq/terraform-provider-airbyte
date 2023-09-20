@@ -1,4 +1,3 @@
 data "airbyte_source_firebolt" "my_source_firebolt" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "d2341189-8e73-4879-afbe-8baebabb7945"
 }

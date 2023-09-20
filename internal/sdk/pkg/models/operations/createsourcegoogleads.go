@@ -10,7 +10,7 @@ import (
 type CreateSourceGoogleAdsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleAdsGetResponse *shared.SourceGoogleAdsGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

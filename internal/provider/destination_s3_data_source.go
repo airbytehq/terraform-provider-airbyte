@@ -78,17 +78,17 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 									"compression_codec": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
+											"destination_s3_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
 														Computed: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
-																"no compression",
+																"bzip2",
 															),
 														},
-														Description: `must be one of ["no compression"]`,
+														Description: `must be one of ["bzip2"]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -112,17 +112,32 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
+											"destination_s3_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
 														Computed: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
-																"bzip2",
+																"no compression",
 															),
 														},
-														Description: `must be one of ["bzip2"]`,
+														Description: `must be one of ["no compression"]`,
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+											"destination_s3_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"snappy",
+															),
+														},
+														Description: `must be one of ["snappy"]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -169,21 +184,6 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"snappy",
-															),
-														},
-														Description: `must be one of ["snappy"]`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
 										},
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
@@ -208,21 +208,6 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 									"compression": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-														Description: `must be one of ["No Compression"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
-											},
 											"destination_s3_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
@@ -234,6 +219,21 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 															),
 														},
 														Description: `must be one of ["GZIP"]`,
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
+											},
+											"destination_s3_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+														Description: `must be one of ["No Compression"]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -273,21 +273,6 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 									"compression": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-														Description: `must be one of ["No Compression"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
 											"destination_s3_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
@@ -299,6 +284,21 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 															),
 														},
 														Description: `must be one of ["GZIP"]`,
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+											"destination_s3_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+														Description: `must be one of ["No Compression"]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -758,7 +758,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
@@ -828,11 +828,11 @@ func (r *DestinationS3DataSource) Read(ctx context.Context, req datasource.ReadR
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationS3GetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationS3GetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

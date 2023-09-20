@@ -14,7 +14,7 @@ type GetSourcePaypalTransactionRequest struct {
 type GetSourcePaypalTransactionResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePaypalTransactionGetResponse *shared.SourcePaypalTransactionGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

@@ -386,13 +386,132 @@ func (r *SourceMssqlResourceModel) ToDeleteSDKType() *shared.SourceMssqlCreateRe
 	return out
 }
 
-func (r *SourceMssqlResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMssqlResourceModel) RefreshFromGetResponse(resp *shared.SourceMssqlGetResponse) {
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	if resp.Configuration.ReplicationMethod == nil {
+		r.Configuration.ReplicationMethod = nil
+	} else {
+		r.Configuration.ReplicationMethod = &SourceMssqlUpdateMethod{}
+		if resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+			r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC = &SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC{}
+			if resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync != nil {
+				r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync = types.StringValue(string(*resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync))
+			} else {
+				r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync = types.StringNull()
+			}
+			if resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds != nil {
+				r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds)
+			} else {
+				r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds = types.Int64Null()
+			}
+			r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.Method))
+			if resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation != nil {
+				r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation = types.StringValue(string(*resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation))
+			} else {
+				r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation = types.StringNull()
+			}
+		}
+		if resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor = &SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor{}
+			r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor.Method = types.StringValue(string(resp.Configuration.ReplicationMethod.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor.Method))
+		}
+		if resp.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+			r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC = &SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC{}
+		}
+		if resp.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = &SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor{}
+		}
+	}
+	r.Configuration.Schemas = nil
+	for _, v := range resp.Configuration.Schemas {
+		r.Configuration.Schemas = append(r.Configuration.Schemas, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.SslMethod == nil {
+		r.Configuration.SslMethod = nil
+	} else {
+		r.Configuration.SslMethod = &SourceMssqlSSLMethod{}
+		if resp.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
+			r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate = &DestinationMssqlSSLMethodEncryptedTrustServerCertificate{}
+			r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod = types.StringValue(string(resp.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod))
+		}
+		if resp.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
+			r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate = &DestinationMssqlSSLMethodEncryptedVerifyCertificate{}
+			if resp.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate != nil {
+				r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate = types.StringValue(*resp.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate)
+			} else {
+				r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate = types.StringNull()
+			}
+			r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod = types.StringValue(string(resp.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod))
+		}
+		if resp.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate != nil {
+			r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate = &DestinationMssqlSSLMethodEncryptedTrustServerCertificate{}
+		}
+		if resp.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate != nil {
+			r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate = &DestinationMssqlSSLMethodEncryptedVerifyCertificate{}
+		}
+	}
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &SourceMssqlSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMssqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMssqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceMssqlGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -5,10 +5,69 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceGoogleAnalyticsDataAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleAnalyticsDataAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceGoogleAnalyticsDataAPIGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceGoogleAnalyticsDataAPICredentials{}
+		if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth = &SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth{}
+			if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken != nil {
+				r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken = types.StringValue(*resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken)
+			} else {
+				r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType != nil {
+				r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientID = types.StringValue(resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientID)
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientSecret)
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication = &SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication{}
+			if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType != nil {
+				r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType = types.StringValue(string(*resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType))
+			} else {
+				r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.CredentialsJSON = types.StringValue(resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.CredentialsJSON)
+		}
+		if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth != nil {
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth = &SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth{}
+		}
+		if resp.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication != nil {
+			r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication = &SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication{}
+		}
+	}
+	if resp.Configuration.CustomReports != nil {
+		r.Configuration.CustomReports = types.StringValue(*resp.Configuration.CustomReports)
+	} else {
+		r.Configuration.CustomReports = types.StringNull()
+	}
+	r.Configuration.DateRangesStartDate = types.StringValue(resp.Configuration.DateRangesStartDate.String())
+	r.Configuration.PropertyID = types.StringValue(resp.Configuration.PropertyID)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.WindowInDays != nil {
+		r.Configuration.WindowInDays = types.Int64Value(*resp.Configuration.WindowInDays)
+	} else {
+		r.Configuration.WindowInDays = types.Int64Null()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

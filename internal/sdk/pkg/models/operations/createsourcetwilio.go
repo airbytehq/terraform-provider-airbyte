@@ -10,7 +10,7 @@ import (
 type CreateSourceTwilioResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTwilioGetResponse *shared.SourceTwilioGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

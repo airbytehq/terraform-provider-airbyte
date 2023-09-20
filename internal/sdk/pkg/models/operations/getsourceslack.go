@@ -14,7 +14,7 @@ type GetSourceSlackRequest struct {
 type GetSourceSlackResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSlackGetResponse *shared.SourceSlackGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

@@ -221,13 +221,69 @@ func (r *DestinationPineconeResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationPineconeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationPineconeResourceModel) RefreshFromGetResponse(resp *shared.DestinationPineconeGetResponse) {
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.Embedding.DestinationPineconeEmbeddingCohere != nil {
+		r.Configuration.Embedding.DestinationPineconeEmbeddingCohere = &DestinationMilvusEmbeddingCohere{}
+		r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.CohereKey = types.StringValue(resp.Configuration.Embedding.DestinationPineconeEmbeddingCohere.CohereKey)
+		if resp.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode != nil {
+			r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Embedding.DestinationPineconeEmbeddingFake != nil {
+		r.Configuration.Embedding.DestinationPineconeEmbeddingFake = &DestinationLangchainEmbeddingFake{}
+		if resp.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode != nil {
+			r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI != nil {
+		r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI = &DestinationLangchainEmbeddingOpenAI{}
+		if resp.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode != nil {
+			r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode = types.StringNull()
+		}
+		r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.OpenaiKey = types.StringValue(resp.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.OpenaiKey)
+	}
+	if resp.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere != nil {
+		r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere = &DestinationMilvusEmbeddingCohere{}
+	}
+	if resp.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake != nil {
+		r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake = &DestinationLangchainEmbeddingFake{}
+	}
+	if resp.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI != nil {
+		r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI = &DestinationLangchainEmbeddingOpenAI{}
+	}
+	r.Configuration.Indexing.Index = types.StringValue(resp.Configuration.Indexing.Index)
+	r.Configuration.Indexing.PineconeEnvironment = types.StringValue(resp.Configuration.Indexing.PineconeEnvironment)
+	r.Configuration.Indexing.PineconeKey = types.StringValue(resp.Configuration.Indexing.PineconeKey)
+	if resp.Configuration.Processing.ChunkOverlap != nil {
+		r.Configuration.Processing.ChunkOverlap = types.Int64Value(*resp.Configuration.Processing.ChunkOverlap)
+	} else {
+		r.Configuration.Processing.ChunkOverlap = types.Int64Null()
+	}
+	r.Configuration.Processing.ChunkSize = types.Int64Value(resp.Configuration.Processing.ChunkSize)
+	r.Configuration.Processing.MetadataFields = nil
+	for _, v := range resp.Configuration.Processing.MetadataFields {
+		r.Configuration.Processing.MetadataFields = append(r.Configuration.Processing.MetadataFields, types.StringValue(v))
+	}
+	r.Configuration.Processing.TextFields = nil
+	for _, v := range resp.Configuration.Processing.TextFields {
+		r.Configuration.Processing.TextFields = append(r.Configuration.Processing.TextFields, types.StringValue(v))
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationPineconeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationPineconeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationPineconeGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

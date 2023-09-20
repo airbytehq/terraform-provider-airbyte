@@ -10,7 +10,7 @@ import (
 type CreateSourceMetabaseResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMetabaseGetResponse *shared.SourceMetabaseGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

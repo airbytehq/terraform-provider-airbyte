@@ -70,13 +70,28 @@ func (r *SourceCoinmarketcapResourceModel) ToDeleteSDKType() *shared.SourceCoinm
 	return out
 }
 
-func (r *SourceCoinmarketcapResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceCoinmarketcapResourceModel) RefreshFromGetResponse(resp *shared.SourceCoinmarketcapGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.DataType = types.StringValue(string(resp.Configuration.DataType))
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Symbols = nil
+	for _, v := range resp.Configuration.Symbols {
+		r.Configuration.Symbols = append(r.Configuration.Symbols, types.StringValue(v))
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceCoinmarketcapResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceCoinmarketcapResourceModel) RefreshFromCreateResponse(resp *shared.SourceCoinmarketcapGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

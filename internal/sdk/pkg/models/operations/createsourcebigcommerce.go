@@ -10,7 +10,7 @@ import (
 type CreateSourceBigcommerceResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBigcommerceGetResponse *shared.SourceBigcommerceGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

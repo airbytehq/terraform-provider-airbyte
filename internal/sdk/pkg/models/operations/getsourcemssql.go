@@ -14,7 +14,7 @@ type GetSourceMssqlRequest struct {
 type GetSourceMssqlResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMssqlGetResponse *shared.SourceMssqlGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

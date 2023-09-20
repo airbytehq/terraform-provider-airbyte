@@ -14,7 +14,7 @@ type GetSourceAircallRequest struct {
 type GetSourceAircallResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAircallGetResponse *shared.SourceAircallGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

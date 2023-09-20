@@ -10,7 +10,7 @@ import (
 type CreateSourceGetlagoResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGetlagoGetResponse *shared.SourceGetlagoGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

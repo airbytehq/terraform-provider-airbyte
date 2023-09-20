@@ -5,10 +5,51 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceSurveymonkeyDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSurveymonkeyDataSourceModel) RefreshFromGetResponse(resp *shared.SourceSurveymonkeyGetResponse) {
+	if r.Configuration.Credentials == nil {
+		r.Configuration.Credentials = &SourceSurveymonkeySurveyMonkeyAuthorizationMethod{}
+	}
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceSurveymonkeySurveyMonkeyAuthorizationMethod{}
+		r.Configuration.Credentials.AccessToken = types.StringValue(resp.Configuration.Credentials.AccessToken)
+		r.Configuration.Credentials.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.AuthMethod))
+		if resp.Configuration.Credentials.ClientID != nil {
+			r.Configuration.Credentials.ClientID = types.StringValue(*resp.Configuration.Credentials.ClientID)
+		} else {
+			r.Configuration.Credentials.ClientID = types.StringNull()
+		}
+		if resp.Configuration.Credentials.ClientSecret != nil {
+			r.Configuration.Credentials.ClientSecret = types.StringValue(*resp.Configuration.Credentials.ClientSecret)
+		} else {
+			r.Configuration.Credentials.ClientSecret = types.StringNull()
+		}
+	}
+	if resp.Configuration.Origin != nil {
+		r.Configuration.Origin = types.StringValue(string(*resp.Configuration.Origin))
+	} else {
+		r.Configuration.Origin = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	r.Configuration.SurveyIds = nil
+	for _, v := range resp.Configuration.SurveyIds {
+		r.Configuration.SurveyIds = append(r.Configuration.SurveyIds, types.StringValue(v))
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

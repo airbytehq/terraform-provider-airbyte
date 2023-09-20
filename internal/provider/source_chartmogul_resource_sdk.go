@@ -65,13 +65,25 @@ func (r *SourceChartmogulResourceModel) ToDeleteSDKType() *shared.SourceChartmog
 	return out
 }
 
-func (r *SourceChartmogulResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceChartmogulResourceModel) RefreshFromGetResponse(resp *shared.SourceChartmogulGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.Interval = types.StringValue(string(resp.Configuration.Interval))
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceChartmogulResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceChartmogulResourceModel) RefreshFromCreateResponse(resp *shared.SourceChartmogulGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

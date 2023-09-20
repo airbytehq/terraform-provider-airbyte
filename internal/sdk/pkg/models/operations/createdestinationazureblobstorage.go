@@ -10,7 +10,7 @@ import (
 type CreateDestinationAzureBlobStorageResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationAzureBlobStorageGetResponse *shared.DestinationAzureBlobStorageGetResponse
+	StatusCode                             int
+	RawResponse                            *http.Response
 }

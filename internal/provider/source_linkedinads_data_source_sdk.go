@@ -5,10 +5,65 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceLinkedinAdsDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceLinkedinAdsDataSourceModel) RefreshFromGetResponse(resp *shared.SourceLinkedinAdsGetResponse) {
+	r.Configuration.AccountIds = nil
+	for _, v := range resp.Configuration.AccountIds {
+		r.Configuration.AccountIds = append(r.Configuration.AccountIds, types.Int64Value(v))
+	}
+	r.Configuration.AdAnalyticsReports = nil
+	for _, adAnalyticsReportsItem := range resp.Configuration.AdAnalyticsReports {
+		var adAnalyticsReports1 SourceLinkedinAdsAdAnalyticsReportConfiguration
+		adAnalyticsReports1.Name = types.StringValue(adAnalyticsReportsItem.Name)
+		adAnalyticsReports1.PivotBy = types.StringValue(string(adAnalyticsReportsItem.PivotBy))
+		adAnalyticsReports1.TimeGranularity = types.StringValue(string(adAnalyticsReportsItem.TimeGranularity))
+		r.Configuration.AdAnalyticsReports = append(r.Configuration.AdAnalyticsReports, adAnalyticsReports1)
+	}
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceLinkedinAdsAuthentication{}
+		if resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken != nil {
+			r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
+			r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AccessToken)
+			if resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod != nil {
+				r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod = types.StringValue(string(*resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod))
+			} else {
+				r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20 = &SourceLinkedinAdsAuthenticationOAuth20{}
+			if resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod != nil {
+				r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod = types.StringValue(string(*resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod))
+			} else {
+				r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientID = types.StringValue(resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientID)
+			r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientSecret = types.StringValue(resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientSecret)
+			r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.RefreshToken = types.StringValue(resp.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.RefreshToken)
+		}
+		if resp.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken != nil {
+			r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
+		}
+		if resp.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20 = &SourceLinkedinAdsAuthenticationOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -14,7 +14,7 @@ type GetSourceK6CloudRequest struct {
 type GetSourceK6CloudResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceK6CloudGetResponse *shared.SourceK6CloudGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_pexels_api" "my_source_pexelsapi" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "249b211c-e46b-4951-a52b-158ca9142f05"
 }

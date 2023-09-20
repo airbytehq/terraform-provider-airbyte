@@ -1,4 +1,3 @@
 data "airbyte_source_okta" "my_source_okta" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "36add704-080e-40a3-bc73-a5a034b11499"
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_gainsight_px" "my_source_gainsightpx" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "d72d9edd-785b-4e5e-bafe-55297ba6281f"
 }

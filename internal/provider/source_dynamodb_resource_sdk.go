@@ -102,13 +102,39 @@ func (r *SourceDynamodbResourceModel) ToDeleteSDKType() *shared.SourceDynamodbCr
 	return out
 }
 
-func (r *SourceDynamodbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceDynamodbResourceModel) RefreshFromGetResponse(resp *shared.SourceDynamodbGetResponse) {
+	r.Configuration.AccessKeyID = types.StringValue(resp.Configuration.AccessKeyID)
+	if resp.Configuration.Endpoint != nil {
+		r.Configuration.Endpoint = types.StringValue(*resp.Configuration.Endpoint)
+	} else {
+		r.Configuration.Endpoint = types.StringNull()
+	}
+	if resp.Configuration.Region != nil {
+		r.Configuration.Region = types.StringValue(string(*resp.Configuration.Region))
+	} else {
+		r.Configuration.Region = types.StringNull()
+	}
+	if resp.Configuration.ReservedAttributeNames != nil {
+		r.Configuration.ReservedAttributeNames = types.StringValue(*resp.Configuration.ReservedAttributeNames)
+	} else {
+		r.Configuration.ReservedAttributeNames = types.StringNull()
+	}
+	r.Configuration.SecretAccessKey = types.StringValue(resp.Configuration.SecretAccessKey)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceDynamodbGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

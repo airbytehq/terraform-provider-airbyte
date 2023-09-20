@@ -14,7 +14,7 @@ type GetSourceBigcommerceRequest struct {
 type GetSourceBigcommerceResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBigcommerceGetResponse *shared.SourceBigcommerceGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

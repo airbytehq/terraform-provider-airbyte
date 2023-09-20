@@ -10,7 +10,7 @@ import (
 type CreateDestinationCumulioResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationCumulioGetResponse *shared.DestinationCumulioGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

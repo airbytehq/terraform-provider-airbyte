@@ -10,7 +10,7 @@ import (
 type CreateSourceMyHoursResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMyHoursGetResponse *shared.SourceMyHoursGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

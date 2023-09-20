@@ -14,7 +14,7 @@ type GetSourceSurveymonkeyRequest struct {
 type GetSourceSurveymonkeyResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSurveymonkeyGetResponse *shared.SourceSurveymonkeyGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

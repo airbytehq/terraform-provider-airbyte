@@ -10,7 +10,7 @@ import (
 type CreateSourceWhiskyHunterResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWhiskyHunterGetResponse *shared.SourceWhiskyHunterGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

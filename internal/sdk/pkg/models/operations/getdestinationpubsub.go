@@ -14,7 +14,7 @@ type GetDestinationPubsubRequest struct {
 type GetDestinationPubsubResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationPubsubGetResponse *shared.DestinationPubsubGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

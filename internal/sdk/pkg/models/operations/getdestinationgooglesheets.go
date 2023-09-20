@@ -14,7 +14,7 @@ type GetDestinationGoogleSheetsRequest struct {
 type GetDestinationGoogleSheetsResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationGoogleSheetsGetResponse *shared.DestinationGoogleSheetsGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

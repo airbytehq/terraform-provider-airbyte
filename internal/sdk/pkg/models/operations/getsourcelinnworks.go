@@ -14,7 +14,7 @@ type GetSourceLinnworksRequest struct {
 type GetSourceLinnworksResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLinnworksGetResponse *shared.SourceLinnworksGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

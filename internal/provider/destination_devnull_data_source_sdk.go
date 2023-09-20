@@ -7,8 +7,20 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDevNullDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationDevNullDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationDevNullGetResponse) {
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.TestDestination.DestinationDevNullTestDestinationSilent != nil {
+		r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent = &DestinationDevNullTestDestinationSilent{}
+		r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType = types.StringValue(string(resp.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType))
+	}
+	if resp.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent != nil {
+		r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent = &DestinationDevNullTestDestinationSilent{}
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

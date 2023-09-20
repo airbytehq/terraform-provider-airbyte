@@ -14,7 +14,7 @@ type GetSourceSenseforceRequest struct {
 type GetSourceSenseforceResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSenseforceGetResponse *shared.SourceSenseforceGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

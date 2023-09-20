@@ -10,7 +10,7 @@ import (
 type CreateSourceZuoraResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZuoraGetResponse *shared.SourceZuoraGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

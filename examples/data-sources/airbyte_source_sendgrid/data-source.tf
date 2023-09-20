@@ -1,4 +1,3 @@
 data "airbyte_source_sendgrid" "my_source_sendgrid" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "40c8f08b-ff10-481e-88f8-6996c8e22be0"
 }

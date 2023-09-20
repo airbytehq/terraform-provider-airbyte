@@ -10,7 +10,7 @@ import (
 type CreateSourceRetentlyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRetentlyGetResponse *shared.SourceRetentlyGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

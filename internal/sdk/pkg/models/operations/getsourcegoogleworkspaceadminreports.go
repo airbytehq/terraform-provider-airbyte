@@ -14,7 +14,7 @@ type GetSourceGoogleWorkspaceAdminReportsRequest struct {
 type GetSourceGoogleWorkspaceAdminReportsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleWorkspaceAdminReportsGetResponse *shared.SourceGoogleWorkspaceAdminReportsGetResponse
+	StatusCode                                   int
+	RawResponse                                  *http.Response
 }

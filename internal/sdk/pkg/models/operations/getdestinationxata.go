@@ -14,7 +14,7 @@ type GetDestinationXataRequest struct {
 type GetDestinationXataResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationXataGetResponse *shared.DestinationXataGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

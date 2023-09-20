@@ -112,13 +112,43 @@ func (r *SourceFakerResourceModel) ToDeleteSDKType() *shared.SourceFakerCreateRe
 	return out
 }
 
-func (r *SourceFakerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceFakerResourceModel) RefreshFromGetResponse(resp *shared.SourceFakerGetResponse) {
+	if resp.Configuration.AlwaysUpdated != nil {
+		r.Configuration.AlwaysUpdated = types.BoolValue(*resp.Configuration.AlwaysUpdated)
+	} else {
+		r.Configuration.AlwaysUpdated = types.BoolNull()
+	}
+	r.Configuration.Count = types.Int64Value(resp.Configuration.Count)
+	if resp.Configuration.Parallelism != nil {
+		r.Configuration.Parallelism = types.Int64Value(*resp.Configuration.Parallelism)
+	} else {
+		r.Configuration.Parallelism = types.Int64Null()
+	}
+	if resp.Configuration.RecordsPerSlice != nil {
+		r.Configuration.RecordsPerSlice = types.Int64Value(*resp.Configuration.RecordsPerSlice)
+	} else {
+		r.Configuration.RecordsPerSlice = types.Int64Null()
+	}
+	if resp.Configuration.Seed != nil {
+		r.Configuration.Seed = types.Int64Value(*resp.Configuration.Seed)
+	} else {
+		r.Configuration.Seed = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFakerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFakerResourceModel) RefreshFromCreateResponse(resp *shared.SourceFakerGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

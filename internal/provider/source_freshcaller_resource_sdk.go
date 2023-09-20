@@ -93,13 +93,35 @@ func (r *SourceFreshcallerResourceModel) ToDeleteSDKType() *shared.SourceFreshca
 	return out
 }
 
-func (r *SourceFreshcallerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceFreshcallerResourceModel) RefreshFromGetResponse(resp *shared.SourceFreshcallerGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.Domain = types.StringValue(resp.Configuration.Domain)
+	if resp.Configuration.RequestsPerMinute != nil {
+		r.Configuration.RequestsPerMinute = types.Int64Value(*resp.Configuration.RequestsPerMinute)
+	} else {
+		r.Configuration.RequestsPerMinute = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	if resp.Configuration.SyncLagMinutes != nil {
+		r.Configuration.SyncLagMinutes = types.Int64Value(*resp.Configuration.SyncLagMinutes)
+	} else {
+		r.Configuration.SyncLagMinutes = types.Int64Null()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFreshcallerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFreshcallerResourceModel) RefreshFromCreateResponse(resp *shared.SourceFreshcallerGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

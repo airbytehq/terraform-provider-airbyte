@@ -1,4 +1,3 @@
 data "airbyte_source_bigcommerce" "my_source_bigcommerce" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "7a82e5e8-2fd2-48d1-840a-7e91392ab44c"
 }

@@ -14,7 +14,7 @@ type GetSourcePostgresRequest struct {
 type GetSourcePostgresResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePostgresGetResponse *shared.SourcePostgresGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

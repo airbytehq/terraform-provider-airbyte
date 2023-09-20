@@ -7,8 +7,25 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceUsCensusDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceUsCensusDataSourceModel) RefreshFromGetResponse(resp *shared.SourceUsCensusGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.QueryParams != nil {
+		r.Configuration.QueryParams = types.StringValue(*resp.Configuration.QueryParams)
+	} else {
+		r.Configuration.QueryParams = types.StringNull()
+	}
+	r.Configuration.QueryPath = types.StringValue(resp.Configuration.QueryPath)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

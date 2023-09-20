@@ -10,7 +10,7 @@ import (
 type CreateSourceTvmazeScheduleResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTvmazeScheduleGetResponse *shared.SourceTvmazeScheduleGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceLaunchdarklyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLaunchdarklyGetResponse *shared.SourceLaunchdarklyGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

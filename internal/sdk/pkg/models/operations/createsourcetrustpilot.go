@@ -10,7 +10,7 @@ import (
 type CreateSourceTrustpilotResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTrustpilotGetResponse *shared.SourceTrustpilotGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

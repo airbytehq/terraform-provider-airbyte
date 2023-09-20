@@ -1,4 +1,3 @@
 data "airbyte_source_xkcd" "my_source_xkcd" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "49b8e5c1-8b25-4e87-b648-23255be95c0c"
 }

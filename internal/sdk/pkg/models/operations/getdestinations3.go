@@ -14,7 +14,7 @@ type GetDestinationS3Request struct {
 type GetDestinationS3Response struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationS3GetResponse *shared.DestinationS3GetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

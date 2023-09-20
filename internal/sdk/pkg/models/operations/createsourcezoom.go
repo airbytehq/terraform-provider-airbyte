@@ -10,7 +10,7 @@ import (
 type CreateSourceZoomResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZoomGetResponse *shared.SourceZoomGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

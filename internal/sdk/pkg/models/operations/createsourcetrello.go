@@ -10,7 +10,7 @@ import (
 type CreateSourceTrelloResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTrelloGetResponse *shared.SourceTrelloGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

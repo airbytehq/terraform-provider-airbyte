@@ -14,7 +14,7 @@ type GetSourceZenloopRequest struct {
 type GetSourceZenloopResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZenloopGetResponse *shared.SourceZenloopGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

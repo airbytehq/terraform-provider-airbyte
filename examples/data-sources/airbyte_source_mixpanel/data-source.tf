@@ -1,4 +1,3 @@
 data "airbyte_source_mixpanel" "my_source_mixpanel" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "669e5b7e-c762-4664-9d84-eb9e4cfd2276"
 }

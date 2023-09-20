@@ -1,4 +1,3 @@
 data "airbyte_source_qualaroo" "my_source_qualaroo" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "0c16a7ba-4784-4044-89f6-770ef048091a"
 }

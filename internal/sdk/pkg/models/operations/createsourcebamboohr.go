@@ -10,7 +10,7 @@ import (
 type CreateSourceBambooHrResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBambooHrGetResponse *shared.SourceBambooHrGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

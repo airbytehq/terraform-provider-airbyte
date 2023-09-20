@@ -7,8 +7,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationConvexDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationConvexDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationConvexGetResponse) {
+	r.Configuration.AccessKey = types.StringValue(resp.Configuration.AccessKey)
+	r.Configuration.DeploymentURL = types.StringValue(resp.Configuration.DeploymentURL)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

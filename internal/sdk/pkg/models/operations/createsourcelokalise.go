@@ -10,7 +10,7 @@ import (
 type CreateSourceLokaliseResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceLokaliseGetResponse *shared.SourceLokaliseGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

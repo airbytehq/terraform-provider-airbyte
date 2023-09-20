@@ -14,7 +14,7 @@ type GetDestinationS3GlueRequest struct {
 type GetDestinationS3GlueResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationS3GlueGetResponse *shared.DestinationS3GlueGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

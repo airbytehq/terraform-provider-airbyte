@@ -1,4 +1,3 @@
 data "airbyte_source_gitlab" "my_source_gitlab" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "5d4a839f-03ba-4b77-b918-f0313984507e"
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceCoinmarketcapResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceCoinmarketcapGetResponse *shared.SourceCoinmarketcapGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

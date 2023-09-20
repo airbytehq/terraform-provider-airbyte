@@ -1,4 +1,3 @@
 data "airbyte_source_vantage" "my_source_vantage" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "808c36c9-e2f7-4034-8e00-f478eb539483"
 }

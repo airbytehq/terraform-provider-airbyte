@@ -10,7 +10,7 @@ import (
 type CreateSourceSapFieldglassResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSapFieldglassGetResponse *shared.SourceSapFieldglassGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

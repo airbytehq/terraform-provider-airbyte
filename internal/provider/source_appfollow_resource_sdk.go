@@ -66,13 +66,27 @@ func (r *SourceAppfollowResourceModel) ToDeleteSDKType() *shared.SourceAppfollow
 	return out
 }
 
-func (r *SourceAppfollowResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAppfollowResourceModel) RefreshFromGetResponse(resp *shared.SourceAppfollowGetResponse) {
+	if resp.Configuration.APISecret != nil {
+		r.Configuration.APISecret = types.StringValue(*resp.Configuration.APISecret)
+	} else {
+		r.Configuration.APISecret = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAppfollowResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAppfollowResourceModel) RefreshFromCreateResponse(resp *shared.SourceAppfollowGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

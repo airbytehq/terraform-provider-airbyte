@@ -1,4 +1,3 @@
 data "airbyte_source_glassfrog" "my_source_glassfrog" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "0e39c7e2-3ecb-4060-8652-e23a3d6c657e"
 }

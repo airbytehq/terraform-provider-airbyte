@@ -14,7 +14,7 @@ type GetSourceOnesignalRequest struct {
 type GetSourceOnesignalResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOnesignalGetResponse *shared.SourceOnesignalGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

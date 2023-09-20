@@ -1,4 +1,3 @@
 data "airbyte_source_webflow" "my_source_webflow" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "f748eefc-cb69-4d54-9b4b-393f3566625b"
 }

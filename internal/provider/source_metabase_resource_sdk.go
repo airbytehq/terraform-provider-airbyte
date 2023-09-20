@@ -98,13 +98,38 @@ func (r *SourceMetabaseResourceModel) ToDeleteSDKType() *shared.SourceMetabaseCr
 	return out
 }
 
-func (r *SourceMetabaseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMetabaseResourceModel) RefreshFromGetResponse(resp *shared.SourceMetabaseGetResponse) {
+	r.Configuration.InstanceAPIURL = types.StringValue(resp.Configuration.InstanceAPIURL)
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	if resp.Configuration.SessionToken != nil {
+		r.Configuration.SessionToken = types.StringValue(*resp.Configuration.SessionToken)
+	} else {
+		r.Configuration.SessionToken = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.Username != nil {
+		r.Configuration.Username = types.StringValue(*resp.Configuration.Username)
+	} else {
+		r.Configuration.Username = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMetabaseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMetabaseResourceModel) RefreshFromCreateResponse(resp *shared.SourceMetabaseGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

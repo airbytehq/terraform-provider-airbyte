@@ -10,7 +10,7 @@ import (
 type CreateSourceRedshiftResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRedshiftGetResponse *shared.SourceRedshiftGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

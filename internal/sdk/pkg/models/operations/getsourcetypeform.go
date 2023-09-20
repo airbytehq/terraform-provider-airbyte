@@ -14,7 +14,7 @@ type GetSourceTypeformRequest struct {
 type GetSourceTypeformResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTypeformGetResponse *shared.SourceTypeformGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

@@ -84,13 +84,33 @@ func (r *SourceRecurlyResourceModel) ToDeleteSDKType() *shared.SourceRecurlyCrea
 	return out
 }
 
-func (r *SourceRecurlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceRecurlyResourceModel) RefreshFromGetResponse(resp *shared.SourceRecurlyGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.BeginTime != nil {
+		r.Configuration.BeginTime = types.StringValue(*resp.Configuration.BeginTime)
+	} else {
+		r.Configuration.BeginTime = types.StringNull()
+	}
+	if resp.Configuration.EndTime != nil {
+		r.Configuration.EndTime = types.StringValue(*resp.Configuration.EndTime)
+	} else {
+		r.Configuration.EndTime = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRecurlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRecurlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceRecurlyGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

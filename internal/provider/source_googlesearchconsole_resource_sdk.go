@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
@@ -231,13 +232,80 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToDeleteSDKType() *shared.Sourc
 	return out
 }
 
-func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromGetResponse(resp *shared.SourceGoogleSearchConsoleGetResponse) {
+	if resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth != nil {
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth = &SourceGoogleSearchConsoleAuthenticationTypeOAuth{}
+		if resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken != nil {
+			r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken = types.StringValue(*resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken)
+		} else {
+			r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken = types.StringNull()
+		}
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType = types.StringValue(string(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType))
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientID = types.StringValue(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientID)
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientSecret = types.StringValue(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientSecret)
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.RefreshToken = types.StringValue(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.RefreshToken)
+	}
+	if resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication = &SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication{}
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType = types.StringValue(string(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType))
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.Email = types.StringValue(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.Email)
+		r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo = types.StringValue(resp.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo)
+	}
+	if resp.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth != nil {
+		r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth = &SourceGoogleSearchConsoleAuthenticationTypeOAuth{}
+	}
+	if resp.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication != nil {
+		r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication = &SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication{}
+	}
+	if resp.Configuration.CustomReports != nil {
+		r.Configuration.CustomReports = types.StringValue(*resp.Configuration.CustomReports)
+	} else {
+		r.Configuration.CustomReports = types.StringNull()
+	}
+	r.Configuration.CustomReportsArray = nil
+	for _, customReportsArrayItem := range resp.Configuration.CustomReportsArray {
+		var customReportsArray1 SourceGoogleSearchConsoleCustomReportConfig
+		customReportsArray1.Dimensions = nil
+		for _, v := range customReportsArrayItem.Dimensions {
+			customReportsArray1.Dimensions = append(customReportsArray1.Dimensions, types.StringValue(string(v)))
+		}
+		customReportsArray1.Name = types.StringValue(customReportsArrayItem.Name)
+		r.Configuration.CustomReportsArray = append(r.Configuration.CustomReportsArray, customReportsArray1)
+	}
+	if resp.Configuration.DataState != nil {
+		r.Configuration.DataState = types.StringValue(string(*resp.Configuration.DataState))
+	} else {
+		r.Configuration.DataState = types.StringNull()
+	}
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.String())
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.SiteUrls = nil
+	for _, v := range resp.Configuration.SiteUrls {
+		r.Configuration.SiteUrls = append(r.Configuration.SiteUrls, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromCreateResponse(resp *shared.SourceGoogleSearchConsoleGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

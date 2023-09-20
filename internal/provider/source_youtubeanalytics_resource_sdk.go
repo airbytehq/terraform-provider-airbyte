@@ -81,13 +81,33 @@ func (r *SourceYoutubeAnalyticsResourceModel) ToDeleteSDKType() *shared.SourceYo
 	return out
 }
 
-func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromGetResponse(resp *shared.SourceYoutubeAnalyticsGetResponse) {
+	r.Configuration.Credentials.ClientID = types.StringValue(resp.Configuration.Credentials.ClientID)
+	r.Configuration.Credentials.ClientSecret = types.StringValue(resp.Configuration.Credentials.ClientSecret)
+	r.Configuration.Credentials.RefreshToken = types.StringValue(resp.Configuration.Credentials.RefreshToken)
+	if r.Configuration.Credentials.AdditionalProperties.IsUnknown() {
+		if resp.Configuration.Credentials.AdditionalProperties == nil {
+			r.Configuration.Credentials.AdditionalProperties = types.StringNull()
+		} else {
+			additionalPropertiesResult, _ := json.Marshal(resp.Configuration.Credentials.AdditionalProperties)
+			r.Configuration.Credentials.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromCreateResponse(resp *shared.SourceYoutubeAnalyticsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

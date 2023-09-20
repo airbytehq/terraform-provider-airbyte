@@ -14,7 +14,7 @@ type GetSourceMetabaseRequest struct {
 type GetSourceMetabaseResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMetabaseGetResponse *shared.SourceMetabaseGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceFaunaRequest struct {
 type GetSourceFaunaResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFaunaGetResponse *shared.SourceFaunaGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

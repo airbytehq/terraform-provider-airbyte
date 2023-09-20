@@ -14,7 +14,7 @@ type GetDestinationConvexRequest struct {
 type GetDestinationConvexResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationConvexGetResponse *shared.DestinationConvexGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

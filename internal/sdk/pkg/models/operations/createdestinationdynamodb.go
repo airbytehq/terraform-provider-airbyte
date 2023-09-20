@@ -10,7 +10,7 @@ import (
 type CreateDestinationDynamodbResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationDynamodbGetResponse *shared.DestinationDynamodbGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

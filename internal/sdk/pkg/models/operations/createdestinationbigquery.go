@@ -10,7 +10,7 @@ import (
 type CreateDestinationBigqueryResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationBigqueryGetResponse *shared.DestinationBigqueryGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

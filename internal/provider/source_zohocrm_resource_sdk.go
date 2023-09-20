@@ -91,13 +91,33 @@ func (r *SourceZohoCrmResourceModel) ToDeleteSDKType() *shared.SourceZohoCrmCrea
 	return out
 }
 
-func (r *SourceZohoCrmResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZohoCrmResourceModel) RefreshFromGetResponse(resp *shared.SourceZohoCrmGetResponse) {
+	r.Configuration.ClientID = types.StringValue(resp.Configuration.ClientID)
+	r.Configuration.ClientSecret = types.StringValue(resp.Configuration.ClientSecret)
+	r.Configuration.DcRegion = types.StringValue(string(resp.Configuration.DcRegion))
+	r.Configuration.Edition = types.StringValue(string(resp.Configuration.Edition))
+	r.Configuration.Environment = types.StringValue(string(resp.Configuration.Environment))
+	r.Configuration.RefreshToken = types.StringValue(resp.Configuration.RefreshToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDatetime != nil {
+		r.Configuration.StartDatetime = types.StringValue(resp.Configuration.StartDatetime.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDatetime = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZohoCrmResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZohoCrmResourceModel) RefreshFromCreateResponse(resp *shared.SourceZohoCrmGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateDestinationKeenResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationKeenGetResponse *shared.DestinationKeenGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

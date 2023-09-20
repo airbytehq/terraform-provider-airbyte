@@ -10,7 +10,7 @@ import (
 type CreateSourceWoocommerceResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWoocommerceGetResponse *shared.SourceWoocommerceGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

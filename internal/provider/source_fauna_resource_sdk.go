@@ -140,13 +140,50 @@ func (r *SourceFaunaResourceModel) ToDeleteSDKType() *shared.SourceFaunaCreateRe
 	return out
 }
 
-func (r *SourceFaunaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceFaunaResourceModel) RefreshFromGetResponse(resp *shared.SourceFaunaGetResponse) {
+	if r.Configuration.Collection == nil {
+		r.Configuration.Collection = &SourceFaunaCollection{}
+	}
+	if resp.Configuration.Collection == nil {
+		r.Configuration.Collection = nil
+	} else {
+		r.Configuration.Collection = &SourceFaunaCollection{}
+		if resp.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled != nil {
+			r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled = &SourceFaunaCollectionDeletionModeDisabled{}
+			r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode = types.StringValue(string(resp.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode))
+		}
+		if resp.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled != nil {
+			r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled = &SourceFaunaCollectionDeletionModeEnabled{}
+			r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column = types.StringValue(resp.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column)
+			r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode = types.StringValue(string(resp.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode))
+		}
+		if resp.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeDisabled != nil {
+			r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeDisabled = &SourceFaunaCollectionDeletionModeDisabled{}
+		}
+		if resp.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled != nil {
+			r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled = &SourceFaunaCollectionDeletionModeEnabled{}
+		}
+		r.Configuration.Collection.PageSize = types.Int64Value(resp.Configuration.Collection.PageSize)
+	}
+	r.Configuration.Domain = types.StringValue(resp.Configuration.Domain)
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	r.Configuration.Scheme = types.StringValue(resp.Configuration.Scheme)
+	r.Configuration.Secret = types.StringValue(resp.Configuration.Secret)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFaunaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFaunaResourceModel) RefreshFromCreateResponse(resp *shared.SourceFaunaGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

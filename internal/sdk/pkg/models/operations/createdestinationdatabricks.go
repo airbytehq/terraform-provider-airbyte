@@ -10,7 +10,7 @@ import (
 type CreateDestinationDatabricksResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationDatabricksGetResponse *shared.DestinationDatabricksGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

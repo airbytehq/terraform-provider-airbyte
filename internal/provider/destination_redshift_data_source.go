@@ -267,21 +267,6 @@ func (r *DestinationRedshiftDataSource) Schema(ctx context.Context, req datasour
 									"encryption": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"none",
-															),
-														},
-														Description: `must be one of ["none"]`,
-													},
-												},
-												Description: `Staging data will be stored in plaintext.`,
-											},
 											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 												Computed: true,
 												Attributes: map[string]schema.Attribute{
@@ -300,6 +285,21 @@ func (r *DestinationRedshiftDataSource) Schema(ctx context.Context, req datasour
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+											},
+											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"none",
+															),
+														},
+														Description: `must be one of ["none"]`,
+													},
+												},
+												Description: `Staging data will be stored in plaintext.`,
 											},
 										},
 										Validators: []validator.Object{
@@ -538,7 +538,7 @@ func (r *DestinationRedshiftDataSource) Schema(ctx context.Context, req datasour
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
@@ -608,11 +608,11 @@ func (r *DestinationRedshiftDataSource) Read(ctx context.Context, req datasource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
+	if res.DestinationRedshiftGetResponse == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromGetResponse(res.DestinationRedshiftGetResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

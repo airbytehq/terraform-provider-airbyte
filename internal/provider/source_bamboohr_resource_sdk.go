@@ -88,13 +88,34 @@ func (r *SourceBambooHrResourceModel) ToDeleteSDKType() *shared.SourceBambooHrCr
 	return out
 }
 
-func (r *SourceBambooHrResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceBambooHrResourceModel) RefreshFromGetResponse(resp *shared.SourceBambooHrGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.CustomReportsFields != nil {
+		r.Configuration.CustomReportsFields = types.StringValue(*resp.Configuration.CustomReportsFields)
+	} else {
+		r.Configuration.CustomReportsFields = types.StringNull()
+	}
+	if resp.Configuration.CustomReportsIncludeDefaultFields != nil {
+		r.Configuration.CustomReportsIncludeDefaultFields = types.BoolValue(*resp.Configuration.CustomReportsIncludeDefaultFields)
+	} else {
+		r.Configuration.CustomReportsIncludeDefaultFields = types.BoolNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.Subdomain = types.StringValue(resp.Configuration.Subdomain)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBambooHrResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceBambooHrResourceModel) RefreshFromCreateResponse(resp *shared.SourceBambooHrGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

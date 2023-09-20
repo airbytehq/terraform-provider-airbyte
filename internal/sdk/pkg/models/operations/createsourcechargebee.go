@@ -10,7 +10,7 @@ import (
 type CreateSourceChargebeeResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceChargebeeGetResponse *shared.SourceChargebeeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

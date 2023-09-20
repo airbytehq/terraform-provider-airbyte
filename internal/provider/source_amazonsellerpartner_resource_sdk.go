@@ -202,13 +202,73 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToDeleteSDKType() *shared.Sourc
 	return out
 }
 
-func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromGetResponse(resp *shared.SourceAmazonSellerPartnerGetResponse) {
+	if resp.Configuration.AdvancedStreamOptions != nil {
+		r.Configuration.AdvancedStreamOptions = types.StringValue(*resp.Configuration.AdvancedStreamOptions)
+	} else {
+		r.Configuration.AdvancedStreamOptions = types.StringNull()
+	}
+	if resp.Configuration.AuthType != nil {
+		r.Configuration.AuthType = types.StringValue(string(*resp.Configuration.AuthType))
+	} else {
+		r.Configuration.AuthType = types.StringNull()
+	}
+	if resp.Configuration.AwsAccessKey != nil {
+		r.Configuration.AwsAccessKey = types.StringValue(*resp.Configuration.AwsAccessKey)
+	} else {
+		r.Configuration.AwsAccessKey = types.StringNull()
+	}
+	r.Configuration.AwsEnvironment = types.StringValue(string(resp.Configuration.AwsEnvironment))
+	if resp.Configuration.AwsSecretKey != nil {
+		r.Configuration.AwsSecretKey = types.StringValue(*resp.Configuration.AwsSecretKey)
+	} else {
+		r.Configuration.AwsSecretKey = types.StringNull()
+	}
+	r.Configuration.LwaAppID = types.StringValue(resp.Configuration.LwaAppID)
+	r.Configuration.LwaClientSecret = types.StringValue(resp.Configuration.LwaClientSecret)
+	if resp.Configuration.MaxWaitSeconds != nil {
+		r.Configuration.MaxWaitSeconds = types.Int64Value(*resp.Configuration.MaxWaitSeconds)
+	} else {
+		r.Configuration.MaxWaitSeconds = types.Int64Null()
+	}
+	if resp.Configuration.PeriodInDays != nil {
+		r.Configuration.PeriodInDays = types.Int64Value(*resp.Configuration.PeriodInDays)
+	} else {
+		r.Configuration.PeriodInDays = types.Int64Null()
+	}
+	r.Configuration.RefreshToken = types.StringValue(resp.Configuration.RefreshToken)
+	r.Configuration.Region = types.StringValue(string(resp.Configuration.Region))
+	if resp.Configuration.ReplicationEndDate != nil {
+		r.Configuration.ReplicationEndDate = types.StringValue(*resp.Configuration.ReplicationEndDate)
+	} else {
+		r.Configuration.ReplicationEndDate = types.StringNull()
+	}
+	r.Configuration.ReplicationStartDate = types.StringValue(resp.Configuration.ReplicationStartDate)
+	if resp.Configuration.ReportOptions != nil {
+		r.Configuration.ReportOptions = types.StringValue(*resp.Configuration.ReportOptions)
+	} else {
+		r.Configuration.ReportOptions = types.StringNull()
+	}
+	if resp.Configuration.RoleArn != nil {
+		r.Configuration.RoleArn = types.StringValue(*resp.Configuration.RoleArn)
+	} else {
+		r.Configuration.RoleArn = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromCreateResponse(resp *shared.SourceAmazonSellerPartnerGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

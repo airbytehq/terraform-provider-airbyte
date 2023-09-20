@@ -10,7 +10,7 @@ import (
 type CreateSourcePocketResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePocketGetResponse *shared.SourcePocketGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

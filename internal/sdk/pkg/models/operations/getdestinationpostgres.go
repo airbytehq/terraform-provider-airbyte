@@ -14,7 +14,7 @@ type GetDestinationPostgresRequest struct {
 type GetDestinationPostgresResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationPostgresGetResponse *shared.DestinationPostgresGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

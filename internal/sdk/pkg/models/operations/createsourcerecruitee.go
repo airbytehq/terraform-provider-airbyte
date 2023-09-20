@@ -10,7 +10,7 @@ import (
 type CreateSourceRecruiteeResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRecruiteeGetResponse *shared.SourceRecruiteeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

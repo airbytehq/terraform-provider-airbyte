@@ -14,7 +14,7 @@ type GetSourcePocketRequest struct {
 type GetSourcePocketResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePocketGetResponse *shared.SourcePocketGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

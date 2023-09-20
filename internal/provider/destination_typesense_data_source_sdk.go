@@ -7,8 +7,30 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationTypesenseDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationTypesenseDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationTypesenseGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.BatchSize != nil {
+		r.Configuration.BatchSize = types.Int64Value(*resp.Configuration.BatchSize)
+	} else {
+		r.Configuration.BatchSize = types.Int64Null()
+	}
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.Port != nil {
+		r.Configuration.Port = types.StringValue(*resp.Configuration.Port)
+	} else {
+		r.Configuration.Port = types.StringNull()
+	}
+	if resp.Configuration.Protocol != nil {
+		r.Configuration.Protocol = types.StringValue(*resp.Configuration.Protocol)
+	} else {
+		r.Configuration.Protocol = types.StringNull()
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

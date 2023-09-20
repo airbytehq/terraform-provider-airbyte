@@ -219,13 +219,81 @@ func (r *SourceMongodbResourceModel) ToDeleteSDKType() *shared.SourceMongodbCrea
 	return out
 }
 
-func (r *SourceMongodbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMongodbResourceModel) RefreshFromGetResponse(resp *shared.SourceMongodbGetResponse) {
+	if resp.Configuration.AuthSource != nil {
+		r.Configuration.AuthSource = types.StringValue(*resp.Configuration.AuthSource)
+	} else {
+		r.Configuration.AuthSource = types.StringNull()
+	}
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	if resp.Configuration.InstanceType == nil {
+		r.Configuration.InstanceType = nil
+	} else {
+		r.Configuration.InstanceType = &SourceMongodbMongoDbInstanceType{}
+		if resp.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+			r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas = &SourceMongodbMongoDBInstanceTypeMongoDBAtlas{}
+			r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL = types.StringValue(resp.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL)
+			r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance = types.StringValue(string(resp.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance))
+			if r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties == nil {
+					r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult, _ := json.Marshal(resp.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties)
+					r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+				}
+			}
+		}
+		if resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet != nil {
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet = &SourceMongodbMongoDbInstanceTypeReplicaSet{}
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance = types.StringValue(string(resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance))
+			if resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet != nil {
+				r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet = types.StringValue(*resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet)
+			} else {
+				r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet = types.StringNull()
+			}
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses = types.StringValue(resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses)
+		}
+		if resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{}
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host = types.StringValue(resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host)
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance = types.StringValue(string(resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance))
+			r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port = types.Int64Value(resp.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port)
+		}
+		if resp.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
+			r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = &SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{}
+		}
+		if resp.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet != nil {
+			r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet = &SourceMongodbMongoDbInstanceTypeReplicaSet{}
+		}
+		if resp.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+			r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance = &SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{}
+		}
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.User != nil {
+		r.Configuration.User = types.StringValue(*resp.Configuration.User)
+	} else {
+		r.Configuration.User = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMongodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMongodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceMongodbGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

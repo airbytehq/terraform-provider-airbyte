@@ -5,10 +5,48 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceJiraDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceJiraDataSourceModel) RefreshFromGetResponse(resp *shared.SourceJiraGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	r.Configuration.Domain = types.StringValue(resp.Configuration.Domain)
+	r.Configuration.Email = types.StringValue(resp.Configuration.Email)
+	if resp.Configuration.EnableExperimentalStreams != nil {
+		r.Configuration.EnableExperimentalStreams = types.BoolValue(*resp.Configuration.EnableExperimentalStreams)
+	} else {
+		r.Configuration.EnableExperimentalStreams = types.BoolNull()
+	}
+	if resp.Configuration.ExpandIssueChangelog != nil {
+		r.Configuration.ExpandIssueChangelog = types.BoolValue(*resp.Configuration.ExpandIssueChangelog)
+	} else {
+		r.Configuration.ExpandIssueChangelog = types.BoolNull()
+	}
+	r.Configuration.Projects = nil
+	for _, v := range resp.Configuration.Projects {
+		r.Configuration.Projects = append(r.Configuration.Projects, types.StringValue(v))
+	}
+	if resp.Configuration.RenderFields != nil {
+		r.Configuration.RenderFields = types.BoolValue(*resp.Configuration.RenderFields)
+	} else {
+		r.Configuration.RenderFields = types.BoolNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

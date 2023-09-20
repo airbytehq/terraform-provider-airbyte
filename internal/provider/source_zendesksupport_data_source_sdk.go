@@ -4,11 +4,90 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceZendeskSupportDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskSupportDataSourceModel) RefreshFromGetResponse(resp *shared.SourceZendeskSupportGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceZendeskSupportAuthentication1{}
+		if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken != nil {
+			r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken = &SourceZendeskSupportAuthenticationAPIToken1{}
+			r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken = types.StringValue(resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken)
+			if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials != nil {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials = types.StringValue(string(*resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials))
+			} else {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email = types.StringValue(resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email)
+			if r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties == nil {
+					r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult, _ := json.Marshal(resp.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties)
+					r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties = types.StringValue(string(additionalPropertiesResult))
+				}
+			}
+		}
+		if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20 = &SourceZendeskSupportAuthenticationOAuth201{}
+			r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken)
+			if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID != nil {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID = types.StringValue(*resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID)
+			} else {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret != nil {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials != nil {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials = types.StringValue(string(*resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials))
+			} else {
+				r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials = types.StringNull()
+			}
+			if r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.IsUnknown() {
+				if resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties == nil {
+					r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties = types.StringNull()
+				} else {
+					additionalPropertiesResult1, _ := json.Marshal(resp.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties)
+					r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties = types.StringValue(string(additionalPropertiesResult1))
+				}
+			}
+		}
+		if resp.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken != nil {
+			r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken = &SourceZendeskSupportUpdateAuthenticationAPIToken1{}
+		}
+		if resp.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20 != nil {
+			r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20 = &SourceZendeskSupportUpdateAuthenticationOAuth201{}
+		}
+	}
+	if resp.Configuration.IgnorePagination != nil {
+		r.Configuration.IgnorePagination = types.BoolValue(*resp.Configuration.IgnorePagination)
+	} else {
+		r.Configuration.IgnorePagination = types.BoolNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	r.Configuration.Subdomain = types.StringValue(resp.Configuration.Subdomain)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

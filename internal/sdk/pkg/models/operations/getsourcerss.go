@@ -14,7 +14,7 @@ type GetSourceRssRequest struct {
 type GetSourceRssResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRssGetResponse *shared.SourceRssGetResponse
+	StatusCode           int
+	RawResponse          *http.Response
 }

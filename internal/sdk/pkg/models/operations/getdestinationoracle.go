@@ -14,7 +14,7 @@ type GetDestinationOracleRequest struct {
 type GetDestinationOracleResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationOracleGetResponse *shared.DestinationOracleGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

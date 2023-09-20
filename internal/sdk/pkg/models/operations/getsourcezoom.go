@@ -14,7 +14,7 @@ type GetSourceZoomRequest struct {
 type GetSourceZoomResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZoomGetResponse *shared.SourceZoomGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

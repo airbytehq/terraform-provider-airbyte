@@ -69,13 +69,26 @@ func (r *SourceLinnworksResourceModel) ToDeleteSDKType() *shared.SourceLinnworks
 	return out
 }
 
-func (r *SourceLinnworksResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceLinnworksResourceModel) RefreshFromGetResponse(resp *shared.SourceLinnworksGetResponse) {
+	r.Configuration.ApplicationID = types.StringValue(resp.Configuration.ApplicationID)
+	r.Configuration.ApplicationSecret = types.StringValue(resp.Configuration.ApplicationSecret)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	r.Configuration.Token = types.StringValue(resp.Configuration.Token)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLinnworksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLinnworksResourceModel) RefreshFromCreateResponse(resp *shared.SourceLinnworksGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

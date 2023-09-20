@@ -1,4 +1,3 @@
 data "airbyte_source_retently" "my_source_retently" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "39099552-8250-4dcb-bcd3-b121b88c1ee5"
 }

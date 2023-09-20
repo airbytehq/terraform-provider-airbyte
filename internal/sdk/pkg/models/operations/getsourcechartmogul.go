@@ -14,7 +14,7 @@ type GetSourceChartmogulRequest struct {
 type GetSourceChartmogulResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceChartmogulGetResponse *shared.SourceChartmogulGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourcePipedriveResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourcePipedriveGetResponse *shared.SourcePipedriveGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

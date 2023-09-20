@@ -56,13 +56,26 @@ func (r *SourceWhiskyHunterResourceModel) ToDeleteSDKType() *shared.SourceWhisky
 	return out
 }
 
-func (r *SourceWhiskyHunterResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceWhiskyHunterResourceModel) RefreshFromGetResponse(resp *shared.SourceWhiskyHunterGetResponse) {
+	if resp.Configuration.SourceType != nil {
+		r.Configuration.SourceType = types.StringValue(string(*resp.Configuration.SourceType))
+	} else {
+		r.Configuration.SourceType = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWhiskyHunterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceWhiskyHunterResourceModel) RefreshFromCreateResponse(resp *shared.SourceWhiskyHunterGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

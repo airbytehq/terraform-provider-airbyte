@@ -14,7 +14,7 @@ type GetDestinationDynamodbRequest struct {
 type GetDestinationDynamodbResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationDynamodbGetResponse *shared.DestinationDynamodbGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

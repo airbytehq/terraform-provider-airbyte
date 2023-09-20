@@ -14,7 +14,7 @@ type GetSourceDynamodbRequest struct {
 type GetSourceDynamodbResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceDynamodbGetResponse *shared.SourceDynamodbGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

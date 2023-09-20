@@ -170,13 +170,61 @@ func (r *SourceSftpResourceModel) ToDeleteSDKType() *shared.SourceSftpCreateRequ
 	return out
 }
 
-func (r *SourceSftpResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSftpResourceModel) RefreshFromGetResponse(resp *shared.SourceSftpGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceSftpAuthenticationWildcard{}
+		if resp.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
+			r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication = &SourceSftpAuthenticationWildcardPasswordAuthentication{}
+			r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod))
+			r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword = types.StringValue(resp.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword)
+		}
+		if resp.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
+			r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication = &SourceSftpAuthenticationWildcardSSHKeyAuthentication{}
+			r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod = types.StringValue(string(resp.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod))
+			r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey = types.StringValue(resp.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey)
+		}
+		if resp.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
+			r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication = &SourceSftpAuthenticationWildcardPasswordAuthentication{}
+		}
+		if resp.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
+			r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication = &SourceSftpAuthenticationWildcardSSHKeyAuthentication{}
+		}
+	}
+	if resp.Configuration.FilePattern != nil {
+		r.Configuration.FilePattern = types.StringValue(*resp.Configuration.FilePattern)
+	} else {
+		r.Configuration.FilePattern = types.StringNull()
+	}
+	if resp.Configuration.FileTypes != nil {
+		r.Configuration.FileTypes = types.StringValue(*resp.Configuration.FileTypes)
+	} else {
+		r.Configuration.FileTypes = types.StringNull()
+	}
+	if resp.Configuration.FolderPath != nil {
+		r.Configuration.FolderPath = types.StringValue(*resp.Configuration.FolderPath)
+	} else {
+		r.Configuration.FolderPath = types.StringNull()
+	}
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.User = types.StringValue(resp.Configuration.User)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSftpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSftpResourceModel) RefreshFromCreateResponse(resp *shared.SourceSftpGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

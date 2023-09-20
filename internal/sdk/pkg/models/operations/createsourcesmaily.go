@@ -10,7 +10,7 @@ import (
 type CreateSourceSmailyResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSmailyGetResponse *shared.SourceSmailyGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

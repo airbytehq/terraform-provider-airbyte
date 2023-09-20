@@ -1,4 +1,3 @@
 data "airbyte_source_orb" "my_source_orb" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "49028488-26bb-403c-bfd2-25e47871a88e"
 }

@@ -10,7 +10,7 @@ import (
 type CreateDestinationGoogleSheetsResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationGoogleSheetsGetResponse *shared.DestinationGoogleSheetsGetResponse
+	StatusCode                         int
+	RawResponse                        *http.Response
 }

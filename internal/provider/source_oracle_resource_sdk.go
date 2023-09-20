@@ -368,13 +368,122 @@ func (r *SourceOracleResourceModel) ToDeleteSDKType() *shared.SourceOracleCreate
 	return out
 }
 
-func (r *SourceOracleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceOracleResourceModel) RefreshFromGetResponse(resp *shared.SourceOracleGetResponse) {
+	if resp.Configuration.ConnectionData == nil {
+		r.Configuration.ConnectionData = nil
+	} else {
+		r.Configuration.ConnectionData = &SourceOracleConnectBy{}
+		if resp.Configuration.ConnectionData.SourceOracleConnectByServiceName != nil {
+			r.Configuration.ConnectionData.SourceOracleConnectByServiceName = &SourceOracleConnectByServiceName{}
+			if resp.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType != nil {
+				r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType = types.StringValue(string(*resp.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType))
+			} else {
+				r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType = types.StringNull()
+			}
+			r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ServiceName = types.StringValue(resp.Configuration.ConnectionData.SourceOracleConnectByServiceName.ServiceName)
+		}
+		if resp.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID != nil {
+			r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID = &SourceOracleConnectBySystemIDSID{}
+			if resp.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType != nil {
+				r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType = types.StringValue(string(*resp.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType))
+			} else {
+				r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType = types.StringNull()
+			}
+			r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.Sid = types.StringValue(resp.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.Sid)
+		}
+		if resp.Configuration.ConnectionData.SourceOracleUpdateConnectByServiceName != nil {
+			r.Configuration.ConnectionData.SourceOracleUpdateConnectByServiceName = &SourceOracleConnectByServiceName{}
+		}
+		if resp.Configuration.ConnectionData.SourceOracleUpdateConnectBySystemIDSID != nil {
+			r.Configuration.ConnectionData.SourceOracleUpdateConnectBySystemIDSID = &SourceOracleConnectBySystemIDSID{}
+		}
+	}
+	if resp.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE != nil {
+		r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE = &SourceOracleEncryptionNativeNetworkEncryptionNNE{}
+		if resp.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm != nil {
+			r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm = types.StringValue(string(*resp.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm))
+		} else {
+			r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm = types.StringNull()
+		}
+		r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionMethod = types.StringValue(string(resp.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionMethod))
+	}
+	if resp.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate != nil {
+		r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate = &SourceOracleEncryptionTLSEncryptedVerifyCertificate{}
+		r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.EncryptionMethod = types.StringValue(string(resp.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.EncryptionMethod))
+		r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.SslCertificate = types.StringValue(resp.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.SslCertificate)
+	}
+	if resp.Configuration.Encryption.SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE != nil {
+		r.Configuration.Encryption.SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE = &SourceOracleEncryptionNativeNetworkEncryptionNNE{}
+	}
+	if resp.Configuration.Encryption.SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate != nil {
+		r.Configuration.Encryption.SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate = &SourceOracleEncryptionTLSEncryptedVerifyCertificate{}
+	}
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.JdbcURLParams != nil {
+		r.Configuration.JdbcURLParams = types.StringValue(*resp.Configuration.JdbcURLParams)
+	} else {
+		r.Configuration.JdbcURLParams = types.StringNull()
+	}
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	r.Configuration.Schemas = nil
+	for _, v := range resp.Configuration.Schemas {
+		r.Configuration.Schemas = append(r.Configuration.Schemas, types.StringValue(v))
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &SourceOracleSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.SourceOracleUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.SourceOracleUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.SourceOracleUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceOracleUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOracleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOracleResourceModel) RefreshFromCreateResponse(resp *shared.SourceOracleGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

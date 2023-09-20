@@ -10,7 +10,7 @@ import (
 type CreateSourceHubspotResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceHubspotGetResponse *shared.SourceHubspotGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

@@ -14,7 +14,7 @@ type GetSourceTheGuardianAPIRequest struct {
 type GetSourceTheGuardianAPIResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTheGuardianAPIGetResponse *shared.SourceTheGuardianAPIGetResponse
+	StatusCode                      int
+	RawResponse                     *http.Response
 }

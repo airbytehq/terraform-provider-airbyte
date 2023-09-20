@@ -60,13 +60,24 @@ func (r *SourceLokaliseResourceModel) ToDeleteSDKType() *shared.SourceLokaliseCr
 	return out
 }
 
-func (r *SourceLokaliseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceLokaliseResourceModel) RefreshFromGetResponse(resp *shared.SourceLokaliseGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.ProjectID = types.StringValue(resp.Configuration.ProjectID)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLokaliseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLokaliseResourceModel) RefreshFromCreateResponse(resp *shared.SourceLokaliseGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

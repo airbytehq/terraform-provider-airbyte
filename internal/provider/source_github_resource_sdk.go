@@ -201,13 +201,73 @@ func (r *SourceGithubResourceModel) ToDeleteSDKType() *shared.SourceGithubCreate
 	return out
 }
 
-func (r *SourceGithubResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGithubResourceModel) RefreshFromGetResponse(resp *shared.SourceGithubGetResponse) {
+	if resp.Configuration.Branch != nil {
+		r.Configuration.Branch = types.StringValue(*resp.Configuration.Branch)
+	} else {
+		r.Configuration.Branch = types.StringNull()
+	}
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceGithubAuthentication{}
+		if resp.Configuration.Credentials.SourceGithubAuthenticationOAuth != nil {
+			r.Configuration.Credentials.SourceGithubAuthenticationOAuth = &SourceGithubAuthenticationOAuth{}
+			r.Configuration.Credentials.SourceGithubAuthenticationOAuth.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.AccessToken)
+			if resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID != nil {
+				r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID = types.StringValue(*resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID)
+			} else {
+				r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret != nil {
+				r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle != nil {
+				r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle))
+			} else {
+				r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken != nil {
+			r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken = &SourceGithubAuthenticationPersonalAccessToken{}
+			if resp.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle != nil {
+				r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle))
+			} else {
+				r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.PersonalAccessToken = types.StringValue(resp.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.PersonalAccessToken)
+		}
+		if resp.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth != nil {
+			r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth = &SourceGithubAuthenticationOAuth{}
+		}
+		if resp.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken != nil {
+			r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken = &SourceGithubAuthenticationPersonalAccessToken{}
+		}
+	}
+	r.Configuration.Repository = types.StringValue(resp.Configuration.Repository)
+	if resp.Configuration.RequestsPerHour != nil {
+		r.Configuration.RequestsPerHour = types.Int64Value(*resp.Configuration.RequestsPerHour)
+	} else {
+		r.Configuration.RequestsPerHour = types.Int64Null()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGithubResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGithubResourceModel) RefreshFromCreateResponse(resp *shared.SourceGithubGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceMailgunResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMailgunGetResponse *shared.SourceMailgunGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

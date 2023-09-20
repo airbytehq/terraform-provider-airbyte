@@ -10,7 +10,7 @@ import (
 type CreateSourceAlloydbResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceAlloydbGetResponse *shared.SourceAlloydbGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

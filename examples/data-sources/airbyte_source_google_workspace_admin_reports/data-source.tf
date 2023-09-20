@@ -1,4 +1,3 @@
 data "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspaceadminreports" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "79cfc6c0-e503-4f56-831f-1d8ed87b28e8"
 }

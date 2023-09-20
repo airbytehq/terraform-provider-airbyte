@@ -10,7 +10,7 @@ import (
 type CreateSourceGoogleDirectoryResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGoogleDirectoryGetResponse *shared.SourceGoogleDirectoryGetResponse
+	StatusCode                       int
+	RawResponse                      *http.Response
 }

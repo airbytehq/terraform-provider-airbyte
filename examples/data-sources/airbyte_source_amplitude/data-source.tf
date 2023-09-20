@@ -1,4 +1,3 @@
 data "airbyte_source_amplitude" "my_source_amplitude" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "d977f1a5-491a-4be9-b51b-106d23e03e69"
 }

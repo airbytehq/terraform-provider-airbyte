@@ -10,7 +10,7 @@ import (
 type CreateSourceSendgridResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSendgridGetResponse *shared.SourceSendgridGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

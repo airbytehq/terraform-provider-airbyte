@@ -1,4 +1,3 @@
 data "airbyte_source_iterable" "my_source_iterable" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "cca36327-2760-4e96-ae97-e054103347d7"
 }

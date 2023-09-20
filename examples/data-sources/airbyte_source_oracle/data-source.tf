@@ -1,4 +1,3 @@
 data "airbyte_source_oracle" "my_source_oracle" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "37bd204a-1f34-40bb-b6f6-77a48519c337"
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceGooglePagespeedInsightsResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceGooglePagespeedInsightsGetResponse *shared.SourceGooglePagespeedInsightsGetResponse
+	StatusCode                               int
+	RawResponse                              *http.Response
 }

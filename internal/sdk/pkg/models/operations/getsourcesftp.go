@@ -14,7 +14,7 @@ type GetSourceSftpRequest struct {
 type GetSourceSftpResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSftpGetResponse *shared.SourceSftpGetResponse
+	StatusCode            int
+	RawResponse           *http.Response
 }

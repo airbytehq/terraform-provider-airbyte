@@ -161,13 +161,58 @@ func (r *SourceSftpBulkResourceModel) ToDeleteSDKType() *shared.SourceSftpBulkCr
 	return out
 }
 
-func (r *SourceSftpBulkResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSftpBulkResourceModel) RefreshFromGetResponse(resp *shared.SourceSftpBulkGetResponse) {
+	if resp.Configuration.FileMostRecent != nil {
+		r.Configuration.FileMostRecent = types.BoolValue(*resp.Configuration.FileMostRecent)
+	} else {
+		r.Configuration.FileMostRecent = types.BoolNull()
+	}
+	if resp.Configuration.FilePattern != nil {
+		r.Configuration.FilePattern = types.StringValue(*resp.Configuration.FilePattern)
+	} else {
+		r.Configuration.FilePattern = types.StringNull()
+	}
+	if resp.Configuration.FileType != nil {
+		r.Configuration.FileType = types.StringValue(string(*resp.Configuration.FileType))
+	} else {
+		r.Configuration.FileType = types.StringNull()
+	}
+	r.Configuration.FolderPath = types.StringValue(resp.Configuration.FolderPath)
+	r.Configuration.Host = types.StringValue(resp.Configuration.Host)
+	if resp.Configuration.Password != nil {
+		r.Configuration.Password = types.StringValue(*resp.Configuration.Password)
+	} else {
+		r.Configuration.Password = types.StringNull()
+	}
+	r.Configuration.Port = types.Int64Value(resp.Configuration.Port)
+	if resp.Configuration.PrivateKey != nil {
+		r.Configuration.PrivateKey = types.StringValue(*resp.Configuration.PrivateKey)
+	} else {
+		r.Configuration.PrivateKey = types.StringNull()
+	}
+	if resp.Configuration.Separator != nil {
+		r.Configuration.Separator = types.StringValue(*resp.Configuration.Separator)
+	} else {
+		r.Configuration.Separator = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	r.Configuration.StreamName = types.StringValue(resp.Configuration.StreamName)
+	r.Configuration.Username = types.StringValue(resp.Configuration.Username)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSftpBulkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSftpBulkResourceModel) RefreshFromCreateResponse(resp *shared.SourceSftpBulkGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

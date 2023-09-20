@@ -69,13 +69,26 @@ func (r *SourceMarketoResourceModel) ToDeleteSDKType() *shared.SourceMarketoCrea
 	return out
 }
 
-func (r *SourceMarketoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMarketoResourceModel) RefreshFromGetResponse(resp *shared.SourceMarketoGetResponse) {
+	r.Configuration.ClientID = types.StringValue(resp.Configuration.ClientID)
+	r.Configuration.ClientSecret = types.StringValue(resp.Configuration.ClientSecret)
+	r.Configuration.DomainURL = types.StringValue(resp.Configuration.DomainURL)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMarketoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMarketoResourceModel) RefreshFromCreateResponse(resp *shared.SourceMarketoGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

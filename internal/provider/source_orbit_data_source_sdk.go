@@ -7,8 +7,25 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOrbitDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbitDataSourceModel) RefreshFromGetResponse(resp *shared.SourceOrbitGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	r.Configuration.Workspace = types.StringValue(resp.Configuration.Workspace)
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

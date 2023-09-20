@@ -1,4 +1,3 @@
 data "airbyte_source_instagram" "my_source_instagram" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "25382533-43fb-40a4-a66e-a47578d171e2"
 }

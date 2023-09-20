@@ -7,8 +7,35 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceKyveDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceKyveDataSourceModel) RefreshFromGetResponse(resp *shared.SourceKyveGetResponse) {
+	if resp.Configuration.MaxPages != nil {
+		r.Configuration.MaxPages = types.Int64Value(*resp.Configuration.MaxPages)
+	} else {
+		r.Configuration.MaxPages = types.Int64Null()
+	}
+	if resp.Configuration.PageSize != nil {
+		r.Configuration.PageSize = types.Int64Value(*resp.Configuration.PageSize)
+	} else {
+		r.Configuration.PageSize = types.Int64Null()
+	}
+	r.Configuration.PoolIds = types.StringValue(resp.Configuration.PoolIds)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartIds = types.StringValue(resp.Configuration.StartIds)
+	if resp.Configuration.URLBase != nil {
+		r.Configuration.URLBase = types.StringValue(*resp.Configuration.URLBase)
+	} else {
+		r.Configuration.URLBase = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

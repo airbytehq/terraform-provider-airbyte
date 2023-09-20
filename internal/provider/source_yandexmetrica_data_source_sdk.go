@@ -5,10 +5,29 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceYandexMetricaDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceYandexMetricaDataSourceModel) RefreshFromGetResponse(resp *shared.SourceYandexMetricaGetResponse) {
+	r.Configuration.AuthToken = types.StringValue(resp.Configuration.AuthToken)
+	r.Configuration.CounterID = types.StringValue(resp.Configuration.CounterID)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.String())
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

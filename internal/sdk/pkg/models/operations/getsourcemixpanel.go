@@ -14,7 +14,7 @@ type GetSourceMixpanelRequest struct {
 type GetSourceMixpanelResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMixpanelGetResponse *shared.SourceMixpanelGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

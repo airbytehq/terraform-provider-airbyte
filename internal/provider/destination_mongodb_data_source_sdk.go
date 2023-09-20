@@ -7,8 +7,99 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationMongodbDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationMongodbDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationMongodbGetResponse) {
+	if resp.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
+		r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword = &DestinationMongodbAuthorizationTypeLoginPassword{}
+		r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization = types.StringValue(string(resp.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization))
+		r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Password = types.StringValue(resp.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Password)
+		r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Username = types.StringValue(resp.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Username)
+	}
+	if resp.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
+		r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone = &DestinationMongodbAuthorizationTypeNone{}
+		r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization = types.StringValue(string(resp.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization))
+	}
+	if resp.Configuration.AuthType.DestinationMongodbUpdateAuthorizationTypeLoginPassword != nil {
+		r.Configuration.AuthType.DestinationMongodbUpdateAuthorizationTypeLoginPassword = &DestinationMongodbAuthorizationTypeLoginPassword{}
+	}
+	if resp.Configuration.AuthType.DestinationMongodbUpdateAuthorizationTypeNone != nil {
+		r.Configuration.AuthType.DestinationMongodbUpdateAuthorizationTypeNone = &DestinationMongodbAuthorizationTypeNone{}
+	}
+	r.Configuration.Database = types.StringValue(resp.Configuration.Database)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.InstanceType == nil {
+		r.Configuration.InstanceType = nil
+	} else {
+		r.Configuration.InstanceType = &DestinationMongodbMongoDbInstanceType{}
+		if resp.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+			r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas = &DestinationMongodbMongoDBInstanceTypeMongoDBAtlas{}
+			r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL = types.StringValue(resp.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL)
+			r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance = types.StringValue(string(resp.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance))
+		}
+		if resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet != nil {
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet = &DestinationMongodbMongoDbInstanceTypeReplicaSet{}
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.Instance = types.StringValue(string(resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.Instance))
+			if resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet != nil {
+				r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet = types.StringValue(*resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet)
+			} else {
+				r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet = types.StringNull()
+			}
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses = types.StringValue(resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses)
+		}
+		if resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{}
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host = types.StringValue(resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host)
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance = types.StringValue(string(resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance))
+			r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port = types.Int64Value(resp.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port)
+		}
+		if resp.Configuration.InstanceType.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
+			r.Configuration.InstanceType.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = &DestinationMongodbMongoDBInstanceTypeMongoDBAtlas{}
+		}
+		if resp.Configuration.InstanceType.DestinationMongodbUpdateMongoDbInstanceTypeReplicaSet != nil {
+			r.Configuration.InstanceType.DestinationMongodbUpdateMongoDbInstanceTypeReplicaSet = &DestinationMongodbMongoDbInstanceTypeReplicaSet{}
+		}
+		if resp.Configuration.InstanceType.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+			r.Configuration.InstanceType.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance = &DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{}
+		}
+	}
+	if resp.Configuration.TunnelMethod == nil {
+		r.Configuration.TunnelMethod = nil
+	} else {
+		r.Configuration.TunnelMethod = &DestinationMongodbSSHTunnelMethod{}
+		if resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel.TunnelMethod))
+		}
+		if resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser)
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
+		}
+		if resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.SSHKey)
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
+			r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
+		}
+		if resp.Configuration.TunnelMethod.DestinationMongodbUpdateSSHTunnelMethodNoTunnel != nil {
+			r.Configuration.TunnelMethod.DestinationMongodbUpdateSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
+		}
+		if resp.Configuration.TunnelMethod.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			r.Configuration.TunnelMethod.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
+		}
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

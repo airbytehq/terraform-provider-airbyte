@@ -10,7 +10,7 @@ import (
 type CreateSourceIp2whoisResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceIp2whoisGetResponse *shared.SourceIp2whoisGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

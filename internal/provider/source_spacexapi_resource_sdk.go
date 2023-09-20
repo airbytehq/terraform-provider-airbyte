@@ -85,13 +85,36 @@ func (r *SourceSpacexAPIResourceModel) ToDeleteSDKType() *shared.SourceSpacexAPI
 	return out
 }
 
-func (r *SourceSpacexAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceSpacexAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceSpacexAPIGetResponse) {
+	if resp.Configuration.ID != nil {
+		r.Configuration.ID = types.StringValue(*resp.Configuration.ID)
+	} else {
+		r.Configuration.ID = types.StringNull()
+	}
+	if resp.Configuration.Options != nil {
+		r.Configuration.Options = types.StringValue(*resp.Configuration.Options)
+	} else {
+		r.Configuration.Options = types.StringNull()
+	}
+	if resp.Configuration.SourceType != nil {
+		r.Configuration.SourceType = types.StringValue(string(*resp.Configuration.SourceType))
+	} else {
+		r.Configuration.SourceType = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSpacexAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSpacexAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceSpacexAPIGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

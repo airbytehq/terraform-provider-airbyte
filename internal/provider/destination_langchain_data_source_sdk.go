@@ -7,8 +7,89 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationLangchainDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
+func (r *DestinationLangchainDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationLangchainGetResponse) {
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.Embedding.DestinationLangchainEmbeddingFake != nil {
+		r.Configuration.Embedding.DestinationLangchainEmbeddingFake = &DestinationLangchainEmbeddingFake{}
+		if resp.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode != nil {
+			r.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI != nil {
+		r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI = &DestinationLangchainEmbeddingOpenAI{}
+		if resp.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode != nil {
+			r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode = types.StringValue(string(*resp.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode))
+		} else {
+			r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode = types.StringNull()
+		}
+		r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.OpenaiKey = types.StringValue(resp.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.OpenaiKey)
+	}
+	if resp.Configuration.Embedding.DestinationLangchainUpdateEmbeddingFake != nil {
+		r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingFake = &DestinationLangchainEmbeddingFake{}
+	}
+	if resp.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI != nil {
+		r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI = &DestinationLangchainEmbeddingOpenAI{}
+	}
+	if resp.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance != nil {
+		r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance = &DestinationLangchainIndexingChromaLocalPersistance{}
+		if resp.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName != nil {
+			r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName = types.StringValue(*resp.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName)
+		} else {
+			r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName = types.StringNull()
+		}
+		r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.DestinationPath = types.StringValue(resp.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.DestinationPath)
+		if resp.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode != nil {
+			r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode = types.StringValue(string(*resp.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode))
+		} else {
+			r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch != nil {
+		r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch = &DestinationLangchainIndexingDocArrayHnswSearch{}
+		r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.DestinationPath = types.StringValue(resp.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.DestinationPath)
+		if resp.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode != nil {
+			r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode = types.StringValue(string(*resp.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode))
+		} else {
+			r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode = types.StringNull()
+		}
+	}
+	if resp.Configuration.Indexing.DestinationLangchainIndexingPinecone != nil {
+		r.Configuration.Indexing.DestinationLangchainIndexingPinecone = &DestinationLangchainIndexingPinecone{}
+		r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Index = types.StringValue(resp.Configuration.Indexing.DestinationLangchainIndexingPinecone.Index)
+		if resp.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode != nil {
+			r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode = types.StringValue(string(*resp.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode))
+		} else {
+			r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode = types.StringNull()
+		}
+		r.Configuration.Indexing.DestinationLangchainIndexingPinecone.PineconeEnvironment = types.StringValue(resp.Configuration.Indexing.DestinationLangchainIndexingPinecone.PineconeEnvironment)
+		r.Configuration.Indexing.DestinationLangchainIndexingPinecone.PineconeKey = types.StringValue(resp.Configuration.Indexing.DestinationLangchainIndexingPinecone.PineconeKey)
+	}
+	if resp.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance != nil {
+		r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance = &DestinationLangchainIndexingChromaLocalPersistance{}
+	}
+	if resp.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch != nil {
+		r.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch = &DestinationLangchainIndexingDocArrayHnswSearch{}
+	}
+	if resp.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone != nil {
+		r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone = &DestinationLangchainIndexingPinecone{}
+	}
+	if resp.Configuration.Processing.ChunkOverlap != nil {
+		r.Configuration.Processing.ChunkOverlap = types.Int64Value(*resp.Configuration.Processing.ChunkOverlap)
+	} else {
+		r.Configuration.Processing.ChunkOverlap = types.Int64Null()
+	}
+	r.Configuration.Processing.ChunkSize = types.Int64Value(resp.Configuration.Processing.ChunkSize)
+	r.Configuration.Processing.TextFields = nil
+	for _, v := range resp.Configuration.Processing.TextFields {
+		r.Configuration.Processing.TextFields = append(r.Configuration.Processing.TextFields, types.StringValue(v))
+	}
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

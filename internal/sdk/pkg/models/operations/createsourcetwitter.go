@@ -10,7 +10,7 @@ import (
 type CreateSourceTwitterResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTwitterGetResponse *shared.SourceTwitterGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

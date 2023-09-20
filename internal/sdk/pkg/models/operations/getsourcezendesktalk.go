@@ -14,7 +14,7 @@ type GetSourceZendeskTalkRequest struct {
 type GetSourceZendeskTalkResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceZendeskTalkGetResponse *shared.SourceZendeskTalkGetResponse
+	StatusCode                   int
+	RawResponse                  *http.Response
 }

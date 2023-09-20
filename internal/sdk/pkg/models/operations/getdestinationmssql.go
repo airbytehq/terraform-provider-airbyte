@@ -14,7 +14,7 @@ type GetDestinationMssqlRequest struct {
 type GetDestinationMssqlResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationMssqlGetResponse *shared.DestinationMssqlGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

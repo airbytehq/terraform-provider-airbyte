@@ -10,7 +10,7 @@ import (
 type CreateSourceMarketoResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMarketoGetResponse *shared.SourceMarketoGetResponse
+	StatusCode               int
+	RawResponse              *http.Response
 }

@@ -10,7 +10,7 @@ import (
 type CreateSourceNotionResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceNotionGetResponse *shared.SourceNotionGetResponse
+	StatusCode              int
+	RawResponse             *http.Response
 }

@@ -14,7 +14,7 @@ type GetDestinationSftpJSONRequest struct {
 type GetDestinationSftpJSONResponse struct {
 	ContentType string
 	// Get a Destination by the id in the path.
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationSftpJSONGetResponse *shared.DestinationSftpJSONGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

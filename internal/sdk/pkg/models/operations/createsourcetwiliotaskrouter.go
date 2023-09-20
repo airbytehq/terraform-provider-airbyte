@@ -10,7 +10,7 @@ import (
 type CreateSourceTwilioTaskrouterResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceTwilioTaskrouterGetResponse *shared.SourceTwilioTaskrouterGetResponse
+	StatusCode                        int
+	RawResponse                       *http.Response
 }

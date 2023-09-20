@@ -60,13 +60,24 @@ func (r *SourceWebflowResourceModel) ToDeleteSDKType() *shared.SourceWebflowCrea
 	return out
 }
 
-func (r *SourceWebflowResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceWebflowResourceModel) RefreshFromGetResponse(resp *shared.SourceWebflowGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.SiteID = types.StringValue(resp.Configuration.SiteID)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWebflowResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceWebflowResourceModel) RefreshFromCreateResponse(resp *shared.SourceWebflowGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

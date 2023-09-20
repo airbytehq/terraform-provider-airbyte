@@ -1,4 +1,3 @@
 data "airbyte_source_appfollow" "my_source_appfollow" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "ca60db73-a2f9-43f4-a7dc-0d8da5612202"
 }

@@ -9,12 +9,12 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
     }
     indexing = {
       index                = "...my_index..."
-      pinecone_environment = "...my_pinecone_environment..."
+      pinecone_environment = "us-west1-gcp"
       pinecone_key         = "...my_pinecone_key..."
     }
     processing = {
-      chunk_overlap = 2
-      chunk_size    = 3
+      chunk_overlap = 3
+      chunk_size    = 4
       metadata_fields = [
         "...",
       ]
@@ -23,6 +23,6 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       ]
     }
   }
-  name         = "Cecelia Braun"
-  workspace_id = "8b6a89fb-e3a5-4aa8-a482-4d0ab4075088"
+  name         = "Jack Langworth"
+  workspace_id = "b6a89fbe-3a5a-4a8e-8824-d0ab4075088e"
 }

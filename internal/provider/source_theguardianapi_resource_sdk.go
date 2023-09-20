@@ -116,13 +116,44 @@ func (r *SourceTheGuardianAPIResourceModel) ToDeleteSDKType() *shared.SourceTheG
 	return out
 }
 
-func (r *SourceTheGuardianAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceTheGuardianAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceTheGuardianAPIGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(*resp.Configuration.EndDate)
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	if resp.Configuration.Query != nil {
+		r.Configuration.Query = types.StringValue(*resp.Configuration.Query)
+	} else {
+		r.Configuration.Query = types.StringNull()
+	}
+	if resp.Configuration.Section != nil {
+		r.Configuration.Section = types.StringValue(*resp.Configuration.Section)
+	} else {
+		r.Configuration.Section = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate)
+	if resp.Configuration.Tag != nil {
+		r.Configuration.Tag = types.StringValue(*resp.Configuration.Tag)
+	} else {
+		r.Configuration.Tag = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTheGuardianAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTheGuardianAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceTheGuardianAPIGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

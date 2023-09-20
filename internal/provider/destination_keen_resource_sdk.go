@@ -67,13 +67,24 @@ func (r *DestinationKeenResourceModel) ToDeleteSDKType() *shared.DestinationKeen
 	return out
 }
 
-func (r *DestinationKeenResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationKeenResourceModel) RefreshFromGetResponse(resp *shared.DestinationKeenGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.Configuration.InferTimestamp != nil {
+		r.Configuration.InferTimestamp = types.BoolValue(*resp.Configuration.InferTimestamp)
+	} else {
+		r.Configuration.InferTimestamp = types.BoolNull()
+	}
+	r.Configuration.ProjectID = types.StringValue(resp.Configuration.ProjectID)
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationKeenResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationKeenResourceModel) RefreshFromCreateResponse(resp *shared.DestinationKeenGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

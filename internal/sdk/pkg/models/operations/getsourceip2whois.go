@@ -14,7 +14,7 @@ type GetSourceIp2whoisRequest struct {
 type GetSourceIp2whoisResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceIp2whoisGetResponse *shared.SourceIp2whoisGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

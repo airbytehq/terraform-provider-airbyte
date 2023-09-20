@@ -10,7 +10,7 @@ import (
 type CreateSourceOrbitResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceOrbitGetResponse *shared.SourceOrbitGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

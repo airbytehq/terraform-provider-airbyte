@@ -7,8 +7,44 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceClickupAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceClickupAPIDataSourceModel) RefreshFromGetResponse(resp *shared.SourceClickupAPIGetResponse) {
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	if resp.Configuration.FolderID != nil {
+		r.Configuration.FolderID = types.StringValue(*resp.Configuration.FolderID)
+	} else {
+		r.Configuration.FolderID = types.StringNull()
+	}
+	if resp.Configuration.IncludeClosedTasks != nil {
+		r.Configuration.IncludeClosedTasks = types.BoolValue(*resp.Configuration.IncludeClosedTasks)
+	} else {
+		r.Configuration.IncludeClosedTasks = types.BoolNull()
+	}
+	if resp.Configuration.ListID != nil {
+		r.Configuration.ListID = types.StringValue(*resp.Configuration.ListID)
+	} else {
+		r.Configuration.ListID = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.SpaceID != nil {
+		r.Configuration.SpaceID = types.StringValue(*resp.Configuration.SpaceID)
+	} else {
+		r.Configuration.SpaceID = types.StringNull()
+	}
+	if resp.Configuration.TeamID != nil {
+		r.Configuration.TeamID = types.StringValue(*resp.Configuration.TeamID)
+	} else {
+		r.Configuration.TeamID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

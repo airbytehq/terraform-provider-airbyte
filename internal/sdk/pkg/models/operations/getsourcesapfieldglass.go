@@ -14,7 +14,7 @@ type GetSourceSapFieldglassRequest struct {
 type GetSourceSapFieldglassResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceSapFieldglassGetResponse *shared.SourceSapFieldglassGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

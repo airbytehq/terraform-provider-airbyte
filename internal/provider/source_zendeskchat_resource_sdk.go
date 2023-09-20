@@ -187,13 +187,68 @@ func (r *SourceZendeskChatResourceModel) ToDeleteSDKType() *shared.SourceZendesk
 	return out
 }
 
-func (r *SourceZendeskChatResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskChatResourceModel) RefreshFromGetResponse(resp *shared.SourceZendeskChatGetResponse) {
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceZendeskChatAuthorizationMethod{}
+		if resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken != nil {
+			r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken = &SourceZendeskChatAuthorizationMethodAccessToken{}
+			r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken = types.StringValue(resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken)
+			r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials = types.StringValue(string(resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials))
+		}
+		if resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20 = &SourceZendeskChatAuthorizationMethodOAuth20{}
+			if resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken != nil {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken = types.StringValue(*resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken)
+			} else {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID != nil {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID)
+			} else {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID = types.StringNull()
+			}
+			if resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret != nil {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret)
+			} else {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials = types.StringValue(string(resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials))
+			if resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken != nil {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken = types.StringValue(*resp.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken)
+			} else {
+				r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodAccessToken != nil {
+			r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodAccessToken = &SourceZendeskChatAuthorizationMethodAccessToken{}
+		}
+		if resp.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodOAuth20 != nil {
+			r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodOAuth20 = &SourceZendeskChatAuthorizationMethodOAuth20{}
+		}
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.Format(time.RFC3339))
+	if resp.Configuration.Subdomain != nil {
+		r.Configuration.Subdomain = types.StringValue(*resp.Configuration.Subdomain)
+	} else {
+		r.Configuration.Subdomain = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZendeskChatResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskChatResourceModel) RefreshFromCreateResponse(resp *shared.SourceZendeskChatGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

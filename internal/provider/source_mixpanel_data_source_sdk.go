@@ -5,10 +5,95 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceMixpanelDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMixpanelDataSourceModel) RefreshFromGetResponse(resp *shared.SourceMixpanelGetResponse) {
+	if resp.Configuration.AttributionWindow != nil {
+		r.Configuration.AttributionWindow = types.Int64Value(*resp.Configuration.AttributionWindow)
+	} else {
+		r.Configuration.AttributionWindow = types.Int64Null()
+	}
+	if resp.Configuration.Credentials == nil {
+		r.Configuration.Credentials = nil
+	} else {
+		r.Configuration.Credentials = &SourceMixpanelAuthenticationWildcard{}
+		if resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
+			r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret = &SourceMixpanelAuthenticationWildcardProjectSecret{}
+			r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret = types.StringValue(resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret)
+			if resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle != nil {
+				r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle))
+			} else {
+				r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle = types.StringNull()
+			}
+		}
+		if resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
+			r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount = &SourceMixpanelAuthenticationWildcardServiceAccount{}
+			if resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle != nil {
+				r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle = types.StringValue(string(*resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle))
+			} else {
+				r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle = types.StringNull()
+			}
+			r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Secret = types.StringValue(resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Secret)
+			r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Username = types.StringValue(resp.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Username)
+		}
+		if resp.Configuration.Credentials.SourceMixpanelUpdateAuthenticationWildcardProjectSecret != nil {
+			r.Configuration.Credentials.SourceMixpanelUpdateAuthenticationWildcardProjectSecret = &SourceMixpanelAuthenticationWildcardProjectSecret{}
+		}
+		if resp.Configuration.Credentials.SourceMixpanelUpdateAuthenticationWildcardServiceAccount != nil {
+			r.Configuration.Credentials.SourceMixpanelUpdateAuthenticationWildcardServiceAccount = &SourceMixpanelAuthenticationWildcardServiceAccount{}
+		}
+	}
+	if resp.Configuration.DateWindowSize != nil {
+		r.Configuration.DateWindowSize = types.Int64Value(*resp.Configuration.DateWindowSize)
+	} else {
+		r.Configuration.DateWindowSize = types.Int64Null()
+	}
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(resp.Configuration.EndDate.String())
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	if resp.Configuration.ProjectID != nil {
+		r.Configuration.ProjectID = types.Int64Value(*resp.Configuration.ProjectID)
+	} else {
+		r.Configuration.ProjectID = types.Int64Null()
+	}
+	if resp.Configuration.ProjectTimezone != nil {
+		r.Configuration.ProjectTimezone = types.StringValue(*resp.Configuration.ProjectTimezone)
+	} else {
+		r.Configuration.ProjectTimezone = types.StringNull()
+	}
+	if resp.Configuration.Region != nil {
+		r.Configuration.Region = types.StringValue(string(*resp.Configuration.Region))
+	} else {
+		r.Configuration.Region = types.StringNull()
+	}
+	if resp.Configuration.SelectPropertiesByDefault != nil {
+		r.Configuration.SelectPropertiesByDefault = types.BoolValue(*resp.Configuration.SelectPropertiesByDefault)
+	} else {
+		r.Configuration.SelectPropertiesByDefault = types.BoolNull()
+	}
+	if resp.Configuration.SourceType != nil {
+		r.Configuration.SourceType = types.StringValue(string(*resp.Configuration.SourceType))
+	} else {
+		r.Configuration.SourceType = types.StringNull()
+	}
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

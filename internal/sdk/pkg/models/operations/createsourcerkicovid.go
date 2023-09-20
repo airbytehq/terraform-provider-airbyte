@@ -10,7 +10,7 @@ import (
 type CreateSourceRkiCovidResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceRkiCovidGetResponse *shared.SourceRkiCovidGetResponse
+	StatusCode                int
+	RawResponse               *http.Response
 }

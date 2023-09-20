@@ -10,7 +10,7 @@ import (
 type CreateSourceFacebookPagesResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceFacebookPagesGetResponse *shared.SourceFacebookPagesGetResponse
+	StatusCode                     int
+	RawResponse                    *http.Response
 }

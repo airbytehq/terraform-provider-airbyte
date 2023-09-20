@@ -178,13 +178,67 @@ func (r *SourceGnewsResourceModel) ToDeleteSDKType() *shared.SourceGnewsCreateRe
 	return out
 }
 
-func (r *SourceGnewsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceGnewsResourceModel) RefreshFromGetResponse(resp *shared.SourceGnewsGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	if resp.Configuration.Country != nil {
+		r.Configuration.Country = types.StringValue(string(*resp.Configuration.Country))
+	} else {
+		r.Configuration.Country = types.StringNull()
+	}
+	if resp.Configuration.EndDate != nil {
+		r.Configuration.EndDate = types.StringValue(*resp.Configuration.EndDate)
+	} else {
+		r.Configuration.EndDate = types.StringNull()
+	}
+	r.Configuration.In = nil
+	for _, v := range resp.Configuration.In {
+		r.Configuration.In = append(r.Configuration.In, types.StringValue(string(v)))
+	}
+	if resp.Configuration.Language != nil {
+		r.Configuration.Language = types.StringValue(string(*resp.Configuration.Language))
+	} else {
+		r.Configuration.Language = types.StringNull()
+	}
+	r.Configuration.Nullable = nil
+	for _, v := range resp.Configuration.Nullable {
+		r.Configuration.Nullable = append(r.Configuration.Nullable, types.StringValue(string(v)))
+	}
+	r.Configuration.Query = types.StringValue(resp.Configuration.Query)
+	if resp.Configuration.Sortby != nil {
+		r.Configuration.Sortby = types.StringValue(string(*resp.Configuration.Sortby))
+	} else {
+		r.Configuration.Sortby = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	if resp.Configuration.StartDate != nil {
+		r.Configuration.StartDate = types.StringValue(*resp.Configuration.StartDate)
+	} else {
+		r.Configuration.StartDate = types.StringNull()
+	}
+	if resp.Configuration.TopHeadlinesQuery != nil {
+		r.Configuration.TopHeadlinesQuery = types.StringValue(*resp.Configuration.TopHeadlinesQuery)
+	} else {
+		r.Configuration.TopHeadlinesQuery = types.StringNull()
+	}
+	if resp.Configuration.TopHeadlinesTopic != nil {
+		r.Configuration.TopHeadlinesTopic = types.StringValue(string(*resp.Configuration.TopHeadlinesTopic))
+	} else {
+		r.Configuration.TopHeadlinesTopic = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGnewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGnewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceGnewsGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

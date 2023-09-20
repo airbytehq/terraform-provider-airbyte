@@ -1,4 +1,3 @@
 data "airbyte_source_lemlist" "my_source_lemlist" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "f38bd2be-8787-4034-93f4-9aa8465a3283"
 }

@@ -1,4 +1,3 @@
 data "airbyte_source_rss" "my_source_rss" {
-  secret_id = "...my_secret_id..."
-  source_id = "...my_source_id..."
+  source_id = "6cb6ebab-e5e0-4b99-b3b1-358d6a87bb7a"
 }

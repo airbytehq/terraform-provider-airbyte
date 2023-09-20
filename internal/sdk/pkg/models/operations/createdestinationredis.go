@@ -10,7 +10,7 @@ import (
 type CreateDestinationRedisResponse struct {
 	ContentType string
 	// Successful operation
-	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	DestinationRedisGetResponse *shared.DestinationRedisGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }

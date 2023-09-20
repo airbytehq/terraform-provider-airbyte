@@ -14,7 +14,7 @@ type GetSourceWhiskyHunterRequest struct {
 type GetSourceWhiskyHunterResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceWhiskyHunterGetResponse *shared.SourceWhiskyHunterGetResponse
+	StatusCode                    int
+	RawResponse                   *http.Response
 }

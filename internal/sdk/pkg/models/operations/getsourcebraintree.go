@@ -14,7 +14,7 @@ type GetSourceBraintreeRequest struct {
 type GetSourceBraintreeResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceBraintreeGetResponse *shared.SourceBraintreeGetResponse
+	StatusCode                 int
+	RawResponse                *http.Response
 }

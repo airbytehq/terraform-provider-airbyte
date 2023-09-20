@@ -10,7 +10,7 @@ import (
 type CreateSourceMysqlResponse struct {
 	ContentType string
 	// Successful operation
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMysqlGetResponse *shared.SourceMysqlGetResponse
+	StatusCode             int
+	RawResponse            *http.Response
 }

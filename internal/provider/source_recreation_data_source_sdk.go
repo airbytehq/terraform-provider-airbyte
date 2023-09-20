@@ -7,8 +7,24 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceRecreationDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceRecreationDataSourceModel) RefreshFromGetResponse(resp *shared.SourceRecreationGetResponse) {
+	r.Configuration.Apikey = types.StringValue(resp.Configuration.Apikey)
+	if resp.Configuration.QueryCampsites != nil {
+		r.Configuration.QueryCampsites = types.StringValue(*resp.Configuration.QueryCampsites)
+	} else {
+		r.Configuration.QueryCampsites = types.StringNull()
+	}
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

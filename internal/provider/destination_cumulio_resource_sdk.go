@@ -57,13 +57,20 @@ func (r *DestinationCumulioResourceModel) ToDeleteSDKType() *shared.DestinationC
 	return out
 }
 
-func (r *DestinationCumulioResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
+func (r *DestinationCumulioResourceModel) RefreshFromGetResponse(resp *shared.DestinationCumulioGetResponse) {
+	r.Configuration.APIHost = types.StringValue(resp.Configuration.APIHost)
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.APIToken = types.StringValue(resp.Configuration.APIToken)
+	r.Configuration.DestinationType = types.StringValue(string(resp.Configuration.DestinationType))
+	if resp.DestinationID != nil {
+		r.DestinationID = types.StringValue(*resp.DestinationID)
+	} else {
+		r.DestinationID = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationCumulioResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationCumulioResourceModel) RefreshFromCreateResponse(resp *shared.DestinationCumulioGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

@@ -6,6 +6,7 @@ import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceWoocommerceResourceModel) ToCreateSDKType() *shared.SourceWoocommerceCreateRequest {
@@ -69,13 +70,26 @@ func (r *SourceWoocommerceResourceModel) ToDeleteSDKType() *shared.SourceWoocomm
 	return out
 }
 
-func (r *SourceWoocommerceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceWoocommerceResourceModel) RefreshFromGetResponse(resp *shared.SourceWoocommerceGetResponse) {
+	r.Configuration.APIKey = types.StringValue(resp.Configuration.APIKey)
+	r.Configuration.APISecret = types.StringValue(resp.Configuration.APISecret)
+	r.Configuration.Shop = types.StringValue(resp.Configuration.Shop)
+	r.Configuration.SourceType = types.StringValue(string(resp.Configuration.SourceType))
+	r.Configuration.StartDate = types.StringValue(resp.Configuration.StartDate.String())
 	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
+	if resp.SecretID != nil {
+		r.SecretID = types.StringValue(*resp.SecretID)
+	} else {
+		r.SecretID = types.StringNull()
+	}
+	if resp.SourceID != nil {
+		r.SourceID = types.StringValue(*resp.SourceID)
+	} else {
+		r.SourceID = types.StringNull()
+	}
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWoocommerceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceWoocommerceResourceModel) RefreshFromCreateResponse(resp *shared.SourceWoocommerceGetResponse) {
 	r.RefreshFromGetResponse(resp)
 }

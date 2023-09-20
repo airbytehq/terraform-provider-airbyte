@@ -4,7 +4,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     destination_type = "redis"
     host             = "localhost,127.0.0.1"
     password         = "...my_password..."
-    port             = 9
+    port             = 3
     ssl              = false
     ssl_mode = {
       destination_redis_ssl_modes_disable = {
@@ -16,7 +16,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Vivianne.Baumbach3"
+    username = "Alphonso3"
   }
   name         = "Bonnie Halvorson"
   workspace_id = "f94e29e9-73e9-422a-97a1-5be3e060807e"

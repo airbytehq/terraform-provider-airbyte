@@ -14,7 +14,7 @@ type GetSourceMailjetSmsRequest struct {
 type GetSourceMailjetSmsResponse struct {
 	ContentType string
 	// Get a Source by the id in the path.
-	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	SourceMailjetSmsGetResponse *shared.SourceMailjetSmsGetResponse
+	StatusCode                  int
+	RawResponse                 *http.Response
 }
