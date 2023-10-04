@@ -45,7 +45,6 @@ Read-Only:
 Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
 - `site` (String) The site prefix for your Chargebee instance.
 - `site_api_key` (String) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["chargebee"]
 - `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

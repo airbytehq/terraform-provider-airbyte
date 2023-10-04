@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,17 +55,9 @@ func (r *SourceClockifyDataSource) Schema(ctx context.Context, req datasource.Sc
 						Description: `You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.`,
 					},
 					"api_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"clockify",
-							),
-						},
-						Description: `must be one of ["clockify"]`,
+						MarkdownDescription: `Default: "https://api.clockify.me"` + "\n" +
+							`The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.`,
 					},
 					"workspace_id": schema.StringAttribute{
 						Computed:    true,

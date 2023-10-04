@@ -9,12 +9,10 @@ import (
 
 func (r *SourceAhaResourceModel) ToCreateSDKType() *shared.SourceAhaCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceAhaAha(r.Configuration.SourceType.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourceAha{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		URL:        url,
+		APIKey: apiKey,
+		URL:    url,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

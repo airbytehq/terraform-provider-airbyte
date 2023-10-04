@@ -9,3 +9,31 @@ type SourceMicrosoftTeamsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMicrosoftTeamsCreateRequest) GetConfiguration() SourceMicrosoftTeams {
+	if o == nil {
+		return SourceMicrosoftTeams{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMicrosoftTeamsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMicrosoftTeamsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMicrosoftTeamsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

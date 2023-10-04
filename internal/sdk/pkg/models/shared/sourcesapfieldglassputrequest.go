@@ -7,3 +7,24 @@ type SourceSapFieldglassPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *SourceSapFieldglassPutRequest) GetConfiguration() SourceSapFieldglassUpdate {
+	if o == nil {
+		return SourceSapFieldglassUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSapFieldglassPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSapFieldglassPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

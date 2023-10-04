@@ -2,11 +2,8 @@
 
 package provider
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
-
 type DestinationLangchain struct {
-	DestinationType types.String                              `tfsdk:"destination_type"`
-	Embedding       DestinationLangchainEmbedding             `tfsdk:"embedding"`
-	Indexing        DestinationLangchainIndexing              `tfsdk:"indexing"`
-	Processing      DestinationLangchainProcessingConfigModel `tfsdk:"processing"`
+	Embedding  DestinationLangchainEmbedding             `tfsdk:"embedding"`
+	Indexing   DestinationLangchainIndexing              `tfsdk:"indexing"`
+	Processing DestinationLangchainProcessingConfigModel `tfsdk:"processing"`
 }

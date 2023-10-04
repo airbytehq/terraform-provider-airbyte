@@ -5,9 +5,15 @@ package utils
 import (
 	"context"
 	"fmt"
+	"math/big"
 	"net/url"
 	"reflect"
 	"strings"
+	"time"
+
+	"github.com/ericlagergren/decimal"
+
+	"airbyte/internal/sdk/pkg/types"
 )
 
 func GenerateURL(ctx context.Context, serverURL, path string, pathParams interface{}, globals map[string]map[string]map[string]interface{}) (string, error) {
@@ -95,31 +101,42 @@ func getSimplePathParams(ctx context.Context, parentName string, objType reflect
 		}
 		pathParams[parentName] = strings.Join(ppVals, ",")
 	case reflect.Struct:
-		var ppVals []string
-		for i := 0; i < objType.NumField(); i++ {
-			fieldType := objType.Field(i)
-			valType := objValue.Field(i)
+		switch objValue.Interface().(type) {
+		case time.Time:
+			pathParams[parentName] = valToString(objValue.Interface())
+		case types.Date:
+			pathParams[parentName] = valToString(objValue.Interface())
+		case big.Int:
+			pathParams[parentName] = valToString(objValue.Interface())
+		case decimal.Big:
+			pathParams[parentName] = valToString(objValue.Interface())
+		default:
+			var ppVals []string
+			for i := 0; i < objType.NumField(); i++ {
+				fieldType := objType.Field(i)
+				valType := objValue.Field(i)
 
-			ppTag := parseParamTag(pathParamTagKey, fieldType, "simple", explode)
-			if ppTag == nil {
-				continue
-			}
+				ppTag := parseParamTag(pathParamTagKey, fieldType, "simple", explode)
+				if ppTag == nil {
+					continue
+				}
 
-			if isNil(fieldType.Type, valType) {
-				continue
-			}
+				if isNil(fieldType.Type, valType) {
+					continue
+				}
 
-			if fieldType.Type.Kind() == reflect.Pointer {
-				valType = valType.Elem()
-			}
+				if fieldType.Type.Kind() == reflect.Pointer {
+					valType = valType.Elem()
+				}
 
-			if explode {
-				ppVals = append(ppVals, fmt.Sprintf("%s=%s", ppTag.ParamName, valToString(valType.Interface())))
-			} else {
-				ppVals = append(ppVals, fmt.Sprintf("%s,%s", ppTag.ParamName, valToString(valType.Interface())))
+				if explode {
+					ppVals = append(ppVals, fmt.Sprintf("%s=%s", ppTag.ParamName, valToString(valType.Interface())))
+				} else {
+					ppVals = append(ppVals, fmt.Sprintf("%s,%s", ppTag.ParamName, valToString(valType.Interface())))
+				}
 			}
+			pathParams[parentName] = strings.Join(ppVals, ",")
 		}
-		pathParams[parentName] = strings.Join(ppVals, ",")
 	default:
 		pathParams[parentName] = valToString(objValue.Interface())
 	}

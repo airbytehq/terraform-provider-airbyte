@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceGetlagoGetlago) UnmarshalJSON(data []byte) error {
 type SourceGetlago struct {
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
 	APIKey     string               `json:"api_key"`
-	SourceType SourceGetlagoGetlago `json:"sourceType"`
+	sourceType SourceGetlagoGetlago `const:"getlago" json:"sourceType"`
+}
+
+func (s SourceGetlago) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGetlago) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGetlago) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGetlago) GetSourceType() SourceGetlagoGetlago {
+	return SourceGetlagoGetlagoGetlago
 }

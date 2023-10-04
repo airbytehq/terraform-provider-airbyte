@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -63,13 +63,56 @@ type DestinationMysqlSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (d DestinationMysqlSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMysqlSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMysqlSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationMysqlSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationMysqlSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationMysqlSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationMysqlSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -104,11 +147,54 @@ type DestinationMysqlSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (d DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationMysqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -139,7 +225,22 @@ func (e *DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data
 // DestinationMysqlSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMysqlSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationMysqlSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMysqlSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMysqlSSHTunnelMethodNoTunnel) GetTunnelMethod() DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethod {
+	return DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type DestinationMysqlSSHTunnelMethodType string
@@ -186,30 +287,23 @@ func CreateDestinationMysqlSSHTunnelMethodDestinationMysqlSSHTunnelMethodPasswor
 }
 
 func (u *DestinationMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationMysqlSSHTunnelMethodNoTunnel := new(DestinationMysqlSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMysqlSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMysqlSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.DestinationMysqlSSHTunnelMethodNoTunnel = destinationMysqlSSHTunnelMethodNoTunnel
 		u.Type = DestinationMysqlSSHTunnelMethodTypeDestinationMysqlSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	destinationMysqlSSHTunnelMethodSSHKeyAuthentication := new(DestinationMysqlSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMysqlSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMysqlSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication = destinationMysqlSSHTunnelMethodSSHKeyAuthentication
 		u.Type = DestinationMysqlSSHTunnelMethodTypeDestinationMysqlSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	destinationMysqlSSHTunnelMethodPasswordAuthentication := new(DestinationMysqlSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMysqlSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMysqlSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.DestinationMysqlSSHTunnelMethodPasswordAuthentication = destinationMysqlSSHTunnelMethodPasswordAuthentication
 		u.Type = DestinationMysqlSSHTunnelMethodTypeDestinationMysqlSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -220,24 +314,24 @@ func (u *DestinationMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u DestinationMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationMysqlSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationMysqlSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.DestinationMysqlSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.DestinationMysqlSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationMysqlSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.DestinationMysqlSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationMysql struct {
 	// Name of the database.
 	Database        string                `json:"database"`
-	DestinationType DestinationMysqlMysql `json:"destinationType"`
+	destinationType DestinationMysqlMysql `const:"mysql" json:"destinationType"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -245,9 +339,73 @@ type DestinationMysql struct {
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"3306" json:"port"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMysqlSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationMysql) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMysql) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMysql) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationMysql) GetDestinationType() DestinationMysqlMysql {
+	return DestinationMysqlMysqlMysql
+}
+
+func (o *DestinationMysql) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMysql) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationMysql) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationMysql) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationMysql) GetTunnelMethod() *DestinationMysqlSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationMysql) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

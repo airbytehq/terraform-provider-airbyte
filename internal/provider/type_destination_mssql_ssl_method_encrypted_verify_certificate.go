@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationMssqlSSLMethodEncryptedVerifyCertificate struct {
 	HostNameInCertificate types.String `tfsdk:"host_name_in_certificate"`
-	SslMethod             types.String `tfsdk:"ssl_method"`
 }

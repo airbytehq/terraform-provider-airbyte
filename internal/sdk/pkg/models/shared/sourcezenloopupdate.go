@@ -12,3 +12,31 @@ type SourceZenloopUpdate struct {
 	// Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
 	SurveyID *string `json:"survey_id,omitempty"`
 }
+
+func (o *SourceZenloopUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceZenloopUpdate) GetDateFrom() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DateFrom
+}
+
+func (o *SourceZenloopUpdate) GetSurveyGroupID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SurveyGroupID
+}
+
+func (o *SourceZenloopUpdate) GetSurveyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SurveyID
+}

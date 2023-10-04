@@ -37,7 +37,6 @@ data "airbyte_destination_firestore" "my_destination_firestore" {
 Read-Only:
 
 - `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
-- `destination_type` (String) must be one of ["firestore"]
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
 
 

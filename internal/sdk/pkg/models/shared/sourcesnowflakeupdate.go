@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -34,11 +34,40 @@ func (e *SourceSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType) Un
 }
 
 type SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword struct {
-	AuthType SourceSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType `json:"auth_type"`
+	authType SourceSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType `const:"username/password" json:"auth_type"`
 	// The password associated with the username.
 	Password string `json:"password"`
 	// The username you created to allow Airbyte to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword) GetAuthType() SourceSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType {
+	return SourceSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthTypeUsernamePassword
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthType string
@@ -68,13 +97,56 @@ func (e *SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthType) UnmarshalJSON(
 type SourceSnowflakeUpdateAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string                                                 `json:"access_token,omitempty"`
-	AuthType    SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthType `json:"auth_type"`
+	authType    SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthType `const:"OAuth" json:"auth_type"`
 	// The Client ID of your Snowflake developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Snowflake developer application.
 	ClientSecret string `json:"client_secret"`
 	// Refresh Token for making authenticated requests.
 	RefreshToken *string `json:"refresh_token,omitempty"`
+}
+
+func (s SourceSnowflakeUpdateAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSnowflakeUpdateAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodOAuth20) GetAuthType() SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthType {
+	return SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthTypeOAuth
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSnowflakeUpdateAuthorizationMethodOAuth20) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
 }
 
 type SourceSnowflakeUpdateAuthorizationMethodType string
@@ -110,21 +182,16 @@ func CreateSourceSnowflakeUpdateAuthorizationMethodSourceSnowflakeUpdateAuthoriz
 }
 
 func (u *SourceSnowflakeUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword := new(SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword, "", true, true); err == nil {
 		u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword = sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword
 		u.Type = SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword
 		return nil
 	}
 
 	sourceSnowflakeUpdateAuthorizationMethodOAuth20 := new(SourceSnowflakeUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSnowflakeUpdateAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceSnowflakeUpdateAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceSnowflakeUpdateAuthorizationMethodOAuth20 = sourceSnowflakeUpdateAuthorizationMethodOAuth20
 		u.Type = SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateAuthorizationMethodOAuth20
 		return nil
@@ -134,15 +201,15 @@ func (u *SourceSnowflakeUpdateAuthorizationMethod) UnmarshalJSON(data []byte) er
 }
 
 func (u SourceSnowflakeUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
-		return json.Marshal(u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword)
-	}
-
 	if u.SourceSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceSnowflakeUpdateAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceSnowflakeUpdateAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
+		return utils.MarshalJSON(u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceSnowflakeUpdate struct {
@@ -159,4 +226,53 @@ type SourceSnowflakeUpdate struct {
 	Schema *string `json:"schema,omitempty"`
 	// The warehouse you created for Airbyte to access data.
 	Warehouse string `json:"warehouse"`
+}
+
+func (o *SourceSnowflakeUpdate) GetCredentials() *SourceSnowflakeUpdateAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceSnowflakeUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceSnowflakeUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceSnowflakeUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceSnowflakeUpdate) GetRole() string {
+	if o == nil {
+		return ""
+	}
+	return o.Role
+}
+
+func (o *SourceSnowflakeUpdate) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *SourceSnowflakeUpdate) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
 }

@@ -9,3 +9,31 @@ type SourceDixaCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceDixaCreateRequest) GetConfiguration() SourceDixa {
+	if o == nil {
+		return SourceDixa{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDixaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDixaCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceDixaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

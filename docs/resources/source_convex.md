@@ -17,11 +17,10 @@ resource "airbyte_source_convex" "my_source_convex" {
   configuration = {
     access_key     = "...my_access_key..."
     deployment_url = "https://murky-swan-635.convex.cloud"
-    source_type    = "convex"
   }
-  name         = "Guy Kovacek"
+  name         = "Leroy Cormier Jr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "a8581a58-208c-454f-afa9-c95f2eac5565"
+  workspace_id = "1e265eeb-c230-4b15-894c-c21854edb75e"
 }
 ```
 
@@ -50,6 +49,5 @@ Required:
 
 - `access_key` (String) API access key used to retrieve data from Convex.
 - `deployment_url` (String)
-- `source_type` (String) must be one of ["convex"]
 
 

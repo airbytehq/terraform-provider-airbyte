@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,7 +35,22 @@ func (e *SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) Un
 
 // SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
 type SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor struct {
-	Method SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
+	method SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `const:"STANDARD" json:"method"`
+}
+
+func (s SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) GetMethod() SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod {
+	return SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethodStandard
 }
 
 // SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync - What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
@@ -121,12 +136,48 @@ func (e *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCInitia
 // SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.
 type SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC struct {
 	// What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-	DataToSync *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync `json:"data_to_sync,omitempty"`
+	DataToSync *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync `default:"Existing and New" json:"data_to_sync"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                                  `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod `json:"method"`
+	InitialWaitingSeconds *int64                                                                  `default:"300" json:"initial_waiting_seconds"`
+	method                SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod `const:"CDC" json:"method"`
 	// Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
-	SnapshotIsolation *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel `json:"snapshot_isolation,omitempty"`
+	SnapshotIsolation *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel `default:"Snapshot" json:"snapshot_isolation"`
+}
+
+func (s SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC) GetDataToSync() *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync {
+	if o == nil {
+		return nil
+	}
+	return o.DataToSync
+}
+
+func (o *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialWaitingSeconds
+}
+
+func (o *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC) GetMethod() SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod {
+	return SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCMethodCdc
+}
+
+func (o *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC) GetSnapshotIsolation() *SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel {
+	if o == nil {
+		return nil
+	}
+	return o.SnapshotIsolation
 }
 
 type SourceMssqlUpdateUpdateMethodType string
@@ -162,21 +213,16 @@ func CreateSourceMssqlUpdateUpdateMethodSourceMssqlUpdateUpdateMethodScanChanges
 }
 
 func (u *SourceMssqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor, "", true, true); err == nil {
 		u.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
 		u.Type = SourceMssqlUpdateUpdateMethodTypeSourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
 		return nil
 	}
 
 	sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC := new(SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
 		u.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC = sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC
 		u.Type = SourceMssqlUpdateUpdateMethodTypeSourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC
 		return nil
@@ -186,15 +232,15 @@ func (u *SourceMssqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMssqlUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
-		return json.Marshal(u.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
-	}
-
 	if u.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
-		return json.Marshal(u.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC)
+		return utils.MarshalJSON(u.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC, "", true)
 	}
 
-	return nil, nil
+	if u.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod string
@@ -225,7 +271,29 @@ func (e *SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod) Unmarsha
 type SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate struct {
 	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 	HostNameInCertificate *string                                                       `json:"hostNameInCertificate,omitempty"`
-	SslMethod             SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod `json:"ssl_method"`
+	sslMethod             SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod `const:"encrypted_verify_certificate" json:"ssl_method"`
+}
+
+func (s SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate) GetHostNameInCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HostNameInCertificate
+}
+
+func (o *SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate) GetSslMethod() SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod {
+	return SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethodEncryptedVerifyCertificate
 }
 
 type SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod string
@@ -254,7 +322,22 @@ func (e *SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod) Unm
 
 // SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate - Use the certificate provided by the server without verification. (For testing purposes only!)
 type SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate struct {
-	SslMethod SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod `json:"ssl_method"`
+	sslMethod SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod `const:"encrypted_trust_server_certificate" json:"ssl_method"`
+}
+
+func (s SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate) GetSslMethod() SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod {
+	return SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethodEncryptedTrustServerCertificate
 }
 
 type SourceMssqlUpdateSSLMethodType string
@@ -290,21 +373,16 @@ func CreateSourceMssqlUpdateSSLMethodSourceMssqlUpdateSSLMethodEncryptedVerifyCe
 }
 
 func (u *SourceMssqlUpdateSSLMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate := new(SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate, "", true, true); err == nil {
 		u.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate = sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate
 		u.Type = SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate
 		return nil
 	}
 
 	sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate := new(SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate, "", true, true); err == nil {
 		u.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate = sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate
 		u.Type = SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateSSLMethodEncryptedVerifyCertificate
 		return nil
@@ -315,14 +393,14 @@ func (u *SourceMssqlUpdateSSLMethod) UnmarshalJSON(data []byte) error {
 
 func (u SourceMssqlUpdateSSLMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate != nil {
-		return json.Marshal(u.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate)
+		return utils.MarshalJSON(u.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate, "", true)
 	}
 
 	if u.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate != nil {
-		return json.Marshal(u.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate)
+		return utils.MarshalJSON(u.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -355,13 +433,56 @@ type SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (s SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -396,11 +517,54 @@ type SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (s SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -431,7 +595,22 @@ func (e *SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(dat
 // SourceMssqlUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMssqlUpdateSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceMssqlUpdateSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMssqlUpdateSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMssqlUpdateSSHTunnelMethodNoTunnel) GetTunnelMethod() SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+	return SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type SourceMssqlUpdateSSHTunnelMethodType string
@@ -478,30 +657,23 @@ func CreateSourceMssqlUpdateSSHTunnelMethodSourceMssqlUpdateSSHTunnelMethodPassw
 }
 
 func (u *SourceMssqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMssqlUpdateSSHTunnelMethodNoTunnel := new(SourceMssqlUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.SourceMssqlUpdateSSHTunnelMethodNoTunnel = sourceMssqlUpdateSSHTunnelMethodNoTunnel
 		u.Type = SourceMssqlUpdateSSHTunnelMethodTypeSourceMssqlUpdateSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication := new(SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication = sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication
 		u.Type = SourceMssqlUpdateSSHTunnelMethodTypeSourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication := new(SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication = sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication
 		u.Type = SourceMssqlUpdateSSHTunnelMethodTypeSourceMssqlUpdateSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -512,18 +684,18 @@ func (u *SourceMssqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u SourceMssqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceMssqlUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceMssqlUpdateSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.SourceMssqlUpdateSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMssqlUpdate struct {
@@ -547,4 +719,74 @@ type SourceMssqlUpdate struct {
 	TunnelMethod *SourceMssqlUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (o *SourceMssqlUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceMssqlUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceMssqlUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceMssqlUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMssqlUpdate) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
+}
+
+func (o *SourceMssqlUpdate) GetReplicationMethod() *SourceMssqlUpdateUpdateMethod {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicationMethod
+}
+
+func (o *SourceMssqlUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceMssqlUpdate) GetSslMethod() *SourceMssqlUpdateSSLMethod {
+	if o == nil {
+		return nil
+	}
+	return o.SslMethod
+}
+
+func (o *SourceMssqlUpdate) GetTunnelMethod() *SourceMssqlUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceMssqlUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -7,3 +7,24 @@ type DestinationMongodbCreateRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *DestinationMongodbCreateRequest) GetConfiguration() DestinationMongodb {
+	if o == nil {
+		return DestinationMongodb{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMongodbCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMongodbCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

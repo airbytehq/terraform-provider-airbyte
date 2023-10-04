@@ -15,14 +15,13 @@ SourcePrestashop Resource
 ```terraform
 resource "airbyte_source_prestashop" "my_source_prestashop" {
   configuration = {
-    access_key  = "...my_access_key..."
-    source_type = "prestashop"
-    start_date  = "2022-01-01"
-    url         = "...my_url..."
+    access_key = "...my_access_key..."
+    start_date = "2022-01-01"
+    url        = "...my_url..."
   }
-  name         = "Evelyn Stracke"
+  name         = "Anna Collier Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "2f4f127f-b0e0-4bf1-b821-7978d0acca77"
+  workspace_id = "3e87b490-ecc6-4bf7-9161-16fc803c8311"
 }
 ```
 
@@ -50,7 +49,6 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
 Required:
 
 - `access_key` (String) Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
-- `source_type` (String) must be one of ["prestashop"]
 - `start_date` (String) The Start date in the format YYYY-MM-DD.
 - `url` (String) Shop URL without trailing slash.
 

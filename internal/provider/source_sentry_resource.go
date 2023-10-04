@@ -11,7 +11,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -69,8 +68,9 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Fields to retrieve when fetching discover events`,
 					},
 					"hostname": schema.StringAttribute{
-						Optional:    true,
-						Description: `Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.`,
+						Optional: true,
+						MarkdownDescription: `Default: "sentry.io"` + "\n" +
+							`Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.`,
 					},
 					"organization": schema.StringAttribute{
 						Required:    true,
@@ -79,15 +79,6 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 					"project": schema.StringAttribute{
 						Required:    true,
 						Description: `The name (slug) of the Project you want to sync.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sentry",
-							),
-						},
-						Description: `must be one of ["sentry"]`,
 					},
 				},
 			},
@@ -161,7 +152,7 @@ func (r *SourceSentryResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSentry(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

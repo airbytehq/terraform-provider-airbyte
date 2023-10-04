@@ -9,6 +9,5 @@ type SourceStripe struct {
 	ClientSecret       types.String `tfsdk:"client_secret"`
 	LookbackWindowDays types.Int64  `tfsdk:"lookback_window_days"`
 	SliceRange         types.Int64  `tfsdk:"slice_range"`
-	SourceType         types.String `tfsdk:"source_type"`
 	StartDate          types.String `tfsdk:"start_date"`
 }

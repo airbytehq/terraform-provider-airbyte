@@ -36,13 +36,14 @@ data "airbyte_destination_redis" "my_destination_redis" {
 
 Read-Only:
 
-- `cache_type` (String) must be one of ["hash"]
+- `cache_type` (String) must be one of ["hash"]; Default: "hash"
 Redis cache type to store data in.
-- `destination_type` (String) must be one of ["redis"]
 - `host` (String) Redis host to connect to.
 - `password` (String) Password associated with Redis.
-- `port` (Number) Port of Redis.
-- `ssl` (Boolean) Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
+- `port` (Number) Default: 6379
+Port of Redis.
+- `ssl` (Boolean) Default: false
+Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
 - `ssl_mode` (Attributes) SSL connection modes. 
   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
@@ -61,10 +62,6 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_redis_ssl_modes_disable`
 
-Read-Only:
-
-- `mode` (String) must be one of ["disable"]
-
 
 <a id="nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_verify_full"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_redis_ssl_modes_verify_full`
@@ -75,15 +72,10 @@ Read-Only:
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
 - `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
-- `mode` (String) must be one of ["verify-full"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_redis_update_ssl_modes_disable`
-
-Read-Only:
-
-- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_verify_full"></a>
@@ -95,7 +87,6 @@ Read-Only:
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
 - `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
-- `mode` (String) must be one of ["verify-full"]
 
 
 
@@ -114,11 +105,6 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redis_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redis_ssh_tunnel_method_password_authentication`
@@ -126,9 +112,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -140,19 +125,13 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_no_tunnel`
-
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_password_authentication"></a>
@@ -161,9 +140,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -175,9 +153,8 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

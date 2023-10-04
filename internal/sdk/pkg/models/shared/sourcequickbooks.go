@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,7 @@ func (e *SourceQuickbooksAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data 
 type SourceQuickbooksAuthorizationMethodOAuth20 struct {
 	// Access token fot making authenticated requests.
 	AccessToken string                                              `json:"access_token"`
-	AuthType    *SourceQuickbooksAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	authType    *SourceQuickbooksAuthorizationMethodOAuth20AuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 	ClientID string `json:"client_id"`
 	//  Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
@@ -48,6 +48,63 @@ type SourceQuickbooksAuthorizationMethodOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
 	TokenExpiryDate time.Time `json:"token_expiry_date"`
+}
+
+func (s SourceQuickbooksAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceQuickbooksAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetAuthType() *SourceQuickbooksAuthorizationMethodOAuth20AuthType {
+	return SourceQuickbooksAuthorizationMethodOAuth20AuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetRealmID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RealmID
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceQuickbooksAuthorizationMethodOAuth20) GetTokenExpiryDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceQuickbooksAuthorizationMethodType string
@@ -72,12 +129,9 @@ func CreateSourceQuickbooksAuthorizationMethodSourceQuickbooksAuthorizationMetho
 }
 
 func (u *SourceQuickbooksAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceQuickbooksAuthorizationMethodOAuth20 := new(SourceQuickbooksAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceQuickbooksAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceQuickbooksAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceQuickbooksAuthorizationMethodOAuth20 = sourceQuickbooksAuthorizationMethodOAuth20
 		u.Type = SourceQuickbooksAuthorizationMethodTypeSourceQuickbooksAuthorizationMethodOAuth20
 		return nil
@@ -88,10 +142,10 @@ func (u *SourceQuickbooksAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
 func (u SourceQuickbooksAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceQuickbooksAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceQuickbooksAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceQuickbooksAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceQuickbooksQuickbooks string
@@ -121,8 +175,44 @@ func (e *SourceQuickbooksQuickbooks) UnmarshalJSON(data []byte) error {
 type SourceQuickbooks struct {
 	Credentials SourceQuickbooksAuthorizationMethod `json:"credentials"`
 	// Determines whether to use the sandbox or production environment.
-	Sandbox    bool                       `json:"sandbox"`
-	SourceType SourceQuickbooksQuickbooks `json:"sourceType"`
+	Sandbox    *bool                      `default:"false" json:"sandbox"`
+	sourceType SourceQuickbooksQuickbooks `const:"quickbooks" json:"sourceType"`
 	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceQuickbooks) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceQuickbooks) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceQuickbooks) GetCredentials() SourceQuickbooksAuthorizationMethod {
+	if o == nil {
+		return SourceQuickbooksAuthorizationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceQuickbooks) GetSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Sandbox
+}
+
+func (o *SourceQuickbooks) GetSourceType() SourceQuickbooksQuickbooks {
+	return SourceQuickbooksQuickbooksQuickbooks
+}
+
+func (o *SourceQuickbooks) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

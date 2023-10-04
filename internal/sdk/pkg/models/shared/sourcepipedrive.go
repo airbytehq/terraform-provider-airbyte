@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -35,7 +36,29 @@ func (e *SourcePipedriveAPIKeyAuthenticationAuthType) UnmarshalJSON(data []byte)
 type SourcePipedriveAPIKeyAuthentication struct {
 	// The Pipedrive API Token.
 	APIToken string                                      `json:"api_token"`
-	AuthType SourcePipedriveAPIKeyAuthenticationAuthType `json:"auth_type"`
+	authType SourcePipedriveAPIKeyAuthenticationAuthType `const:"Token" json:"auth_type"`
+}
+
+func (s SourcePipedriveAPIKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedriveAPIKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedriveAPIKeyAuthentication) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourcePipedriveAPIKeyAuthentication) GetAuthType() SourcePipedriveAPIKeyAuthenticationAuthType {
+	return SourcePipedriveAPIKeyAuthenticationAuthTypeToken
 }
 
 type SourcePipedrivePipedrive string
@@ -66,5 +89,34 @@ type SourcePipedrive struct {
 	Authorization *SourcePipedriveAPIKeyAuthentication `json:"authorization,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
 	ReplicationStartDate time.Time                `json:"replication_start_date"`
-	SourceType           SourcePipedrivePipedrive `json:"sourceType"`
+	sourceType           SourcePipedrivePipedrive `const:"pipedrive" json:"sourceType"`
+}
+
+func (s SourcePipedrive) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedrive) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedrive) GetAuthorization() *SourcePipedriveAPIKeyAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Authorization
+}
+
+func (o *SourcePipedrive) GetReplicationStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ReplicationStartDate
+}
+
+func (o *SourcePipedrive) GetSourceType() SourcePipedrivePipedrive {
+	return SourcePipedrivePipedrivePipedrive
 }

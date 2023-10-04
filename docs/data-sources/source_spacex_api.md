@@ -43,6 +43,5 @@ Read-Only:
 
 - `id` (String)
 - `options` (String)
-- `source_type` (String) must be one of ["spacex-api"]
 
 

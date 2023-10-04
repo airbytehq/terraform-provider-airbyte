@@ -79,7 +79,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 							`Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>`,
 					},
 					"edition": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"Free",
@@ -89,7 +89,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"Ultimate",
 							),
 						},
-						MarkdownDescription: `must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]` + "\n" +
+						MarkdownDescription: `must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]; Default: "Free"` + "\n" +
 							`Choose your Edition of Zoho CRM to determine API Concurrency Limits`,
 					},
 					"environment": schema.StringAttribute{
@@ -107,15 +107,6 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
 						Description: `OAuth2.0 Refresh Token`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zoho-crm",
-							),
-						},
-						Description: `must be one of ["zoho-crm"]`,
 					},
 					"start_datetime": schema.StringAttribute{
 						Optional: true,
@@ -196,7 +187,7 @@ func (r *SourceZohoCrmResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceZohoCrm(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

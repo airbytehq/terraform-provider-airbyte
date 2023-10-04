@@ -9,7 +9,6 @@ import (
 
 func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.DestinationRedshiftCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationRedshiftRedshift(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -18,16 +17,23 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		jdbcURLParams = nil
 	}
 	password := r.Configuration.Password.ValueString()
-	port := r.Configuration.Port.ValueInt64()
-	schema := r.Configuration.Schema.ValueString()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	var tunnelMethod *shared.DestinationRedshiftSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationRedshiftSSHTunnelMethodNoTunnel *shared.DestinationRedshiftSSHTunnelMethodNoTunnel
 		if r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationRedshiftSSHTunnelMethodNoTunnel = &shared.DestinationRedshiftSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+			destinationRedshiftSSHTunnelMethodNoTunnel = &shared.DestinationRedshiftSSHTunnelMethodNoTunnel{}
 		}
 		if destinationRedshiftSSHTunnelMethodNoTunnel != nil {
 			tunnelMethod = &shared.DestinationRedshiftSSHTunnelMethod{
@@ -38,15 +44,18 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		if r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication != nil {
 			sshKey := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 			tunnelHost := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
 			tunnelUser := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 			destinationRedshiftSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
 		if destinationRedshiftSSHTunnelMethodSSHKeyAuthentication != nil {
@@ -57,13 +66,16 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		var destinationRedshiftSSHTunnelMethodPasswordAuthentication *shared.DestinationRedshiftSSHTunnelMethodPasswordAuthentication
 		if r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication != nil {
 			tunnelHost1 := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
 			tunnelUser1 := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationRedshiftSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
 			destinationRedshiftSSHTunnelMethodPasswordAuthentication = &shared.DestinationRedshiftSSHTunnelMethodPasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
@@ -79,10 +91,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 	if r.Configuration.UploadingMethod != nil {
 		var destinationRedshiftUploadingMethodStandard *shared.DestinationRedshiftUploadingMethodStandard
 		if r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodStandard != nil {
-			method := shared.DestinationRedshiftUploadingMethodStandardMethod(r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodStandard.Method.ValueString())
-			destinationRedshiftUploadingMethodStandard = &shared.DestinationRedshiftUploadingMethodStandard{
-				Method: method,
-			}
+			destinationRedshiftUploadingMethodStandard = &shared.DestinationRedshiftUploadingMethodStandard{}
 		}
 		if destinationRedshiftUploadingMethodStandard != nil {
 			uploadingMethod = &shared.DestinationRedshiftUploadingMethod{
@@ -96,10 +105,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 			if r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption != nil {
 				var destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption *shared.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption
 				if r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption != nil {
-					encryptionType := shared.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType(r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption.EncryptionType.ValueString())
-					destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption = &shared.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption{
-						EncryptionType: encryptionType,
-					}
+					destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption = &shared.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption{}
 				}
 				if destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption != nil {
 					encryption = &shared.DestinationRedshiftUploadingMethodS3StagingEncryption{
@@ -108,7 +114,6 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 				}
 				var destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption *shared.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption
 				if r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
-					encryptionType1 := shared.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType.ValueString())
 					keyEncryptingKey := new(string)
 					if !r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
 						*keyEncryptingKey = r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Encryption.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
@@ -116,7 +121,6 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 						keyEncryptingKey = nil
 					}
 					destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption = &shared.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption{
-						EncryptionType:   encryptionType1,
 						KeyEncryptingKey: keyEncryptingKey,
 					}
 				}
@@ -138,7 +142,6 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 			} else {
 				fileNamePattern = nil
 			}
-			method1 := shared.DestinationRedshiftUploadingMethodS3StagingMethod(r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.Method.ValueString())
 			purgeStagingData := new(bool)
 			if !r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData.IsUnknown() && !r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData.IsNull() {
 				*purgeStagingData = r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.PurgeStagingData.ValueBool()
@@ -152,14 +155,18 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 			} else {
 				s3BucketPath = nil
 			}
-			s3BucketRegion := shared.DestinationRedshiftUploadingMethodS3StagingS3BucketRegion(r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketRegion.ValueString())
+			s3BucketRegion := new(shared.DestinationRedshiftUploadingMethodS3StagingS3BucketRegion)
+			if !r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketRegion.IsUnknown() && !r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketRegion.IsNull() {
+				*s3BucketRegion = shared.DestinationRedshiftUploadingMethodS3StagingS3BucketRegion(r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.S3BucketRegion.ValueString())
+			} else {
+				s3BucketRegion = nil
+			}
 			secretAccessKey := r.Configuration.UploadingMethod.DestinationRedshiftUploadingMethodS3Staging.SecretAccessKey.ValueString()
 			destinationRedshiftUploadingMethodS3Staging = &shared.DestinationRedshiftUploadingMethodS3Staging{
 				AccessKeyID:      accessKeyID,
 				Encryption:       encryption,
 				FileBufferCount:  fileBufferCount,
 				FileNamePattern:  fileNamePattern,
-				Method:           method1,
 				PurgeStagingData: purgeStagingData,
 				S3BucketName:     s3BucketName,
 				S3BucketPath:     s3BucketPath,
@@ -176,7 +183,6 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationRedshift{
 		Database:        database,
-		DestinationType: destinationType,
 		Host:            host,
 		JdbcURLParams:   jdbcURLParams,
 		Password:        password,
@@ -211,16 +217,23 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 		jdbcURLParams = nil
 	}
 	password := r.Configuration.Password.ValueString()
-	port := r.Configuration.Port.ValueInt64()
-	schema := r.Configuration.Schema.ValueString()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	var tunnelMethod *shared.DestinationRedshiftUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationRedshiftUpdateSSHTunnelMethodNoTunnel *shared.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel
 		if r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationRedshiftUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationRedshiftUpdateSSHTunnelMethodNoTunnel = &shared.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+			destinationRedshiftUpdateSSHTunnelMethodNoTunnel = &shared.DestinationRedshiftUpdateSSHTunnelMethodNoTunnel{}
 		}
 		if destinationRedshiftUpdateSSHTunnelMethodNoTunnel != nil {
 			tunnelMethod = &shared.DestinationRedshiftUpdateSSHTunnelMethod{
@@ -231,15 +244,18 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 		if r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
 			sshKey := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 			tunnelHost := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
 			tunnelUser := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 			destinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
 		if destinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
@@ -250,13 +266,16 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 		var destinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication
 		if r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication != nil {
 			tunnelHost1 := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
 			tunnelUser1 := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
 			destinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
@@ -272,10 +291,7 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 	if r.Configuration.UploadingMethod != nil {
 		var destinationRedshiftUpdateUploadingMethodStandard *shared.DestinationRedshiftUpdateUploadingMethodStandard
 		if r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodStandard != nil {
-			method := shared.DestinationRedshiftUpdateUploadingMethodStandardMethod(r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodStandard.Method.ValueString())
-			destinationRedshiftUpdateUploadingMethodStandard = &shared.DestinationRedshiftUpdateUploadingMethodStandard{
-				Method: method,
-			}
+			destinationRedshiftUpdateUploadingMethodStandard = &shared.DestinationRedshiftUpdateUploadingMethodStandard{}
 		}
 		if destinationRedshiftUpdateUploadingMethodStandard != nil {
 			uploadingMethod = &shared.DestinationRedshiftUpdateUploadingMethod{
@@ -289,10 +305,7 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 			if r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption != nil {
 				var destinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption *shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption
 				if r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption != nil {
-					encryptionType := shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType(r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption.EncryptionType.ValueString())
-					destinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption = &shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption{
-						EncryptionType: encryptionType,
-					}
+					destinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption = &shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption{}
 				}
 				if destinationRedshiftUpdateUploadingMethodS3StagingEncryptionNoEncryption != nil {
 					encryption = &shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryption{
@@ -301,7 +314,6 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 				}
 				var destinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption *shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption
 				if r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
-					encryptionType1 := shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType.ValueString())
 					keyEncryptingKey := new(string)
 					if !r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
 						*keyEncryptingKey = r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Encryption.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
@@ -309,7 +321,6 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 						keyEncryptingKey = nil
 					}
 					destinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption = &shared.DestinationRedshiftUpdateUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption{
-						EncryptionType:   encryptionType1,
 						KeyEncryptingKey: keyEncryptingKey,
 					}
 				}
@@ -331,7 +342,6 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 			} else {
 				fileNamePattern = nil
 			}
-			method1 := shared.DestinationRedshiftUpdateUploadingMethodS3StagingMethod(r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.Method.ValueString())
 			purgeStagingData := new(bool)
 			if !r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.PurgeStagingData.IsUnknown() && !r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.PurgeStagingData.IsNull() {
 				*purgeStagingData = r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.PurgeStagingData.ValueBool()
@@ -345,14 +355,18 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 			} else {
 				s3BucketPath = nil
 			}
-			s3BucketRegion := shared.DestinationRedshiftUpdateUploadingMethodS3StagingS3BucketRegion(r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.S3BucketRegion.ValueString())
+			s3BucketRegion := new(shared.DestinationRedshiftUpdateUploadingMethodS3StagingS3BucketRegion)
+			if !r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.S3BucketRegion.IsUnknown() && !r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.S3BucketRegion.IsNull() {
+				*s3BucketRegion = shared.DestinationRedshiftUpdateUploadingMethodS3StagingS3BucketRegion(r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.S3BucketRegion.ValueString())
+			} else {
+				s3BucketRegion = nil
+			}
 			secretAccessKey := r.Configuration.UploadingMethod.DestinationRedshiftUpdateUploadingMethodS3Staging.SecretAccessKey.ValueString()
 			destinationRedshiftUpdateUploadingMethodS3Staging = &shared.DestinationRedshiftUpdateUploadingMethodS3Staging{
 				AccessKeyID:      accessKeyID,
 				Encryption:       encryption,
 				FileBufferCount:  fileBufferCount,
 				FileNamePattern:  fileNamePattern,
-				Method:           method1,
 				PurgeStagingData: purgeStagingData,
 				S3BucketName:     s3BucketName,
 				S3BucketPath:     s3BucketPath,

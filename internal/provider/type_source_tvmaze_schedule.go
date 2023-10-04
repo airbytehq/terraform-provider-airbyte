@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceTvmazeSchedule struct {
 	DomesticScheduleCountryCode types.String `tfsdk:"domestic_schedule_country_code"`
 	EndDate                     types.String `tfsdk:"end_date"`
-	SourceType                  types.String `tfsdk:"source_type"`
 	StartDate                   types.String `tfsdk:"start_date"`
 	WebScheduleCountryCode      types.String `tfsdk:"web_schedule_country_code"`
 }

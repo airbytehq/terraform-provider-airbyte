@@ -42,7 +42,6 @@ data "airbyte_source_datascope" "my_source_datascope" {
 Read-Only:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["datascope"]
 - `start_date` (String) Start date for the data to be replicated
 
 

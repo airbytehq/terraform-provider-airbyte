@@ -44,7 +44,6 @@ Read-Only:
 - `api_key` (String) App only Bearer Token. See the <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens">docs</a> for more information on how to obtain this token.
 - `end_date` (String) The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
 - `query` (String) Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
-- `source_type` (String) must be one of ["twitter"]
 - `start_date` (String) The start date for retrieving tweets cannot be more than 7 days in the past.
 
 

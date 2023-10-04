@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,29 +62,11 @@ func (r *SourceLinkedinPagesDataSource) Schema(ctx context.Context, req datasour
 										Computed:    true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_linkedin_pages_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-										Description: `must be one of ["oAuth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The client ID of the LinkedIn developer application.`,
@@ -107,29 +88,11 @@ func (r *SourceLinkedinPagesDataSource) Schema(ctx context.Context, req datasour
 										Computed:    true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_linkedin_pages_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-										Description: `must be one of ["oAuth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The client ID of the LinkedIn developer application.`,
@@ -152,15 +115,6 @@ func (r *SourceLinkedinPagesDataSource) Schema(ctx context.Context, req datasour
 					"org_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `Specify the Organization ID`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"linkedin-pages",
-							),
-						},
-						Description: `must be one of ["linkedin-pages"]`,
 					},
 				},
 			},

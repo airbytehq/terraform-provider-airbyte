@@ -3,8 +3,8 @@
 package provider
 
 type SourceOutbrainAmplifyAuthenticationMethod struct {
-	SourceOutbrainAmplifyAuthenticationMethodAccessToken            *SourceOutbrainAmplifyAuthenticationMethodAccessToken      `tfsdk:"source_outbrain_amplify_authentication_method_access_token"`
-	SourceOutbrainAmplifyAuthenticationMethodUsernamePassword       *SourceOutbrainAmplifyAuthenticationMethodUsernamePassword `tfsdk:"source_outbrain_amplify_authentication_method_username_password"`
-	SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken      *SourceOutbrainAmplifyAuthenticationMethodAccessToken      `tfsdk:"source_outbrain_amplify_update_authentication_method_access_token"`
-	SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword *SourceOutbrainAmplifyAuthenticationMethodUsernamePassword `tfsdk:"source_outbrain_amplify_update_authentication_method_username_password"`
+	SourceOutbrainAmplifyAuthenticationMethodAccessToken            *SourceAuth0AuthenticationMethodOAuth2AccessToken             `tfsdk:"source_outbrain_amplify_authentication_method_access_token"`
+	SourceOutbrainAmplifyAuthenticationMethodUsernamePassword       *DestinationElasticsearchAuthenticationMethodUsernamePassword `tfsdk:"source_outbrain_amplify_authentication_method_username_password"`
+	SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken      *SourceAuth0AuthenticationMethodOAuth2AccessToken             `tfsdk:"source_outbrain_amplify_update_authentication_method_access_token"`
+	SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword *DestinationElasticsearchAuthenticationMethodUsernamePassword `tfsdk:"source_outbrain_amplify_update_authentication_method_username_password"`
 }

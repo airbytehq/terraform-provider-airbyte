@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -60,15 +58,6 @@ func (r *SourceTvmazeScheduleDataSource) Schema(ctx context.Context, req datasou
 						Computed: true,
 						MarkdownDescription: `End date for TV schedule retrieval. May be in the future. Optional.` + "\n" +
 							``,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"tvmaze-schedule",
-							),
-						},
-						Description: `must be one of ["tvmaze-schedule"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

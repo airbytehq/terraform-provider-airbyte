@@ -7,3 +7,24 @@ type SourceRecreationPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceRecreationPutRequest) GetConfiguration() SourceRecreationUpdate {
+	if o == nil {
+		return SourceRecreationUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRecreationPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRecreationPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

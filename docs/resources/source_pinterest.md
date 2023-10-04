@@ -18,18 +18,16 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     credentials = {
       source_pinterest_authorization_method_access_token = {
         access_token = "...my_access_token..."
-        auth_method  = "access_token"
       }
     }
-    source_type = "pinterest"
-    start_date  = "2022-07-28"
+    start_date = "2022-07-28"
     status = [
-      "ACTIVE",
+      "ARCHIVED",
     ]
   }
-  name         = "Nathan Bauch"
+  name         = "Walter Bode"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3df5b671-9890-4f42-a4bb-438d85b26059"
+  workspace_id = "8c1cd3af-e5ef-4853-81e2-2d9fe1bd2224"
 }
 ```
 
@@ -56,7 +54,6 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
 
 Required:
 
-- `source_type` (String) must be one of ["pinterest"]
 - `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 
 Optional:
@@ -80,7 +77,6 @@ Optional:
 Required:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_pinterest_authorization_method_o_auth2_0"></a>
@@ -88,7 +84,6 @@ Required:
 
 Required:
 
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 Optional:
@@ -103,7 +98,6 @@ Optional:
 Required:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_pinterest_update_authorization_method_o_auth2_0"></a>
@@ -111,7 +105,6 @@ Required:
 
 Required:
 
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 Optional:

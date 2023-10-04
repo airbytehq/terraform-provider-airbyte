@@ -42,7 +42,6 @@ data "airbyte_source_xero" "my_source_xero" {
 Read-Only:
 
 - `authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--authentication))
-- `source_type` (String) must be one of ["xero"]
 - `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
 - `tenant_id` (String) Enter your Xero organization's Tenant ID
 

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceFacebookPages struct {
 	AccessToken string `json:"access_token"`
 	// Page ID
 	PageID     string                           `json:"page_id"`
-	SourceType SourceFacebookPagesFacebookPages `json:"sourceType"`
+	sourceType SourceFacebookPagesFacebookPages `const:"facebook-pages" json:"sourceType"`
+}
+
+func (s SourceFacebookPages) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFacebookPages) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFacebookPages) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceFacebookPages) GetPageID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PageID
+}
+
+func (o *SourceFacebookPages) GetSourceType() SourceFacebookPagesFacebookPages {
+	return SourceFacebookPagesFacebookPagesFacebookPages
 }

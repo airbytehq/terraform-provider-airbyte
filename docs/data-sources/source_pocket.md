@@ -48,12 +48,12 @@ Select the content type of the items to retrieve.
 - `detail_type` (String) must be one of ["simple", "complete"]
 Select the granularity of the information about each item.
 - `domain` (String) Only return items from a particular `domain`.
-- `favorite` (Boolean) Retrieve only favorited items.
+- `favorite` (Boolean) Default: false
+Retrieve only favorited items.
 - `search` (String) Only return items whose title or url contain the `search` string.
 - `since` (String) Only return items modified since the given timestamp.
 - `sort` (String) must be one of ["newest", "oldest", "title", "site"]
 Sort retrieved items by the given criteria.
-- `source_type` (String) must be one of ["pocket"]
 - `state` (String) must be one of ["unread", "archive", "all"]
 Select the state of the items to retrieve.
 - `tag` (String) Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.

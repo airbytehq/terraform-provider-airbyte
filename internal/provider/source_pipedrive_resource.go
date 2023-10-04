@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -62,15 +61,6 @@ func (r *SourcePipedriveResource) Schema(ctx context.Context, req resource.Schem
 								Required:    true,
 								Description: `The Pipedrive API Token.`,
 							},
-							"auth_type": schema.StringAttribute{
-								Required: true,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"Token",
-									),
-								},
-								Description: `must be one of ["Token"]`,
-							},
 						},
 					},
 					"replication_start_date": schema.StringAttribute{
@@ -79,15 +69,6 @@ func (r *SourcePipedriveResource) Schema(ctx context.Context, req resource.Schem
 							validators.IsRFC3339(),
 						},
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pipedrive",
-							),
-						},
-						Description: `must be one of ["pipedrive"]`,
 					},
 				},
 			},
@@ -161,7 +142,7 @@ func (r *SourcePipedriveResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePipedrive(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

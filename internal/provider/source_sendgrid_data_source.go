@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -56,15 +55,6 @@ func (r *SourceSendgridDataSource) Schema(ctx context.Context, req datasource.Sc
 					"apikey": schema.StringAttribute{
 						Computed:    true,
 						Description: `API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sendgrid",
-							),
-						},
-						Description: `must be one of ["sendgrid"]`,
 					},
 					"start_time": schema.StringAttribute{
 						Computed: true,

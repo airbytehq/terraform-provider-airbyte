@@ -9,3 +9,31 @@ type SourceAhaCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAhaCreateRequest) GetConfiguration() SourceAha {
+	if o == nil {
+		return SourceAha{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAhaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAhaCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAhaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

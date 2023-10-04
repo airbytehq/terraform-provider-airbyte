@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceS3FileBasedStreamConfigFormatAvroFormat struct {
-	DoubleAsString types.Bool   `tfsdk:"double_as_string"`
-	Filetype       types.String `tfsdk:"filetype"`
+	DoubleAsString types.Bool `tfsdk:"double_as_string"`
 }

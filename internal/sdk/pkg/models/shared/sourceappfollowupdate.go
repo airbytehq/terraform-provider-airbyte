@@ -6,3 +6,10 @@ type SourceAppfollowUpdate struct {
 	// API Key provided by Appfollow
 	APISecret *string `json:"api_secret,omitempty"`
 }
+
+func (o *SourceAppfollowUpdate) GetAPISecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APISecret
+}

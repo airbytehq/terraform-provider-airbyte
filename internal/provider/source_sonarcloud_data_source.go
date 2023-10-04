@@ -10,7 +10,6 @@ import (
 
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -72,15 +71,6 @@ func (r *SourceSonarCloudDataSource) Schema(ctx context.Context, req datasource.
 					"organization": schema.StringAttribute{
 						Computed:    true,
 						Description: `Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sonar-cloud",
-							),
-						},
-						Description: `must be one of ["sonar-cloud"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -37,10 +38,60 @@ type SourceSentry struct {
 	// Fields to retrieve when fetching discover events
 	DiscoverFields []interface{} `json:"discover_fields,omitempty"`
 	// Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.
-	Hostname *string `json:"hostname,omitempty"`
+	Hostname *string `default:"sentry.io" json:"hostname"`
 	// The slug of the organization the groups belong to.
 	Organization string `json:"organization"`
 	// The name (slug) of the Project you want to sync.
 	Project    string             `json:"project"`
-	SourceType SourceSentrySentry `json:"sourceType"`
+	sourceType SourceSentrySentry `const:"sentry" json:"sourceType"`
+}
+
+func (s SourceSentry) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSentry) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSentry) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceSentry) GetDiscoverFields() []interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.DiscoverFields
+}
+
+func (o *SourceSentry) GetHostname() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Hostname
+}
+
+func (o *SourceSentry) GetOrganization() string {
+	if o == nil {
+		return ""
+	}
+	return o.Organization
+}
+
+func (o *SourceSentry) GetProject() string {
+	if o == nil {
+		return ""
+	}
+	return o.Project
+}
+
+func (o *SourceSentry) GetSourceType() SourceSentrySentry {
+	return SourceSentrySentrySentry
 }

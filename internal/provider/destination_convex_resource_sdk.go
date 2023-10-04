@@ -10,11 +10,9 @@ import (
 func (r *DestinationConvexResourceModel) ToCreateSDKType() *shared.DestinationConvexCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
-	destinationType := shared.DestinationConvexConvex(r.Configuration.DestinationType.ValueString())
 	configuration := shared.DestinationConvex{
-		AccessKey:       accessKey,
-		DeploymentURL:   deploymentURL,
-		DestinationType: destinationType,
+		AccessKey:     accessKey,
+		DeploymentURL: deploymentURL,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

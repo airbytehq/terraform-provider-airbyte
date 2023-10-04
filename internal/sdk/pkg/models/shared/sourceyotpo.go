@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -38,8 +39,51 @@ type SourceYotpo struct {
 	// App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
 	AppKey string `json:"app_key"`
 	// Email address registered with yotpo.
-	Email      string           `json:"email"`
-	SourceType SourceYotpoYotpo `json:"sourceType"`
+	Email      *string          `default:"example@gmail.com" json:"email"`
+	sourceType SourceYotpoYotpo `const:"yotpo" json:"sourceType"`
 	// Date time filter for incremental filter, Specify which date to extract from.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceYotpo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceYotpo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceYotpo) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceYotpo) GetAppKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppKey
+}
+
+func (o *SourceYotpo) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *SourceYotpo) GetSourceType() SourceYotpoYotpo {
+	return SourceYotpoYotpoYotpo
+}
+
+func (o *SourceYotpo) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

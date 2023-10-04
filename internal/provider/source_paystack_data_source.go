@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,21 +53,13 @@ func (r *SourcePaystackDataSource) Schema(ctx context.Context, req datasource.Sc
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"lookback_window_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.`,
+						Computed: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.`,
 					},
 					"secret_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"paystack",
-							),
-						},
-						Description: `must be one of ["paystack"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

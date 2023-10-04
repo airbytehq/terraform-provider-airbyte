@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMailchimpAuthenticationAPIKey struct {
-	Apikey   types.String `tfsdk:"apikey"`
-	AuthType types.String `tfsdk:"auth_type"`
+	Apikey types.String `tfsdk:"apikey"`
 }

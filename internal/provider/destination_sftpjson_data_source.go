@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *DestinationSftpJSONDataSource) Schema(ctx context.Context, req datasour
 						Computed:    true,
 						Description: `Path to the directory where json files will be written.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp-json",
-							),
-						},
-						Description: `must be one of ["sftp-json"]`,
-					},
 					"host": schema.StringAttribute{
 						Computed:    true,
 						Description: `Hostname of the SFTP server.`,
@@ -73,8 +62,9 @@ func (r *DestinationSftpJSONDataSource) Schema(ctx context.Context, req datasour
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Port of the SFTP server.`,
+						Computed: true,
+						MarkdownDescription: `Default: 22` + "\n" +
+							`Port of the SFTP server.`,
 					},
 					"username": schema.StringAttribute{
 						Computed:    true,

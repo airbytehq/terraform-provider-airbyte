@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,9 +35,45 @@ func (e *SourceOrbitOrbit) UnmarshalJSON(data []byte) error {
 type SourceOrbit struct {
 	// Authorizes you to work with Orbit workspaces associated with the token.
 	APIToken   string           `json:"api_token"`
-	SourceType SourceOrbitOrbit `json:"sourceType"`
+	sourceType SourceOrbitOrbit `const:"orbit" json:"sourceType"`
 	// Date in the format 2022-06-26. Only load members whose last activities are after this date.
 	StartDate *string `json:"start_date,omitempty"`
 	// The unique name of the workspace that your API token is associated with.
 	Workspace string `json:"workspace"`
+}
+
+func (s SourceOrbit) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOrbit) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOrbit) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceOrbit) GetSourceType() SourceOrbitOrbit {
+	return SourceOrbitOrbitOrbit
+}
+
+func (o *SourceOrbit) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceOrbit) GetWorkspace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Workspace
 }

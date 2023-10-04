@@ -12,8 +12,46 @@ type CreateOrUpdateWorkspaceOAuthCredentialsRequest struct {
 	WorkspaceID                      string                                  `pathParam:"style=simple,explode=false,name=workspaceId"`
 }
 
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsRequest) GetWorkspaceOAuthCredentialsRequest() shared.WorkspaceOAuthCredentialsRequest {
+	if o == nil {
+		return shared.WorkspaceOAuthCredentialsRequest{}
+	}
+	return o.WorkspaceOAuthCredentialsRequest
+}
+
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}
+
 type CreateOrUpdateWorkspaceOAuthCredentialsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateOrUpdateWorkspaceOAuthCredentialsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

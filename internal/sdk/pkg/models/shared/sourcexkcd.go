@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,5 +33,20 @@ func (e *SourceXkcdXkcd) UnmarshalJSON(data []byte) error {
 }
 
 type SourceXkcd struct {
-	SourceType *SourceXkcdXkcd `json:"sourceType,omitempty"`
+	sourceType *SourceXkcdXkcd `const:"xkcd" json:"sourceType,omitempty"`
+}
+
+func (s SourceXkcd) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceXkcd) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceXkcd) GetSourceType() *SourceXkcdXkcd {
+	return SourceXkcdXkcdXkcd.ToPointer()
 }

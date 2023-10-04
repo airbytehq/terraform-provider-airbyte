@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -42,7 +43,64 @@ type SourceFirebolt struct {
 	Host *string `json:"host,omitempty"`
 	// Firebolt password.
 	Password   string                 `json:"password"`
-	SourceType SourceFireboltFirebolt `json:"sourceType"`
+	sourceType SourceFireboltFirebolt `const:"firebolt" json:"sourceType"`
 	// Firebolt email address you use to login.
 	Username string `json:"username"`
+}
+
+func (s SourceFirebolt) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFirebolt) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFirebolt) GetAccount() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Account
+}
+
+func (o *SourceFirebolt) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceFirebolt) GetEngine() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Engine
+}
+
+func (o *SourceFirebolt) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
+}
+
+func (o *SourceFirebolt) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceFirebolt) GetSourceType() SourceFireboltFirebolt {
+	return SourceFireboltFireboltFirebolt
+}
+
+func (o *SourceFirebolt) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

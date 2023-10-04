@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,30 +62,12 @@ func (r *SourceSquareDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `The API key for a Square application`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Key",
-											),
-										},
-										Description: `must be one of ["API Key"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Square.`,
 							},
 							"source_square_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Square-issued ID of your application`,
@@ -109,30 +90,12 @@ func (r *SourceSquareDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `The API key for a Square application`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Key",
-											),
-										},
-										Description: `must be one of ["API Key"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Square.`,
 							},
 							"source_square_update_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Square-issued ID of your application`,
@@ -155,28 +118,22 @@ func (r *SourceSquareDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `Choose how to authenticate to Square.`,
 					},
 					"include_deleted_objects": schema.BoolAttribute{
-						Computed:    true,
-						Description: `In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"square",
-							),
-						},
-						Description: `must be one of ["square"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Determines whether to use the sandbox or production environment.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
+						MarkdownDescription: `Default: "2021-01-01"` + "\n" +
+							`UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
 					},
 				},
 			},

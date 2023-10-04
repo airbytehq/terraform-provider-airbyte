@@ -2,11 +2,47 @@
 
 package shared
 
+import (
+	"airbyte/internal/sdk/pkg/utils"
+)
+
 type DestinationCumulioUpdate struct {
 	// URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
-	APIHost string `json:"api_host"`
+	APIHost *string `default:"https://api.cumul.io" json:"api_host"`
 	// An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
 	APIKey string `json:"api_key"`
 	// The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
 	APIToken string `json:"api_token"`
+}
+
+func (d DestinationCumulioUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationCumulioUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationCumulioUpdate) GetAPIHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIHost
+}
+
+func (o *DestinationCumulioUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationCumulioUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
 }

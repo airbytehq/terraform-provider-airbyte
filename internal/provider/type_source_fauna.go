@@ -10,5 +10,4 @@ type SourceFauna struct {
 	Port       types.Int64            `tfsdk:"port"`
 	Scheme     types.String           `tfsdk:"scheme"`
 	Secret     types.String           `tfsdk:"secret"`
-	SourceType types.String           `tfsdk:"source_type"`
 }

@@ -9,3 +9,31 @@ type SourceNotionCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceNotionCreateRequest) GetConfiguration() SourceNotion {
+	if o == nil {
+		return SourceNotion{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceNotionCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceNotionCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceNotionCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

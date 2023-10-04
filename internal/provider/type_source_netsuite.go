@@ -9,7 +9,6 @@ type SourceNetsuite struct {
 	ConsumerSecret types.String   `tfsdk:"consumer_secret"`
 	ObjectTypes    []types.String `tfsdk:"object_types"`
 	Realm          types.String   `tfsdk:"realm"`
-	SourceType     types.String   `tfsdk:"source_type"`
 	StartDatetime  types.String   `tfsdk:"start_datetime"`
 	TokenKey       types.String   `tfsdk:"token_key"`
 	TokenSecret    types.String   `tfsdk:"token_secret"`

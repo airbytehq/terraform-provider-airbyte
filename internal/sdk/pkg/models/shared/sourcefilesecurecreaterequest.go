@@ -9,3 +9,31 @@ type SourceFileSecureCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceFileSecureCreateRequest) GetConfiguration() SourceFileSecure {
+	if o == nil {
+		return SourceFileSecure{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFileSecureCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFileSecureCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceFileSecureCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

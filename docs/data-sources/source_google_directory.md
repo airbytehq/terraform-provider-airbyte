@@ -42,7 +42,6 @@ data "airbyte_source_google_directory" "my_source_googledirectory" {
 Read-Only:
 
 - `credentials` (Attributes) Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["google-directory"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -60,8 +59,6 @@ Read-Only:
 Read-Only:
 
 - `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
-- `credentials_title` (String) must be one of ["Service accounts"]
-Authentication Scenario
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
 
 
@@ -72,8 +69,6 @@ Read-Only:
 
 - `client_id` (String) The Client ID of the developer application.
 - `client_secret` (String) The Client Secret of the developer application.
-- `credentials_title` (String) must be one of ["Web server app"]
-Authentication Scenario
 - `refresh_token` (String) The Token for obtaining a new access token.
 
 
@@ -83,8 +78,6 @@ Authentication Scenario
 Read-Only:
 
 - `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
-- `credentials_title` (String) must be one of ["Service accounts"]
-Authentication Scenario
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
 
 
@@ -95,8 +88,6 @@ Read-Only:
 
 - `client_id` (String) The Client ID of the developer application.
 - `client_secret` (String) The Client Secret of the developer application.
-- `credentials_title` (String) must be one of ["Web server app"]
-Authentication Scenario
 - `refresh_token` (String) The Token for obtaining a new access token.
 
 

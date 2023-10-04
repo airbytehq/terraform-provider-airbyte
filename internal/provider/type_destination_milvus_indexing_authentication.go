@@ -3,10 +3,10 @@
 package provider
 
 type DestinationMilvusIndexingAuthentication struct {
-	DestinationMilvusIndexingAuthenticationAPIToken               *DestinationMilvusIndexingAuthenticationAPIToken         `tfsdk:"destination_milvus_indexing_authentication_api_token"`
-	DestinationMilvusIndexingAuthenticationNoAuth                 *DestinationMilvusIndexingAuthenticationNoAuth           `tfsdk:"destination_milvus_indexing_authentication_no_auth"`
-	DestinationMilvusIndexingAuthenticationUsernamePassword       *DestinationMilvusIndexingAuthenticationUsernamePassword `tfsdk:"destination_milvus_indexing_authentication_username_password"`
-	DestinationMilvusUpdateIndexingAuthenticationAPIToken         *DestinationMilvusIndexingAuthenticationAPIToken         `tfsdk:"destination_milvus_update_indexing_authentication_api_token"`
-	DestinationMilvusUpdateIndexingAuthenticationNoAuth           *DestinationMilvusIndexingAuthenticationNoAuth           `tfsdk:"destination_milvus_update_indexing_authentication_no_auth"`
-	DestinationMilvusUpdateIndexingAuthenticationUsernamePassword *DestinationMilvusIndexingAuthenticationUsernamePassword `tfsdk:"destination_milvus_update_indexing_authentication_username_password"`
+	DestinationMilvusIndexingAuthenticationAPIToken               *DestinationMilvusIndexingAuthenticationAPIToken                      `tfsdk:"destination_milvus_indexing_authentication_api_token"`
+	DestinationMilvusIndexingAuthenticationNoAuth                 *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_milvus_indexing_authentication_no_auth"`
+	DestinationMilvusIndexingAuthenticationUsernamePassword       *DestinationElasticsearchAuthenticationMethodUsernamePassword         `tfsdk:"destination_milvus_indexing_authentication_username_password"`
+	DestinationMilvusUpdateIndexingAuthenticationAPIToken         *DestinationMilvusIndexingAuthenticationAPIToken                      `tfsdk:"destination_milvus_update_indexing_authentication_api_token"`
+	DestinationMilvusUpdateIndexingAuthenticationNoAuth           *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_milvus_update_indexing_authentication_no_auth"`
+	DestinationMilvusUpdateIndexingAuthenticationUsernamePassword *DestinationElasticsearchAuthenticationMethodUsernamePassword         `tfsdk:"destination_milvus_update_indexing_authentication_username_password"`
 }

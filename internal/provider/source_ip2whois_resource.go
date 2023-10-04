@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -61,15 +59,6 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 					"domain": schema.StringAttribute{
 						Optional:    true,
 						Description: `Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"ip2whois",
-							),
-						},
-						Description: `must be one of ["ip2whois"]`,
 					},
 				},
 			},
@@ -143,7 +132,7 @@ func (r *SourceIp2whoisResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceIp2whois(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

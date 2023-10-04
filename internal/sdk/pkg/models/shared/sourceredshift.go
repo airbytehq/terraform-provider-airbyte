@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -41,10 +42,74 @@ type SourceRedshift struct {
 	// Password associated with the username.
 	Password string `json:"password"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"5439" json:"port"`
 	// The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
 	Schemas    []string               `json:"schemas,omitempty"`
-	SourceType SourceRedshiftRedshift `json:"sourceType"`
+	sourceType SourceRedshiftRedshift `const:"redshift" json:"sourceType"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceRedshift) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRedshift) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRedshift) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceRedshift) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceRedshift) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceRedshift) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceRedshift) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceRedshift) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceRedshift) GetSourceType() SourceRedshiftRedshift {
+	return SourceRedshiftRedshiftRedshift
+}
+
+func (o *SourceRedshift) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

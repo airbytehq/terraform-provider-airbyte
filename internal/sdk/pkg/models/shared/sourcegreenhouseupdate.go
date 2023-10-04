@@ -6,3 +6,10 @@ type SourceGreenhouseUpdate struct {
 	// Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourceGreenhouseUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

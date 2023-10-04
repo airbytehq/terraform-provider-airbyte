@@ -54,7 +54,6 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 	} else {
 		loginCustomerID = nil
 	}
-	sourceType := shared.SourceGoogleAdsGoogleAds(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -68,7 +67,6 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 		CustomerID:           customerID,
 		EndDate:              endDate,
 		LoginCustomerID:      loginCustomerID,
-		SourceType:           sourceType,
 		StartDate:            startDate,
 	}
 	name := r.Name.ValueString()

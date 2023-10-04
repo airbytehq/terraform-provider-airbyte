@@ -17,10 +17,9 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     customer_id       = "6783948572,5839201945"
     end_date          = "2017-01-30"
     login_customer_id = "7349206847"
-    source_type       = "google-ads"
     start_date        = "2017-01-25"
   }
-  name         = "Dr. Forrest Roob"
+  name         = "Leland Will"
   secret_id    = "...my_secret_id..."
-  workspace_id = "bddb4847-08fb-44e3-91e6-bc158c4c4e54"
+  workspace_id = "64874e62-c58d-4879-afd4-8887cb19c48e"
 }

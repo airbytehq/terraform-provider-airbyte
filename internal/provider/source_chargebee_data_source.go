@@ -72,15 +72,6 @@ func (r *SourceChargebeeDataSource) Schema(ctx context.Context, req datasource.S
 						Computed:    true,
 						Description: `Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"chargebee",
-							),
-						},
-						Description: `must be one of ["chargebee"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

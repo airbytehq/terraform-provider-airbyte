@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,8 +35,30 @@ func (e *SourceOracleConnectBySystemIDSIDConnectionType) UnmarshalJSON(data []by
 
 // SourceOracleConnectBySystemIDSID - Use SID (Oracle System Identifier)
 type SourceOracleConnectBySystemIDSID struct {
-	ConnectionType *SourceOracleConnectBySystemIDSIDConnectionType `json:"connection_type,omitempty"`
+	connectionType *SourceOracleConnectBySystemIDSIDConnectionType `const:"sid" json:"connection_type"`
 	Sid            string                                          `json:"sid"`
+}
+
+func (s SourceOracleConnectBySystemIDSID) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleConnectBySystemIDSID) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleConnectBySystemIDSID) GetConnectionType() *SourceOracleConnectBySystemIDSIDConnectionType {
+	return SourceOracleConnectBySystemIDSIDConnectionTypeSid.ToPointer()
+}
+
+func (o *SourceOracleConnectBySystemIDSID) GetSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sid
 }
 
 type SourceOracleConnectByServiceNameConnectionType string
@@ -65,8 +87,30 @@ func (e *SourceOracleConnectByServiceNameConnectionType) UnmarshalJSON(data []by
 
 // SourceOracleConnectByServiceName - Use service name
 type SourceOracleConnectByServiceName struct {
-	ConnectionType *SourceOracleConnectByServiceNameConnectionType `json:"connection_type,omitempty"`
+	connectionType *SourceOracleConnectByServiceNameConnectionType `const:"service_name" json:"connection_type"`
 	ServiceName    string                                          `json:"service_name"`
+}
+
+func (s SourceOracleConnectByServiceName) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleConnectByServiceName) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleConnectByServiceName) GetConnectionType() *SourceOracleConnectByServiceNameConnectionType {
+	return SourceOracleConnectByServiceNameConnectionTypeServiceName.ToPointer()
+}
+
+func (o *SourceOracleConnectByServiceName) GetServiceName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceName
 }
 
 type SourceOracleConnectByType string
@@ -102,21 +146,16 @@ func CreateSourceOracleConnectBySourceOracleConnectBySystemIDSID(sourceOracleCon
 }
 
 func (u *SourceOracleConnectBy) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceOracleConnectByServiceName := new(SourceOracleConnectByServiceName)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleConnectByServiceName); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleConnectByServiceName, "", true, true); err == nil {
 		u.SourceOracleConnectByServiceName = sourceOracleConnectByServiceName
 		u.Type = SourceOracleConnectByTypeSourceOracleConnectByServiceName
 		return nil
 	}
 
 	sourceOracleConnectBySystemIDSID := new(SourceOracleConnectBySystemIDSID)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleConnectBySystemIDSID); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleConnectBySystemIDSID, "", true, true); err == nil {
 		u.SourceOracleConnectBySystemIDSID = sourceOracleConnectBySystemIDSID
 		u.Type = SourceOracleConnectByTypeSourceOracleConnectBySystemIDSID
 		return nil
@@ -127,14 +166,14 @@ func (u *SourceOracleConnectBy) UnmarshalJSON(data []byte) error {
 
 func (u SourceOracleConnectBy) MarshalJSON() ([]byte, error) {
 	if u.SourceOracleConnectByServiceName != nil {
-		return json.Marshal(u.SourceOracleConnectByServiceName)
+		return utils.MarshalJSON(u.SourceOracleConnectByServiceName, "", true)
 	}
 
 	if u.SourceOracleConnectBySystemIDSID != nil {
-		return json.Marshal(u.SourceOracleConnectBySystemIDSID)
+		return utils.MarshalJSON(u.SourceOracleConnectBySystemIDSID, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethod string
@@ -163,9 +202,31 @@ func (e *SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethod) Un
 
 // SourceOracleEncryptionTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type SourceOracleEncryptionTLSEncryptedVerifyCertificate struct {
-	EncryptionMethod SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethod `json:"encryption_method"`
+	encryptionMethod *SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
+}
+
+func (s SourceOracleEncryptionTLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleEncryptionTLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleEncryptionTLSEncryptedVerifyCertificate) GetEncryptionMethod() *SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethod {
+	return SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethodEncryptedVerifyCertificate.ToPointer()
+}
+
+func (o *SourceOracleEncryptionTLSEncryptedVerifyCertificate) GetSslCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.SslCertificate
 }
 
 // SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm - This parameter defines what encryption algorithm is used.
@@ -226,8 +287,30 @@ func (e *SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethod) Unmar
 // SourceOracleEncryptionNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
 type SourceOracleEncryptionNativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
-	EncryptionAlgorithm *SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm `json:"encryption_algorithm,omitempty"`
-	EncryptionMethod    SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethod     `json:"encryption_method"`
+	EncryptionAlgorithm *SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
+	encryptionMethod    *SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethod    `const:"client_nne" json:"encryption_method"`
+}
+
+func (s SourceOracleEncryptionNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleEncryptionNativeNetworkEncryptionNNE) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleEncryptionNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm {
+	if o == nil {
+		return nil
+	}
+	return o.EncryptionAlgorithm
+}
+
+func (o *SourceOracleEncryptionNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethod {
+	return SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethodClientNne.ToPointer()
 }
 
 type SourceOracleEncryptionType string
@@ -263,21 +346,16 @@ func CreateSourceOracleEncryptionSourceOracleEncryptionTLSEncryptedVerifyCertifi
 }
 
 func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceOracleEncryptionNativeNetworkEncryptionNNE := new(SourceOracleEncryptionNativeNetworkEncryptionNNE)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleEncryptionNativeNetworkEncryptionNNE); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleEncryptionNativeNetworkEncryptionNNE, "", true, true); err == nil {
 		u.SourceOracleEncryptionNativeNetworkEncryptionNNE = sourceOracleEncryptionNativeNetworkEncryptionNNE
 		u.Type = SourceOracleEncryptionTypeSourceOracleEncryptionNativeNetworkEncryptionNNE
 		return nil
 	}
 
 	sourceOracleEncryptionTLSEncryptedVerifyCertificate := new(SourceOracleEncryptionTLSEncryptedVerifyCertificate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleEncryptionTLSEncryptedVerifyCertificate); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleEncryptionTLSEncryptedVerifyCertificate, "", true, true); err == nil {
 		u.SourceOracleEncryptionTLSEncryptedVerifyCertificate = sourceOracleEncryptionTLSEncryptedVerifyCertificate
 		u.Type = SourceOracleEncryptionTypeSourceOracleEncryptionTLSEncryptedVerifyCertificate
 		return nil
@@ -288,14 +366,14 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 
 func (u SourceOracleEncryption) MarshalJSON() ([]byte, error) {
 	if u.SourceOracleEncryptionNativeNetworkEncryptionNNE != nil {
-		return json.Marshal(u.SourceOracleEncryptionNativeNetworkEncryptionNNE)
+		return utils.MarshalJSON(u.SourceOracleEncryptionNativeNetworkEncryptionNNE, "", true)
 	}
 
 	if u.SourceOracleEncryptionTLSEncryptedVerifyCertificate != nil {
-		return json.Marshal(u.SourceOracleEncryptionTLSEncryptedVerifyCertificate)
+		return utils.MarshalJSON(u.SourceOracleEncryptionTLSEncryptedVerifyCertificate, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceOracleOracle string
@@ -352,13 +430,56 @@ type SourceOracleSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (s SourceOracleSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceOracleSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() SourceOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return SourceOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceOracleSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceOracleSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceOracleSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -393,11 +514,54 @@ type SourceOracleSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (s SourceOracleSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceOracleSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceOracleSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceOracleSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceOracleSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // SourceOracleSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -428,7 +592,22 @@ func (e *SourceOracleSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []b
 // SourceOracleSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceOracleSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceOracleSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceOracleSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleSSHTunnelMethodNoTunnel) GetTunnelMethod() SourceOracleSSHTunnelMethodNoTunnelTunnelMethod {
+	return SourceOracleSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type SourceOracleSSHTunnelMethodType string
@@ -475,30 +654,23 @@ func CreateSourceOracleSSHTunnelMethodSourceOracleSSHTunnelMethodPasswordAuthent
 }
 
 func (u *SourceOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceOracleSSHTunnelMethodNoTunnel := new(SourceOracleSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.SourceOracleSSHTunnelMethodNoTunnel = sourceOracleSSHTunnelMethodNoTunnel
 		u.Type = SourceOracleSSHTunnelMethodTypeSourceOracleSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	sourceOracleSSHTunnelMethodSSHKeyAuthentication := new(SourceOracleSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.SourceOracleSSHTunnelMethodSSHKeyAuthentication = sourceOracleSSHTunnelMethodSSHKeyAuthentication
 		u.Type = SourceOracleSSHTunnelMethodTypeSourceOracleSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	sourceOracleSSHTunnelMethodPasswordAuthentication := new(SourceOracleSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOracleSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.SourceOracleSSHTunnelMethodPasswordAuthentication = sourceOracleSSHTunnelMethodPasswordAuthentication
 		u.Type = SourceOracleSSHTunnelMethodTypeSourceOracleSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -509,18 +681,18 @@ func (u *SourceOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u SourceOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceOracleSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceOracleSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.SourceOracleSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.SourceOracleSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceOracleSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.SourceOracleSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.SourceOracleSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceOracleSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.SourceOracleSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceOracle struct {
@@ -538,12 +710,90 @@ type SourceOracle struct {
 	// Oracle Corporations recommends the following port numbers:
 	// 1521 - Default listening port for client connections to the listener.
 	// 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
-	Port int64 `json:"port"`
+	Port *int64 `default:"1521" json:"port"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
 	Schemas    []string           `json:"schemas,omitempty"`
-	SourceType SourceOracleOracle `json:"sourceType"`
+	sourceType SourceOracleOracle `const:"oracle" json:"sourceType"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceOracleSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceOracle) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracle) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracle) GetConnectionData() *SourceOracleConnectBy {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectionData
+}
+
+func (o *SourceOracle) GetEncryption() SourceOracleEncryption {
+	if o == nil {
+		return SourceOracleEncryption{}
+	}
+	return o.Encryption
+}
+
+func (o *SourceOracle) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceOracle) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceOracle) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceOracle) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceOracle) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceOracle) GetSourceType() SourceOracleOracle {
+	return SourceOracleOracleOracle
+}
+
+func (o *SourceOracle) GetTunnelMethod() *SourceOracleSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceOracle) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

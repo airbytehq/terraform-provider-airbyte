@@ -17,6 +17,5 @@ type SourceFacebookMarketing struct {
 	InsightsLookbackWindow     types.Int64                            `tfsdk:"insights_lookback_window"`
 	MaxBatchSize               types.Int64                            `tfsdk:"max_batch_size"`
 	PageSize                   types.Int64                            `tfsdk:"page_size"`
-	SourceType                 types.String                           `tfsdk:"source_type"`
 	StartDate                  types.String                           `tfsdk:"start_date"`
 }

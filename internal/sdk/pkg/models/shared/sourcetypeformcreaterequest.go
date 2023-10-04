@@ -9,3 +9,31 @@ type SourceTypeformCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTypeformCreateRequest) GetConfiguration() SourceTypeform {
+	if o == nil {
+		return SourceTypeform{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTypeformCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTypeformCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTypeformCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

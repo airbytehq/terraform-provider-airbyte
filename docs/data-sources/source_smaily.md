@@ -44,6 +44,5 @@ Read-Only:
 - `api_password` (String) API user password. See https://smaily.com/help/api/general/create-api-user/
 - `api_subdomain` (String) API Subdomain. See https://smaily.com/help/api/general/create-api-user/
 - `api_username` (String) API user username. See https://smaily.com/help/api/general/create-api-user/
-- `source_type` (String) must be one of ["smaily"]
 
 

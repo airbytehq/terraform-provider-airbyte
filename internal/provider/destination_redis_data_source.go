@@ -59,17 +59,8 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 								"hash",
 							),
 						},
-						MarkdownDescription: `must be one of ["hash"]` + "\n" +
+						MarkdownDescription: `must be one of ["hash"]; Default: "hash"` + "\n" +
 							`Redis cache type to store data in.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"redis",
-							),
-						},
-						Description: `must be one of ["redis"]`,
 					},
 					"host": schema.StringAttribute{
 						Computed:    true,
@@ -80,29 +71,21 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 						Description: `Password associated with Redis.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Port of Redis.`,
+						Computed: true,
+						MarkdownDescription: `Default: 6379` + "\n" +
+							`Port of Redis.`,
 					},
 					"ssl": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redis_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"disable",
-											),
-										},
-										Description: `must be one of ["disable"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Disable SSL.`,
 							},
 							"destination_redis_ssl_modes_verify_full": schema.SingleNestedAttribute{
@@ -124,31 +107,12 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-full",
-											),
-										},
-										Description: `must be one of ["verify-full"]`,
-									},
 								},
 								Description: `Verify-full SSL mode.`,
 							},
 							"destination_redis_update_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"disable",
-											),
-										},
-										Description: `must be one of ["disable"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Disable SSL.`,
 							},
 							"destination_redis_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
@@ -170,15 +134,6 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-full",
-											),
-										},
-										Description: `must be one of ["verify-full"]`,
-									},
 								},
 								Description: `Verify-full SSL mode.`,
 							},
@@ -193,19 +148,8 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redis_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redis_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -215,19 +159,10 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -251,19 +186,10 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -273,19 +199,8 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redis_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redis_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -295,19 +210,10 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -331,19 +237,10 @@ func (r *DestinationRedisDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,

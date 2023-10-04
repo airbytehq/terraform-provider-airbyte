@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,7 +36,29 @@ func (e *SourceOktaAuthorizationMethodAPITokenAuthType) UnmarshalJSON(data []byt
 type SourceOktaAuthorizationMethodAPIToken struct {
 	// An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
 	APIToken string                                        `json:"api_token"`
-	AuthType SourceOktaAuthorizationMethodAPITokenAuthType `json:"auth_type"`
+	authType SourceOktaAuthorizationMethodAPITokenAuthType `const:"api_token" json:"auth_type"`
+}
+
+func (s SourceOktaAuthorizationMethodAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOktaAuthorizationMethodAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOktaAuthorizationMethodAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceOktaAuthorizationMethodAPIToken) GetAuthType() SourceOktaAuthorizationMethodAPITokenAuthType {
+	return SourceOktaAuthorizationMethodAPITokenAuthTypeAPIToken
 }
 
 type SourceOktaAuthorizationMethodOAuth20AuthType string
@@ -64,13 +86,49 @@ func (e *SourceOktaAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte
 }
 
 type SourceOktaAuthorizationMethodOAuth20 struct {
-	AuthType SourceOktaAuthorizationMethodOAuth20AuthType `json:"auth_type"`
+	authType SourceOktaAuthorizationMethodOAuth20AuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SourceOktaAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOktaAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOktaAuthorizationMethodOAuth20) GetAuthType() SourceOktaAuthorizationMethodOAuth20AuthType {
+	return SourceOktaAuthorizationMethodOAuth20AuthTypeOauth20
+}
+
+func (o *SourceOktaAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceOktaAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceOktaAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourceOktaAuthorizationMethodType string
@@ -106,21 +164,16 @@ func CreateSourceOktaAuthorizationMethodSourceOktaAuthorizationMethodAPIToken(so
 }
 
 func (u *SourceOktaAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceOktaAuthorizationMethodAPIToken := new(SourceOktaAuthorizationMethodAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOktaAuthorizationMethodAPIToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOktaAuthorizationMethodAPIToken, "", true, true); err == nil {
 		u.SourceOktaAuthorizationMethodAPIToken = sourceOktaAuthorizationMethodAPIToken
 		u.Type = SourceOktaAuthorizationMethodTypeSourceOktaAuthorizationMethodAPIToken
 		return nil
 	}
 
 	sourceOktaAuthorizationMethodOAuth20 := new(SourceOktaAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOktaAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceOktaAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceOktaAuthorizationMethodOAuth20 = sourceOktaAuthorizationMethodOAuth20
 		u.Type = SourceOktaAuthorizationMethodTypeSourceOktaAuthorizationMethodOAuth20
 		return nil
@@ -130,15 +183,15 @@ func (u *SourceOktaAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOktaAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceOktaAuthorizationMethodAPIToken != nil {
-		return json.Marshal(u.SourceOktaAuthorizationMethodAPIToken)
-	}
-
 	if u.SourceOktaAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceOktaAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceOktaAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceOktaAuthorizationMethodAPIToken != nil {
+		return utils.MarshalJSON(u.SourceOktaAuthorizationMethodAPIToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceOktaOkta string
@@ -169,7 +222,43 @@ type SourceOkta struct {
 	Credentials *SourceOktaAuthorizationMethod `json:"credentials,omitempty"`
 	// The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
 	Domain     *string        `json:"domain,omitempty"`
-	SourceType SourceOktaOkta `json:"sourceType"`
+	sourceType SourceOktaOkta `const:"okta" json:"sourceType"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
 	StartDate *string `json:"start_date,omitempty"`
+}
+
+func (s SourceOkta) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOkta) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOkta) GetCredentials() *SourceOktaAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceOkta) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourceOkta) GetSourceType() SourceOktaOkta {
+	return SourceOktaOktaOkta
+}
+
+func (o *SourceOkta) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePinterest struct {
 	Credentials *SourcePinterestAuthorizationMethod `tfsdk:"credentials"`
-	SourceType  types.String                        `tfsdk:"source_type"`
 	StartDate   types.String                        `tfsdk:"start_date"`
 	Status      []types.String                      `tfsdk:"status"`
 }

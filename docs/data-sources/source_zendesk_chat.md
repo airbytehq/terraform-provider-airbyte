@@ -42,9 +42,9 @@ data "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["zendesk-chat"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
-- `subdomain` (String) Required if you access Zendesk Chat from a Zendesk Support subdomain.
+- `subdomain` (String) Default: ""
+Required if you access Zendesk Chat from a Zendesk Support subdomain.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -62,7 +62,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `credentials` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_authorization_method_o_auth2_0"></a>
@@ -73,7 +72,6 @@ Read-Only:
 - `access_token` (String) Access Token for making authenticated requests.
 - `client_id` (String) The Client ID of your OAuth application
 - `client_secret` (String) The Client Secret of your OAuth application.
-- `credentials` (String) must be one of ["oauth2.0"]
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 
@@ -83,7 +81,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `credentials` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_o_auth2_0"></a>
@@ -94,7 +91,6 @@ Read-Only:
 - `access_token` (String) Access Token for making authenticated requests.
 - `client_id` (String) The Client ID of your OAuth application
 - `client_secret` (String) The Client Secret of your OAuth application.
-- `credentials` (String) must be one of ["oauth2.0"]
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 

@@ -9,3 +9,31 @@ type SourceMetabaseCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMetabaseCreateRequest) GetConfiguration() SourceMetabase {
+	if o == nil {
+		return SourceMetabase{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMetabaseCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMetabaseCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMetabaseCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

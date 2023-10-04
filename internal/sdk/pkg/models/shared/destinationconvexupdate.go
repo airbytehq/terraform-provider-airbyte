@@ -8,3 +8,17 @@ type DestinationConvexUpdate struct {
 	// URL of the Convex deployment that is the destination
 	DeploymentURL string `json:"deployment_url"`
 }
+
+func (o *DestinationConvexUpdate) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *DestinationConvexUpdate) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
+}

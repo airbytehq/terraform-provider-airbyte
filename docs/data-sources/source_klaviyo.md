@@ -42,7 +42,6 @@ data "airbyte_source_klaviyo" "my_source_klaviyo" {
 Read-Only:
 
 - `api_key` (String) Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
-- `source_type` (String) must be one of ["klaviyo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

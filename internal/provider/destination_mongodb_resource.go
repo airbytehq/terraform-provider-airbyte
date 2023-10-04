@@ -60,15 +60,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 							"destination_mongodb_authorization_type_login_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"authorization": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"login/password",
-											),
-										},
-										Description: `must be one of ["login/password"]`,
-									},
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `Password associated with the username.`,
@@ -81,32 +72,13 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Login/Password.`,
 							},
 							"destination_mongodb_authorization_type_none": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"authorization": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"none",
-											),
-										},
-										Description: `must be one of ["none"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `None.`,
 							},
 							"destination_mongodb_update_authorization_type_login_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"authorization": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"login/password",
-											),
-										},
-										Description: `must be one of ["login/password"]`,
-									},
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `Password associated with the username.`,
@@ -119,18 +91,8 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Login/Password.`,
 							},
 							"destination_mongodb_update_authorization_type_none": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"authorization": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"none",
-											),
-										},
-										Description: `must be one of ["none"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `None.`,
 							},
 						},
@@ -143,15 +105,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						Required:    true,
 						Description: `Name of the database.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mongodb",
-							),
-						},
-						Description: `must be one of ["mongodb"]`,
-					},
 					"instance_type": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
@@ -163,13 +116,13 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Description: `URL of a cluster to connect to.`,
 									},
 									"instance": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"atlas",
 											),
 										},
-										Description: `must be one of ["atlas"]`,
+										Description: `must be one of ["atlas"]; Default: "atlas"`,
 									},
 								},
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -178,13 +131,13 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"instance": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"replica",
 											),
 										},
-										Description: `must be one of ["replica"]`,
+										Description: `must be one of ["replica"]; Default: "replica"`,
 									},
 									"replica_set": schema.StringAttribute{
 										Optional:    true,
@@ -205,17 +158,18 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Description: `The Host of a Mongo database to be replicated.`,
 									},
 									"instance": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"standalone",
 											),
 										},
-										Description: `must be one of ["standalone"]`,
+										Description: `must be one of ["standalone"]; Default: "standalone"`,
 									},
 									"port": schema.Int64Attribute{
-										Required:    true,
-										Description: `The Port of a Mongo database to be replicated.`,
+										Optional: true,
+										MarkdownDescription: `Default: 27017` + "\n" +
+											`The Port of a Mongo database to be replicated.`,
 									},
 								},
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -228,13 +182,13 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Description: `URL of a cluster to connect to.`,
 									},
 									"instance": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"atlas",
 											),
 										},
-										Description: `must be one of ["atlas"]`,
+										Description: `must be one of ["atlas"]; Default: "atlas"`,
 									},
 								},
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -243,13 +197,13 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"instance": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"replica",
 											),
 										},
-										Description: `must be one of ["replica"]`,
+										Description: `must be one of ["replica"]; Default: "replica"`,
 									},
 									"replica_set": schema.StringAttribute{
 										Optional:    true,
@@ -270,17 +224,18 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Description: `The Host of a Mongo database to be replicated.`,
 									},
 									"instance": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"standalone",
 											),
 										},
-										Description: `must be one of ["standalone"]`,
+										Description: `must be one of ["standalone"]; Default: "standalone"`,
 									},
 									"port": schema.Int64Attribute{
-										Required:    true,
-										Description: `The Port of a Mongo database to be replicated.`,
+										Optional: true,
+										MarkdownDescription: `Default: 27017` + "\n" +
+											`The Port of a Mongo database to be replicated.`,
 									},
 								},
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -295,19 +250,8 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -317,19 +261,10 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -353,19 +288,10 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -375,19 +301,8 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -397,19 +312,10 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -433,19 +339,10 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -528,7 +425,7 @@ func (r *DestinationMongodbResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationMongodb(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceSmartengageSmartengage) UnmarshalJSON(data []byte) error {
 type SourceSmartengage struct {
 	// API Key
 	APIKey     string                       `json:"api_key"`
-	SourceType SourceSmartengageSmartengage `json:"sourceType"`
+	sourceType SourceSmartengageSmartengage `const:"smartengage" json:"sourceType"`
+}
+
+func (s SourceSmartengage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSmartengage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSmartengage) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSmartengage) GetSourceType() SourceSmartengageSmartengage {
+	return SourceSmartengageSmartengageSmartengage
 }

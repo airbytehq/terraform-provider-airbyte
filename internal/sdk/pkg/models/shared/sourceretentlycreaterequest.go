@@ -9,3 +9,31 @@ type SourceRetentlyCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceRetentlyCreateRequest) GetConfiguration() SourceRetently {
+	if o == nil {
+		return SourceRetently{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRetentlyCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRetentlyCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceRetentlyCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

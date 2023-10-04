@@ -41,7 +41,6 @@ data "airbyte_source_postmarkapp" "my_source_postmarkapp" {
 
 Read-Only:
 
-- `source_type` (String) must be one of ["postmarkapp"]
 - `x_postmark_account_token` (String) API Key for account
 - `x_postmark_server_token` (String) API Key for server
 

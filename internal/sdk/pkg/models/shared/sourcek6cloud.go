@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceK6CloudK6Cloud) UnmarshalJSON(data []byte) error {
 type SourceK6Cloud struct {
 	// Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
 	APIToken   string               `json:"api_token"`
-	SourceType SourceK6CloudK6Cloud `json:"sourceType"`
+	sourceType SourceK6CloudK6Cloud `const:"k6-cloud" json:"sourceType"`
+}
+
+func (s SourceK6Cloud) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceK6Cloud) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceK6Cloud) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceK6Cloud) GetSourceType() SourceK6CloudK6Cloud {
+	return SourceK6CloudK6CloudK6Cloud
 }

@@ -8,11 +8,9 @@ import (
 )
 
 func (r *SourceTodoistResourceModel) ToCreateSDKType() *shared.SourceTodoistCreateRequest {
-	sourceType := shared.SourceTodoistTodoist(r.Configuration.SourceType.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceTodoist{
-		SourceType: sourceType,
-		Token:      token,
+		Token: token,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -58,15 +57,6 @@ func (r *SourcePrestashopResource) Schema(ctx context.Context, req resource.Sche
 					"access_key": schema.StringAttribute{
 						Required:    true,
 						Description: `Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"prestashop",
-							),
-						},
-						Description: `must be one of ["prestashop"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -151,7 +141,7 @@ func (r *SourcePrestashopResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePrestashop(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

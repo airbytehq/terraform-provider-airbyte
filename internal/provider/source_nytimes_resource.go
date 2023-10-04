@@ -91,15 +91,6 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 						MarkdownDescription: `must be one of ["facebook"]` + "\n" +
 							`Share Type`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"nytimes",
-							),
-						},
-						Description: `must be one of ["nytimes"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -179,7 +170,7 @@ func (r *SourceNytimesResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceNytimes(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

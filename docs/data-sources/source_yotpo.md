@@ -43,8 +43,8 @@ Read-Only:
 
 - `access_token` (String) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
 - `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
-- `email` (String) Email address registered with yotpo.
-- `source_type` (String) must be one of ["yotpo"]
+- `email` (String) Default: "example@gmail.com"
+Email address registered with yotpo.
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 

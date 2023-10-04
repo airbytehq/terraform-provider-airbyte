@@ -42,6 +42,5 @@ data "airbyte_source_sendinblue" "my_source_sendinblue" {
 Read-Only:
 
 - `api_key` (String) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
-- `source_type` (String) must be one of ["sendinblue"]
 
 

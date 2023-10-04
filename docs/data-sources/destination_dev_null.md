@@ -36,7 +36,6 @@ data "airbyte_destination_dev_null" "my_destination_devnull" {
 
 Read-Only:
 
-- `destination_type` (String) must be one of ["dev-null"]
 - `test_destination` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination))
 
 <a id="nestedatt--configuration--test_destination"></a>
@@ -50,16 +49,8 @@ Read-Only:
 <a id="nestedatt--configuration--test_destination--destination_dev_null_test_destination_silent"></a>
 ### Nested Schema for `configuration.test_destination.destination_dev_null_test_destination_silent`
 
-Read-Only:
-
-- `test_destination_type` (String) must be one of ["SILENT"]
-
 
 <a id="nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent"></a>
 ### Nested Schema for `configuration.test_destination.destination_dev_null_update_test_destination_silent`
-
-Read-Only:
-
-- `test_destination_type` (String) must be one of ["SILENT"]
 
 

@@ -21,12 +21,10 @@ func (r *SourceRecurlyResourceModel) ToCreateSDKType() *shared.SourceRecurlyCrea
 	} else {
 		endTime = nil
 	}
-	sourceType := shared.SourceRecurlyRecurly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecurly{
-		APIKey:     apiKey,
-		BeginTime:  beginTime,
-		EndTime:    endTime,
-		SourceType: sourceType,
+		APIKey:    apiKey,
+		BeginTime: beginTime,
+		EndTime:   endTime,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

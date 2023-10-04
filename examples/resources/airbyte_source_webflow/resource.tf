@@ -1,10 +1,9 @@
 resource "airbyte_source_webflow" "my_source_webflow" {
   configuration = {
-    api_key     = "a very long hex sequence"
-    site_id     = "a relatively long hex sequence"
-    source_type = "webflow"
+    api_key = "a very long hex sequence"
+    site_id = "a relatively long hex sequence"
   }
-  name         = "Taylor Paucek"
+  name         = "Kathleen Bins"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fded84a3-5a41-4238-a1a7-35ac26ae33be"
+  workspace_id = "c5491060-9be9-4a98-8e4b-07bcaf13ed56"
 }

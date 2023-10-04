@@ -63,24 +63,15 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Your OAuth user Client Secret`,
 					},
 					"data_query": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"Live",
 								"Unlimited",
 							),
 						},
-						MarkdownDescription: `must be one of ["Live", "Unlimited"]` + "\n" +
+						MarkdownDescription: `must be one of ["Live", "Unlimited"]; Default: "Live"` + "\n" +
 							`Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zuora",
-							),
-						},
-						Description: `must be one of ["zuora"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -105,8 +96,9 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 							`Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
 					},
 					"window_in_days": schema.StringAttribute{
-						Optional:    true,
-						Description: `The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).`,
+						Optional: true,
+						MarkdownDescription: `Default: "90"` + "\n" +
+							`The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).`,
 					},
 				},
 			},
@@ -180,7 +172,7 @@ func (r *SourceZuoraResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceZuora(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

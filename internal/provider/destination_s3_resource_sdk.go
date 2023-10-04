@@ -14,7 +14,6 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	} else {
 		accessKeyID = nil
 	}
-	destinationType := shared.DestinationS3S3(r.Configuration.DestinationType.ValueString())
 	fileNamePattern := new(string)
 	if !r.Configuration.FileNamePattern.IsUnknown() && !r.Configuration.FileNamePattern.IsNull() {
 		*fileNamePattern = r.Configuration.FileNamePattern.ValueString()
@@ -27,7 +26,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		var compressionCodec shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodec
 		var destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression *shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression
 		if r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-			codec := shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+			codec := new(shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.IsNull() {
+				*codec = shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+			} else {
+				codec = nil
+			}
 			destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression = &shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression{
 				Codec: codec,
 			}
@@ -39,8 +43,18 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		var destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate *shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
 		if r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-			codec1 := shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
-			compressionLevel := r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
+			codec1 := new(shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.IsNull() {
+				*codec1 = shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
+			} else {
+				codec1 = nil
+			}
+			compressionLevel := new(int64)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsNull() {
+				*compressionLevel = r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel = nil
+			}
 			destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate = &shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate{
 				Codec:            codec1,
 				CompressionLevel: compressionLevel,
@@ -53,7 +67,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		var destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 *shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
 		if r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-			codec2 := shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+			codec2 := new(shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.IsNull() {
+				*codec2 = shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+			} else {
+				codec2 = nil
+			}
 			destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 = &shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2{
 				Codec: codec2,
 			}
@@ -65,8 +84,18 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		var destinationS3OutputFormatAvroApacheAvroCompressionCodecXz *shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz
 		if r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz != nil {
-			codec3 := shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
-			compressionLevel1 := r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+			codec3 := new(shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.Codec.IsNull() {
+				*codec3 = shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
+			} else {
+				codec3 = nil
+			}
+			compressionLevel1 := new(int64)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
+				*compressionLevel1 = r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel1 = nil
+			}
 			destinationS3OutputFormatAvroApacheAvroCompressionCodecXz = &shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz{
 				Codec:            codec3,
 				CompressionLevel: compressionLevel1,
@@ -79,8 +108,18 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		var destinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard *shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard
 		if r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-			codec4 := shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
-			compressionLevel2 := r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
+			codec4 := new(shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.IsNull() {
+				*codec4 = shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+			} else {
+				codec4 = nil
+			}
+			compressionLevel2 := new(int64)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsNull() {
+				*compressionLevel2 = r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel2 = nil
+			}
 			includeChecksum := new(bool)
 			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsNull() {
 				*includeChecksum = r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.ValueBool()
@@ -100,7 +139,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		var destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy *shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
 		if r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-			codec5 := shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+			codec5 := new(shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec)
+			if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.IsNull() {
+				*codec5 = shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.CompressionCodec.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+			} else {
+				codec5 = nil
+			}
 			destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy = &shared.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy{
 				Codec: codec5,
 			}
@@ -110,7 +154,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 				DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy: destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy,
 			}
 		}
-		formatType := shared.DestinationS3OutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.FormatType.ValueString())
+		formatType := new(shared.DestinationS3OutputFormatAvroApacheAvroFormatType)
+		if !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.FormatType.IsNull() {
+			*formatType = shared.DestinationS3OutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationS3OutputFormatAvroApacheAvro.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
 		destinationS3OutputFormatAvroApacheAvro = &shared.DestinationS3OutputFormatAvroApacheAvro{
 			CompressionCodec: compressionCodec,
 			FormatType:       formatType,
@@ -160,8 +209,18 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 				}
 			}
 		}
-		flattening := shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
-		formatType1 := shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		flattening := new(shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening)
+		if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
+		} else {
+			flattening = nil
+		}
+		formatType1 := new(shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType)
+		if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.FormatType.IsNull() {
+			*formatType1 = shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		} else {
+			formatType1 = nil
+		}
 		destinationS3OutputFormatCSVCommaSeparatedValues = &shared.DestinationS3OutputFormatCSVCommaSeparatedValues{
 			Compression: compression,
 			Flattening:  flattening,
@@ -218,7 +277,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		} else {
 			flattening1 = nil
 		}
-		formatType2 := shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType2 := new(shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType)
+		if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType2 = shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		} else {
+			formatType2 = nil
+		}
 		destinationS3OutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression1,
 			Flattening:  flattening1,
@@ -256,7 +320,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		} else {
 			dictionaryPageSizeKb = nil
 		}
-		formatType3 := shared.DestinationS3OutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.FormatType.ValueString())
+		formatType3 := new(shared.DestinationS3OutputFormatParquetColumnarStorageFormatType)
+		if !r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.FormatType.IsNull() {
+			*formatType3 = shared.DestinationS3OutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.FormatType.ValueString())
+		} else {
+			formatType3 = nil
+		}
 		maxPaddingSizeMb := new(int64)
 		if !r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
 			*maxPaddingSizeMb = r.Configuration.Format.DestinationS3OutputFormatParquetColumnarStorage.MaxPaddingSizeMb.ValueInt64()
@@ -286,7 +355,12 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
-	s3BucketRegion := shared.DestinationS3S3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	s3BucketRegion := new(shared.DestinationS3S3BucketRegion)
+	if !r.Configuration.S3BucketRegion.IsUnknown() && !r.Configuration.S3BucketRegion.IsNull() {
+		*s3BucketRegion = shared.DestinationS3S3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	} else {
+		s3BucketRegion = nil
+	}
 	s3Endpoint := new(string)
 	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
 		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
@@ -307,7 +381,6 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	}
 	configuration := shared.DestinationS3{
 		AccessKeyID:     accessKeyID,
-		DestinationType: destinationType,
 		FileNamePattern: fileNamePattern,
 		Format:          format,
 		S3BucketName:    s3BucketName,
@@ -351,7 +424,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		var compressionCodec shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodec
 		var destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression *shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression
 		if r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-			codec := shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+			codec := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.IsNull() {
+				*codec = shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+			} else {
+				codec = nil
+			}
 			destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression = &shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression{
 				Codec: codec,
 			}
@@ -363,8 +441,18 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		var destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate *shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
 		if r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-			codec1 := shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
-			compressionLevel := r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
+			codec1 := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.IsNull() {
+				*codec1 = shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
+			} else {
+				codec1 = nil
+			}
+			compressionLevel := new(int64)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsNull() {
+				*compressionLevel = r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel = nil
+			}
 			destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate = &shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecDeflate{
 				Codec:            codec1,
 				CompressionLevel: compressionLevel,
@@ -377,7 +465,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		var destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 *shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2
 		if r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-			codec2 := shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+			codec2 := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.IsNull() {
+				*codec2 = shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+			} else {
+				codec2 = nil
+			}
 			destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 = &shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecBzip2{
 				Codec: codec2,
 			}
@@ -389,8 +482,18 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		var destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz *shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz
 		if r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz != nil {
-			codec3 := shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
-			compressionLevel1 := r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+			codec3 := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.Codec.IsNull() {
+				*codec3 = shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
+			} else {
+				codec3 = nil
+			}
+			compressionLevel1 := new(int64)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
+				*compressionLevel1 = r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel1 = nil
+			}
 			destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz = &shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecXz{
 				Codec:            codec3,
 				CompressionLevel: compressionLevel1,
@@ -403,8 +506,18 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		var destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard *shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard
 		if r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-			codec4 := shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
-			compressionLevel2 := r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
+			codec4 := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.IsNull() {
+				*codec4 = shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+			} else {
+				codec4 = nil
+			}
+			compressionLevel2 := new(int64)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsNull() {
+				*compressionLevel2 = r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel2 = nil
+			}
 			includeChecksum := new(bool)
 			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsNull() {
 				*includeChecksum = r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.ValueBool()
@@ -424,7 +537,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		var destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy *shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
 		if r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-			codec5 := shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+			codec5 := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec)
+			if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.IsNull() {
+				*codec5 = shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+			} else {
+				codec5 = nil
+			}
 			destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy = &shared.DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy{
 				Codec: codec5,
 			}
@@ -434,7 +552,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 				DestinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy: destinationS3UpdateOutputFormatAvroApacheAvroCompressionCodecSnappy,
 			}
 		}
-		formatType := shared.DestinationS3UpdateOutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.FormatType.ValueString())
+		formatType := new(shared.DestinationS3UpdateOutputFormatAvroApacheAvroFormatType)
+		if !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.FormatType.IsNull() {
+			*formatType = shared.DestinationS3UpdateOutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatAvroApacheAvro.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
 		destinationS3UpdateOutputFormatAvroApacheAvro = &shared.DestinationS3UpdateOutputFormatAvroApacheAvro{
 			CompressionCodec: compressionCodec,
 			FormatType:       formatType,
@@ -484,8 +607,18 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 				}
 			}
 		}
-		flattening := shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFlattening(r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
-		formatType1 := shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		flattening := new(shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFlattening)
+		if !r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFlattening(r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
+		} else {
+			flattening = nil
+		}
+		formatType1 := new(shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFormatType)
+		if !r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.FormatType.IsNull() {
+			*formatType1 = shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		} else {
+			formatType1 = nil
+		}
 		destinationS3UpdateOutputFormatCSVCommaSeparatedValues = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues{
 			Compression: compression,
 			Flattening:  flattening,
@@ -542,7 +675,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		} else {
 			flattening1 = nil
 		}
-		formatType2 := shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType2 := new(shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType)
+		if !r.Configuration.Format.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType2 = shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		} else {
+			formatType2 = nil
+		}
 		destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression1,
 			Flattening:  flattening1,
@@ -580,7 +718,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		} else {
 			dictionaryPageSizeKb = nil
 		}
-		formatType3 := shared.DestinationS3UpdateOutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.FormatType.ValueString())
+		formatType3 := new(shared.DestinationS3UpdateOutputFormatParquetColumnarStorageFormatType)
+		if !r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.FormatType.IsNull() {
+			*formatType3 = shared.DestinationS3UpdateOutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.FormatType.ValueString())
+		} else {
+			formatType3 = nil
+		}
 		maxPaddingSizeMb := new(int64)
 		if !r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
 			*maxPaddingSizeMb = r.Configuration.Format.DestinationS3UpdateOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.ValueInt64()
@@ -610,7 +753,12 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
-	s3BucketRegion := shared.DestinationS3UpdateS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	s3BucketRegion := new(shared.DestinationS3UpdateS3BucketRegion)
+	if !r.Configuration.S3BucketRegion.IsUnknown() && !r.Configuration.S3BucketRegion.IsNull() {
+		*s3BucketRegion = shared.DestinationS3UpdateS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	} else {
+		s3BucketRegion = nil
+	}
 	s3Endpoint := new(string)
 	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
 		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()

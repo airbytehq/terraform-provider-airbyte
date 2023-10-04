@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,7 +35,36 @@ func (e *SourceDatascopeDatascope) UnmarshalJSON(data []byte) error {
 type SourceDatascope struct {
 	// API Key
 	APIKey     string                   `json:"api_key"`
-	SourceType SourceDatascopeDatascope `json:"sourceType"`
+	sourceType SourceDatascopeDatascope `const:"datascope" json:"sourceType"`
 	// Start date for the data to be replicated
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceDatascope) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDatascope) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDatascope) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceDatascope) GetSourceType() SourceDatascopeDatascope {
+	return SourceDatascopeDatascopeDatascope
+}
+
+func (o *SourceDatascope) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

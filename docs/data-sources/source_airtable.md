@@ -42,7 +42,6 @@ data "airbyte_source_airtable" "my_source_airtable" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["airtable"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -60,7 +59,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The client ID of the Airtable developer application.
 - `client_secret` (String) The client secret the Airtable developer application.
 - `refresh_token` (String) The key to refresh the expired access token.
@@ -73,7 +71,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-- `auth_method` (String) must be one of ["api_key"]
 
 
 <a id="nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0"></a>
@@ -82,7 +79,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The client ID of the Airtable developer application.
 - `client_secret` (String) The client secret the Airtable developer application.
 - `refresh_token` (String) The key to refresh the expired access token.
@@ -95,6 +91,5 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-- `auth_method` (String) must be one of ["api_key"]
 
 

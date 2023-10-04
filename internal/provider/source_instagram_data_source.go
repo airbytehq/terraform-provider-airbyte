@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -64,15 +63,6 @@ func (r *SourceInstagramDataSource) Schema(ctx context.Context, req datasource.S
 					"client_secret": schema.StringAttribute{
 						Computed:    true,
 						Description: `The Client Secret for your Oauth application`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"instagram",
-							),
-						},
-						Description: `must be one of ["instagram"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

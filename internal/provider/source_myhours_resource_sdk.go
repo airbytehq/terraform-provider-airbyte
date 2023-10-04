@@ -16,13 +16,11 @@ func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCrea
 		logsBatchSize = nil
 	}
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceMyHoursMyHours(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceMyHours{
 		Email:         email,
 		LogsBatchSize: logsBatchSize,
 		Password:      password,
-		SourceType:    sourceType,
 		StartDate:     startDate,
 	}
 	name := r.Name.ValueString()

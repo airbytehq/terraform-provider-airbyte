@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,21 +55,14 @@ func (r *SourceBambooHrDataSource) Schema(ctx context.Context, req datasource.Sc
 						Description: `Api key of bamboo hr`,
 					},
 					"custom_reports_fields": schema.StringAttribute{
-						Computed:    true,
-						Description: `Comma-separated list of fields to include in custom reports.`,
+						Computed: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Comma-separated list of fields to include in custom reports.`,
 					},
 					"custom_reports_include_default_fields": schema.BoolAttribute{
-						Computed:    true,
-						Description: `If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bamboo-hr",
-							),
-						},
-						Description: `must be one of ["bamboo-hr"]`,
+						MarkdownDescription: `Default: true` + "\n" +
+							`If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.`,
 					},
 					"subdomain": schema.StringAttribute{
 						Computed:    true,

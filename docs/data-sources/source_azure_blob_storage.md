@@ -45,10 +45,10 @@ Read-Only:
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_blobs_prefix` (String) The Azure blob storage prefix to be applied
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
-- `azure_blob_storage_endpoint` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+- `azure_blob_storage_endpoint` (String) Default: "blob.core.windows.net"
+This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
 - `azure_blob_storage_schema_inference_limit` (Number) The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure
 - `format` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format))
-- `source_type` (String) must be one of ["azure-blob-storage"]
 
 <a id="nestedatt--configuration--format"></a>
 ### Nested Schema for `configuration.format`
@@ -61,16 +61,8 @@ Read-Only:
 <a id="nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.source_azure_blob_storage_input_format_json_lines_newline_delimited_json`
 
-Read-Only:
-
-- `format_type` (String) must be one of ["JSONL"]
-
 
 <a id="nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json`
-
-Read-Only:
-
-- `format_type` (String) must be one of ["JSONL"]
 
 

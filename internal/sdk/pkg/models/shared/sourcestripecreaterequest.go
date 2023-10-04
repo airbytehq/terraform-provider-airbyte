@@ -9,3 +9,31 @@ type SourceStripeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceStripeCreateRequest) GetConfiguration() SourceStripe {
+	if o == nil {
+		return SourceStripe{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceStripeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceStripeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceStripeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

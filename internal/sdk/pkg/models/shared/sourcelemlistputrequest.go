@@ -7,3 +7,24 @@ type SourceLemlistPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceLemlistPutRequest) GetConfiguration() SourceLemlistUpdate {
+	if o == nil {
+		return SourceLemlistUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLemlistPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLemlistPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

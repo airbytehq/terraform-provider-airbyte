@@ -23,13 +23,12 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
       },
     ]
     outcome_names = "os__session_duration.count,os__click.count,CustomOutcomeName.sum"
-    source_type   = "onesignal"
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  name         = "Joan Schaefer"
+  name         = "Mattie Bode"
   secret_id    = "...my_secret_id..."
-  workspace_id = "41ffbe9c-bd79-45ee-a5e0-76cc7abf616e"
+  workspace_id = "c2e9642f-3c2f-4e19-832e-dfee92bc3373"
 }
 ```
 
@@ -58,7 +57,6 @@ Required:
 
 - `applications` (Attributes List) Applications keys, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys">docs</a> for more information on how to obtain this data (see [below for nested schema](#nestedatt--configuration--applications))
 - `outcome_names` (String) Comma-separated list of names and the value (sum/count) for the returned outcome data. See the <a href="https://documentation.onesignal.com/reference/view-outcomes">docs</a> for more details
-- `source_type` (String) must be one of ["onesignal"]
 - `start_date` (String) The date from which you'd like to replicate data for OneSignal API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `user_auth_key` (String) OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
 

@@ -11,14 +11,17 @@ import (
 func (r *SourceYotpoResourceModel) ToCreateSDKType() *shared.SourceYotpoCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	appKey := r.Configuration.AppKey.ValueString()
-	email := r.Configuration.Email.ValueString()
-	sourceType := shared.SourceYotpoYotpo(r.Configuration.SourceType.ValueString())
+	email := new(string)
+	if !r.Configuration.Email.IsUnknown() && !r.Configuration.Email.IsNull() {
+		*email = r.Configuration.Email.ValueString()
+	} else {
+		email = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYotpo{
 		AccessToken: accessToken,
 		AppKey:      appKey,
 		Email:       email,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -46,7 +49,12 @@ func (r *SourceYotpoResourceModel) ToGetSDKType() *shared.SourceYotpoCreateReque
 func (r *SourceYotpoResourceModel) ToUpdateSDKType() *shared.SourceYotpoPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	appKey := r.Configuration.AppKey.ValueString()
-	email := r.Configuration.Email.ValueString()
+	email := new(string)
+	if !r.Configuration.Email.IsUnknown() && !r.Configuration.Email.IsNull() {
+		*email = r.Configuration.Email.ValueString()
+	} else {
+		email = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYotpoUpdate{
 		AccessToken: accessToken,

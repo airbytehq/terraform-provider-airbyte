@@ -47,7 +47,6 @@ Read-Only:
 - `limit` (Number) The target date for the aggregate window.
 - `multiplier` (Number) The size of the timespan multiplier.
 - `sort` (String) Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).
-- `source_type` (String) must be one of ["polygon-stock-api"]
 - `start_date` (String) The beginning date for the aggregate window.
 - `stocks_ticker` (String) The exchange symbol that this item is traded under.
 - `timespan` (String) The size of the time window.

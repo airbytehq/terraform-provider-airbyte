@@ -7,3 +7,24 @@ type SourceChargebeePutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceChargebeePutRequest) GetConfiguration() SourceChargebeeUpdate {
+	if o == nil {
+		return SourceChargebeeUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceChargebeePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceChargebeePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

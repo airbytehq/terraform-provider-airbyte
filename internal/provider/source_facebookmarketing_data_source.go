@@ -62,8 +62,9 @@ func (r *SourceFacebookMarketingDataSource) Schema(ctx context.Context, req data
 						Description: `The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. Open your Meta Ads Manager. The Ad account ID number is in the account dropdown menu or in your browser's address bar. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.`,
 					},
 					"action_breakdowns_allow_empty": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Allows action_breakdowns to be an empty list`,
+						Computed: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Allows action_breakdowns to be an empty list`,
 					},
 					"client_id": schema.StringAttribute{
 						Computed:    true,
@@ -91,7 +92,7 @@ func (r *SourceFacebookMarketingDataSource) Schema(ctx context.Context, req data
 											"mixed",
 										),
 									},
-									MarkdownDescription: `must be one of ["conversion", "impression", "mixed"]` + "\n" +
+									MarkdownDescription: `must be one of ["conversion", "impression", "mixed"]; Default: "mixed"` + "\n" +
 										`Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.`,
 								},
 								"breakdowns": schema.ListAttribute{
@@ -112,8 +113,9 @@ func (r *SourceFacebookMarketingDataSource) Schema(ctx context.Context, req data
 									Description: `A list of chosen fields for fields parameter`,
 								},
 								"insights_lookback_window": schema.Int64Attribute{
-									Computed:    true,
-									Description: `The attribution window`,
+									Computed: true,
+									MarkdownDescription: `Default: 28` + "\n" +
+										`The attribution window`,
 								},
 								"level": schema.StringAttribute{
 									Computed: true,
@@ -125,7 +127,7 @@ func (r *SourceFacebookMarketingDataSource) Schema(ctx context.Context, req data
 											"account",
 										),
 									},
-									MarkdownDescription: `must be one of ["ad", "adset", "campaign", "account"]` + "\n" +
+									MarkdownDescription: `must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"` + "\n" +
 										`Chosen level for API`,
 								},
 								"name": schema.StringAttribute{
@@ -140,8 +142,9 @@ func (r *SourceFacebookMarketingDataSource) Schema(ctx context.Context, req data
 									Description: `The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.`,
 								},
 								"time_increment": schema.Int64Attribute{
-									Computed:    true,
-									Description: `Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).`,
+									Computed: true,
+									MarkdownDescription: `Default: 1` + "\n" +
+										`Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).`,
 								},
 							},
 						},
@@ -155,33 +158,29 @@ func (r *SourceFacebookMarketingDataSource) Schema(ctx context.Context, req data
 						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.`,
 					},
 					"fetch_thumbnail_images": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.`,
 					},
 					"include_deleted": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.`,
 					},
 					"insights_lookback_window": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.`,
+						Computed: true,
+						MarkdownDescription: `Default: 28` + "\n" +
+							`The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.`,
 					},
 					"max_batch_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Maximum batch size used when sending batch requests to Facebook API. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.`,
+						Computed: true,
+						MarkdownDescription: `Default: 50` + "\n" +
+							`Maximum batch size used when sending batch requests to Facebook API. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.`,
 					},
 					"page_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"facebook-marketing",
-							),
-						},
-						Description: `must be one of ["facebook-marketing"]`,
+						MarkdownDescription: `Default: 100` + "\n" +
+							`Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

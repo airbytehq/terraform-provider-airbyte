@@ -8,6 +8,5 @@ type SourceTiktokMarketingAuthenticationMethodOAuth20 struct {
 	AccessToken  types.String `tfsdk:"access_token"`
 	AdvertiserID types.String `tfsdk:"advertiser_id"`
 	AppID        types.String `tfsdk:"app_id"`
-	AuthType     types.String `tfsdk:"auth_type"`
 	Secret       types.String `tfsdk:"secret"`
 }

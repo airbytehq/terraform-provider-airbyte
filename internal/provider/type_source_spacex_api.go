@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSpacexAPI struct {
-	ID         types.String `tfsdk:"id"`
-	Options    types.String `tfsdk:"options"`
-	SourceType types.String `tfsdk:"source_type"`
+	ID      types.String `tfsdk:"id"`
+	Options types.String `tfsdk:"options"`
 }

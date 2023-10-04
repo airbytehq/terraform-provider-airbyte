@@ -7,3 +7,24 @@ type SourcePaystackPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourcePaystackPutRequest) GetConfiguration() SourcePaystackUpdate {
+	if o == nil {
+		return SourcePaystackUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePaystackPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePaystackPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -67,16 +66,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"client_secret": schema.StringAttribute{
 										Required: true,
 									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`OAuth Credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Required: true,
 									},
@@ -86,16 +75,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 							"source_asana_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
-											`PAT Credentials`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
@@ -112,16 +91,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"client_secret": schema.StringAttribute{
 										Required: true,
 									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`OAuth Credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Required: true,
 									},
@@ -131,16 +100,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 							"source_asana_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
-											`PAT Credentials`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
@@ -153,15 +112,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 							validators.ExactlyOneChild(),
 						},
 						Description: `Choose how to authenticate to Github`,
-					},
-					"source_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"asana",
-							),
-						},
-						Description: `must be one of ["asana"]`,
 					},
 				},
 			},
@@ -235,7 +185,7 @@ func (r *SourceAsanaResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAsana(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

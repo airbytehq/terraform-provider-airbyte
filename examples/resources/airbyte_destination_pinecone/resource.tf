@@ -1,10 +1,8 @@
 resource "airbyte_destination_pinecone" "my_destination_pinecone" {
   configuration = {
-    destination_type = "pinecone"
     embedding = {
       destination_pinecone_embedding_cohere = {
         cohere_key = "...my_cohere_key..."
-        mode       = "cohere"
       }
     }
     indexing = {
@@ -13,8 +11,8 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       pinecone_key         = "...my_pinecone_key..."
     }
     processing = {
-      chunk_overlap = 2
-      chunk_size    = 3
+      chunk_overlap = 7
+      chunk_size    = 6
       metadata_fields = [
         "...",
       ]
@@ -23,6 +21,6 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       ]
     }
   }
-  name         = "Cecelia Braun"
-  workspace_id = "8b6a89fb-e3a5-4aa8-a482-4d0ab4075088"
+  name         = "Peggy Renner"
+  workspace_id = "88e15f86-8bf0-4372-97dc-d66bcb9a13f0"
 }

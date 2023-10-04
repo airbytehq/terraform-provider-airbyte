@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -62,15 +60,6 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 						Required:    true,
 						ElementType: types.StringType,
 						Description: `Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-pagespeed-insights",
-							),
-						},
-						Description: `must be one of ["google-pagespeed-insights"]`,
 					},
 					"strategies": schema.ListAttribute{
 						Required:    true,
@@ -154,7 +143,7 @@ func (r *SourceGooglePagespeedInsightsResource) Create(ctx context.Context, req 
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGooglePagespeedInsights(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

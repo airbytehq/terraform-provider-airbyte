@@ -55,8 +55,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"big_query_client_buffer_size_mb": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.`,
+						Optional: true,
+						MarkdownDescription: `Default: 15` + "\n" +
+							`Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.`,
 					},
 					"credentials_json": schema.StringAttribute{
 						Optional:    true,
@@ -112,17 +113,8 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 								"us-west4",
 							),
 						},
-						MarkdownDescription: `must be one of ["US", "EU", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "europe-central1", "europe-central2", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "europe-west7", "europe-west8", "europe-west9", "me-west1", "northamerica-northeast1", "northamerica-northeast2", "southamerica-east1", "southamerica-west1", "us-central1", "us-east1", "us-east2", "us-east3", "us-east4", "us-east5", "us-west1", "us-west2", "us-west3", "us-west4"]` + "\n" +
+						MarkdownDescription: `must be one of ["US", "EU", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "europe-central1", "europe-central2", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "europe-west7", "europe-west8", "europe-west9", "me-west1", "northamerica-northeast1", "northamerica-northeast2", "southamerica-east1", "southamerica-west1", "us-central1", "us-east1", "us-east2", "us-east3", "us-east4", "us-east5", "us-west1", "us-west2", "us-west3", "us-west4"]; Default: "US"` + "\n" +
 							`The location of the dataset. Warning: Changes made after creation will not be applied. The default "US" value is used if not set explicitly. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bigquery-denormalized",
-							),
-						},
-						Description: `must be one of ["bigquery-denormalized"]`,
 					},
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -136,15 +128,6 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 											"destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
-													"credential_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"HMAC_KEY",
-															),
-														},
-														Description: `must be one of ["HMAC_KEY"]`,
-													},
 													"hmac_key_access_id": schema.StringAttribute{
 														Required:    true,
 														Description: `HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.`,
@@ -163,8 +146,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Optional:    true,
-										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
+										Optional: true,
+										MarkdownDescription: `Default: 10` + "\n" +
+											`Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
 										Required:    true,
@@ -182,34 +166,15 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"Keep all tmp files in GCS",
 											),
 										},
-										MarkdownDescription: `must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]` + "\n" +
+										MarkdownDescription: `must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]; Default: "Delete all tmp files from GCS"` + "\n" +
 											`This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS Staging",
-											),
-										},
-										Description: `must be one of ["GCS Staging"]`,
 									},
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 							"destination_bigquery_denormalized_loading_method_standard_inserts": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 							"destination_bigquery_denormalized_update_loading_method_gcs_staging": schema.SingleNestedAttribute{
@@ -221,15 +186,6 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 											"destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
-													"credential_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"HMAC_KEY",
-															),
-														},
-														Description: `must be one of ["HMAC_KEY"]`,
-													},
 													"hmac_key_access_id": schema.StringAttribute{
 														Required:    true,
 														Description: `HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.`,
@@ -248,8 +204,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Optional:    true,
-										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
+										Optional: true,
+										MarkdownDescription: `Default: 10` + "\n" +
+											`Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
 										Required:    true,
@@ -267,34 +224,15 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"Keep all tmp files in GCS",
 											),
 										},
-										MarkdownDescription: `must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]` + "\n" +
+										MarkdownDescription: `must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]; Default: "Delete all tmp files from GCS"` + "\n" +
 											`This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS Staging",
-											),
-										},
-										Description: `must be one of ["GCS Staging"]`,
 									},
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 							"destination_bigquery_denormalized_update_loading_method_standard_inserts": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 						},
@@ -375,7 +313,7 @@ func (r *DestinationBigqueryDenormalizedResource) Create(ctx context.Context, re
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationBigqueryDenormalized(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

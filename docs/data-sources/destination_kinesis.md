@@ -37,11 +37,12 @@ data "airbyte_destination_kinesis" "my_destination_kinesis" {
 Read-Only:
 
 - `access_key` (String) Generate the AWS Access Key for current user.
-- `buffer_size` (Number) Buffer size for storing kinesis records before being batch streamed.
-- `destination_type` (String) must be one of ["kinesis"]
+- `buffer_size` (Number) Default: 100
+Buffer size for storing kinesis records before being batch streamed.
 - `endpoint` (String) AWS Kinesis endpoint.
 - `private_key` (String) The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".
 - `region` (String) AWS region. Your account determines the Regions that are available to you.
-- `shard_count` (Number) Number of shards to which the data should be streamed.
+- `shard_count` (Number) Default: 5
+Number of shards to which the data should be streamed.
 
 

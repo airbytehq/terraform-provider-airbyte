@@ -7,3 +7,24 @@ type SourceRecurlyPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceRecurlyPutRequest) GetConfiguration() SourceRecurlyUpdate {
+	if o == nil {
+		return SourceRecurlyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRecurlyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRecurlyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

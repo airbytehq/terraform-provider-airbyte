@@ -90,8 +90,9 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Only return items from a particular ` + "`" + `domain` + "`" + `.`,
 					},
 					"favorite": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Retrieve only favorited items.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Retrieve only favorited items.`,
 					},
 					"search": schema.StringAttribute{
 						Optional:    true,
@@ -113,15 +114,6 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 						MarkdownDescription: `must be one of ["newest", "oldest", "title", "site"]` + "\n" +
 							`Sort retrieved items by the given criteria.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pocket",
-							),
-						},
-						Description: `must be one of ["pocket"]`,
 					},
 					"state": schema.StringAttribute{
 						Optional: true,
@@ -211,7 +203,7 @@ func (r *SourcePocketResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePocket(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

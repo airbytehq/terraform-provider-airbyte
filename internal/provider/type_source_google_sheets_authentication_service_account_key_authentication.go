@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication struct {
-	AuthType           types.String `tfsdk:"auth_type"`
 	ServiceAccountInfo types.String `tfsdk:"service_account_info"`
 }

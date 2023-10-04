@@ -42,17 +42,13 @@ data "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["youtube-analytics"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
+- `additional_properties` (String) Parsed as JSON.
 - `client_id` (String) The Client ID of your developer application
 - `client_secret` (String) The client secret of your developer application
 - `refresh_token` (String) A refresh token generated using the above client ID and secret

@@ -3,10 +3,10 @@
 package provider
 
 type SourceMysqlSSHTunnelMethod struct {
-	SourceMysqlSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_mysql_ssh_tunnel_method_no_tunnel"`
-	SourceMysqlSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_mysql_ssh_tunnel_method_password_authentication"`
-	SourceMysqlSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_mysql_ssh_tunnel_method_ssh_key_authentication"`
-	SourceMysqlUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_mysql_update_ssh_tunnel_method_no_tunnel"`
-	SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_mysql_update_ssh_tunnel_method_password_authentication"`
-	SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_mysql_update_ssh_tunnel_method_ssh_key_authentication"`
+	SourceMysqlSSHTunnelMethodNoTunnel                     *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_ssh_tunnel_method_no_tunnel"`
+	SourceMysqlSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"source_mysql_ssh_tunnel_method_password_authentication"`
+	SourceMysqlSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"source_mysql_ssh_tunnel_method_ssh_key_authentication"`
+	SourceMysqlUpdateSSHTunnelMethodNoTunnel               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_update_ssh_tunnel_method_no_tunnel"`
+	SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"source_mysql_update_ssh_tunnel_method_password_authentication"`
+	SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"source_mysql_update_ssh_tunnel_method_ssh_key_authentication"`
 }

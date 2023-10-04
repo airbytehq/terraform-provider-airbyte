@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOracleEncryptionTLSEncryptedVerifyCertificate struct {
-	EncryptionMethod types.String `tfsdk:"encryption_method"`
-	SslCertificate   types.String `tfsdk:"ssl_certificate"`
+	SslCertificate types.String `tfsdk:"ssl_certificate"`
 }

@@ -14,12 +14,10 @@ SourceWhiskyHunter Resource
 
 ```terraform
 resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
-  configuration = {
-    source_type = "whisky-hunter"
-  }
-  name         = "Miss Terrence Kulas"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f46bca11-06fe-4965-b711-d08cf88ec9f7"
+  configuration = {}
+  name          = "Loretta Nikolaus"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9e7c8aee-eb09-4ffd-b753-fe46a1403ba1"
 }
 ```
 
@@ -43,9 +41,5 @@ resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
-
-Optional:
-
-- `source_type` (String) must be one of ["whisky-hunter"]
 
 

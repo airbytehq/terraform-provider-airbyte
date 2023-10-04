@@ -80,15 +80,6 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 						Required:    true,
 						Description: `Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"braintree",
-							),
-						},
-						Description: `must be one of ["braintree"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
@@ -168,7 +159,7 @@ func (r *SourceBraintreeResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceBraintree(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -47,7 +47,6 @@ Read-Only:
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `role` (String) The role you created for Airbyte to access Snowflake.
 - `schema` (String) The source Snowflake schema tables. Leave empty to access tables from multiple schemas.
-- `source_type` (String) must be one of ["snowflake"]
 - `warehouse` (String) The warehouse you created for Airbyte to access data.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -66,7 +65,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Client ID of your Snowflake developer application.
 - `client_secret` (String) The Client Secret of your Snowflake developer application.
 - `refresh_token` (String) Refresh Token for making authenticated requests.
@@ -77,7 +75,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["username/password"]
 - `password` (String) The password associated with the username.
 - `username` (String) The username you created to allow Airbyte to access the database.
 
@@ -88,7 +85,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Client ID of your Snowflake developer application.
 - `client_secret` (String) The Client Secret of your Snowflake developer application.
 - `refresh_token` (String) Refresh Token for making authenticated requests.
@@ -99,7 +95,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["username/password"]
 - `password` (String) The password associated with the username.
 - `username` (String) The username you created to allow Airbyte to access the database.
 

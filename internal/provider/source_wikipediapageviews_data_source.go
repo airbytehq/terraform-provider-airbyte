@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -75,15 +73,6 @@ func (r *SourceWikipediaPageviewsDataSource) Schema(ctx context.Context, req dat
 					"project": schema.StringAttribute{
 						Computed:    true,
 						Description: `If you want to filter by project, use the domain of any Wikimedia project.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"wikipedia-pageviews",
-							),
-						},
-						Description: `must be one of ["wikipedia-pageviews"]`,
 					},
 					"start": schema.StringAttribute{
 						Computed:    true,

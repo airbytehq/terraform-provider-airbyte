@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 									"email": schema.StringAttribute{
 										Computed:    true,
 										Description: `The user email for your Zendesk account`,
@@ -84,15 +74,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Long-term access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -111,15 +92,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 									"email": schema.StringAttribute{
 										Computed:    true,
 										Description: `The user email for your Zendesk account`,
@@ -132,15 +104,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Long-term access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -156,15 +119,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-sunshine",
-							),
-						},
-						Description: `must be one of ["zendesk-sunshine"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

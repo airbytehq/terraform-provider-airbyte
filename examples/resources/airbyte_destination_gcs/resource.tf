@@ -7,7 +7,6 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
         hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
       }
     }
-    destination_type = "gcs"
     format = {
       destination_gcs_output_format_avro_apache_avro = {
         compression_codec = {
@@ -20,8 +19,8 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "us-west1"
+    gcs_bucket_region = "eu"
   }
-  name         = "Miss Dennis Friesen"
-  workspace_id = "c366c8dd-6b14-4429-8747-4778a7bd466d"
+  name         = "Lorena Mills"
+  workspace_id = "416d119e-802e-4071-a9d4-644f9dd3d54c"
 }

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *SourceKustomerSingerDataSource) Schema(ctx context.Context, req datasou
 					"api_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kustomer-singer",
-							),
-						},
-						Description: `must be one of ["kustomer-singer"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

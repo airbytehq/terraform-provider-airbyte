@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -39,7 +40,50 @@ type SourceTwitter struct {
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
 	Query      string               `json:"query"`
-	SourceType SourceTwitterTwitter `json:"sourceType"`
+	sourceType SourceTwitterTwitter `const:"twitter" json:"sourceType"`
 	// The start date for retrieving tweets cannot be more than 7 days in the past.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceTwitter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTwitter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTwitter) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceTwitter) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTwitter) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceTwitter) GetSourceType() SourceTwitterTwitter {
+	return SourceTwitterTwitterTwitter
+}
+
+func (o *SourceTwitter) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

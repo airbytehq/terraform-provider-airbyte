@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -39,7 +39,36 @@ type DestinationMilvusUpdateEmbeddingFromField struct {
 	Dimensions int64 `json:"dimensions"`
 	// Name of the field in the record that contains the embedding
 	FieldName string                                         `json:"field_name"`
-	Mode      *DestinationMilvusUpdateEmbeddingFromFieldMode `json:"mode,omitempty"`
+	mode      *DestinationMilvusUpdateEmbeddingFromFieldMode `const:"from_field" json:"mode"`
+}
+
+func (d DestinationMilvusUpdateEmbeddingFromField) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateEmbeddingFromField) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateEmbeddingFromField) GetDimensions() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Dimensions
+}
+
+func (o *DestinationMilvusUpdateEmbeddingFromField) GetFieldName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FieldName
+}
+
+func (o *DestinationMilvusUpdateEmbeddingFromField) GetMode() *DestinationMilvusUpdateEmbeddingFromFieldMode {
+	return DestinationMilvusUpdateEmbeddingFromFieldModeFromField.ToPointer()
 }
 
 type DestinationMilvusUpdateEmbeddingFakeMode string
@@ -68,7 +97,22 @@ func (e *DestinationMilvusUpdateEmbeddingFakeMode) UnmarshalJSON(data []byte) er
 
 // DestinationMilvusUpdateEmbeddingFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
 type DestinationMilvusUpdateEmbeddingFake struct {
-	Mode *DestinationMilvusUpdateEmbeddingFakeMode `json:"mode,omitempty"`
+	mode *DestinationMilvusUpdateEmbeddingFakeMode `const:"fake" json:"mode"`
+}
+
+func (d DestinationMilvusUpdateEmbeddingFake) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateEmbeddingFake) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateEmbeddingFake) GetMode() *DestinationMilvusUpdateEmbeddingFakeMode {
+	return DestinationMilvusUpdateEmbeddingFakeModeFake.ToPointer()
 }
 
 type DestinationMilvusUpdateEmbeddingCohereMode string
@@ -98,7 +142,29 @@ func (e *DestinationMilvusUpdateEmbeddingCohereMode) UnmarshalJSON(data []byte) 
 // DestinationMilvusUpdateEmbeddingCohere - Use the Cohere API to embed text.
 type DestinationMilvusUpdateEmbeddingCohere struct {
 	CohereKey string                                      `json:"cohere_key"`
-	Mode      *DestinationMilvusUpdateEmbeddingCohereMode `json:"mode,omitempty"`
+	mode      *DestinationMilvusUpdateEmbeddingCohereMode `const:"cohere" json:"mode"`
+}
+
+func (d DestinationMilvusUpdateEmbeddingCohere) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateEmbeddingCohere) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateEmbeddingCohere) GetCohereKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.CohereKey
+}
+
+func (o *DestinationMilvusUpdateEmbeddingCohere) GetMode() *DestinationMilvusUpdateEmbeddingCohereMode {
+	return DestinationMilvusUpdateEmbeddingCohereModeCohere.ToPointer()
 }
 
 type DestinationMilvusUpdateEmbeddingOpenAIMode string
@@ -127,8 +193,30 @@ func (e *DestinationMilvusUpdateEmbeddingOpenAIMode) UnmarshalJSON(data []byte) 
 
 // DestinationMilvusUpdateEmbeddingOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationMilvusUpdateEmbeddingOpenAI struct {
-	Mode      *DestinationMilvusUpdateEmbeddingOpenAIMode `json:"mode,omitempty"`
+	mode      *DestinationMilvusUpdateEmbeddingOpenAIMode `const:"openai" json:"mode"`
 	OpenaiKey string                                      `json:"openai_key"`
+}
+
+func (d DestinationMilvusUpdateEmbeddingOpenAI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateEmbeddingOpenAI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateEmbeddingOpenAI) GetMode() *DestinationMilvusUpdateEmbeddingOpenAIMode {
+	return DestinationMilvusUpdateEmbeddingOpenAIModeOpenai.ToPointer()
+}
+
+func (o *DestinationMilvusUpdateEmbeddingOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationMilvusUpdateEmbeddingType string
@@ -186,39 +274,30 @@ func CreateDestinationMilvusUpdateEmbeddingDestinationMilvusUpdateEmbeddingFromF
 }
 
 func (u *DestinationMilvusUpdateEmbedding) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationMilvusUpdateEmbeddingFake := new(DestinationMilvusUpdateEmbeddingFake)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateEmbeddingFake); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateEmbeddingFake, "", true, true); err == nil {
 		u.DestinationMilvusUpdateEmbeddingFake = destinationMilvusUpdateEmbeddingFake
 		u.Type = DestinationMilvusUpdateEmbeddingTypeDestinationMilvusUpdateEmbeddingFake
 		return nil
 	}
 
 	destinationMilvusUpdateEmbeddingOpenAI := new(DestinationMilvusUpdateEmbeddingOpenAI)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateEmbeddingOpenAI); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateEmbeddingOpenAI, "", true, true); err == nil {
 		u.DestinationMilvusUpdateEmbeddingOpenAI = destinationMilvusUpdateEmbeddingOpenAI
 		u.Type = DestinationMilvusUpdateEmbeddingTypeDestinationMilvusUpdateEmbeddingOpenAI
 		return nil
 	}
 
 	destinationMilvusUpdateEmbeddingCohere := new(DestinationMilvusUpdateEmbeddingCohere)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateEmbeddingCohere); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateEmbeddingCohere, "", true, true); err == nil {
 		u.DestinationMilvusUpdateEmbeddingCohere = destinationMilvusUpdateEmbeddingCohere
 		u.Type = DestinationMilvusUpdateEmbeddingTypeDestinationMilvusUpdateEmbeddingCohere
 		return nil
 	}
 
 	destinationMilvusUpdateEmbeddingFromField := new(DestinationMilvusUpdateEmbeddingFromField)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateEmbeddingFromField); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateEmbeddingFromField, "", true, true); err == nil {
 		u.DestinationMilvusUpdateEmbeddingFromField = destinationMilvusUpdateEmbeddingFromField
 		u.Type = DestinationMilvusUpdateEmbeddingTypeDestinationMilvusUpdateEmbeddingFromField
 		return nil
@@ -228,23 +307,23 @@ func (u *DestinationMilvusUpdateEmbedding) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMilvusUpdateEmbedding) MarshalJSON() ([]byte, error) {
-	if u.DestinationMilvusUpdateEmbeddingFake != nil {
-		return json.Marshal(u.DestinationMilvusUpdateEmbeddingFake)
-	}
-
 	if u.DestinationMilvusUpdateEmbeddingOpenAI != nil {
-		return json.Marshal(u.DestinationMilvusUpdateEmbeddingOpenAI)
+		return utils.MarshalJSON(u.DestinationMilvusUpdateEmbeddingOpenAI, "", true)
 	}
 
 	if u.DestinationMilvusUpdateEmbeddingCohere != nil {
-		return json.Marshal(u.DestinationMilvusUpdateEmbeddingCohere)
+		return utils.MarshalJSON(u.DestinationMilvusUpdateEmbeddingCohere, "", true)
+	}
+
+	if u.DestinationMilvusUpdateEmbeddingFake != nil {
+		return utils.MarshalJSON(u.DestinationMilvusUpdateEmbeddingFake, "", true)
 	}
 
 	if u.DestinationMilvusUpdateEmbeddingFromField != nil {
-		return json.Marshal(u.DestinationMilvusUpdateEmbeddingFromField)
+		return utils.MarshalJSON(u.DestinationMilvusUpdateEmbeddingFromField, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationMilvusUpdateIndexingAuthenticationNoAuthMode string
@@ -273,7 +352,22 @@ func (e *DestinationMilvusUpdateIndexingAuthenticationNoAuthMode) UnmarshalJSON(
 
 // DestinationMilvusUpdateIndexingAuthenticationNoAuth - Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)
 type DestinationMilvusUpdateIndexingAuthenticationNoAuth struct {
-	Mode *DestinationMilvusUpdateIndexingAuthenticationNoAuthMode `json:"mode,omitempty"`
+	mode *DestinationMilvusUpdateIndexingAuthenticationNoAuthMode `const:"no_auth" json:"mode"`
+}
+
+func (d DestinationMilvusUpdateIndexingAuthenticationNoAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateIndexingAuthenticationNoAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateIndexingAuthenticationNoAuth) GetMode() *DestinationMilvusUpdateIndexingAuthenticationNoAuthMode {
+	return DestinationMilvusUpdateIndexingAuthenticationNoAuthModeNoAuth.ToPointer()
 }
 
 type DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode string
@@ -302,11 +396,40 @@ func (e *DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode) Unma
 
 // DestinationMilvusUpdateIndexingAuthenticationUsernamePassword - Authenticate using username and password (suitable for self-managed Milvus clusters)
 type DestinationMilvusUpdateIndexingAuthenticationUsernamePassword struct {
-	Mode *DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode `json:"mode,omitempty"`
+	mode *DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode `const:"username_password" json:"mode"`
 	// Password for the Milvus instance
 	Password string `json:"password"`
 	// Username for the Milvus instance
 	Username string `json:"username"`
+}
+
+func (d DestinationMilvusUpdateIndexingAuthenticationUsernamePassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateIndexingAuthenticationUsernamePassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateIndexingAuthenticationUsernamePassword) GetMode() *DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode {
+	return DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordModeUsernamePassword.ToPointer()
+}
+
+func (o *DestinationMilvusUpdateIndexingAuthenticationUsernamePassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationMilvusUpdateIndexingAuthenticationUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationMilvusUpdateIndexingAuthenticationAPITokenMode string
@@ -335,9 +458,31 @@ func (e *DestinationMilvusUpdateIndexingAuthenticationAPITokenMode) UnmarshalJSO
 
 // DestinationMilvusUpdateIndexingAuthenticationAPIToken - Authenticate using an API token (suitable for Zilliz Cloud)
 type DestinationMilvusUpdateIndexingAuthenticationAPIToken struct {
-	Mode *DestinationMilvusUpdateIndexingAuthenticationAPITokenMode `json:"mode,omitempty"`
+	mode *DestinationMilvusUpdateIndexingAuthenticationAPITokenMode `const:"token" json:"mode"`
 	// API Token for the Milvus instance
 	Token string `json:"token"`
+}
+
+func (d DestinationMilvusUpdateIndexingAuthenticationAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateIndexingAuthenticationAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateIndexingAuthenticationAPIToken) GetMode() *DestinationMilvusUpdateIndexingAuthenticationAPITokenMode {
+	return DestinationMilvusUpdateIndexingAuthenticationAPITokenModeToken.ToPointer()
+}
+
+func (o *DestinationMilvusUpdateIndexingAuthenticationAPIToken) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }
 
 type DestinationMilvusUpdateIndexingAuthenticationType string
@@ -384,30 +529,23 @@ func CreateDestinationMilvusUpdateIndexingAuthenticationDestinationMilvusUpdateI
 }
 
 func (u *DestinationMilvusUpdateIndexingAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationMilvusUpdateIndexingAuthenticationNoAuth := new(DestinationMilvusUpdateIndexingAuthenticationNoAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateIndexingAuthenticationNoAuth); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateIndexingAuthenticationNoAuth, "", true, true); err == nil {
 		u.DestinationMilvusUpdateIndexingAuthenticationNoAuth = destinationMilvusUpdateIndexingAuthenticationNoAuth
 		u.Type = DestinationMilvusUpdateIndexingAuthenticationTypeDestinationMilvusUpdateIndexingAuthenticationNoAuth
 		return nil
 	}
 
 	destinationMilvusUpdateIndexingAuthenticationAPIToken := new(DestinationMilvusUpdateIndexingAuthenticationAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateIndexingAuthenticationAPIToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateIndexingAuthenticationAPIToken, "", true, true); err == nil {
 		u.DestinationMilvusUpdateIndexingAuthenticationAPIToken = destinationMilvusUpdateIndexingAuthenticationAPIToken
 		u.Type = DestinationMilvusUpdateIndexingAuthenticationTypeDestinationMilvusUpdateIndexingAuthenticationAPIToken
 		return nil
 	}
 
 	destinationMilvusUpdateIndexingAuthenticationUsernamePassword := new(DestinationMilvusUpdateIndexingAuthenticationUsernamePassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMilvusUpdateIndexingAuthenticationUsernamePassword); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUpdateIndexingAuthenticationUsernamePassword, "", true, true); err == nil {
 		u.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword = destinationMilvusUpdateIndexingAuthenticationUsernamePassword
 		u.Type = DestinationMilvusUpdateIndexingAuthenticationTypeDestinationMilvusUpdateIndexingAuthenticationUsernamePassword
 		return nil
@@ -417,19 +555,19 @@ func (u *DestinationMilvusUpdateIndexingAuthentication) UnmarshalJSON(data []byt
 }
 
 func (u DestinationMilvusUpdateIndexingAuthentication) MarshalJSON() ([]byte, error) {
-	if u.DestinationMilvusUpdateIndexingAuthenticationNoAuth != nil {
-		return json.Marshal(u.DestinationMilvusUpdateIndexingAuthenticationNoAuth)
-	}
-
 	if u.DestinationMilvusUpdateIndexingAuthenticationAPIToken != nil {
-		return json.Marshal(u.DestinationMilvusUpdateIndexingAuthenticationAPIToken)
+		return utils.MarshalJSON(u.DestinationMilvusUpdateIndexingAuthenticationAPIToken, "", true)
 	}
 
 	if u.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword != nil {
-		return json.Marshal(u.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword)
+		return utils.MarshalJSON(u.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword, "", true)
 	}
 
-	return nil, nil
+	if u.DestinationMilvusUpdateIndexingAuthenticationNoAuth != nil {
+		return utils.MarshalJSON(u.DestinationMilvusUpdateIndexingAuthenticationNoAuth, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationMilvusUpdateIndexing - Indexing configuration
@@ -439,18 +577,71 @@ type DestinationMilvusUpdateIndexing struct {
 	// The collection to load data into
 	Collection string `json:"collection"`
 	// The database to connect to
-	Db *string `json:"db,omitempty"`
+	Db *string `default:"" json:"db"`
 	// The public endpoint of the Milvus instance.
 	Host string `json:"host"`
 	// The field in the entity that contains the embedded text
-	TextField *string `json:"text_field,omitempty"`
+	TextField *string `default:"text" json:"text_field"`
 	// The field in the entity that contains the vector
-	VectorField *string `json:"vector_field,omitempty"`
+	VectorField *string `default:"vector" json:"vector_field"`
+}
+
+func (d DestinationMilvusUpdateIndexing) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateIndexing) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateIndexing) GetAuth() DestinationMilvusUpdateIndexingAuthentication {
+	if o == nil {
+		return DestinationMilvusUpdateIndexingAuthentication{}
+	}
+	return o.Auth
+}
+
+func (o *DestinationMilvusUpdateIndexing) GetCollection() string {
+	if o == nil {
+		return ""
+	}
+	return o.Collection
+}
+
+func (o *DestinationMilvusUpdateIndexing) GetDb() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Db
+}
+
+func (o *DestinationMilvusUpdateIndexing) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMilvusUpdateIndexing) GetTextField() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TextField
+}
+
+func (o *DestinationMilvusUpdateIndexing) GetVectorField() *string {
+	if o == nil {
+		return nil
+	}
+	return o.VectorField
 }
 
 type DestinationMilvusUpdateProcessingConfigModel struct {
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
-	ChunkOverlap *int64 `json:"chunk_overlap,omitempty"`
+	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
 	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
 	ChunkSize int64 `json:"chunk_size"`
 	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
@@ -459,10 +650,70 @@ type DestinationMilvusUpdateProcessingConfigModel struct {
 	TextFields []string `json:"text_fields,omitempty"`
 }
 
+func (d DestinationMilvusUpdateProcessingConfigModel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusUpdateProcessingConfigModel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusUpdateProcessingConfigModel) GetChunkOverlap() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ChunkOverlap
+}
+
+func (o *DestinationMilvusUpdateProcessingConfigModel) GetChunkSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ChunkSize
+}
+
+func (o *DestinationMilvusUpdateProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
+}
+
+func (o *DestinationMilvusUpdateProcessingConfigModel) GetTextFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TextFields
+}
+
 type DestinationMilvusUpdate struct {
 	// Embedding configuration
 	Embedding DestinationMilvusUpdateEmbedding `json:"embedding"`
 	// Indexing configuration
 	Indexing   DestinationMilvusUpdateIndexing              `json:"indexing"`
 	Processing DestinationMilvusUpdateProcessingConfigModel `json:"processing"`
+}
+
+func (o *DestinationMilvusUpdate) GetEmbedding() DestinationMilvusUpdateEmbedding {
+	if o == nil {
+		return DestinationMilvusUpdateEmbedding{}
+	}
+	return o.Embedding
+}
+
+func (o *DestinationMilvusUpdate) GetIndexing() DestinationMilvusUpdateIndexing {
+	if o == nil {
+		return DestinationMilvusUpdateIndexing{}
+	}
+	return o.Indexing
+}
+
+func (o *DestinationMilvusUpdate) GetProcessing() DestinationMilvusUpdateProcessingConfigModel {
+	if o == nil {
+		return DestinationMilvusUpdateProcessingConfigModel{}
+	}
+	return o.Processing
 }

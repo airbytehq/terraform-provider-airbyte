@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -38,8 +39,51 @@ type SourceTwilio struct {
 	// Twilio Auth Token.
 	AuthToken string `json:"auth_token"`
 	// How far into the past to look for records. (in minutes)
-	LookbackWindow *int64             `json:"lookback_window,omitempty"`
-	SourceType     SourceTwilioTwilio `json:"sourceType"`
+	LookbackWindow *int64             `default:"0" json:"lookback_window"`
+	sourceType     SourceTwilioTwilio `const:"twilio" json:"sourceType"`
 	// UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceTwilio) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTwilio) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTwilio) GetAccountSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountSid
+}
+
+func (o *SourceTwilio) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceTwilio) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
+}
+
+func (o *SourceTwilio) GetSourceType() SourceTwilioTwilio {
+	return SourceTwilioTwilioTwilio
+}
+
+func (o *SourceTwilio) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

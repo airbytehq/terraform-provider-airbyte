@@ -70,25 +70,16 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.`,
 					},
 					"endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `Endpoint to an S3 compatible service. Leave empty to use AWS.`,
+						Computed: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Endpoint to an S3 compatible service. Leave empty to use AWS.`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_s3_file_format_avro": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"avro",
-											),
-										},
-										Description: `must be one of ["avro"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
 							},
 							"source_s3_file_format_csv": schema.SingleNestedAttribute{
@@ -103,45 +94,43 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										Description: `Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.`,
 									},
 									"block_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
+										Computed: true,
+										MarkdownDescription: `Default: 10000` + "\n" +
+											`The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"delimiter": schema.StringAttribute{
-										Computed:    true,
-										Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
+										Computed: true,
+										MarkdownDescription: `Default: ","` + "\n" +
+											`The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
 									},
 									"double_quote": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Whether two quotes in a quoted CSV value denote a single quote in the data.`,
+										Computed: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Whether two quotes in a quoted CSV value denote a single quote in the data.`,
 									},
 									"encoding": schema.StringAttribute{
-										Computed:    true,
-										Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
+										Computed: true,
+										MarkdownDescription: `Default: "utf8"` + "\n" +
+											`The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
 									},
 									"escape_char": schema.StringAttribute{
 										Computed:    true,
 										Description: `The character used for escaping special characters. To disallow escaping, leave this field blank.`,
 									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"csv",
-											),
-										},
-										Description: `must be one of ["csv"]`,
-									},
 									"infer_datatypes": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings`,
+										Computed: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.`,
+										Computed: true,
+										MarkdownDescription: `Default: false` + "\n" +
+											`Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"quote_char": schema.StringAttribute{
-										Computed:    true,
-										Description: `The character used for quoting CSV values. To disallow quoting, make this field blank.`,
+										Computed: true,
+										MarkdownDescription: `Default: "\""` + "\n" +
+											`The character used for quoting CSV values. To disallow quoting, make this field blank.`,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
@@ -150,21 +139,14 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
-									},
-									"filetype": schema.StringAttribute{
 										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"jsonl",
-											),
-										},
-										Description: `must be one of ["jsonl"]`,
+										MarkdownDescription: `Default: 0` + "\n" +
+											`The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.`,
+										Computed: true,
+										MarkdownDescription: `Default: false` + "\n" +
+											`Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Computed: true,
@@ -175,7 +157,7 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 												"error",
 											),
 										},
-										MarkdownDescription: `must be one of ["ignore", "infer", "error"]` + "\n" +
+										MarkdownDescription: `must be one of ["ignore", "infer", "error"]; Default: "infer"` + "\n" +
 											`How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
 									},
 								},
@@ -185,43 +167,26 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.`,
+										Computed: true,
+										MarkdownDescription: `Default: 65536` + "\n" +
+											`Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"buffer_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.`,
+										Computed: true,
+										MarkdownDescription: `Default: 2` + "\n" +
+											`Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"columns": schema.ListAttribute{
 										Computed:    true,
 										ElementType: types.StringType,
 										Description: `If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.`,
 									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"parquet",
-											),
-										},
-										Description: `must be one of ["parquet"]`,
-									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
 							},
 							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"avro",
-											),
-										},
-										Description: `must be one of ["avro"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
 							},
 							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
@@ -236,45 +201,43 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										Description: `Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.`,
 									},
 									"block_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
+										Computed: true,
+										MarkdownDescription: `Default: 10000` + "\n" +
+											`The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"delimiter": schema.StringAttribute{
-										Computed:    true,
-										Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
+										Computed: true,
+										MarkdownDescription: `Default: ","` + "\n" +
+											`The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
 									},
 									"double_quote": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Whether two quotes in a quoted CSV value denote a single quote in the data.`,
+										Computed: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Whether two quotes in a quoted CSV value denote a single quote in the data.`,
 									},
 									"encoding": schema.StringAttribute{
-										Computed:    true,
-										Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
+										Computed: true,
+										MarkdownDescription: `Default: "utf8"` + "\n" +
+											`The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
 									},
 									"escape_char": schema.StringAttribute{
 										Computed:    true,
 										Description: `The character used for escaping special characters. To disallow escaping, leave this field blank.`,
 									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"csv",
-											),
-										},
-										Description: `must be one of ["csv"]`,
-									},
 									"infer_datatypes": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings`,
+										Computed: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.`,
+										Computed: true,
+										MarkdownDescription: `Default: false` + "\n" +
+											`Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"quote_char": schema.StringAttribute{
-										Computed:    true,
-										Description: `The character used for quoting CSV values. To disallow quoting, make this field blank.`,
+										Computed: true,
+										MarkdownDescription: `Default: "\""` + "\n" +
+											`The character used for quoting CSV values. To disallow quoting, make this field blank.`,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
@@ -283,21 +246,14 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
-									},
-									"filetype": schema.StringAttribute{
 										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"jsonl",
-											),
-										},
-										Description: `must be one of ["jsonl"]`,
+										MarkdownDescription: `Default: 0` + "\n" +
+											`The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.`,
+										Computed: true,
+										MarkdownDescription: `Default: false` + "\n" +
+											`Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Computed: true,
@@ -308,7 +264,7 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 												"error",
 											),
 										},
-										MarkdownDescription: `must be one of ["ignore", "infer", "error"]` + "\n" +
+										MarkdownDescription: `must be one of ["ignore", "infer", "error"]; Default: "infer"` + "\n" +
 											`How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
 									},
 								},
@@ -318,26 +274,19 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.`,
+										Computed: true,
+										MarkdownDescription: `Default: 65536` + "\n" +
+											`Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"buffer_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.`,
+										Computed: true,
+										MarkdownDescription: `Default: 2` + "\n" +
+											`Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"columns": schema.ListAttribute{
 										Computed:    true,
 										ElementType: types.StringType,
 										Description: `If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.`,
-									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"parquet",
-											),
-										},
-										Description: `must be one of ["parquet"]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
@@ -368,12 +317,14 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Description: `Name of the S3 bucket where the file(s) exist.`,
 							},
 							"endpoint": schema.StringAttribute{
-								Computed:    true,
-								Description: `Endpoint to an S3 compatible service. Leave empty to use AWS.`,
+								Computed: true,
+								MarkdownDescription: `Default: ""` + "\n" +
+									`Endpoint to an S3 compatible service. Leave empty to use AWS.`,
 							},
 							"path_prefix": schema.StringAttribute{
-								Computed:    true,
-								Description: `By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.`,
+								Computed: true,
+								MarkdownDescription: `Default: ""` + "\n" +
+									`By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.`,
 							},
 							"start_date": schema.StringAttribute{
 								Computed: true,
@@ -386,17 +337,9 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services`,
 					},
 					"schema": schema.StringAttribute{
-						Computed:    true,
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"s3",
-							),
-						},
-						Description: `must be one of ["s3"]`,
+						MarkdownDescription: `Default: "{}"` + "\n" +
+							`Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
@@ -410,8 +353,9 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"days_to_sync_if_history_is_full": schema.Int64Attribute{
-									Computed:    true,
-									Description: `When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.`,
+									Computed: true,
+									MarkdownDescription: `Default: 3` + "\n" +
+										`When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.`,
 								},
 								"file_type": schema.StringAttribute{
 									Computed:    true,
@@ -424,17 +368,9 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed: true,
 											Attributes: map[string]schema.Attribute{
 												"double_as_string": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.`,
-												},
-												"filetype": schema.StringAttribute{
 													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"avro",
-														),
-													},
-													Description: `must be one of ["avro"]`,
+													MarkdownDescription: `Default: false` + "\n" +
+														`Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.`,
 												},
 											},
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
@@ -443,16 +379,19 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed: true,
 											Attributes: map[string]schema.Attribute{
 												"delimiter": schema.StringAttribute{
-													Computed:    true,
-													Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
+													Computed: true,
+													MarkdownDescription: `Default: ","` + "\n" +
+														`The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
 												},
 												"double_quote": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether two quotes in a quoted CSV value denote a single quote in the data.`,
+													Computed: true,
+													MarkdownDescription: `Default: true` + "\n" +
+														`Whether two quotes in a quoted CSV value denote a single quote in the data.`,
 												},
 												"encoding": schema.StringAttribute{
-													Computed:    true,
-													Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
+													Computed: true,
+													MarkdownDescription: `Default: "utf8"` + "\n" +
+														`The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
 												},
 												"escape_char": schema.StringAttribute{
 													Computed:    true,
@@ -463,46 +402,17 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 													ElementType: types.StringType,
 													Description: `A set of case-sensitive strings that should be interpreted as false values.`,
 												},
-												"filetype": schema.StringAttribute{
-													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"csv",
-														),
-													},
-													Description: `must be one of ["csv"]`,
-												},
 												"header_definition": schema.SingleNestedAttribute{
 													Computed: true,
 													Attributes: map[string]schema.Attribute{
 														"source_s3_file_based_stream_config_format_csv_format_csv_header_definition_from_csv": schema.SingleNestedAttribute{
-															Computed: true,
-															Attributes: map[string]schema.Attribute{
-																"header_definition_type": schema.StringAttribute{
-																	Computed: true,
-																	Validators: []validator.String{
-																		stringvalidator.OneOf(
-																			"From CSV",
-																		),
-																	},
-																	Description: `must be one of ["From CSV"]`,
-																},
-															},
+															Computed:    true,
+															Attributes:  map[string]schema.Attribute{},
 															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 														},
 														"source_s3_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated": schema.SingleNestedAttribute{
-															Computed: true,
-															Attributes: map[string]schema.Attribute{
-																"header_definition_type": schema.StringAttribute{
-																	Computed: true,
-																	Validators: []validator.String{
-																		stringvalidator.OneOf(
-																			"Autogenerated",
-																		),
-																	},
-																	Description: `must be one of ["Autogenerated"]`,
-																},
-															},
+															Computed:    true,
+															Attributes:  map[string]schema.Attribute{},
 															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 														},
 														"source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided": schema.SingleNestedAttribute{
@@ -513,15 +423,6 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 																	ElementType: types.StringType,
 																	Description: `The column names that will be used while emitting the CSV records`,
 																},
-																"header_definition_type": schema.StringAttribute{
-																	Computed: true,
-																	Validators: []validator.String{
-																		stringvalidator.OneOf(
-																			"User Provided",
-																		),
-																	},
-																	Description: `must be one of ["User Provided"]`,
-																},
 															},
 															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 														},
@@ -539,7 +440,7 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 															"Primitive Types Only",
 														),
 													},
-													MarkdownDescription: `must be one of ["None", "Primitive Types Only"]` + "\n" +
+													MarkdownDescription: `must be one of ["None", "Primitive Types Only"]; Default: "None"` + "\n" +
 														`How to infer the types of the columns. If none, inference default to strings.`,
 												},
 												"null_values": schema.ListAttribute{
@@ -548,20 +449,24 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 													Description: `A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.`,
 												},
 												"quote_char": schema.StringAttribute{
-													Computed:    true,
-													Description: `The character used for quoting CSV values. To disallow quoting, make this field blank.`,
+													Computed: true,
+													MarkdownDescription: `Default: "\""` + "\n" +
+														`The character used for quoting CSV values. To disallow quoting, make this field blank.`,
 												},
 												"skip_rows_after_header": schema.Int64Attribute{
-													Computed:    true,
-													Description: `The number of rows to skip after the header row.`,
+													Computed: true,
+													MarkdownDescription: `Default: 0` + "\n" +
+														`The number of rows to skip after the header row.`,
 												},
 												"skip_rows_before_header": schema.Int64Attribute{
-													Computed:    true,
-													Description: `The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.`,
+													Computed: true,
+													MarkdownDescription: `Default: 0` + "\n" +
+														`The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.`,
 												},
 												"strings_can_be_null": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.`,
+													Computed: true,
+													MarkdownDescription: `Default: true` + "\n" +
+														`Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.`,
 												},
 												"true_values": schema.ListAttribute{
 													Computed:    true,
@@ -572,35 +477,17 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 										"source_s3_file_based_stream_config_format_jsonl_format": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"filetype": schema.StringAttribute{
-													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"jsonl",
-														),
-													},
-													Description: `must be one of ["jsonl"]`,
-												},
-											},
+											Computed:    true,
+											Attributes:  map[string]schema.Attribute{},
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 										"source_s3_file_based_stream_config_format_parquet_format": schema.SingleNestedAttribute{
 											Computed: true,
 											Attributes: map[string]schema.Attribute{
 												"decimal_as_float": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.`,
-												},
-												"filetype": schema.StringAttribute{
 													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"parquet",
-														),
-													},
-													Description: `must be one of ["parquet"]`,
+													MarkdownDescription: `Default: false` + "\n" +
+														`Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.`,
 												},
 											},
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
@@ -609,17 +496,9 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed: true,
 											Attributes: map[string]schema.Attribute{
 												"double_as_string": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.`,
-												},
-												"filetype": schema.StringAttribute{
 													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"avro",
-														),
-													},
-													Description: `must be one of ["avro"]`,
+													MarkdownDescription: `Default: false` + "\n" +
+														`Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.`,
 												},
 											},
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
@@ -628,16 +507,19 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed: true,
 											Attributes: map[string]schema.Attribute{
 												"delimiter": schema.StringAttribute{
-													Computed:    true,
-													Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
+													Computed: true,
+													MarkdownDescription: `Default: ","` + "\n" +
+														`The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
 												},
 												"double_quote": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether two quotes in a quoted CSV value denote a single quote in the data.`,
+													Computed: true,
+													MarkdownDescription: `Default: true` + "\n" +
+														`Whether two quotes in a quoted CSV value denote a single quote in the data.`,
 												},
 												"encoding": schema.StringAttribute{
-													Computed:    true,
-													Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
+													Computed: true,
+													MarkdownDescription: `Default: "utf8"` + "\n" +
+														`The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
 												},
 												"escape_char": schema.StringAttribute{
 													Computed:    true,
@@ -648,46 +530,17 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 													ElementType: types.StringType,
 													Description: `A set of case-sensitive strings that should be interpreted as false values.`,
 												},
-												"filetype": schema.StringAttribute{
-													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"csv",
-														),
-													},
-													Description: `must be one of ["csv"]`,
-												},
 												"header_definition": schema.SingleNestedAttribute{
 													Computed: true,
 													Attributes: map[string]schema.Attribute{
 														"source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_from_csv": schema.SingleNestedAttribute{
-															Computed: true,
-															Attributes: map[string]schema.Attribute{
-																"header_definition_type": schema.StringAttribute{
-																	Computed: true,
-																	Validators: []validator.String{
-																		stringvalidator.OneOf(
-																			"From CSV",
-																		),
-																	},
-																	Description: `must be one of ["From CSV"]`,
-																},
-															},
+															Computed:    true,
+															Attributes:  map[string]schema.Attribute{},
 															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 														},
 														"source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated": schema.SingleNestedAttribute{
-															Computed: true,
-															Attributes: map[string]schema.Attribute{
-																"header_definition_type": schema.StringAttribute{
-																	Computed: true,
-																	Validators: []validator.String{
-																		stringvalidator.OneOf(
-																			"Autogenerated",
-																		),
-																	},
-																	Description: `must be one of ["Autogenerated"]`,
-																},
-															},
+															Computed:    true,
+															Attributes:  map[string]schema.Attribute{},
 															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 														},
 														"source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided": schema.SingleNestedAttribute{
@@ -697,15 +550,6 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 																	Computed:    true,
 																	ElementType: types.StringType,
 																	Description: `The column names that will be used while emitting the CSV records`,
-																},
-																"header_definition_type": schema.StringAttribute{
-																	Computed: true,
-																	Validators: []validator.String{
-																		stringvalidator.OneOf(
-																			"User Provided",
-																		),
-																	},
-																	Description: `must be one of ["User Provided"]`,
 																},
 															},
 															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
@@ -724,7 +568,7 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 															"Primitive Types Only",
 														),
 													},
-													MarkdownDescription: `must be one of ["None", "Primitive Types Only"]` + "\n" +
+													MarkdownDescription: `must be one of ["None", "Primitive Types Only"]; Default: "None"` + "\n" +
 														`How to infer the types of the columns. If none, inference default to strings.`,
 												},
 												"null_values": schema.ListAttribute{
@@ -733,20 +577,24 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 													Description: `A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.`,
 												},
 												"quote_char": schema.StringAttribute{
-													Computed:    true,
-													Description: `The character used for quoting CSV values. To disallow quoting, make this field blank.`,
+													Computed: true,
+													MarkdownDescription: `Default: "\""` + "\n" +
+														`The character used for quoting CSV values. To disallow quoting, make this field blank.`,
 												},
 												"skip_rows_after_header": schema.Int64Attribute{
-													Computed:    true,
-													Description: `The number of rows to skip after the header row.`,
+													Computed: true,
+													MarkdownDescription: `Default: 0` + "\n" +
+														`The number of rows to skip after the header row.`,
 												},
 												"skip_rows_before_header": schema.Int64Attribute{
-													Computed:    true,
-													Description: `The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.`,
+													Computed: true,
+													MarkdownDescription: `Default: 0` + "\n" +
+														`The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.`,
 												},
 												"strings_can_be_null": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.`,
+													Computed: true,
+													MarkdownDescription: `Default: true` + "\n" +
+														`Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.`,
 												},
 												"true_values": schema.ListAttribute{
 													Computed:    true,
@@ -757,35 +605,17 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 										"source_s3_update_file_based_stream_config_format_jsonl_format": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"filetype": schema.StringAttribute{
-													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"jsonl",
-														),
-													},
-													Description: `must be one of ["jsonl"]`,
-												},
-											},
+											Computed:    true,
+											Attributes:  map[string]schema.Attribute{},
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 										"source_s3_update_file_based_stream_config_format_parquet_format": schema.SingleNestedAttribute{
 											Computed: true,
 											Attributes: map[string]schema.Attribute{
 												"decimal_as_float": schema.BoolAttribute{
-													Computed:    true,
-													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.`,
-												},
-												"filetype": schema.StringAttribute{
 													Computed: true,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"parquet",
-														),
-													},
-													Description: `must be one of ["parquet"]`,
+													MarkdownDescription: `Default: false` + "\n" +
+														`Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.`,
 												},
 											},
 											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
@@ -818,8 +648,9 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record.`,
 								},
 								"schemaless": schema.BoolAttribute{
-									Computed:    true,
-									Description: `When enabled, syncs will not validate or structure records against the stream's schema.`,
+									Computed: true,
+									MarkdownDescription: `Default: false` + "\n" +
+										`When enabled, syncs will not validate or structure records against the stream's schema.`,
 								},
 								"validation_policy": schema.StringAttribute{
 									Computed: true,
@@ -830,7 +661,7 @@ func (r *SourceS3DataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											"Wait for Discover",
 										),
 									},
-									MarkdownDescription: `must be one of ["Emit Record", "Skip Record", "Wait for Discover"]` + "\n" +
+									MarkdownDescription: `must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"` + "\n" +
 										`The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.`,
 								},
 							},

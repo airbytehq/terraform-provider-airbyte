@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -52,15 +50,6 @@ func (r *SourceRkiCovidDataSource) Schema(ctx context.Context, req datasource.Sc
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"rki-covid",
-							),
-						},
-						Description: `must be one of ["rki-covid"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Description: `UTC date in the format 2017-01-25. Any data before this date will not be replicated.`,

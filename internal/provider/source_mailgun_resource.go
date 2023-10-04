@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -56,21 +55,13 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"domain_region": schema.StringAttribute{
-						Optional:    true,
-						Description: `Domain region code. 'EU' or 'US' are possible values. The default is 'US'.`,
+						Optional: true,
+						MarkdownDescription: `Default: "US"` + "\n" +
+							`Domain region code. 'EU' or 'US' are possible values. The default is 'US'.`,
 					},
 					"private_key": schema.StringAttribute{
 						Required:    true,
 						Description: `Primary account API key to access your Mailgun data.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mailgun",
-							),
-						},
-						Description: `must be one of ["mailgun"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -151,7 +142,7 @@ func (r *SourceMailgunResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMailgun(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

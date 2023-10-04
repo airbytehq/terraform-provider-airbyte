@@ -26,13 +26,11 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 		})
 	}
 	outcomeNames := r.Configuration.OutcomeNames.ValueString()
-	sourceType := shared.SourceOnesignalOnesignal(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	userAuthKey := r.Configuration.UserAuthKey.ValueString()
 	configuration := shared.SourceOnesignal{
 		Applications: applications,
 		OutcomeNames: outcomeNames,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 		UserAuthKey:  userAuthKey,
 	}

@@ -9,3 +9,31 @@ type SourceShopifyCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceShopifyCreateRequest) GetConfiguration() SourceShopify {
+	if o == nil {
+		return SourceShopify{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceShopifyCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceShopifyCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceShopifyCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

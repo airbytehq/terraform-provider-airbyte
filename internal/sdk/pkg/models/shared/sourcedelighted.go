@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -37,5 +38,34 @@ type SourceDelighted struct {
 	APIKey string `json:"api_key"`
 	// The date from which you'd like to replicate the data
 	Since      time.Time                `json:"since"`
-	SourceType SourceDelightedDelighted `json:"sourceType"`
+	sourceType SourceDelightedDelighted `const:"delighted" json:"sourceType"`
+}
+
+func (s SourceDelighted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDelighted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDelighted) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceDelighted) GetSince() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Since
+}
+
+func (o *SourceDelighted) GetSourceType() SourceDelightedDelighted {
+	return SourceDelightedDelightedDelighted
 }

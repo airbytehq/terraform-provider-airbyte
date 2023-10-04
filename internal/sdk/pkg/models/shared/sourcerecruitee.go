@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceRecruitee struct {
 	APIKey string `json:"api_key"`
 	// Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
 	CompanyID  int64                    `json:"company_id"`
-	SourceType SourceRecruiteeRecruitee `json:"sourceType"`
+	sourceType SourceRecruiteeRecruitee `const:"recruitee" json:"sourceType"`
+}
+
+func (s SourceRecruitee) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRecruitee) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRecruitee) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceRecruitee) GetCompanyID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CompanyID
+}
+
+func (o *SourceRecruitee) GetSourceType() SourceRecruiteeRecruitee {
+	return SourceRecruiteeRecruiteeRecruitee
 }

@@ -8,3 +8,17 @@ type SourcePypiUpdate struct {
 	// Version of the project/package.  Use it to find a particular release instead of all releases.
 	Version *string `json:"version,omitempty"`
 }
+
+func (o *SourcePypiUpdate) GetProjectName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectName
+}
+
+func (o *SourcePypiUpdate) GetVersion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Version
+}

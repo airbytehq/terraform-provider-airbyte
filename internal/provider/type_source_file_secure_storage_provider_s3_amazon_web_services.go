@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceFileSecureStorageProviderS3AmazonWebServices struct {
 	AwsAccessKeyID     types.String `tfsdk:"aws_access_key_id"`
 	AwsSecretAccessKey types.String `tfsdk:"aws_secret_access_key"`
-	Storage            types.String `tfsdk:"storage"`
 }

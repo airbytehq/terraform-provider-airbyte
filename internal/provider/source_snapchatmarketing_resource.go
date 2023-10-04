@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -74,21 +73,13 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 						Required:    true,
 						Description: `Refresh Token to renew the expired Access Token.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snapchat-marketing",
-							),
-						},
-						Description: `must be one of ["snapchat-marketing"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `Date in the format 2022-01-01. Any data before this date will not be replicated.`,
+						MarkdownDescription: `Default: "2022-01-01"` + "\n" +
+							`Date in the format 2022-01-01. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -162,7 +153,7 @@ func (r *SourceSnapchatMarketingResource) Create(ctx context.Context, req resour
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSnapchatMarketing(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

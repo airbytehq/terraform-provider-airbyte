@@ -42,6 +42,5 @@ data "airbyte_source_gainsight_px" "my_source_gainsightpx" {
 Read-Only:
 
 - `api_key` (String) The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
-- `source_type` (String) must be one of ["gainsight-px"]
 
 

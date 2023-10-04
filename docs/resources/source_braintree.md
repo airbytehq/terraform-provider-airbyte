@@ -19,12 +19,11 @@ resource "airbyte_source_braintree" "my_source_braintree" {
     merchant_id = "...my_merchant_id..."
     private_key = "...my_private_key..."
     public_key  = "...my_public_key..."
-    source_type = "braintree"
-    start_date  = "2020-12-30"
+    start_date  = "2020"
   }
-  name         = "Henrietta Nienow"
+  name         = "Traci Volkman"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4f3b756c-11f6-4c37-a512-6243835bbc05"
+  workspace_id = "2f8e06ef-6fed-4365-9e7d-5496735da213"
 }
 ```
 
@@ -56,7 +55,6 @@ Environment specifies where the data will come from.
 - `merchant_id` (String) The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
 - `private_key` (String) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 - `public_key` (String) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["braintree"]
 
 Optional:
 

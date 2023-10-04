@@ -13,7 +13,6 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 		var sourceMondayAuthorizationMethodOAuth20 *shared.SourceMondayAuthorizationMethodOAuth20
 		if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
 			accessToken := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType := shared.SourceMondayAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
 			clientID := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret.ValueString()
 			subdomain := new(string)
@@ -24,7 +23,6 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 			}
 			sourceMondayAuthorizationMethodOAuth20 = &shared.SourceMondayAuthorizationMethodOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				Subdomain:    subdomain,
@@ -38,10 +36,8 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 		var sourceMondayAuthorizationMethodAPIToken *shared.SourceMondayAuthorizationMethodAPIToken
 		if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
 			apiToken := r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken.ValueString()
-			authType1 := shared.SourceMondayAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
 			sourceMondayAuthorizationMethodAPIToken = &shared.SourceMondayAuthorizationMethodAPIToken{
 				APIToken: apiToken,
-				AuthType: authType1,
 			}
 		}
 		if sourceMondayAuthorizationMethodAPIToken != nil {
@@ -50,10 +46,8 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 			}
 		}
 	}
-	sourceType := shared.SourceMondayMonday(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceMonday{
 		Credentials: credentials,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -83,7 +77,6 @@ func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutReq
 		var sourceMondayUpdateAuthorizationMethodOAuth20 *shared.SourceMondayUpdateAuthorizationMethodOAuth20
 		if r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20 != nil {
 			accessToken := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType := shared.SourceMondayUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
 			clientID := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
 			subdomain := new(string)
@@ -94,7 +87,6 @@ func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutReq
 			}
 			sourceMondayUpdateAuthorizationMethodOAuth20 = &shared.SourceMondayUpdateAuthorizationMethodOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				Subdomain:    subdomain,
@@ -108,10 +100,8 @@ func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutReq
 		var sourceMondayUpdateAuthorizationMethodAPIToken *shared.SourceMondayUpdateAuthorizationMethodAPIToken
 		if r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken != nil {
 			apiToken := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken.APIToken.ValueString()
-			authType1 := shared.SourceMondayUpdateAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken.AuthType.ValueString())
 			sourceMondayUpdateAuthorizationMethodAPIToken = &shared.SourceMondayUpdateAuthorizationMethodAPIToken{
 				APIToken: apiToken,
-				AuthType: authType1,
 			}
 		}
 		if sourceMondayUpdateAuthorizationMethodAPIToken != nil {

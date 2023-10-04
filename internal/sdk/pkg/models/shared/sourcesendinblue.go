@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceSendinblueSendinblue) UnmarshalJSON(data []byte) error {
 type SourceSendinblue struct {
 	// Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
 	APIKey     string                     `json:"api_key"`
-	SourceType SourceSendinblueSendinblue `json:"sourceType"`
+	sourceType SourceSendinblueSendinblue `const:"sendinblue" json:"sourceType"`
+}
+
+func (s SourceSendinblue) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSendinblue) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSendinblue) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSendinblue) GetSourceType() SourceSendinblueSendinblue {
+	return SourceSendinblueSendinblueSendinblue
 }

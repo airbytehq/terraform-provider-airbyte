@@ -42,7 +42,6 @@ data "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
 Read-Only:
 
 - `api_token` (String) Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
-- `source_type` (String) must be one of ["kustomer-singer"]
 - `start_date` (String) The date from which you'd like to replicate the data
 
 

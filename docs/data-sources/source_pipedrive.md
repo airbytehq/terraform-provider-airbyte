@@ -43,7 +43,6 @@ Read-Only:
 
 - `authorization` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization))
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-- `source_type` (String) must be one of ["pipedrive"]
 
 <a id="nestedatt--configuration--authorization"></a>
 ### Nested Schema for `configuration.authorization`
@@ -51,6 +50,5 @@ Read-Only:
 Read-Only:
 
 - `api_token` (String) The Pipedrive API Token.
-- `auth_type` (String) must be one of ["Token"]
 
 

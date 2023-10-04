@@ -9,3 +9,31 @@ type SourceTwitterCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTwitterCreateRequest) GetConfiguration() SourceTwitter {
+	if o == nil {
+		return SourceTwitter{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTwitterCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTwitterCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTwitterCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

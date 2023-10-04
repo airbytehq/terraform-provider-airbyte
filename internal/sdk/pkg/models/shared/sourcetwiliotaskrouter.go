@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceTwilioTaskrouter struct {
 	AccountSid string `json:"account_sid"`
 	// Twilio Auth Token
 	AuthToken  string                                 `json:"auth_token"`
-	SourceType SourceTwilioTaskrouterTwilioTaskrouter `json:"sourceType"`
+	sourceType SourceTwilioTaskrouterTwilioTaskrouter `const:"twilio-taskrouter" json:"sourceType"`
+}
+
+func (s SourceTwilioTaskrouter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTwilioTaskrouter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTwilioTaskrouter) GetAccountSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountSid
+}
+
+func (o *SourceTwilioTaskrouter) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceTwilioTaskrouter) GetSourceType() SourceTwilioTaskrouterTwilioTaskrouter {
+	return SourceTwilioTaskrouterTwilioTaskrouterTwilioTaskrouter
 }

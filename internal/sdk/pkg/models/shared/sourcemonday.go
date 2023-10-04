@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,7 +36,29 @@ func (e *SourceMondayAuthorizationMethodAPITokenAuthType) UnmarshalJSON(data []b
 type SourceMondayAuthorizationMethodAPIToken struct {
 	// API Token for making authenticated requests.
 	APIToken string                                          `json:"api_token"`
-	AuthType SourceMondayAuthorizationMethodAPITokenAuthType `json:"auth_type"`
+	authType SourceMondayAuthorizationMethodAPITokenAuthType `const:"api_token" json:"auth_type"`
+}
+
+func (s SourceMondayAuthorizationMethodAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMondayAuthorizationMethodAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMondayAuthorizationMethodAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceMondayAuthorizationMethodAPIToken) GetAuthType() SourceMondayAuthorizationMethodAPITokenAuthType {
+	return SourceMondayAuthorizationMethodAPITokenAuthTypeAPIToken
 }
 
 type SourceMondayAuthorizationMethodOAuth20AuthType string
@@ -66,13 +88,56 @@ func (e *SourceMondayAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []by
 type SourceMondayAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                         `json:"access_token"`
-	AuthType    SourceMondayAuthorizationMethodOAuth20AuthType `json:"auth_type"`
+	authType    SourceMondayAuthorizationMethodOAuth20AuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
 	// Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
-	Subdomain *string `json:"subdomain,omitempty"`
+	Subdomain *string `default:"" json:"subdomain"`
+}
+
+func (s SourceMondayAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMondayAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMondayAuthorizationMethodOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceMondayAuthorizationMethodOAuth20) GetAuthType() SourceMondayAuthorizationMethodOAuth20AuthType {
+	return SourceMondayAuthorizationMethodOAuth20AuthTypeOauth20
+}
+
+func (o *SourceMondayAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMondayAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMondayAuthorizationMethodOAuth20) GetSubdomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Subdomain
 }
 
 type SourceMondayAuthorizationMethodType string
@@ -108,21 +173,16 @@ func CreateSourceMondayAuthorizationMethodSourceMondayAuthorizationMethodAPIToke
 }
 
 func (u *SourceMondayAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMondayAuthorizationMethodAPIToken := new(SourceMondayAuthorizationMethodAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMondayAuthorizationMethodAPIToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMondayAuthorizationMethodAPIToken, "", true, true); err == nil {
 		u.SourceMondayAuthorizationMethodAPIToken = sourceMondayAuthorizationMethodAPIToken
 		u.Type = SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodAPIToken
 		return nil
 	}
 
 	sourceMondayAuthorizationMethodOAuth20 := new(SourceMondayAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMondayAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMondayAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceMondayAuthorizationMethodOAuth20 = sourceMondayAuthorizationMethodOAuth20
 		u.Type = SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodOAuth20
 		return nil
@@ -132,15 +192,15 @@ func (u *SourceMondayAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMondayAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMondayAuthorizationMethodAPIToken != nil {
-		return json.Marshal(u.SourceMondayAuthorizationMethodAPIToken)
-	}
-
 	if u.SourceMondayAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceMondayAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceMondayAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceMondayAuthorizationMethodAPIToken != nil {
+		return utils.MarshalJSON(u.SourceMondayAuthorizationMethodAPIToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMondayMonday string
@@ -169,5 +229,27 @@ func (e *SourceMondayMonday) UnmarshalJSON(data []byte) error {
 
 type SourceMonday struct {
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceMondayMonday               `json:"sourceType"`
+	sourceType  SourceMondayMonday               `const:"monday" json:"sourceType"`
+}
+
+func (s SourceMonday) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMonday) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMonday) GetCredentials() *SourceMondayAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceMonday) GetSourceType() SourceMondayMonday {
+	return SourceMondayMondayMonday
 }

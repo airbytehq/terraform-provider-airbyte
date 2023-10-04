@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,11 +31,11 @@ type SourceYoutubeAnalyticsDataSource struct {
 
 // SourceYoutubeAnalyticsDataSourceModel describes the data model.
 type SourceYoutubeAnalyticsDataSourceModel struct {
-	Configuration SourceYoutubeAnalytics1 `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceYoutubeAnalytics `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -56,6 +55,13 @@ func (r *SourceYoutubeAnalyticsDataSource) Schema(ctx context.Context, req datas
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
+							"additional_properties": schema.StringAttribute{
+								Computed: true,
+								Validators: []validator.String{
+									validators.IsValidJSON(),
+								},
+								Description: `Parsed as JSON.`,
+							},
 							"client_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The Client ID of your developer application`,
@@ -68,23 +74,7 @@ func (r *SourceYoutubeAnalyticsDataSource) Schema(ctx context.Context, req datas
 								Computed:    true,
 								Description: `A refresh token generated using the above client ID and secret`,
 							},
-							"additional_properties": schema.StringAttribute{
-								Optional: true,
-								Validators: []validator.String{
-									validators.IsValidJSON(),
-								},
-								Description: `Parsed as JSON.`,
-							},
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"youtube-analytics",
-							),
-						},
-						Description: `must be one of ["youtube-analytics"]`,
 					},
 				},
 			},

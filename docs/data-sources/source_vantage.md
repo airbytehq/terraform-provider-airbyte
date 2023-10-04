@@ -42,6 +42,5 @@ data "airbyte_source_vantage" "my_source_vantage" {
 Read-Only:
 
 - `access_token` (String) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
-- `source_type` (String) must be one of ["vantage"]
 
 

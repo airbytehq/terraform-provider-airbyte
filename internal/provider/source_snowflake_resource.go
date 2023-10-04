@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 										Optional:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Client ID of your Snowflake developer application.`,
@@ -91,15 +81,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 							"source_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username/password",
-											),
-										},
-										Description: `must be one of ["username/password"]`,
-									},
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `The password associated with the username.`,
@@ -116,15 +97,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 									"access_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -143,15 +115,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 							"source_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username/password",
-											),
-										},
-										Description: `must be one of ["username/password"]`,
-									},
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `The password associated with the username.`,
@@ -186,15 +149,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 					"schema": schema.StringAttribute{
 						Optional:    true,
 						Description: `The source Snowflake schema tables. Leave empty to access tables from multiple schemas.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snowflake",
-							),
-						},
-						Description: `must be one of ["snowflake"]`,
 					},
 					"warehouse": schema.StringAttribute{
 						Required:    true,
@@ -272,7 +226,7 @@ func (r *SourceSnowflakeResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSnowflake(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

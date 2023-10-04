@@ -39,10 +39,12 @@ Read-Only:
 - `azure_blob_storage_account_key` (String) The Azure blob storage account key.
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp
-- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-- `azure_blob_storage_output_buffer_size` (Number) The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.
-- `azure_blob_storage_spill_size` (Number) The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable
-- `destination_type` (String) must be one of ["azure-blob-storage"]
+- `azure_blob_storage_endpoint_domain_name` (String) Default: "blob.core.windows.net"
+This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+- `azure_blob_storage_output_buffer_size` (Number) Default: 5
+The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.
+- `azure_blob_storage_spill_size` (Number) Default: 500
+The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable
 - `format` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format))
 
 <a id="nestedatt--configuration--format"></a>
@@ -60,17 +62,12 @@ Read-Only:
 
 Read-Only:
 
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
 Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-- `format_type` (String) must be one of ["CSV"]
 
 
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_output_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.destination_azure_blob_storage_output_format_json_lines_newline_delimited_json`
-
-Read-Only:
-
-- `format_type` (String) must be one of ["JSONL"]
 
 
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_csv_comma_separated_values"></a>
@@ -78,16 +75,11 @@ Read-Only:
 
 Read-Only:
 
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
 Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-- `format_type` (String) must be one of ["CSV"]
 
 
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json`
-
-Read-Only:
-
-- `format_type` (String) must be one of ["JSONL"]
 
 

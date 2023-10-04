@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -69,22 +67,14 @@ func (r *SourceRedshiftDataSource) Schema(ctx context.Context, req datasource.Sc
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Port of the database.`,
+						Computed: true,
+						MarkdownDescription: `Default: 5439` + "\n" +
+							`Port of the database.`,
 					},
 					"schemas": schema.ListAttribute{
 						Computed:    true,
 						ElementType: types.StringType,
 						Description: `The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"redshift",
-							),
-						},
-						Description: `must be one of ["redshift"]`,
 					},
 					"username": schema.StringAttribute{
 						Computed:    true,

@@ -42,7 +42,6 @@ data "airbyte_source_recharge" "my_source_recharge" {
 Read-Only:
 
 - `access_token` (String) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
-- `source_type` (String) must be one of ["recharge"]
 - `start_date` (String) The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -3,10 +3,10 @@
 package provider
 
 type SourceMssqlSSHTunnelMethod struct {
-	SourceMssqlSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_mssql_ssh_tunnel_method_no_tunnel"`
-	SourceMssqlSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_mssql_ssh_tunnel_method_password_authentication"`
-	SourceMssqlSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_mssql_ssh_tunnel_method_ssh_key_authentication"`
-	SourceMssqlUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_mssql_update_ssh_tunnel_method_no_tunnel"`
-	SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_mssql_update_ssh_tunnel_method_password_authentication"`
-	SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_mssql_update_ssh_tunnel_method_ssh_key_authentication"`
+	SourceMssqlSSHTunnelMethodNoTunnel                     *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mssql_ssh_tunnel_method_no_tunnel"`
+	SourceMssqlSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"source_mssql_ssh_tunnel_method_password_authentication"`
+	SourceMssqlSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"source_mssql_ssh_tunnel_method_ssh_key_authentication"`
+	SourceMssqlUpdateSSHTunnelMethodNoTunnel               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mssql_update_ssh_tunnel_method_no_tunnel"`
+	SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"source_mssql_update_ssh_tunnel_method_password_authentication"`
+	SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"source_mssql_update_ssh_tunnel_method_ssh_key_authentication"`
 }

@@ -9,3 +9,31 @@ type SourceSpacexAPICreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSpacexAPICreateRequest) GetConfiguration() SourceSpacexAPI {
+	if o == nil {
+		return SourceSpacexAPI{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSpacexAPICreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSpacexAPICreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSpacexAPICreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

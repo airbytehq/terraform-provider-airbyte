@@ -15,14 +15,13 @@ SourceChartmogul Resource
 ```terraform
 resource "airbyte_source_chartmogul" "my_source_chartmogul" {
   configuration = {
-    api_key     = "...my_api_key..."
-    interval    = "week"
-    source_type = "chartmogul"
-    start_date  = "2017-01-25T00:00:00Z"
+    api_key    = "...my_api_key..."
+    interval   = "week"
+    start_date = "2017-01-25T00:00:00Z"
   }
-  name         = "Neal Gorczany"
+  name         = "Tyler Lind"
   secret_id    = "...my_secret_id..."
-  workspace_id = "06a8aa94-c026-444c-b5e9-d9a4578adc1a"
+  workspace_id = "dc13c292-fcfa-4b73-b9ba-5d3045674ad2"
 }
 ```
 
@@ -50,9 +49,11 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
 Required:
 
 - `api_key` (String) Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
-- `interval` (String) must be one of ["day", "week", "month", "quarter"]
-Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-- `source_type` (String) must be one of ["chartmogul"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
+
+Optional:
+
+- `interval` (String) must be one of ["day", "week", "month", "quarter"]; Default: "month"
+Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
 
 

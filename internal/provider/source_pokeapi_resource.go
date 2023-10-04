@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,15 +55,6 @@ func (r *SourcePokeapiResource) Schema(ctx context.Context, req resource.SchemaR
 					"pokemon_name": schema.StringAttribute{
 						Required:    true,
 						Description: `Pokemon requested from the API.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pokeapi",
-							),
-						},
-						Description: `must be one of ["pokeapi"]`,
 					},
 				},
 			},
@@ -139,7 +128,7 @@ func (r *SourcePokeapiResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePokeapi(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

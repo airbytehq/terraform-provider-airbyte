@@ -9,3 +9,31 @@ type SourceSonarCloudCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSonarCloudCreateRequest) GetConfiguration() SourceSonarCloud {
+	if o == nil {
+		return SourceSonarCloud{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSonarCloudCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSonarCloudCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSonarCloudCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

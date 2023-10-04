@@ -59,15 +59,6 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_oracle_connect_by_service_name": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"connection_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"service_name",
-											),
-										},
-										Description: `must be one of ["service_name"]`,
-									},
 									"service_name": schema.StringAttribute{
 										Computed: true,
 									},
@@ -77,15 +68,6 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_oracle_connect_by_system_id_sid": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"connection_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sid",
-											),
-										},
-										Description: `must be one of ["sid"]`,
-									},
 									"sid": schema.StringAttribute{
 										Computed: true,
 									},
@@ -95,15 +77,6 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_oracle_update_connect_by_service_name": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"connection_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"service_name",
-											),
-										},
-										Description: `must be one of ["service_name"]`,
-									},
 									"service_name": schema.StringAttribute{
 										Computed: true,
 									},
@@ -113,15 +86,6 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_oracle_update_connect_by_system_id_sid": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"connection_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sid",
-											),
-										},
-										Description: `must be one of ["sid"]`,
-									},
 									"sid": schema.StringAttribute{
 										Computed: true,
 									},
@@ -149,17 +113,8 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 												"3DES168",
 											),
 										},
-										MarkdownDescription: `must be one of ["AES256", "RC4_56", "3DES168"]` + "\n" +
+										MarkdownDescription: `must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"` + "\n" +
 											`This parameter defines what encryption algorithm is used.`,
-									},
-									"encryption_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"client_nne",
-											),
-										},
-										Description: `must be one of ["client_nne"]`,
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
@@ -167,15 +122,6 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_oracle_encryption_tls_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"encryption_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
-									},
 									"ssl_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
@@ -195,17 +141,8 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 												"3DES168",
 											),
 										},
-										MarkdownDescription: `must be one of ["AES256", "RC4_56", "3DES168"]` + "\n" +
+										MarkdownDescription: `must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"` + "\n" +
 											`This parameter defines what encryption algorithm is used.`,
-									},
-									"encryption_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"client_nne",
-											),
-										},
-										Description: `must be one of ["client_nne"]`,
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
@@ -213,15 +150,6 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_oracle_update_encryption_tls_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"encryption_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
-									},
 									"ssl_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
@@ -249,7 +177,8 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 					},
 					"port": schema.Int64Attribute{
 						Computed: true,
-						MarkdownDescription: `Port of the database.` + "\n" +
+						MarkdownDescription: `Default: 1521` + "\n" +
+							`Port of the database.` + "\n" +
 							`Oracle Corporations recommends the following port numbers:` + "\n" +
 							`1521 - Default listening port for client connections to the listener. ` + "\n" +
 							`2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL`,
@@ -259,32 +188,12 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 						ElementType: types.StringType,
 						Description: `The list of schemas to sync from. Defaults to user. Case sensitive.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oracle",
-							),
-						},
-						Description: `must be one of ["oracle"]`,
-					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -294,19 +203,10 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -330,19 +230,10 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -352,19 +243,8 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -374,19 +254,10 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -410,19 +281,10 @@ func (r *SourceOracleDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,

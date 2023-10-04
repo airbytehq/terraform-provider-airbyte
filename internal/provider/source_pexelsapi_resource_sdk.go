@@ -34,7 +34,6 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 	} else {
 		size = nil
 	}
-	sourceType := shared.SourcePexelsAPIPexelsAPI(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePexelsAPI{
 		APIKey:      apiKey,
 		Color:       color,
@@ -42,7 +41,6 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 		Orientation: orientation,
 		Query:       query,
 		Size:        size,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

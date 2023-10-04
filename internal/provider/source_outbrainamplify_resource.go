@@ -65,15 +65,6 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 							},
@@ -83,15 +74,6 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `Add Password for authentication.`,
-									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username_password",
-											),
-										},
-										Description: `must be one of ["username_password"]`,
 									},
 									"username": schema.StringAttribute{
 										Required:    true,
@@ -107,15 +89,6 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 							},
@@ -125,15 +98,6 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `Add Password for authentication.`,
-									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username_password",
-											),
-										},
-										Description: `must be one of ["username_password"]`,
 									},
 									"username": schema.StringAttribute{
 										Required:    true,
@@ -175,15 +139,6 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 						},
 						MarkdownDescription: `must be one of ["daily", "weekly", "monthly"]` + "\n" +
 							`The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"outbrain-amplify",
-							),
-						},
-						Description: `must be one of ["outbrain-amplify"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -261,7 +216,7 @@ func (r *SourceOutbrainAmplifyResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceOutbrainAmplify(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

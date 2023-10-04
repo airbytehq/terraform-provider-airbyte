@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -68,15 +67,6 @@ func (r *SourceSlackDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.`,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Token Credentials",
-											),
-										},
-										Description: `must be one of ["API Token Credentials"]`,
-									},
 								},
 								Description: `Choose how to authenticate into Slack`,
 							},
@@ -95,15 +85,6 @@ func (r *SourceSlackDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.`,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Default OAuth2.0 authorization",
-											),
-										},
-										Description: `must be one of ["Default OAuth2.0 authorization"]`,
-									},
 								},
 								Description: `Choose how to authenticate into Slack`,
 							},
@@ -113,15 +94,6 @@ func (r *SourceSlackDataSource) Schema(ctx context.Context, req datasource.Schem
 									"api_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.`,
-									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Token Credentials",
-											),
-										},
-										Description: `must be one of ["API Token Credentials"]`,
 									},
 								},
 								Description: `Choose how to authenticate into Slack`,
@@ -141,15 +113,6 @@ func (r *SourceSlackDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.`,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Default OAuth2.0 authorization",
-											),
-										},
-										Description: `must be one of ["Default OAuth2.0 authorization"]`,
-									},
 								},
 								Description: `Choose how to authenticate into Slack`,
 							},
@@ -160,21 +123,14 @@ func (r *SourceSlackDataSource) Schema(ctx context.Context, req datasource.Schem
 						Description: `Choose how to authenticate into Slack`,
 					},
 					"join_channels": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages. `,
+						Computed: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages. `,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How far into the past to look for messages in threads, default is 0 days`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"slack",
-							),
-						},
-						Description: `must be one of ["slack"]`,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`How far into the past to look for messages in threads, default is 0 days`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

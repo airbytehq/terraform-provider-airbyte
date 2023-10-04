@@ -9,3 +9,31 @@ type SourceNetsuiteCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceNetsuiteCreateRequest) GetConfiguration() SourceNetsuite {
+	if o == nil {
+		return SourceNetsuite{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceNetsuiteCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceNetsuiteCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceNetsuiteCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

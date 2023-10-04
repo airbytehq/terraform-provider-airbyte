@@ -7,3 +7,24 @@ type DestinationDatabricksCreateRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *DestinationDatabricksCreateRequest) GetConfiguration() DestinationDatabricks {
+	if o == nil {
+		return DestinationDatabricks{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationDatabricksCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationDatabricksCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

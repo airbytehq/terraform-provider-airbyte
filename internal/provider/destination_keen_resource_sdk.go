@@ -9,7 +9,6 @@ import (
 
 func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeenCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	destinationType := shared.DestinationKeenKeen(r.Configuration.DestinationType.ValueString())
 	inferTimestamp := new(bool)
 	if !r.Configuration.InferTimestamp.IsUnknown() && !r.Configuration.InferTimestamp.IsNull() {
 		*inferTimestamp = r.Configuration.InferTimestamp.ValueBool()
@@ -18,10 +17,9 @@ func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeen
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
 	configuration := shared.DestinationKeen{
-		APIKey:          apiKey,
-		DestinationType: destinationType,
-		InferTimestamp:  inferTimestamp,
-		ProjectID:       projectID,
+		APIKey:         apiKey,
+		InferTimestamp: inferTimestamp,
+		ProjectID:      projectID,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

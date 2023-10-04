@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceZendeskChatDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `The Access Token to make authenticated requests.`,
 									},
-									"credentials": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_zendesk_chat_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -89,15 +79,6 @@ func (r *SourceZendeskChatDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"credentials": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
@@ -110,15 +91,6 @@ func (r *SourceZendeskChatDataSource) Schema(ctx context.Context, req datasource
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Access Token to make authenticated requests.`,
-									},
-									"credentials": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
 									},
 								},
 							},
@@ -137,15 +109,6 @@ func (r *SourceZendeskChatDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"credentials": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
@@ -157,15 +120,6 @@ func (r *SourceZendeskChatDataSource) Schema(ctx context.Context, req datasource
 							validators.ExactlyOneChild(),
 						},
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-chat",
-							),
-						},
-						Description: `must be one of ["zendesk-chat"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
@@ -174,8 +128,9 @@ func (r *SourceZendeskChatDataSource) Schema(ctx context.Context, req datasource
 						Description: `The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{
-						Computed:    true,
-						Description: `Required if you access Zendesk Chat from a Zendesk Support subdomain.`,
+						Computed: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Required if you access Zendesk Chat from a Zendesk Support subdomain.`,
 					},
 				},
 			},

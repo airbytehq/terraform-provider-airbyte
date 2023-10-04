@@ -260,7 +260,11 @@ func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.Connection
 		r.Configurations.Streams = append(r.Configurations.Streams, streams1)
 	}
 	r.ConnectionID = types.StringValue(resp.ConnectionID)
-	r.DataResidency = types.StringValue(string(resp.DataResidency))
+	if resp.DataResidency != nil {
+		r.DataResidency = types.StringValue(string(*resp.DataResidency))
+	} else {
+		r.DataResidency = types.StringNull()
+	}
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.Name = types.StringValue(resp.Name)
 	if resp.NamespaceDefinition != nil {

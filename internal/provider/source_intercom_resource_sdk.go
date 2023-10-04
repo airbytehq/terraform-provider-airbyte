@@ -22,13 +22,11 @@ func (r *SourceIntercomResourceModel) ToCreateSDKType() *shared.SourceIntercomCr
 	} else {
 		clientSecret = nil
 	}
-	sourceType := shared.SourceIntercomIntercom(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIntercom{
 		AccessToken:  accessToken,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()

@@ -42,6 +42,5 @@ data "airbyte_source_greenhouse" "my_source_greenhouse" {
 Read-Only:
 
 - `api_key` (String) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
-- `source_type` (String) must be one of ["greenhouse"]
 
 

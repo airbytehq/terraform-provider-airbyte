@@ -7,3 +7,24 @@ type SourcePolygonStockAPIPutRequest struct {
 	Name          string                      `json:"name"`
 	WorkspaceID   string                      `json:"workspaceId"`
 }
+
+func (o *SourcePolygonStockAPIPutRequest) GetConfiguration() SourcePolygonStockAPIUpdate {
+	if o == nil {
+		return SourcePolygonStockAPIUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePolygonStockAPIPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePolygonStockAPIPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

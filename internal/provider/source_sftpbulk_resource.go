@@ -56,12 +56,14 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"file_most_recent": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Sync only the most recent file for the configured folder path and file pattern`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Sync only the most recent file for the configured folder path and file pattern`,
 					},
 					"file_pattern": schema.StringAttribute{
-						Optional:    true,
-						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The regular expression to specify files for sync in a chosen Folder Path`,
 					},
 					"file_type": schema.StringAttribute{
 						Optional: true,
@@ -71,12 +73,13 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								"json",
 							),
 						},
-						MarkdownDescription: `must be one of ["csv", "json"]` + "\n" +
+						MarkdownDescription: `must be one of ["csv", "json"]; Default: "csv"` + "\n" +
 							`The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
 					},
 					"folder_path": schema.StringAttribute{
-						Required:    true,
-						Description: `The directory to search files for sync`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The directory to search files for sync`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -87,25 +90,18 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 						Description: `OS-level password for logging into the jump server host`,
 					},
 					"port": schema.Int64Attribute{
-						Required:    true,
-						Description: `The server port`,
+						Optional: true,
+						MarkdownDescription: `Default: 22` + "\n" +
+							`The server port`,
 					},
 					"private_key": schema.StringAttribute{
 						Optional:    true,
 						Description: `The private key`,
 					},
 					"separator": schema.StringAttribute{
-						Optional:    true,
-						Description: `The separator used in the CSV files. Define None if you want to use the Sniffer functionality`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp-bulk",
-							),
-						},
-						Description: `must be one of ["sftp-bulk"]`,
+						Optional: true,
+						MarkdownDescription: `Default: ","` + "\n" +
+							`The separator used in the CSV files. Define None if you want to use the Sniffer functionality`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -194,7 +190,7 @@ func (r *SourceSftpBulkResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSftpBulk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

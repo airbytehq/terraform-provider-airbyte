@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceSnowflakeDataSource) Schema(ctx context.Context, req datasource.S
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Snowflake developer application.`,
@@ -89,15 +79,6 @@ func (r *SourceSnowflakeDataSource) Schema(ctx context.Context, req datasource.S
 							"source_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username/password",
-											),
-										},
-										Description: `must be one of ["username/password"]`,
-									},
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `The password associated with the username.`,
@@ -114,15 +95,6 @@ func (r *SourceSnowflakeDataSource) Schema(ctx context.Context, req datasource.S
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -141,15 +113,6 @@ func (r *SourceSnowflakeDataSource) Schema(ctx context.Context, req datasource.S
 							"source_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username/password",
-											),
-										},
-										Description: `must be one of ["username/password"]`,
-									},
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `The password associated with the username.`,
@@ -184,15 +147,6 @@ func (r *SourceSnowflakeDataSource) Schema(ctx context.Context, req datasource.S
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Description: `The source Snowflake schema tables. Leave empty to access tables from multiple schemas.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snowflake",
-							),
-						},
-						Description: `must be one of ["snowflake"]`,
 					},
 					"warehouse": schema.StringAttribute{
 						Computed:    true,

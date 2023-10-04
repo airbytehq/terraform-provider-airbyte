@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *SourceCodaDataSource) Schema(ctx context.Context, req datasource.Schema
 					"auth_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `Bearer token`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"coda",
-							),
-						},
-						Description: `must be one of ["coda"]`,
 					},
 				},
 			},

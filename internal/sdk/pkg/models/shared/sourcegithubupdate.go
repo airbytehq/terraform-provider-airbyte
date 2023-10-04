@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,9 +36,31 @@ func (e *SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle) Unmarsh
 
 // SourceGithubUpdateAuthenticationPersonalAccessToken - Choose how to authenticate to GitHub
 type SourceGithubUpdateAuthenticationPersonalAccessToken struct {
-	OptionTitle *SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle `json:"option_title,omitempty"`
+	optionTitle *SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle `const:"PAT Credentials" json:"option_title,omitempty"`
 	// Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
 	PersonalAccessToken string `json:"personal_access_token"`
+}
+
+func (s SourceGithubUpdateAuthenticationPersonalAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGithubUpdateAuthenticationPersonalAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGithubUpdateAuthenticationPersonalAccessToken) GetOptionTitle() *SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle {
+	return SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitlePatCredentials.ToPointer()
+}
+
+func (o *SourceGithubUpdateAuthenticationPersonalAccessToken) GetPersonalAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.PersonalAccessToken
 }
 
 type SourceGithubUpdateAuthenticationOAuthOptionTitle string
@@ -73,7 +95,43 @@ type SourceGithubUpdateAuthenticationOAuth struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// OAuth Client secret
 	ClientSecret *string                                           `json:"client_secret,omitempty"`
-	OptionTitle  *SourceGithubUpdateAuthenticationOAuthOptionTitle `json:"option_title,omitempty"`
+	optionTitle  *SourceGithubUpdateAuthenticationOAuthOptionTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
+}
+
+func (s SourceGithubUpdateAuthenticationOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGithubUpdateAuthenticationOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGithubUpdateAuthenticationOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGithubUpdateAuthenticationOAuth) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceGithubUpdateAuthenticationOAuth) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceGithubUpdateAuthenticationOAuth) GetOptionTitle() *SourceGithubUpdateAuthenticationOAuthOptionTitle {
+	return SourceGithubUpdateAuthenticationOAuthOptionTitleOAuthCredentials.ToPointer()
 }
 
 type SourceGithubUpdateAuthenticationType string
@@ -109,21 +167,16 @@ func CreateSourceGithubUpdateAuthenticationSourceGithubUpdateAuthenticationPerso
 }
 
 func (u *SourceGithubUpdateAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceGithubUpdateAuthenticationPersonalAccessToken := new(SourceGithubUpdateAuthenticationPersonalAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGithubUpdateAuthenticationPersonalAccessToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceGithubUpdateAuthenticationPersonalAccessToken, "", true, true); err == nil {
 		u.SourceGithubUpdateAuthenticationPersonalAccessToken = sourceGithubUpdateAuthenticationPersonalAccessToken
 		u.Type = SourceGithubUpdateAuthenticationTypeSourceGithubUpdateAuthenticationPersonalAccessToken
 		return nil
 	}
 
 	sourceGithubUpdateAuthenticationOAuth := new(SourceGithubUpdateAuthenticationOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGithubUpdateAuthenticationOAuth); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceGithubUpdateAuthenticationOAuth, "", true, true); err == nil {
 		u.SourceGithubUpdateAuthenticationOAuth = sourceGithubUpdateAuthenticationOAuth
 		u.Type = SourceGithubUpdateAuthenticationTypeSourceGithubUpdateAuthenticationOAuth
 		return nil
@@ -133,15 +186,15 @@ func (u *SourceGithubUpdateAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGithubUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceGithubUpdateAuthenticationPersonalAccessToken != nil {
-		return json.Marshal(u.SourceGithubUpdateAuthenticationPersonalAccessToken)
-	}
-
 	if u.SourceGithubUpdateAuthenticationOAuth != nil {
-		return json.Marshal(u.SourceGithubUpdateAuthenticationOAuth)
+		return utils.MarshalJSON(u.SourceGithubUpdateAuthenticationOAuth, "", true)
 	}
 
-	return nil, nil
+	if u.SourceGithubUpdateAuthenticationPersonalAccessToken != nil {
+		return utils.MarshalJSON(u.SourceGithubUpdateAuthenticationPersonalAccessToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceGithubUpdate struct {
@@ -155,4 +208,50 @@ type SourceGithubUpdate struct {
 	RequestsPerHour *int64 `json:"requests_per_hour,omitempty"`
 	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceGithubUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGithubUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGithubUpdate) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *SourceGithubUpdate) GetCredentials() *SourceGithubUpdateAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceGithubUpdate) GetRepository() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repository
+}
+
+func (o *SourceGithubUpdate) GetRequestsPerHour() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestsPerHour
+}
+
+func (o *SourceGithubUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

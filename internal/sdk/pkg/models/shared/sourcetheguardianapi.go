@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -40,9 +41,66 @@ type SourceTheGuardianAPI struct {
 	Query *string `json:"query,omitempty"`
 	// (Optional) Use this to filter the results by a particular section. See <a href="https://content.guardianapis.com/sections?api-key=test">here</a> for a list of all sections, and <a href="https://open-platform.theguardian.com/documentation/section">here</a> for the sections endpoint documentation.
 	Section    *string                            `json:"section,omitempty"`
-	SourceType SourceTheGuardianAPITheGuardianAPI `json:"sourceType"`
+	sourceType SourceTheGuardianAPITheGuardianAPI `const:"the-guardian-api" json:"sourceType"`
 	// Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 	StartDate string `json:"start_date"`
 	// (Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.
 	Tag *string `json:"tag,omitempty"`
+}
+
+func (s SourceTheGuardianAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTheGuardianAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTheGuardianAPI) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceTheGuardianAPI) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTheGuardianAPI) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *SourceTheGuardianAPI) GetSection() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Section
+}
+
+func (o *SourceTheGuardianAPI) GetSourceType() SourceTheGuardianAPITheGuardianAPI {
+	return SourceTheGuardianAPITheGuardianAPITheGuardianAPI
+}
+
+func (o *SourceTheGuardianAPI) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceTheGuardianAPI) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
 }

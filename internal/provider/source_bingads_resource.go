@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -55,54 +54,40 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"auth_method": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
 						Description: `The Client ID of your Microsoft Advertising developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Optional:    true,
-						Description: `The Client Secret of your Microsoft Advertising developer application.`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The Client Secret of your Microsoft Advertising developer application.`,
 					},
 					"developer_token": schema.StringAttribute{
 						Required:    true,
 						Description: `Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.`,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.`,
+						Optional: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
 						Description: `Refresh Token to renew the expired Access Token.`,
 					},
 					"reports_start_date": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bing-ads",
-							),
-						},
-						Description: `must be one of ["bing-ads"]`,
+						MarkdownDescription: `Default: "2020-01-01"` + "\n" +
+							`The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.`,
 					},
 					"tenant_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.`,
+						Optional: true,
+						MarkdownDescription: `Default: "common"` + "\n" +
+							`The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.`,
 					},
 				},
 			},
@@ -176,7 +161,7 @@ func (r *SourceBingAdsResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceBingAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

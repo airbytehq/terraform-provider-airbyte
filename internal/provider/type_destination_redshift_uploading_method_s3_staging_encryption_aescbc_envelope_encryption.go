@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption struct {
-	EncryptionType   types.String `tfsdk:"encryption_type"`
 	KeyEncryptingKey types.String `tfsdk:"key_encrypting_key"`
 }

@@ -9,3 +9,31 @@ type SourceAwsCloudtrailCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAwsCloudtrailCreateRequest) GetConfiguration() SourceAwsCloudtrail {
+	if o == nil {
+		return SourceAwsCloudtrail{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAwsCloudtrailCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAwsCloudtrailCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAwsCloudtrailCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

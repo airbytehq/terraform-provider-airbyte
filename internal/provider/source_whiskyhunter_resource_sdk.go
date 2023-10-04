@@ -8,15 +8,7 @@ import (
 )
 
 func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhiskyHunterCreateRequest {
-	sourceType := new(shared.SourceWhiskyHunterWhiskyHunter)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceWhiskyHunterWhiskyHunter(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
-	configuration := shared.SourceWhiskyHunter{
-		SourceType: sourceType,
-	}
+	configuration := shared.SourceWhiskyHunter{}
 	name := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {

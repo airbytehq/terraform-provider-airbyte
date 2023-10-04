@@ -22,13 +22,11 @@ func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExcha
 	} else {
 		ignoreWeekends = nil
 	}
-	sourceType := shared.SourceExchangeRatesExchangeRates(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceExchangeRates{
 		AccessKey:      accessKey,
 		Base:           base,
 		IgnoreWeekends: ignoreWeekends,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()

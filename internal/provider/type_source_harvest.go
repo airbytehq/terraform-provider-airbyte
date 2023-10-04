@@ -9,5 +9,4 @@ type SourceHarvest struct {
 	Credentials          *SourceHarvestAuthenticationMechanism `tfsdk:"credentials"`
 	ReplicationEndDate   types.String                          `tfsdk:"replication_end_date"`
 	ReplicationStartDate types.String                          `tfsdk:"replication_start_date"`
-	SourceType           types.String                          `tfsdk:"source_type"`
 }

@@ -1,11 +1,10 @@
 resource "airbyte_source_prestashop" "my_source_prestashop" {
   configuration = {
-    access_key  = "...my_access_key..."
-    source_type = "prestashop"
-    start_date  = "2022-01-01"
-    url         = "...my_url..."
+    access_key = "...my_access_key..."
+    start_date = "2022-01-01"
+    url        = "...my_url..."
   }
-  name         = "Evelyn Stracke"
+  name         = "Anna Collier Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "2f4f127f-b0e0-4bf1-b821-7978d0acca77"
+  workspace_id = "3e87b490-ecc6-4bf7-9161-16fc803c8311"
 }

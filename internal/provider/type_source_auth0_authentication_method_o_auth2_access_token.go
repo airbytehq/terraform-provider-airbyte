@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAuth0AuthenticationMethodOAuth2AccessToken struct {
 	AccessToken types.String `tfsdk:"access_token"`
-	AuthType    types.String `tfsdk:"auth_type"`
 }

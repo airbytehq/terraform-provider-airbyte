@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -60,15 +59,6 @@ func (r *SourcePipedriveDataSource) Schema(ctx context.Context, req datasource.S
 								Computed:    true,
 								Description: `The Pipedrive API Token.`,
 							},
-							"auth_type": schema.StringAttribute{
-								Computed: true,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"Token",
-									),
-								},
-								Description: `must be one of ["Token"]`,
-							},
 						},
 					},
 					"replication_start_date": schema.StringAttribute{
@@ -77,15 +67,6 @@ func (r *SourcePipedriveDataSource) Schema(ctx context.Context, req datasource.S
 							validators.IsRFC3339(),
 						},
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pipedrive",
-							),
-						},
-						Description: `must be one of ["pipedrive"]`,
 					},
 				},
 			},

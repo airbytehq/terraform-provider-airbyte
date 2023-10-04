@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -57,15 +56,6 @@ func (r *SourceStravaDataSource) Schema(ctx context.Context, req datasource.Sche
 						Computed:    true,
 						Description: `The Athlete ID of your Strava developer application.`,
 					},
-					"auth_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Client",
-							),
-						},
-						Description: `must be one of ["Client"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `The Client ID of your Strava developer application.`,
@@ -77,15 +67,6 @@ func (r *SourceStravaDataSource) Schema(ctx context.Context, req datasource.Sche
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `The Refresh Token with the activity: read_all permissions.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"strava",
-							),
-						},
-						Description: `must be one of ["strava"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

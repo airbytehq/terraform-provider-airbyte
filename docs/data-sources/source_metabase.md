@@ -49,7 +49,6 @@ Read-Only:
   http://localhost:3000/api/session
 ``` Then copy the value of the `id` field returned by a successful call to that API.
 Note that by default, sessions are good for 14 days and needs to be regenerated.
-- `source_type` (String) must be one of ["metabase"]
 - `username` (String)
 
 

@@ -9,3 +9,31 @@ type SourcePunkAPICreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePunkAPICreateRequest) GetConfiguration() SourcePunkAPI {
+	if o == nil {
+		return SourcePunkAPI{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePunkAPICreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePunkAPICreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePunkAPICreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

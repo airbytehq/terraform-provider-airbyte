@@ -9,10 +9,8 @@ import (
 
 func (r *SourceOmnisendResourceModel) ToCreateSDKType() *shared.SourceOmnisendCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceOmnisendOmnisend(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceOmnisend{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

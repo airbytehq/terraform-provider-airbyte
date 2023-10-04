@@ -9,3 +9,31 @@ type SourceGoogleWorkspaceAdminReportsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGoogleWorkspaceAdminReportsCreateRequest) GetConfiguration() SourceGoogleWorkspaceAdminReports {
+	if o == nil {
+		return SourceGoogleWorkspaceAdminReports{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

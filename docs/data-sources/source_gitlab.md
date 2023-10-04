@@ -41,11 +41,11 @@ data "airbyte_source_gitlab" "my_source_gitlab" {
 
 Read-Only:
 
-- `api_url` (String) Please enter your basic URL from GitLab instance.
+- `api_url` (String) Default: "gitlab.com"
+Please enter your basic URL from GitLab instance.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `groups` (String) Space-delimited list of groups. e.g. airbyte.io.
 - `projects` (String) Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
-- `source_type` (String) must be one of ["gitlab"]
 - `start_date` (String) The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -64,7 +64,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The API ID of the Gitlab developer application.
 - `client_secret` (String) The API Secret the Gitlab developer application.
 - `refresh_token` (String) The key to refresh the expired access_token.
@@ -77,7 +76,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Log into your Gitlab account and then generate a personal Access Token.
-- `auth_type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_o_auth2_0"></a>
@@ -86,7 +84,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The API ID of the Gitlab developer application.
 - `client_secret` (String) The API Secret the Gitlab developer application.
 - `refresh_token` (String) The key to refresh the expired access_token.
@@ -99,6 +96,5 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Log into your Gitlab account and then generate a personal Access Token.
-- `auth_type` (String) must be one of ["access_token"]
 
 

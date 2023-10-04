@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -34,12 +32,12 @@ type SourceGlassfrogResource struct {
 
 // SourceGlassfrogResourceModel describes the resource data model.
 type SourceGlassfrogResourceModel struct {
-	Configuration SourceGlassfrog `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"configuration"`
+	Name          types.String                                    `tfsdk:"name"`
+	SecretID      types.String                                    `tfsdk:"secret_id"`
+	SourceID      types.String                                    `tfsdk:"source_id"`
+	SourceType    types.String                                    `tfsdk:"source_type"`
+	WorkspaceID   types.String                                    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGlassfrogResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,15 +55,6 @@ func (r *SourceGlassfrogResource) Schema(ctx context.Context, req resource.Schem
 					"api_key": schema.StringAttribute{
 						Required:    true,
 						Description: `API key provided by Glassfrog`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"glassfrog",
-							),
-						},
-						Description: `must be one of ["glassfrog"]`,
 					},
 				},
 			},
@@ -139,7 +128,7 @@ func (r *SourceGlassfrogResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGlassfrog(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

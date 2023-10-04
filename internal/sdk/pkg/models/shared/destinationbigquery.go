@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -201,11 +201,40 @@ func (e *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTy
 
 // DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey struct {
-	CredentialType DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType `json:"credential_type"`
+	credentialType DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType `const:"HMAC_KEY" json:"credential_type"`
 	// HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
 	HmacKeyAccessID string `json:"hmac_key_access_id"`
 	// The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
 	HmacKeySecret string `json:"hmac_key_secret"`
+}
+
+func (d DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey) GetCredentialType() DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType {
+	return DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeHmacKey
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey) GetHmacKeyAccessID() string {
+	if o == nil {
+		return ""
+	}
+	return o.HmacKeyAccessID
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey) GetHmacKeySecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.HmacKeySecret
 }
 
 type DestinationBigqueryLoadingMethodGCSStagingCredentialType string
@@ -230,12 +259,9 @@ func CreateDestinationBigqueryLoadingMethodGCSStagingCredentialDestinationBigque
 }
 
 func (u *DestinationBigqueryLoadingMethodGCSStagingCredential) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey := new(DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey, "", true, true); err == nil {
 		u.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey = destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey
 		u.Type = DestinationBigqueryLoadingMethodGCSStagingCredentialTypeDestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey
 		return nil
@@ -246,10 +272,10 @@ func (u *DestinationBigqueryLoadingMethodGCSStagingCredential) UnmarshalJSON(dat
 
 func (u DestinationBigqueryLoadingMethodGCSStagingCredential) MarshalJSON() ([]byte, error) {
 	if u.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey != nil {
-		return json.Marshal(u.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey)
+		return utils.MarshalJSON(u.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing - This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
@@ -309,14 +335,64 @@ type DestinationBigqueryLoadingMethodGCSStaging struct {
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 	Credential DestinationBigqueryLoadingMethodGCSStagingCredential `json:"credential"`
 	// Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
-	FileBufferCount *int64 `json:"file_buffer_count,omitempty"`
+	FileBufferCount *int64 `default:"10" json:"file_buffer_count"`
 	// The name of the GCS bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
 	GcsBucketName string `json:"gcs_bucket_name"`
 	// Directory under the GCS bucket where data will be written.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
-	KeepFilesInGcsBucket *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing `json:"keep_files_in_gcs-bucket,omitempty"`
-	Method               DestinationBigqueryLoadingMethodGCSStagingMethod                          `json:"method"`
+	KeepFilesInGcsBucket *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing `default:"Delete all tmp files from GCS" json:"keep_files_in_gcs-bucket"`
+	method               DestinationBigqueryLoadingMethodGCSStagingMethod                          `const:"GCS Staging" json:"method"`
+}
+
+func (d DestinationBigqueryLoadingMethodGCSStaging) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationBigqueryLoadingMethodGCSStaging) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStaging) GetCredential() DestinationBigqueryLoadingMethodGCSStagingCredential {
+	if o == nil {
+		return DestinationBigqueryLoadingMethodGCSStagingCredential{}
+	}
+	return o.Credential
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStaging) GetFileBufferCount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.FileBufferCount
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStaging) GetGcsBucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsBucketName
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStaging) GetGcsBucketPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsBucketPath
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStaging) GetKeepFilesInGcsBucket() *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.KeepFilesInGcsBucket
+}
+
+func (o *DestinationBigqueryLoadingMethodGCSStaging) GetMethod() DestinationBigqueryLoadingMethodGCSStagingMethod {
+	return DestinationBigqueryLoadingMethodGCSStagingMethodGcsStaging
 }
 
 type DestinationBigqueryLoadingMethodStandardInsertsMethod string
@@ -345,7 +421,22 @@ func (e *DestinationBigqueryLoadingMethodStandardInsertsMethod) UnmarshalJSON(da
 
 // DestinationBigqueryLoadingMethodStandardInserts - Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.
 type DestinationBigqueryLoadingMethodStandardInserts struct {
-	Method DestinationBigqueryLoadingMethodStandardInsertsMethod `json:"method"`
+	method DestinationBigqueryLoadingMethodStandardInsertsMethod `const:"Standard" json:"method"`
+}
+
+func (d DestinationBigqueryLoadingMethodStandardInserts) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationBigqueryLoadingMethodStandardInserts) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationBigqueryLoadingMethodStandardInserts) GetMethod() DestinationBigqueryLoadingMethodStandardInsertsMethod {
+	return DestinationBigqueryLoadingMethodStandardInsertsMethodStandard
 }
 
 type DestinationBigqueryLoadingMethodType string
@@ -381,21 +472,16 @@ func CreateDestinationBigqueryLoadingMethodDestinationBigqueryLoadingMethodGCSSt
 }
 
 func (u *DestinationBigqueryLoadingMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationBigqueryLoadingMethodStandardInserts := new(DestinationBigqueryLoadingMethodStandardInserts)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationBigqueryLoadingMethodStandardInserts); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryLoadingMethodStandardInserts, "", true, true); err == nil {
 		u.DestinationBigqueryLoadingMethodStandardInserts = destinationBigqueryLoadingMethodStandardInserts
 		u.Type = DestinationBigqueryLoadingMethodTypeDestinationBigqueryLoadingMethodStandardInserts
 		return nil
 	}
 
 	destinationBigqueryLoadingMethodGCSStaging := new(DestinationBigqueryLoadingMethodGCSStaging)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationBigqueryLoadingMethodGCSStaging); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryLoadingMethodGCSStaging, "", true, true); err == nil {
 		u.DestinationBigqueryLoadingMethodGCSStaging = destinationBigqueryLoadingMethodGCSStaging
 		u.Type = DestinationBigqueryLoadingMethodTypeDestinationBigqueryLoadingMethodGCSStaging
 		return nil
@@ -406,14 +492,14 @@ func (u *DestinationBigqueryLoadingMethod) UnmarshalJSON(data []byte) error {
 
 func (u DestinationBigqueryLoadingMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationBigqueryLoadingMethodStandardInserts != nil {
-		return json.Marshal(u.DestinationBigqueryLoadingMethodStandardInserts)
+		return utils.MarshalJSON(u.DestinationBigqueryLoadingMethodStandardInserts, "", true)
 	}
 
 	if u.DestinationBigqueryLoadingMethodGCSStaging != nil {
-		return json.Marshal(u.DestinationBigqueryLoadingMethodGCSStaging)
+		return utils.MarshalJSON(u.DestinationBigqueryLoadingMethodGCSStaging, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationBigqueryTransformationQueryRunType - Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
@@ -446,14 +532,14 @@ func (e *DestinationBigqueryTransformationQueryRunType) UnmarshalJSON(data []byt
 
 type DestinationBigquery struct {
 	// Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.
-	BigQueryClientBufferSizeMb *int64 `json:"big_query_client_buffer_size_mb,omitempty"`
+	BigQueryClientBufferSizeMb *int64 `default:"15" json:"big_query_client_buffer_size_mb"`
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 	CredentialsJSON *string `json:"credentials_json,omitempty"`
 	// The default BigQuery Dataset ID that tables are replicated to if the source does not specify a namespace. Read more <a href="https://cloud.google.com/bigquery/docs/datasets#create-dataset">here</a>.
 	DatasetID string `json:"dataset_id"`
 	// The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
 	DatasetLocation DestinationBigqueryDatasetLocation `json:"dataset_location"`
-	DestinationType DestinationBigqueryBigquery        `json:"destinationType"`
+	destinationType DestinationBigqueryBigquery        `const:"bigquery" json:"destinationType"`
 	// Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.
 	LoadingMethod *DestinationBigqueryLoadingMethod `json:"loading_method,omitempty"`
 	// The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
@@ -461,5 +547,76 @@ type DestinationBigquery struct {
 	// The dataset to write raw tables into
 	RawDataDataset *string `json:"raw_data_dataset,omitempty"`
 	// Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
-	TransformationPriority *DestinationBigqueryTransformationQueryRunType `json:"transformation_priority,omitempty"`
+	TransformationPriority *DestinationBigqueryTransformationQueryRunType `default:"interactive" json:"transformation_priority"`
+}
+
+func (d DestinationBigquery) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationBigquery) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationBigquery) GetBigQueryClientBufferSizeMb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BigQueryClientBufferSizeMb
+}
+
+func (o *DestinationBigquery) GetCredentialsJSON() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CredentialsJSON
+}
+
+func (o *DestinationBigquery) GetDatasetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatasetID
+}
+
+func (o *DestinationBigquery) GetDatasetLocation() DestinationBigqueryDatasetLocation {
+	if o == nil {
+		return DestinationBigqueryDatasetLocation("")
+	}
+	return o.DatasetLocation
+}
+
+func (o *DestinationBigquery) GetDestinationType() DestinationBigqueryBigquery {
+	return DestinationBigqueryBigqueryBigquery
+}
+
+func (o *DestinationBigquery) GetLoadingMethod() *DestinationBigqueryLoadingMethod {
+	if o == nil {
+		return nil
+	}
+	return o.LoadingMethod
+}
+
+func (o *DestinationBigquery) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *DestinationBigquery) GetRawDataDataset() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataDataset
+}
+
+func (o *DestinationBigquery) GetTransformationPriority() *DestinationBigqueryTransformationQueryRunType {
+	if o == nil {
+		return nil
+	}
+	return o.TransformationPriority
 }

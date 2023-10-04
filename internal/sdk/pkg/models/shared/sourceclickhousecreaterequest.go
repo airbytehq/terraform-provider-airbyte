@@ -9,3 +9,31 @@ type SourceClickhouseCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceClickhouseCreateRequest) GetConfiguration() SourceClickhouse {
+	if o == nil {
+		return SourceClickhouse{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceClickhouseCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceClickhouseCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceClickhouseCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

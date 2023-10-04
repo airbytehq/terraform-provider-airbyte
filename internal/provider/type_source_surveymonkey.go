@@ -5,9 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSurveymonkey struct {
-	Credentials *SourceSurveymonkeySurveyMonkeyAuthorizationMethod `tfsdk:"credentials"`
-	Origin      types.String                                       `tfsdk:"origin"`
-	SourceType  types.String                                       `tfsdk:"source_type"`
-	StartDate   types.String                                       `tfsdk:"start_date"`
-	SurveyIds   []types.String                                     `tfsdk:"survey_ids"`
+	Credentials *SourceGithubAuthenticationOAuth `tfsdk:"credentials"`
+	Origin      types.String                     `tfsdk:"origin"`
+	StartDate   types.String                     `tfsdk:"start_date"`
+	SurveyIds   []types.String                   `tfsdk:"survey_ids"`
 }

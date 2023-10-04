@@ -9,3 +9,31 @@ type SourcePendoCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePendoCreateRequest) GetConfiguration() SourcePendo {
+	if o == nil {
+		return SourcePendo{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePendoCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePendoCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePendoCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

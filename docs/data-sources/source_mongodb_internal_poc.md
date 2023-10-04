@@ -41,11 +41,11 @@ data "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
 
 Read-Only:
 
-- `auth_source` (String) The authentication source where the user information is stored.
+- `auth_source` (String) Default: "admin"
+The authentication source where the user information is stored.
 - `connection_string` (String) The connection string of the database that you want to replicate..
 - `password` (String) The password associated with this username.
 - `replica_set` (String) The name of the replica set to be replicated.
-- `source_type` (String) must be one of ["mongodb-internal-poc"]
 - `user` (String) The username which is used to access the database.
 
 

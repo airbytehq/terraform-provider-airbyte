@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -60,8 +60,30 @@ func (e *DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethod) Unmarshal
 // DestinationMssqlSSLMethodEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type DestinationMssqlSSLMethodEncryptedVerifyCertificate struct {
 	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-	HostNameInCertificate *string                                                      `json:"hostNameInCertificate,omitempty"`
-	SslMethod             DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethod `json:"ssl_method"`
+	HostNameInCertificate *string                                                       `json:"hostNameInCertificate,omitempty"`
+	sslMethod             *DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethod `const:"encrypted_verify_certificate" json:"ssl_method"`
+}
+
+func (d DestinationMssqlSSLMethodEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlSSLMethodEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlSSLMethodEncryptedVerifyCertificate) GetHostNameInCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HostNameInCertificate
+}
+
+func (o *DestinationMssqlSSLMethodEncryptedVerifyCertificate) GetSslMethod() *DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethod {
+	return DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEncryptedVerifyCertificate.ToPointer()
 }
 
 type DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod string
@@ -90,7 +112,22 @@ func (e *DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod) Unma
 
 // DestinationMssqlSSLMethodEncryptedTrustServerCertificate - Use the certificate provided by the server without verification. (For testing purposes only!)
 type DestinationMssqlSSLMethodEncryptedTrustServerCertificate struct {
-	SslMethod DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod `json:"ssl_method"`
+	sslMethod *DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod `const:"encrypted_trust_server_certificate" json:"ssl_method"`
+}
+
+func (d DestinationMssqlSSLMethodEncryptedTrustServerCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlSSLMethodEncryptedTrustServerCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlSSLMethodEncryptedTrustServerCertificate) GetSslMethod() *DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod {
+	return DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEncryptedTrustServerCertificate.ToPointer()
 }
 
 type DestinationMssqlSSLMethodType string
@@ -126,21 +163,16 @@ func CreateDestinationMssqlSSLMethodDestinationMssqlSSLMethodEncryptedVerifyCert
 }
 
 func (u *DestinationMssqlSSLMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationMssqlSSLMethodEncryptedTrustServerCertificate := new(DestinationMssqlSSLMethodEncryptedTrustServerCertificate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMssqlSSLMethodEncryptedTrustServerCertificate); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMssqlSSLMethodEncryptedTrustServerCertificate, "", true, true); err == nil {
 		u.DestinationMssqlSSLMethodEncryptedTrustServerCertificate = destinationMssqlSSLMethodEncryptedTrustServerCertificate
 		u.Type = DestinationMssqlSSLMethodTypeDestinationMssqlSSLMethodEncryptedTrustServerCertificate
 		return nil
 	}
 
 	destinationMssqlSSLMethodEncryptedVerifyCertificate := new(DestinationMssqlSSLMethodEncryptedVerifyCertificate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMssqlSSLMethodEncryptedVerifyCertificate); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMssqlSSLMethodEncryptedVerifyCertificate, "", true, true); err == nil {
 		u.DestinationMssqlSSLMethodEncryptedVerifyCertificate = destinationMssqlSSLMethodEncryptedVerifyCertificate
 		u.Type = DestinationMssqlSSLMethodTypeDestinationMssqlSSLMethodEncryptedVerifyCertificate
 		return nil
@@ -151,14 +183,14 @@ func (u *DestinationMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 
 func (u DestinationMssqlSSLMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationMssqlSSLMethodEncryptedTrustServerCertificate != nil {
-		return json.Marshal(u.DestinationMssqlSSLMethodEncryptedTrustServerCertificate)
+		return utils.MarshalJSON(u.DestinationMssqlSSLMethodEncryptedTrustServerCertificate, "", true)
 	}
 
 	if u.DestinationMssqlSSLMethodEncryptedVerifyCertificate != nil {
-		return json.Marshal(u.DestinationMssqlSSLMethodEncryptedVerifyCertificate)
+		return utils.MarshalJSON(u.DestinationMssqlSSLMethodEncryptedVerifyCertificate, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -191,13 +223,56 @@ type DestinationMssqlSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (d DestinationMssqlSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationMssqlSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationMssqlSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationMssqlSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationMssqlSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -232,11 +307,54 @@ type DestinationMssqlSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (d DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationMssqlSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -267,7 +385,22 @@ func (e *DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data
 // DestinationMssqlSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMssqlSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationMssqlSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlSSHTunnelMethodNoTunnel) GetTunnelMethod() DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethod {
+	return DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type DestinationMssqlSSHTunnelMethodType string
@@ -314,30 +447,23 @@ func CreateDestinationMssqlSSHTunnelMethodDestinationMssqlSSHTunnelMethodPasswor
 }
 
 func (u *DestinationMssqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationMssqlSSHTunnelMethodNoTunnel := new(DestinationMssqlSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMssqlSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMssqlSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.DestinationMssqlSSHTunnelMethodNoTunnel = destinationMssqlSSHTunnelMethodNoTunnel
 		u.Type = DestinationMssqlSSHTunnelMethodTypeDestinationMssqlSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	destinationMssqlSSHTunnelMethodSSHKeyAuthentication := new(DestinationMssqlSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMssqlSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMssqlSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication = destinationMssqlSSHTunnelMethodSSHKeyAuthentication
 		u.Type = DestinationMssqlSSHTunnelMethodTypeDestinationMssqlSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	destinationMssqlSSHTunnelMethodPasswordAuthentication := new(DestinationMssqlSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMssqlSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationMssqlSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.DestinationMssqlSSHTunnelMethodPasswordAuthentication = destinationMssqlSSHTunnelMethodPasswordAuthentication
 		u.Type = DestinationMssqlSSHTunnelMethodTypeDestinationMssqlSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -348,24 +474,24 @@ func (u *DestinationMssqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u DestinationMssqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationMssqlSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationMssqlSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.DestinationMssqlSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.DestinationMssqlSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationMssqlSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.DestinationMssqlSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationMssql struct {
 	// The name of the MSSQL database.
 	Database        string                `json:"database"`
-	DestinationType DestinationMssqlMssql `json:"destinationType"`
+	destinationType DestinationMssqlMssql `const:"mssql" json:"destinationType"`
 	// The host name of the MSSQL database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -373,13 +499,91 @@ type DestinationMssql struct {
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
 	// The port of the MSSQL database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"1433" json:"port"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
-	Schema string `json:"schema"`
+	Schema *string `default:"public" json:"schema"`
 	// The encryption method which is used to communicate with the database.
 	SslMethod *DestinationMssqlSSLMethod `json:"ssl_method,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMssqlSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationMssql) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssql) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssql) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationMssql) GetDestinationType() DestinationMssqlMssql {
+	return DestinationMssqlMssqlMssql
+}
+
+func (o *DestinationMssql) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMssql) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationMssql) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationMssql) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationMssql) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationMssql) GetSslMethod() *DestinationMssqlSSLMethod {
+	if o == nil {
+		return nil
+	}
+	return o.SslMethod
+}
+
+func (o *DestinationMssql) GetTunnelMethod() *DestinationMssqlSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationMssql) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

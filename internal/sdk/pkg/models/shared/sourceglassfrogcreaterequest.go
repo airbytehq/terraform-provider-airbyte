@@ -9,3 +9,31 @@ type SourceGlassfrogCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGlassfrogCreateRequest) GetConfiguration() SourceGlassfrog {
+	if o == nil {
+		return SourceGlassfrog{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGlassfrogCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGlassfrogCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGlassfrogCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

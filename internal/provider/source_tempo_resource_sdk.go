@@ -9,10 +9,8 @@ import (
 
 func (r *SourceTempoResourceModel) ToCreateSDKType() *shared.SourceTempoCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceTempoTempo(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceTempo{
-		APIToken:   apiToken,
-		SourceType: sourceType,
+		APIToken: apiToken,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

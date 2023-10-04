@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -63,15 +61,6 @@ func (r *SourceSmailyDataSource) Schema(ctx context.Context, req datasource.Sche
 					"api_username": schema.StringAttribute{
 						Computed:    true,
 						Description: `API user username. See https://smaily.com/help/api/general/create-api-user/`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"smaily",
-							),
-						},
-						Description: `must be one of ["smaily"]`,
 					},
 				},
 			},

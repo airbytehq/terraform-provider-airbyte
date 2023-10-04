@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceMailgun struct {
 	DomainRegion types.String `tfsdk:"domain_region"`
 	PrivateKey   types.String `tfsdk:"private_key"`
-	SourceType   types.String `tfsdk:"source_type"`
 	StartDate    types.String `tfsdk:"start_date"`
 }

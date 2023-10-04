@@ -9,3 +9,31 @@ type SourcePexelsAPICreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePexelsAPICreateRequest) GetConfiguration() SourcePexelsAPI {
+	if o == nil {
+		return SourcePexelsAPI{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePexelsAPICreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePexelsAPICreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePexelsAPICreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

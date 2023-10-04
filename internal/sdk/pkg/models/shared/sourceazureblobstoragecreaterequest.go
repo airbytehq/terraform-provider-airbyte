@@ -9,3 +9,31 @@ type SourceAzureBlobStorageCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAzureBlobStorageCreateRequest) GetConfiguration() SourceAzureBlobStorage {
+	if o == nil {
+		return SourceAzureBlobStorage{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAzureBlobStorageCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAzureBlobStorageCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAzureBlobStorageCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

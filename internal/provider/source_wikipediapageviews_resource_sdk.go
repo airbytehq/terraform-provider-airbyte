@@ -14,17 +14,15 @@ func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.Source
 	country := r.Configuration.Country.ValueString()
 	end := r.Configuration.End.ValueString()
 	project := r.Configuration.Project.ValueString()
-	sourceType := shared.SourceWikipediaPageviewsWikipediaPageviews(r.Configuration.SourceType.ValueString())
 	start := r.Configuration.Start.ValueString()
 	configuration := shared.SourceWikipediaPageviews{
-		Access:     access,
-		Agent:      agent,
-		Article:    article,
-		Country:    country,
-		End:        end,
-		Project:    project,
-		SourceType: sourceType,
-		Start:      start,
+		Access:  access,
+		Agent:   agent,
+		Article: article,
+		Country: country,
+		End:     end,
+		Project: project,
+		Start:   start,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

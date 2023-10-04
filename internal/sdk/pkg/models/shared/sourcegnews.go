@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -400,7 +401,7 @@ type SourceGnews struct {
 	//   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
 	//   - relevance = sort by best match to keywords, the articles with the best match are returned first
 	Sortby     *SourceGnewsSortBy `json:"sortby,omitempty"`
-	SourceType SourceGnewsGnews   `json:"sourceType"`
+	sourceType SourceGnewsGnews   `const:"gnews" json:"sourceType"`
 	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	StartDate *string `json:"start_date,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
@@ -420,4 +421,96 @@ type SourceGnews struct {
 	TopHeadlinesQuery *string `json:"top_headlines_query,omitempty"`
 	// This parameter allows you to change the category for the request.
 	TopHeadlinesTopic *SourceGnewsTopHeadlinesTopic `json:"top_headlines_topic,omitempty"`
+}
+
+func (s SourceGnews) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGnews) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGnews) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGnews) GetCountry() *SourceGnewsCountry {
+	if o == nil {
+		return nil
+	}
+	return o.Country
+}
+
+func (o *SourceGnews) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceGnews) GetIn() []SourceGnewsIn {
+	if o == nil {
+		return nil
+	}
+	return o.In
+}
+
+func (o *SourceGnews) GetLanguage() *SourceGnewsLanguage {
+	if o == nil {
+		return nil
+	}
+	return o.Language
+}
+
+func (o *SourceGnews) GetNullable() []SourceGnewsNullable {
+	if o == nil {
+		return nil
+	}
+	return o.Nullable
+}
+
+func (o *SourceGnews) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceGnews) GetSortby() *SourceGnewsSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.Sortby
+}
+
+func (o *SourceGnews) GetSourceType() SourceGnewsGnews {
+	return SourceGnewsGnewsGnews
+}
+
+func (o *SourceGnews) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceGnews) GetTopHeadlinesQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TopHeadlinesQuery
+}
+
+func (o *SourceGnews) GetTopHeadlinesTopic() *SourceGnewsTopHeadlinesTopic {
+	if o == nil {
+		return nil
+	}
+	return o.TopHeadlinesTopic
 }

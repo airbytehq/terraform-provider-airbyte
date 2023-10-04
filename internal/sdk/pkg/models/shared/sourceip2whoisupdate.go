@@ -8,3 +8,17 @@ type SourceIp2whoisUpdate struct {
 	// Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	Domain *string `json:"domain,omitempty"`
 }
+
+func (o *SourceIp2whoisUpdate) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *SourceIp2whoisUpdate) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}

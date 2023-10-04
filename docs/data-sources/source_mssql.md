@@ -48,7 +48,6 @@ Read-Only:
 - `port` (Number) The port of the database.
 - `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas to sync from. Defaults to user. Case sensitive.
-- `source_type` (String) must be one of ["mssql"]
 - `ssl_method` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `username` (String) The username which is used to access the database.
@@ -68,20 +67,16 @@ Read-Only:
 
 Read-Only:
 
-- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]
+- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"
 What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-- `method` (String) must be one of ["CDC"]
-- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]
+- `initial_waiting_seconds` (Number) Default: 300
+The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
+- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"
 Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
 <a id="nestedatt--configuration--replication_method--source_mssql_update_method_scan_changes_with_user_defined_cursor"></a>
 ### Nested Schema for `configuration.replication_method.source_mssql_update_method_scan_changes_with_user_defined_cursor`
-
-Read-Only:
-
-- `method` (String) must be one of ["STANDARD"]
 
 
 <a id="nestedatt--configuration--replication_method--source_mssql_update_update_method_read_changes_using_change_data_capture_cdc"></a>
@@ -89,20 +84,16 @@ Read-Only:
 
 Read-Only:
 
-- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]
+- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"
 What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-- `method` (String) must be one of ["CDC"]
-- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]
+- `initial_waiting_seconds` (Number) Default: 300
+The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
+- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"
 Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
 <a id="nestedatt--configuration--replication_method--source_mssql_update_update_method_scan_changes_with_user_defined_cursor"></a>
 ### Nested Schema for `configuration.replication_method.source_mssql_update_update_method_scan_changes_with_user_defined_cursor`
-
-Read-Only:
-
-- `method` (String) must be one of ["STANDARD"]
 
 
 
@@ -119,10 +110,6 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_trust_server_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.source_mssql_ssl_method_encrypted_trust_server_certificate`
 
-Read-Only:
-
-- `ssl_method` (String) must be one of ["encrypted_trust_server_certificate"]
-
 
 <a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.source_mssql_ssl_method_encrypted_verify_certificate`
@@ -130,15 +117,10 @@ Read-Only:
 Read-Only:
 
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-- `ssl_method` (String) must be one of ["encrypted_verify_certificate"]
 
 
 <a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_trust_server_certificate`
-
-Read-Only:
-
-- `ssl_method` (String) must be one of ["encrypted_trust_server_certificate"]
 
 
 <a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate"></a>
@@ -147,7 +129,6 @@ Read-Only:
 Read-Only:
 
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-- `ssl_method` (String) must be one of ["encrypted_verify_certificate"]
 
 
 
@@ -166,11 +147,6 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_mssql_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mssql_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--source_mssql_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mssql_ssh_tunnel_method_password_authentication`
@@ -178,9 +154,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -192,19 +167,13 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mssql_update_ssh_tunnel_method_no_tunnel`
-
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_password_authentication"></a>
@@ -213,9 +182,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -227,9 +195,8 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

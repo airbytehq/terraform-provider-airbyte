@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,15 +55,6 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"project_name": schema.StringAttribute{
 						Required:    true,
 						Description: `Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pypi",
-							),
-						},
-						Description: `must be one of ["pypi"]`,
 					},
 					"version": schema.StringAttribute{
 						Optional:    true,
@@ -143,7 +132,7 @@ func (r *SourcePypiResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePypi(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

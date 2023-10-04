@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -70,8 +69,9 @@ func (r *SourceAzureBlobStorageDataSource) Schema(ctx context.Context, req datas
 						Description: `The name of the Azure blob storage container.`,
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
+						Computed: true,
+						MarkdownDescription: `Default: "blob.core.windows.net"` + "\n" +
+							`This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
 						Computed:    true,
@@ -81,33 +81,13 @@ func (r *SourceAzureBlobStorageDataSource) Schema(ctx context.Context, req datas
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Input data format`,
 							},
 							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Input data format`,
 							},
 						},
@@ -115,15 +95,6 @@ func (r *SourceAzureBlobStorageDataSource) Schema(ctx context.Context, req datas
 							validators.ExactlyOneChild(),
 						},
 						Description: `Input data format`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-blob-storage",
-							),
-						},
-						Description: `must be one of ["azure-blob-storage"]`,
 					},
 				},
 			},

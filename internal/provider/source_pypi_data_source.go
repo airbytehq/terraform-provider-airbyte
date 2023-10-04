@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *SourcePypiDataSource) Schema(ctx context.Context, req datasource.Schema
 					"project_name": schema.StringAttribute{
 						Computed:    true,
 						Description: `Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pypi",
-							),
-						},
-						Description: `must be one of ["pypi"]`,
 					},
 					"version": schema.StringAttribute{
 						Computed:    true,

@@ -7,3 +7,24 @@ type SourceSftpBulkPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceSftpBulkPutRequest) GetConfiguration() SourceSftpBulkUpdate {
+	if o == nil {
+		return SourceSftpBulkUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSftpBulkPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSftpBulkPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

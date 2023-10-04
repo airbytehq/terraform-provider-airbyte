@@ -11,7 +11,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -64,63 +63,23 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_base_url_global_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 						},
@@ -128,15 +87,6 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 							validators.ExactlyOneChild(),
 						},
 						Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"survey-sparrow",
-							),
-						},
-						Description: `must be one of ["survey-sparrow"]`,
 					},
 					"survey_id": schema.ListAttribute{
 						Optional:    true,
@@ -218,7 +168,7 @@ func (r *SourceSurveySparrowResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSurveySparrow(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

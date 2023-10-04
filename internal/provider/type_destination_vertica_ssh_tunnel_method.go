@@ -3,10 +3,10 @@
 package provider
 
 type DestinationVerticaSSHTunnelMethod struct {
-	DestinationVerticaSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_vertica_ssh_tunnel_method_no_tunnel"`
-	DestinationVerticaSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_vertica_ssh_tunnel_method_password_authentication"`
-	DestinationVerticaSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_vertica_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationVerticaUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_vertica_update_ssh_tunnel_method_no_tunnel"`
-	DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_vertica_update_ssh_tunnel_method_password_authentication"`
-	DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_vertica_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationVerticaSSHTunnelMethodNoTunnel                     *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_vertica_ssh_tunnel_method_no_tunnel"`
+	DestinationVerticaSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_vertica_ssh_tunnel_method_password_authentication"`
+	DestinationVerticaSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_vertica_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationVerticaUpdateSSHTunnelMethodNoTunnel               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_vertica_update_ssh_tunnel_method_no_tunnel"`
+	DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_vertica_update_ssh_tunnel_method_password_authentication"`
+	DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_vertica_update_ssh_tunnel_method_ssh_key_authentication"`
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourcePokeapiPokeapi) UnmarshalJSON(data []byte) error {
 type SourcePokeapi struct {
 	// Pokemon requested from the API.
 	PokemonName string               `json:"pokemon_name"`
-	SourceType  SourcePokeapiPokeapi `json:"sourceType"`
+	sourceType  SourcePokeapiPokeapi `const:"pokeapi" json:"sourceType"`
+}
+
+func (s SourcePokeapi) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePokeapi) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePokeapi) GetPokemonName() string {
+	if o == nil {
+		return ""
+	}
+	return o.PokemonName
+}
+
+func (o *SourcePokeapi) GetSourceType() SourcePokeapiPokeapi {
+	return SourcePokeapiPokeapiPokeapi
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceGoogleWorkspaceAdminReports struct {
 	Email string `json:"email"`
 	// Sets the range of time shown in the report. Reports API allows from up to 180 days ago.
 	Lookback   *int64                                                       `json:"lookback,omitempty"`
-	SourceType SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports `json:"sourceType"`
+	sourceType SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports `const:"google-workspace-admin-reports" json:"sourceType"`
+}
+
+func (s SourceGoogleWorkspaceAdminReports) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleWorkspaceAdminReports) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleWorkspaceAdminReports) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+func (o *SourceGoogleWorkspaceAdminReports) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *SourceGoogleWorkspaceAdminReports) GetLookback() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lookback
+}
+
+func (o *SourceGoogleWorkspaceAdminReports) GetSourceType() SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports {
+	return SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports
 }

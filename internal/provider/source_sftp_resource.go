@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,16 +60,6 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 							"source_sftp_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through password authentication`,
-									},
 									"auth_user_password": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level password for logging into the jump server host`,
@@ -81,16 +70,6 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 							"source_sftp_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through ssh key`,
-									},
 									"auth_ssh_key": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
@@ -101,16 +80,6 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 							"source_sftp_update_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through password authentication`,
-									},
 									"auth_user_password": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level password for logging into the jump server host`,
@@ -121,16 +90,6 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 							"source_sftp_update_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through ssh key`,
-									},
 									"auth_ssh_key": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
@@ -145,33 +104,28 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `The server authentication method`,
 					},
 					"file_pattern": schema.StringAttribute{
-						Optional:    true,
-						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The regular expression to specify files for sync in a chosen Folder Path`,
 					},
 					"file_types": schema.StringAttribute{
-						Optional:    true,
-						Description: `Coma separated file types. Currently only 'csv' and 'json' types are supported.`,
+						Optional: true,
+						MarkdownDescription: `Default: "csv,json"` + "\n" +
+							`Coma separated file types. Currently only 'csv' and 'json' types are supported.`,
 					},
 					"folder_path": schema.StringAttribute{
-						Optional:    true,
-						Description: `The directory to search files for sync`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The directory to search files for sync`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `The server host address`,
 					},
 					"port": schema.Int64Attribute{
-						Required:    true,
-						Description: `The server port`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp",
-							),
-						},
-						Description: `must be one of ["sftp"]`,
+						Optional: true,
+						MarkdownDescription: `Default: 22` + "\n" +
+							`The server port`,
 					},
 					"user": schema.StringAttribute{
 						Required:    true,
@@ -249,7 +203,7 @@ func (r *SourceSftpResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSftp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

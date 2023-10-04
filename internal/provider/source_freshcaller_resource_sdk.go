@@ -17,7 +17,6 @@ func (r *SourceFreshcallerResourceModel) ToCreateSDKType() *shared.SourceFreshca
 	} else {
 		requestsPerMinute = nil
 	}
-	sourceType := shared.SourceFreshcallerFreshcaller(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	syncLagMinutes := new(int64)
 	if !r.Configuration.SyncLagMinutes.IsUnknown() && !r.Configuration.SyncLagMinutes.IsNull() {
@@ -29,7 +28,6 @@ func (r *SourceFreshcallerResourceModel) ToCreateSDKType() *shared.SourceFreshca
 		APIKey:            apiKey,
 		Domain:            domain,
 		RequestsPerMinute: requestsPerMinute,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 		SyncLagMinutes:    syncLagMinutes,
 	}

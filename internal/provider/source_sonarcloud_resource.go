@@ -11,7 +11,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -74,15 +73,6 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 					"organization": schema.StringAttribute{
 						Required:    true,
 						Description: `Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sonar-cloud",
-							),
-						},
-						Description: `must be one of ["sonar-cloud"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -167,7 +157,7 @@ func (r *SourceSonarCloudResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSonarCloud(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

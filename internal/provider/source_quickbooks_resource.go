@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 										Required:    true,
 										Description: `Access token fot making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
@@ -106,15 +96,6 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 										Required:    true,
 										Description: `Access token fot making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
@@ -146,17 +127,9 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"sandbox": schema.BoolAttribute{
-						Required:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"quickbooks",
-							),
-						},
-						Description: `must be one of ["quickbooks"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Determines whether to use the sandbox or production environment.`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -237,7 +210,7 @@ func (r *SourceQuickbooksResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceQuickbooks(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

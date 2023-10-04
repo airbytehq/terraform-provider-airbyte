@@ -10,11 +10,9 @@ import (
 func (r *SourcePostmarkappResourceModel) ToCreateSDKType() *shared.SourcePostmarkappCreateRequest {
 	xPostmarkAccountToken := r.Configuration.XPostmarkAccountToken.ValueString()
 	xPostmarkServerToken := r.Configuration.XPostmarkServerToken.ValueString()
-	sourceType := shared.SourcePostmarkappPostmarkapp(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePostmarkapp{
 		XPostmarkAccountToken: xPostmarkAccountToken,
 		XPostmarkServerToken:  xPostmarkServerToken,
-		SourceType:            sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

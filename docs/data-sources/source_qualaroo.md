@@ -42,7 +42,6 @@ data "airbyte_source_qualaroo" "my_source_qualaroo" {
 Read-Only:
 
 - `key` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
-- `source_type` (String) must be one of ["qualaroo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `survey_ids` (List of String) IDs of the surveys from which you'd like to replicate data. If left empty, data from all surveys to which you have access will be replicated.
 - `token` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.

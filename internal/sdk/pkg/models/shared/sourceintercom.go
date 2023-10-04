@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -39,7 +40,50 @@ type SourceIntercom struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// Client Secret for your Intercom application.
 	ClientSecret *string                `json:"client_secret,omitempty"`
-	SourceType   SourceIntercomIntercom `json:"sourceType"`
+	sourceType   SourceIntercomIntercom `const:"intercom" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceIntercom) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceIntercom) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceIntercom) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceIntercom) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceIntercom) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceIntercom) GetSourceType() SourceIntercomIntercom {
+	return SourceIntercomIntercomIntercom
+}
+
+func (o *SourceIntercom) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

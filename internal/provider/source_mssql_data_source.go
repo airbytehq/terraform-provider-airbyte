@@ -87,21 +87,13 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 												"New Changes Only",
 											),
 										},
-										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]` + "\n" +
+										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"` + "\n" +
 											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"method": schema.StringAttribute{
 										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Computed: true,
@@ -111,25 +103,15 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 												"Read Committed",
 											),
 										},
-										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]` + "\n" +
+										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"` + "\n" +
 											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
 							},
 							"source_mssql_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-										Description: `must be one of ["STANDARD"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 							"source_mssql_update_update_method_read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
@@ -143,21 +125,13 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 												"New Changes Only",
 											),
 										},
-										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]` + "\n" +
+										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"` + "\n" +
 											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"method": schema.StringAttribute{
 										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Computed: true,
@@ -167,25 +141,15 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 												"Read Committed",
 											),
 										},
-										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]` + "\n" +
+										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"` + "\n" +
 											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
 							},
 							"source_mssql_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-										Description: `must be one of ["STANDARD"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
@@ -199,31 +163,12 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 						ElementType: types.StringType,
 						Description: `The list of schemas to sync from. Defaults to user. Case sensitive.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mssql",
-							),
-						},
-						Description: `must be one of ["mssql"]`,
-					},
 					"ssl_method": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_trust_server_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_trust_server_certificate"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"source_mssql_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
@@ -233,31 +178,12 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
 									},
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
-									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
 							},
 							"source_mssql_update_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_trust_server_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_trust_server_certificate"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"source_mssql_update_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
@@ -266,15 +192,6 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 									"host_name_in_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
-									},
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -289,19 +206,8 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -311,19 +217,10 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -347,19 +244,10 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -369,19 +257,8 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -391,19 +268,10 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -427,19 +295,10 @@ func (r *SourceMssqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,

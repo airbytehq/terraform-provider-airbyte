@@ -7,3 +7,24 @@ type SourceRedshiftPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceRedshiftPutRequest) GetConfiguration() SourceRedshiftUpdate {
+	if o == nil {
+		return SourceRedshiftUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRedshiftPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRedshiftPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

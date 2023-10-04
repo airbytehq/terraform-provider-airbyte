@@ -42,7 +42,6 @@ data "airbyte_source_notion" "my_source_notion" {
 Read-Only:
 
 - `credentials` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["notion"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -60,7 +59,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["token"]
 - `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
@@ -70,7 +68,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) The ClientID of your Notion integration.
 - `client_secret` (String) The ClientSecret of your Notion integration.
 
@@ -80,7 +77,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["token"]
 - `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
@@ -90,7 +86,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) The ClientID of your Notion integration.
 - `client_secret` (String) The ClientSecret of your Notion integration.
 

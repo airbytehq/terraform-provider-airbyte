@@ -15,12 +15,11 @@ DestinationXata Resource
 ```terraform
 resource "airbyte_destination_xata" "my_destination_xata" {
   configuration = {
-    api_key          = "...my_api_key..."
-    db_url           = "https://my-workspace-abc123.us-east-1.xata.sh/db/nyc-taxi-fares:main"
-    destination_type = "xata"
+    api_key = "...my_api_key..."
+    db_url  = "https://my-workspace-abc123.us-east-1.xata.sh/db/nyc-taxi-fares:main"
   }
-  name         = "Oscar Smith"
-  workspace_id = "e68e4be0-5601-43f5-9da7-57a59ecfef66"
+  name         = "Shannon Kuvalis"
+  workspace_id = "fec4ca4c-8c4b-4f88-a725-c3c6bc39a6d3"
 }
 ```
 
@@ -45,6 +44,5 @@ Required:
 
 - `api_key` (String) API Key to connect.
 - `db_url` (String) URL pointing to your workspace.
-- `destination_type` (String) must be one of ["xata"]
 
 

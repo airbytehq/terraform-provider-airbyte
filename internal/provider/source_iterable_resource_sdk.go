@@ -10,12 +10,10 @@ import (
 
 func (r *SourceIterableResourceModel) ToCreateSDKType() *shared.SourceIterableCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceIterableIterable(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIterable{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

@@ -15,13 +15,12 @@ DestinationKeen Resource
 ```terraform
 resource "airbyte_destination_keen" "my_destination_keen" {
   configuration = {
-    api_key          = "ABCDEFGHIJKLMNOPRSTUWXYZ"
-    destination_type = "keen"
-    infer_timestamp  = false
-    project_id       = "58b4acc22ba938934e888322e"
+    api_key         = "ABCDEFGHIJKLMNOPRSTUWXYZ"
+    infer_timestamp = true
+    project_id      = "58b4acc22ba938934e888322e"
   }
-  name         = "Todd Oberbrunner DDS"
-  workspace_id = "688282aa-4825-462f-a22e-9817ee17cbe6"
+  name         = "Marlene Ondricka"
+  workspace_id = "112db1ee-ca9f-491e-b58c-33257456993f"
 }
 ```
 
@@ -45,11 +44,11 @@ resource "airbyte_destination_keen" "my_destination_keen" {
 Required:
 
 - `api_key` (String) To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
-- `destination_type` (String) must be one of ["keen"]
 - `project_id` (String) To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 
 Optional:
 
-- `infer_timestamp` (Boolean) Allow connector to guess keen.timestamp value based on the streamed data.
+- `infer_timestamp` (Boolean) Default: true
+Allow connector to guess keen.timestamp value based on the streamed data.
 
 

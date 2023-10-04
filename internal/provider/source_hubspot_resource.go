@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -69,16 +68,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`Name of the credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.`,
@@ -92,16 +81,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.`,
-									},
-									"credentials_title": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Private App Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["Private App Credentials"]` + "\n" +
-											`Name of the credentials set`,
 									},
 								},
 								Description: `Choose how to authenticate to HubSpot.`,
@@ -117,16 +96,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`Name of the credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.`,
@@ -141,16 +110,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Private App Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["Private App Credentials"]` + "\n" +
-											`Name of the credentials set`,
-									},
 								},
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
@@ -159,15 +118,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 							validators.ExactlyOneChild(),
 						},
 						Description: `Choose how to authenticate to HubSpot.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"hubspot",
-							),
-						},
-						Description: `must be one of ["hubspot"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -248,7 +198,7 @@ func (r *SourceHubspotResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceHubspot(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -21,35 +21,32 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      source_alloydb_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 2
-        lsn_commit_behaviour    = "While reading Data"
-        method                  = "CDC"
+      source_alloydb_replication_method_logical_replication_cdc = {
+        additional_properties   = "{ \"see\": \"documentation\" }"
+        initial_waiting_seconds = 1
+        lsn_commit_behaviour    = "After loading Data in the destination"
         plugin                  = "pgoutput"
         publication             = "...my_publication..."
-        queue_size              = 10
+        queue_size              = 4
         replication_slot        = "...my_replication_slot..."
       }
     }
     schemas = [
       "...",
     ]
-    source_type = "alloydb"
     ssl_mode = {
       source_alloydb_ssl_modes_allow = {
-        mode = "allow"
+        additional_properties = "{ \"see\": \"documentation\" }"
       }
     }
     tunnel_method = {
-      source_alloydb_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      source_alloydb_ssh_tunnel_method_no_tunnel = {}
     }
-    username = "Ashlynn_Emard"
+    username = "Mackenzie83"
   }
-  name         = "Wilbert Crona"
+  name         = "Robin Kuhn"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9b1abda8-c070-4e10-84cb-0672d1ad879e"
+  workspace_id = "3598ffb0-4292-44fa-aae5-018c31937409"
 }
 ```
 
@@ -78,14 +75,14 @@ Required:
 
 - `database` (String) Name of the database.
 - `host` (String) Hostname of the database.
-- `port` (Number) Port of the database.
-- `source_type` (String) must be one of ["alloydb"]
 - `username` (String) Username to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
 - `password` (String) Password associated with the username.
+- `port` (Number) Default: 5432
+Port of the database.
 - `replication_method` (Attributes) Replication method for extracting data from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas (case sensitive) to sync from. Defaults to public.
 - `ssl_mode` (Attributes) SSL connection modes. 
@@ -109,35 +106,28 @@ Optional:
 
 Required:
 
-- `method` (String) must be one of ["CDC"]
 - `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 - `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]
+- `initial_waiting_seconds` (Number) Default: 300
+The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
 Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of ["pgoutput"]
+- `plugin` (String) must be one of ["pgoutput"]; Default: "pgoutput"
 A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+- `queue_size` (Number) Default: 10000
+The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_replication_method_standard"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_replication_method_standard`
 
-Required:
-
-- `method` (String) must be one of ["Standard"]
-
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_replication_method_standard_xmin"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_replication_method_standard_xmin`
-
-Required:
-
-- `method` (String) must be one of ["Xmin"]
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_logical_replication_cdc"></a>
@@ -145,35 +135,28 @@ Required:
 
 Required:
 
-- `method` (String) must be one of ["CDC"]
 - `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 - `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]
+- `initial_waiting_seconds` (Number) Default: 300
+The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
 Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of ["pgoutput"]
+- `plugin` (String) must be one of ["pgoutput"]; Default: "pgoutput"
 A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+- `queue_size` (Number) Default: 10000
+The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_update_replication_method_standard`
 
-Required:
-
-- `method` (String) must be one of ["Standard"]
-
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard_xmin"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_update_replication_method_standard_xmin`
-
-Required:
-
-- `method` (String) must be one of ["Xmin"]
 
 
 
@@ -198,10 +181,6 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_allow"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_ssl_modes_allow`
 
-Required:
-
-- `mode` (String) must be one of ["allow"]
-
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
@@ -209,10 +188,6 @@ Optional:
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_ssl_modes_disable`
-
-Required:
-
-- `mode` (String) must be one of ["disable"]
 
 Optional:
 
@@ -222,10 +197,6 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_prefer"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_ssl_modes_prefer`
 
-Required:
-
-- `mode` (String) must be one of ["prefer"]
-
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
@@ -233,10 +204,6 @@ Optional:
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_require"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_ssl_modes_require`
-
-Required:
-
-- `mode` (String) must be one of ["require"]
 
 Optional:
 
@@ -249,7 +216,6 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
@@ -265,7 +231,6 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -278,10 +243,6 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_allow"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_allow`
 
-Required:
-
-- `mode` (String) must be one of ["allow"]
-
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
@@ -289,10 +250,6 @@ Optional:
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_disable`
-
-Required:
-
-- `mode` (String) must be one of ["disable"]
 
 Optional:
 
@@ -302,10 +259,6 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_prefer"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_prefer`
 
-Required:
-
-- `mode` (String) must be one of ["prefer"]
-
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
@@ -313,10 +266,6 @@ Optional:
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_require"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_require`
-
-Required:
-
-- `mode` (String) must be one of ["require"]
 
 Optional:
 
@@ -329,7 +278,6 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
@@ -345,7 +293,6 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -371,11 +318,6 @@ Optional:
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_alloydb_ssh_tunnel_method_no_tunnel`
 
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_alloydb_ssh_tunnel_method_password_authentication`
@@ -383,11 +325,13 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -397,19 +341,16 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_alloydb_update_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_password_authentication"></a>
@@ -418,11 +359,13 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -432,9 +375,11 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 

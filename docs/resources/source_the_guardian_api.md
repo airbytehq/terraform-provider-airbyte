@@ -15,17 +15,16 @@ SourceTheGuardianAPI Resource
 ```terraform
 resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
   configuration = {
-    api_key     = "...my_api_key..."
-    end_date    = "YYYY-MM-DD"
-    query       = "political"
-    section     = "media"
-    source_type = "the-guardian-api"
-    start_date  = "YYYY-MM-DD"
-    tag         = "environment/recycling"
+    api_key    = "...my_api_key..."
+    end_date   = "YYYY-MM-DD"
+    query      = "environment AND political"
+    section    = "technology"
+    start_date = "YYYY-MM-DD"
+    tag        = "environment/energyefficiency"
   }
-  name         = "Pauline Kozey IV"
+  name         = "Grant Gerhold I"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2b94f2ab-1fd5-4671-a9c3-26350a467143"
+  workspace_id = "7442775e-d080-474e-97a6-4885711ab94f"
 }
 ```
 
@@ -53,7 +52,6 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["the-guardian-api"]
 - `start_date` (String) Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 
 Optional:

@@ -19,12 +19,11 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     client_secret = "...my_client_secret..."
     end_date      = "2022-01-30"
     refresh_token = "...my_refresh_token..."
-    source_type   = "snapchat-marketing"
     start_date    = "2022-01-01"
   }
-  name         = "Chelsea Ortiz"
+  name         = "Ernestine Parker Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "5ca8649a-70cf-4d5d-a989-b7206451077d"
+  workspace_id = "fb0fc527-30b3-4999-8a41-e4a8985c78fa"
 }
 ```
 
@@ -54,11 +53,11 @@ Required:
 - `client_id` (String) The Client ID of your Snapchat developer application.
 - `client_secret` (String) The Client Secret of your Snapchat developer application.
 - `refresh_token` (String) Refresh Token to renew the expired Access Token.
-- `source_type` (String) must be one of ["snapchat-marketing"]
 
 Optional:
 
 - `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
-- `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated.
+- `start_date` (String) Default: "2022-01-01"
+Date in the format 2022-01-01. Any data before this date will not be replicated.
 
 

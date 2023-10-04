@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceSmaily struct {
 	APISubdomain string `json:"api_subdomain"`
 	// API user username. See https://smaily.com/help/api/general/create-api-user/
 	APIUsername string             `json:"api_username"`
-	SourceType  SourceSmailySmaily `json:"sourceType"`
+	sourceType  SourceSmailySmaily `const:"smaily" json:"sourceType"`
+}
+
+func (s SourceSmaily) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSmaily) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSmaily) GetAPIPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIPassword
+}
+
+func (o *SourceSmaily) GetAPISubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.APISubdomain
+}
+
+func (o *SourceSmaily) GetAPIUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIUsername
+}
+
+func (o *SourceSmaily) GetSourceType() SourceSmailySmaily {
+	return SourceSmailySmailySmaily
 }

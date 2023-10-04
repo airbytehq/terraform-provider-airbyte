@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -60,18 +59,8 @@ func (r *SourceFaunaDataSource) Schema(ctx context.Context, req datasource.Schem
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"source_fauna_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"deletion_mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"ignore",
-													),
-												},
-												Description: `must be one of ["ignore"]`,
-											},
-										},
+										Computed:   true,
+										Attributes: map[string]schema.Attribute{},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
 											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
 											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
@@ -81,17 +70,9 @@ func (r *SourceFaunaDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												Computed:    true,
-												Description: `Name of the "deleted at" column.`,
-											},
-											"deletion_mode": schema.StringAttribute{
 												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"deleted_field",
-													),
-												},
-												Description: `must be one of ["deleted_field"]`,
+												MarkdownDescription: `Default: "deleted_at"` + "\n" +
+													`Name of the "deleted at" column.`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -100,18 +81,8 @@ func (r *SourceFaunaDataSource) Schema(ctx context.Context, req datasource.Schem
 											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
 									},
 									"source_fauna_update_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"deletion_mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"ignore",
-													),
-												},
-												Description: `must be one of ["ignore"]`,
-											},
-										},
+										Computed:   true,
+										Attributes: map[string]schema.Attribute{},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
 											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
 											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
@@ -121,17 +92,9 @@ func (r *SourceFaunaDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												Computed:    true,
-												Description: `Name of the "deleted at" column.`,
-											},
-											"deletion_mode": schema.StringAttribute{
 												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"deleted_field",
-													),
-												},
-												Description: `must be one of ["deleted_field"]`,
+												MarkdownDescription: `Default: "deleted_at"` + "\n" +
+													`Name of the "deleted at" column.`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -150,7 +113,8 @@ func (r *SourceFaunaDataSource) Schema(ctx context.Context, req datasource.Schem
 							},
 							"page_size": schema.Int64Attribute{
 								Computed: true,
-								MarkdownDescription: `The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>` + "\n" +
+								MarkdownDescription: `Default: 64` + "\n" +
+									`The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>` + "\n" +
 									`Choose your page size based on how large the documents are. <br>` + "\n" +
 									`See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.`,
 							},
@@ -158,29 +122,23 @@ func (r *SourceFaunaDataSource) Schema(ctx context.Context, req datasource.Schem
 						Description: `Settings for the Fauna Collection.`,
 					},
 					"domain": schema.StringAttribute{
-						Computed:    true,
-						Description: `Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.`,
+						Computed: true,
+						MarkdownDescription: `Default: "db.fauna.com"` + "\n" +
+							`Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Endpoint port.`,
+						Computed: true,
+						MarkdownDescription: `Default: 443` + "\n" +
+							`Endpoint port.`,
 					},
 					"scheme": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL scheme.`,
+						Computed: true,
+						MarkdownDescription: `Default: "https"` + "\n" +
+							`URL scheme.`,
 					},
 					"secret": schema.StringAttribute{
 						Computed:    true,
 						Description: `Fauna secret, used when authenticating with the database.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"fauna",
-							),
-						},
-						Description: `must be one of ["fauna"]`,
 					},
 				},
 			},

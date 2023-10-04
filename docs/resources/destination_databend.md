@@ -15,16 +15,15 @@ DestinationDatabend Resource
 ```terraform
 resource "airbyte_destination_databend" "my_destination_databend" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "databend"
-    host             = "...my_host..."
-    password         = "...my_password..."
-    port             = 443
-    table            = "default"
-    username         = "Leo.Purdy"
+    database = "...my_database..."
+    host     = "...my_host..."
+    password = "...my_password..."
+    port     = 443
+    table    = "default"
+    username = "Casimir70"
   }
-  name         = "Bobby Kutch V"
-  workspace_id = "b3fe49a8-d9cb-4f48-a333-23f9b77f3a41"
+  name         = "Sheri Howell"
+  workspace_id = "5d335e03-abeb-4b71-b58e-872ec68b6d2a"
 }
 ```
 
@@ -48,14 +47,15 @@ resource "airbyte_destination_databend" "my_destination_databend" {
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of ["databend"]
 - `host` (String) Hostname of the database.
 - `username` (String) Username to use to access the database.
 
 Optional:
 
 - `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
-- `table` (String) The default  table was written to.
+- `port` (Number) Default: 443
+Port of the database.
+- `table` (String) Default: "default"
+The default  table was written to.
 
 

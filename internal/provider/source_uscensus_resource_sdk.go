@@ -16,12 +16,10 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 		queryParams = nil
 	}
 	queryPath := r.Configuration.QueryPath.ValueString()
-	sourceType := shared.SourceUsCensusUsCensus(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceUsCensus{
 		APIKey:      apiKey,
 		QueryParams: queryParams,
 		QueryPath:   queryPath,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

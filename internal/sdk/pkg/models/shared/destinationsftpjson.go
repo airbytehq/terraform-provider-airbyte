@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,7 +33,7 @@ func (e *DestinationSftpJSONSftpJSON) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationSftpJSON struct {
-	DestinationType DestinationSftpJSONSftpJSON `json:"destinationType"`
+	destinationType DestinationSftpJSONSftpJSON `const:"sftp-json" json:"destinationType"`
 	// Path to the directory where json files will be written.
 	DestinationPath string `json:"destination_path"`
 	// Hostname of the SFTP server.
@@ -40,7 +41,57 @@ type DestinationSftpJSON struct {
 	// Password associated with the username.
 	Password string `json:"password"`
 	// Port of the SFTP server.
-	Port *int64 `json:"port,omitempty"`
+	Port *int64 `default:"22" json:"port"`
 	// Username to use to access the SFTP server.
 	Username string `json:"username"`
+}
+
+func (d DestinationSftpJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSftpJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSftpJSON) GetDestinationType() DestinationSftpJSONSftpJSON {
+	return DestinationSftpJSONSftpJSONSftpJSON
+}
+
+func (o *DestinationSftpJSON) GetDestinationPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationPath
+}
+
+func (o *DestinationSftpJSON) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationSftpJSON) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationSftpJSON) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationSftpJSON) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationElasticsearch struct {
 	AuthenticationMethod *DestinationElasticsearchAuthenticationMethod `tfsdk:"authentication_method"`
 	CaCertificate        types.String                                  `tfsdk:"ca_certificate"`
-	DestinationType      types.String                                  `tfsdk:"destination_type"`
 	Endpoint             types.String                                  `tfsdk:"endpoint"`
 	Upsert               types.Bool                                    `tfsdk:"upsert"`
 }

@@ -42,6 +42,5 @@ data "airbyte_source_getlago" "my_source_getlago" {
 Read-Only:
 
 - `api_key` (String) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
-- `source_type` (String) must be one of ["getlago"]
 
 

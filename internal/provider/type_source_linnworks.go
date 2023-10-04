@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceLinnworks struct {
 	ApplicationID     types.String `tfsdk:"application_id"`
 	ApplicationSecret types.String `tfsdk:"application_secret"`
-	SourceType        types.String `tfsdk:"source_type"`
 	StartDate         types.String `tfsdk:"start_date"`
 	Token             types.String `tfsdk:"token"`
 }

@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -59,7 +59,25 @@ func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZ
 
 // DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP struct {
-	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `json:"compression_type,omitempty"`
+	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `default:"GZIP" json:"compression_type"`
+}
+
+func (d DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) GetCompressionType() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
 }
 
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType string
@@ -88,7 +106,25 @@ func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNo
 
 // DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression struct {
-	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
+	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `default:"No Compression" json:"compression_type"`
+}
+
+func (d DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) GetCompressionType() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
 }
 
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionType string
@@ -124,21 +160,16 @@ func CreateDestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression
 }
 
 func (u *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression := new(DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression, "", true, true); err == nil {
 		u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
 		u.Type = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
 		return nil
 	}
 
 	destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP := new(DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP, "", true, true); err == nil {
 		u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
 		u.Type = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
 		return nil
@@ -149,14 +180,14 @@ func (u *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression) 
 
 func (u DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression) MarshalJSON() ([]byte, error) {
 	if u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-		return json.Marshal(u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
+		return utils.MarshalJSON(u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression, "", true)
 	}
 
 	if u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-		return json.Marshal(u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
+		return utils.MarshalJSON(u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
@@ -216,8 +247,40 @@ type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
 	// Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-	Flattening *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening `json:"flattening,omitempty"`
-	FormatType DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType  `json:"format_type"`
+	Flattening *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening `default:"Root level flattening" json:"flattening"`
+	FormatType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType `default:"JSONL" json:"format_type"`
+}
+
+func (d DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON) GetCompression() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON) GetFlattening() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening {
+	if o == nil {
+		return nil
+	}
+	return o.Flattening
+}
+
+func (o *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationS3GlueOutputFormatType string
@@ -242,12 +305,9 @@ func CreateDestinationS3GlueOutputFormatDestinationS3GlueOutputFormatJSONLinesNe
 }
 
 func (u *DestinationS3GlueOutputFormat) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON := new(DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
 		u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON = destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON
 		u.Type = DestinationS3GlueOutputFormatTypeDestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON
 		return nil
@@ -258,10 +318,10 @@ func (u *DestinationS3GlueOutputFormat) UnmarshalJSON(data []byte) error {
 
 func (u DestinationS3GlueOutputFormat) MarshalJSON() ([]byte, error) {
 	if u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON)
+		return utils.MarshalJSON(u.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationS3GlueSerializationLibrary - The library that your query engine will use for reading and writing data in your lake.
@@ -395,7 +455,7 @@ func (e *DestinationS3GlueS3BucketRegion) UnmarshalJSON(data []byte) error {
 type DestinationS3Glue struct {
 	// The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.
 	AccessKeyID     *string                 `json:"access_key_id,omitempty"`
-	DestinationType DestinationS3GlueS3Glue `json:"destinationType"`
+	destinationType DestinationS3GlueS3Glue `const:"s3-glue" json:"destinationType"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
 	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
@@ -403,17 +463,109 @@ type DestinationS3Glue struct {
 	// Name of the glue database for creating the tables, leave blank if no integration
 	GlueDatabase string `json:"glue_database"`
 	// The library that your query engine will use for reading and writing data in your lake.
-	GlueSerializationLibrary DestinationS3GlueSerializationLibrary `json:"glue_serialization_library"`
+	GlueSerializationLibrary *DestinationS3GlueSerializationLibrary `default:"org.openx.data.jsonserde.JsonSerDe" json:"glue_serialization_library"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 	S3BucketName string `json:"s3_bucket_name"`
 	// Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>
 	S3BucketPath string `json:"s3_bucket_path"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	S3BucketRegion DestinationS3GlueS3BucketRegion `json:"s3_bucket_region"`
+	S3BucketRegion *DestinationS3GlueS3BucketRegion `default:"" json:"s3_bucket_region"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
-	S3Endpoint *string `json:"s3_endpoint,omitempty"`
+	S3Endpoint *string `default:"" json:"s3_endpoint"`
 	// Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 	S3PathFormat *string `json:"s3_path_format,omitempty"`
 	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
 	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+}
+
+func (d DestinationS3Glue) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3Glue) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3Glue) GetAccessKeyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationS3Glue) GetDestinationType() DestinationS3GlueS3Glue {
+	return DestinationS3GlueS3GlueS3Glue
+}
+
+func (o *DestinationS3Glue) GetFileNamePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNamePattern
+}
+
+func (o *DestinationS3Glue) GetFormat() DestinationS3GlueOutputFormat {
+	if o == nil {
+		return DestinationS3GlueOutputFormat{}
+	}
+	return o.Format
+}
+
+func (o *DestinationS3Glue) GetGlueDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.GlueDatabase
+}
+
+func (o *DestinationS3Glue) GetGlueSerializationLibrary() *DestinationS3GlueSerializationLibrary {
+	if o == nil {
+		return nil
+	}
+	return o.GlueSerializationLibrary
+}
+
+func (o *DestinationS3Glue) GetS3BucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketName
+}
+
+func (o *DestinationS3Glue) GetS3BucketPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketPath
+}
+
+func (o *DestinationS3Glue) GetS3BucketRegion() *DestinationS3GlueS3BucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.S3BucketRegion
+}
+
+func (o *DestinationS3Glue) GetS3Endpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3Endpoint
+}
+
+func (o *DestinationS3Glue) GetS3PathFormat() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3PathFormat
+}
+
+func (o *DestinationS3Glue) GetSecretAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretAccessKey
 }

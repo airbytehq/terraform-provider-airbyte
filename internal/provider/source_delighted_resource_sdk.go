@@ -11,11 +11,9 @@ import (
 func (r *SourceDelightedResourceModel) ToCreateSDKType() *shared.SourceDelightedCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	since, _ := time.Parse(time.RFC3339Nano, r.Configuration.Since.ValueString())
-	sourceType := shared.SourceDelightedDelighted(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDelighted{
-		APIKey:     apiKey,
-		Since:      since,
-		SourceType: sourceType,
+		APIKey: apiKey,
+		Since:  since,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

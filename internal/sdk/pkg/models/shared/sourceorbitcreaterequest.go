@@ -9,3 +9,31 @@ type SourceOrbitCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceOrbitCreateRequest) GetConfiguration() SourceOrbit {
+	if o == nil {
+		return SourceOrbit{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOrbitCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOrbitCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceOrbitCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

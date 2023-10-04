@@ -30,7 +30,6 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourcePolygonStockAPIPolygonStockAPI(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	stocksTicker := r.Configuration.StocksTicker.ValueString()
 	timespan := r.Configuration.Timespan.ValueString()
@@ -41,7 +40,6 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 		Limit:        limit,
 		Multiplier:   multiplier,
 		Sort:         sort,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 		StocksTicker: stocksTicker,
 		Timespan:     timespan,

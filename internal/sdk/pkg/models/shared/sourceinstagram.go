@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -39,7 +40,50 @@ type SourceInstagram struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret for your Oauth application
 	ClientSecret *string                  `json:"client_secret,omitempty"`
-	SourceType   SourceInstagramInstagram `json:"sourceType"`
+	sourceType   SourceInstagramInstagram `const:"instagram" json:"sourceType"`
 	// The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceInstagram) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInstagram) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInstagram) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceInstagram) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceInstagram) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceInstagram) GetSourceType() SourceInstagramInstagram {
+	return SourceInstagramInstagramInstagram
+}
+
+func (o *SourceInstagram) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

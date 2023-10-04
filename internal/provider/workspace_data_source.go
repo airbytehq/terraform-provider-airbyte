@@ -56,7 +56,7 @@ func (r *WorkspaceDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						"eu",
 					),
 				},
-				Description: `must be one of ["auto", "us", "eu"]`,
+				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
 			},
 			"name": schema.StringAttribute{
 				Computed:    true,

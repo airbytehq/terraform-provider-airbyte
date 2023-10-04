@@ -12,6 +12,5 @@ type SourceJira struct {
 	ExpandIssueChangelog      types.Bool     `tfsdk:"expand_issue_changelog"`
 	Projects                  []types.String `tfsdk:"projects"`
 	RenderFields              types.Bool     `tfsdk:"render_fields"`
-	SourceType                types.String   `tfsdk:"source_type"`
 	StartDate                 types.String   `tfsdk:"start_date"`
 }

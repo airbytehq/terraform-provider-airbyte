@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceK6Cloud struct {
-	APIToken   types.String `tfsdk:"api_token"`
-	SourceType types.String `tfsdk:"source_type"`
+	APIToken types.String `tfsdk:"api_token"`
 }

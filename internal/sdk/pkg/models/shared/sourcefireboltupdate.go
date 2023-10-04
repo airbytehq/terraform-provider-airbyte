@@ -16,3 +16,45 @@ type SourceFireboltUpdate struct {
 	// Firebolt email address you use to login.
 	Username string `json:"username"`
 }
+
+func (o *SourceFireboltUpdate) GetAccount() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Account
+}
+
+func (o *SourceFireboltUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceFireboltUpdate) GetEngine() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Engine
+}
+
+func (o *SourceFireboltUpdate) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
+}
+
+func (o *SourceFireboltUpdate) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceFireboltUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}

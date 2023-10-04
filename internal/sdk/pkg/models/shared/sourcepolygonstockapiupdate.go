@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 )
 
 type SourcePolygonStockAPIUpdate struct {
@@ -25,4 +26,78 @@ type SourcePolygonStockAPIUpdate struct {
 	StocksTicker string `json:"stocksTicker"`
 	// The size of the time window.
 	Timespan string `json:"timespan"`
+}
+
+func (s SourcePolygonStockAPIUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePolygonStockAPIUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetAdjusted() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Adjusted
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetEndDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.EndDate
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetMultiplier() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Multiplier
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetSort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetStocksTicker() string {
+	if o == nil {
+		return ""
+	}
+	return o.StocksTicker
+}
+
+func (o *SourcePolygonStockAPIUpdate) GetTimespan() string {
+	if o == nil {
+		return ""
+	}
+	return o.Timespan
 }

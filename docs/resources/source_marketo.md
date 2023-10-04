@@ -18,12 +18,11 @@ resource "airbyte_source_marketo" "my_source_marketo" {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
     domain_url    = "https://000-AAA-000.mktorest.com"
-    source_type   = "marketo"
     start_date    = "2020-09-25T00:00:00Z"
   }
-  name         = "Jerome Berge"
+  name         = "Merle McCullough"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b4c21ccb-423a-4bcd-891f-aabdd88e71f6"
+  workspace_id = "6d74638d-1409-4463-9cf5-dd4a0c05f536"
 }
 ```
 
@@ -53,7 +52,6 @@ Required:
 - `client_id` (String) The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 - `client_secret` (String) The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 - `domain_url` (String) Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
-- `source_type` (String) must be one of ["marketo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

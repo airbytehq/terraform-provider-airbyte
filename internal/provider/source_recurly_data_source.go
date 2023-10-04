@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -63,15 +61,6 @@ func (r *SourceRecurlyDataSource) Schema(ctx context.Context, req datasource.Sch
 					"end_time": schema.StringAttribute{
 						Computed:    true,
 						Description: `ISO8601 timestamp to which the replication from Recurly API will stop. Records after that date won't be imported.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"recurly",
-							),
-						},
-						Description: `must be one of ["recurly"]`,
 					},
 				},
 			},

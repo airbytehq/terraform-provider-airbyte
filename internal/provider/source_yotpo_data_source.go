@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,17 +61,9 @@ func (r *SourceYotpoDataSource) Schema(ctx context.Context, req datasource.Schem
 						Description: `App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)`,
 					},
 					"email": schema.StringAttribute{
-						Computed:    true,
-						Description: `Email address registered with yotpo.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"yotpo",
-							),
-						},
-						Description: `must be one of ["yotpo"]`,
+						MarkdownDescription: `Default: "example@gmail.com"` + "\n" +
+							`Email address registered with yotpo.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

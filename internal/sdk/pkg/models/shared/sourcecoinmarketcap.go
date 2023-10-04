@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -64,7 +65,43 @@ type SourceCoinmarketcap struct {
 	APIKey string `json:"api_key"`
 	// /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
 	DataType   SourceCoinmarketcapDataType      `json:"data_type"`
-	SourceType SourceCoinmarketcapCoinmarketcap `json:"sourceType"`
+	sourceType SourceCoinmarketcapCoinmarketcap `const:"coinmarketcap" json:"sourceType"`
 	// Cryptocurrency symbols. (only used for quotes stream)
 	Symbols []string `json:"symbols,omitempty"`
+}
+
+func (s SourceCoinmarketcap) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceCoinmarketcap) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceCoinmarketcap) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceCoinmarketcap) GetDataType() SourceCoinmarketcapDataType {
+	if o == nil {
+		return SourceCoinmarketcapDataType("")
+	}
+	return o.DataType
+}
+
+func (o *SourceCoinmarketcap) GetSourceType() SourceCoinmarketcapCoinmarketcap {
+	return SourceCoinmarketcapCoinmarketcapCoinmarketcap
+}
+
+func (o *SourceCoinmarketcap) GetSymbols() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Symbols
 }

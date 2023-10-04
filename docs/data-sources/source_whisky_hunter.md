@@ -39,8 +39,4 @@ data "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Read-Only:
-
-- `source_type` (String) must be one of ["whisky-hunter"]
-
 

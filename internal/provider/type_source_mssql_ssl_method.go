@@ -3,8 +3,8 @@
 package provider
 
 type SourceMssqlSSLMethod struct {
-	SourceMssqlSSLMethodEncryptedTrustServerCertificate       *DestinationMssqlSSLMethodEncryptedTrustServerCertificate `tfsdk:"source_mssql_ssl_method_encrypted_trust_server_certificate"`
-	SourceMssqlSSLMethodEncryptedVerifyCertificate            *DestinationMssqlSSLMethodEncryptedVerifyCertificate      `tfsdk:"source_mssql_ssl_method_encrypted_verify_certificate"`
-	SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate *DestinationMssqlSSLMethodEncryptedTrustServerCertificate `tfsdk:"source_mssql_update_ssl_method_encrypted_trust_server_certificate"`
-	SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate      *DestinationMssqlSSLMethodEncryptedVerifyCertificate      `tfsdk:"source_mssql_update_ssl_method_encrypted_verify_certificate"`
+	SourceMssqlSSLMethodEncryptedTrustServerCertificate       *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mssql_ssl_method_encrypted_trust_server_certificate"`
+	SourceMssqlSSLMethodEncryptedVerifyCertificate            *DestinationMssqlSSLMethodEncryptedVerifyCertificate                  `tfsdk:"source_mssql_ssl_method_encrypted_verify_certificate"`
+	SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mssql_update_ssl_method_encrypted_trust_server_certificate"`
+	SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate      *DestinationMssqlSSLMethodEncryptedVerifyCertificate                  `tfsdk:"source_mssql_update_ssl_method_encrypted_verify_certificate"`
 }

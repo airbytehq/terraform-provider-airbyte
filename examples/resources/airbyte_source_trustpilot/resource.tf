@@ -5,14 +5,12 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
     ]
     credentials = {
       source_trustpilot_authorization_method_api_key = {
-        auth_type = "apikey"
         client_id = "...my_client_id..."
       }
     }
-    source_type = "trustpilot"
-    start_date  = "%Y-%m-%dT%H:%M:%S"
+    start_date = "%Y-%m-%dT%H:%M:%S"
   }
-  name         = "Bradley Goodwin"
+  name         = "Miss Tony Schimmel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f5c84383-6b86-4b3c-9f64-15b0449f9df1"
+  workspace_id = "98dd5412-2565-4139-b61b-0488926ab9cf"
 }

@@ -89,15 +89,6 @@ func (r *SourceNytimesDataSource) Schema(ctx context.Context, req datasource.Sch
 						MarkdownDescription: `must be one of ["facebook"]` + "\n" +
 							`Share Type`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"nytimes",
-							),
-						},
-						Description: `must be one of ["nytimes"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

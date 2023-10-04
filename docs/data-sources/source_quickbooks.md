@@ -42,8 +42,8 @@ data "airbyte_source_quickbooks" "my_source_quickbooks" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `source_type` (String) must be one of ["quickbooks"]
+- `sandbox` (Boolean) Default: false
+Determines whether to use the sandbox or production environment.
 - `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -60,7 +60,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access token fot making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 - `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 - `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
@@ -74,7 +73,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access token fot making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 - `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 - `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.

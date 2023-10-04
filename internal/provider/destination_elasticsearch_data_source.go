@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -66,30 +65,12 @@ func (r *DestinationElasticsearchDataSource) Schema(ctx context.Context, req dat
 										Computed:    true,
 										Description: `The secret associated with the API Key ID.`,
 									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-										Description: `must be one of ["secret"]`,
-									},
 								},
 								Description: `Use a api key and secret combination to authenticate`,
 							},
 							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-										Description: `must be one of ["basic"]`,
-									},
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Basic auth password to access a secure Elasticsearch server`,
@@ -112,30 +93,12 @@ func (r *DestinationElasticsearchDataSource) Schema(ctx context.Context, req dat
 										Computed:    true,
 										Description: `The secret associated with the API Key ID.`,
 									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-										Description: `must be one of ["secret"]`,
-									},
 								},
 								Description: `Use a api key and secret combination to authenticate`,
 							},
 							"destination_elasticsearch_update_authentication_method_username_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-										Description: `must be one of ["basic"]`,
-									},
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Basic auth password to access a secure Elasticsearch server`,
@@ -157,22 +120,14 @@ func (r *DestinationElasticsearchDataSource) Schema(ctx context.Context, req dat
 						Computed:    true,
 						Description: `CA certificate`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"elasticsearch",
-							),
-						},
-						Description: `must be one of ["elasticsearch"]`,
-					},
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
 						Description: `The full url of the Elasticsearch server`,
 					},
 					"upsert": schema.BoolAttribute{
-						Computed:    true,
-						Description: `If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.`,
+						Computed: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.`,
 					},
 				},
 			},

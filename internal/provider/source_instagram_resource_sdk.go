@@ -22,13 +22,11 @@ func (r *SourceInstagramResourceModel) ToCreateSDKType() *shared.SourceInstagram
 	} else {
 		clientSecret = nil
 	}
-	sourceType := shared.SourceInstagramInstagram(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceInstagram{
 		AccessToken:  accessToken,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()

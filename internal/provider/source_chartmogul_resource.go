@@ -60,7 +60,7 @@ func (r *SourceChartmogulResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.`,
 					},
 					"interval": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"day",
@@ -69,17 +69,8 @@ func (r *SourceChartmogulResource) Schema(ctx context.Context, req resource.Sche
 								"quarter",
 							),
 						},
-						MarkdownDescription: `must be one of ["day", "week", "month", "quarter"]` + "\n" +
+						MarkdownDescription: `must be one of ["day", "week", "month", "quarter"]; Default: "month"` + "\n" +
 							`Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"chartmogul",
-							),
-						},
-						Description: `must be one of ["chartmogul"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -160,7 +151,7 @@ func (r *SourceChartmogulResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceChartmogul(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

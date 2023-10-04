@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,18 +55,10 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 						Required:    true,
 						Description: `To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"keen",
-							),
-						},
-						Description: `must be one of ["keen"]`,
-					},
 					"infer_timestamp": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Allow connector to guess keen.timestamp value based on the streamed data.`,
+						Optional: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Allow connector to guess keen.timestamp value based on the streamed data.`,
 					},
 					"project_id": schema.StringAttribute{
 						Required:    true,
@@ -142,7 +132,7 @@ func (r *DestinationKeenResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationKeen(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

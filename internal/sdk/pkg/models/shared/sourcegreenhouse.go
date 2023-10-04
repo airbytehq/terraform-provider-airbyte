@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceGreenhouseGreenhouse) UnmarshalJSON(data []byte) error {
 type SourceGreenhouse struct {
 	// Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
 	APIKey     string                     `json:"api_key"`
-	SourceType SourceGreenhouseGreenhouse `json:"sourceType"`
+	sourceType SourceGreenhouseGreenhouse `const:"greenhouse" json:"sourceType"`
+}
+
+func (s SourceGreenhouse) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGreenhouse) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGreenhouse) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGreenhouse) GetSourceType() SourceGreenhouseGreenhouse {
+	return SourceGreenhouseGreenhouseGreenhouse
 }

@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,11 +31,11 @@ type SourceKlaviyoDataSource struct {
 
 // SourceKlaviyoDataSourceModel describes the data model.
 type SourceKlaviyoDataSourceModel struct {
-	Configuration SourceKlaviyo `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceIterable `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -56,15 +55,6 @@ func (r *SourceKlaviyoDataSource) Schema(ctx context.Context, req datasource.Sch
 					"api_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"klaviyo",
-							),
-						},
-						Description: `must be one of ["klaviyo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

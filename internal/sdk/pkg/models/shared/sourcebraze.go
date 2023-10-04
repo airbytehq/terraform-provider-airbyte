@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,9 +36,45 @@ func (e *SourceBrazeBraze) UnmarshalJSON(data []byte) error {
 type SourceBraze struct {
 	// Braze REST API key
 	APIKey     string           `json:"api_key"`
-	SourceType SourceBrazeBraze `json:"sourceType"`
+	sourceType SourceBrazeBraze `const:"braze" json:"sourceType"`
 	// Rows after this date will be synced
 	StartDate types.Date `json:"start_date"`
 	// Braze REST API endpoint
 	URL string `json:"url"`
+}
+
+func (s SourceBraze) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBraze) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBraze) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceBraze) GetSourceType() SourceBrazeBraze {
+	return SourceBrazeBrazeBraze
+}
+
+func (o *SourceBraze) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceBraze) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

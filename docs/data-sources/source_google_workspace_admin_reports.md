@@ -44,6 +44,5 @@ Read-Only:
 - `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
 - `lookback` (Number) Sets the range of time shown in the report. Reports API allows from up to 180 days ago.
-- `source_type` (String) must be one of ["google-workspace-admin-reports"]
 
 

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceGcs struct {
 	GcsPath string `json:"gcs_path"`
 	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 	ServiceAccount string       `json:"service_account"`
-	SourceType     SourceGcsGcs `json:"sourceType"`
+	sourceType     SourceGcsGcs `const:"gcs" json:"sourceType"`
+}
+
+func (s SourceGcs) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGcs) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGcs) GetGcsBucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsBucket
+}
+
+func (o *SourceGcs) GetGcsPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsPath
+}
+
+func (o *SourceGcs) GetServiceAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceAccount
+}
+
+func (o *SourceGcs) GetSourceType() SourceGcsGcs {
+	return SourceGcsGcsGcs
 }

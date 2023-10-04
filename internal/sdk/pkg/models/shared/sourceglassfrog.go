@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceGlassfrogGlassfrog) UnmarshalJSON(data []byte) error {
 type SourceGlassfrog struct {
 	// API key provided by Glassfrog
 	APIKey     string                   `json:"api_key"`
-	SourceType SourceGlassfrogGlassfrog `json:"sourceType"`
+	sourceType SourceGlassfrogGlassfrog `const:"glassfrog" json:"sourceType"`
+}
+
+func (s SourceGlassfrog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGlassfrog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGlassfrog) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGlassfrog) GetSourceType() SourceGlassfrogGlassfrog {
+	return SourceGlassfrogGlassfrogGlassfrog
 }

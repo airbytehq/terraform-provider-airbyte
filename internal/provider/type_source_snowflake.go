@@ -11,6 +11,5 @@ type SourceSnowflake struct {
 	JdbcURLParams types.String                        `tfsdk:"jdbc_url_params"`
 	Role          types.String                        `tfsdk:"role"`
 	Schema        types.String                        `tfsdk:"schema"`
-	SourceType    types.String                        `tfsdk:"source_type"`
 	Warehouse     types.String                        `tfsdk:"warehouse"`
 }

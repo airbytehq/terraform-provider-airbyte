@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -34,9 +34,31 @@ func (e *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType) Unm
 }
 
 type DestinationSnowflakeAuthorizationMethodUsernameAndPassword struct {
-	AuthType *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType `json:"auth_type,omitempty"`
+	authType *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType `const:"Username and Password" json:"auth_type"`
 	// Enter the password associated with the username.
 	Password string `json:"password"`
+}
+
+func (d DestinationSnowflakeAuthorizationMethodUsernameAndPassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSnowflakeAuthorizationMethodUsernameAndPassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodUsernameAndPassword) GetAuthType() *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType {
+	return DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeUsernameAndPassword.ToPointer()
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodUsernameAndPassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
 }
 
 type DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType string
@@ -64,11 +86,40 @@ func (e *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType) U
 }
 
 type DestinationSnowflakeAuthorizationMethodKeyPairAuthentication struct {
-	AuthType *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType `json:"auth_type,omitempty"`
+	authType *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType `const:"Key Pair Authentication" json:"auth_type"`
 	// RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Passphrase for private key
 	PrivateKeyPassword *string `json:"private_key_password,omitempty"`
+}
+
+func (d DestinationSnowflakeAuthorizationMethodKeyPairAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSnowflakeAuthorizationMethodKeyPairAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodKeyPairAuthentication) GetAuthType() *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType {
+	return DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeKeyPairAuthentication.ToPointer()
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodKeyPairAuthentication) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodKeyPairAuthentication) GetPrivateKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrivateKeyPassword
 }
 
 type DestinationSnowflakeAuthorizationMethodOAuth20AuthType string
@@ -98,13 +149,56 @@ func (e *DestinationSnowflakeAuthorizationMethodOAuth20AuthType) UnmarshalJSON(d
 type DestinationSnowflakeAuthorizationMethodOAuth20 struct {
 	// Enter you application's Access Token
 	AccessToken string                                                  `json:"access_token"`
-	AuthType    *DestinationSnowflakeAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	authType    *DestinationSnowflakeAuthorizationMethodOAuth20AuthType `const:"OAuth2.0" json:"auth_type"`
 	// Enter your application's Client ID
 	ClientID *string `json:"client_id,omitempty"`
 	// Enter your application's Client secret
 	ClientSecret *string `json:"client_secret,omitempty"`
 	// Enter your application's Refresh Token
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (d DestinationSnowflakeAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSnowflakeAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodOAuth20) GetAuthType() *DestinationSnowflakeAuthorizationMethodOAuth20AuthType {
+	return DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeOAuth20.ToPointer()
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *DestinationSnowflakeAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type DestinationSnowflakeAuthorizationMethodType string
@@ -151,30 +245,23 @@ func CreateDestinationSnowflakeAuthorizationMethodDestinationSnowflakeAuthorizat
 }
 
 func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationSnowflakeAuthorizationMethodUsernameAndPassword := new(DestinationSnowflakeAuthorizationMethodUsernameAndPassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationSnowflakeAuthorizationMethodUsernameAndPassword); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeAuthorizationMethodUsernameAndPassword, "", true, true); err == nil {
 		u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword = destinationSnowflakeAuthorizationMethodUsernameAndPassword
 		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodUsernameAndPassword
 		return nil
 	}
 
 	destinationSnowflakeAuthorizationMethodKeyPairAuthentication := new(DestinationSnowflakeAuthorizationMethodKeyPairAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationSnowflakeAuthorizationMethodKeyPairAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeAuthorizationMethodKeyPairAuthentication, "", true, true); err == nil {
 		u.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication = destinationSnowflakeAuthorizationMethodKeyPairAuthentication
 		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodKeyPairAuthentication
 		return nil
 	}
 
 	destinationSnowflakeAuthorizationMethodOAuth20 := new(DestinationSnowflakeAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationSnowflakeAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.DestinationSnowflakeAuthorizationMethodOAuth20 = destinationSnowflakeAuthorizationMethodOAuth20
 		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodOAuth20
 		return nil
@@ -184,19 +271,19 @@ func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword)
+	if u.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
+		return utils.MarshalJSON(u.DestinationSnowflakeAuthorizationMethodOAuth20, "", true)
 	}
 
 	if u.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
-		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication)
+		return utils.MarshalJSON(u.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication, "", true)
 	}
 
-	if u.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodOAuth20)
+	if u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+		return utils.MarshalJSON(u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationSnowflakeSnowflake string
@@ -227,7 +314,7 @@ type DestinationSnowflake struct {
 	Credentials *DestinationSnowflakeAuthorizationMethod `json:"credentials,omitempty"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
 	Database        string                        `json:"database"`
-	DestinationType DestinationSnowflakeSnowflake `json:"destinationType"`
+	destinationType DestinationSnowflakeSnowflake `const:"snowflake" json:"destinationType"`
 	// Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 	Host string `json:"host"`
 	// Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
@@ -242,4 +329,82 @@ type DestinationSnowflake struct {
 	Username string `json:"username"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into
 	Warehouse string `json:"warehouse"`
+}
+
+func (d DestinationSnowflake) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSnowflake) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSnowflake) GetCredentials() *DestinationSnowflakeAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *DestinationSnowflake) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationSnowflake) GetDestinationType() DestinationSnowflakeSnowflake {
+	return DestinationSnowflakeSnowflakeSnowflake
+}
+
+func (o *DestinationSnowflake) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationSnowflake) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationSnowflake) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
+}
+
+func (o *DestinationSnowflake) GetRole() string {
+	if o == nil {
+		return ""
+	}
+	return o.Role
+}
+
+func (o *DestinationSnowflake) GetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schema
+}
+
+func (o *DestinationSnowflake) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *DestinationSnowflake) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
 }

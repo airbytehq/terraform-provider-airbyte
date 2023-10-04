@@ -42,10 +42,11 @@ data "airbyte_source_kyve" "my_source_kyve" {
 Read-Only:
 
 - `max_pages` (Number) The maximum amount of pages to go trough. Set to 'null' for all pages.
-- `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests.
+- `page_size` (Number) Default: 100
+The pagesize for pagination, smaller numbers are used in integration tests.
 - `pool_ids` (String) The IDs of the KYVE storage pool you want to archive. (Comma separated)
-- `source_type` (String) must be one of ["kyve"]
 - `start_ids` (String) The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)
-- `url_base` (String) URL to the KYVE Chain API.
+- `url_base` (String) Default: "https://api.korellia.kyve.network"
+URL to the KYVE Chain API.
 
 

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -69,15 +67,6 @@ func (r *SourceNetsuiteDataSource) Schema(ctx context.Context, req datasource.Sc
 						Computed:    true,
 						Description: `Netsuite realm e.g. 2344535, as for ` + "`" + `production` + "`" + ` or 2344535_SB1, as for the ` + "`" + `sandbox` + "`" + ``,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"netsuite",
-							),
-						},
-						Description: `must be one of ["netsuite"]`,
-					},
 					"start_datetime": schema.StringAttribute{
 						Computed:    true,
 						Description: `Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"`,
@@ -91,8 +80,9 @@ func (r *SourceNetsuiteDataSource) Schema(ctx context.Context, req datasource.Sc
 						Description: `Access token secret`,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.`,
+						Computed: true,
+						MarkdownDescription: `Default: 30` + "\n" +
+							`The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.`,
 					},
 				},
 			},

@@ -10,11 +10,9 @@ import (
 func (r *SourceWebflowResourceModel) ToCreateSDKType() *shared.SourceWebflowCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	siteID := r.Configuration.SiteID.ValueString()
-	sourceType := shared.SourceWebflowWebflow(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceWebflow{
-		APIKey:     apiKey,
-		SiteID:     siteID,
-		SourceType: sourceType,
+		APIKey: apiKey,
+		SiteID: siteID,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

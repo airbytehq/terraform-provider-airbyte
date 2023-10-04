@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -64,15 +63,6 @@ func (r *SourceMarketoDataSource) Schema(ctx context.Context, req datasource.Sch
 					"domain_url": schema.StringAttribute{
 						Computed:    true,
 						Description: `Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"marketo",
-							),
-						},
-						Description: `must be one of ["marketo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -174,11 +175,11 @@ func (e *SourceAmazonSellerPartnerAmazonSellerPartner) UnmarshalJSON(data []byte
 type SourceAmazonSellerPartner struct {
 	// Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.
 	AdvancedStreamOptions *string                            `json:"advanced_stream_options,omitempty"`
-	AuthType              *SourceAmazonSellerPartnerAuthType `json:"auth_type,omitempty"`
+	authType              *SourceAmazonSellerPartnerAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Specifies the AWS access key used as part of the credentials to authenticate the user.
 	AwsAccessKey *string `json:"aws_access_key,omitempty"`
 	// Select the AWS Environment.
-	AwsEnvironment SourceAmazonSellerPartnerAWSEnvironment `json:"aws_environment"`
+	AwsEnvironment *SourceAmazonSellerPartnerAWSEnvironment `default:"PRODUCTION" json:"aws_environment"`
 	// Specifies the AWS secret key used as part of the credentials to authenticate the user.
 	AwsSecretKey *string `json:"aws_secret_key,omitempty"`
 	// Your Login with Amazon Client ID.
@@ -186,13 +187,13 @@ type SourceAmazonSellerPartner struct {
 	// Your Login with Amazon Client Secret.
 	LwaClientSecret string `json:"lwa_client_secret"`
 	// Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.
-	MaxWaitSeconds *int64 `json:"max_wait_seconds,omitempty"`
+	MaxWaitSeconds *int64 `default:"500" json:"max_wait_seconds"`
 	// Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
-	PeriodInDays *int64 `json:"period_in_days,omitempty"`
+	PeriodInDays *int64 `default:"90" json:"period_in_days"`
 	// The Refresh Token obtained via OAuth flow authorization.
 	RefreshToken string `json:"refresh_token"`
 	// Select the AWS Region.
-	Region SourceAmazonSellerPartnerAWSRegion `json:"region"`
+	Region *SourceAmazonSellerPartnerAWSRegion `default:"US" json:"region"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 	ReplicationEndDate *string `json:"replication_end_date,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
@@ -201,5 +202,122 @@ type SourceAmazonSellerPartner struct {
 	ReportOptions *string `json:"report_options,omitempty"`
 	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).
 	RoleArn    *string                                      `json:"role_arn,omitempty"`
-	SourceType SourceAmazonSellerPartnerAmazonSellerPartner `json:"sourceType"`
+	sourceType SourceAmazonSellerPartnerAmazonSellerPartner `const:"amazon-seller-partner" json:"sourceType"`
+}
+
+func (s SourceAmazonSellerPartner) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmazonSellerPartner) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmazonSellerPartner) GetAdvancedStreamOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AdvancedStreamOptions
+}
+
+func (o *SourceAmazonSellerPartner) GetAuthType() *SourceAmazonSellerPartnerAuthType {
+	return SourceAmazonSellerPartnerAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceAmazonSellerPartner) GetAwsAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsAccessKey
+}
+
+func (o *SourceAmazonSellerPartner) GetAwsEnvironment() *SourceAmazonSellerPartnerAWSEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.AwsEnvironment
+}
+
+func (o *SourceAmazonSellerPartner) GetAwsSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsSecretKey
+}
+
+func (o *SourceAmazonSellerPartner) GetLwaAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.LwaAppID
+}
+
+func (o *SourceAmazonSellerPartner) GetLwaClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.LwaClientSecret
+}
+
+func (o *SourceAmazonSellerPartner) GetMaxWaitSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxWaitSeconds
+}
+
+func (o *SourceAmazonSellerPartner) GetPeriodInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PeriodInDays
+}
+
+func (o *SourceAmazonSellerPartner) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceAmazonSellerPartner) GetRegion() *SourceAmazonSellerPartnerAWSRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceAmazonSellerPartner) GetReplicationEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicationEndDate
+}
+
+func (o *SourceAmazonSellerPartner) GetReplicationStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.ReplicationStartDate
+}
+
+func (o *SourceAmazonSellerPartner) GetReportOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReportOptions
+}
+
+func (o *SourceAmazonSellerPartner) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
+}
+
+func (o *SourceAmazonSellerPartner) GetSourceType() SourceAmazonSellerPartnerAmazonSellerPartner {
+	return SourceAmazonSellerPartnerAmazonSellerPartnerAmazonSellerPartner
 }

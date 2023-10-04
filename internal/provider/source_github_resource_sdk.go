@@ -32,17 +32,10 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 			} else {
 				clientSecret = nil
 			}
-			optionTitle := new(shared.SourceGithubAuthenticationOAuthOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsNull() {
-				*optionTitle = shared.SourceGithubAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.ValueString())
-			} else {
-				optionTitle = nil
-			}
 			sourceGithubAuthenticationOAuth = &shared.SourceGithubAuthenticationOAuth{
 				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
 			}
 		}
 		if sourceGithubAuthenticationOAuth != nil {
@@ -52,15 +45,8 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 		}
 		var sourceGithubAuthenticationPersonalAccessToken *shared.SourceGithubAuthenticationPersonalAccessToken
 		if r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken != nil {
-			optionTitle1 := new(shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.IsNull() {
-				*optionTitle1 = shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.ValueString())
-			} else {
-				optionTitle1 = nil
-			}
 			personalAccessToken := r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.PersonalAccessToken.ValueString()
 			sourceGithubAuthenticationPersonalAccessToken = &shared.SourceGithubAuthenticationPersonalAccessToken{
-				OptionTitle:         optionTitle1,
 				PersonalAccessToken: personalAccessToken,
 			}
 		}
@@ -77,14 +63,12 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	} else {
 		requestsPerHour = nil
 	}
-	sourceType := shared.SourceGithubGithub(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGithub{
 		Branch:          branch,
 		Credentials:     credentials,
 		Repository:      repository,
 		RequestsPerHour: requestsPerHour,
-		SourceType:      sourceType,
 		StartDate:       startDate,
 	}
 	name := r.Name.ValueString()
@@ -133,17 +117,10 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 			} else {
 				clientSecret = nil
 			}
-			optionTitle := new(shared.SourceGithubUpdateAuthenticationOAuthOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.IsNull() {
-				*optionTitle = shared.SourceGithubUpdateAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.ValueString())
-			} else {
-				optionTitle = nil
-			}
 			sourceGithubUpdateAuthenticationOAuth = &shared.SourceGithubUpdateAuthenticationOAuth{
 				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
 			}
 		}
 		if sourceGithubUpdateAuthenticationOAuth != nil {
@@ -153,15 +130,8 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 		}
 		var sourceGithubUpdateAuthenticationPersonalAccessToken *shared.SourceGithubUpdateAuthenticationPersonalAccessToken
 		if r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken != nil {
-			optionTitle1 := new(shared.SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.OptionTitle.IsNull() {
-				*optionTitle1 = shared.SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle(r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.OptionTitle.ValueString())
-			} else {
-				optionTitle1 = nil
-			}
 			personalAccessToken := r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.PersonalAccessToken.ValueString()
 			sourceGithubUpdateAuthenticationPersonalAccessToken = &shared.SourceGithubUpdateAuthenticationPersonalAccessToken{
-				OptionTitle:         optionTitle1,
 				PersonalAccessToken: personalAccessToken,
 			}
 		}

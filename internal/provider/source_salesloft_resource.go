@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 										Required:    true,
 										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-										Description: `must be one of ["api_key"]`,
-									},
 								},
 							},
 							"source_salesloft_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
@@ -82,15 +72,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -120,15 +101,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 										Required:    true,
 										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-										Description: `must be one of ["api_key"]`,
-									},
 								},
 							},
 							"source_salesloft_update_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
@@ -137,15 +109,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -172,15 +135,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"salesloft",
-							),
-						},
-						Description: `must be one of ["salesloft"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -261,7 +215,7 @@ func (r *SourceSalesloftResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSalesloft(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,15 +57,6 @@ func (r *SourceRailzDataSource) Schema(ctx context.Context, req datasource.Schem
 					"secret_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Secret key (secret_key)`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"railz",
-							),
-						},
-						Description: `must be one of ["railz"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

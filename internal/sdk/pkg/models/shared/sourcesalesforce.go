@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -102,25 +103,118 @@ func (e *SourceSalesforceStreamsCriteriaSearchCriteria) UnmarshalJSON(data []byt
 }
 
 type SourceSalesforceStreamsCriteria struct {
-	Criteria SourceSalesforceStreamsCriteriaSearchCriteria `json:"criteria"`
-	Value    string                                        `json:"value"`
+	Criteria *SourceSalesforceStreamsCriteriaSearchCriteria `default:"contains" json:"criteria"`
+	Value    string                                         `json:"value"`
+}
+
+func (s SourceSalesforceStreamsCriteria) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSalesforceStreamsCriteria) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSalesforceStreamsCriteria) GetCriteria() *SourceSalesforceStreamsCriteriaSearchCriteria {
+	if o == nil {
+		return nil
+	}
+	return o.Criteria
+}
+
+func (o *SourceSalesforceStreamsCriteria) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type SourceSalesforce struct {
-	AuthType *SourceSalesforceAuthType `json:"auth_type,omitempty"`
+	authType *SourceSalesforceAuthType `const:"Client" json:"auth_type,omitempty"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 	ClientID string `json:"client_id"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
 	ClientSecret string `json:"client_secret"`
 	// Toggle to use Bulk API (this might cause empty fields for some streams)
-	ForceUseBulkAPI *bool `json:"force_use_bulk_api,omitempty"`
+	ForceUseBulkAPI *bool `default:"false" json:"force_use_bulk_api"`
 	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
-	IsSandbox *bool `json:"is_sandbox,omitempty"`
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 	RefreshToken string                     `json:"refresh_token"`
-	SourceType   SourceSalesforceSalesforce `json:"sourceType"`
+	sourceType   SourceSalesforceSalesforce `const:"salesforce" json:"sourceType"`
 	// Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector.
 	StreamsCriteria []SourceSalesforceStreamsCriteria `json:"streams_criteria,omitempty"`
+}
+
+func (s SourceSalesforce) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSalesforce) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSalesforce) GetAuthType() *SourceSalesforceAuthType {
+	return SourceSalesforceAuthTypeClient.ToPointer()
+}
+
+func (o *SourceSalesforce) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSalesforce) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSalesforce) GetForceUseBulkAPI() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ForceUseBulkAPI
+}
+
+func (o *SourceSalesforce) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *SourceSalesforce) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceSalesforce) GetSourceType() SourceSalesforceSalesforce {
+	return SourceSalesforceSalesforceSalesforce
+}
+
+func (o *SourceSalesforce) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceSalesforce) GetStreamsCriteria() []SourceSalesforceStreamsCriteria {
+	if o == nil {
+		return nil
+	}
+	return o.StreamsCriteria
 }

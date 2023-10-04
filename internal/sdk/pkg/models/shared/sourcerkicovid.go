@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,7 +33,29 @@ func (e *SourceRkiCovidRkiCovid) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRkiCovid struct {
-	SourceType SourceRkiCovidRkiCovid `json:"sourceType"`
+	sourceType SourceRkiCovidRkiCovid `const:"rki-covid" json:"sourceType"`
 	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceRkiCovid) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRkiCovid) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRkiCovid) GetSourceType() SourceRkiCovidRkiCovid {
+	return SourceRkiCovidRkiCovidRkiCovid
+}
+
+func (o *SourceRkiCovid) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

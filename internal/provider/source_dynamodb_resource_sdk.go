@@ -28,14 +28,12 @@ func (r *SourceDynamodbResourceModel) ToCreateSDKType() *shared.SourceDynamodbCr
 		reservedAttributeNames = nil
 	}
 	secretAccessKey := r.Configuration.SecretAccessKey.ValueString()
-	sourceType := shared.SourceDynamodbDynamodb(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDynamodb{
 		AccessKeyID:            accessKeyID,
 		Endpoint:               endpoint,
 		Region:                 region,
 		ReservedAttributeNames: reservedAttributeNames,
 		SecretAccessKey:        secretAccessKey,
-		SourceType:             sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

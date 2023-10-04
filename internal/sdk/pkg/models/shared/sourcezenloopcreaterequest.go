@@ -9,3 +9,31 @@ type SourceZenloopCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceZenloopCreateRequest) GetConfiguration() SourceZenloop {
+	if o == nil {
+		return SourceZenloop{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZenloopCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZenloopCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceZenloopCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

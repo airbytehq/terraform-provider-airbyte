@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -56,15 +55,6 @@ func (r *SourcePrestashopDataSource) Schema(ctx context.Context, req datasource.
 					"access_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"prestashop",
-							),
-						},
-						Description: `must be one of ["prestashop"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

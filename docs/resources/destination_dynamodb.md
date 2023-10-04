@@ -16,14 +16,13 @@ DestinationDynamodb Resource
 resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
   configuration = {
     access_key_id              = "A012345678910EXAMPLE"
-    destination_type           = "dynamodb"
     dynamodb_endpoint          = "http://localhost:9000"
-    dynamodb_region            = "eu-south-1"
+    dynamodb_region            = "us-west-2"
     dynamodb_table_name_prefix = "airbyte_sync"
     secret_access_key          = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  name         = "Joanna Kohler"
-  workspace_id = "29cdb1a8-422b-4b67-9d23-22715bf0cbb1"
+  name         = "Penny Boyer"
+  workspace_id = "8452de7c-35eb-492a-9e95-2da293962c00"
 }
 ```
 
@@ -47,14 +46,14 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
 Required:
 
 - `access_key_id` (String) The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
-- `destination_type` (String) must be one of ["dynamodb"]
-- `dynamodb_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
-The region of the DynamoDB.
 - `dynamodb_table_name_prefix` (String) The prefix to use when naming DynamoDB tables.
 - `secret_access_key` (String) The corresponding secret to the access key id.
 
 Optional:
 
-- `dynamodb_endpoint` (String) This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
+- `dynamodb_endpoint` (String) Default: ""
+This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
+- `dynamodb_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
+The region of the DynamoDB.
 
 

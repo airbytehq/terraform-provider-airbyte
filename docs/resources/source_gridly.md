@@ -15,13 +15,12 @@ SourceGridly Resource
 ```terraform
 resource "airbyte_source_gridly" "my_source_gridly" {
   configuration = {
-    api_key     = "...my_api_key..."
-    grid_id     = "...my_grid_id..."
-    source_type = "gridly"
+    api_key = "...my_api_key..."
+    grid_id = "...my_grid_id..."
   }
-  name         = "Josephine McCullough"
+  name         = "Mr. Kenny Rohan"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d78de3b6-e938-49f5-abb7-f662550a2838"
+  workspace_id = "cb908523-df16-4a0c-8499-1982a682b0a7"
 }
 ```
 
@@ -50,6 +49,5 @@ Required:
 
 - `api_key` (String)
 - `grid_id` (String) ID of a grid, or can be ID of a branch
-- `source_type` (String) must be one of ["gridly"]
 
 

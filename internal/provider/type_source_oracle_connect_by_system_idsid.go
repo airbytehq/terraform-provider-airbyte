@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOracleConnectBySystemIDSID struct {
-	ConnectionType types.String `tfsdk:"connection_type"`
-	Sid            types.String `tfsdk:"sid"`
+	Sid types.String `tfsdk:"sid"`
 }

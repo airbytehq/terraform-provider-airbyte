@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 )
 
 type SourceSonarCloudUpdate struct {
@@ -17,4 +18,50 @@ type SourceSonarCloudUpdate struct {
 	StartDate *types.Date `json:"start_date,omitempty"`
 	// Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 	UserToken string `json:"user_token"`
+}
+
+func (s SourceSonarCloudUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSonarCloudUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSonarCloudUpdate) GetComponentKeys() []interface{} {
+	if o == nil {
+		return []interface{}{}
+	}
+	return o.ComponentKeys
+}
+
+func (o *SourceSonarCloudUpdate) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceSonarCloudUpdate) GetOrganization() string {
+	if o == nil {
+		return ""
+	}
+	return o.Organization
+}
+
+func (o *SourceSonarCloudUpdate) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceSonarCloudUpdate) GetUserToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserToken
 }

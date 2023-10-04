@@ -18,14 +18,12 @@ func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSensefor
 	} else {
 		sliceRange = nil
 	}
-	sourceType := shared.SourceSenseforceSenseforce(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSenseforce{
 		AccessToken: accessToken,
 		BackendURL:  backendURL,
 		DatasetID:   datasetID,
 		SliceRange:  sliceRange,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()

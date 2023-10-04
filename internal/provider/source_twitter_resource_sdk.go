@@ -17,7 +17,6 @@ func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCrea
 		endDate = nil
 	}
 	query := r.Configuration.Query.ValueString()
-	sourceType := shared.SourceTwitterTwitter(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -25,11 +24,10 @@ func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCrea
 		startDate = nil
 	}
 	configuration := shared.SourceTwitter{
-		APIKey:     apiKey,
-		EndDate:    endDate,
-		Query:      query,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Query:     query,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

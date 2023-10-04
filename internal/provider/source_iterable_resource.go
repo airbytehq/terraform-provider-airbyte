@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -58,15 +57,6 @@ func (r *SourceIterableResource) Schema(ctx context.Context, req resource.Schema
 					"api_key": schema.StringAttribute{
 						Required:    true,
 						Description: `Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"iterable",
-							),
-						},
-						Description: `must be one of ["iterable"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -147,7 +137,7 @@ func (r *SourceIterableResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceIterable(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

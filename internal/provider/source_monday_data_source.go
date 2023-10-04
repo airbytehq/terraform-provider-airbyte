@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `API Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 								},
 							},
 							"source_monday_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -80,15 +70,6 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -99,8 +80,9 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"subdomain": schema.StringAttribute{
-										Computed:    true,
-										Description: `Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
+										Computed: true,
+										MarkdownDescription: `Default: ""` + "\n" +
+											`Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
 									},
 								},
 							},
@@ -111,15 +93,6 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `API Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 								},
 							},
 							"source_monday_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -128,15 +101,6 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -147,8 +111,9 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"subdomain": schema.StringAttribute{
-										Computed:    true,
-										Description: `Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
+										Computed: true,
+										MarkdownDescription: `Default: ""` + "\n" +
+											`Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
 									},
 								},
 							},
@@ -156,15 +121,6 @@ func (r *SourceMondayDataSource) Schema(ctx context.Context, req datasource.Sche
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"monday",
-							),
-						},
-						Description: `must be one of ["monday"]`,
 					},
 				},
 			},

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -39,9 +40,59 @@ type SourceFreshcaller struct {
 	Domain string `json:"domain"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
 	RequestsPerMinute *int64                       `json:"requests_per_minute,omitempty"`
-	SourceType        SourceFreshcallerFreshcaller `json:"sourceType"`
+	sourceType        SourceFreshcallerFreshcaller `const:"freshcaller" json:"sourceType"`
 	// UTC date and time. Any data created after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 	SyncLagMinutes *int64 `json:"sync_lag_minutes,omitempty"`
+}
+
+func (s SourceFreshcaller) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshcaller) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshcaller) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshcaller) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *SourceFreshcaller) GetRequestsPerMinute() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestsPerMinute
+}
+
+func (o *SourceFreshcaller) GetSourceType() SourceFreshcallerFreshcaller {
+	return SourceFreshcallerFreshcallerFreshcaller
+}
+
+func (o *SourceFreshcaller) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceFreshcaller) GetSyncLagMinutes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SyncLagMinutes
 }

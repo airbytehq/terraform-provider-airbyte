@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,7 +35,22 @@ func (e *DestinationDevNullUpdateTestDestinationSilentTestDestinationType) Unmar
 
 // DestinationDevNullUpdateTestDestinationSilent - The type of destination to be used
 type DestinationDevNullUpdateTestDestinationSilent struct {
-	TestDestinationType DestinationDevNullUpdateTestDestinationSilentTestDestinationType `json:"test_destination_type"`
+	testDestinationType *DestinationDevNullUpdateTestDestinationSilentTestDestinationType `const:"SILENT" json:"test_destination_type"`
+}
+
+func (d DestinationDevNullUpdateTestDestinationSilent) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDevNullUpdateTestDestinationSilent) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDevNullUpdateTestDestinationSilent) GetTestDestinationType() *DestinationDevNullUpdateTestDestinationSilentTestDestinationType {
+	return DestinationDevNullUpdateTestDestinationSilentTestDestinationTypeSilent.ToPointer()
 }
 
 type DestinationDevNullUpdateTestDestinationType string
@@ -60,12 +75,9 @@ func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateTestDe
 }
 
 func (u *DestinationDevNullUpdateTestDestination) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationDevNullUpdateTestDestinationSilent := new(DestinationDevNullUpdateTestDestinationSilent)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDevNullUpdateTestDestinationSilent); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationDevNullUpdateTestDestinationSilent, "", true, true); err == nil {
 		u.DestinationDevNullUpdateTestDestinationSilent = destinationDevNullUpdateTestDestinationSilent
 		u.Type = DestinationDevNullUpdateTestDestinationTypeDestinationDevNullUpdateTestDestinationSilent
 		return nil
@@ -76,13 +88,20 @@ func (u *DestinationDevNullUpdateTestDestination) UnmarshalJSON(data []byte) err
 
 func (u DestinationDevNullUpdateTestDestination) MarshalJSON() ([]byte, error) {
 	if u.DestinationDevNullUpdateTestDestinationSilent != nil {
-		return json.Marshal(u.DestinationDevNullUpdateTestDestinationSilent)
+		return utils.MarshalJSON(u.DestinationDevNullUpdateTestDestinationSilent, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationDevNullUpdate struct {
 	// The type of destination to be used
 	TestDestination DestinationDevNullUpdateTestDestination `json:"test_destination"`
+}
+
+func (o *DestinationDevNullUpdate) GetTestDestination() DestinationDevNullUpdateTestDestination {
+	if o == nil {
+		return DestinationDevNullUpdateTestDestination{}
+	}
+	return o.TestDestination
 }

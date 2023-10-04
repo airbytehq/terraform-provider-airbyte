@@ -56,15 +56,6 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 						Computed:    true,
 						Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"s3",
-							),
-						},
-						Description: `must be one of ["s3"]`,
-					},
 					"file_name_pattern": schema.StringAttribute{
 						Computed:    true,
 						Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
@@ -88,7 +79,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"no compression",
 															),
 														},
-														Description: `must be one of ["no compression"]`,
+														Description: `must be one of ["no compression"]; Default: "no compression"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -103,11 +94,12 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"Deflate",
 															),
 														},
-														Description: `must be one of ["Deflate"]`,
+														Description: `must be one of ["Deflate"]; Default: "Deflate"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed:    true,
-														Description: `0: no compression & fastest, 9: best compression & slowest.`,
+														Computed: true,
+														MarkdownDescription: `Default: 0` + "\n" +
+															`0: no compression & fastest, 9: best compression & slowest.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -122,7 +114,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"bzip2",
 															),
 														},
-														Description: `must be one of ["bzip2"]`,
+														Description: `must be one of ["bzip2"]; Default: "bzip2"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -137,11 +129,12 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"xz",
 															),
 														},
-														Description: `must be one of ["xz"]`,
+														Description: `must be one of ["xz"]; Default: "xz"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed:    true,
-														Description: `See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
+														Computed: true,
+														MarkdownDescription: `Default: 6` + "\n" +
+															`See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -156,15 +149,17 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"zstandard",
 															),
 														},
-														Description: `must be one of ["zstandard"]`,
+														Description: `must be one of ["zstandard"]; Default: "zstandard"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed:    true,
-														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
+														Computed: true,
+														MarkdownDescription: `Default: 3` + "\n" +
+															`Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Computed:    true,
-														Description: `If true, include a checksum with each data block.`,
+														Computed: true,
+														MarkdownDescription: `Default: false` + "\n" +
+															`If true, include a checksum with each data block.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -179,7 +174,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"snappy",
 															),
 														},
-														Description: `must be one of ["snappy"]`,
+														Description: `must be one of ["snappy"]; Default: "snappy"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -197,7 +192,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Avro",
 											),
 										},
-										Description: `must be one of ["Avro"]`,
+										Description: `must be one of ["Avro"]; Default: "Avro"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -218,7 +213,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -233,7 +228,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -252,7 +247,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -262,7 +257,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"CSV",
 											),
 										},
-										Description: `must be one of ["CSV"]`,
+										Description: `must be one of ["CSV"]; Default: "CSV"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -283,7 +278,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -298,7 +293,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -317,7 +312,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -327,7 +322,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"JSONL",
 											),
 										},
-										Description: `must be one of ["JSONL"]`,
+										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -336,8 +331,9 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 128` + "\n" +
+											`This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
 									},
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
@@ -352,16 +348,18 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"ZSTD",
 											),
 										},
-										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"` + "\n" +
 											`The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Default: true.`,
+										Computed: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Default: true.`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 1024` + "\n" +
+											`There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
 									},
 									"format_type": schema.StringAttribute{
 										Computed: true,
@@ -370,15 +368,17 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Parquet",
 											),
 										},
-										Description: `must be one of ["Parquet"]`,
+										Description: `must be one of ["Parquet"]; Default: "Parquet"`,
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 8` + "\n" +
+											`Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 1024` + "\n" +
+											`The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -399,7 +399,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"no compression",
 															),
 														},
-														Description: `must be one of ["no compression"]`,
+														Description: `must be one of ["no compression"]; Default: "no compression"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -414,11 +414,12 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"Deflate",
 															),
 														},
-														Description: `must be one of ["Deflate"]`,
+														Description: `must be one of ["Deflate"]; Default: "Deflate"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed:    true,
-														Description: `0: no compression & fastest, 9: best compression & slowest.`,
+														Computed: true,
+														MarkdownDescription: `Default: 0` + "\n" +
+															`0: no compression & fastest, 9: best compression & slowest.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -433,7 +434,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"bzip2",
 															),
 														},
-														Description: `must be one of ["bzip2"]`,
+														Description: `must be one of ["bzip2"]; Default: "bzip2"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -448,11 +449,12 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"xz",
 															),
 														},
-														Description: `must be one of ["xz"]`,
+														Description: `must be one of ["xz"]; Default: "xz"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed:    true,
-														Description: `See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
+														Computed: true,
+														MarkdownDescription: `Default: 6` + "\n" +
+															`See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -467,15 +469,17 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"zstandard",
 															),
 														},
-														Description: `must be one of ["zstandard"]`,
+														Description: `must be one of ["zstandard"]; Default: "zstandard"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed:    true,
-														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
+														Computed: true,
+														MarkdownDescription: `Default: 3` + "\n" +
+															`Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Computed:    true,
-														Description: `If true, include a checksum with each data block.`,
+														Computed: true,
+														MarkdownDescription: `Default: false` + "\n" +
+															`If true, include a checksum with each data block.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -490,7 +494,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"snappy",
 															),
 														},
-														Description: `must be one of ["snappy"]`,
+														Description: `must be one of ["snappy"]; Default: "snappy"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -508,7 +512,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Avro",
 											),
 										},
-										Description: `must be one of ["Avro"]`,
+										Description: `must be one of ["Avro"]; Default: "Avro"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -529,7 +533,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -544,7 +548,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -563,7 +567,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -573,7 +577,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"CSV",
 											),
 										},
-										Description: `must be one of ["CSV"]`,
+										Description: `must be one of ["CSV"]; Default: "CSV"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -594,7 +598,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -609,7 +613,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -628,7 +632,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -638,7 +642,7 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"JSONL",
 											),
 										},
-										Description: `must be one of ["JSONL"]`,
+										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -647,8 +651,9 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 128` + "\n" +
+											`This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
 									},
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
@@ -663,16 +668,18 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"ZSTD",
 											),
 										},
-										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"` + "\n" +
 											`The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Computed:    true,
-										Description: `Default: true.`,
+										Computed: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Default: true.`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 1024` + "\n" +
+											`There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
 									},
 									"format_type": schema.StringAttribute{
 										Computed: true,
@@ -681,15 +688,17 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 												"Parquet",
 											),
 										},
-										Description: `must be one of ["Parquet"]`,
+										Description: `must be one of ["Parquet"]; Default: "Parquet"`,
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 8` + "\n" +
+											`Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
+										Computed: true,
+										MarkdownDescription: `Default: 1024` + "\n" +
+											`The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -740,12 +749,13 @@ func (r *DestinationS3DataSource) Schema(ctx context.Context, req datasource.Sch
 								"us-gov-west-1",
 							),
 						},
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
+						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
 							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 					"s3_endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
+						Computed: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
 					},
 					"s3_path_format": schema.StringAttribute{
 						Computed:    true,

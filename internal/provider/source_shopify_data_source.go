@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceShopifyDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-										Description: `must be one of ["api_password"]`,
-									},
 								},
 								Description: `API Password Auth`,
 							},
@@ -81,15 +71,6 @@ func (r *SourceShopifyDataSource) Schema(ctx context.Context, req datasource.Sch
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -109,15 +90,6 @@ func (r *SourceShopifyDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-										Description: `must be one of ["api_password"]`,
-									},
 								},
 								Description: `API Password Auth`,
 							},
@@ -127,15 +99,6 @@ func (r *SourceShopifyDataSource) Schema(ctx context.Context, req datasource.Sch
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -158,21 +121,13 @@ func (r *SourceShopifyDataSource) Schema(ctx context.Context, req datasource.Sch
 						Computed:    true,
 						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"shopify",
-							),
-						},
-						Description: `must be one of ["shopify"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
+						MarkdownDescription: `Default: "2020-01-01"` + "\n" +
+							`The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},

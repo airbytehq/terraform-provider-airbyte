@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -59,15 +58,6 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required:    true,
 						Description: `The Athlete ID of your Strava developer application.`,
 					},
-					"auth_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Client",
-							),
-						},
-						Description: `must be one of ["Client"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
 						Description: `The Client ID of your Strava developer application.`,
@@ -79,15 +69,6 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
 						Description: `The Refresh Token with the activity: read_all permissions.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"strava",
-							),
-						},
-						Description: `must be one of ["strava"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -168,7 +149,7 @@ func (r *SourceStravaResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceStrava(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

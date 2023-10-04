@@ -45,7 +45,6 @@ Read-Only:
 - `client_secret` (String) The Client Secret of your Outreach developer application.
 - `redirect_uri` (String) A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
 - `refresh_token` (String) The token for obtaining the new access token.
-- `source_type` (String) must be one of ["outreach"]
 - `start_date` (String) The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -54,45 +53,17 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"langchain",
-							),
-						},
-						Description: `must be one of ["langchain"]`,
-					},
 					"embedding": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_langchain_embedding_fake": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_langchain_embedding_open_ai": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Required: true,
 									},
@@ -100,32 +71,13 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
 							},
 							"destination_langchain_update_embedding_fake": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_langchain_update_embedding_open_ai": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Required: true,
 									},
@@ -145,21 +97,13 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"collection_name": schema.StringAttribute{
-										Optional:    true,
-										Description: `Name of the collection to use.`,
+										Optional: true,
+										MarkdownDescription: `Default: "langchain"` + "\n" +
+											`Name of the collection to use.`,
 									},
 									"destination_path": schema.StringAttribute{
 										Required:    true,
 										Description: `Path to the directory where chroma files will be written. The files will be placed inside that local mount.`,
-									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"chroma_local",
-											),
-										},
-										Description: `must be one of ["chroma_local"]`,
 									},
 								},
 								Description: `Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.`,
@@ -171,15 +115,6 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 										Required:    true,
 										Description: `Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.`,
 									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"DocArrayHnswSearch",
-											),
-										},
-										Description: `must be one of ["DocArrayHnswSearch"]`,
-									},
 								},
 								Description: `DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.`,
 							},
@@ -189,15 +124,6 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 									"index": schema.StringAttribute{
 										Required:    true,
 										Description: `Pinecone index to use`,
-									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"pinecone",
-											),
-										},
-										Description: `must be one of ["pinecone"]`,
 									},
 									"pinecone_environment": schema.StringAttribute{
 										Required:    true,
@@ -213,21 +139,13 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"collection_name": schema.StringAttribute{
-										Optional:    true,
-										Description: `Name of the collection to use.`,
+										Optional: true,
+										MarkdownDescription: `Default: "langchain"` + "\n" +
+											`Name of the collection to use.`,
 									},
 									"destination_path": schema.StringAttribute{
 										Required:    true,
 										Description: `Path to the directory where chroma files will be written. The files will be placed inside that local mount.`,
-									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"chroma_local",
-											),
-										},
-										Description: `must be one of ["chroma_local"]`,
 									},
 								},
 								Description: `Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.`,
@@ -239,15 +157,6 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 										Required:    true,
 										Description: `Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.`,
 									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"DocArrayHnswSearch",
-											),
-										},
-										Description: `must be one of ["DocArrayHnswSearch"]`,
-									},
 								},
 								Description: `DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.`,
 							},
@@ -257,15 +166,6 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 									"index": schema.StringAttribute{
 										Required:    true,
 										Description: `Pinecone index to use`,
-									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"pinecone",
-											),
-										},
-										Description: `must be one of ["pinecone"]`,
 									},
 									"pinecone_environment": schema.StringAttribute{
 										Required:    true,
@@ -287,8 +187,9 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
-								Optional:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
+								Optional: true,
+								MarkdownDescription: `Default: 0` + "\n" +
+									`Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
 							},
 							"chunk_size": schema.Int64Attribute{
 								Required:    true,
@@ -369,7 +270,7 @@ func (r *DestinationLangchainResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationLangchain(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

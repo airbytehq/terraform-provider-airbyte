@@ -15,12 +15,11 @@ SourceGetlago Resource
 ```terraform
 resource "airbyte_source_getlago" "my_source_getlago" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "getlago"
+    api_key = "...my_api_key..."
   }
-  name         = "Irving Rohan"
+  name         = "Kelvin Bahringer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0df448a4-7f93-490c-9888-0983dabf9ef3"
+  workspace_id = "f07c5466-21bd-4ba9-8354-f51ed0a8181e"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_getlago" "my_source_getlago" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
-- `source_type` (String) must be one of ["getlago"]
 
 

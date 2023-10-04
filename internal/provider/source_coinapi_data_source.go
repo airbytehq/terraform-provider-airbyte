@@ -71,13 +71,14 @@ func (r *SourceCoinAPIDataSource) Schema(ctx context.Context, req datasource.Sch
 								"production",
 							),
 						},
-						MarkdownDescription: `must be one of ["sandbox", "production"]` + "\n" +
+						MarkdownDescription: `must be one of ["sandbox", "production"]; Default: "sandbox"` + "\n" +
 							`The environment to use. Either sandbox or production.` + "\n" +
 							``,
 					},
 					"limit": schema.Int64Attribute{
 						Computed: true,
-						MarkdownDescription: `The maximum number of elements to return. If not supplied, the default` + "\n" +
+						MarkdownDescription: `Default: 100` + "\n" +
+							`The maximum number of elements to return. If not supplied, the default` + "\n" +
 							`is 100. For numbers larger than 100, each 100 items is counted as one` + "\n" +
 							`request for pricing purposes. Maximum value is 100000.` + "\n" +
 							``,
@@ -85,15 +86,6 @@ func (r *SourceCoinAPIDataSource) Schema(ctx context.Context, req datasource.Sch
 					"period": schema.StringAttribute{
 						Computed:    true,
 						Description: `The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"coin-api",
-							),
-						},
-						Description: `must be one of ["coin-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,15 +60,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 							"source_notion_authenticate_using_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"token",
-											),
-										},
-										Description: `must be one of ["token"]`,
-									},
 									"token": schema.StringAttribute{
 										Required:    true,
 										Description: `Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.`,
@@ -83,15 +73,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token is a token you received by complete the OauthWebFlow of Notion.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -107,15 +88,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 							"source_notion_update_authenticate_using_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"token",
-											),
-										},
-										Description: `must be one of ["token"]`,
-									},
 									"token": schema.StringAttribute{
 										Required:    true,
 										Description: `Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.`,
@@ -129,15 +101,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token is a token you received by complete the OauthWebFlow of Notion.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -155,15 +118,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 							validators.ExactlyOneChild(),
 						},
 						Description: `Pick an authentication method.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"notion",
-							),
-						},
-						Description: `must be one of ["notion"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -244,7 +198,7 @@ func (r *SourceNotionResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceNotion(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

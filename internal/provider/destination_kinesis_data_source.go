@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -56,17 +54,9 @@ func (r *DestinationKinesisDataSource) Schema(ctx context.Context, req datasourc
 						Description: `Generate the AWS Access Key for current user.`,
 					},
 					"buffer_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Buffer size for storing kinesis records before being batch streamed.`,
-					},
-					"destination_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kinesis",
-							),
-						},
-						Description: `must be one of ["kinesis"]`,
+						MarkdownDescription: `Default: 100` + "\n" +
+							`Buffer size for storing kinesis records before being batch streamed.`,
 					},
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
@@ -81,8 +71,9 @@ func (r *DestinationKinesisDataSource) Schema(ctx context.Context, req datasourc
 						Description: `AWS region. Your account determines the Regions that are available to you.`,
 					},
 					"shard_count": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Number of shards to which the data should be streamed.`,
+						Computed: true,
+						MarkdownDescription: `Default: 5` + "\n" +
+							`Number of shards to which the data should be streamed.`,
 					},
 				},
 			},

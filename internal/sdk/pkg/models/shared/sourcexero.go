@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -19,6 +20,41 @@ type SourceXeroAuthenticateViaXeroOAuth struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed
 	TokenExpiryDate string `json:"token_expiry_date"`
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetTokenExpiryDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceXeroXero string
@@ -47,9 +83,45 @@ func (e *SourceXeroXero) UnmarshalJSON(data []byte) error {
 
 type SourceXero struct {
 	Authentication SourceXeroAuthenticateViaXeroOAuth `json:"authentication"`
-	SourceType     SourceXeroXero                     `json:"sourceType"`
+	sourceType     SourceXeroXero                     `const:"xero" json:"sourceType"`
 	// UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
 	StartDate time.Time `json:"start_date"`
 	// Enter your Xero organization's Tenant ID
 	TenantID string `json:"tenant_id"`
+}
+
+func (s SourceXero) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceXero) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceXero) GetAuthentication() SourceXeroAuthenticateViaXeroOAuth {
+	if o == nil {
+		return SourceXeroAuthenticateViaXeroOAuth{}
+	}
+	return o.Authentication
+}
+
+func (o *SourceXero) GetSourceType() SourceXeroXero {
+	return SourceXeroXeroXero
+}
+
+func (o *SourceXero) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceXero) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }

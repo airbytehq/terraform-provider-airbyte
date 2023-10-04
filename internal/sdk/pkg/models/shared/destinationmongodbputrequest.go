@@ -7,3 +7,24 @@ type DestinationMongodbPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *DestinationMongodbPutRequest) GetConfiguration() DestinationMongodbUpdate {
+	if o == nil {
+		return DestinationMongodbUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMongodbPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMongodbPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

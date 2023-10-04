@@ -12,8 +12,46 @@ type PutSourceIterableRequest struct {
 	SourceID                 string                           `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceIterableRequest) GetSourceIterablePutRequest() *shared.SourceIterablePutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceIterablePutRequest
+}
+
+func (o *PutSourceIterableRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceIterableResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceIterableResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceIterableResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceIterableResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

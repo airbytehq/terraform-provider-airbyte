@@ -22,15 +22,11 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	datasetID := r.Configuration.DatasetID.ValueString()
 	datasetLocation := shared.DestinationBigqueryDatasetLocation(r.Configuration.DatasetLocation.ValueString())
-	destinationType := shared.DestinationBigqueryBigquery(r.Configuration.DestinationType.ValueString())
 	var loadingMethod *shared.DestinationBigqueryLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
 		var destinationBigqueryLoadingMethodStandardInserts *shared.DestinationBigqueryLoadingMethodStandardInserts
 		if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
-			method := shared.DestinationBigqueryLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
-			destinationBigqueryLoadingMethodStandardInserts = &shared.DestinationBigqueryLoadingMethodStandardInserts{
-				Method: method,
-			}
+			destinationBigqueryLoadingMethodStandardInserts = &shared.DestinationBigqueryLoadingMethodStandardInserts{}
 		}
 		if destinationBigqueryLoadingMethodStandardInserts != nil {
 			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
@@ -42,11 +38,9 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 			var credential shared.DestinationBigqueryLoadingMethodGCSStagingCredential
 			var destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey *shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey
 			if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey != nil {
-				credentialType := shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
 				hmacKeyAccessID := r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID.ValueString()
 				hmacKeySecret := r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret.ValueString()
 				destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey = &shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey{
-					CredentialType:  credentialType,
 					HmacKeyAccessID: hmacKeyAccessID,
 					HmacKeySecret:   hmacKeySecret,
 				}
@@ -70,14 +64,12 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 			} else {
 				keepFilesInGcsBucket = nil
 			}
-			method1 := shared.DestinationBigqueryLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
 			destinationBigqueryLoadingMethodGCSStaging = &shared.DestinationBigqueryLoadingMethodGCSStaging{
 				Credential:           credential,
 				FileBufferCount:      fileBufferCount,
 				GcsBucketName:        gcsBucketName,
 				GcsBucketPath:        gcsBucketPath,
 				KeepFilesInGcsBucket: keepFilesInGcsBucket,
-				Method:               method1,
 			}
 		}
 		if destinationBigqueryLoadingMethodGCSStaging != nil {
@@ -104,7 +96,6 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		CredentialsJSON:            credentialsJSON,
 		DatasetID:                  datasetID,
 		DatasetLocation:            datasetLocation,
-		DestinationType:            destinationType,
 		LoadingMethod:              loadingMethod,
 		ProjectID:                  projectID,
 		RawDataDataset:             rawDataDataset,
@@ -144,10 +135,7 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 	if r.Configuration.LoadingMethod != nil {
 		var destinationBigqueryUpdateLoadingMethodStandardInserts *shared.DestinationBigqueryUpdateLoadingMethodStandardInserts
 		if r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodStandardInserts != nil {
-			method := shared.DestinationBigqueryUpdateLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodStandardInserts.Method.ValueString())
-			destinationBigqueryUpdateLoadingMethodStandardInserts = &shared.DestinationBigqueryUpdateLoadingMethodStandardInserts{
-				Method: method,
-			}
+			destinationBigqueryUpdateLoadingMethodStandardInserts = &shared.DestinationBigqueryUpdateLoadingMethodStandardInserts{}
 		}
 		if destinationBigqueryUpdateLoadingMethodStandardInserts != nil {
 			loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
@@ -159,11 +147,9 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 			var credential shared.DestinationBigqueryUpdateLoadingMethodGCSStagingCredential
 			var destinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey *shared.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey
 			if r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey != nil {
-				credentialType := shared.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKeyCredentialType(r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
 				hmacKeyAccessID := r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID.ValueString()
 				hmacKeySecret := r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret.ValueString()
 				destinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey = &shared.DestinationBigqueryUpdateLoadingMethodGCSStagingCredentialHMACKey{
-					CredentialType:  credentialType,
 					HmacKeyAccessID: hmacKeyAccessID,
 					HmacKeySecret:   hmacKeySecret,
 				}
@@ -187,14 +173,12 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 			} else {
 				keepFilesInGcsBucket = nil
 			}
-			method1 := shared.DestinationBigqueryUpdateLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryUpdateLoadingMethodGCSStaging.Method.ValueString())
 			destinationBigqueryUpdateLoadingMethodGCSStaging = &shared.DestinationBigqueryUpdateLoadingMethodGCSStaging{
 				Credential:           credential,
 				FileBufferCount:      fileBufferCount,
 				GcsBucketName:        gcsBucketName,
 				GcsBucketPath:        gcsBucketPath,
 				KeepFilesInGcsBucket: keepFilesInGcsBucket,
-				Method:               method1,
 			}
 		}
 		if destinationBigqueryUpdateLoadingMethodGCSStaging != nil {

@@ -43,6 +43,5 @@ Read-Only:
 
 - `api_key` (String) The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 - `site_id` (String) The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-- `source_type` (String) must be one of ["webflow"]
 
 

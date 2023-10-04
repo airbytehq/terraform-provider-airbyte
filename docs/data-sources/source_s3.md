@@ -46,12 +46,13 @@ Read-Only:
 - `aws_secret_access_key` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `bucket` (String) Name of the S3 bucket where the file(s) exist.
 - `dataset` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
-- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS.
+- `endpoint` (String) Default: ""
+Endpoint to an S3 compatible service. Leave empty to use AWS.
 - `format` (Attributes) Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate (see [below for nested schema](#nestedatt--configuration--format))
 - `path_pattern` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.globs instead. A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.
 - `provider` (Attributes) Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services (see [below for nested schema](#nestedatt--configuration--provider))
-- `schema` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
-- `source_type` (String) must be one of ["s3"]
+- `schema` (String) Default: "{}"
+Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 - `streams` (Attributes List) Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table. (see [below for nested schema](#nestedatt--configuration--streams))
 
@@ -72,10 +73,6 @@ Read-Only:
 <a id="nestedatt--configuration--format--source_s3_file_format_avro"></a>
 ### Nested Schema for `configuration.format.source_s3_file_format_avro`
 
-Read-Only:
-
-- `filetype` (String) must be one of ["avro"]
-
 
 <a id="nestedatt--configuration--format--source_s3_file_format_csv"></a>
 ### Nested Schema for `configuration.format.source_s3_file_format_csv`
@@ -84,15 +81,21 @@ Read-Only:
 
 - `additional_reader_options` (String) Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
 - `advanced_options` (String) Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `block_size` (Number) Default: 10000
+The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
-- `filetype` (String) must be one of ["csv"]
-- `infer_datatypes` (Boolean) Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `infer_datatypes` (Boolean) Default: true
+Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
+- `newlines_in_values` (Boolean) Default: false
+Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
 
 
 <a id="nestedatt--configuration--format--source_s3_file_format_jsonl"></a>
@@ -100,10 +103,11 @@ Read-Only:
 
 Read-Only:
 
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `filetype` (String) must be one of ["jsonl"]
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
-- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]
+- `block_size` (Number) Default: 0
+The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
+- `newlines_in_values` (Boolean) Default: false
+Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
+- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]; Default: "infer"
 How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
 
 
@@ -112,18 +116,15 @@ How JSON fields outside of explicit_schema (if given) are treated. Check <a href
 
 Read-Only:
 
-- `batch_size` (Number) Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
-- `buffer_size` (Number) Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
+- `batch_size` (Number) Default: 65536
+Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
+- `buffer_size` (Number) Default: 2
+Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
 - `columns` (List of String) If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-- `filetype` (String) must be one of ["parquet"]
 
 
 <a id="nestedatt--configuration--format--source_s3_update_file_format_avro"></a>
 ### Nested Schema for `configuration.format.source_s3_update_file_format_avro`
-
-Read-Only:
-
-- `filetype` (String) must be one of ["avro"]
 
 
 <a id="nestedatt--configuration--format--source_s3_update_file_format_csv"></a>
@@ -133,15 +134,21 @@ Read-Only:
 
 - `additional_reader_options` (String) Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
 - `advanced_options` (String) Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `block_size` (Number) Default: 10000
+The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
-- `filetype` (String) must be one of ["csv"]
-- `infer_datatypes` (Boolean) Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `infer_datatypes` (Boolean) Default: true
+Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
+- `newlines_in_values` (Boolean) Default: false
+Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
 
 
 <a id="nestedatt--configuration--format--source_s3_update_file_format_jsonl"></a>
@@ -149,10 +156,11 @@ Read-Only:
 
 Read-Only:
 
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `filetype` (String) must be one of ["jsonl"]
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
-- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]
+- `block_size` (Number) Default: 0
+The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
+- `newlines_in_values` (Boolean) Default: false
+Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
+- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]; Default: "infer"
 How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
 
 
@@ -161,10 +169,11 @@ How JSON fields outside of explicit_schema (if given) are treated. Check <a href
 
 Read-Only:
 
-- `batch_size` (Number) Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
-- `buffer_size` (Number) Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
+- `batch_size` (Number) Default: 65536
+Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
+- `buffer_size` (Number) Default: 2
+Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
 - `columns` (List of String) If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-- `filetype` (String) must be one of ["parquet"]
 
 
 
@@ -176,8 +185,10 @@ Read-Only:
 - `aws_access_key_id` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `aws_secret_access_key` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `bucket` (String) Name of the S3 bucket where the file(s) exist.
-- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS.
-- `path_prefix` (String) By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
+- `endpoint` (String) Default: ""
+Endpoint to an S3 compatible service. Leave empty to use AWS.
+- `path_prefix` (String) Default: ""
+By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.
 
 
@@ -186,7 +197,8 @@ Read-Only:
 
 Read-Only:
 
-- `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
+- `days_to_sync_if_history_is_full` (Number) Default: 3
+When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 - `file_type` (String) The data file type that is being extracted for a stream.
 - `format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format))
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
@@ -194,8 +206,9 @@ Read-Only:
 - `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
 - `name` (String) The name of the stream.
 - `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record.
-- `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema.
-- `validation_policy` (String) must be one of ["Emit Record", "Skip Record", "Wait for Discover"]
+- `schemaless` (Boolean) Default: false
+When enabled, syncs will not validate or structure records against the stream's schema.
+- `validation_policy` (String) must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
 
 <a id="nestedatt--configuration--streams--format"></a>
@@ -217,8 +230,8 @@ Read-Only:
 
 Read-Only:
 
-- `double_as_string` (Boolean) Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-- `filetype` (String) must be one of ["avro"]
+- `double_as_string` (Boolean) Default: false
+Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
 
 
 <a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_csv_format"></a>
@@ -226,20 +239,26 @@ Read-Only:
 
 Read-Only:
 
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
-- `filetype` (String) must be one of ["csv"]
 - `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition))
-- `inference_type` (String) must be one of ["None", "Primitive Types Only"]
+- `inference_type` (String) must be one of ["None", "Primitive Types Only"]; Default: "None"
 How to infer the types of the columns. If none, inference default to strings.
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
-- `skip_rows_after_header` (Number) The number of rows to skip after the header row.
-- `skip_rows_before_header` (Number) The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-- `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `skip_rows_after_header` (Number) Default: 0
+The number of rows to skip after the header row.
+- `skip_rows_before_header` (Number) Default: 0
+The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+- `strings_can_be_null` (Boolean) Default: true
+Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
 - `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition"></a>
@@ -254,17 +273,9 @@ Read-Only:
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
 
-Read-Only:
-
-- `header_definition_type` (String) must be one of ["Autogenerated"]
-
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_from_csv"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Read-Only:
-
-- `header_definition_type` (String) must be one of ["From CSV"]
 
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided"></a>
@@ -273,7 +284,6 @@ Read-Only:
 Read-Only:
 
 - `column_names` (List of String) The column names that will be used while emitting the CSV records
-- `header_definition_type` (String) must be one of ["User Provided"]
 
 
 
@@ -281,18 +291,14 @@ Read-Only:
 <a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_jsonl_format"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
 
-Read-Only:
-
-- `filetype` (String) must be one of ["jsonl"]
-
 
 <a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_parquet_format"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
 
 Read-Only:
 
-- `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-- `filetype` (String) must be one of ["parquet"]
+- `decimal_as_float` (Boolean) Default: false
+Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_avro_format"></a>
@@ -300,8 +306,8 @@ Read-Only:
 
 Read-Only:
 
-- `double_as_string` (Boolean) Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-- `filetype` (String) must be one of ["avro"]
+- `double_as_string` (Boolean) Default: false
+Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
 
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_csv_format"></a>
@@ -309,20 +315,26 @@ Read-Only:
 
 Read-Only:
 
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
-- `filetype` (String) must be one of ["csv"]
 - `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition))
-- `inference_type` (String) must be one of ["None", "Primitive Types Only"]
+- `inference_type` (String) must be one of ["None", "Primitive Types Only"]; Default: "None"
 How to infer the types of the columns. If none, inference default to strings.
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
-- `skip_rows_after_header` (Number) The number of rows to skip after the header row.
-- `skip_rows_before_header` (Number) The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-- `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `skip_rows_after_header` (Number) Default: 0
+The number of rows to skip after the header row.
+- `skip_rows_before_header` (Number) Default: 0
+The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+- `strings_can_be_null` (Boolean) Default: true
+Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
 - `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition"></a>
@@ -337,17 +349,9 @@ Read-Only:
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
 
-Read-Only:
-
-- `header_definition_type` (String) must be one of ["Autogenerated"]
-
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_from_csv"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Read-Only:
-
-- `header_definition_type` (String) must be one of ["From CSV"]
 
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided"></a>
@@ -356,7 +360,6 @@ Read-Only:
 Read-Only:
 
 - `column_names` (List of String) The column names that will be used while emitting the CSV records
-- `header_definition_type` (String) must be one of ["User Provided"]
 
 
 
@@ -364,17 +367,13 @@ Read-Only:
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_jsonl_format"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
 
-Read-Only:
-
-- `filetype` (String) must be one of ["jsonl"]
-
 
 <a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format"></a>
 ### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
 
 Read-Only:
 
-- `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-- `filetype` (String) must be one of ["parquet"]
+- `decimal_as_float` (Boolean) Default: false
+Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 
 

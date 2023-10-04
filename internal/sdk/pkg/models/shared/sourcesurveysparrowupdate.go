@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,7 +35,22 @@ func (e *SourceSurveySparrowUpdateBaseURLGlobalAccountURLBase) UnmarshalJSON(dat
 
 // SourceSurveySparrowUpdateBaseURLGlobalAccount - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowUpdateBaseURLGlobalAccount struct {
-	URLBase *SourceSurveySparrowUpdateBaseURLGlobalAccountURLBase `json:"url_base,omitempty"`
+	urlBase *SourceSurveySparrowUpdateBaseURLGlobalAccountURLBase `const:"https://api.surveysparrow.com/v3" json:"url_base,omitempty"`
+}
+
+func (s SourceSurveySparrowUpdateBaseURLGlobalAccount) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSurveySparrowUpdateBaseURLGlobalAccount) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSurveySparrowUpdateBaseURLGlobalAccount) GetURLBase() *SourceSurveySparrowUpdateBaseURLGlobalAccountURLBase {
+	return SourceSurveySparrowUpdateBaseURLGlobalAccountURLBaseHTTPSAPISurveysparrowComV3.ToPointer()
 }
 
 type SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase string
@@ -64,7 +79,22 @@ func (e *SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase) UnmarshalJSON(da
 
 // SourceSurveySparrowUpdateBaseURLEUBasedAccount - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowUpdateBaseURLEUBasedAccount struct {
-	URLBase *SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase `json:"url_base,omitempty"`
+	urlBase *SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase `const:"https://eu-api.surveysparrow.com/v3" json:"url_base,omitempty"`
+}
+
+func (s SourceSurveySparrowUpdateBaseURLEUBasedAccount) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSurveySparrowUpdateBaseURLEUBasedAccount) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSurveySparrowUpdateBaseURLEUBasedAccount) GetURLBase() *SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase {
+	return SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBaseHTTPSEuAPISurveysparrowComV3.ToPointer()
 }
 
 type SourceSurveySparrowUpdateBaseURLType string
@@ -100,21 +130,16 @@ func CreateSourceSurveySparrowUpdateBaseURLSourceSurveySparrowUpdateBaseURLGloba
 }
 
 func (u *SourceSurveySparrowUpdateBaseURL) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceSurveySparrowUpdateBaseURLEUBasedAccount := new(SourceSurveySparrowUpdateBaseURLEUBasedAccount)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSurveySparrowUpdateBaseURLEUBasedAccount); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceSurveySparrowUpdateBaseURLEUBasedAccount, "", true, true); err == nil {
 		u.SourceSurveySparrowUpdateBaseURLEUBasedAccount = sourceSurveySparrowUpdateBaseURLEUBasedAccount
 		u.Type = SourceSurveySparrowUpdateBaseURLTypeSourceSurveySparrowUpdateBaseURLEUBasedAccount
 		return nil
 	}
 
 	sourceSurveySparrowUpdateBaseURLGlobalAccount := new(SourceSurveySparrowUpdateBaseURLGlobalAccount)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSurveySparrowUpdateBaseURLGlobalAccount); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceSurveySparrowUpdateBaseURLGlobalAccount, "", true, true); err == nil {
 		u.SourceSurveySparrowUpdateBaseURLGlobalAccount = sourceSurveySparrowUpdateBaseURLGlobalAccount
 		u.Type = SourceSurveySparrowUpdateBaseURLTypeSourceSurveySparrowUpdateBaseURLGlobalAccount
 		return nil
@@ -125,14 +150,14 @@ func (u *SourceSurveySparrowUpdateBaseURL) UnmarshalJSON(data []byte) error {
 
 func (u SourceSurveySparrowUpdateBaseURL) MarshalJSON() ([]byte, error) {
 	if u.SourceSurveySparrowUpdateBaseURLEUBasedAccount != nil {
-		return json.Marshal(u.SourceSurveySparrowUpdateBaseURLEUBasedAccount)
+		return utils.MarshalJSON(u.SourceSurveySparrowUpdateBaseURLEUBasedAccount, "", true)
 	}
 
 	if u.SourceSurveySparrowUpdateBaseURLGlobalAccount != nil {
-		return json.Marshal(u.SourceSurveySparrowUpdateBaseURLGlobalAccount)
+		return utils.MarshalJSON(u.SourceSurveySparrowUpdateBaseURLGlobalAccount, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceSurveySparrowUpdate struct {
@@ -142,4 +167,25 @@ type SourceSurveySparrowUpdate struct {
 	Region *SourceSurveySparrowUpdateBaseURL `json:"region,omitempty"`
 	// A List of your survey ids for survey-specific stream
 	SurveyID []interface{} `json:"survey_id,omitempty"`
+}
+
+func (o *SourceSurveySparrowUpdate) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceSurveySparrowUpdate) GetRegion() *SourceSurveySparrowUpdateBaseURL {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceSurveySparrowUpdate) GetSurveyID() []interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.SurveyID
 }

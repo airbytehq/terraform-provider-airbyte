@@ -16,15 +16,14 @@ SourceMongodbInternalPoc Resource
 resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
   configuration = {
     auth_source       = "admin"
-    connection_string = "mongodb://example1.host.com:27017,example2.host.com:27017,example3.host.com:27017"
+    connection_string = "mongodb://example.host.com:27017"
     password          = "...my_password..."
     replica_set       = "...my_replica_set..."
-    source_type       = "mongodb-internal-poc"
     user              = "...my_user..."
   }
-  name         = "Eduardo Weissnat"
+  name         = "Victoria Wiegand"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f8221125-359d-4983-87f7-a79cd72cd248"
+  workspace_id = "a1e39a63-be20-49ca-a593-eb808ec8c0a1"
 }
 ```
 
@@ -49,13 +48,10 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["mongodb-internal-poc"]
-
 Optional:
 
-- `auth_source` (String) The authentication source where the user information is stored.
+- `auth_source` (String) Default: "admin"
+The authentication source where the user information is stored.
 - `connection_string` (String) The connection string of the database that you want to replicate..
 - `password` (String) The password associated with this username.
 - `replica_set` (String) The name of the replica set to be replicated.

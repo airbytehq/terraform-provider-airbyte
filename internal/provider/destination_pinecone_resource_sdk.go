@@ -8,19 +8,11 @@ import (
 )
 
 func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.DestinationPineconeCreateRequest {
-	destinationType := shared.DestinationPineconePinecone(r.Configuration.DestinationType.ValueString())
 	var embedding shared.DestinationPineconeEmbedding
 	var destinationPineconeEmbeddingOpenAI *shared.DestinationPineconeEmbeddingOpenAI
 	if r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationPineconeEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationPineconeEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
 		openaiKey := r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.OpenaiKey.ValueString()
 		destinationPineconeEmbeddingOpenAI = &shared.DestinationPineconeEmbeddingOpenAI{
-			Mode:      mode,
 			OpenaiKey: openaiKey,
 		}
 	}
@@ -32,15 +24,8 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 	var destinationPineconeEmbeddingCohere *shared.DestinationPineconeEmbeddingCohere
 	if r.Configuration.Embedding.DestinationPineconeEmbeddingCohere != nil {
 		cohereKey := r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.CohereKey.ValueString()
-		mode1 := new(shared.DestinationPineconeEmbeddingCohereMode)
-		if !r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode.IsNull() {
-			*mode1 = shared.DestinationPineconeEmbeddingCohereMode(r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
 		destinationPineconeEmbeddingCohere = &shared.DestinationPineconeEmbeddingCohere{
 			CohereKey: cohereKey,
-			Mode:      mode1,
 		}
 	}
 	if destinationPineconeEmbeddingCohere != nil {
@@ -50,15 +35,7 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	var destinationPineconeEmbeddingFake *shared.DestinationPineconeEmbeddingFake
 	if r.Configuration.Embedding.DestinationPineconeEmbeddingFake != nil {
-		mode2 := new(shared.DestinationPineconeEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode.IsNull() {
-			*mode2 = shared.DestinationPineconeEmbeddingFakeMode(r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		destinationPineconeEmbeddingFake = &shared.DestinationPineconeEmbeddingFake{
-			Mode: mode2,
-		}
+		destinationPineconeEmbeddingFake = &shared.DestinationPineconeEmbeddingFake{}
 	}
 	if destinationPineconeEmbeddingFake != nil {
 		embedding = shared.DestinationPineconeEmbedding{
@@ -95,10 +72,9 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 		TextFields:     textFields,
 	}
 	configuration := shared.DestinationPinecone{
-		DestinationType: destinationType,
-		Embedding:       embedding,
-		Indexing:        indexing,
-		Processing:      processing,
+		Embedding:  embedding,
+		Indexing:   indexing,
+		Processing: processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -119,15 +95,8 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 	var embedding shared.DestinationPineconeUpdateEmbedding
 	var destinationPineconeUpdateEmbeddingOpenAI *shared.DestinationPineconeUpdateEmbeddingOpenAI
 	if r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationPineconeUpdateEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationPineconeUpdateEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
 		openaiKey := r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.OpenaiKey.ValueString()
 		destinationPineconeUpdateEmbeddingOpenAI = &shared.DestinationPineconeUpdateEmbeddingOpenAI{
-			Mode:      mode,
 			OpenaiKey: openaiKey,
 		}
 	}
@@ -139,15 +108,8 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 	var destinationPineconeUpdateEmbeddingCohere *shared.DestinationPineconeUpdateEmbeddingCohere
 	if r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere != nil {
 		cohereKey := r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.CohereKey.ValueString()
-		mode1 := new(shared.DestinationPineconeUpdateEmbeddingCohereMode)
-		if !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.Mode.IsNull() {
-			*mode1 = shared.DestinationPineconeUpdateEmbeddingCohereMode(r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
 		destinationPineconeUpdateEmbeddingCohere = &shared.DestinationPineconeUpdateEmbeddingCohere{
 			CohereKey: cohereKey,
-			Mode:      mode1,
 		}
 	}
 	if destinationPineconeUpdateEmbeddingCohere != nil {
@@ -157,15 +119,7 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	var destinationPineconeUpdateEmbeddingFake *shared.DestinationPineconeUpdateEmbeddingFake
 	if r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake != nil {
-		mode2 := new(shared.DestinationPineconeUpdateEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake.Mode.IsNull() {
-			*mode2 = shared.DestinationPineconeUpdateEmbeddingFakeMode(r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		destinationPineconeUpdateEmbeddingFake = &shared.DestinationPineconeUpdateEmbeddingFake{
-			Mode: mode2,
-		}
+		destinationPineconeUpdateEmbeddingFake = &shared.DestinationPineconeUpdateEmbeddingFake{}
 	}
 	if destinationPineconeUpdateEmbeddingFake != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{

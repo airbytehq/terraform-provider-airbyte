@@ -9,3 +9,31 @@ type SourceSnapchatMarketingCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSnapchatMarketingCreateRequest) GetConfiguration() SourceSnapchatMarketing {
+	if o == nil {
+		return SourceSnapchatMarketing{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSnapchatMarketingCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSnapchatMarketingCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSnapchatMarketingCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

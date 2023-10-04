@@ -10,11 +10,9 @@ import (
 func (r *SourceLokaliseResourceModel) ToCreateSDKType() *shared.SourceLokaliseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	projectID := r.Configuration.ProjectID.ValueString()
-	sourceType := shared.SourceLokaliseLokalise(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLokalise{
-		APIKey:     apiKey,
-		ProjectID:  projectID,
-		SourceType: sourceType,
+		APIKey:    apiKey,
+		ProjectID: projectID,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

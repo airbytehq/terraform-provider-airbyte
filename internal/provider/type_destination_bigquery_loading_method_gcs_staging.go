@@ -10,5 +10,4 @@ type DestinationBigqueryLoadingMethodGCSStaging struct {
 	GcsBucketName        types.String                                         `tfsdk:"gcs_bucket_name"`
 	GcsBucketPath        types.String                                         `tfsdk:"gcs_bucket_path"`
 	KeepFilesInGcsBucket types.String                                         `tfsdk:"keep_files_in_gcs_bucket"`
-	Method               types.String                                         `tfsdk:"method"`
 }

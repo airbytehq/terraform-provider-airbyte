@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceHubplannerHubplanner) UnmarshalJSON(data []byte) error {
 type SourceHubplanner struct {
 	// Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
 	APIKey     string                     `json:"api_key"`
-	SourceType SourceHubplannerHubplanner `json:"sourceType"`
+	sourceType SourceHubplannerHubplanner `const:"hubplanner" json:"sourceType"`
+}
+
+func (s SourceHubplanner) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubplanner) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubplanner) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceHubplanner) GetSourceType() SourceHubplannerHubplanner {
+	return SourceHubplannerHubplannerHubplanner
 }

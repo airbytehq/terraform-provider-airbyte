@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -19,10 +20,77 @@ type SourceXeroUpdateAuthenticateViaXeroOAuth struct {
 	TokenExpiryDate string `json:"token_expiry_date"`
 }
 
+func (o *SourceXeroUpdateAuthenticateViaXeroOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceXeroUpdateAuthenticateViaXeroOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceXeroUpdateAuthenticateViaXeroOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceXeroUpdateAuthenticateViaXeroOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceXeroUpdateAuthenticateViaXeroOAuth) GetTokenExpiryDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenExpiryDate
+}
+
 type SourceXeroUpdate struct {
 	Authentication SourceXeroUpdateAuthenticateViaXeroOAuth `json:"authentication"`
 	// UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
 	StartDate time.Time `json:"start_date"`
 	// Enter your Xero organization's Tenant ID
 	TenantID string `json:"tenant_id"`
+}
+
+func (s SourceXeroUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceXeroUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceXeroUpdate) GetAuthentication() SourceXeroUpdateAuthenticateViaXeroOAuth {
+	if o == nil {
+		return SourceXeroUpdateAuthenticateViaXeroOAuth{}
+	}
+	return o.Authentication
+}
+
+func (o *SourceXeroUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceXeroUpdate) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }

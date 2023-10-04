@@ -42,6 +42,5 @@ data "airbyte_source_k6_cloud" "my_source_k6cloud" {
 Read-Only:
 
 - `api_token` (String) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["k6-cloud"]
 
 

@@ -15,12 +15,11 @@ SourcePersistiq Resource
 ```terraform
 resource "airbyte_source_persistiq" "my_source_persistiq" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "persistiq"
+    api_key = "...my_api_key..."
   }
-  name         = "Nicole Vandervort"
+  name         = "Bessie Ernser"
   secret_id    = "...my_secret_id..."
-  workspace_id = "df55c294-c060-4b06-a128-7764eef6d0c6"
+  workspace_id = "c6ca7fcd-ac63-4878-94b6-9c42e8b9a534"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
 Required:
 
 - `api_key` (String) PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
-- `source_type` (String) must be one of ["persistiq"]
 
 

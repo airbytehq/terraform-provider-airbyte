@@ -44,6 +44,5 @@ Read-Only:
 - `api_key` (String) Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
 - `query_params` (String) The query parameters portion of the GET request, without the api key
 - `query_path` (String) The path portion of the GET request
-- `source_type` (String) must be one of ["us-census"]
 
 

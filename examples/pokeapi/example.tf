@@ -55,7 +55,7 @@ resource "airbyte_workspace" "my_workspace" {
 }
 
 resource "airbyte_source_pokeapi" "kido" {
-  name         = "bulbasaur"
+  name         = "new"
   workspace_id = airbyte_workspace.my_workspace.workspace_id
   configuration = {
     pokemon_name = "bulbasaur"
@@ -67,14 +67,12 @@ resource "airbyte_destination_google_sheets" "output" {
   name         = "test_new_output"
   workspace_id = airbyte_workspace.my_workspace.workspace_id
   configuration = {
-    source_type = "googlesheets"
     credentials = {
       client_id     = var.google_client_id
       client_secret = var.google_client_secret
       refresh_token = var.google_client_refresh_token
     }
-    destination_type = "google-sheets"
-    spreadsheet_id   = var.google_spreadsheet_id
+    spreadsheet_id = var.google_spreadsheet_id
   }
 }
 

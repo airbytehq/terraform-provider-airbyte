@@ -396,3 +396,80 @@ type SourceGnewsUpdate struct {
 	// This parameter allows you to change the category for the request.
 	TopHeadlinesTopic *SourceGnewsUpdateTopHeadlinesTopic `json:"top_headlines_topic,omitempty"`
 }
+
+func (o *SourceGnewsUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGnewsUpdate) GetCountry() *SourceGnewsUpdateCountry {
+	if o == nil {
+		return nil
+	}
+	return o.Country
+}
+
+func (o *SourceGnewsUpdate) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceGnewsUpdate) GetIn() []SourceGnewsUpdateIn {
+	if o == nil {
+		return nil
+	}
+	return o.In
+}
+
+func (o *SourceGnewsUpdate) GetLanguage() *SourceGnewsUpdateLanguage {
+	if o == nil {
+		return nil
+	}
+	return o.Language
+}
+
+func (o *SourceGnewsUpdate) GetNullable() []SourceGnewsUpdateNullable {
+	if o == nil {
+		return nil
+	}
+	return o.Nullable
+}
+
+func (o *SourceGnewsUpdate) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceGnewsUpdate) GetSortby() *SourceGnewsUpdateSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.Sortby
+}
+
+func (o *SourceGnewsUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceGnewsUpdate) GetTopHeadlinesQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TopHeadlinesQuery
+}
+
+func (o *SourceGnewsUpdate) GetTopHeadlinesTopic() *SourceGnewsUpdateTopHeadlinesTopic {
+	if o == nil {
+		return nil
+	}
+	return o.TopHeadlinesTopic
+}

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,8 +55,9 @@ func (r *SourceOrbDataSource) Schema(ctx context.Context, req datasource.SchemaR
 						Description: `Orb API Key, issued from the Orb admin console.`,
 					},
 					"lookback_window_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.`,
+						Computed: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.`,
 					},
 					"numeric_event_properties_keys": schema.ListAttribute{
 						Computed:    true,
@@ -68,15 +67,6 @@ func (r *SourceOrbDataSource) Schema(ctx context.Context, req datasource.SchemaR
 					"plan_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `Orb Plan ID to filter subscriptions that should have usage fetched.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"orb",
-							),
-						},
-						Description: `must be one of ["orb"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

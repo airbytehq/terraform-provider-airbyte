@@ -12,7 +12,6 @@ type SourceAlloydb struct {
 	Port              types.Int64                     `tfsdk:"port"`
 	ReplicationMethod *SourceAlloydbReplicationMethod `tfsdk:"replication_method"`
 	Schemas           []types.String                  `tfsdk:"schemas"`
-	SourceType        types.String                    `tfsdk:"source_type"`
 	SslMode           *SourceAlloydbSSLModes          `tfsdk:"ssl_mode"`
 	TunnelMethod      *SourceAlloydbSSHTunnelMethod   `tfsdk:"tunnel_method"`
 	Username          types.String                    `tfsdk:"username"`

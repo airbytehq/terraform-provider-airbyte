@@ -17,21 +17,18 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        source_fauna_collection_deletion_mode_disabled = {
-          deletion_mode = "ignore"
-        }
+        source_fauna_collection_deletion_mode_disabled = {}
       }
-      page_size = 4
+      page_size = 5
     }
-    domain      = "...my_domain..."
-    port        = 5
-    scheme      = "...my_scheme..."
-    secret      = "...my_secret..."
-    source_type = "fauna"
+    domain = "...my_domain..."
+    port   = 7
+    scheme = "...my_scheme..."
+    secret = "...my_secret..."
   }
-  name         = "Irvin Klein"
+  name         = "Sherri Ruecker"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1ffc71dc-a163-4f2a-bc80-a97ff334cddf"
+  workspace_id = "e6b85628-652e-40ff-83c2-1b517b16f1f8"
 }
 ```
 
@@ -58,15 +55,17 @@ resource "airbyte_source_fauna" "my_source_fauna" {
 
 Required:
 
-- `domain` (String) Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
-- `port` (Number) Endpoint port.
-- `scheme` (String) URL scheme.
 - `secret` (String) Fauna secret, used when authenticating with the database.
-- `source_type` (String) must be one of ["fauna"]
 
 Optional:
 
 - `collection` (Attributes) Settings for the Fauna Collection. (see [below for nested schema](#nestedatt--configuration--collection))
+- `domain` (String) Default: "db.fauna.com"
+Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
+- `port` (Number) Default: 443
+Endpoint port.
+- `scheme` (String) Default: "https"
+URL scheme.
 
 <a id="nestedatt--configuration--collection"></a>
 ### Nested Schema for `configuration.collection`
@@ -77,7 +76,11 @@ Required:
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions))
-- `page_size` (Number) The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+
+Optional:
+
+- `page_size` (Number) Default: 64
+The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
 Choose your page size based on how large the documents are. <br>
 See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
 
@@ -106,34 +109,26 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 <a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_disabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Required:
-
-- `deletion_mode` (String) must be one of ["ignore"]
-
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Required:
+Optional:
 
-- `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of ["deleted_field"]
+- `column` (String) Default: "deleted_at"
+Name of the "deleted at" column.
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Required:
-
-- `deletion_mode` (String) must be one of ["ignore"]
-
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Required:
+Optional:
 
-- `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of ["deleted_field"]
+- `column` (String) Default: "deleted_at"
+Name of the "deleted at" column.
 
 

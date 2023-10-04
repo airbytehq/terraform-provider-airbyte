@@ -8,3 +8,17 @@ type SourceFacebookPagesUpdate struct {
 	// Page ID
 	PageID string `json:"page_id"`
 }
+
+func (o *SourceFacebookPagesUpdate) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceFacebookPagesUpdate) GetPageID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PageID
+}

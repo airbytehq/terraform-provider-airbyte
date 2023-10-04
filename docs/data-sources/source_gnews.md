@@ -66,7 +66,6 @@ This parameter allows you to specify the country where the news articles returne
 This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
   - relevance = sort by best match to keywords, the articles with the best match are returned first
-- `source_type` (String) must be one of ["gnews"]
 - `start_date` (String) This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 - `top_headlines_query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
   quotation marks are used to search for articles with the exact same keyword sequence. 

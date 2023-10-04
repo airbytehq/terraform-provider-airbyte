@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -58,15 +57,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-										Description: `must be one of ["Key Pair Authentication"]`,
-									},
 									"private_key": schema.StringAttribute{
 										Computed:    true,
 										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.`,
@@ -83,15 +73,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Enter you application's Access Token`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -110,15 +91,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Username and Password",
-											),
-										},
-										Description: `must be one of ["Username and Password"]`,
-									},
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Enter the password associated with the username.`,
@@ -128,15 +100,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-										Description: `must be one of ["Key Pair Authentication"]`,
-									},
 									"private_key": schema.StringAttribute{
 										Computed:    true,
 										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.`,
@@ -153,15 +116,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Enter you application's Access Token`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -180,15 +134,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 							"destination_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Username and Password",
-											),
-										},
-										Description: `must be one of ["Username and Password"]`,
-									},
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Enter the password associated with the username.`,
@@ -203,15 +148,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 					"database": schema.StringAttribute{
 						Computed:    true,
 						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snowflake",
-							),
-						},
-						Description: `must be one of ["snowflake"]`,
 					},
 					"host": schema.StringAttribute{
 						Computed:    true,

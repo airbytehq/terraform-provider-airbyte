@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFileSecureStorageProviderHTTPSPublicWeb struct {
-	Storage   types.String `tfsdk:"storage"`
-	UserAgent types.Bool   `tfsdk:"user_agent"`
+	UserAgent types.Bool `tfsdk:"user_agent"`
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -11,4 +12,29 @@ type SourceSendgridUpdate struct {
 	Apikey string `json:"apikey"`
 	// Start time in ISO8601 format. Any data before this time point will not be replicated.
 	StartTime *time.Time `json:"start_time,omitempty"`
+}
+
+func (s SourceSendgridUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSendgridUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSendgridUpdate) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *SourceSendgridUpdate) GetStartTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartTime
 }

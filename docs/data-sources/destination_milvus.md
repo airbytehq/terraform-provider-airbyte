@@ -36,7 +36,6 @@ data "airbyte_destination_milvus" "my_destination_milvus" {
 
 Read-Only:
 
-- `destination_type` (String) must be one of ["milvus"]
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Indexing configuration (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
@@ -61,15 +60,10 @@ Read-Only:
 Read-Only:
 
 - `cohere_key` (String)
-- `mode` (String) must be one of ["cohere"]
 
 
 <a id="nestedatt--configuration--embedding--destination_milvus_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_milvus_embedding_fake`
-
-Read-Only:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_milvus_embedding_from_field"></a>
@@ -79,7 +73,6 @@ Read-Only:
 
 - `dimensions` (Number) The number of dimensions the embedding model is generating
 - `field_name` (String) Name of the field in the record that contains the embedding
-- `mode` (String) must be one of ["from_field"]
 
 
 <a id="nestedatt--configuration--embedding--destination_milvus_embedding_open_ai"></a>
@@ -87,7 +80,6 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["openai"]
 - `openai_key` (String)
 
 
@@ -97,15 +89,10 @@ Read-Only:
 Read-Only:
 
 - `cohere_key` (String)
-- `mode` (String) must be one of ["cohere"]
 
 
 <a id="nestedatt--configuration--embedding--destination_milvus_update_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_milvus_update_embedding_fake`
-
-Read-Only:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_milvus_update_embedding_from_field"></a>
@@ -115,7 +102,6 @@ Read-Only:
 
 - `dimensions` (Number) The number of dimensions the embedding model is generating
 - `field_name` (String) Name of the field in the record that contains the embedding
-- `mode` (String) must be one of ["from_field"]
 
 
 <a id="nestedatt--configuration--embedding--destination_milvus_update_embedding_open_ai"></a>
@@ -123,7 +109,6 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["openai"]
 - `openai_key` (String)
 
 
@@ -135,10 +120,13 @@ Read-Only:
 
 - `auth` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--indexing--auth))
 - `collection` (String) The collection to load data into
-- `db` (String) The database to connect to
+- `db` (String) Default: ""
+The database to connect to
 - `host` (String) The public endpoint of the Milvus instance.
-- `text_field` (String) The field in the entity that contains the embedded text
-- `vector_field` (String) The field in the entity that contains the vector
+- `text_field` (String) Default: "text"
+The field in the entity that contains the embedded text
+- `vector_field` (String) Default: "vector"
+The field in the entity that contains the vector
 
 <a id="nestedatt--configuration--indexing--auth"></a>
 ### Nested Schema for `configuration.indexing.auth`
@@ -157,16 +145,11 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["token"]
 - `token` (String) API Token for the Milvus instance
 
 
 <a id="nestedatt--configuration--indexing--auth--destination_milvus_indexing_authentication_no_auth"></a>
 ### Nested Schema for `configuration.indexing.auth.destination_milvus_update_indexing_authentication_username_password`
-
-Read-Only:
-
-- `mode` (String) must be one of ["no_auth"]
 
 
 <a id="nestedatt--configuration--indexing--auth--destination_milvus_indexing_authentication_username_password"></a>
@@ -174,7 +157,6 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["username_password"]
 - `password` (String) Password for the Milvus instance
 - `username` (String) Username for the Milvus instance
 
@@ -184,16 +166,11 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["token"]
 - `token` (String) API Token for the Milvus instance
 
 
 <a id="nestedatt--configuration--indexing--auth--destination_milvus_update_indexing_authentication_no_auth"></a>
 ### Nested Schema for `configuration.indexing.auth.destination_milvus_update_indexing_authentication_username_password`
-
-Read-Only:
-
-- `mode` (String) must be one of ["no_auth"]
 
 
 <a id="nestedatt--configuration--indexing--auth--destination_milvus_update_indexing_authentication_username_password"></a>
@@ -201,7 +178,6 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["username_password"]
 - `password` (String) Password for the Milvus instance
 - `username` (String) Username for the Milvus instance
 
@@ -213,7 +189,8 @@ Read-Only:
 
 Read-Only:
 
-- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Default: 0
+Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 - `chunk_size` (Number) Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.

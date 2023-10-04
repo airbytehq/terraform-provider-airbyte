@@ -19,19 +19,12 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	var sourceGitlabAuthorizationMethodOAuth20 *shared.SourceGitlabAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceGitlabAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceGitlabAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
 		clientID := r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.RefreshToken.ValueString()
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
 		sourceGitlabAuthorizationMethodOAuth20 = &shared.SourceGitlabAuthorizationMethodOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
@@ -46,15 +39,8 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	var sourceGitlabAuthorizationMethodPrivateToken *shared.SourceGitlabAuthorizationMethodPrivateToken
 	if r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceGitlabAuthorizationMethodPrivateTokenAuthType)
-		if !r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.IsNull() {
-			*authType1 = shared.SourceGitlabAuthorizationMethodPrivateTokenAuthType(r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
 		sourceGitlabAuthorizationMethodPrivateToken = &shared.SourceGitlabAuthorizationMethodPrivateToken{
 			AccessToken: accessToken1,
-			AuthType:    authType1,
 		}
 	}
 	if sourceGitlabAuthorizationMethodPrivateToken != nil {
@@ -74,14 +60,12 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	} else {
 		projects = nil
 	}
-	sourceType := shared.SourceGitlabGitlab(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGitlab{
 		APIURL:      apiURL,
 		Credentials: credentials,
 		Groups:      groups,
 		Projects:    projects,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -117,19 +101,12 @@ func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutReq
 	var sourceGitlabUpdateAuthorizationMethodOAuth20 *shared.SourceGitlabUpdateAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceGitlabUpdateAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceGitlabUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
 		clientID := r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
 		sourceGitlabUpdateAuthorizationMethodOAuth20 = &shared.SourceGitlabUpdateAuthorizationMethodOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
@@ -144,15 +121,8 @@ func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutReq
 	var sourceGitlabUpdateAuthorizationMethodPrivateToken *shared.SourceGitlabUpdateAuthorizationMethodPrivateToken
 	if r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodPrivateToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodPrivateToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthType)
-		if !r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodPrivateToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodPrivateToken.AuthType.IsNull() {
-			*authType1 = shared.SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthType(r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodPrivateToken.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
 		sourceGitlabUpdateAuthorizationMethodPrivateToken = &shared.SourceGitlabUpdateAuthorizationMethodPrivateToken{
 			AccessToken: accessToken1,
-			AuthType:    authType1,
 		}
 	}
 	if sourceGitlabUpdateAuthorizationMethodPrivateToken != nil {

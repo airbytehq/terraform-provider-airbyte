@@ -10,11 +10,9 @@ import (
 
 func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceRechargeRecharge(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceRecharge{
 		AccessToken: accessToken,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -21,11 +22,60 @@ type SourceGoogleAdsGoogleCredentials struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+func (o *SourceGoogleAdsGoogleCredentials) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGoogleAdsGoogleCredentials) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceGoogleAdsGoogleCredentials) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceGoogleAdsGoogleCredentials) GetDeveloperToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeveloperToken
+}
+
+func (o *SourceGoogleAdsGoogleCredentials) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 type SourceGoogleAdsCustomQueries struct {
 	// A custom defined GAQL query for building the report. Avoid including the segments.date field; wherever possible, Airbyte will automatically include it for incremental syncs. For more information, refer to <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">Google's documentation</a>.
 	Query string `json:"query"`
 	// The table name in your destination database for the chosen query.
 	TableName string `json:"table_name"`
+}
+
+func (o *SourceGoogleAdsCustomQueries) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceGoogleAdsCustomQueries) GetTableName() string {
+	if o == nil {
+		return ""
+	}
+	return o.TableName
 }
 
 type SourceGoogleAdsGoogleAds string
@@ -54,7 +104,7 @@ func (e *SourceGoogleAdsGoogleAds) UnmarshalJSON(data []byte) error {
 
 type SourceGoogleAds struct {
 	// A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.
-	ConversionWindowDays *int64                           `json:"conversion_window_days,omitempty"`
+	ConversionWindowDays *int64                           `default:"14" json:"conversion_window_days"`
 	Credentials          SourceGoogleAdsGoogleCredentials `json:"credentials"`
 	CustomQueries        []SourceGoogleAdsCustomQueries   `json:"custom_queries,omitempty"`
 	// Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
@@ -63,7 +113,71 @@ type SourceGoogleAds struct {
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
 	LoginCustomerID *string                  `json:"login_customer_id,omitempty"`
-	SourceType      SourceGoogleAdsGoogleAds `json:"sourceType"`
+	sourceType      SourceGoogleAdsGoogleAds `const:"google-ads" json:"sourceType"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 	StartDate *types.Date `json:"start_date,omitempty"`
+}
+
+func (s SourceGoogleAds) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAds) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAds) GetConversionWindowDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ConversionWindowDays
+}
+
+func (o *SourceGoogleAds) GetCredentials() SourceGoogleAdsGoogleCredentials {
+	if o == nil {
+		return SourceGoogleAdsGoogleCredentials{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceGoogleAds) GetCustomQueries() []SourceGoogleAdsCustomQueries {
+	if o == nil {
+		return nil
+	}
+	return o.CustomQueries
+}
+
+func (o *SourceGoogleAds) GetCustomerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerID
+}
+
+func (o *SourceGoogleAds) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceGoogleAds) GetLoginCustomerID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LoginCustomerID
+}
+
+func (o *SourceGoogleAds) GetSourceType() SourceGoogleAdsGoogleAds {
+	return SourceGoogleAdsGoogleAdsGoogleAds
+}
+
+func (o *SourceGoogleAds) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

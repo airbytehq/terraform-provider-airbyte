@@ -36,7 +36,6 @@ data "airbyte_destination_pinecone" "my_destination_pinecone" {
 
 Read-Only:
 
-- `destination_type` (String) must be one of ["pinecone"]
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
@@ -59,15 +58,10 @@ Read-Only:
 Read-Only:
 
 - `cohere_key` (String)
-- `mode` (String) must be one of ["cohere"]
 
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_pinecone_embedding_fake`
-
-Read-Only:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_embedding_open_ai"></a>
@@ -75,7 +69,6 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["openai"]
 - `openai_key` (String)
 
 
@@ -85,15 +78,10 @@ Read-Only:
 Read-Only:
 
 - `cohere_key` (String)
-- `mode` (String) must be one of ["cohere"]
 
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_pinecone_update_embedding_fake`
-
-Read-Only:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_open_ai"></a>
@@ -101,7 +89,6 @@ Read-Only:
 
 Read-Only:
 
-- `mode` (String) must be one of ["openai"]
 - `openai_key` (String)
 
 
@@ -121,7 +108,8 @@ Read-Only:
 
 Read-Only:
 
-- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Default: 0
+Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 - `chunk_size` (Number) Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.

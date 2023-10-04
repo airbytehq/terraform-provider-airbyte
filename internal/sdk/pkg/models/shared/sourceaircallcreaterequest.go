@@ -9,3 +9,31 @@ type SourceAircallCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAircallCreateRequest) GetConfiguration() SourceAircall {
+	if o == nil {
+		return SourceAircall{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAircallCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAircallCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAircallCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

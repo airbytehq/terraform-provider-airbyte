@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthType) UnmarshalJ
 type SourceTypeformUpdateAuthorizationMethodPrivateToken struct {
 	// Log into your Typeform account and then generate a personal Access Token.
 	AccessToken string                                                       `json:"access_token"`
-	AuthType    *SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthType `json:"auth_type,omitempty"`
+	authType    *SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthType `const:"access_token" json:"auth_type,omitempty"`
+}
+
+func (s SourceTypeformUpdateAuthorizationMethodPrivateToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTypeformUpdateAuthorizationMethodPrivateToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodPrivateToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodPrivateToken) GetAuthType() *SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthType {
+	return SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthTypeAccessToken.ToPointer()
 }
 
 type SourceTypeformUpdateAuthorizationMethodOAuth20AuthType string
@@ -67,7 +89,7 @@ func (e *SourceTypeformUpdateAuthorizationMethodOAuth20AuthType) UnmarshalJSON(d
 type SourceTypeformUpdateAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                                  `json:"access_token"`
-	AuthType    *SourceTypeformUpdateAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	authType    *SourceTypeformUpdateAuthorizationMethodOAuth20AuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Client ID of the Typeform developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret the Typeform developer application.
@@ -76,6 +98,56 @@ type SourceTypeformUpdateAuthorizationMethodOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
 	TokenExpiryDate time.Time `json:"token_expiry_date"`
+}
+
+func (s SourceTypeformUpdateAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTypeformUpdateAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodOAuth20) GetAuthType() *SourceTypeformUpdateAuthorizationMethodOAuth20AuthType {
+	return SourceTypeformUpdateAuthorizationMethodOAuth20AuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceTypeformUpdateAuthorizationMethodOAuth20) GetTokenExpiryDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceTypeformUpdateAuthorizationMethodType string
@@ -111,21 +183,16 @@ func CreateSourceTypeformUpdateAuthorizationMethodSourceTypeformUpdateAuthorizat
 }
 
 func (u *SourceTypeformUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceTypeformUpdateAuthorizationMethodPrivateToken := new(SourceTypeformUpdateAuthorizationMethodPrivateToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTypeformUpdateAuthorizationMethodPrivateToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceTypeformUpdateAuthorizationMethodPrivateToken, "", true, true); err == nil {
 		u.SourceTypeformUpdateAuthorizationMethodPrivateToken = sourceTypeformUpdateAuthorizationMethodPrivateToken
 		u.Type = SourceTypeformUpdateAuthorizationMethodTypeSourceTypeformUpdateAuthorizationMethodPrivateToken
 		return nil
 	}
 
 	sourceTypeformUpdateAuthorizationMethodOAuth20 := new(SourceTypeformUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTypeformUpdateAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceTypeformUpdateAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceTypeformUpdateAuthorizationMethodOAuth20 = sourceTypeformUpdateAuthorizationMethodOAuth20
 		u.Type = SourceTypeformUpdateAuthorizationMethodTypeSourceTypeformUpdateAuthorizationMethodOAuth20
 		return nil
@@ -135,15 +202,15 @@ func (u *SourceTypeformUpdateAuthorizationMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u SourceTypeformUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTypeformUpdateAuthorizationMethodPrivateToken != nil {
-		return json.Marshal(u.SourceTypeformUpdateAuthorizationMethodPrivateToken)
-	}
-
 	if u.SourceTypeformUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTypeformUpdateAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceTypeformUpdateAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceTypeformUpdateAuthorizationMethodPrivateToken != nil {
+		return utils.MarshalJSON(u.SourceTypeformUpdateAuthorizationMethodPrivateToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceTypeformUpdate struct {
@@ -152,4 +219,36 @@ type SourceTypeformUpdate struct {
 	FormIds []string `json:"form_ids,omitempty"`
 	// The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceTypeformUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTypeformUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTypeformUpdate) GetCredentials() SourceTypeformUpdateAuthorizationMethod {
+	if o == nil {
+		return SourceTypeformUpdateAuthorizationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceTypeformUpdate) GetFormIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.FormIds
+}
+
+func (o *SourceTypeformUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

@@ -3,8 +3,8 @@
 package provider
 
 type DestinationRedisSSLModes struct {
-	DestinationRedisSSLModesDisable          *DestinationPostgresSSLModesDisable    `tfsdk:"destination_redis_ssl_modes_disable"`
-	DestinationRedisSSLModesVerifyFull       *DestinationPostgresSSLModesVerifyFull `tfsdk:"destination_redis_ssl_modes_verify_full"`
-	DestinationRedisUpdateSSLModesDisable    *DestinationPostgresSSLModesDisable    `tfsdk:"destination_redis_update_ssl_modes_disable"`
-	DestinationRedisUpdateSSLModesVerifyFull *DestinationPostgresSSLModesVerifyFull `tfsdk:"destination_redis_update_ssl_modes_verify_full"`
+	DestinationRedisSSLModesDisable          *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_redis_ssl_modes_disable"`
+	DestinationRedisSSLModesVerifyFull       *DestinationPostgresSSLModesVerifyFull                                `tfsdk:"destination_redis_ssl_modes_verify_full"`
+	DestinationRedisUpdateSSLModesDisable    *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_redis_update_ssl_modes_disable"`
+	DestinationRedisUpdateSSLModesVerifyFull *DestinationPostgresSSLModesVerifyFull                                `tfsdk:"destination_redis_update_ssl_modes_verify_full"`
 }

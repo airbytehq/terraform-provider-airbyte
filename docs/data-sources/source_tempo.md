@@ -42,6 +42,5 @@ data "airbyte_source_tempo" "my_source_tempo" {
 Read-Only:
 
 - `api_token` (String) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
-- `source_type` (String) must be one of ["tempo"]
 
 

@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceDelightedDataSource) Schema(ctx context.Context, req datasource.S
 							validators.IsRFC3339(),
 						},
 						Description: `The date from which you'd like to replicate the data`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"delighted",
-							),
-						},
-						Description: `must be one of ["delighted"]`,
 					},
 				},
 			},

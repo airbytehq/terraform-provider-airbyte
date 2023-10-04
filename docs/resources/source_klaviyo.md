@@ -15,13 +15,12 @@ SourceKlaviyo Resource
 ```terraform
 resource "airbyte_source_klaviyo" "my_source_klaviyo" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "klaviyo"
-    start_date  = "2017-01-25T00:00:00Z"
+    api_key    = "...my_api_key..."
+    start_date = "2017-01-25T00:00:00Z"
   }
-  name         = "Charlotte Muller"
+  name         = "Jimmy Kilback"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0e123b78-47ec-459e-9f67-f3c4cce4b6d7"
+  workspace_id = "06663420-a6a3-4ab4-9447-55b910e5c999"
 }
 ```
 
@@ -49,7 +48,6 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
 Required:
 
 - `api_key` (String) Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
-- `source_type` (String) must be one of ["klaviyo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

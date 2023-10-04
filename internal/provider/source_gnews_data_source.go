@@ -169,15 +169,6 @@ func (r *SourceGnewsDataSource) Schema(ctx context.Context, req datasource.Schem
 							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
 							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gnews",
-							),
-						},
-						Description: `must be one of ["gnews"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Description: `This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)`,

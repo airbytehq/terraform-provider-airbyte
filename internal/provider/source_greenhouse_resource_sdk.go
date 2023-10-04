@@ -9,10 +9,8 @@ import (
 
 func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhouseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGreenhouseGreenhouse(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGreenhouse{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

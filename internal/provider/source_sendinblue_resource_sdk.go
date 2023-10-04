@@ -9,10 +9,8 @@ import (
 
 func (r *SourceSendinblueResourceModel) ToCreateSDKType() *shared.SourceSendinblueCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceSendinblueSendinblue(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSendinblue{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

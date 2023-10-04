@@ -42,9 +42,9 @@ data "airbyte_source_my_hours" "my_source_myhours" {
 Read-Only:
 
 - `email` (String) Your My Hours username
-- `logs_batch_size` (Number) Pagination size used for retrieving logs in days
+- `logs_batch_size` (Number) Default: 30
+Pagination size used for retrieving logs in days
 - `password` (String) The password associated to the username
-- `source_type` (String) must be one of ["my-hours"]
 - `start_date` (String) Start date for collecting time logs
 
 

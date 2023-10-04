@@ -42,7 +42,6 @@ data "airbyte_source_configcat" "my_source_configcat" {
 Read-Only:
 
 - `password` (String) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-- `source_type` (String) must be one of ["configcat"]
 - `username` (String) Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 
 

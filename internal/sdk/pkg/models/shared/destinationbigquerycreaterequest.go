@@ -7,3 +7,24 @@ type DestinationBigqueryCreateRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *DestinationBigqueryCreateRequest) GetConfiguration() DestinationBigquery {
+	if o == nil {
+		return DestinationBigquery{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationBigqueryCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationBigqueryCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

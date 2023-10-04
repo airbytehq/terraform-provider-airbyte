@@ -31,7 +31,6 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 			} else {
 				clientSecret = nil
 			}
-			credentials1 := shared.SourceZendeskChatAuthorizationMethodOAuth20Credentials(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials.ValueString())
 			refreshToken := new(string)
 			if !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsNull() {
 				*refreshToken = r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.ValueString()
@@ -42,7 +41,6 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				Credentials:  credentials1,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -54,10 +52,8 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 		var sourceZendeskChatAuthorizationMethodAccessToken *shared.SourceZendeskChatAuthorizationMethodAccessToken
 		if r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken != nil {
 			accessToken1 := r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken.ValueString()
-			credentials2 := shared.SourceZendeskChatAuthorizationMethodAccessTokenCredentials(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials.ValueString())
 			sourceZendeskChatAuthorizationMethodAccessToken = &shared.SourceZendeskChatAuthorizationMethodAccessToken{
 				AccessToken: accessToken1,
-				Credentials: credentials2,
 			}
 		}
 		if sourceZendeskChatAuthorizationMethodAccessToken != nil {
@@ -66,7 +62,6 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 			}
 		}
 	}
-	sourceType := shared.SourceZendeskChatZendeskChat(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := new(string)
 	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
@@ -76,7 +71,6 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 	}
 	configuration := shared.SourceZendeskChat{
 		Credentials: credentials,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 		Subdomain:   subdomain,
 	}
@@ -125,7 +119,6 @@ func (r *SourceZendeskChatResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 			} else {
 				clientSecret = nil
 			}
-			credentials1 := shared.SourceZendeskChatUpdateAuthorizationMethodOAuth20Credentials(r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodOAuth20.Credentials.ValueString())
 			refreshToken := new(string)
 			if !r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodOAuth20.RefreshToken.IsNull() {
 				*refreshToken = r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
@@ -136,7 +129,6 @@ func (r *SourceZendeskChatResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				Credentials:  credentials1,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -148,10 +140,8 @@ func (r *SourceZendeskChatResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 		var sourceZendeskChatUpdateAuthorizationMethodAccessToken *shared.SourceZendeskChatUpdateAuthorizationMethodAccessToken
 		if r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodAccessToken != nil {
 			accessToken1 := r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodAccessToken.AccessToken.ValueString()
-			credentials2 := shared.SourceZendeskChatUpdateAuthorizationMethodAccessTokenCredentials(r.Configuration.Credentials.SourceZendeskChatUpdateAuthorizationMethodAccessToken.Credentials.ValueString())
 			sourceZendeskChatUpdateAuthorizationMethodAccessToken = &shared.SourceZendeskChatUpdateAuthorizationMethodAccessToken{
 				AccessToken: accessToken1,
-				Credentials: credentials2,
 			}
 		}
 		if sourceZendeskChatUpdateAuthorizationMethodAccessToken != nil {

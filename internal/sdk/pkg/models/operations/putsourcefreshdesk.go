@@ -12,8 +12,46 @@ type PutSourceFreshdeskRequest struct {
 	SourceID                  string                            `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceFreshdeskRequest) GetSourceFreshdeskPutRequest() *shared.SourceFreshdeskPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceFreshdeskPutRequest
+}
+
+func (o *PutSourceFreshdeskRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceFreshdeskResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceFreshdeskResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceFreshdeskResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceFreshdeskResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

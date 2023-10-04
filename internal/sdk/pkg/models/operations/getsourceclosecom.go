@@ -11,10 +11,48 @@ type GetSourceCloseComRequest struct {
 	SourceID string `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *GetSourceCloseComRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type GetSourceCloseComResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// Get a Source by the id in the path.
 	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *GetSourceCloseComResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetSourceCloseComResponse) GetSourceResponse() *shared.SourceResponse {
+	if o == nil {
+		return nil
+	}
+	return o.SourceResponse
+}
+
+func (o *GetSourceCloseComResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetSourceCloseComResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

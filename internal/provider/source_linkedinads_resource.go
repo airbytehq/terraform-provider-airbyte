@@ -124,29 +124,11 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 										Required:    true,
 										Description: `The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_linkedin_ads_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-										Description: `must be one of ["oAuth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
@@ -168,29 +150,11 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 										Required:    true,
 										Description: `The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_linkedin_ads_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-										Description: `must be one of ["oAuth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
@@ -209,15 +173,6 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"linkedin-ads",
-							),
-						},
-						Description: `must be one of ["linkedin-ads"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -298,7 +253,7 @@ func (r *SourceLinkedinAdsResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceLinkedinAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

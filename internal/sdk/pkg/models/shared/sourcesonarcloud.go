@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -39,9 +40,59 @@ type SourceSonarCloud struct {
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.
 	Organization string                     `json:"organization"`
-	SourceType   SourceSonarCloudSonarCloud `json:"sourceType"`
+	sourceType   SourceSonarCloudSonarCloud `const:"sonar-cloud" json:"sourceType"`
 	// To retrieve issues created after the given date (inclusive).
 	StartDate *types.Date `json:"start_date,omitempty"`
 	// Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 	UserToken string `json:"user_token"`
+}
+
+func (s SourceSonarCloud) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSonarCloud) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSonarCloud) GetComponentKeys() []interface{} {
+	if o == nil {
+		return []interface{}{}
+	}
+	return o.ComponentKeys
+}
+
+func (o *SourceSonarCloud) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceSonarCloud) GetOrganization() string {
+	if o == nil {
+		return ""
+	}
+	return o.Organization
+}
+
+func (o *SourceSonarCloud) GetSourceType() SourceSonarCloudSonarCloud {
+	return SourceSonarCloudSonarCloudSonarCloud
+}
+
+func (o *SourceSonarCloud) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceSonarCloud) GetUserToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserToken
 }

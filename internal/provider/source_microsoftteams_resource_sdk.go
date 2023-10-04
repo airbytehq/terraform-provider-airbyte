@@ -12,18 +12,11 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 	if r.Configuration.Credentials != nil {
 		var sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 *shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
 		if r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
-			authType := new(shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType)
-			if !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.IsNull() {
-				*authType = shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType(r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			clientID := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientSecret.ValueString()
 			refreshToken := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.RefreshToken.ValueString()
 			tenantID := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.TenantID.ValueString()
 			sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 = &shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20{
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -37,17 +30,10 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 		}
 		var sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft *shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft
 		if r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft != nil {
-			authType1 := new(shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType)
-			if !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.IsNull() {
-				*authType1 = shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType(r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			clientId1 := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.ClientID.ValueString()
 			clientSecret1 := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.ClientSecret.ValueString()
 			tenantId1 := r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.TenantID.ValueString()
 			sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft = &shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft{
-				AuthType:     authType1,
 				ClientID:     clientId1,
 				ClientSecret: clientSecret1,
 				TenantID:     tenantId1,
@@ -60,11 +46,9 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 		}
 	}
 	period := r.Configuration.Period.ValueString()
-	sourceType := shared.SourceMicrosoftTeamsMicrosoftTeams(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceMicrosoftTeams{
 		Credentials: credentials,
 		Period:      period,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -93,18 +77,11 @@ func (r *SourceMicrosoftTeamsResourceModel) ToUpdateSDKType() *shared.SourceMicr
 	if r.Configuration.Credentials != nil {
 		var sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 *shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
 		if r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
-			authType := new(shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType)
-			if !r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.IsNull() {
-				*authType = shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType(r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			clientID := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientSecret.ValueString()
 			refreshToken := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.RefreshToken.ValueString()
 			tenantID := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.TenantID.ValueString()
 			sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 = &shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20{
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -118,17 +95,10 @@ func (r *SourceMicrosoftTeamsResourceModel) ToUpdateSDKType() *shared.SourceMicr
 		}
 		var sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft *shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft
 		if r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft != nil {
-			authType1 := new(shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftAuthType)
-			if !r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.IsNull() {
-				*authType1 = shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftAuthType(r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			clientId1 := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft.ClientID.ValueString()
 			clientSecret1 := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft.ClientSecret.ValueString()
 			tenantId1 := r.Configuration.Credentials.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft.TenantID.ValueString()
 			sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft = &shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft{
-				AuthType:     authType1,
 				ClientID:     clientId1,
 				ClientSecret: clientSecret1,
 				TenantID:     tenantId1,

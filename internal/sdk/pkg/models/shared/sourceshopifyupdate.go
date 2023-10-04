@@ -4,7 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -38,7 +38,29 @@ func (e *SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod) Unm
 type SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword struct {
 	// The API Password for your private application in the `Shopify` store.
 	APIPassword string                                                             `json:"api_password"`
-	AuthMethod  SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod `json:"auth_method"`
+	authMethod  SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod `const:"api_password" json:"auth_method"`
+}
+
+func (s SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword) GetAPIPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIPassword
+}
+
+func (o *SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword) GetAuthMethod() SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod {
+	return SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethodAPIPassword
 }
 
 type SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod string
@@ -69,11 +91,47 @@ func (e *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod) Unmarsh
 type SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 struct {
 	// The Access Token for making authenticated requests.
 	AccessToken *string                                                        `json:"access_token,omitempty"`
-	AuthMethod  SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
+	authMethod  SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of the Shopify developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of the Shopify developer application.
 	ClientSecret *string `json:"client_secret,omitempty"`
+}
+
+func (s SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) GetAuthMethod() SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod {
+	return SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethodOauth20
+}
+
+func (o *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
 }
 
 type SourceShopifyUpdateShopifyAuthorizationMethodType string
@@ -109,21 +167,16 @@ func CreateSourceShopifyUpdateShopifyAuthorizationMethodSourceShopifyUpdateShopi
 }
 
 func (u *SourceShopifyUpdateShopifyAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword := new(SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword, "", true, true); err == nil {
 		u.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword = sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
 		u.Type = SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
 		return nil
 	}
 
 	sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 := new(SourceShopifyUpdateShopifyAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceShopifyUpdateShopifyAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceShopifyUpdateShopifyAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 = sourceShopifyUpdateShopifyAuthorizationMethodOAuth20
 		u.Type = SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodOAuth20
 		return nil
@@ -133,15 +186,15 @@ func (u *SourceShopifyUpdateShopifyAuthorizationMethod) UnmarshalJSON(data []byt
 }
 
 func (u SourceShopifyUpdateShopifyAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
-		return json.Marshal(u.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword)
-	}
-
 	if u.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
+		return utils.MarshalJSON(u.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceShopifyUpdate struct {
@@ -150,5 +203,37 @@ type SourceShopifyUpdate struct {
 	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
 	Shop string `json:"shop"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2020-01-01" json:"start_date"`
+}
+
+func (s SourceShopifyUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceShopifyUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceShopifyUpdate) GetCredentials() *SourceShopifyUpdateShopifyAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceShopifyUpdate) GetShop() string {
+	if o == nil {
+		return ""
+	}
+	return o.Shop
+}
+
+func (o *SourceShopifyUpdate) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

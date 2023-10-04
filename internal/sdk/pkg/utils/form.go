@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ericlagergren/decimal"
+
 	"airbyte/internal/sdk/pkg/types"
 )
 
@@ -33,9 +35,9 @@ func populateForm(paramName string, explode bool, objType reflect.Type, objValue
 			formValues.Add(paramName, valToString(objValue.Interface()))
 		case types.Date:
 			formValues.Add(paramName, valToString(objValue.Interface()))
-		case types.BigInt:
-			formValues.Add(paramName, valToString(objValue.Interface()))
 		case big.Int:
+			formValues.Add(paramName, valToString(objValue.Interface()))
+		case decimal.Big:
 			formValues.Add(paramName, valToString(objValue.Interface()))
 		default:
 			var items []string

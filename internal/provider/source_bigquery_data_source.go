@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -63,15 +61,6 @@ func (r *SourceBigqueryDataSource) Schema(ctx context.Context, req datasource.Sc
 					"project_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `The GCP project ID for the project containing the target BigQuery dataset.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bigquery",
-							),
-						},
-						Description: `must be one of ["bigquery"]`,
 					},
 				},
 			},

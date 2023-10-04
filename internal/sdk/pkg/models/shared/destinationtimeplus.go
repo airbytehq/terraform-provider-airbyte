@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,7 +35,36 @@ func (e *DestinationTimeplusTimeplus) UnmarshalJSON(data []byte) error {
 type DestinationTimeplus struct {
 	// Personal API key
 	Apikey          string                      `json:"apikey"`
-	DestinationType DestinationTimeplusTimeplus `json:"destinationType"`
+	destinationType DestinationTimeplusTimeplus `const:"timeplus" json:"destinationType"`
 	// Timeplus workspace endpoint
-	Endpoint string `json:"endpoint"`
+	Endpoint *string `default:"https://us.timeplus.cloud/<workspace_id>" json:"endpoint"`
+}
+
+func (d DestinationTimeplus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationTimeplus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationTimeplus) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *DestinationTimeplus) GetDestinationType() DestinationTimeplusTimeplus {
+	return DestinationTimeplusTimeplusTimeplus
+}
+
+func (o *DestinationTimeplus) GetEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Endpoint
 }

@@ -3,8 +3,8 @@
 package provider
 
 type SourceZendeskTalkAuthentication struct {
-	SourceZendeskTalkAuthenticationAPIToken       *SourceZendeskTalkAuthenticationAPIToken       `tfsdk:"source_zendesk_talk_authentication_api_token"`
-	SourceZendeskTalkAuthenticationOAuth20        *SourceZendeskTalkAuthenticationOAuth20        `tfsdk:"source_zendesk_talk_authentication_o_auth2_0"`
-	SourceZendeskTalkUpdateAuthenticationAPIToken *SourceZendeskTalkUpdateAuthenticationAPIToken `tfsdk:"source_zendesk_talk_update_authentication_api_token"`
-	SourceZendeskTalkUpdateAuthenticationOAuth20  *SourceZendeskTalkUpdateAuthenticationOAuth20  `tfsdk:"source_zendesk_talk_update_authentication_o_auth2_0"`
+	SourceZendeskTalkAuthenticationAPIToken       *SourceZendeskSupportAuthenticationAPIToken `tfsdk:"source_zendesk_talk_authentication_api_token"`
+	SourceZendeskTalkAuthenticationOAuth20        *SourceZendeskSupportAuthenticationOAuth20  `tfsdk:"source_zendesk_talk_authentication_o_auth2_0"`
+	SourceZendeskTalkUpdateAuthenticationAPIToken *SourceZendeskSupportAuthenticationAPIToken `tfsdk:"source_zendesk_talk_update_authentication_api_token"`
+	SourceZendeskTalkUpdateAuthenticationOAuth20  *SourceZendeskSupportAuthenticationOAuth20  `tfsdk:"source_zendesk_talk_update_authentication_o_auth2_0"`
 }

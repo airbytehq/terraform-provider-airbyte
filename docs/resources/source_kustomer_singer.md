@@ -15,13 +15,12 @@ SourceKustomerSinger Resource
 ```terraform
 resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
   configuration = {
-    api_token   = "...my_api_token..."
-    source_type = "kustomer-singer"
-    start_date  = "2019-01-01T00:00:00Z"
+    api_token  = "...my_api_token..."
+    start_date = "2019-01-01T00:00:00Z"
   }
-  name         = "Bobbie Jacobs"
+  name         = "Alberto McKenzie"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3c574750-1357-4e44-b51f-8b084c3197e1"
+  workspace_id = "d0e8f2a3-7cc1-4fbe-8883-da2fecd2cab2"
 }
 ```
 
@@ -49,7 +48,6 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
 Required:
 
 - `api_token` (String) Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
-- `source_type` (String) must be one of ["kustomer-singer"]
 - `start_date` (String) The date from which you'd like to replicate the data
 
 

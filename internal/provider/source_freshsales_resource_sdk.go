@@ -10,11 +10,9 @@ import (
 func (r *SourceFreshsalesResourceModel) ToCreateSDKType() *shared.SourceFreshsalesCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
-	sourceType := shared.SourceFreshsalesFreshsales(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFreshsales{
 		APIKey:     apiKey,
 		DomainName: domainName,
-		SourceType: sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

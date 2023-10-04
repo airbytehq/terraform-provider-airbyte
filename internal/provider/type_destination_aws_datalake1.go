@@ -9,7 +9,6 @@ type DestinationAwsDatalake1 struct {
 	BucketName                            types.String                                `tfsdk:"bucket_name"`
 	BucketPrefix                          types.String                                `tfsdk:"bucket_prefix"`
 	Credentials                           DestinationAwsDatalakeAuthenticationMode    `tfsdk:"credentials"`
-	DestinationType                       types.String                                `tfsdk:"destination_type"`
 	Format                                *DestinationAwsDatalakeOutputFormatWildcard `tfsdk:"format"`
 	GlueCatalogFloatAsDecimal             types.Bool                                  `tfsdk:"glue_catalog_float_as_decimal"`
 	LakeformationDatabaseDefaultTagKey    types.String                                `tfsdk:"lakeformation_database_default_tag_key"`

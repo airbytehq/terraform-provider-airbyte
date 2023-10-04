@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -59,15 +58,6 @@ func (r *SourceNotionDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_notion_authenticate_using_access_token": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"token",
-											),
-										},
-										Description: `must be one of ["token"]`,
-									},
 									"token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.`,
@@ -81,15 +71,6 @@ func (r *SourceNotionDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token is a token you received by complete the OauthWebFlow of Notion.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -105,15 +86,6 @@ func (r *SourceNotionDataSource) Schema(ctx context.Context, req datasource.Sche
 							"source_notion_update_authenticate_using_access_token": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"token",
-											),
-										},
-										Description: `must be one of ["token"]`,
-									},
 									"token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.`,
@@ -127,15 +99,6 @@ func (r *SourceNotionDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token is a token you received by complete the OauthWebFlow of Notion.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -153,15 +116,6 @@ func (r *SourceNotionDataSource) Schema(ctx context.Context, req datasource.Sche
 							validators.ExactlyOneChild(),
 						},
 						Description: `Pick an authentication method.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"notion",
-							),
-						},
-						Description: `must be one of ["notion"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

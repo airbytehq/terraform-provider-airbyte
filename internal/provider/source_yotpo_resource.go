@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -64,17 +63,9 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)`,
 					},
 					"email": schema.StringAttribute{
-						Required:    true,
-						Description: `Email address registered with yotpo.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"yotpo",
-							),
-						},
-						Description: `must be one of ["yotpo"]`,
+						Optional: true,
+						MarkdownDescription: `Default: "example@gmail.com"` + "\n" +
+							`Email address registered with yotpo.`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -155,7 +146,7 @@ func (r *SourceYotpoResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceYotpo(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

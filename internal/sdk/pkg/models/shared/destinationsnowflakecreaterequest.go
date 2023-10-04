@@ -7,3 +7,24 @@ type DestinationSnowflakeCreateRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *DestinationSnowflakeCreateRequest) GetConfiguration() DestinationSnowflake {
+	if o == nil {
+		return DestinationSnowflake{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationSnowflakeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationSnowflakeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

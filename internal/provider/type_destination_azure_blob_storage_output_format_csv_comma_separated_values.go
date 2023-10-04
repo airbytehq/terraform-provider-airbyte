@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues struct {
 	Flattening types.String `tfsdk:"flattening"`
-	FormatType types.String `tfsdk:"format_type"`
 }

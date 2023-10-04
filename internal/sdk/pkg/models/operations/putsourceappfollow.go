@@ -12,8 +12,46 @@ type PutSourceAppfollowRequest struct {
 	SourceID                  string                            `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceAppfollowRequest) GetSourceAppfollowPutRequest() *shared.SourceAppfollowPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceAppfollowPutRequest
+}
+
+func (o *PutSourceAppfollowRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceAppfollowResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceAppfollowResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceAppfollowResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceAppfollowResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

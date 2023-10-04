@@ -13,19 +13,12 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	var sourceSmartsheetsAuthorizationMethodOAuth20 *shared.SourceSmartsheetsAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
 		clientID := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken.ValueString()
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
 		sourceSmartsheetsAuthorizationMethodOAuth20 = &shared.SourceSmartsheetsAuthorizationMethodOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
@@ -40,15 +33,8 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	var sourceSmartsheetsAuthorizationMethodAPIAccessToken *shared.SourceSmartsheetsAuthorizationMethodAPIAccessToken
 	if r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthType)
-		if !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsNull() {
-			*authType1 = shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthType(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
 		sourceSmartsheetsAuthorizationMethodAPIAccessToken = &shared.SourceSmartsheetsAuthorizationMethodAPIAccessToken{
 			AccessToken: accessToken1,
-			AuthType:    authType1,
 		}
 	}
 	if sourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
@@ -60,7 +46,6 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, shared.SourceSmartsheetsValidenums(metadataFieldsItem.ValueString()))
 	}
-	sourceType := shared.SourceSmartsheetsSmartsheets(r.Configuration.SourceType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	startDatetime := new(time.Time)
 	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
@@ -71,7 +56,6 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	configuration := shared.SourceSmartsheets{
 		Credentials:    credentials,
 		MetadataFields: metadataFields,
-		SourceType:     sourceType,
 		SpreadsheetID:  spreadsheetID,
 		StartDatetime:  startDatetime,
 	}
@@ -102,19 +86,12 @@ func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsh
 	var sourceSmartsheetsUpdateAuthorizationMethodOAuth20 *shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
 		clientID := r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
 		sourceSmartsheetsUpdateAuthorizationMethodOAuth20 = &shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
@@ -129,15 +106,8 @@ func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsh
 	var sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken *shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken
 	if r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessTokenAuthType)
-		if !r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken.AuthType.IsNull() {
-			*authType1 = shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessTokenAuthType(r.Configuration.Credentials.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
 		sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken = &shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken{
 			AccessToken: accessToken1,
-			AuthType:    authType1,
 		}
 	}
 	if sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken != nil {

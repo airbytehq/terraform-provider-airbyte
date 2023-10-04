@@ -38,7 +38,6 @@ Read-Only:
 
 - `auth_type` (Attributes) Authorization type. (see [below for nested schema](#nestedatt--configuration--auth_type))
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of ["mongodb"]
 - `instance_type` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
@@ -57,7 +56,6 @@ Read-Only:
 
 Read-Only:
 
-- `authorization` (String) must be one of ["login/password"]
 - `password` (String) Password associated with the username.
 - `username` (String) Username to use to access the database.
 
@@ -65,27 +63,18 @@ Read-Only:
 <a id="nestedatt--configuration--auth_type--destination_mongodb_authorization_type_none"></a>
 ### Nested Schema for `configuration.auth_type.destination_mongodb_authorization_type_none`
 
-Read-Only:
-
-- `authorization` (String) must be one of ["none"]
-
 
 <a id="nestedatt--configuration--auth_type--destination_mongodb_update_authorization_type_login_password"></a>
 ### Nested Schema for `configuration.auth_type.destination_mongodb_update_authorization_type_login_password`
 
 Read-Only:
 
-- `authorization` (String) must be one of ["login/password"]
 - `password` (String) Password associated with the username.
 - `username` (String) Username to use to access the database.
 
 
 <a id="nestedatt--configuration--auth_type--destination_mongodb_update_authorization_type_none"></a>
 ### Nested Schema for `configuration.auth_type.destination_mongodb_update_authorization_type_none`
-
-Read-Only:
-
-- `authorization` (String) must be one of ["none"]
 
 
 
@@ -107,7 +96,7 @@ Read-Only:
 Read-Only:
 
 - `cluster_url` (String) URL of a cluster to connect to.
-- `instance` (String) must be one of ["atlas"]
+- `instance` (String) must be one of ["atlas"]; Default: "atlas"
 
 
 <a id="nestedatt--configuration--instance_type--destination_mongodb_mongo_db_instance_type_replica_set"></a>
@@ -115,7 +104,7 @@ Read-Only:
 
 Read-Only:
 
-- `instance` (String) must be one of ["replica"]
+- `instance` (String) must be one of ["replica"]; Default: "replica"
 - `replica_set` (String) A replica set name.
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member seperated by comma.
 
@@ -126,8 +115,9 @@ Read-Only:
 Read-Only:
 
 - `host` (String) The Host of a Mongo database to be replicated.
-- `instance` (String) must be one of ["standalone"]
-- `port` (Number) The Port of a Mongo database to be replicated.
+- `instance` (String) must be one of ["standalone"]; Default: "standalone"
+- `port` (Number) Default: 27017
+The Port of a Mongo database to be replicated.
 
 
 <a id="nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
@@ -136,7 +126,7 @@ Read-Only:
 Read-Only:
 
 - `cluster_url` (String) URL of a cluster to connect to.
-- `instance` (String) must be one of ["atlas"]
+- `instance` (String) must be one of ["atlas"]; Default: "atlas"
 
 
 <a id="nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_replica_set"></a>
@@ -144,7 +134,7 @@ Read-Only:
 
 Read-Only:
 
-- `instance` (String) must be one of ["replica"]
+- `instance` (String) must be one of ["replica"]; Default: "replica"
 - `replica_set` (String) A replica set name.
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member seperated by comma.
 
@@ -155,8 +145,9 @@ Read-Only:
 Read-Only:
 
 - `host` (String) The Host of a Mongo database to be replicated.
-- `instance` (String) must be one of ["standalone"]
-- `port` (Number) The Port of a Mongo database to be replicated.
+- `instance` (String) must be one of ["standalone"]; Default: "standalone"
+- `port` (Number) Default: 27017
+The Port of a Mongo database to be replicated.
 
 
 
@@ -175,11 +166,6 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mongodb_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mongodb_ssh_tunnel_method_password_authentication`
@@ -187,9 +173,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -201,19 +186,13 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mongodb_update_ssh_tunnel_method_no_tunnel`
-
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_password_authentication"></a>
@@ -222,9 +201,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -236,9 +214,8 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

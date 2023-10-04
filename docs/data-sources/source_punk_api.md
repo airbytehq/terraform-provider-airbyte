@@ -44,6 +44,5 @@ Read-Only:
 - `brewed_after` (String) To extract specific data with Unique ID
 - `brewed_before` (String) To extract specific data with Unique ID
 - `id` (String) To extract specific data with Unique ID
-- `source_type` (String) must be one of ["punk-api"]
 
 

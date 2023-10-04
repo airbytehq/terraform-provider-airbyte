@@ -9,3 +9,31 @@ type SourcePaypalTransactionCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePaypalTransactionCreateRequest) GetConfiguration() SourcePaypalTransaction {
+	if o == nil {
+		return SourcePaypalTransaction{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePaypalTransactionCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePaypalTransactionCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePaypalTransactionCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

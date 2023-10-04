@@ -12,13 +12,16 @@ func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCl
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
 	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
-	sourceType := shared.SourceAwsCloudtrailAwsCloudtrail(r.Configuration.SourceType.ValueString())
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceAwsCloudtrail{
 		AwsKeyID:      awsKeyID,
 		AwsRegionName: awsRegionName,
 		AwsSecretKey:  awsSecretKey,
-		SourceType:    sourceType,
 		StartDate:     startDate,
 	}
 	name := r.Name.ValueString()
@@ -47,7 +50,12 @@ func (r *SourceAwsCloudtrailResourceModel) ToUpdateSDKType() *shared.SourceAwsCl
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
 	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceAwsCloudtrailUpdate{
 		AwsKeyID:      awsKeyID,
 		AwsRegionName: awsRegionName,

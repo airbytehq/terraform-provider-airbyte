@@ -5,15 +5,14 @@ resource "airbyte_source_pocket" "my_source_pocket" {
     content_type = "image"
     detail_type  = "complete"
     domain       = "...my_domain..."
-    favorite     = true
+    favorite     = false
     search       = "...my_search..."
     since        = "2022-10-20 14:14:14"
-    sort         = "site"
-    source_type  = "pocket"
-    state        = "unread"
+    sort         = "newest"
+    state        = "archive"
     tag          = "...my_tag..."
   }
-  name         = "Christina Bode"
+  name         = "Deanna Kunde"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e2239e8f-25cd-40d1-9d95-9f439e39266c"
+  workspace_id = "fdf7e2fa-4a63-4623-a34b-ba48ed6d0eaf"
 }

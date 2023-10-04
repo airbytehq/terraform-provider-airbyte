@@ -18,7 +18,6 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToCreateSDKType() *shared.S
 	for _, categoriesItem := range r.Configuration.Categories {
 		categories = append(categories, shared.SourceGooglePagespeedInsightsCategories(categoriesItem.ValueString()))
 	}
-	sourceType := shared.SourceGooglePagespeedInsightsGooglePagespeedInsights(r.Configuration.SourceType.ValueString())
 	var strategies []shared.SourceGooglePagespeedInsightsStrategies = nil
 	for _, strategiesItem := range r.Configuration.Strategies {
 		strategies = append(strategies, shared.SourceGooglePagespeedInsightsStrategies(strategiesItem.ValueString()))
@@ -30,7 +29,6 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToCreateSDKType() *shared.S
 	configuration := shared.SourceGooglePagespeedInsights{
 		APIKey:     apiKey,
 		Categories: categories,
-		SourceType: sourceType,
 		Strategies: strategies,
 		Urls:       urls,
 	}

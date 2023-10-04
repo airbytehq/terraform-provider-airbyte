@@ -9,3 +9,31 @@ type SourceMarketoCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMarketoCreateRequest) GetConfiguration() SourceMarketo {
+	if o == nil {
+		return SourceMarketo{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMarketoCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMarketoCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMarketoCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -16,18 +16,16 @@ SourceLeverHiring Resource
 resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
   configuration = {
     credentials = {
-      source_lever_hiring_authentication_mechanism_authenticate_via_lever_api_key_ = {
-        api_key   = "...my_api_key..."
-        auth_type = "Api Key"
+      source_lever_hiring_authentication_mechanism_authenticate_via_lever_api_key = {
+        api_key = "...my_api_key..."
       }
     }
-    environment = "Sandbox"
-    source_type = "lever-hiring"
+    environment = "Production"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  name         = "Donald Wuckert"
+  name         = "Joyce Shields"
   secret_id    = "...my_secret_id..."
-  workspace_id = "aedf2aca-b58b-4991-8926-ddb589461e74"
+  workspace_id = "00cfe1ba-68d3-4405-82b9-6029febd39e6"
 }
 ```
 
@@ -54,13 +52,12 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
 
 Required:
 
-- `source_type` (String) must be one of ["lever-hiring"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.
 
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Lever Hiring. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `environment` (String) must be one of ["Production", "Sandbox"]
+- `environment` (String) must be one of ["Production", "Sandbox"]; Default: "Sandbox"
 The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -80,10 +77,6 @@ Required:
 
 - `api_key` (String) The Api Key of your Lever Hiring account.
 
-Optional:
-
-- `auth_type` (String) must be one of ["Api Key"]
-
 
 <a id="nestedatt--configuration--credentials--source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth`
@@ -94,7 +87,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Lever Hiring developer application.
 - `client_secret` (String) The Client Secret of your Lever Hiring developer application.
 
@@ -106,10 +98,6 @@ Required:
 
 - `api_key` (String) The Api Key of your Lever Hiring account.
 
-Optional:
-
-- `auth_type` (String) must be one of ["Api Key"]
-
 
 <a id="nestedatt--configuration--credentials--source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth`
@@ -120,7 +108,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Lever Hiring developer application.
 - `client_secret` (String) The Client Secret of your Lever Hiring developer application.
 

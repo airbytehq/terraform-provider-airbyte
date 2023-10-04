@@ -46,12 +46,12 @@ Read-Only:
 - `host` (String) Hostname of the database.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String) The password associated with the username.
-- `port` (Number) Port of the database.
+- `port` (Number) Default: 1521
+Port of the database.
 Oracle Corporations recommends the following port numbers:
 1521 - Default listening port for client connections to the listener. 
 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
 - `schemas` (List of String) The list of schemas to sync from. Defaults to user. Case sensitive.
-- `source_type` (String) must be one of ["oracle"]
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `username` (String) The username which is used to access the database.
 
@@ -70,7 +70,6 @@ Read-Only:
 
 Read-Only:
 
-- `connection_type` (String) must be one of ["service_name"]
 - `service_name` (String)
 
 
@@ -79,7 +78,6 @@ Read-Only:
 
 Read-Only:
 
-- `connection_type` (String) must be one of ["sid"]
 - `sid` (String)
 
 
@@ -88,7 +86,6 @@ Read-Only:
 
 Read-Only:
 
-- `connection_type` (String) must be one of ["service_name"]
 - `service_name` (String)
 
 
@@ -97,7 +94,6 @@ Read-Only:
 
 Read-Only:
 
-- `connection_type` (String) must be one of ["sid"]
 - `sid` (String)
 
 
@@ -117,9 +113,8 @@ Read-Only:
 
 Read-Only:
 
-- `encryption_algorithm` (String) must be one of ["AES256", "RC4_56", "3DES168"]
+- `encryption_algorithm` (String) must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
 This parameter defines what encryption algorithm is used.
-- `encryption_method` (String) must be one of ["client_nne"]
 
 
 <a id="nestedatt--configuration--encryption--source_oracle_encryption_tls_encrypted_verify_certificate"></a>
@@ -127,7 +122,6 @@ This parameter defines what encryption algorithm is used.
 
 Read-Only:
 
-- `encryption_method` (String) must be one of ["encrypted_verify_certificate"]
 - `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 
@@ -136,9 +130,8 @@ Read-Only:
 
 Read-Only:
 
-- `encryption_algorithm` (String) must be one of ["AES256", "RC4_56", "3DES168"]
+- `encryption_algorithm` (String) must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
 This parameter defines what encryption algorithm is used.
-- `encryption_method` (String) must be one of ["client_nne"]
 
 
 <a id="nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate"></a>
@@ -146,7 +139,6 @@ This parameter defines what encryption algorithm is used.
 
 Read-Only:
 
-- `encryption_method` (String) must be one of ["encrypted_verify_certificate"]
 - `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 
@@ -166,11 +158,6 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_oracle_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_oracle_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--source_oracle_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_oracle_ssh_tunnel_method_password_authentication`
@@ -178,9 +165,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -192,19 +178,13 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_oracle_update_ssh_tunnel_method_no_tunnel`
-
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_password_authentication"></a>
@@ -213,9 +193,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -227,9 +206,8 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

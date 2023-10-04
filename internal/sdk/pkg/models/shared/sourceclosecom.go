@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,7 +36,36 @@ func (e *SourceCloseComCloseCom) UnmarshalJSON(data []byte) error {
 type SourceCloseCom struct {
 	// Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
 	APIKey     string                 `json:"api_key"`
-	SourceType SourceCloseComCloseCom `json:"sourceType"`
+	sourceType SourceCloseComCloseCom `const:"close-com" json:"sourceType"`
 	// The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
+}
+
+func (s SourceCloseCom) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceCloseCom) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceCloseCom) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceCloseCom) GetSourceType() SourceCloseComCloseCom {
+	return SourceCloseComCloseComCloseCom
+}
+
+func (o *SourceCloseCom) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

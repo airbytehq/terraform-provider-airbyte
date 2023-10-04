@@ -42,6 +42,5 @@ data "airbyte_source_glassfrog" "my_source_glassfrog" {
 Read-Only:
 
 - `api_key` (String) API key provided by Glassfrog
-- `source_type` (String) must be one of ["glassfrog"]
 
 

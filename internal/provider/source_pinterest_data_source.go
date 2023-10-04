@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,29 +62,11 @@ func (r *SourcePinterestDataSource) Schema(ctx context.Context, req datasource.S
 										Computed:    true,
 										Description: `The Access Token to make authenticated requests.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_pinterest_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your OAuth application`,
@@ -107,29 +88,11 @@ func (r *SourcePinterestDataSource) Schema(ctx context.Context, req datasource.S
 										Computed:    true,
 										Description: `The Access Token to make authenticated requests.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_pinterest_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your OAuth application`,
@@ -148,15 +111,6 @@ func (r *SourcePinterestDataSource) Schema(ctx context.Context, req datasource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pinterest",
-							),
-						},
-						Description: `must be one of ["pinterest"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

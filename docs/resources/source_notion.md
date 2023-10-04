@@ -17,16 +17,14 @@ resource "airbyte_source_notion" "my_source_notion" {
   configuration = {
     credentials = {
       source_notion_authenticate_using_access_token = {
-        auth_type = "token"
-        token     = "...my_token..."
+        token = "...my_token..."
       }
     }
-    source_type = "notion"
-    start_date  = "2020-11-16T00:00:00.000Z"
+    start_date = "2020-11-16T00:00:00.000Z"
   }
-  name         = "Francisco Yost"
+  name         = "Alyssa Douglas"
   secret_id    = "...my_secret_id..."
-  workspace_id = "cb35d176-38f1-4edb-b835-9ecc5cb860f8"
+  workspace_id = "9cbeca1c-7573-4a5b-bba8-2d4c0a2cef78"
 }
 ```
 
@@ -53,7 +51,6 @@ resource "airbyte_source_notion" "my_source_notion" {
 
 Required:
 
-- `source_type` (String) must be one of ["notion"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 
 Optional:
@@ -75,7 +72,6 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of ["token"]
 - `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
@@ -85,7 +81,6 @@ Required:
 Required:
 
 - `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) The ClientID of your Notion integration.
 - `client_secret` (String) The ClientSecret of your Notion integration.
 
@@ -95,7 +90,6 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of ["token"]
 - `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
@@ -105,7 +99,6 @@ Required:
 Required:
 
 - `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) The ClientID of your Notion integration.
 - `client_secret` (String) The ClientSecret of your Notion integration.
 

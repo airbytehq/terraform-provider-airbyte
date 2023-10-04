@@ -80,3 +80,31 @@ type SourceGooglePagespeedInsightsUpdate struct {
 	// The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 	Urls []string `json:"urls"`
 }
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetCategories() []SourceGooglePagespeedInsightsUpdateCategories {
+	if o == nil {
+		return []SourceGooglePagespeedInsightsUpdateCategories{}
+	}
+	return o.Categories
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetStrategies() []SourceGooglePagespeedInsightsUpdateStrategies {
+	if o == nil {
+		return []SourceGooglePagespeedInsightsUpdateStrategies{}
+	}
+	return o.Strategies
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Urls
+}

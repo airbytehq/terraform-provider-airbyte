@@ -6,12 +6,11 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "ap-southeast-2"
+    region               = "eu-central-1"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
-    source_type          = "amazon-sqs"
     visibility_timeout   = 15
   }
-  name         = "Cathy Kirlin"
+  name         = "Mr. Myrtle Crona"
   secret_id    = "...my_secret_id..."
-  workspace_id = "29177dea-c646-4ecb-9734-09e3eb1e5a2b"
+  workspace_id = "b4de2c1a-7f28-48ad-bcde-3c9d6fa94b74"
 }

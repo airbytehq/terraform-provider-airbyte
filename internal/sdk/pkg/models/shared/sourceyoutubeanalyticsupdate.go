@@ -3,66 +3,65 @@
 package shared
 
 import (
-	"encoding/json"
+	"airbyte/internal/sdk/pkg/utils"
 )
 
 type SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20 struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The Client ID of your developer application
 	ClientID string `json:"client_id"`
 	// The client secret of your developer application
 	ClientSecret string `json:"client_secret"`
 	// A refresh token generated using the above client ID and secret
 	RefreshToken string `json:"refresh_token"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20 SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20
 
-func (c *SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) UnmarshalJSON(bs []byte) error {
-	data := _SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20{}
+func (s SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
 		return err
 	}
-	*c = SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "client_id")
-	delete(additionalFields, "client_secret")
-	delete(additionalFields, "refresh_token")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20(c))
-	if err != nil {
-		return nil, err
+func (o *SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
 	}
+	return o.ClientID
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
 	}
+	return o.ClientSecret
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
 	}
-
-	return json.Marshal(out)
+	return o.RefreshToken
 }
 
 type SourceYoutubeAnalyticsUpdate struct {
 	Credentials SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20 `json:"credentials"`
+}
+
+func (o *SourceYoutubeAnalyticsUpdate) GetCredentials() SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20 {
+	if o == nil {
+		return SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20{}
+	}
+	return o.Credentials
 }

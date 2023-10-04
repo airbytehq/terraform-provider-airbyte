@@ -1,18 +1,17 @@
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
     api_token                   = "...my_api_token..."
-    domain                      = "<your-domain>.jira.com"
-    email                       = "Eldridge_Reichert@hotmail.com"
-    enable_experimental_streams = false
-    expand_issue_changelog      = false
+    domain                      = "jira.<your-domain>.com"
+    email                       = "Karlee_Fadel@yahoo.com"
+    enable_experimental_streams = true
+    expand_issue_changelog      = true
     projects = [
       "...",
     ]
     render_fields = false
-    source_type   = "jira"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Olive Windler"
+  name         = "Ida Rath"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0a54b475-f16f-456d-b85a-3c4ac631b99e"
+  workspace_id = "8621a877-d2e6-425c-9d80-ba5ff53c6fc1"
 }

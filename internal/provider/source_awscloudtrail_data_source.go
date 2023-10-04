@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -65,21 +64,13 @@ func (r *SourceAwsCloudtrailDataSource) Schema(ctx context.Context, req datasour
 						Computed:    true,
 						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"aws-cloudtrail",
-							),
-						},
-						Description: `must be one of ["aws-cloudtrail"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.`,
+						MarkdownDescription: `Default: "1970-01-01"` + "\n" +
+							`The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.`,
 					},
 				},
 			},

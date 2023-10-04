@@ -42,6 +42,5 @@ data "airbyte_source_hubplanner" "my_source_hubplanner" {
 Read-Only:
 
 - `api_key` (String) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-- `source_type` (String) must be one of ["hubplanner"]
 
 

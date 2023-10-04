@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -44,5 +45,62 @@ type SourcePexelsAPI struct {
 	Query string `json:"query"`
 	// Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
 	Size       *string                  `json:"size,omitempty"`
-	SourceType SourcePexelsAPIPexelsAPI `json:"sourceType"`
+	sourceType SourcePexelsAPIPexelsAPI `const:"pexels-api" json:"sourceType"`
+}
+
+func (s SourcePexelsAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePexelsAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePexelsAPI) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePexelsAPI) GetColor() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Color
+}
+
+func (o *SourcePexelsAPI) GetLocale() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *SourcePexelsAPI) GetOrientation() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Orientation
+}
+
+func (o *SourcePexelsAPI) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourcePexelsAPI) GetSize() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Size
+}
+
+func (o *SourcePexelsAPI) GetSourceType() SourcePexelsAPIPexelsAPI {
+	return SourcePexelsAPIPexelsAPIPexelsAPI
 }

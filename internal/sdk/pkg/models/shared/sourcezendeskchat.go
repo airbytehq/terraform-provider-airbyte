@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourceZendeskChatAuthorizationMethodAccessTokenCredentials) UnmarshalJS
 type SourceZendeskChatAuthorizationMethodAccessToken struct {
 	// The Access Token to make authenticated requests.
 	AccessToken string                                                     `json:"access_token"`
-	Credentials SourceZendeskChatAuthorizationMethodAccessTokenCredentials `json:"credentials"`
+	credentials SourceZendeskChatAuthorizationMethodAccessTokenCredentials `const:"access_token" json:"credentials"`
+}
+
+func (s SourceZendeskChatAuthorizationMethodAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskChatAuthorizationMethodAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskChatAuthorizationMethodAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceZendeskChatAuthorizationMethodAccessToken) GetCredentials() SourceZendeskChatAuthorizationMethodAccessTokenCredentials {
+	return SourceZendeskChatAuthorizationMethodAccessTokenCredentialsAccessToken
 }
 
 type SourceZendeskChatAuthorizationMethodOAuth20Credentials string
@@ -71,9 +93,52 @@ type SourceZendeskChatAuthorizationMethodOAuth20 struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
 	ClientSecret *string                                                `json:"client_secret,omitempty"`
-	Credentials  SourceZendeskChatAuthorizationMethodOAuth20Credentials `json:"credentials"`
+	credentials  SourceZendeskChatAuthorizationMethodOAuth20Credentials `const:"oauth2.0" json:"credentials"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken *string `json:"refresh_token,omitempty"`
+}
+
+func (s SourceZendeskChatAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskChatAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskChatAuthorizationMethodOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceZendeskChatAuthorizationMethodOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceZendeskChatAuthorizationMethodOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZendeskChatAuthorizationMethodOAuth20) GetCredentials() SourceZendeskChatAuthorizationMethodOAuth20Credentials {
+	return SourceZendeskChatAuthorizationMethodOAuth20CredentialsOauth20
+}
+
+func (o *SourceZendeskChatAuthorizationMethodOAuth20) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
 }
 
 type SourceZendeskChatAuthorizationMethodType string
@@ -109,21 +174,16 @@ func CreateSourceZendeskChatAuthorizationMethodSourceZendeskChatAuthorizationMet
 }
 
 func (u *SourceZendeskChatAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceZendeskChatAuthorizationMethodAccessToken := new(SourceZendeskChatAuthorizationMethodAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskChatAuthorizationMethodAccessToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceZendeskChatAuthorizationMethodAccessToken, "", true, true); err == nil {
 		u.SourceZendeskChatAuthorizationMethodAccessToken = sourceZendeskChatAuthorizationMethodAccessToken
 		u.Type = SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAuthorizationMethodAccessToken
 		return nil
 	}
 
 	sourceZendeskChatAuthorizationMethodOAuth20 := new(SourceZendeskChatAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskChatAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceZendeskChatAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceZendeskChatAuthorizationMethodOAuth20 = sourceZendeskChatAuthorizationMethodOAuth20
 		u.Type = SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAuthorizationMethodOAuth20
 		return nil
@@ -133,15 +193,15 @@ func (u *SourceZendeskChatAuthorizationMethod) UnmarshalJSON(data []byte) error 
 }
 
 func (u SourceZendeskChatAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskChatAuthorizationMethodAccessToken != nil {
-		return json.Marshal(u.SourceZendeskChatAuthorizationMethodAccessToken)
-	}
-
 	if u.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskChatAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceZendeskChatAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceZendeskChatAuthorizationMethodAccessToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskChatAuthorizationMethodAccessToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceZendeskChatZendeskChat string
@@ -170,9 +230,45 @@ func (e *SourceZendeskChatZendeskChat) UnmarshalJSON(data []byte) error {
 
 type SourceZendeskChat struct {
 	Credentials *SourceZendeskChatAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceZendeskChatZendeskChat          `json:"sourceType"`
+	sourceType  SourceZendeskChatZendeskChat          `const:"zendesk-chat" json:"sourceType"`
 	// The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate time.Time `json:"start_date"`
 	// Required if you access Zendesk Chat from a Zendesk Support subdomain.
-	Subdomain *string `json:"subdomain,omitempty"`
+	Subdomain *string `default:"" json:"subdomain"`
+}
+
+func (s SourceZendeskChat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskChat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskChat) GetCredentials() *SourceZendeskChatAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceZendeskChat) GetSourceType() SourceZendeskChatZendeskChat {
+	return SourceZendeskChatZendeskChatZendeskChat
+}
+
+func (o *SourceZendeskChat) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceZendeskChat) GetSubdomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Subdomain
 }

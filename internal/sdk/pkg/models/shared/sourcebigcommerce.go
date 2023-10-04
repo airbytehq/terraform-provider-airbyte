@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,9 +35,45 @@ func (e *SourceBigcommerceBigcommerce) UnmarshalJSON(data []byte) error {
 type SourceBigcommerce struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                       `json:"access_token"`
-	SourceType  SourceBigcommerceBigcommerce `json:"sourceType"`
+	sourceType  SourceBigcommerceBigcommerce `const:"bigcommerce" json:"sourceType"`
 	// The date you would like to replicate data. Format: YYYY-MM-DD.
 	StartDate string `json:"start_date"`
 	// The hash code of the store. For https://api.bigcommerce.com/stores/HASH_CODE/v3/, The store's hash code is 'HASH_CODE'.
 	StoreHash string `json:"store_hash"`
+}
+
+func (s SourceBigcommerce) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBigcommerce) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBigcommerce) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceBigcommerce) GetSourceType() SourceBigcommerceBigcommerce {
+	return SourceBigcommerceBigcommerceBigcommerce
+}
+
+func (o *SourceBigcommerce) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceBigcommerce) GetStoreHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreHash
 }

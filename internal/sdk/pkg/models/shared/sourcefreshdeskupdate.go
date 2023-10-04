@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -15,4 +16,43 @@ type SourceFreshdeskUpdate struct {
 	RequestsPerMinute *int64 `json:"requests_per_minute,omitempty"`
 	// UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceFreshdeskUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshdeskUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshdeskUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshdeskUpdate) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *SourceFreshdeskUpdate) GetRequestsPerMinute() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestsPerMinute
+}
+
+func (o *SourceFreshdeskUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

@@ -21,12 +21,15 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		var sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance *shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
 		if r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
 			host := r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
-			instance := shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
-			port := r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+			port := new(int64)
+			if !r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.IsNull() {
+				*port = r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+			} else {
+				port = nil
+			}
 			sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{
-				Host:     host,
-				Instance: instance,
-				Port:     port,
+				Host: host,
+				Port: port,
 			}
 		}
 		if sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
@@ -36,7 +39,6 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		}
 		var sourceMongodbMongoDbInstanceTypeReplicaSet *shared.SourceMongodbMongoDbInstanceTypeReplicaSet
 		if r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet != nil {
-			instance1 := shared.SourceMongodbMongoDbInstanceTypeReplicaSetInstance(r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance.ValueString())
 			replicaSet := new(string)
 			if !r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsNull() {
 				*replicaSet = r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.ValueString()
@@ -45,7 +47,6 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 			}
 			serverAddresses := r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses.ValueString()
 			sourceMongodbMongoDbInstanceTypeReplicaSet = &shared.SourceMongodbMongoDbInstanceTypeReplicaSet{
-				Instance:        instance1,
 				ReplicaSet:      replicaSet,
 				ServerAddresses: serverAddresses,
 			}
@@ -57,16 +58,14 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		}
 		var sourceMongodbMongoDBInstanceTypeMongoDBAtlas *shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlas
 		if r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-			clusterURL := r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
-			instance2 := shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
 			var additionalProperties interface{}
 			if !r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.ValueString()), &additionalProperties)
 			}
+			clusterURL := r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
 			sourceMongodbMongoDBInstanceTypeMongoDBAtlas = &shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlas{
-				ClusterURL:           clusterURL,
-				Instance:             instance2,
 				AdditionalProperties: additionalProperties,
+				ClusterURL:           clusterURL,
 			}
 		}
 		if sourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
@@ -81,7 +80,6 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 	} else {
 		password = nil
 	}
-	sourceType := shared.SourceMongodbMongodb(r.Configuration.SourceType.ValueString())
 	user := new(string)
 	if !r.Configuration.User.IsUnknown() && !r.Configuration.User.IsNull() {
 		*user = r.Configuration.User.ValueString()
@@ -93,7 +91,6 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		Database:     database,
 		InstanceType: instanceType,
 		Password:     password,
-		SourceType:   sourceType,
 		User:         user,
 	}
 	name := r.Name.ValueString()
@@ -131,12 +128,15 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		var sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance *shared.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance
 		if r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
 			host := r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
-			instance := shared.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
-			port := r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+			port := new(int64)
+			if !r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance.Port.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance.Port.IsNull() {
+				*port = r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+			} else {
+				port = nil
+			}
 			sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance{
-				Host:     host,
-				Instance: instance,
-				Port:     port,
+				Host: host,
+				Port: port,
 			}
 		}
 		if sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
@@ -146,7 +146,6 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		}
 		var sourceMongodbUpdateMongoDbInstanceTypeReplicaSet *shared.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet
 		if r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet != nil {
-			instance1 := shared.SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance(r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet.Instance.ValueString())
 			replicaSet := new(string)
 			if !r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet.ReplicaSet.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet.ReplicaSet.IsNull() {
 				*replicaSet = r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet.ReplicaSet.ValueString()
@@ -155,7 +154,6 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 			}
 			serverAddresses := r.Configuration.InstanceType.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet.ServerAddresses.ValueString()
 			sourceMongodbUpdateMongoDbInstanceTypeReplicaSet = &shared.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet{
-				Instance:        instance1,
 				ReplicaSet:      replicaSet,
 				ServerAddresses: serverAddresses,
 			}
@@ -167,16 +165,14 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		}
 		var sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas *shared.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
 		if r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
-			clusterURL := r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
-			instance2 := shared.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
 			var additionalProperties interface{}
 			if !r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.ValueString()), &additionalProperties)
 			}
+			clusterURL := r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
 			sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = &shared.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{
-				ClusterURL:           clusterURL,
-				Instance:             instance2,
 				AdditionalProperties: additionalProperties,
+				ClusterURL:           clusterURL,
 			}
 		}
 		if sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {

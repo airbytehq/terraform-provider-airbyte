@@ -13,6 +13,5 @@ type SourceMixpanel struct {
 	ProjectTimezone           types.String                          `tfsdk:"project_timezone"`
 	Region                    types.String                          `tfsdk:"region"`
 	SelectPropertiesByDefault types.Bool                            `tfsdk:"select_properties_by_default"`
-	SourceType                types.String                          `tfsdk:"source_type"`
 	StartDate                 types.String                          `tfsdk:"start_date"`
 }

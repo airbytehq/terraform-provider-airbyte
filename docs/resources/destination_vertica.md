@@ -15,22 +15,19 @@ DestinationVertica Resource
 ```terraform
 resource "airbyte_destination_vertica" "my_destination_vertica" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "vertica"
-    host             = "...my_host..."
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    password         = "...my_password..."
-    port             = 5433
-    schema           = "...my_schema..."
+    database        = "...my_database..."
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 5433
+    schema          = "...my_schema..."
     tunnel_method = {
-      destination_vertica_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_vertica_ssh_tunnel_method_no_tunnel = {}
     }
-    username = "Jackson.Kuvalis"
+    username = "Douglas32"
   }
-  name         = "Ida Lubowitz"
-  workspace_id = "73a8418d-1623-409f-b092-9921aefb9f58"
+  name         = "Mr. Bobbie Wolf"
+  workspace_id = "2182d15e-f4e8-495c-9212-618452d1432f"
 }
 ```
 
@@ -54,9 +51,7 @@ resource "airbyte_destination_vertica" "my_destination_vertica" {
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of ["vertica"]
 - `host` (String) Hostname of the database.
-- `port` (Number) Port of the database.
 - `schema` (String) Schema for vertica destination
 - `username` (String) Username to use to access the database.
 
@@ -64,6 +59,8 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String) Password associated with the username.
+- `port` (Number) Default: 5433
+Port of the database.
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
@@ -81,11 +78,6 @@ Optional:
 <a id="nestedatt--configuration--tunnel_method--destination_vertica_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_vertica_ssh_tunnel_method_no_tunnel`
 
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--destination_vertica_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_vertica_ssh_tunnel_method_password_authentication`
@@ -93,11 +85,13 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_vertica_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -107,19 +101,16 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_vertica_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_vertica_update_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_vertica_update_ssh_tunnel_method_password_authentication"></a>
@@ -128,11 +119,13 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_vertica_update_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -142,9 +135,11 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 

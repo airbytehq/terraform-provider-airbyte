@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -65,15 +63,6 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Schema(ctx context.Context, 
 					"lookback": schema.Int64Attribute{
 						Optional:    true,
 						Description: `Sets the range of time shown in the report. Reports API allows from up to 180 days ago. `,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-workspace-admin-reports",
-							),
-						},
-						Description: `must be one of ["google-workspace-admin-reports"]`,
 					},
 				},
 			},
@@ -147,7 +136,7 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Create(ctx context.Context, 
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGoogleWorkspaceAdminReports(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

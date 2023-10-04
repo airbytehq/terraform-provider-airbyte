@@ -12,8 +12,46 @@ type PutSourceBraintreeRequest struct {
 	SourceID                  string                            `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceBraintreeRequest) GetSourceBraintreePutRequest() *shared.SourceBraintreePutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceBraintreePutRequest
+}
+
+func (o *PutSourceBraintreeRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceBraintreeResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceBraintreeResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceBraintreeResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceBraintreeResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

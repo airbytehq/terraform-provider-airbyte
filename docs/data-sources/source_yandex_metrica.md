@@ -44,7 +44,6 @@ Read-Only:
 - `auth_token` (String) Your Yandex Metrica API access token
 - `counter_id` (String) Counter ID
 - `end_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
-- `source_type` (String) must be one of ["yandex-metrica"]
 - `start_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD".
 
 

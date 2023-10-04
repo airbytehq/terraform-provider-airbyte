@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -71,22 +69,14 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Required:    true,
-						Description: `Port of the database.`,
+						Optional: true,
+						MarkdownDescription: `Default: 5439` + "\n" +
+							`Port of the database.`,
 					},
 					"schemas": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"redshift",
-							),
-						},
-						Description: `must be one of ["redshift"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
@@ -164,7 +154,7 @@ func (r *SourceRedshiftResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceRedshift(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

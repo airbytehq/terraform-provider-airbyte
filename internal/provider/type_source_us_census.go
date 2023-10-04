@@ -8,5 +8,4 @@ type SourceUsCensus struct {
 	APIKey      types.String `tfsdk:"api_key"`
 	QueryParams types.String `tfsdk:"query_params"`
 	QueryPath   types.String `tfsdk:"query_path"`
-	SourceType  types.String `tfsdk:"source_type"`
 }

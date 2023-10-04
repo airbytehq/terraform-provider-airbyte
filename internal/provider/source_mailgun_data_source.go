@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,21 +53,13 @@ func (r *SourceMailgunDataSource) Schema(ctx context.Context, req datasource.Sch
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"domain_region": schema.StringAttribute{
-						Computed:    true,
-						Description: `Domain region code. 'EU' or 'US' are possible values. The default is 'US'.`,
+						Computed: true,
+						MarkdownDescription: `Default: "US"` + "\n" +
+							`Domain region code. 'EU' or 'US' are possible values. The default is 'US'.`,
 					},
 					"private_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Primary account API key to access your Mailgun data.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mailgun",
-							),
-						},
-						Description: `must be one of ["mailgun"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

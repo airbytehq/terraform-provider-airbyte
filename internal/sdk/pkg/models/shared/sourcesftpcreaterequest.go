@@ -9,3 +9,31 @@ type SourceSftpCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSftpCreateRequest) GetConfiguration() SourceSftp {
+	if o == nil {
+		return SourceSftp{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSftpCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSftpCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSftpCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

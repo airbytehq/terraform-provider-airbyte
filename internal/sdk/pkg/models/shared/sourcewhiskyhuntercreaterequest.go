@@ -9,3 +9,31 @@ type SourceWhiskyHunterCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceWhiskyHunterCreateRequest) GetConfiguration() SourceWhiskyHunter {
+	if o == nil {
+		return SourceWhiskyHunter{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceWhiskyHunterCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceWhiskyHunterCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceWhiskyHunterCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

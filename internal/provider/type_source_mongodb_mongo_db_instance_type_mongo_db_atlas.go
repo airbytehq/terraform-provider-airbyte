@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMongodbMongoDBInstanceTypeMongoDBAtlas struct {
-	ClusterURL           types.String `tfsdk:"cluster_url"`
-	Instance             types.String `tfsdk:"instance"`
 	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	ClusterURL           types.String `tfsdk:"cluster_url"`
 }

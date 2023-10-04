@@ -7,3 +7,24 @@ type SourceZoomPutRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *SourceZoomPutRequest) GetConfiguration() SourceZoomUpdate {
+	if o == nil {
+		return SourceZoomUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZoomPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZoomPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

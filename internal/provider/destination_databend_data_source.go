@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *DestinationDatabendDataSource) Schema(ctx context.Context, req datasour
 						Computed:    true,
 						Description: `Name of the database.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"databend",
-							),
-						},
-						Description: `must be one of ["databend"]`,
-					},
 					"host": schema.StringAttribute{
 						Computed:    true,
 						Description: `Hostname of the database.`,
@@ -73,12 +62,14 @@ func (r *DestinationDatabendDataSource) Schema(ctx context.Context, req datasour
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Port of the database.`,
+						Computed: true,
+						MarkdownDescription: `Default: 443` + "\n" +
+							`Port of the database.`,
 					},
 					"table": schema.StringAttribute{
-						Computed:    true,
-						Description: `The default  table was written to.`,
+						Computed: true,
+						MarkdownDescription: `Default: "default"` + "\n" +
+							`The default  table was written to.`,
 					},
 					"username": schema.StringAttribute{
 						Computed:    true,

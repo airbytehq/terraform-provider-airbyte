@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceLaunchdarklyLaunchdarkly) UnmarshalJSON(data []byte) error {
 type SourceLaunchdarkly struct {
 	// Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
 	AccessToken string                         `json:"access_token"`
-	SourceType  SourceLaunchdarklyLaunchdarkly `json:"sourceType"`
+	sourceType  SourceLaunchdarklyLaunchdarkly `const:"launchdarkly" json:"sourceType"`
+}
+
+func (s SourceLaunchdarkly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLaunchdarkly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLaunchdarkly) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceLaunchdarkly) GetSourceType() SourceLaunchdarklyLaunchdarkly {
+	return SourceLaunchdarklyLaunchdarklyLaunchdarkly
 }

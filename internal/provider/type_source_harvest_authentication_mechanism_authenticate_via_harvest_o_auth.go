@@ -5,9 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth struct {
-	AuthType             types.String `tfsdk:"auth_type"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 	ClientID             types.String `tfsdk:"client_id"`
 	ClientSecret         types.String `tfsdk:"client_secret"`
 	RefreshToken         types.String `tfsdk:"refresh_token"`
-	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

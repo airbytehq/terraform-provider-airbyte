@@ -9,3 +9,31 @@ type SourceConfigcatCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceConfigcatCreateRequest) GetConfiguration() SourceConfigcat {
+	if o == nil {
+		return SourceConfigcat{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceConfigcatCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceConfigcatCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceConfigcatCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

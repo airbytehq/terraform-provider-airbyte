@@ -15,17 +15,16 @@ SourceFirebolt Resource
 ```terraform
 resource "airbyte_source_firebolt" "my_source_firebolt" {
   configuration = {
-    account     = "...my_account..."
-    database    = "...my_database..."
-    engine      = "...my_engine..."
-    host        = "api.app.firebolt.io"
-    password    = "...my_password..."
-    source_type = "firebolt"
-    username    = "username@email.com"
+    account  = "...my_account..."
+    database = "...my_database..."
+    engine   = "...my_engine..."
+    host     = "api.app.firebolt.io"
+    password = "...my_password..."
+    username = "username@email.com"
   }
-  name         = "Donna Abshire"
+  name         = "Willie Bayer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5338cec0-86fa-421e-9152-cb3119167b8e"
+  workspace_id = "1180fb2a-875a-41ca-990e-95bd1182a17e"
 }
 ```
 
@@ -54,7 +53,6 @@ Required:
 
 - `database` (String) The database to connect to.
 - `password` (String) Firebolt password.
-- `source_type` (String) must be one of ["firebolt"]
 - `username` (String) Firebolt email address you use to login.
 
 Optional:

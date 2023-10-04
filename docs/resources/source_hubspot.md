@@ -17,18 +17,16 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
   configuration = {
     credentials = {
       source_hubspot_authentication_o_auth = {
-        client_id         = "123456789000"
-        client_secret     = "secret"
-        credentials_title = "OAuth Credentials"
-        refresh_token     = "refresh_token"
+        client_id     = "123456789000"
+        client_secret = "secret"
+        refresh_token = "refresh_token"
       }
     }
-    source_type = "hubspot"
-    start_date  = "2017-01-25T00:00:00Z"
+    start_date = "2017-01-25T00:00:00Z"
   }
-  name         = "Mr. Tomas Wisozk DVM"
+  name         = "Darlene Stroman"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9f443b42-57b9-492c-8dbd-a6a61efa2198"
+  workspace_id = "bd757e59-4698-41cb-8608-691686308ead"
 }
 ```
 
@@ -56,7 +54,6 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
 Required:
 
 - `credentials` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["hubspot"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -76,8 +73,6 @@ Required:
 
 - `client_id` (String) The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 - `client_secret` (String) The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
-- `credentials_title` (String) must be one of ["OAuth Credentials"]
-Name of the credentials
 - `refresh_token` (String) Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 
 
@@ -87,8 +82,6 @@ Name of the credentials
 Required:
 
 - `access_token` (String) HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
-- `credentials_title` (String) must be one of ["Private App Credentials"]
-Name of the credentials set
 
 
 <a id="nestedatt--configuration--credentials--source_hubspot_update_authentication_o_auth"></a>
@@ -98,8 +91,6 @@ Required:
 
 - `client_id` (String) The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 - `client_secret` (String) The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
-- `credentials_title` (String) must be one of ["OAuth Credentials"]
-Name of the credentials
 - `refresh_token` (String) Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 
 
@@ -109,7 +100,5 @@ Name of the credentials
 Required:
 
 - `access_token` (String) HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
-- `credentials_title` (String) must be one of ["Private App Credentials"]
-Name of the credentials set
 
 

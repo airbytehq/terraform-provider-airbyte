@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,11 +31,11 @@ type SourceIntercomDataSource struct {
 
 // SourceIntercomDataSourceModel describes the data model.
 type SourceIntercomDataSourceModel struct {
-	Configuration SourceIntercom `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceInstagram `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -64,15 +63,6 @@ func (r *SourceIntercomDataSource) Schema(ctx context.Context, req datasource.Sc
 					"client_secret": schema.StringAttribute{
 						Computed:    true,
 						Description: `Client Secret for your Intercom application.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"intercom",
-							),
-						},
-						Description: `must be one of ["intercom"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

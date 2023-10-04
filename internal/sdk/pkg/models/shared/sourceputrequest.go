@@ -7,3 +7,17 @@ type SourcePutRequest struct {
 	Configuration interface{} `json:"configuration"`
 	Name          string      `json:"name"`
 }
+
+func (o *SourcePutRequest) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *SourcePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}

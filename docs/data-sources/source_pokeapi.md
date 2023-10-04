@@ -42,6 +42,5 @@ data "airbyte_source_pokeapi" "my_source_pokeapi" {
 Read-Only:
 
 - `pokemon_name` (String) Pokemon requested from the API.
-- `source_type` (String) must be one of ["pokeapi"]
 
 

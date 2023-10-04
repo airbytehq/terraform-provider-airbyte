@@ -9,3 +9,31 @@ type SourceGoogleWebfontsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGoogleWebfontsCreateRequest) GetConfiguration() SourceGoogleWebfonts {
+	if o == nil {
+		return SourceGoogleWebfonts{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleWebfontsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleWebfontsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleWebfontsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -60,15 +58,6 @@ func (r *SourceGooglePagespeedInsightsDataSource) Schema(ctx context.Context, re
 						Computed:    true,
 						ElementType: types.StringType,
 						Description: `Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-pagespeed-insights",
-							),
-						},
-						Description: `must be one of ["google-pagespeed-insights"]`,
 					},
 					"strategies": schema.ListAttribute{
 						Computed:    true,

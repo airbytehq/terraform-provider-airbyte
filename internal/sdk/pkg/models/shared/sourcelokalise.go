@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceLokalise struct {
 	APIKey string `json:"api_key"`
 	// Lokalise project ID. Available at Project Settings > General.
 	ProjectID  string                 `json:"project_id"`
-	SourceType SourceLokaliseLokalise `json:"sourceType"`
+	sourceType SourceLokaliseLokalise `const:"lokalise" json:"sourceType"`
+}
+
+func (s SourceLokalise) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLokalise) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLokalise) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceLokalise) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *SourceLokalise) GetSourceType() SourceLokaliseLokalise {
+	return SourceLokaliseLokaliseLokalise
 }

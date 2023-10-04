@@ -43,6 +43,5 @@ Read-Only:
 
 - `account_sid` (String) Twilio Account ID
 - `auth_token` (String) Twilio Auth Token
-- `source_type` (String) must be one of ["twilio-taskrouter"]
 
 

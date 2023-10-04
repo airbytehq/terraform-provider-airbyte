@@ -9,3 +9,31 @@ type SourceIp2whoisCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceIp2whoisCreateRequest) GetConfiguration() SourceIp2whois {
+	if o == nil {
+		return SourceIp2whois{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceIp2whoisCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceIp2whoisCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceIp2whoisCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

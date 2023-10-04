@@ -47,7 +47,6 @@ Read-Only:
 - `country` (String) The ISO 3166-1 alpha-2 code of a country for which to retrieve top articles.
 - `end` (String) The date of the last day to include, in YYYYMMDD or YYYYMMDDHH format.
 - `project` (String) If you want to filter by project, use the domain of any Wikimedia project.
-- `source_type` (String) must be one of ["wikipedia-pageviews"]
 - `start` (String) The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
 
 

@@ -78,15 +78,6 @@ func (r *SourceBraintreeDataSource) Schema(ctx context.Context, req datasource.S
 						Computed:    true,
 						Description: `Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"braintree",
-							),
-						},
-						Description: `must be one of ["braintree"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

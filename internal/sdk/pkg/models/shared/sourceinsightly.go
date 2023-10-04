@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,9 +33,38 @@ func (e *SourceInsightlyInsightly) UnmarshalJSON(data []byte) error {
 }
 
 type SourceInsightly struct {
-	SourceType SourceInsightlyInsightly `json:"sourceType"`
+	sourceType SourceInsightlyInsightly `const:"insightly" json:"sourceType"`
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 	StartDate *string `json:"start_date"`
 	// Your Insightly API token.
 	Token *string `json:"token"`
+}
+
+func (s SourceInsightly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInsightly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInsightly) GetSourceType() SourceInsightlyInsightly {
+	return SourceInsightlyInsightlyInsightly
+}
+
+func (o *SourceInsightly) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceInsightly) GetToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Token
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -35,7 +36,7 @@ func (e *SourceStravaUpdateAuthType) UnmarshalJSON(data []byte) error {
 type SourceStravaUpdate struct {
 	// The Athlete ID of your Strava developer application.
 	AthleteID int64                       `json:"athlete_id"`
-	AuthType  *SourceStravaUpdateAuthType `json:"auth_type,omitempty"`
+	authType  *SourceStravaUpdateAuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Strava developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Strava developer application.
@@ -44,4 +45,54 @@ type SourceStravaUpdate struct {
 	RefreshToken string `json:"refresh_token"`
 	// UTC date and time. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceStravaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceStravaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceStravaUpdate) GetAthleteID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AthleteID
+}
+
+func (o *SourceStravaUpdate) GetAuthType() *SourceStravaUpdateAuthType {
+	return SourceStravaUpdateAuthTypeClient.ToPointer()
+}
+
+func (o *SourceStravaUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceStravaUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceStravaUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceStravaUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

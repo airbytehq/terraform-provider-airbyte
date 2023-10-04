@@ -12,7 +12,6 @@ type SourcePostgres struct {
 	Port              types.Int64                    `tfsdk:"port"`
 	ReplicationMethod *SourcePostgresUpdateMethod    `tfsdk:"replication_method"`
 	Schemas           []types.String                 `tfsdk:"schemas"`
-	SourceType        types.String                   `tfsdk:"source_type"`
 	SslMode           *SourcePostgresSSLModes        `tfsdk:"ssl_mode"`
 	TunnelMethod      *SourcePostgresSSHTunnelMethod `tfsdk:"tunnel_method"`
 	Username          types.String                   `tfsdk:"username"`

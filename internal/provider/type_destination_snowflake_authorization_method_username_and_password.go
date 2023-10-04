@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationSnowflakeAuthorizationMethodUsernameAndPassword struct {
-	AuthType types.String `tfsdk:"auth_type"`
 	Password types.String `tfsdk:"password"`
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceIp2whois struct {
 	APIKey *string `json:"api_key,omitempty"`
 	// Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	Domain     *string                 `json:"domain,omitempty"`
-	SourceType *SourceIp2whoisIp2whois `json:"sourceType,omitempty"`
+	sourceType *SourceIp2whoisIp2whois `const:"ip2whois" json:"sourceType,omitempty"`
+}
+
+func (s SourceIp2whois) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceIp2whois) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceIp2whois) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *SourceIp2whois) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourceIp2whois) GetSourceType() *SourceIp2whoisIp2whois {
+	return SourceIp2whoisIp2whoisIp2whois.ToPointer()
 }

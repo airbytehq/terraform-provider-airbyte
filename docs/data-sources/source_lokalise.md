@@ -43,6 +43,5 @@ Read-Only:
 
 - `api_key` (String) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 - `project_id` (String) Lokalise project ID. Available at Project Settings > General.
-- `source_type` (String) must be one of ["lokalise"]
 
 

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -53,33 +51,29 @@ func (r *SourceFakerDataSource) Schema(ctx context.Context, req datasource.Schem
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"always_updated": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
+						Computed: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
 					},
 					"count": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
+						Computed: true,
+						MarkdownDescription: `Default: 1000` + "\n" +
+							`How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
 					},
 					"parallelism": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.`,
+						Computed: true,
+						MarkdownDescription: `Default: 4` + "\n" +
+							`How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.`,
 					},
 					"records_per_slice": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How many fake records will be in each page (stream slice), before a state message is emitted?`,
+						Computed: true,
+						MarkdownDescription: `Default: 1000` + "\n" +
+							`How many fake records will be in each page (stream slice), before a state message is emitted?`,
 					},
 					"seed": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"faker",
-							),
-						},
-						Description: `must be one of ["faker"]`,
+						MarkdownDescription: `Default: -1` + "\n" +
+							`Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)`,
 					},
 				},
 			},

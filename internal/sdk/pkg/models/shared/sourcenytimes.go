@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -97,7 +98,57 @@ type SourceNytimes struct {
 	Period SourceNytimesPeriodUsedForMostPopularStreams `json:"period"`
 	// Share Type
 	ShareType  *SourceNytimesShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
-	SourceType SourceNytimesNytimes                                  `json:"sourceType"`
+	sourceType SourceNytimesNytimes                                  `const:"nytimes" json:"sourceType"`
 	// Start date to begin the article retrieval (format YYYY-MM)
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceNytimes) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNytimes) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNytimes) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceNytimes) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceNytimes) GetPeriod() SourceNytimesPeriodUsedForMostPopularStreams {
+	if o == nil {
+		return SourceNytimesPeriodUsedForMostPopularStreams(0)
+	}
+	return o.Period
+}
+
+func (o *SourceNytimes) GetShareType() *SourceNytimesShareTypeUsedForMostPopularSharedStream {
+	if o == nil {
+		return nil
+	}
+	return o.ShareType
+}
+
+func (o *SourceNytimes) GetSourceType() SourceNytimesNytimes {
+	return SourceNytimesNytimesNytimes
+}
+
+func (o *SourceNytimes) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

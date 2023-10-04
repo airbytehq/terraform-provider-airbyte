@@ -9,3 +9,31 @@ type SourceMailgunCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMailgunCreateRequest) GetConfiguration() SourceMailgun {
+	if o == nil {
+		return SourceMailgun{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMailgunCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMailgunCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMailgunCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

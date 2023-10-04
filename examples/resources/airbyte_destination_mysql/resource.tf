@@ -1,18 +1,15 @@
 resource "airbyte_destination_mysql" "my_destination_mysql" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "mysql"
-    host             = "...my_host..."
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    password         = "...my_password..."
-    port             = 3306
+    database        = "...my_database..."
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 3306
     tunnel_method = {
-      destination_mysql_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_mysql_ssh_tunnel_method_no_tunnel = {}
     }
-    username = "Sheldon.Smitham"
+    username = "Millie80"
   }
-  name         = "Guy Luettgen"
-  workspace_id = "a8d8f5c0-b2f2-4fb7-b194-a276b26916fe"
+  name         = "Colleen Langworth"
+  workspace_id = "a3ea494c-4202-4097-9cad-1afa4145a8ea"
 }

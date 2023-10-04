@@ -15,12 +15,11 @@ SourceRkiCovid Resource
 ```terraform
 resource "airbyte_source_rki_covid" "my_source_rkicovid" {
   configuration = {
-    source_type = "rki-covid"
-    start_date  = "...my_start_date..."
+    start_date = "...my_start_date..."
   }
-  name         = "Penny Morissette"
+  name         = "Mr. Earl Rempel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7ef807aa-e03f-433c-a79f-b9de4032ba26"
+  workspace_id = "c7045956-c03e-4c7b-8b68-fdfc0692b4fd"
 }
 ```
 
@@ -47,7 +46,6 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
 
 Required:
 
-- `source_type` (String) must be one of ["rki-covid"]
 - `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 

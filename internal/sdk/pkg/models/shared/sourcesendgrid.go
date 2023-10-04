@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -35,7 +36,36 @@ func (e *SourceSendgridSendgrid) UnmarshalJSON(data []byte) error {
 type SourceSendgrid struct {
 	// API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
 	Apikey     string                 `json:"apikey"`
-	SourceType SourceSendgridSendgrid `json:"sourceType"`
+	sourceType SourceSendgridSendgrid `const:"sendgrid" json:"sourceType"`
 	// Start time in ISO8601 format. Any data before this time point will not be replicated.
 	StartTime *time.Time `json:"start_time,omitempty"`
+}
+
+func (s SourceSendgrid) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSendgrid) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSendgrid) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *SourceSendgrid) GetSourceType() SourceSendgridSendgrid {
+	return SourceSendgridSendgridSendgrid
+}
+
+func (o *SourceSendgrid) GetStartTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartTime
 }

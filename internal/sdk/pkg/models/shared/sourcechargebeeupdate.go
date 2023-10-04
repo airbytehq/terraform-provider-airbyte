@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -45,4 +46,43 @@ type SourceChargebeeUpdate struct {
 	SiteAPIKey string `json:"site_api_key"`
 	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceChargebeeUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceChargebeeUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceChargebeeUpdate) GetProductCatalog() SourceChargebeeUpdateProductCatalog {
+	if o == nil {
+		return SourceChargebeeUpdateProductCatalog("")
+	}
+	return o.ProductCatalog
+}
+
+func (o *SourceChargebeeUpdate) GetSite() string {
+	if o == nil {
+		return ""
+	}
+	return o.Site
+}
+
+func (o *SourceChargebeeUpdate) GetSiteAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteAPIKey
+}
+
+func (o *SourceChargebeeUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

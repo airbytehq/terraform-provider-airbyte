@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,17 +55,9 @@ func (r *SourceDixaDataSource) Schema(ctx context.Context, req datasource.Schema
 						Description: `Dixa API token`,
 					},
 					"batch_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Number of days to batch into one request. Max 31.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dixa",
-							),
-						},
-						Description: `must be one of ["dixa"]`,
+						MarkdownDescription: `Default: 31` + "\n" +
+							`Number of days to batch into one request. Max 31.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

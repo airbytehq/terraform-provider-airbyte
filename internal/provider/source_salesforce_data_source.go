@@ -53,15 +53,6 @@ func (r *SourceSalesforceDataSource) Schema(ctx context.Context, req datasource.
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"auth_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Client",
-							),
-						},
-						Description: `must be one of ["Client"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>`,
@@ -71,25 +62,18 @@ func (r *SourceSalesforceDataSource) Schema(ctx context.Context, req datasource.
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
 					"force_use_bulk_api": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Toggle to use Bulk API (this might cause empty fields for some streams)`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Toggle to use Bulk API (this might cause empty fields for some streams)`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"salesforce",
-							),
-						},
-						Description: `must be one of ["salesforce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
@@ -116,7 +100,7 @@ func (r *SourceSalesforceDataSource) Schema(ctx context.Context, req datasource.
 											"not exacts",
 										),
 									},
-									Description: `must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]`,
+									Description: `must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]; Default: "contains"`,
 								},
 								"value": schema.StringAttribute{
 									Computed: true,

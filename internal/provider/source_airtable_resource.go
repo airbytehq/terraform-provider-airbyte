@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 										Optional:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The client ID of the Airtable developer application.`,
@@ -102,15 +92,6 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 										Required:    true,
 										Description: `The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-										Description: `must be one of ["api_key"]`,
-									},
 								},
 							},
 							"source_airtable_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
@@ -119,15 +100,6 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 									"access_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -157,30 +129,12 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 										Required:    true,
 										Description: `The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-										Description: `must be one of ["api_key"]`,
-									},
 								},
 							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"airtable",
-							),
-						},
-						Description: `must be one of ["airtable"]`,
 					},
 				},
 			},
@@ -254,7 +208,7 @@ func (r *SourceAirtableResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAirtable(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -43,6 +43,5 @@ Read-Only:
 
 - `apikey` (String) API Key
 - `query_campsites` (String)
-- `source_type` (String) must be one of ["recreation"]
 
 

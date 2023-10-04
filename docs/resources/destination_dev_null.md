@@ -15,15 +15,12 @@ DestinationDevNull Resource
 ```terraform
 resource "airbyte_destination_dev_null" "my_destination_devnull" {
   configuration = {
-    destination_type = "dev-null"
     test_destination = {
-      destination_dev_null_test_destination_silent = {
-        test_destination_type = "SILENT"
-      }
+      destination_dev_null_test_destination_silent = {}
     }
   }
-  name         = "Rene Hane"
-  workspace_id = "a0d446ce-2af7-4a73-8f3b-e453f870b326"
+  name         = "Tasha Rodriguez"
+  workspace_id = "23613d23-ce87-4529-baec-4aa100bb2392"
 }
 ```
 
@@ -46,7 +43,6 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 
 Required:
 
-- `destination_type` (String) must be one of ["dev-null"]
 - `test_destination` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination))
 
 <a id="nestedatt--configuration--test_destination"></a>
@@ -60,16 +56,8 @@ Optional:
 <a id="nestedatt--configuration--test_destination--destination_dev_null_test_destination_silent"></a>
 ### Nested Schema for `configuration.test_destination.destination_dev_null_test_destination_silent`
 
-Required:
-
-- `test_destination_type` (String) must be one of ["SILENT"]
-
 
 <a id="nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent"></a>
 ### Nested Schema for `configuration.test_destination.destination_dev_null_update_test_destination_silent`
-
-Required:
-
-- `test_destination_type` (String) must be one of ["SILENT"]
 
 

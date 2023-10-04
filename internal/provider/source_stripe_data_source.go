@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,28 +61,22 @@ func (r *SourceStripeDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).`,
 					},
 					"lookback_window_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. Applies only to streams that do not support event-based incremental syncs: CheckoutSessionLineItems,  Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>`,
+						Computed: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. Applies only to streams that do not support event-based incremental syncs: CheckoutSessionLineItems,  Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>`,
 					},
 					"slice_range": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"stripe",
-							),
-						},
-						Description: `must be one of ["stripe"]`,
+						MarkdownDescription: `Default: 365` + "\n" +
+							`The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.`,
+						MarkdownDescription: `Default: "2017-01-25T00:00:00Z"` + "\n" +
+							`UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.`,
 					},
 				},
 			},

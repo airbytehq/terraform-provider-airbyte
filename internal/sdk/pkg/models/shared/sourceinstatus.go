@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceInstatusInstatus) UnmarshalJSON(data []byte) error {
 type SourceInstatus struct {
 	// Instatus REST API key
 	APIKey     string                 `json:"api_key"`
-	SourceType SourceInstatusInstatus `json:"sourceType"`
+	sourceType SourceInstatusInstatus `const:"instatus" json:"sourceType"`
+}
+
+func (s SourceInstatus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInstatus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInstatus) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceInstatus) GetSourceType() SourceInstatusInstatus {
+	return SourceInstatusInstatusInstatus
 }

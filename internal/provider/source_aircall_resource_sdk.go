@@ -11,13 +11,11 @@ import (
 func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCreateRequest {
 	apiID := r.Configuration.APIID.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceAircallAircall(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAircall{
-		APIID:      apiID,
-		APIToken:   apiToken,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIID:     apiID,
+		APIToken:  apiToken,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

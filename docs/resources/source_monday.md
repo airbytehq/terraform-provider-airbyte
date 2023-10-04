@@ -18,14 +18,12 @@ resource "airbyte_source_monday" "my_source_monday" {
     credentials = {
       source_monday_authorization_method_api_token = {
         api_token = "...my_api_token..."
-        auth_type = "api_token"
       }
     }
-    source_type = "monday"
   }
-  name         = "Shirley Wisoky"
+  name         = "Traci Lynch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fd5fb6e9-1b9a-49f7-8846-e2c3309db053"
+  workspace_id = "8e9f7431-721e-4422-bfd5-1b66ec345b5c"
 }
 ```
 
@@ -50,10 +48,6 @@ resource "airbyte_source_monday" "my_source_monday" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["monday"]
-
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
@@ -74,7 +68,6 @@ Optional:
 Required:
 
 - `api_token` (String) API Token for making authenticated requests.
-- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_monday_authorization_method_o_auth2_0"></a>
@@ -83,13 +76,13 @@ Required:
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
 Optional:
 
-- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+- `subdomain` (String) Default: ""
+Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 
 <a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_api_token"></a>
@@ -98,7 +91,6 @@ Optional:
 Required:
 
 - `api_token` (String) API Token for making authenticated requests.
-- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_o_auth2_0"></a>
@@ -107,12 +99,12 @@ Required:
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
 Optional:
 
-- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+- `subdomain` (String) Default: ""
+Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 

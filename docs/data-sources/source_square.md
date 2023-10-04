@@ -42,10 +42,12 @@ data "airbyte_source_square" "my_source_square" {
 Read-Only:
 
 - `credentials` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `include_deleted_objects` (Boolean) In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
-- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `source_type` (String) must be one of ["square"]
-- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
+- `include_deleted_objects` (Boolean) Default: false
+In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
+- `is_sandbox` (Boolean) Default: false
+Determines whether to use the sandbox or production environment.
+- `start_date` (String) Default: "2021-01-01"
+UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -63,7 +65,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) The API key for a Square application
-- `auth_type` (String) must be one of ["API Key"]
 
 
 <a id="nestedatt--configuration--credentials--source_square_authentication_oauth_authentication"></a>
@@ -71,7 +72,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Square-issued ID of your application
 - `client_secret` (String) The Square-issued application secret for your application
 - `refresh_token` (String) A refresh token generated using the above client ID and secret
@@ -83,7 +83,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) The API key for a Square application
-- `auth_type` (String) must be one of ["API Key"]
 
 
 <a id="nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication"></a>
@@ -91,7 +90,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Square-issued ID of your application
 - `client_secret` (String) The Square-issued application secret for your application
 - `refresh_token` (String) A refresh token generated using the above client ID and secret

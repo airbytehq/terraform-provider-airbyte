@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -67,15 +65,6 @@ func (r *SourceOutreachDataSource) Schema(ctx context.Context, req datasource.Sc
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `The token for obtaining the new access token.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"outreach",
-							),
-						},
-						Description: `must be one of ["outreach"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

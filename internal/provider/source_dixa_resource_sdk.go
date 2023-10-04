@@ -15,13 +15,11 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 	} else {
 		batchSize = nil
 	}
-	sourceType := shared.SourceDixaDixa(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceDixa{
-		APIToken:   apiToken,
-		BatchSize:  batchSize,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIToken:  apiToken,
+		BatchSize: batchSize,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

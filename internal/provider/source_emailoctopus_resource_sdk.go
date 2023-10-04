@@ -9,10 +9,8 @@ import (
 
 func (r *SourceEmailoctopusResourceModel) ToCreateSDKType() *shared.SourceEmailoctopusCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceEmailoctopusEmailoctopus(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceEmailoctopus{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

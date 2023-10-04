@@ -9,3 +9,31 @@ type SourceLemlistCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceLemlistCreateRequest) GetConfiguration() SourceLemlist {
+	if o == nil {
+		return SourceLemlist{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLemlistCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLemlistCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceLemlistCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

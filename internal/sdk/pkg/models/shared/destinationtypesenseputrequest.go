@@ -7,3 +7,24 @@ type DestinationTypesensePutRequest struct {
 	Name          string                     `json:"name"`
 	WorkspaceID   string                     `json:"workspaceId"`
 }
+
+func (o *DestinationTypesensePutRequest) GetConfiguration() DestinationTypesenseUpdate {
+	if o == nil {
+		return DestinationTypesenseUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationTypesensePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationTypesensePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

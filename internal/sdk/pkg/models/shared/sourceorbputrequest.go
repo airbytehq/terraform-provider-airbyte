@@ -7,3 +7,24 @@ type SourceOrbPutRequest struct {
 	Name          string          `json:"name"`
 	WorkspaceID   string          `json:"workspaceId"`
 }
+
+func (o *SourceOrbPutRequest) GetConfiguration() SourceOrbUpdate {
+	if o == nil {
+		return SourceOrbUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOrbPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOrbPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

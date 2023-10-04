@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceTypeformDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of the Typeform developer application.`,
@@ -100,15 +90,6 @@ func (r *SourceTypeformDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Log into your Typeform account and then generate a personal Access Token.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_typeform_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -117,15 +98,6 @@ func (r *SourceTypeformDataSource) Schema(ctx context.Context, req datasource.Sc
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -155,15 +127,6 @@ func (r *SourceTypeformDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Log into your Typeform account and then generate a personal Access Token.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 						},
@@ -175,15 +138,6 @@ func (r *SourceTypeformDataSource) Schema(ctx context.Context, req datasource.Sc
 						Computed:    true,
 						ElementType: types.StringType,
 						Description: `When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"typeform",
-							),
-						},
-						Description: `must be one of ["typeform"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

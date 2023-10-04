@@ -9,3 +9,31 @@ type SourceRecruiteeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceRecruiteeCreateRequest) GetConfiguration() SourceRecruitee {
+	if o == nil {
+		return SourceRecruitee{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRecruiteeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRecruiteeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceRecruiteeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

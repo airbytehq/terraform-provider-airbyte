@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -66,15 +65,6 @@ func (r *SourceInstagramResource) Schema(ctx context.Context, req resource.Schem
 					"client_secret": schema.StringAttribute{
 						Optional:    true,
 						Description: `The Client Secret for your Oauth application`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"instagram",
-							),
-						},
-						Description: `must be one of ["instagram"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -155,7 +145,7 @@ func (r *SourceInstagramResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceInstagram(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

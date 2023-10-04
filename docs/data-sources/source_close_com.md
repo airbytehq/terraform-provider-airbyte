@@ -42,7 +42,7 @@ data "airbyte_source_close_com" "my_source_closecom" {
 Read-Only:
 
 - `api_key` (String) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
-- `source_type` (String) must be one of ["close-com"]
-- `start_date` (String) The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
+- `start_date` (String) Default: "2021-01-01"
+The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
 
 

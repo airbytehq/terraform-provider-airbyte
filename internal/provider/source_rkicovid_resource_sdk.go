@@ -8,11 +8,9 @@ import (
 )
 
 func (r *SourceRkiCovidResourceModel) ToCreateSDKType() *shared.SourceRkiCovidCreateRequest {
-	sourceType := shared.SourceRkiCovidRkiCovid(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceRkiCovid{
-		SourceType: sourceType,
-		StartDate:  startDate,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

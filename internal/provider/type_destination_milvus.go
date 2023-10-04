@@ -2,11 +2,8 @@
 
 package provider
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
-
 type DestinationMilvus struct {
-	DestinationType types.String                           `tfsdk:"destination_type"`
-	Embedding       DestinationMilvusEmbedding             `tfsdk:"embedding"`
-	Indexing        DestinationMilvusIndexing              `tfsdk:"indexing"`
-	Processing      DestinationMilvusProcessingConfigModel `tfsdk:"processing"`
+	Embedding  DestinationMilvusEmbedding             `tfsdk:"embedding"`
+	Indexing   DestinationMilvusIndexing              `tfsdk:"indexing"`
+	Processing DestinationMilvusProcessingConfigModel `tfsdk:"processing"`
 }

@@ -9,3 +9,31 @@ type SourceHarvestCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceHarvestCreateRequest) GetConfiguration() SourceHarvest {
+	if o == nil {
+		return SourceHarvest{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceHarvestCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceHarvestCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceHarvestCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

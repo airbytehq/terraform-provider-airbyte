@@ -42,7 +42,6 @@ data "airbyte_source_sendgrid" "my_source_sendgrid" {
 Read-Only:
 
 - `apikey` (String) API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
-- `source_type` (String) must be one of ["sendgrid"]
 - `start_time` (String) Start time in ISO8601 format. Any data before this time point will not be replicated.
 
 

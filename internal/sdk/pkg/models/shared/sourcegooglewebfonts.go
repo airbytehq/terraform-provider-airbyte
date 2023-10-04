@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -40,5 +41,48 @@ type SourceGoogleWebfonts struct {
 	PrettyPrint *string `json:"prettyPrint,omitempty"`
 	// Optional, to find how to sort
 	Sort       *string                            `json:"sort,omitempty"`
-	SourceType SourceGoogleWebfontsGoogleWebfonts `json:"sourceType"`
+	sourceType SourceGoogleWebfontsGoogleWebfonts `const:"google-webfonts" json:"sourceType"`
+}
+
+func (s SourceGoogleWebfonts) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleWebfonts) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleWebfonts) GetAlt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Alt
+}
+
+func (o *SourceGoogleWebfonts) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGoogleWebfonts) GetPrettyPrint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrettyPrint
+}
+
+func (o *SourceGoogleWebfonts) GetSort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourceGoogleWebfonts) GetSourceType() SourceGoogleWebfontsGoogleWebfonts {
+	return SourceGoogleWebfontsGoogleWebfontsGoogleWebfonts
 }

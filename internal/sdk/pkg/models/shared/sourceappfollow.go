@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceAppfollowAppfollow) UnmarshalJSON(data []byte) error {
 type SourceAppfollow struct {
 	// API Key provided by Appfollow
 	APISecret  *string                  `json:"api_secret,omitempty"`
-	SourceType SourceAppfollowAppfollow `json:"sourceType"`
+	sourceType SourceAppfollowAppfollow `const:"appfollow" json:"sourceType"`
+}
+
+func (s SourceAppfollow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAppfollow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAppfollow) GetAPISecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APISecret
+}
+
+func (o *SourceAppfollow) GetSourceType() SourceAppfollowAppfollow {
+	return SourceAppfollowAppfollowAppfollow
 }

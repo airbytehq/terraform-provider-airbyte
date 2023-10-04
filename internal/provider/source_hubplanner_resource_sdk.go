@@ -9,10 +9,8 @@ import (
 
 func (r *SourceHubplannerResourceModel) ToCreateSDKType() *shared.SourceHubplannerCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceHubplannerHubplanner(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceHubplanner{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

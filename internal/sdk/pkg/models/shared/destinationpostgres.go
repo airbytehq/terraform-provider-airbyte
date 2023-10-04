@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -66,8 +66,51 @@ type DestinationPostgresSSLModesVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                   `json:"client_key_password,omitempty"`
-	Mode              DestinationPostgresSSLModesVerifyFullMode `json:"mode"`
+	ClientKeyPassword *string                                    `json:"client_key_password,omitempty"`
+	mode              *DestinationPostgresSSLModesVerifyFullMode `const:"verify-full" json:"mode"`
+}
+
+func (d DestinationPostgresSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSLModesVerifyFull) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSLModesVerifyFull) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *DestinationPostgresSSLModesVerifyFull) GetClientCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientCertificate
+}
+
+func (o *DestinationPostgresSSLModesVerifyFull) GetClientKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientKey
+}
+
+func (o *DestinationPostgresSSLModesVerifyFull) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *DestinationPostgresSSLModesVerifyFull) GetMode() *DestinationPostgresSSLModesVerifyFullMode {
+	return DestinationPostgresSSLModesVerifyFullModeVerifyFull.ToPointer()
 }
 
 type DestinationPostgresSSLModesVerifyCaMode string
@@ -99,8 +142,37 @@ type DestinationPostgresSSLModesVerifyCa struct {
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                 `json:"client_key_password,omitempty"`
-	Mode              DestinationPostgresSSLModesVerifyCaMode `json:"mode"`
+	ClientKeyPassword *string                                  `json:"client_key_password,omitempty"`
+	mode              *DestinationPostgresSSLModesVerifyCaMode `const:"verify-ca" json:"mode"`
+}
+
+func (d DestinationPostgresSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSLModesVerifyCa) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSLModesVerifyCa) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *DestinationPostgresSSLModesVerifyCa) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *DestinationPostgresSSLModesVerifyCa) GetMode() *DestinationPostgresSSLModesVerifyCaMode {
+	return DestinationPostgresSSLModesVerifyCaModeVerifyCa.ToPointer()
 }
 
 type DestinationPostgresSSLModesRequireMode string
@@ -129,7 +201,22 @@ func (e *DestinationPostgresSSLModesRequireMode) UnmarshalJSON(data []byte) erro
 
 // DestinationPostgresSSLModesRequire - Require SSL mode.
 type DestinationPostgresSSLModesRequire struct {
-	Mode DestinationPostgresSSLModesRequireMode `json:"mode"`
+	mode *DestinationPostgresSSLModesRequireMode `const:"require" json:"mode"`
+}
+
+func (d DestinationPostgresSSLModesRequire) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSLModesRequire) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSLModesRequire) GetMode() *DestinationPostgresSSLModesRequireMode {
+	return DestinationPostgresSSLModesRequireModeRequire.ToPointer()
 }
 
 type DestinationPostgresSSLModesPreferMode string
@@ -158,7 +245,22 @@ func (e *DestinationPostgresSSLModesPreferMode) UnmarshalJSON(data []byte) error
 
 // DestinationPostgresSSLModesPrefer - Prefer SSL mode.
 type DestinationPostgresSSLModesPrefer struct {
-	Mode DestinationPostgresSSLModesPreferMode `json:"mode"`
+	mode *DestinationPostgresSSLModesPreferMode `const:"prefer" json:"mode"`
+}
+
+func (d DestinationPostgresSSLModesPrefer) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSLModesPrefer) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSLModesPrefer) GetMode() *DestinationPostgresSSLModesPreferMode {
+	return DestinationPostgresSSLModesPreferModePrefer.ToPointer()
 }
 
 type DestinationPostgresSSLModesAllowMode string
@@ -187,7 +289,22 @@ func (e *DestinationPostgresSSLModesAllowMode) UnmarshalJSON(data []byte) error 
 
 // DestinationPostgresSSLModesAllow - Allow SSL mode.
 type DestinationPostgresSSLModesAllow struct {
-	Mode DestinationPostgresSSLModesAllowMode `json:"mode"`
+	mode *DestinationPostgresSSLModesAllowMode `const:"allow" json:"mode"`
+}
+
+func (d DestinationPostgresSSLModesAllow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSLModesAllow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSLModesAllow) GetMode() *DestinationPostgresSSLModesAllowMode {
+	return DestinationPostgresSSLModesAllowModeAllow.ToPointer()
 }
 
 type DestinationPostgresSSLModesDisableMode string
@@ -216,7 +333,22 @@ func (e *DestinationPostgresSSLModesDisableMode) UnmarshalJSON(data []byte) erro
 
 // DestinationPostgresSSLModesDisable - Disable SSL.
 type DestinationPostgresSSLModesDisable struct {
-	Mode DestinationPostgresSSLModesDisableMode `json:"mode"`
+	mode *DestinationPostgresSSLModesDisableMode `const:"disable" json:"mode"`
+}
+
+func (d DestinationPostgresSSLModesDisable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSLModesDisable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSLModesDisable) GetMode() *DestinationPostgresSSLModesDisableMode {
+	return DestinationPostgresSSLModesDisableModeDisable.ToPointer()
 }
 
 type DestinationPostgresSSLModesType string
@@ -296,57 +428,44 @@ func CreateDestinationPostgresSSLModesDestinationPostgresSSLModesVerifyFull(dest
 }
 
 func (u *DestinationPostgresSSLModes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationPostgresSSLModesDisable := new(DestinationPostgresSSLModesDisable)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSLModesDisable); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSLModesDisable, "", true, true); err == nil {
 		u.DestinationPostgresSSLModesDisable = destinationPostgresSSLModesDisable
 		u.Type = DestinationPostgresSSLModesTypeDestinationPostgresSSLModesDisable
 		return nil
 	}
 
 	destinationPostgresSSLModesAllow := new(DestinationPostgresSSLModesAllow)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSLModesAllow); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSLModesAllow, "", true, true); err == nil {
 		u.DestinationPostgresSSLModesAllow = destinationPostgresSSLModesAllow
 		u.Type = DestinationPostgresSSLModesTypeDestinationPostgresSSLModesAllow
 		return nil
 	}
 
 	destinationPostgresSSLModesPrefer := new(DestinationPostgresSSLModesPrefer)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSLModesPrefer); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSLModesPrefer, "", true, true); err == nil {
 		u.DestinationPostgresSSLModesPrefer = destinationPostgresSSLModesPrefer
 		u.Type = DestinationPostgresSSLModesTypeDestinationPostgresSSLModesPrefer
 		return nil
 	}
 
 	destinationPostgresSSLModesRequire := new(DestinationPostgresSSLModesRequire)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSLModesRequire); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSLModesRequire, "", true, true); err == nil {
 		u.DestinationPostgresSSLModesRequire = destinationPostgresSSLModesRequire
 		u.Type = DestinationPostgresSSLModesTypeDestinationPostgresSSLModesRequire
 		return nil
 	}
 
 	destinationPostgresSSLModesVerifyCa := new(DestinationPostgresSSLModesVerifyCa)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSLModesVerifyCa); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSLModesVerifyCa, "", true, true); err == nil {
 		u.DestinationPostgresSSLModesVerifyCa = destinationPostgresSSLModesVerifyCa
 		u.Type = DestinationPostgresSSLModesTypeDestinationPostgresSSLModesVerifyCa
 		return nil
 	}
 
 	destinationPostgresSSLModesVerifyFull := new(DestinationPostgresSSLModesVerifyFull)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSLModesVerifyFull); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSLModesVerifyFull, "", true, true); err == nil {
 		u.DestinationPostgresSSLModesVerifyFull = destinationPostgresSSLModesVerifyFull
 		u.Type = DestinationPostgresSSLModesTypeDestinationPostgresSSLModesVerifyFull
 		return nil
@@ -357,30 +476,30 @@ func (u *DestinationPostgresSSLModes) UnmarshalJSON(data []byte) error {
 
 func (u DestinationPostgresSSLModes) MarshalJSON() ([]byte, error) {
 	if u.DestinationPostgresSSLModesDisable != nil {
-		return json.Marshal(u.DestinationPostgresSSLModesDisable)
+		return utils.MarshalJSON(u.DestinationPostgresSSLModesDisable, "", true)
 	}
 
 	if u.DestinationPostgresSSLModesAllow != nil {
-		return json.Marshal(u.DestinationPostgresSSLModesAllow)
+		return utils.MarshalJSON(u.DestinationPostgresSSLModesAllow, "", true)
 	}
 
 	if u.DestinationPostgresSSLModesPrefer != nil {
-		return json.Marshal(u.DestinationPostgresSSLModesPrefer)
+		return utils.MarshalJSON(u.DestinationPostgresSSLModesPrefer, "", true)
 	}
 
 	if u.DestinationPostgresSSLModesRequire != nil {
-		return json.Marshal(u.DestinationPostgresSSLModesRequire)
+		return utils.MarshalJSON(u.DestinationPostgresSSLModesRequire, "", true)
 	}
 
 	if u.DestinationPostgresSSLModesVerifyCa != nil {
-		return json.Marshal(u.DestinationPostgresSSLModesVerifyCa)
+		return utils.MarshalJSON(u.DestinationPostgresSSLModesVerifyCa, "", true)
 	}
 
 	if u.DestinationPostgresSSLModesVerifyFull != nil {
-		return json.Marshal(u.DestinationPostgresSSLModesVerifyFull)
+		return utils.MarshalJSON(u.DestinationPostgresSSLModesVerifyFull, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -413,13 +532,56 @@ type DestinationPostgresSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (d DestinationPostgresSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationPostgresSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationPostgresSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationPostgresSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationPostgresSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -454,11 +616,54 @@ type DestinationPostgresSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (d DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationPostgresSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -489,7 +694,22 @@ func (e *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(d
 // DestinationPostgresSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationPostgresSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationPostgresSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgresSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgresSSHTunnelMethodNoTunnel) GetTunnelMethod() DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod {
+	return DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type DestinationPostgresSSHTunnelMethodType string
@@ -536,30 +756,23 @@ func CreateDestinationPostgresSSHTunnelMethodDestinationPostgresSSHTunnelMethodP
 }
 
 func (u *DestinationPostgresSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationPostgresSSHTunnelMethodNoTunnel := new(DestinationPostgresSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.DestinationPostgresSSHTunnelMethodNoTunnel = destinationPostgresSSHTunnelMethodNoTunnel
 		u.Type = DestinationPostgresSSHTunnelMethodTypeDestinationPostgresSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	destinationPostgresSSHTunnelMethodSSHKeyAuthentication := new(DestinationPostgresSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication = destinationPostgresSSHTunnelMethodSSHKeyAuthentication
 		u.Type = DestinationPostgresSSHTunnelMethodTypeDestinationPostgresSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	destinationPostgresSSHTunnelMethodPasswordAuthentication := new(DestinationPostgresSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPostgresSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationPostgresSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.DestinationPostgresSSHTunnelMethodPasswordAuthentication = destinationPostgresSSHTunnelMethodPasswordAuthentication
 		u.Type = DestinationPostgresSSHTunnelMethodTypeDestinationPostgresSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -570,24 +783,24 @@ func (u *DestinationPostgresSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u DestinationPostgresSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationPostgresSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationPostgresSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.DestinationPostgresSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationPostgresSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.DestinationPostgresSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationPostgres struct {
 	// Name of the database.
 	Database        string                      `json:"database"`
-	DestinationType DestinationPostgresPostgres `json:"destinationType"`
+	destinationType DestinationPostgresPostgres `const:"postgres" json:"destinationType"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -595,9 +808,9 @@ type DestinationPostgres struct {
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"5432" json:"port"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
-	Schema string `json:"schema"`
+	Schema *string `default:"public" json:"schema"`
 	// SSL connection modes.
 	//  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
 	//  <b>allow</b> - Chose this mode to enable encryption only when required by the source database
@@ -611,4 +824,82 @@ type DestinationPostgres struct {
 	TunnelMethod *DestinationPostgresSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationPostgres) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPostgres) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPostgres) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationPostgres) GetDestinationType() DestinationPostgresPostgres {
+	return DestinationPostgresPostgresPostgres
+}
+
+func (o *DestinationPostgres) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationPostgres) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationPostgres) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationPostgres) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationPostgres) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationPostgres) GetSslMode() *DestinationPostgresSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
+func (o *DestinationPostgres) GetTunnelMethod() *DestinationPostgresSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationPostgres) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

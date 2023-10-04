@@ -3,8 +3,8 @@
 package provider
 
 type SourceSmartsheetsAuthorizationMethod struct {
-	SourceSmartsheetsAuthorizationMethodAPIAccessToken       *SourceGitlabAuthorizationMethodPrivateToken `tfsdk:"source_smartsheets_authorization_method_api_access_token"`
-	SourceSmartsheetsAuthorizationMethodOAuth20              *SourceGitlabAuthorizationMethodOAuth20      `tfsdk:"source_smartsheets_authorization_method_o_auth2_0"`
-	SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken *SourceGitlabAuthorizationMethodPrivateToken `tfsdk:"source_smartsheets_update_authorization_method_api_access_token"`
-	SourceSmartsheetsUpdateAuthorizationMethodOAuth20        *SourceGitlabAuthorizationMethodOAuth20      `tfsdk:"source_smartsheets_update_authorization_method_o_auth2_0"`
+	SourceSmartsheetsAuthorizationMethodAPIAccessToken       *SourceAuth0AuthenticationMethodOAuth2AccessToken `tfsdk:"source_smartsheets_authorization_method_api_access_token"`
+	SourceSmartsheetsAuthorizationMethodOAuth20              *SourceGitlabAuthorizationMethodOAuth20           `tfsdk:"source_smartsheets_authorization_method_o_auth2_0"`
+	SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken *SourceAuth0AuthenticationMethodOAuth2AccessToken `tfsdk:"source_smartsheets_update_authorization_method_api_access_token"`
+	SourceSmartsheetsUpdateAuthorizationMethodOAuth20        *SourceGitlabAuthorizationMethodOAuth20           `tfsdk:"source_smartsheets_update_authorization_method_o_auth2_0"`
 }

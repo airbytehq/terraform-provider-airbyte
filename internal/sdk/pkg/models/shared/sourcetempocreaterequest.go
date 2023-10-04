@@ -9,3 +9,31 @@ type SourceTempoCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTempoCreateRequest) GetConfiguration() SourceTempo {
+	if o == nil {
+		return SourceTempo{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTempoCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTempoCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTempoCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -56,8 +55,9 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_url": schema.StringAttribute{
-						Optional:    true,
-						Description: `Please enter your basic URL from GitLab instance.`,
+						Optional: true,
+						MarkdownDescription: `Default: "gitlab.com"` + "\n" +
+							`Please enter your basic URL from GitLab instance.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
@@ -68,15 +68,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -106,15 +97,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_gitlab_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -123,15 +105,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -161,15 +134,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 						},
@@ -184,15 +148,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 					"projects": schema.StringAttribute{
 						Optional:    true,
 						Description: `Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gitlab",
-							),
-						},
-						Description: `must be one of ["gitlab"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -273,7 +228,7 @@ func (r *SourceGitlabResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGitlab(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

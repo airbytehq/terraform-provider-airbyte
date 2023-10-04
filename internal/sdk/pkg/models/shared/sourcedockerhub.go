@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceDockerhubDockerhub) UnmarshalJSON(data []byte) error {
 type SourceDockerhub struct {
 	// Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
 	DockerUsername string                   `json:"docker_username"`
-	SourceType     SourceDockerhubDockerhub `json:"sourceType"`
+	sourceType     SourceDockerhubDockerhub `const:"dockerhub" json:"sourceType"`
+}
+
+func (s SourceDockerhub) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDockerhub) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDockerhub) GetDockerUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.DockerUsername
+}
+
+func (o *SourceDockerhub) GetSourceType() SourceDockerhubDockerhub {
+	return SourceDockerhubDockerhubDockerhub
 }

@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAha struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	SourceType types.String `tfsdk:"source_type"`
-	URL        types.String `tfsdk:"url"`
+	APIKey types.String `tfsdk:"api_key"`
+	URL    types.String `tfsdk:"url"`
 }

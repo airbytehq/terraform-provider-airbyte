@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,29 +62,11 @@ func (r *SourceOktaDataSource) Schema(ctx context.Context, req datasource.Schema
 										Computed:    true,
 										Description: `An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 								},
 							},
 							"source_okta_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your OAuth application.`,
@@ -107,29 +88,11 @@ func (r *SourceOktaDataSource) Schema(ctx context.Context, req datasource.Schema
 										Computed:    true,
 										Description: `An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 								},
 							},
 							"source_okta_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your OAuth application.`,
@@ -152,15 +115,6 @@ func (r *SourceOktaDataSource) Schema(ctx context.Context, req datasource.Schema
 					"domain": schema.StringAttribute{
 						Computed:    true,
 						Description: `The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"okta",
-							),
-						},
-						Description: `must be one of ["okta"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

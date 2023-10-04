@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceGainsightPxGainsightPx) UnmarshalJSON(data []byte) error {
 type SourceGainsightPx struct {
 	// The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
 	APIKey     string                       `json:"api_key"`
-	SourceType SourceGainsightPxGainsightPx `json:"sourceType"`
+	sourceType SourceGainsightPxGainsightPx `const:"gainsight-px" json:"sourceType"`
+}
+
+func (s SourceGainsightPx) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGainsightPx) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGainsightPx) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGainsightPx) GetSourceType() SourceGainsightPxGainsightPx {
+	return SourceGainsightPxGainsightPxGainsightPx
 }

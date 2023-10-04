@@ -9,6 +9,4 @@ type SourceE2eTestCloud struct {
 	MessageIntervalMs types.Int64                   `tfsdk:"message_interval_ms"`
 	MockCatalog       SourceE2eTestCloudMockCatalog `tfsdk:"mock_catalog"`
 	Seed              types.Int64                   `tfsdk:"seed"`
-	SourceType        types.String                  `tfsdk:"source_type"`
-	Type              types.String                  `tfsdk:"type"`
 }

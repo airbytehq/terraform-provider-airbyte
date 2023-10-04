@@ -7,3 +7,24 @@ type DestinationTypesenseCreateRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *DestinationTypesenseCreateRequest) GetConfiguration() DestinationTypesense {
+	if o == nil {
+		return DestinationTypesense{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationTypesenseCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationTypesenseCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

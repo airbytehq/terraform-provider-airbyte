@@ -3,8 +3,8 @@
 package provider
 
 type DestinationMongodbAuthorizationType struct {
-	DestinationMongodbAuthorizationTypeLoginPassword       *DestinationMongodbAuthorizationTypeLoginPassword `tfsdk:"destination_mongodb_authorization_type_login_password"`
-	DestinationMongodbAuthorizationTypeNone                *DestinationMongodbAuthorizationTypeNone          `tfsdk:"destination_mongodb_authorization_type_none"`
-	DestinationMongodbUpdateAuthorizationTypeLoginPassword *DestinationMongodbAuthorizationTypeLoginPassword `tfsdk:"destination_mongodb_update_authorization_type_login_password"`
-	DestinationMongodbUpdateAuthorizationTypeNone          *DestinationMongodbAuthorizationTypeNone          `tfsdk:"destination_mongodb_update_authorization_type_none"`
+	DestinationMongodbAuthorizationTypeLoginPassword       *DestinationElasticsearchAuthenticationMethodUsernamePassword         `tfsdk:"destination_mongodb_authorization_type_login_password"`
+	DestinationMongodbAuthorizationTypeNone                *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_mongodb_authorization_type_none"`
+	DestinationMongodbUpdateAuthorizationTypeLoginPassword *DestinationElasticsearchAuthenticationMethodUsernamePassword         `tfsdk:"destination_mongodb_update_authorization_type_login_password"`
+	DestinationMongodbUpdateAuthorizationTypeNone          *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_mongodb_update_authorization_type_none"`
 }

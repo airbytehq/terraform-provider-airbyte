@@ -9,3 +9,31 @@ type SourceAppfollowCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAppfollowCreateRequest) GetConfiguration() SourceAppfollow {
+	if o == nil {
+		return SourceAppfollow{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAppfollowCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAppfollowCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAppfollowCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

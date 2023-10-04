@@ -15,11 +15,9 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 	} else {
 		queryCampsites = nil
 	}
-	sourceType := shared.SourceRecreationRecreation(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecreation{
 		Apikey:         apikey,
 		QueryCampsites: queryCampsites,
-		SourceType:     sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

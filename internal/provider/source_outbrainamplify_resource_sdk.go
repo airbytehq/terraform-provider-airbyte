@@ -12,10 +12,8 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	var sourceOutbrainAmplifyAuthenticationMethodAccessToken *shared.SourceOutbrainAmplifyAuthenticationMethodAccessToken
 	if r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken != nil {
 		accessToken := r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.AccessToken.ValueString()
-		typeVar := shared.SourceOutbrainAmplifyAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests(r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.Type.ValueString())
 		sourceOutbrainAmplifyAuthenticationMethodAccessToken = &shared.SourceOutbrainAmplifyAuthenticationMethodAccessToken{
 			AccessToken: accessToken,
-			Type:        typeVar,
 		}
 	}
 	if sourceOutbrainAmplifyAuthenticationMethodAccessToken != nil {
@@ -26,11 +24,9 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	var sourceOutbrainAmplifyAuthenticationMethodUsernamePassword *shared.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword
 	if r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword != nil {
 		password := r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Password.ValueString()
-		typeVar1 := shared.SourceOutbrainAmplifyAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest(r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Type.ValueString())
 		username := r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Username.ValueString()
 		sourceOutbrainAmplifyAuthenticationMethodUsernamePassword = &shared.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword{
 			Password: password,
-			Type:     typeVar1,
 			Username: username,
 		}
 	}
@@ -57,14 +53,12 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	} else {
 		reportGranularity = nil
 	}
-	sourceType := shared.SourceOutbrainAmplifyOutbrainAmplify(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceOutbrainAmplify{
 		Credentials:          credentials,
 		EndDate:              endDate,
 		GeoLocationBreakdown: geoLocationBreakdown,
 		ReportGranularity:    reportGranularity,
-		SourceType:           sourceType,
 		StartDate:            startDate,
 	}
 	name := r.Name.ValueString()
@@ -94,10 +88,8 @@ func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOut
 	var sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken *shared.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken
 	if r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken != nil {
 		accessToken := r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken.AccessToken.ValueString()
-		typeVar := shared.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests(r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken.Type.ValueString())
 		sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken = &shared.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken{
 			AccessToken: accessToken,
-			Type:        typeVar,
 		}
 	}
 	if sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken != nil {
@@ -108,11 +100,9 @@ func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOut
 	var sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword *shared.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword
 	if r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword != nil {
 		password := r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword.Password.ValueString()
-		typeVar1 := shared.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest(r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword.Type.ValueString())
 		username := r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword.Username.ValueString()
 		sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword = &shared.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword{
 			Password: password,
-			Type:     typeVar1,
 			Username: username,
 		}
 	}

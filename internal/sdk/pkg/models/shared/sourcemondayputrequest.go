@@ -7,3 +7,24 @@ type SourceMondayPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceMondayPutRequest) GetConfiguration() SourceMondayUpdate {
+	if o == nil {
+		return SourceMondayUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMondayPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMondayPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

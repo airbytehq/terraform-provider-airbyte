@@ -9,7 +9,6 @@ type DestinationRedshiftUploadingMethodS3Staging struct {
 	Encryption       *DestinationRedshiftUploadingMethodS3StagingEncryption `tfsdk:"encryption"`
 	FileBufferCount  types.Int64                                            `tfsdk:"file_buffer_count"`
 	FileNamePattern  types.String                                           `tfsdk:"file_name_pattern"`
-	Method           types.String                                           `tfsdk:"method"`
 	PurgeStagingData types.Bool                                             `tfsdk:"purge_staging_data"`
 	S3BucketName     types.String                                           `tfsdk:"s3_bucket_name"`
 	S3BucketPath     types.String                                           `tfsdk:"s3_bucket_path"`

@@ -14,11 +14,9 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 		if r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret != nil {
 			apiKeyID := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeyID.ValueString()
 			apiKeySecret := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeySecret.ValueString()
-			method := shared.DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod(r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.Method.ValueString())
 			destinationElasticsearchAuthenticationMethodAPIKeySecret = &shared.DestinationElasticsearchAuthenticationMethodAPIKeySecret{
 				APIKeyID:     apiKeyID,
 				APIKeySecret: apiKeySecret,
-				Method:       method,
 			}
 		}
 		if destinationElasticsearchAuthenticationMethodAPIKeySecret != nil {
@@ -28,11 +26,9 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 		}
 		var destinationElasticsearchAuthenticationMethodUsernamePassword *shared.DestinationElasticsearchAuthenticationMethodUsernamePassword
 		if r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword != nil {
-			method1 := shared.DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod(r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Method.ValueString())
 			password := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Password.ValueString()
 			username := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Username.ValueString()
 			destinationElasticsearchAuthenticationMethodUsernamePassword = &shared.DestinationElasticsearchAuthenticationMethodUsernamePassword{
-				Method:   method1,
 				Password: password,
 				Username: username,
 			}
@@ -49,7 +45,6 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	} else {
 		caCertificate = nil
 	}
-	destinationType := shared.DestinationElasticsearchElasticsearch(r.Configuration.DestinationType.ValueString())
 	endpoint := r.Configuration.Endpoint.ValueString()
 	upsert := new(bool)
 	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
@@ -60,7 +55,6 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	configuration := shared.DestinationElasticsearch{
 		AuthenticationMethod: authenticationMethod,
 		CaCertificate:        caCertificate,
-		DestinationType:      destinationType,
 		Endpoint:             endpoint,
 		Upsert:               upsert,
 	}
@@ -86,11 +80,9 @@ func (r *DestinationElasticsearchResourceModel) ToUpdateSDKType() *shared.Destin
 		if r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret != nil {
 			apiKeyID := r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret.APIKeyID.ValueString()
 			apiKeySecret := r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret.APIKeySecret.ValueString()
-			method := shared.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod(r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret.Method.ValueString())
 			destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret = &shared.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret{
 				APIKeyID:     apiKeyID,
 				APIKeySecret: apiKeySecret,
-				Method:       method,
 			}
 		}
 		if destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret != nil {
@@ -100,11 +92,9 @@ func (r *DestinationElasticsearchResourceModel) ToUpdateSDKType() *shared.Destin
 		}
 		var destinationElasticsearchUpdateAuthenticationMethodUsernamePassword *shared.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword
 		if r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword != nil {
-			method1 := shared.DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod(r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword.Method.ValueString())
 			password := r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword.Password.ValueString()
 			username := r.Configuration.AuthenticationMethod.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword.Username.ValueString()
 			destinationElasticsearchUpdateAuthenticationMethodUsernamePassword = &shared.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword{
-				Method:   method1,
 				Password: password,
 				Username: username,
 			}

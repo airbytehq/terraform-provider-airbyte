@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided struct {
-	ColumnNames          []types.String `tfsdk:"column_names"`
-	HeaderDefinitionType types.String   `tfsdk:"header_definition_type"`
+	ColumnNames []types.String `tfsdk:"column_names"`
 }

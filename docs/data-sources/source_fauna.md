@@ -42,11 +42,13 @@ data "airbyte_source_fauna" "my_source_fauna" {
 Read-Only:
 
 - `collection` (Attributes) Settings for the Fauna Collection. (see [below for nested schema](#nestedatt--configuration--collection))
-- `domain` (String) Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
-- `port` (Number) Endpoint port.
-- `scheme` (String) URL scheme.
+- `domain` (String) Default: "db.fauna.com"
+Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
+- `port` (Number) Default: 443
+Endpoint port.
+- `scheme` (String) Default: "https"
+URL scheme.
 - `secret` (String) Fauna secret, used when authenticating with the database.
-- `source_type` (String) must be one of ["fauna"]
 
 <a id="nestedatt--configuration--collection"></a>
 ### Nested Schema for `configuration.collection`
@@ -57,7 +59,8 @@ Read-Only:
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions))
-- `page_size` (Number) The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+- `page_size` (Number) Default: 64
+The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
 Choose your page size based on how large the documents are. <br>
 See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
 
@@ -86,26 +89,18 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 <a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_disabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Read-Only:
-
-- `deletion_mode` (String) must be one of ["ignore"]
-
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
 Read-Only:
 
-- `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of ["deleted_field"]
+- `column` (String) Default: "deleted_at"
+Name of the "deleted at" column.
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
-
-Read-Only:
-
-- `deletion_mode` (String) must be one of ["ignore"]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled"></a>
@@ -113,7 +108,7 @@ Read-Only:
 
 Read-Only:
 
-- `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of ["deleted_field"]
+- `column` (String) Default: "deleted_at"
+Name of the "deleted at" column.
 
 

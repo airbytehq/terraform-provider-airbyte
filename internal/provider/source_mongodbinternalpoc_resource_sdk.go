@@ -32,7 +32,6 @@ func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.Source
 	} else {
 		replicaSet = nil
 	}
-	sourceType := shared.SourceMongodbInternalPocMongodbInternalPoc(r.Configuration.SourceType.ValueString())
 	user := new(string)
 	if !r.Configuration.User.IsUnknown() && !r.Configuration.User.IsNull() {
 		*user = r.Configuration.User.ValueString()
@@ -44,7 +43,6 @@ func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.Source
 		ConnectionString: connectionString,
 		Password:         password,
 		ReplicaSet:       replicaSet,
-		SourceType:       sourceType,
 		User:             user,
 	}
 	name := r.Name.ValueString()

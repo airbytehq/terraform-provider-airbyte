@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceS3FileFormatJsonl struct {
 	BlockSize               types.Int64  `tfsdk:"block_size"`
-	Filetype                types.String `tfsdk:"filetype"`
 	NewlinesInValues        types.Bool   `tfsdk:"newlines_in_values"`
 	UnexpectedFieldBehavior types.String `tfsdk:"unexpected_field_behavior"`
 }

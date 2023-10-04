@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceQuickbooksDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Access token fot making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
@@ -104,15 +94,6 @@ func (r *SourceQuickbooksDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Access token fot making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
@@ -144,17 +125,9 @@ func (r *SourceQuickbooksDataSource) Schema(ctx context.Context, req datasource.
 						},
 					},
 					"sandbox": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"quickbooks",
-							),
-						},
-						Description: `must be one of ["quickbooks"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Determines whether to use the sandbox or production environment.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

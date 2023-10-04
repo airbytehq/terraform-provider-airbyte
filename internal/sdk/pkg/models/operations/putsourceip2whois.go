@@ -12,8 +12,46 @@ type PutSourceIp2whoisRequest struct {
 	SourceID                 string                           `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceIp2whoisRequest) GetSourceIp2whoisPutRequest() *shared.SourceIp2whoisPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceIp2whoisPutRequest
+}
+
+func (o *PutSourceIp2whoisRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceIp2whoisResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceIp2whoisResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceIp2whoisResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceIp2whoisResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

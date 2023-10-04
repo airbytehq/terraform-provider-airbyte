@@ -42,6 +42,5 @@ data "airbyte_source_instatus" "my_source_instatus" {
 Read-Only:
 
 - `api_key` (String) Instatus REST API key
-- `source_type` (String) must be one of ["instatus"]
 
 

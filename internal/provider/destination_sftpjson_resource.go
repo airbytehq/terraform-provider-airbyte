@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,15 +55,6 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 						Required:    true,
 						Description: `Path to the directory where json files will be written.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp-json",
-							),
-						},
-						Description: `must be one of ["sftp-json"]`,
-					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `Hostname of the SFTP server.`,
@@ -75,8 +64,9 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Port of the SFTP server.`,
+						Optional: true,
+						MarkdownDescription: `Default: 22` + "\n" +
+							`Port of the SFTP server.`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
@@ -150,7 +140,7 @@ func (r *DestinationSftpJSONResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationSftpJSON(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

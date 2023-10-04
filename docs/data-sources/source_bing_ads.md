@@ -41,14 +41,16 @@ data "airbyte_source_bing_ads" "my_source_bingads" {
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your Microsoft Advertising developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Advertising developer application.
+- `client_secret` (String) Default: ""
+The Client Secret of your Microsoft Advertising developer application.
 - `developer_token` (String) Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
-- `lookback_window` (Number) Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
+- `lookback_window` (Number) Default: 0
+Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
 - `refresh_token` (String) Refresh Token to renew the expired Access Token.
-- `reports_start_date` (String) The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
-- `source_type` (String) must be one of ["bing-ads"]
-- `tenant_id` (String) The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
+- `reports_start_date` (String) Default: "2020-01-01"
+The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
+- `tenant_id` (String) Default: "common"
+The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
 
 

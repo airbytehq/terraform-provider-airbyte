@@ -43,6 +43,5 @@ Read-Only:
 
 - `api_key` (String) A Delighted API key.
 - `since` (String) The date from which you'd like to replicate the data
-- `source_type` (String) must be one of ["delighted"]
 
 

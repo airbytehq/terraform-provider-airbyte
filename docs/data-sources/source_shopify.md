@@ -43,8 +43,8 @@ Read-Only:
 
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
 - `shop` (String) The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
-- `source_type` (String) must be one of ["shopify"]
-- `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
+- `start_date` (String) Default: "2020-01-01"
+The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -62,7 +62,6 @@ Read-Only:
 Read-Only:
 
 - `api_password` (String) The API Password for your private application in the `Shopify` store.
-- `auth_method` (String) must be one of ["api_password"]
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_o_auth2_0"></a>
@@ -71,7 +70,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) The Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of the Shopify developer application.
 - `client_secret` (String) The Client Secret of the Shopify developer application.
 
@@ -82,7 +80,6 @@ Read-Only:
 Read-Only:
 
 - `api_password` (String) The API Password for your private application in the `Shopify` store.
-- `auth_method` (String) must be one of ["api_password"]
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0"></a>
@@ -91,7 +88,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) The Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of the Shopify developer application.
 - `client_secret` (String) The Client Secret of the Shopify developer application.
 

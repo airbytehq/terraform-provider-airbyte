@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,11 +33,47 @@ func (e *SourceAzureTableAzureTable) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAzureTable struct {
-	SourceType SourceAzureTableAzureTable `json:"sourceType"`
+	sourceType SourceAzureTableAzureTable `const:"azure-table" json:"sourceType"`
 	// Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
 	StorageAccessKey string `json:"storage_access_key"`
 	// The name of your storage account.
 	StorageAccountName string `json:"storage_account_name"`
 	// Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix
-	StorageEndpointSuffix *string `json:"storage_endpoint_suffix,omitempty"`
+	StorageEndpointSuffix *string `default:"core.windows.net" json:"storage_endpoint_suffix"`
+}
+
+func (s SourceAzureTable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAzureTable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAzureTable) GetSourceType() SourceAzureTableAzureTable {
+	return SourceAzureTableAzureTableAzureTable
+}
+
+func (o *SourceAzureTable) GetStorageAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.StorageAccessKey
+}
+
+func (o *SourceAzureTable) GetStorageAccountName() string {
+	if o == nil {
+		return ""
+	}
+	return o.StorageAccountName
+}
+
+func (o *SourceAzureTable) GetStorageEndpointSuffix() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StorageEndpointSuffix
 }

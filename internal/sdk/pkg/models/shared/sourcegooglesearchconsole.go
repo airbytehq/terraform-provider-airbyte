@@ -4,7 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,11 +35,40 @@ func (e *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticat
 }
 
 type SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication struct {
-	AuthType SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType `json:"auth_type"`
+	authType SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType `const:"Service" json:"auth_type"`
 	// The email of the user which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
 	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 	ServiceAccountInfo string `json:"service_account_info"`
+}
+
+func (s SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication) GetAuthType() SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType {
+	return SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeService
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication) GetServiceAccountInfo() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceAccountInfo
 }
 
 type SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType string
@@ -69,13 +98,56 @@ func (e *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType) UnmarshalJSON
 type SourceGoogleSearchConsoleAuthenticationTypeOAuth struct {
 	// Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	AccessToken *string                                                  `json:"access_token,omitempty"`
-	AuthType    SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType `json:"auth_type"`
+	authType    SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType `const:"Client" json:"auth_type"`
 	// The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	ClientID string `json:"client_id"`
 	// The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	ClientSecret string `json:"client_secret"`
 	// The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SourceGoogleSearchConsoleAuthenticationTypeOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleSearchConsoleAuthenticationTypeOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeOAuth) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeOAuth) GetAuthType() SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType {
+	return SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeClient
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceGoogleSearchConsoleAuthenticationTypeOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourceGoogleSearchConsoleAuthenticationTypeType string
@@ -111,21 +183,16 @@ func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleA
 }
 
 func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication := new(SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication, "", true, true); err == nil {
 		u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication = sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication
 		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication
 		return nil
 	}
 
 	sourceGoogleSearchConsoleAuthenticationTypeOAuth := new(SourceGoogleSearchConsoleAuthenticationTypeOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleSearchConsoleAuthenticationTypeOAuth); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleAuthenticationTypeOAuth, "", true, true); err == nil {
 		u.SourceGoogleSearchConsoleAuthenticationTypeOAuth = sourceGoogleSearchConsoleAuthenticationTypeOAuth
 		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleAuthenticationTypeOAuth
 		return nil
@@ -135,15 +202,15 @@ func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte)
 }
 
 func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
-		return json.Marshal(u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication)
-	}
-
 	if u.SourceGoogleSearchConsoleAuthenticationTypeOAuth != nil {
-		return json.Marshal(u.SourceGoogleSearchConsoleAuthenticationTypeOAuth)
+		return utils.MarshalJSON(u.SourceGoogleSearchConsoleAuthenticationTypeOAuth, "", true)
 	}
 
-	return nil, nil
+	if u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceGoogleSearchConsoleCustomReportConfigValidEnums - An enumeration of dimensions.
@@ -188,6 +255,20 @@ type SourceGoogleSearchConsoleCustomReportConfig struct {
 	Dimensions []SourceGoogleSearchConsoleCustomReportConfigValidEnums `json:"dimensions"`
 	// The name of the custom report, this name would be used as stream name
 	Name string `json:"name"`
+}
+
+func (o *SourceGoogleSearchConsoleCustomReportConfig) GetDimensions() []SourceGoogleSearchConsoleCustomReportConfigValidEnums {
+	if o == nil {
+		return []SourceGoogleSearchConsoleCustomReportConfigValidEnums{}
+	}
+	return o.Dimensions
+}
+
+func (o *SourceGoogleSearchConsoleCustomReportConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 // SourceGoogleSearchConsoleDataFreshness - If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
@@ -249,12 +330,76 @@ type SourceGoogleSearchConsole struct {
 	// You can add your Custom Analytics report by creating one.
 	CustomReportsArray []SourceGoogleSearchConsoleCustomReportConfig `json:"custom_reports_array,omitempty"`
 	// If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
-	DataState *SourceGoogleSearchConsoleDataFreshness `json:"data_state,omitempty"`
+	DataState *SourceGoogleSearchConsoleDataFreshness `default:"final" json:"data_state"`
 	// UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
 	SiteUrls   []string                                     `json:"site_urls"`
-	SourceType SourceGoogleSearchConsoleGoogleSearchConsole `json:"sourceType"`
+	sourceType SourceGoogleSearchConsoleGoogleSearchConsole `const:"google-search-console" json:"sourceType"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
+}
+
+func (s SourceGoogleSearchConsole) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleSearchConsole) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleSearchConsole) GetAuthorization() SourceGoogleSearchConsoleAuthenticationType {
+	if o == nil {
+		return SourceGoogleSearchConsoleAuthenticationType{}
+	}
+	return o.Authorization
+}
+
+func (o *SourceGoogleSearchConsole) GetCustomReports() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomReports
+}
+
+func (o *SourceGoogleSearchConsole) GetCustomReportsArray() []SourceGoogleSearchConsoleCustomReportConfig {
+	if o == nil {
+		return nil
+	}
+	return o.CustomReportsArray
+}
+
+func (o *SourceGoogleSearchConsole) GetDataState() *SourceGoogleSearchConsoleDataFreshness {
+	if o == nil {
+		return nil
+	}
+	return o.DataState
+}
+
+func (o *SourceGoogleSearchConsole) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceGoogleSearchConsole) GetSiteUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.SiteUrls
+}
+
+func (o *SourceGoogleSearchConsole) GetSourceType() SourceGoogleSearchConsoleGoogleSearchConsole {
+	return SourceGoogleSearchConsoleGoogleSearchConsoleGoogleSearchConsole
+}
+
+func (o *SourceGoogleSearchConsole) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

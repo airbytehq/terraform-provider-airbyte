@@ -6,3 +6,10 @@ type SourceGetlagoUpdate struct {
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourceGetlagoUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

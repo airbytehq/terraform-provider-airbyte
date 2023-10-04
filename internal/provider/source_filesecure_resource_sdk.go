@@ -9,11 +9,15 @@ import (
 
 func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecureCreateRequest {
 	datasetName := r.Configuration.DatasetName.ValueString()
-	format := shared.SourceFileSecureFileFormat(r.Configuration.Format.ValueString())
+	format := new(shared.SourceFileSecureFileFormat)
+	if !r.Configuration.Format.IsUnknown() && !r.Configuration.Format.IsNull() {
+		*format = shared.SourceFileSecureFileFormat(r.Configuration.Format.ValueString())
+	} else {
+		format = nil
+	}
 	var provider shared.SourceFileSecureStorageProvider
 	var sourceFileSecureStorageProviderHTTPSPublicWeb *shared.SourceFileSecureStorageProviderHTTPSPublicWeb
 	if r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb != nil {
-		storage := shared.SourceFileSecureStorageProviderHTTPSPublicWebStorage(r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.Storage.ValueString())
 		userAgent := new(bool)
 		if !r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent.IsUnknown() && !r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent.IsNull() {
 			*userAgent = r.Configuration.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent.ValueBool()
@@ -21,7 +25,6 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 			userAgent = nil
 		}
 		sourceFileSecureStorageProviderHTTPSPublicWeb = &shared.SourceFileSecureStorageProviderHTTPSPublicWeb{
-			Storage:   storage,
 			UserAgent: userAgent,
 		}
 	}
@@ -38,10 +41,8 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 		} else {
 			serviceAccountJSON = nil
 		}
-		storage1 := shared.SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage(r.Configuration.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.Storage.ValueString())
 		sourceFileSecureStorageProviderGCSGoogleCloudStorage = &shared.SourceFileSecureStorageProviderGCSGoogleCloudStorage{
 			ServiceAccountJSON: serviceAccountJSON,
-			Storage:            storage1,
 		}
 	}
 	if sourceFileSecureStorageProviderGCSGoogleCloudStorage != nil {
@@ -63,11 +64,9 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 		} else {
 			awsSecretAccessKey = nil
 		}
-		storage2 := shared.SourceFileSecureStorageProviderS3AmazonWebServicesStorage(r.Configuration.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.Storage.ValueString())
 		sourceFileSecureStorageProviderS3AmazonWebServices = &shared.SourceFileSecureStorageProviderS3AmazonWebServices{
 			AwsAccessKeyID:     awsAccessKeyID,
 			AwsSecretAccessKey: awsSecretAccessKey,
-			Storage:            storage2,
 		}
 	}
 	if sourceFileSecureStorageProviderS3AmazonWebServices != nil {
@@ -89,12 +88,10 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 		} else {
 			sharedKey = nil
 		}
-		storage3 := shared.SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage(r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.Storage.ValueString())
 		storageAccount := r.Configuration.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.StorageAccount.ValueString()
 		sourceFileSecureStorageProviderAzBlobAzureBlobStorage = &shared.SourceFileSecureStorageProviderAzBlobAzureBlobStorage{
 			SasToken:       sasToken,
 			SharedKey:      sharedKey,
-			Storage:        storage3,
 			StorageAccount: storageAccount,
 		}
 	}
@@ -118,13 +115,11 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 		} else {
 			port = nil
 		}
-		storage4 := shared.SourceFileSecureStorageProviderSSHSecureShellStorage(r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.Storage.ValueString())
 		user := r.Configuration.Provider.SourceFileSecureStorageProviderSSHSecureShell.User.ValueString()
 		sourceFileSecureStorageProviderSSHSecureShell = &shared.SourceFileSecureStorageProviderSSHSecureShell{
 			Host:     host,
 			Password: password,
 			Port:     port,
-			Storage:  storage4,
 			User:     user,
 		}
 	}
@@ -148,13 +143,11 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 		} else {
 			port1 = nil
 		}
-		storage5 := shared.SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage(r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Storage.ValueString())
 		user1 := r.Configuration.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.User.ValueString()
 		sourceFileSecureStorageProviderSCPSecureCopyProtocol = &shared.SourceFileSecureStorageProviderSCPSecureCopyProtocol{
 			Host:     host1,
 			Password: password1,
 			Port:     port1,
-			Storage:  storage5,
 			User:     user1,
 		}
 	}
@@ -178,13 +171,11 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 		} else {
 			port2 = nil
 		}
-		storage6 := shared.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage(r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Storage.ValueString())
 		user2 := r.Configuration.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.User.ValueString()
 		sourceFileSecureStorageProviderSFTPSecureFileTransferProtocol = &shared.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol{
 			Host:     host2,
 			Password: password2,
 			Port:     port2,
-			Storage:  storage6,
 			User:     user2,
 		}
 	}
@@ -199,14 +190,12 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	} else {
 		readerOptions = nil
 	}
-	sourceType := shared.SourceFileSecureFileSecure(r.Configuration.SourceType.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourceFileSecure{
 		DatasetName:   datasetName,
 		Format:        format,
 		Provider:      provider,
 		ReaderOptions: readerOptions,
-		SourceType:    sourceType,
 		URL:           url,
 	}
 	name := r.Name.ValueString()
@@ -233,11 +222,15 @@ func (r *SourceFileSecureResourceModel) ToGetSDKType() *shared.SourceFileSecureC
 
 func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecurePutRequest {
 	datasetName := r.Configuration.DatasetName.ValueString()
-	format := shared.SourceFileSecureUpdateFileFormat(r.Configuration.Format.ValueString())
+	format := new(shared.SourceFileSecureUpdateFileFormat)
+	if !r.Configuration.Format.IsUnknown() && !r.Configuration.Format.IsNull() {
+		*format = shared.SourceFileSecureUpdateFileFormat(r.Configuration.Format.ValueString())
+	} else {
+		format = nil
+	}
 	var provider shared.SourceFileSecureUpdateStorageProvider
 	var sourceFileSecureUpdateStorageProviderHTTPSPublicWeb *shared.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb
 	if r.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb != nil {
-		storage := shared.SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb.Storage.ValueString())
 		userAgent := new(bool)
 		if !r.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb.UserAgent.IsUnknown() && !r.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb.UserAgent.IsNull() {
 			*userAgent = r.Configuration.Provider.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb.UserAgent.ValueBool()
@@ -245,7 +238,6 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 			userAgent = nil
 		}
 		sourceFileSecureUpdateStorageProviderHTTPSPublicWeb = &shared.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb{
-			Storage:   storage,
 			UserAgent: userAgent,
 		}
 	}
@@ -262,10 +254,8 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 		} else {
 			serviceAccountJSON = nil
 		}
-		storage1 := shared.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage.Storage.ValueString())
 		sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage = &shared.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage{
 			ServiceAccountJSON: serviceAccountJSON,
-			Storage:            storage1,
 		}
 	}
 	if sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage != nil {
@@ -287,11 +277,9 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 		} else {
 			awsSecretAccessKey = nil
 		}
-		storage2 := shared.SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderS3AmazonWebServices.Storage.ValueString())
 		sourceFileSecureUpdateStorageProviderS3AmazonWebServices = &shared.SourceFileSecureUpdateStorageProviderS3AmazonWebServices{
 			AwsAccessKeyID:     awsAccessKeyID,
 			AwsSecretAccessKey: awsSecretAccessKey,
-			Storage:            storage2,
 		}
 	}
 	if sourceFileSecureUpdateStorageProviderS3AmazonWebServices != nil {
@@ -313,12 +301,10 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 		} else {
 			sharedKey = nil
 		}
-		storage3 := shared.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage.Storage.ValueString())
 		storageAccount := r.Configuration.Provider.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage.StorageAccount.ValueString()
 		sourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage = &shared.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage{
 			SasToken:       sasToken,
 			SharedKey:      sharedKey,
-			Storage:        storage3,
 			StorageAccount: storageAccount,
 		}
 	}
@@ -342,13 +328,11 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 		} else {
 			port = nil
 		}
-		storage4 := shared.SourceFileSecureUpdateStorageProviderSSHSecureShellStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSSHSecureShell.Storage.ValueString())
 		user := r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSSHSecureShell.User.ValueString()
 		sourceFileSecureUpdateStorageProviderSSHSecureShell = &shared.SourceFileSecureUpdateStorageProviderSSHSecureShell{
 			Host:     host,
 			Password: password,
 			Port:     port,
-			Storage:  storage4,
 			User:     user,
 		}
 	}
@@ -372,13 +356,11 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 		} else {
 			port1 = nil
 		}
-		storage5 := shared.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol.Storage.ValueString())
 		user1 := r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol.User.ValueString()
 		sourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol = &shared.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol{
 			Host:     host1,
 			Password: password1,
 			Port:     port1,
-			Storage:  storage5,
 			User:     user1,
 		}
 	}
@@ -402,13 +384,11 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 		} else {
 			port2 = nil
 		}
-		storage6 := shared.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage(r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol.Storage.ValueString())
 		user2 := r.Configuration.Provider.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol.User.ValueString()
 		sourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol = &shared.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol{
 			Host:     host2,
 			Password: password2,
 			Port:     port2,
-			Storage:  storage6,
 			User:     user2,
 		}
 	}

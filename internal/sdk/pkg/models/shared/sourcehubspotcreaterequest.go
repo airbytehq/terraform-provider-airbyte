@@ -9,3 +9,31 @@ type SourceHubspotCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceHubspotCreateRequest) GetConfiguration() SourceHubspot {
+	if o == nil {
+		return SourceHubspot{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceHubspotCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceHubspotCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceHubspotCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

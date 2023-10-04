@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey struct {
-	CredentialType  types.String `tfsdk:"credential_type"`
 	HmacKeyAccessID types.String `tfsdk:"hmac_key_access_id"`
 	HmacKeySecret   types.String `tfsdk:"hmac_key_secret"`
 }

@@ -42,8 +42,8 @@ data "airbyte_source_clockify" "my_source_clockify" {
 Read-Only:
 
 - `api_key` (String) You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.
-- `api_url` (String) The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
-- `source_type` (String) must be one of ["clockify"]
+- `api_url` (String) Default: "https://api.clockify.me"
+The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
 - `workspace_id` (String) WorkSpace Id
 
 

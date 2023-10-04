@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,29 +64,11 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 										Required:    true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_linkedin_pages_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-										Description: `must be one of ["oAuth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The client ID of the LinkedIn developer application.`,
@@ -109,29 +90,11 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 										Required:    true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_linkedin_pages_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-										Description: `must be one of ["oAuth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The client ID of the LinkedIn developer application.`,
@@ -154,15 +117,6 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 					"org_id": schema.StringAttribute{
 						Required:    true,
 						Description: `Specify the Organization ID`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"linkedin-pages",
-							),
-						},
-						Description: `must be one of ["linkedin-pages"]`,
 					},
 				},
 			},
@@ -236,7 +190,7 @@ func (r *SourceLinkedinPagesResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceLinkedinPages(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -38,6 +38,5 @@ Read-Only:
 
 - `access_key` (String) API access key used to send data to a Convex deployment.
 - `deployment_url` (String) URL of the Convex deployment that is the destination
-- `destination_type` (String) must be one of ["convex"]
 
 

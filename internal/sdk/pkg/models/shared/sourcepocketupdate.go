@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -143,7 +144,7 @@ type SourcePocketUpdate struct {
 	// Only return items from a particular `domain`.
 	Domain *string `json:"domain,omitempty"`
 	// Retrieve only favorited items.
-	Favorite *bool `json:"favorite,omitempty"`
+	Favorite *bool `default:"false" json:"favorite"`
 	// Only return items whose title or url contain the `search` string.
 	Search *string `json:"search,omitempty"`
 	// Only return items modified since the given timestamp.
@@ -154,4 +155,92 @@ type SourcePocketUpdate struct {
 	State *SourcePocketUpdateState `json:"state,omitempty"`
 	// Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 	Tag *string `json:"tag,omitempty"`
+}
+
+func (s SourcePocketUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePocketUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePocketUpdate) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourcePocketUpdate) GetConsumerKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerKey
+}
+
+func (o *SourcePocketUpdate) GetContentType() *SourcePocketUpdateContentType {
+	if o == nil {
+		return nil
+	}
+	return o.ContentType
+}
+
+func (o *SourcePocketUpdate) GetDetailType() *SourcePocketUpdateDetailType {
+	if o == nil {
+		return nil
+	}
+	return o.DetailType
+}
+
+func (o *SourcePocketUpdate) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourcePocketUpdate) GetFavorite() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Favorite
+}
+
+func (o *SourcePocketUpdate) GetSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Search
+}
+
+func (o *SourcePocketUpdate) GetSince() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *SourcePocketUpdate) GetSort() *SourcePocketUpdateSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourcePocketUpdate) GetState() *SourcePocketUpdateState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *SourcePocketUpdate) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
 }

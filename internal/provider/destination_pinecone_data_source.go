@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -52,15 +51,6 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pinecone",
-							),
-						},
-						Description: `must be one of ["pinecone"]`,
-					},
 					"embedding": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -70,45 +60,17 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 									"cohere_key": schema.StringAttribute{
 										Computed: true,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_pinecone_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_pinecone_embedding_open_ai": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Computed: true,
 									},
@@ -121,45 +83,17 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 									"cohere_key": schema.StringAttribute{
 										Computed: true,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_pinecone_update_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_pinecone_update_embedding_open_ai": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Computed: true,
 									},
@@ -193,8 +127,9 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
+								Computed: true,
+								MarkdownDescription: `Default: 0` + "\n" +
+									`Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
 							},
 							"chunk_size": schema.Int64Attribute{
 								Computed:    true,

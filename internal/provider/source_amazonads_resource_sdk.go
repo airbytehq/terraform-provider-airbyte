@@ -8,12 +8,6 @@ import (
 )
 
 func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAdsCreateRequest {
-	authType := new(shared.SourceAmazonAdsAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonAdsAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	lookBackWindow := new(int64)
@@ -41,7 +35,6 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
 		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsReportRecordTypes(reportRecordTypesItem.ValueString()))
 	}
-	sourceType := shared.SourceAmazonAdsAmazonAds(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -53,7 +46,6 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 		stateFilter = append(stateFilter, shared.SourceAmazonAdsStateFilter(stateFilterItem.ValueString()))
 	}
 	configuration := shared.SourceAmazonAds{
-		AuthType:          authType,
 		ClientID:          clientID,
 		ClientSecret:      clientSecret,
 		LookBackWindow:    lookBackWindow,
@@ -62,7 +54,6 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 		RefreshToken:      refreshToken,
 		Region:            region,
 		ReportRecordTypes: reportRecordTypes,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 		StateFilter:       stateFilter,
 	}
@@ -89,12 +80,6 @@ func (r *SourceAmazonAdsResourceModel) ToGetSDKType() *shared.SourceAmazonAdsCre
 }
 
 func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAdsPutRequest {
-	authType := new(shared.SourceAmazonAdsUpdateAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonAdsUpdateAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	lookBackWindow := new(int64)
@@ -133,7 +118,6 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 		stateFilter = append(stateFilter, shared.SourceAmazonAdsUpdateStateFilter(stateFilterItem.ValueString()))
 	}
 	configuration := shared.SourceAmazonAdsUpdate{
-		AuthType:          authType,
 		ClientID:          clientID,
 		ClientSecret:      clientSecret,
 		LookBackWindow:    lookBackWindow,

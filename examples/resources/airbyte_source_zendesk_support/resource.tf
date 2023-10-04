@@ -2,17 +2,16 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
   configuration = {
     credentials = {
       source_zendesk_support_authentication_api_token = {
-        api_token   = "...my_api_token..."
-        credentials = "api_token"
-        email       = "Ezequiel.Lindgren56@yahoo.com"
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_token             = "...my_api_token..."
+        email                 = "Yolanda.Strosin35@yahoo.com"
       }
     }
-    ignore_pagination = true
-    source_type       = "zendesk-support"
+    ignore_pagination = false
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "Alexander Friesen"
+  name         = "Miss Jodi Berge"
   secret_id    = "...my_secret_id..."
-  workspace_id = "82dbec75-c68c-4606-9946-8ce304d8849b"
+  workspace_id = "c447712b-4a02-4088-b0aa-beffb8d97651"
 }

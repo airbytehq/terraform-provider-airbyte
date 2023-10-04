@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -61,21 +59,13 @@ func (r *SourceClickupAPIDataSource) Schema(ctx context.Context, req datasource.
 						Description: `The ID of your folder in your space. Retrieve it from the ` + "`" + `/space/{space_id}/folder` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.`,
 					},
 					"include_closed_tasks": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.`,
 					},
 					"list_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `The ID of your list in your folder. Retrieve it from the ` + "`" + `/folder/{folder_id}/list` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"clickup-api",
-							),
-						},
-						Description: `must be one of ["clickup-api"]`,
 					},
 					"space_id": schema.StringAttribute{
 						Computed:    true,

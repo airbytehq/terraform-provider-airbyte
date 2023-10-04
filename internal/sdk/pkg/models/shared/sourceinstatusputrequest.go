@@ -7,3 +7,24 @@ type SourceInstatusPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceInstatusPutRequest) GetConfiguration() SourceInstatusUpdate {
+	if o == nil {
+		return SourceInstatusUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceInstatusPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceInstatusPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

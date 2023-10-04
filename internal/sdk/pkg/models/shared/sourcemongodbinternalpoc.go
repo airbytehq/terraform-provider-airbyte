@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -33,14 +34,64 @@ func (e *SourceMongodbInternalPocMongodbInternalPoc) UnmarshalJSON(data []byte) 
 
 type SourceMongodbInternalPoc struct {
 	// The authentication source where the user information is stored.
-	AuthSource *string `json:"auth_source,omitempty"`
+	AuthSource *string `default:"admin" json:"auth_source"`
 	// The connection string of the database that you want to replicate..
 	ConnectionString *string `json:"connection_string,omitempty"`
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
 	// The name of the replica set to be replicated.
 	ReplicaSet *string                                    `json:"replica_set,omitempty"`
-	SourceType SourceMongodbInternalPocMongodbInternalPoc `json:"sourceType"`
+	sourceType SourceMongodbInternalPocMongodbInternalPoc `const:"mongodb-internal-poc" json:"sourceType"`
 	// The username which is used to access the database.
 	User *string `json:"user,omitempty"`
+}
+
+func (s SourceMongodbInternalPoc) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbInternalPoc) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbInternalPoc) GetAuthSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthSource
+}
+
+func (o *SourceMongodbInternalPoc) GetConnectionString() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectionString
+}
+
+func (o *SourceMongodbInternalPoc) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMongodbInternalPoc) GetReplicaSet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicaSet
+}
+
+func (o *SourceMongodbInternalPoc) GetSourceType() SourceMongodbInternalPocMongodbInternalPoc {
+	return SourceMongodbInternalPocMongodbInternalPocMongodbInternalPoc
+}
+
+func (o *SourceMongodbInternalPoc) GetUser() *string {
+	if o == nil {
+		return nil
+	}
+	return o.User
 }

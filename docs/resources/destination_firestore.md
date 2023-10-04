@@ -16,11 +16,10 @@ DestinationFirestore Resource
 resource "airbyte_destination_firestore" "my_destination_firestore" {
   configuration = {
     credentials_json = "...my_credentials_json..."
-    destination_type = "firestore"
     project_id       = "...my_project_id..."
   }
-  name         = "Paula Jacobs I"
-  workspace_id = "f16d9f5f-ce6c-4556-946c-3e250fb008c4"
+  name         = "Shane Weimann MD"
+  workspace_id = "fc11e74f-736d-47a9-93e9-8a4c049945ed"
 }
 ```
 
@@ -43,7 +42,6 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
 
 Required:
 
-- `destination_type` (String) must be one of ["firestore"]
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
 
 Optional:

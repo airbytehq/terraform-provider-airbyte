@@ -42,6 +42,5 @@ data "airbyte_source_secoda" "my_source_secoda" {
 Read-Only:
 
 - `api_key` (String) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["secoda"]
 
 

@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,33 +53,29 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"always_updated": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
+						Optional: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
 					},
 					"count": schema.Int64Attribute{
-						Required:    true,
-						Description: `How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
+						Optional: true,
+						MarkdownDescription: `Default: 1000` + "\n" +
+							`How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
 					},
 					"parallelism": schema.Int64Attribute{
-						Optional:    true,
-						Description: `How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.`,
+						Optional: true,
+						MarkdownDescription: `Default: 4` + "\n" +
+							`How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.`,
 					},
 					"records_per_slice": schema.Int64Attribute{
-						Optional:    true,
-						Description: `How many fake records will be in each page (stream slice), before a state message is emitted?`,
+						Optional: true,
+						MarkdownDescription: `Default: 1000` + "\n" +
+							`How many fake records will be in each page (stream slice), before a state message is emitted?`,
 					},
 					"seed": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"faker",
-							),
-						},
-						Description: `must be one of ["faker"]`,
+						Optional: true,
+						MarkdownDescription: `Default: -1` + "\n" +
+							`Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)`,
 					},
 				},
 			},
@@ -155,7 +149,7 @@ func (r *SourceFakerResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceFaker(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

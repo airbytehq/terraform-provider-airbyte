@@ -60,7 +60,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 						Description: `The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).`,
 					},
 					"format": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"csv",
@@ -73,7 +73,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								"yaml",
 							),
 						},
-						MarkdownDescription: `must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "feather", "parquet", "yaml"]` + "\n" +
+						MarkdownDescription: `must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "feather", "parquet", "yaml"]; Default: "csv"` + "\n" +
 							`The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).`,
 					},
 					"provider": schema.SingleNestedAttribute{
@@ -90,15 +90,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional:    true,
 										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.`,
 									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AzBlob",
-											),
-										},
-										Description: `must be one of ["AzBlob"]`,
-									},
 									"storage_account": schema.StringAttribute{
 										Required:    true,
 										Description: `The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.`,
@@ -113,33 +104,16 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional:    true,
 										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS",
-											),
-										},
-										Description: `must be one of ["GCS"]`,
-									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_https_public_web": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"HTTPS",
-											),
-										},
-										Description: `must be one of ["HTTPS"]`,
-									},
 									"user_agent": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Add User-Agent to request`,
+										Optional: true,
+										MarkdownDescription: `Default: false` + "\n" +
+											`Add User-Agent to request`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -155,15 +129,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional:    true,
 										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-										Description: `must be one of ["S3"]`,
-									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
@@ -177,16 +142,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SCP",
-											),
-										},
-										Description: `must be one of ["SCP"]`,
+										Optional:    true,
+										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -204,16 +161,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SFTP",
-											),
-										},
-										Description: `must be one of ["SFTP"]`,
+										Optional:    true,
+										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -231,16 +180,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH",
-											),
-										},
-										Description: `must be one of ["SSH"]`,
+										Optional:    true,
+										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -259,15 +200,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional:    true,
 										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.`,
 									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AzBlob",
-											),
-										},
-										Description: `must be one of ["AzBlob"]`,
-									},
 									"storage_account": schema.StringAttribute{
 										Required:    true,
 										Description: `The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.`,
@@ -282,33 +214,16 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional:    true,
 										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS",
-											),
-										},
-										Description: `must be one of ["GCS"]`,
-									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_update_storage_provider_https_public_web": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"HTTPS",
-											),
-										},
-										Description: `must be one of ["HTTPS"]`,
-									},
 									"user_agent": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Add User-Agent to request`,
+										Optional: true,
+										MarkdownDescription: `Default: false` + "\n" +
+											`Add User-Agent to request`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -324,15 +239,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional:    true,
 										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-										Description: `must be one of ["S3"]`,
-									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
@@ -346,16 +252,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SCP",
-											),
-										},
-										Description: `must be one of ["SCP"]`,
+										Optional:    true,
+										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -373,16 +271,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SFTP",
-											),
-										},
-										Description: `must be one of ["SFTP"]`,
+										Optional:    true,
+										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -400,16 +290,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH",
-											),
-										},
-										Description: `must be one of ["SSH"]`,
+										Optional:    true,
+										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -426,15 +308,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 					"reader_options": schema.StringAttribute{
 						Optional:    true,
 						Description: `This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"file-secure",
-							),
-						},
-						Description: `must be one of ["file-secure"]`,
 					},
 					"url": schema.StringAttribute{
 						Required:    true,
@@ -512,7 +385,7 @@ func (r *SourceFileSecureResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceFileSecure(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

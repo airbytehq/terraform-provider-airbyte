@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod) UnmarshalJSO
 type SourceAirtableAuthenticationPersonalAccessToken struct {
 	// The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
 	APIKey     string                                                     `json:"api_key"`
-	AuthMethod *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod `json:"auth_method,omitempty"`
+	authMethod *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod `const:"api_key" json:"auth_method,omitempty"`
+}
+
+func (s SourceAirtableAuthenticationPersonalAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAirtableAuthenticationPersonalAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAirtableAuthenticationPersonalAccessToken) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceAirtableAuthenticationPersonalAccessToken) GetAuthMethod() *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod {
+	return SourceAirtableAuthenticationPersonalAccessTokenAuthMethodAPIKey.ToPointer()
 }
 
 type SourceAirtableAuthenticationOAuth20AuthMethod string
@@ -67,7 +89,7 @@ func (e *SourceAirtableAuthenticationOAuth20AuthMethod) UnmarshalJSON(data []byt
 type SourceAirtableAuthenticationOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string                                        `json:"access_token,omitempty"`
-	AuthMethod  *SourceAirtableAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
+	authMethod  *SourceAirtableAuthenticationOAuth20AuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The client ID of the Airtable developer application.
 	ClientID string `json:"client_id"`
 	// The client secret the Airtable developer application.
@@ -76,6 +98,56 @@ type SourceAirtableAuthenticationOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
 	TokenExpiryDate *time.Time `json:"token_expiry_date,omitempty"`
+}
+
+func (s SourceAirtableAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAirtableAuthenticationOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAirtableAuthenticationOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceAirtableAuthenticationOAuth20) GetAuthMethod() *SourceAirtableAuthenticationOAuth20AuthMethod {
+	return SourceAirtableAuthenticationOAuth20AuthMethodOauth20.ToPointer()
+}
+
+func (o *SourceAirtableAuthenticationOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceAirtableAuthenticationOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceAirtableAuthenticationOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceAirtableAuthenticationOAuth20) GetTokenExpiryDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceAirtableAuthenticationType string
@@ -111,21 +183,16 @@ func CreateSourceAirtableAuthenticationSourceAirtableAuthenticationPersonalAcces
 }
 
 func (u *SourceAirtableAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceAirtableAuthenticationPersonalAccessToken := new(SourceAirtableAuthenticationPersonalAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAirtableAuthenticationPersonalAccessToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAirtableAuthenticationPersonalAccessToken, "", true, true); err == nil {
 		u.SourceAirtableAuthenticationPersonalAccessToken = sourceAirtableAuthenticationPersonalAccessToken
 		u.Type = SourceAirtableAuthenticationTypeSourceAirtableAuthenticationPersonalAccessToken
 		return nil
 	}
 
 	sourceAirtableAuthenticationOAuth20 := new(SourceAirtableAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAirtableAuthenticationOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAirtableAuthenticationOAuth20, "", true, true); err == nil {
 		u.SourceAirtableAuthenticationOAuth20 = sourceAirtableAuthenticationOAuth20
 		u.Type = SourceAirtableAuthenticationTypeSourceAirtableAuthenticationOAuth20
 		return nil
@@ -135,15 +202,15 @@ func (u *SourceAirtableAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAirtableAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceAirtableAuthenticationPersonalAccessToken != nil {
-		return json.Marshal(u.SourceAirtableAuthenticationPersonalAccessToken)
-	}
-
 	if u.SourceAirtableAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceAirtableAuthenticationOAuth20)
+		return utils.MarshalJSON(u.SourceAirtableAuthenticationOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceAirtableAuthenticationPersonalAccessToken != nil {
+		return utils.MarshalJSON(u.SourceAirtableAuthenticationPersonalAccessToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAirtableAirtable string
@@ -172,5 +239,27 @@ func (e *SourceAirtableAirtable) UnmarshalJSON(data []byte) error {
 
 type SourceAirtable struct {
 	Credentials *SourceAirtableAuthentication `json:"credentials,omitempty"`
-	SourceType  *SourceAirtableAirtable       `json:"sourceType,omitempty"`
+	sourceType  *SourceAirtableAirtable       `const:"airtable" json:"sourceType,omitempty"`
+}
+
+func (s SourceAirtable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAirtable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAirtable) GetCredentials() *SourceAirtableAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceAirtable) GetSourceType() *SourceAirtableAirtable {
+	return SourceAirtableAirtableAirtable.ToPointer()
 }

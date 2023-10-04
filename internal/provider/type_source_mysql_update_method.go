@@ -3,8 +3,8 @@
 package provider
 
 type SourceMysqlUpdateMethod struct {
-	SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC           *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC     `tfsdk:"source_mysql_update_method_read_changes_using_binary_log_cdc"`
-	SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor       *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor `tfsdk:"source_mysql_update_method_scan_changes_with_user_defined_cursor"`
-	SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC     *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC     `tfsdk:"source_mysql_update_update_method_read_changes_using_binary_log_cdc"`
-	SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor `tfsdk:"source_mysql_update_update_method_scan_changes_with_user_defined_cursor"`
+	SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC           *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC                  `tfsdk:"source_mysql_update_method_read_changes_using_binary_log_cdc"`
+	SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor       *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_update_method_scan_changes_with_user_defined_cursor"`
+	SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC     *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC                  `tfsdk:"source_mysql_update_update_method_read_changes_using_binary_log_cdc"`
+	SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_update_update_method_scan_changes_with_user_defined_cursor"`
 }

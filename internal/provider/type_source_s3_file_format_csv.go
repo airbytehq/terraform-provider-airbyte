@@ -12,7 +12,6 @@ type SourceS3FileFormatCSV struct {
 	DoubleQuote             types.Bool   `tfsdk:"double_quote"`
 	Encoding                types.String `tfsdk:"encoding"`
 	EscapeChar              types.String `tfsdk:"escape_char"`
-	Filetype                types.String `tfsdk:"filetype"`
 	InferDatatypes          types.Bool   `tfsdk:"infer_datatypes"`
 	NewlinesInValues        types.Bool   `tfsdk:"newlines_in_values"`
 	QuoteChar               types.String `tfsdk:"quote_char"`

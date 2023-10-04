@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourcePersistiqPersistiq) UnmarshalJSON(data []byte) error {
 type SourcePersistiq struct {
 	// PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
 	APIKey     string                   `json:"api_key"`
-	SourceType SourcePersistiqPersistiq `json:"sourceType"`
+	sourceType SourcePersistiqPersistiq `const:"persistiq" json:"sourceType"`
+}
+
+func (s SourcePersistiq) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePersistiq) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePersistiq) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePersistiq) GetSourceType() SourcePersistiqPersistiq {
+	return SourcePersistiqPersistiqPersistiq
 }

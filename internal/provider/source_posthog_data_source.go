@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -58,21 +57,14 @@ func (r *SourcePosthogDataSource) Schema(ctx context.Context, req datasource.Sch
 						Description: `API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.`,
 					},
 					"base_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).`,
+						Computed: true,
+						MarkdownDescription: `Default: "https://app.posthog.com"` + "\n" +
+							`Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).`,
 					},
 					"events_time_step": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Set lower value in case of failing long running sync of events stream.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"posthog",
-							),
-						},
-						Description: `must be one of ["posthog"]`,
+						MarkdownDescription: `Default: 30` + "\n" +
+							`Set lower value in case of failing long running sync of events stream.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

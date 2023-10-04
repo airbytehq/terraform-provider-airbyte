@@ -12,9 +12,44 @@ type DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+func (o *DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 type DestinationGoogleSheetsUpdate struct {
 	// Google API Credentials for connecting to Google Sheets and Google Drive APIs
 	Credentials DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth `json:"credentials"`
 	// The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 	SpreadsheetID string `json:"spreadsheet_id"`
+}
+
+func (o *DestinationGoogleSheetsUpdate) GetCredentials() DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth {
+	if o == nil {
+		return DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth{}
+	}
+	return o.Credentials
+}
+
+func (o *DestinationGoogleSheetsUpdate) GetSpreadsheetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SpreadsheetID
 }

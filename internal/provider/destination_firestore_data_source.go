@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -54,15 +52,6 @@ func (r *DestinationFirestoreDataSource) Schema(ctx context.Context, req datasou
 					"credentials_json": schema.StringAttribute{
 						Computed:    true,
 						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"firestore",
-							),
-						},
-						Description: `must be one of ["firestore"]`,
 					},
 					"project_id": schema.StringAttribute{
 						Computed:    true,

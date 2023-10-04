@@ -12,13 +12,11 @@ func (r *SourceMarketoResourceModel) ToCreateSDKType() *shared.SourceMarketoCrea
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	domainURL := r.Configuration.DomainURL.ValueString()
-	sourceType := shared.SourceMarketoMarketo(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceMarketo{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		DomainURL:    domainURL,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()

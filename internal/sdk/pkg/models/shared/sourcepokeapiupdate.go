@@ -6,3 +6,10 @@ type SourcePokeapiUpdate struct {
 	// Pokemon requested from the API.
 	PokemonName string `json:"pokemon_name"`
 }
+
+func (o *SourcePokeapiUpdate) GetPokemonName() string {
+	if o == nil {
+		return ""
+	}
+	return o.PokemonName
+}

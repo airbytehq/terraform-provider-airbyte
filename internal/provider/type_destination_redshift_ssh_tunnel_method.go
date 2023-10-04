@@ -3,10 +3,10 @@
 package provider
 
 type DestinationRedshiftSSHTunnelMethod struct {
-	DestinationRedshiftSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_redshift_ssh_tunnel_method_no_tunnel"`
-	DestinationRedshiftSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redshift_ssh_tunnel_method_password_authentication"`
-	DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redshift_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationRedshiftUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_redshift_update_ssh_tunnel_method_no_tunnel"`
-	DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redshift_update_ssh_tunnel_method_password_authentication"`
-	DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedshiftSSHTunnelMethodNoTunnel                     *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_redshift_ssh_tunnel_method_no_tunnel"`
+	DestinationRedshiftSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_redshift_ssh_tunnel_method_password_authentication"`
+	DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_redshift_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedshiftUpdateSSHTunnelMethodNoTunnel               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_redshift_update_ssh_tunnel_method_no_tunnel"`
+	DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_redshift_update_ssh_tunnel_method_password_authentication"`
+	DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication"`
 }

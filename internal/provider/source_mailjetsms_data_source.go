@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *SourceMailjetSmsDataSource) Schema(ctx context.Context, req datasource.
 					"end_date": schema.Int64Attribute{
 						Computed:    true,
 						Description: `Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mailjet-sms",
-							),
-						},
-						Description: `must be one of ["mailjet-sms"]`,
 					},
 					"start_date": schema.Int64Attribute{
 						Computed:    true,

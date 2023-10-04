@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,11 +37,61 @@ type DestinationTypesense struct {
 	APIKey string `json:"api_key"`
 	// How many documents should be imported together. Default 1000
 	BatchSize       *int64                        `json:"batch_size,omitempty"`
-	DestinationType DestinationTypesenseTypesense `json:"destinationType"`
+	destinationType DestinationTypesenseTypesense `const:"typesense" json:"destinationType"`
 	// Hostname of the Typesense instance without protocol.
 	Host string `json:"host"`
 	// Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443
 	Port *string `json:"port,omitempty"`
 	// Protocol of the Typesense instance. Ex: http or https. Default is https
 	Protocol *string `json:"protocol,omitempty"`
+}
+
+func (d DestinationTypesense) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationTypesense) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationTypesense) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationTypesense) GetBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BatchSize
+}
+
+func (o *DestinationTypesense) GetDestinationType() DestinationTypesenseTypesense {
+	return DestinationTypesenseTypesenseTypesense
+}
+
+func (o *DestinationTypesense) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationTypesense) GetPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationTypesense) GetProtocol() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Protocol
 }

@@ -9,3 +9,31 @@ type SourceInstatusCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceInstatusCreateRequest) GetConfiguration() SourceInstatus {
+	if o == nil {
+		return SourceInstatus{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceInstatusCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceInstatusCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceInstatusCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

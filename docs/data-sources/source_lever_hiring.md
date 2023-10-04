@@ -42,9 +42,8 @@ data "airbyte_source_lever_hiring" "my_source_leverhiring" {
 Read-Only:
 
 - `credentials` (Attributes) Choose how to authenticate to Lever Hiring. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `environment` (String) must be one of ["Production", "Sandbox"]
+- `environment` (String) must be one of ["Production", "Sandbox"]; Default: "Sandbox"
 The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
-- `source_type` (String) must be one of ["lever-hiring"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -63,7 +62,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) The Api Key of your Lever Hiring account.
-- `auth_type` (String) must be one of ["Api Key"]
 
 
 <a id="nestedatt--configuration--credentials--source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth"></a>
@@ -71,7 +69,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Lever Hiring developer application.
 - `client_secret` (String) The Client Secret of your Lever Hiring developer application.
 - `refresh_token` (String) The token for obtaining new access token.
@@ -83,7 +80,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) The Api Key of your Lever Hiring account.
-- `auth_type` (String) must be one of ["Api Key"]
 
 
 <a id="nestedatt--configuration--credentials--source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth"></a>
@@ -91,7 +87,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Lever Hiring developer application.
 - `client_secret` (String) The Client Secret of your Lever Hiring developer application.
 - `refresh_token` (String) The token for obtaining new access token.

@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMixpanelAuthenticationWildcardProjectSecret struct {
-	APISecret   types.String `tfsdk:"api_secret"`
-	OptionTitle types.String `tfsdk:"option_title"`
+	APISecret types.String `tfsdk:"api_secret"`
 }

@@ -9,3 +9,31 @@ type SourceCloseComCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceCloseComCreateRequest) GetConfiguration() SourceCloseCom {
+	if o == nil {
+		return SourceCloseCom{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceCloseComCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceCloseComCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceCloseComCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

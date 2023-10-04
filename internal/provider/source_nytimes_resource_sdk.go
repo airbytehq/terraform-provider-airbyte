@@ -23,15 +23,13 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 	} else {
 		shareType = nil
 	}
-	sourceType := shared.SourceNytimesNytimes(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNytimes{
-		APIKey:     apiKey,
-		EndDate:    endDate,
-		Period:     period,
-		ShareType:  shareType,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Period:    period,
+		ShareType: shareType,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

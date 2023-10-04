@@ -9,7 +9,6 @@ import (
 
 func (r *SourcePypiResourceModel) ToCreateSDKType() *shared.SourcePypiCreateRequest {
 	projectName := r.Configuration.ProjectName.ValueString()
-	sourceType := shared.SourcePypiPypi(r.Configuration.SourceType.ValueString())
 	version := new(string)
 	if !r.Configuration.Version.IsUnknown() && !r.Configuration.Version.IsNull() {
 		*version = r.Configuration.Version.ValueString()
@@ -18,7 +17,6 @@ func (r *SourcePypiResourceModel) ToCreateSDKType() *shared.SourcePypiCreateRequ
 	}
 	configuration := shared.SourcePypi{
 		ProjectName: projectName,
-		SourceType:  sourceType,
 		Version:     version,
 	}
 	name := r.Name.ValueString()

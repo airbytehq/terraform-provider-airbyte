@@ -46,7 +46,6 @@ Read-Only:
 - `engine` (String) Engine name or url to connect to.
 - `host` (String) The host name of your Firebolt database.
 - `password` (String) Firebolt password.
-- `source_type` (String) must be one of ["firebolt"]
 - `username` (String) Firebolt email address you use to login.
 
 

@@ -27,18 +27,11 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 				advertiserID = nil
 			}
 			appID := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AppID.ValueString()
-			authType := new(shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthType)
-			if !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.IsNull() {
-				*authType = shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			secret := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.Secret.ValueString()
 			sourceTiktokMarketingAuthenticationMethodOAuth20 = &shared.SourceTiktokMarketingAuthenticationMethodOAuth20{
 				AccessToken:  accessToken,
 				AdvertiserID: advertiserID,
 				AppID:        appID,
-				AuthType:     authType,
 				Secret:       secret,
 			}
 		}
@@ -51,16 +44,9 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 		if r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
 			accessToken1 := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AccessToken.ValueString()
 			advertiserId1 := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AdvertiserID.ValueString()
-			authType1 := new(shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType)
-			if !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.IsNull() {
-				*authType1 = shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType(r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			sourceTiktokMarketingAuthenticationMethodSandboxAccessToken = &shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken{
 				AccessToken:  accessToken1,
 				AdvertiserID: advertiserId1,
-				AuthType:     authType1,
 			}
 		}
 		if sourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
@@ -81,12 +67,6 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 	} else {
 		includeDeleted = nil
 	}
-	sourceType := new(shared.SourceTiktokMarketingTiktokMarketing)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceTiktokMarketingTiktokMarketing(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -98,7 +78,6 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 		Credentials:       credentials,
 		EndDate:           endDate,
 		IncludeDeleted:    includeDeleted,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 	}
 	name := r.Name.ValueString()
@@ -142,18 +121,11 @@ func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTik
 				advertiserID = nil
 			}
 			appID := r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20.AppID.ValueString()
-			authType := new(shared.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20AuthType)
-			if !r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20.AuthType.IsNull() {
-				*authType = shared.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			secret := r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20.Secret.ValueString()
 			sourceTiktokMarketingUpdateAuthenticationMethodOAuth20 = &shared.SourceTiktokMarketingUpdateAuthenticationMethodOAuth20{
 				AccessToken:  accessToken,
 				AdvertiserID: advertiserID,
 				AppID:        appID,
-				AuthType:     authType,
 				Secret:       secret,
 			}
 		}
@@ -166,16 +138,9 @@ func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTik
 		if r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken != nil {
 			accessToken1 := r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken.AccessToken.ValueString()
 			advertiserId1 := r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken.AdvertiserID.ValueString()
-			authType1 := new(shared.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessTokenAuthType)
-			if !r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken.AuthType.IsNull() {
-				*authType1 = shared.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessTokenAuthType(r.Configuration.Credentials.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			sourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken = &shared.SourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken{
 				AccessToken:  accessToken1,
 				AdvertiserID: advertiserId1,
-				AuthType:     authType1,
 			}
 		}
 		if sourceTiktokMarketingUpdateAuthenticationMethodSandboxAccessToken != nil {

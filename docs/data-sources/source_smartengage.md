@@ -42,6 +42,5 @@ data "airbyte_source_smartengage" "my_source_smartengage" {
 Read-Only:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["smartengage"]
 
 

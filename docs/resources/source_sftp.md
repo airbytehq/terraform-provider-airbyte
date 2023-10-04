@@ -17,21 +17,19 @@ resource "airbyte_source_sftp" "my_source_sftp" {
   configuration = {
     credentials = {
       source_sftp_authentication_wildcard_password_authentication = {
-        auth_method        = "SSH_PASSWORD_AUTH"
         auth_user_password = "...my_auth_user_password..."
       }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
-    file_types   = "csv,json"
+    file_types   = "csv"
     folder_path  = "/logs/2022"
-    host         = "www.host.com"
+    host         = "192.0.2.1"
     port         = 22
-    source_type  = "sftp"
     user         = "...my_user..."
   }
-  name         = "Miss Tommy Emard"
+  name         = "Bertha Williamson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "665163a3-6385-412a-b252-1b9f2e072467"
+  workspace_id = "4145562d-2757-4623-9e52-bb8adc8fd2a7"
 }
 ```
 
@@ -59,16 +57,19 @@ resource "airbyte_source_sftp" "my_source_sftp" {
 Required:
 
 - `host` (String) The server host address
-- `port` (Number) The server port
-- `source_type` (String) must be one of ["sftp"]
 - `user` (String) The server user
 
 Optional:
 
 - `credentials` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
-- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
-- `file_types` (String) Coma separated file types. Currently only 'csv' and 'json' types are supported.
-- `folder_path` (String) The directory to search files for sync
+- `file_pattern` (String) Default: ""
+The regular expression to specify files for sync in a chosen Folder Path
+- `file_types` (String) Default: "csv,json"
+Coma separated file types. Currently only 'csv' and 'json' types are supported.
+- `folder_path` (String) Default: ""
+The directory to search files for sync
+- `port` (Number) Default: 22
+The server port
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -85,8 +86,6 @@ Optional:
 
 Required:
 
-- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through password authentication
 - `auth_user_password` (String) OS-level password for logging into the jump server host
 
 
@@ -95,8 +94,6 @@ Connect through password authentication
 
 Required:
 
-- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through ssh key
 - `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 
@@ -105,8 +102,6 @@ Connect through ssh key
 
 Required:
 
-- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through password authentication
 - `auth_user_password` (String) OS-level password for logging into the jump server host
 
 
@@ -115,8 +110,6 @@ Connect through password authentication
 
 Required:
 
-- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through ssh key
 - `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 

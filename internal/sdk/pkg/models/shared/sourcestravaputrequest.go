@@ -7,3 +7,24 @@ type SourceStravaPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceStravaPutRequest) GetConfiguration() SourceStravaUpdate {
+	if o == nil {
+		return SourceStravaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceStravaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceStravaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

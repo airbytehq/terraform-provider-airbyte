@@ -44,7 +44,6 @@ Read-Only:
 - `account_ids` (List of Number) Specify the account IDs to pull data from, separated by a space. Leave this field empty if you want to pull the data from all accounts accessible by the authenticated user. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn docs</a> to locate these IDs.
 - `ad_analytics_reports` (Attributes List) (see [below for nested schema](#nestedatt--configuration--ad_analytics_reports))
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["linkedin-ads"]
 - `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--ad_analytics_reports"></a>
@@ -75,7 +74,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
-- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_authentication_o_auth2_0"></a>
@@ -83,7 +81,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["oAuth2.0"]
 - `client_id` (String) The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 - `client_secret` (String) The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 - `refresh_token` (String) The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
@@ -95,7 +92,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
-- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_o_auth2_0"></a>
@@ -103,7 +99,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["oAuth2.0"]
 - `client_id` (String) The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 - `client_secret` (String) The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 - `refresh_token` (String) The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.

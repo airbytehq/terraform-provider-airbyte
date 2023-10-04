@@ -55,39 +55,21 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"accept_terms": schema.BoolAttribute{
-						Required:    true,
-						Description: `You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.`,
 					},
 					"data_source": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"MANAGED_TABLES_STORAGE",
-											),
-										},
-										Description: `must be one of ["MANAGED_TABLES_STORAGE"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3_STORAGE",
-											),
-										},
-										Description: `must be one of ["S3_STORAGE"]`,
-									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
 										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
@@ -105,7 +87,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The directory under the S3 bucket where data will be written.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -136,7 +118,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"us-gov-west-1",
 											),
 										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
 											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
 									},
 									"s3_secret_access_key": schema.StringAttribute{
@@ -158,52 +140,25 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The name of the Azure blob storage container.`,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Optional:    true,
-										Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
+										Optional: true,
+										MarkdownDescription: `Default: "blob.core.windows.net"` + "\n" +
+											`This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
 									},
-									"data_source_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AZURE_BLOB_STORAGE",
-											),
-										},
-										Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
-									},
 								},
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_update_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"MANAGED_TABLES_STORAGE",
-											),
-										},
-										Description: `must be one of ["MANAGED_TABLES_STORAGE"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_update_data_source_amazon_s3": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3_STORAGE",
-											),
-										},
-										Description: `must be one of ["S3_STORAGE"]`,
-									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
 										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
@@ -221,7 +176,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The directory under the S3 bucket where data will be written.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -252,7 +207,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"us-gov-west-1",
 											),
 										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
 											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
 									},
 									"s3_secret_access_key": schema.StringAttribute{
@@ -274,21 +229,13 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The name of the Azure blob storage container.`,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Optional:    true,
-										Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
+										Optional: true,
+										MarkdownDescription: `Default: "blob.core.windows.net"` + "\n" +
+											`This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
-									},
-									"data_source_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AZURE_BLOB_STORAGE",
-											),
-										},
-										Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
@@ -312,33 +259,28 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Description: `Databricks Personal Access Token for making authenticated requests.`,
 					},
 					"databricks_port": schema.StringAttribute{
-						Optional:    true,
-						Description: `Databricks Cluster Port.`,
+						Optional: true,
+						MarkdownDescription: `Default: "443"` + "\n" +
+							`Databricks Cluster Port.`,
 					},
 					"databricks_server_hostname": schema.StringAttribute{
 						Required:    true,
 						Description: `Databricks Cluster Server Hostname.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"databricks",
-							),
-						},
-						Description: `must be one of ["databricks"]`,
-					},
 					"enable_schema_evolution": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.`,
 					},
 					"purge_staging_data": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Default to 'true'. Switch it to 'false' for debugging purpose.`,
+						Optional: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Default to 'true'. Switch it to 'false' for debugging purpose.`,
 					},
 					"schema": schema.StringAttribute{
-						Optional:    true,
-						Description: `The default schema tables are written. If not specified otherwise, the "default" will be used.`,
+						Optional: true,
+						MarkdownDescription: `Default: "default"` + "\n" +
+							`The default schema tables are written. If not specified otherwise, the "default" will be used.`,
 					},
 				},
 			},
@@ -408,7 +350,7 @@ func (r *DestinationDatabricksResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationDatabricks(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

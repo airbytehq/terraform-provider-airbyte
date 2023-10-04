@@ -9,3 +9,31 @@ type SourceMixpanelCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMixpanelCreateRequest) GetConfiguration() SourceMixpanel {
+	if o == nil {
+		return SourceMixpanel{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMixpanelCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMixpanelCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMixpanelCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

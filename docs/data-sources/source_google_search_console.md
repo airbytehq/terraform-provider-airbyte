@@ -44,12 +44,12 @@ Read-Only:
 - `authorization` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization))
 - `custom_reports` (String) (DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.
 - `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
-- `data_state` (String) must be one of ["final", "all"]
+- `data_state` (String) must be one of ["final", "all"]; Default: "final"
 If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
 - `end_date` (String) UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
 - `site_urls` (List of String) The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
-- `source_type` (String) must be one of ["google-search-console"]
-- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
+- `start_date` (String) Default: "2021-01-01"
+UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--authorization"></a>
 ### Nested Schema for `configuration.authorization`
@@ -67,7 +67,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
@@ -78,7 +77,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Service"]
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 
@@ -89,7 +87,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
@@ -100,7 +97,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Service"]
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 

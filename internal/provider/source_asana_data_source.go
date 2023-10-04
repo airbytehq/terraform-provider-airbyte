@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -65,16 +64,6 @@ func (r *SourceAsanaDataSource) Schema(ctx context.Context, req datasource.Schem
 									"client_secret": schema.StringAttribute{
 										Computed: true,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`OAuth Credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Computed: true,
 									},
@@ -84,16 +73,6 @@ func (r *SourceAsanaDataSource) Schema(ctx context.Context, req datasource.Schem
 							"source_asana_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
-											`PAT Credentials`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
@@ -110,16 +89,6 @@ func (r *SourceAsanaDataSource) Schema(ctx context.Context, req datasource.Schem
 									"client_secret": schema.StringAttribute{
 										Computed: true,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`OAuth Credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Computed: true,
 									},
@@ -129,16 +98,6 @@ func (r *SourceAsanaDataSource) Schema(ctx context.Context, req datasource.Schem
 							"source_asana_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
-											`PAT Credentials`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
@@ -151,15 +110,6 @@ func (r *SourceAsanaDataSource) Schema(ctx context.Context, req datasource.Schem
 							validators.ExactlyOneChild(),
 						},
 						Description: `Choose how to authenticate to Github`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"asana",
-							),
-						},
-						Description: `must be one of ["asana"]`,
 					},
 				},
 			},

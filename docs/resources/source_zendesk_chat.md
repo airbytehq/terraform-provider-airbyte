@@ -18,16 +18,14 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
     credentials = {
       source_zendesk_chat_authorization_method_access_token = {
         access_token = "...my_access_token..."
-        credentials  = "access_token"
       }
     }
-    source_type = "zendesk-chat"
-    start_date  = "2021-02-01T00:00:00Z"
-    subdomain   = "...my_subdomain..."
+    start_date = "2021-02-01T00:00:00Z"
+    subdomain  = "...my_subdomain..."
   }
-  name         = "Mabel Lebsack MD"
+  name         = "Kelly Kris"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3fd3c81d-a10f-48c2-bdf9-31da3edb51fa"
+  workspace_id = "8933f773-8d63-4dc7-b7f8-b16c6167f1e8"
 }
 ```
 
@@ -54,13 +52,13 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
 
 Required:
 
-- `source_type` (String) must be one of ["zendesk-chat"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `subdomain` (String) Required if you access Zendesk Chat from a Zendesk Support subdomain.
+- `subdomain` (String) Default: ""
+Required if you access Zendesk Chat from a Zendesk Support subdomain.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -78,15 +76,10 @@ Optional:
 Required:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `credentials` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_chat_authorization_method_o_auth2_0`
-
-Required:
-
-- `credentials` (String) must be one of ["oauth2.0"]
 
 Optional:
 
@@ -102,15 +95,10 @@ Optional:
 Required:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `credentials` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_chat_update_authorization_method_o_auth2_0`
-
-Required:
-
-- `credentials` (String) must be one of ["oauth2.0"]
 
 Optional:
 

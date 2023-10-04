@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *SourceDockerhubDataSource) Schema(ctx context.Context, req datasource.S
 					"docker_username": schema.StringAttribute{
 						Computed:    true,
 						Description: `Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dockerhub",
-							),
-						},
-						Description: `must be one of ["dockerhub"]`,
 					},
 				},
 			},

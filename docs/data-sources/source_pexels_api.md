@@ -47,6 +47,5 @@ Read-Only:
 - `orientation` (String) Optional, Desired photo orientation. The current supported orientations are landscape, portrait or square
 - `query` (String) Optional, the search query, Example Ocean, Tigers, Pears, etc.
 - `size` (String) Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
-- `source_type` (String) must be one of ["pexels-api"]
 
 

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourcePostmarkapp struct {
 	XPostmarkAccountToken string `json:"X-Postmark-Account-Token"`
 	// API Key for server
 	XPostmarkServerToken string                       `json:"X-Postmark-Server-Token"`
-	SourceType           SourcePostmarkappPostmarkapp `json:"sourceType"`
+	sourceType           SourcePostmarkappPostmarkapp `const:"postmarkapp" json:"sourceType"`
+}
+
+func (s SourcePostmarkapp) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostmarkapp) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostmarkapp) GetXPostmarkAccountToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkAccountToken
+}
+
+func (o *SourcePostmarkapp) GetXPostmarkServerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkServerToken
+}
+
+func (o *SourcePostmarkapp) GetSourceType() SourcePostmarkappPostmarkapp {
+	return SourcePostmarkappPostmarkappPostmarkapp
 }

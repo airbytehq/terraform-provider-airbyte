@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -59,14 +60,68 @@ func (e *SourceStravaStrava) UnmarshalJSON(data []byte) error {
 type SourceStrava struct {
 	// The Athlete ID of your Strava developer application.
 	AthleteID int64                 `json:"athlete_id"`
-	AuthType  *SourceStravaAuthType `json:"auth_type,omitempty"`
+	authType  *SourceStravaAuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Strava developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Strava developer application.
 	ClientSecret string `json:"client_secret"`
 	// The Refresh Token with the activity: read_all permissions.
 	RefreshToken string             `json:"refresh_token"`
-	SourceType   SourceStravaStrava `json:"sourceType"`
+	sourceType   SourceStravaStrava `const:"strava" json:"sourceType"`
 	// UTC date and time. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceStrava) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceStrava) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceStrava) GetAthleteID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AthleteID
+}
+
+func (o *SourceStrava) GetAuthType() *SourceStravaAuthType {
+	return SourceStravaAuthTypeClient.ToPointer()
+}
+
+func (o *SourceStrava) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceStrava) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceStrava) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceStrava) GetSourceType() SourceStravaStrava {
+	return SourceStravaStravaStrava
+}
+
+func (o *SourceStrava) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

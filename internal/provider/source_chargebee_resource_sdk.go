@@ -12,13 +12,11 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	productCatalog := shared.SourceChargebeeProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
-	sourceType := shared.SourceChargebeeChargebee(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChargebee{
 		ProductCatalog: productCatalog,
 		Site:           site,
 		SiteAPIKey:     siteAPIKey,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()

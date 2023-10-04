@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,8 +36,44 @@ type SourceDixa struct {
 	// Dixa API token
 	APIToken string `json:"api_token"`
 	// Number of days to batch into one request. Max 31.
-	BatchSize  *int64         `json:"batch_size,omitempty"`
-	SourceType SourceDixaDixa `json:"sourceType"`
+	BatchSize  *int64         `default:"31" json:"batch_size"`
+	sourceType SourceDixaDixa `const:"dixa" json:"sourceType"`
 	// The connector pulls records updated from this date onwards.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceDixa) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDixa) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDixa) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceDixa) GetBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BatchSize
+}
+
+func (o *SourceDixa) GetSourceType() SourceDixaDixa {
+	return SourceDixaDixaDixa
+}
+
+func (o *SourceDixa) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

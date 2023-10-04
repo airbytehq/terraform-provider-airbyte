@@ -62,15 +62,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								Required:    true,
 								Description: `Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.`,
 							},
-							"auth_method": schema.StringAttribute{
-								Required: true,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"oauth2.0",
-									),
-								},
-								Description: `must be one of ["oauth2.0"]`,
-							},
 							"client_id": schema.StringAttribute{
 								Optional:    true,
 								Description: `The Client ID of the SurveyMonkey developer application.`,
@@ -91,17 +82,8 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								"Canada",
 							),
 						},
-						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]` + "\n" +
+						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]; Default: "USA"` + "\n" +
 							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"surveymonkey",
-							),
-						},
-						Description: `must be one of ["surveymonkey"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -187,7 +169,7 @@ func (r *SourceSurveymonkeyResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSurveymonkey(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -54,15 +53,6 @@ func (r *DestinationPineconeResource) Schema(ctx context.Context, req resource.S
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pinecone",
-							),
-						},
-						Description: `must be one of ["pinecone"]`,
-					},
 					"embedding": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
@@ -72,45 +62,17 @@ func (r *DestinationPineconeResource) Schema(ctx context.Context, req resource.S
 									"cohere_key": schema.StringAttribute{
 										Required: true,
 									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_pinecone_embedding_fake": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_pinecone_embedding_open_ai": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Required: true,
 									},
@@ -123,45 +85,17 @@ func (r *DestinationPineconeResource) Schema(ctx context.Context, req resource.S
 									"cohere_key": schema.StringAttribute{
 										Required: true,
 									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_pinecone_update_embedding_fake": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_pinecone_update_embedding_open_ai": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Required: true,
 									},
@@ -195,8 +129,9 @@ func (r *DestinationPineconeResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
-								Optional:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
+								Optional: true,
+								MarkdownDescription: `Default: 0` + "\n" +
+									`Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
 							},
 							"chunk_size": schema.Int64Attribute{
 								Required:    true,
@@ -282,7 +217,7 @@ func (r *DestinationPineconeResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationPinecone(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

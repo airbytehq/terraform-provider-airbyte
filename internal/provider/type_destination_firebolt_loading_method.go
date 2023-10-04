@@ -3,8 +3,8 @@
 package provider
 
 type DestinationFireboltLoadingMethod struct {
-	DestinationFireboltLoadingMethodExternalTableViaS3       *DestinationFireboltLoadingMethodExternalTableViaS3 `tfsdk:"destination_firebolt_loading_method_external_table_via_s3"`
-	DestinationFireboltLoadingMethodSQLInserts               *DestinationFireboltLoadingMethodSQLInserts         `tfsdk:"destination_firebolt_loading_method_sql_inserts"`
-	DestinationFireboltUpdateLoadingMethodExternalTableViaS3 *DestinationFireboltLoadingMethodExternalTableViaS3 `tfsdk:"destination_firebolt_update_loading_method_external_table_via_s3"`
-	DestinationFireboltUpdateLoadingMethodSQLInserts         *DestinationFireboltLoadingMethodSQLInserts         `tfsdk:"destination_firebolt_update_loading_method_sql_inserts"`
+	DestinationFireboltLoadingMethodExternalTableViaS3       *DestinationFireboltLoadingMethodExternalTableViaS3                   `tfsdk:"destination_firebolt_loading_method_external_table_via_s3"`
+	DestinationFireboltLoadingMethodSQLInserts               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_firebolt_loading_method_sql_inserts"`
+	DestinationFireboltUpdateLoadingMethodExternalTableViaS3 *DestinationFireboltLoadingMethodExternalTableViaS3                   `tfsdk:"destination_firebolt_update_loading_method_external_table_via_s3"`
+	DestinationFireboltUpdateLoadingMethodSQLInserts         *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_firebolt_update_loading_method_sql_inserts"`
 }

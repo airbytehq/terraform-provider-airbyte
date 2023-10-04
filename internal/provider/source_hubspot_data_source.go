@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -67,16 +66,6 @@ func (r *SourceHubspotDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`Name of the credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.`,
@@ -90,16 +79,6 @@ func (r *SourceHubspotDataSource) Schema(ctx context.Context, req datasource.Sch
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.`,
-									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Private App Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["Private App Credentials"]` + "\n" +
-											`Name of the credentials set`,
 									},
 								},
 								Description: `Choose how to authenticate to HubSpot.`,
@@ -115,16 +94,6 @@ func (r *SourceHubspotDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`Name of the credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.`,
@@ -139,16 +108,6 @@ func (r *SourceHubspotDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Private App Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["Private App Credentials"]` + "\n" +
-											`Name of the credentials set`,
-									},
 								},
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
@@ -157,15 +116,6 @@ func (r *SourceHubspotDataSource) Schema(ctx context.Context, req datasource.Sch
 							validators.ExactlyOneChild(),
 						},
 						Description: `Choose how to authenticate to HubSpot.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"hubspot",
-							),
-						},
-						Description: `must be one of ["hubspot"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

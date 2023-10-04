@@ -63,8 +63,9 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Comma separated list of Mesage Attribute names to return`,
 					},
 					"delete_messages": schema.BoolAttribute{
-						Required:    true,
-						Description: `If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. `,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. `,
 					},
 					"max_batch_size": schema.Int64Attribute{
 						Optional:    true,
@@ -115,15 +116,6 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					"secret_key": schema.StringAttribute{
 						Optional:    true,
 						Description: `The Secret Key of the AWS IAM Role to use for pulling messages`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-sqs",
-							),
-						},
-						Description: `must be one of ["amazon-sqs"]`,
 					},
 					"visibility_timeout": schema.Int64Attribute{
 						Optional:    true,
@@ -201,7 +193,7 @@ func (r *SourceAmazonSqsResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAmazonSqs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

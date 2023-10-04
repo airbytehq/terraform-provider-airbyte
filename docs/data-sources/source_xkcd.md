@@ -39,8 +39,4 @@ data "airbyte_source_xkcd" "my_source_xkcd" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Read-Only:
-
-- `source_type` (String) must be one of ["xkcd"]
-
 

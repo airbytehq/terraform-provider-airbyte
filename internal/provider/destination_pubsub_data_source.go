@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -52,37 +50,33 @@ func (r *DestinationPubsubDataSource) Schema(ctx context.Context, req datasource
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"batching_delay_threshold": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Number of ms before the buffer is flushed`,
+						Computed: true,
+						MarkdownDescription: `Default: 1` + "\n" +
+							`Number of ms before the buffer is flushed`,
 					},
 					"batching_element_count_threshold": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Number of messages before the buffer is flushed`,
+						Computed: true,
+						MarkdownDescription: `Default: 1` + "\n" +
+							`Number of messages before the buffer is flushed`,
 					},
 					"batching_enabled": schema.BoolAttribute{
-						Computed:    true,
-						Description: `If TRUE messages will be buffered instead of sending them one by one`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`If TRUE messages will be buffered instead of sending them one by one`,
 					},
 					"batching_request_bytes_threshold": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Number of bytes before the buffer is flushed`,
+						Computed: true,
+						MarkdownDescription: `Default: 1` + "\n" +
+							`Number of bytes before the buffer is flushed`,
 					},
 					"credentials_json": schema.StringAttribute{
 						Computed:    true,
 						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pubsub",
-							),
-						},
-						Description: `must be one of ["pubsub"]`,
-					},
 					"ordering_enabled": schema.BoolAttribute{
-						Computed:    true,
-						Description: `If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream`,
 					},
 					"project_id": schema.StringAttribute{
 						Computed:    true,

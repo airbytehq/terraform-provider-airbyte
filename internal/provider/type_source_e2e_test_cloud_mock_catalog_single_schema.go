@@ -8,5 +8,4 @@ type SourceE2eTestCloudMockCatalogSingleSchema struct {
 	StreamDuplication types.Int64  `tfsdk:"stream_duplication"`
 	StreamName        types.String `tfsdk:"stream_name"`
 	StreamSchema      types.String `tfsdk:"stream_schema"`
-	Type              types.String `tfsdk:"type"`
 }

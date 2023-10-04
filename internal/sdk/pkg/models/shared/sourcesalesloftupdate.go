@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourceSalesloftUpdateCredentialsAuthenticateViaAPIKeyAuthType) Unmarsha
 type SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey struct {
 	// API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
 	APIKey   string                                                        `json:"api_key"`
-	AuthType SourceSalesloftUpdateCredentialsAuthenticateViaAPIKeyAuthType `json:"auth_type"`
+	authType SourceSalesloftUpdateCredentialsAuthenticateViaAPIKeyAuthType `const:"api_key" json:"auth_type"`
+}
+
+func (s SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey) GetAuthType() SourceSalesloftUpdateCredentialsAuthenticateViaAPIKeyAuthType {
+	return SourceSalesloftUpdateCredentialsAuthenticateViaAPIKeyAuthTypeAPIKey
 }
 
 type SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthType string
@@ -67,7 +89,7 @@ func (e *SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthType) Unmarshal
 type SourceSalesloftUpdateCredentialsAuthenticateViaOAuth struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                                       `json:"access_token"`
-	AuthType    SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthType `json:"auth_type"`
+	authType    SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your Salesloft developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Salesloft developer application.
@@ -76,6 +98,56 @@ type SourceSalesloftUpdateCredentialsAuthenticateViaOAuth struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
 	TokenExpiryDate time.Time `json:"token_expiry_date"`
+}
+
+func (s SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) GetAuthType() SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthType {
+	return SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthTypeOauth20
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceSalesloftUpdateCredentialsAuthenticateViaOAuth) GetTokenExpiryDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceSalesloftUpdateCredentialsType string
@@ -111,21 +183,16 @@ func CreateSourceSalesloftUpdateCredentialsSourceSalesloftUpdateCredentialsAuthe
 }
 
 func (u *SourceSalesloftUpdateCredentials) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey := new(SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey, "", true, true); err == nil {
 		u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey = sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey
 		u.Type = SourceSalesloftUpdateCredentialsTypeSourceSalesloftUpdateCredentialsAuthenticateViaAPIKey
 		return nil
 	}
 
 	sourceSalesloftUpdateCredentialsAuthenticateViaOAuth := new(SourceSalesloftUpdateCredentialsAuthenticateViaOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSalesloftUpdateCredentialsAuthenticateViaOAuth); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceSalesloftUpdateCredentialsAuthenticateViaOAuth, "", true, true); err == nil {
 		u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth = sourceSalesloftUpdateCredentialsAuthenticateViaOAuth
 		u.Type = SourceSalesloftUpdateCredentialsTypeSourceSalesloftUpdateCredentialsAuthenticateViaOAuth
 		return nil
@@ -135,19 +202,44 @@ func (u *SourceSalesloftUpdateCredentials) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceSalesloftUpdateCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
-		return json.Marshal(u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey)
-	}
-
 	if u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
-		return json.Marshal(u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth)
+		return utils.MarshalJSON(u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth, "", true)
 	}
 
-	return nil, nil
+	if u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
+		return utils.MarshalJSON(u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceSalesloftUpdate struct {
 	Credentials SourceSalesloftUpdateCredentials `json:"credentials"`
 	// The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceSalesloftUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSalesloftUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSalesloftUpdate) GetCredentials() SourceSalesloftUpdateCredentials {
+	if o == nil {
+		return SourceSalesloftUpdateCredentials{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceSalesloftUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

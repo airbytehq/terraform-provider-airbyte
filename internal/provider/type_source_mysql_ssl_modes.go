@@ -3,12 +3,12 @@
 package provider
 
 type SourceMysqlSSLModes struct {
-	SourceMysqlSSLModesPreferred            *SourceMysqlSSLModesPreferred      `tfsdk:"source_mysql_ssl_modes_preferred"`
-	SourceMysqlSSLModesRequired             *SourceMysqlSSLModesRequired       `tfsdk:"source_mysql_ssl_modes_required"`
-	SourceMysqlSSLModesVerifyCA             *SourceMysqlSSLModesVerifyCA       `tfsdk:"source_mysql_ssl_modes_verify_ca"`
-	SourceMysqlSSLModesVerifyIdentity       *SourceMysqlSSLModesVerifyIdentity `tfsdk:"source_mysql_ssl_modes_verify_identity"`
-	SourceMysqlUpdateSSLModesPreferred      *SourceMysqlSSLModesPreferred      `tfsdk:"source_mysql_update_ssl_modes_preferred"`
-	SourceMysqlUpdateSSLModesRequired       *SourceMysqlSSLModesRequired       `tfsdk:"source_mysql_update_ssl_modes_required"`
-	SourceMysqlUpdateSSLModesVerifyCA       *SourceMysqlSSLModesVerifyCA       `tfsdk:"source_mysql_update_ssl_modes_verify_ca"`
-	SourceMysqlUpdateSSLModesVerifyIdentity *SourceMysqlSSLModesVerifyIdentity `tfsdk:"source_mysql_update_ssl_modes_verify_identity"`
+	SourceMysqlSSLModesPreferred            *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_ssl_modes_preferred"`
+	SourceMysqlSSLModesRequired             *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_ssl_modes_required"`
+	SourceMysqlSSLModesVerifyCA             *SourceMysqlSSLModesVerifyCA                                          `tfsdk:"source_mysql_ssl_modes_verify_ca"`
+	SourceMysqlSSLModesVerifyIdentity       *SourceMysqlSSLModesVerifyCA                                          `tfsdk:"source_mysql_ssl_modes_verify_identity"`
+	SourceMysqlUpdateSSLModesPreferred      *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_update_ssl_modes_preferred"`
+	SourceMysqlUpdateSSLModesRequired       *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_mysql_update_ssl_modes_required"`
+	SourceMysqlUpdateSSLModesVerifyCA       *SourceMysqlSSLModesVerifyCA                                          `tfsdk:"source_mysql_update_ssl_modes_verify_ca"`
+	SourceMysqlUpdateSSLModesVerifyIdentity *SourceMysqlSSLModesVerifyCA                                          `tfsdk:"source_mysql_update_ssl_modes_verify_identity"`
 }

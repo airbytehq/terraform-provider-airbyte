@@ -43,6 +43,5 @@ Read-Only:
 
 - `access_token` (String) Facebook Page Access Token
 - `page_id` (String) Page ID
-- `source_type` (String) must be one of ["facebook-pages"]
 
 

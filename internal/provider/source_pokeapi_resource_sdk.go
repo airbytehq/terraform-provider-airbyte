@@ -9,10 +9,8 @@ import (
 
 func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCreateRequest {
 	pokemonName := r.Configuration.PokemonName.ValueString()
-	sourceType := shared.SourcePokeapiPokeapi(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePokeapi{
 		PokemonName: pokemonName,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

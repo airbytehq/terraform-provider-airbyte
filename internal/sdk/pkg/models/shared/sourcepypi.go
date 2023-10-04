@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,7 +35,36 @@ func (e *SourcePypiPypi) UnmarshalJSON(data []byte) error {
 type SourcePypi struct {
 	// Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
 	ProjectName string         `json:"project_name"`
-	SourceType  SourcePypiPypi `json:"sourceType"`
+	sourceType  SourcePypiPypi `const:"pypi" json:"sourceType"`
 	// Version of the project/package.  Use it to find a particular release instead of all releases.
 	Version *string `json:"version,omitempty"`
+}
+
+func (s SourcePypi) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePypi) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePypi) GetProjectName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectName
+}
+
+func (o *SourcePypi) GetSourceType() SourcePypiPypi {
+	return SourcePypiPypiPypi
+}
+
+func (o *SourcePypi) GetVersion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Version
 }

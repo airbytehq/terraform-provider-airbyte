@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthT
 type SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey struct {
 	// The Api Key of your Lever Hiring account.
 	APIKey   string                                                                      `json:"api_key"`
-	AuthType *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType `json:"auth_type,omitempty"`
+	authType *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType `const:"Api Key" json:"auth_type,omitempty"`
+}
+
+func (s SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey) GetAuthType() *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType {
+	return SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthTypeAPIKey.ToPointer()
 }
 
 type SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthType string
@@ -66,13 +88,49 @@ func (e *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthTy
 
 // SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth - Choose how to authenticate to Lever Hiring.
 type SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth struct {
-	AuthType *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthType `json:"auth_type,omitempty"`
+	authType *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthType `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Lever Hiring developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your Lever Hiring developer application.
 	ClientSecret *string `json:"client_secret,omitempty"`
 	// The token for obtaining new access token.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth) GetAuthType() *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthType {
+	return SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthTypeClient.ToPointer()
+}
+
+func (o *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourceLeverHiringAuthenticationMechanismType string
@@ -108,21 +166,16 @@ func CreateSourceLeverHiringAuthenticationMechanismSourceLeverHiringAuthenticati
 }
 
 func (u *SourceLeverHiringAuthenticationMechanism) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey := new(SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey, "", true, true); err == nil {
 		u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey = sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey
 		u.Type = SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey
 		return nil
 	}
 
 	sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth := new(SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth, "", true, true); err == nil {
 		u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth = sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth
 		u.Type = SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth
 		return nil
@@ -132,15 +185,15 @@ func (u *SourceLeverHiringAuthenticationMechanism) UnmarshalJSON(data []byte) er
 }
 
 func (u SourceLeverHiringAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
-		return json.Marshal(u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey)
-	}
-
 	if u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
-		return json.Marshal(u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth)
+		return utils.MarshalJSON(u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth, "", true)
 	}
 
-	return nil, nil
+	if u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
+		return utils.MarshalJSON(u.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceLeverHiringEnvironment - The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
@@ -199,8 +252,44 @@ type SourceLeverHiring struct {
 	// Choose how to authenticate to Lever Hiring.
 	Credentials *SourceLeverHiringAuthenticationMechanism `json:"credentials,omitempty"`
 	// The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
-	Environment *SourceLeverHiringEnvironment `json:"environment,omitempty"`
-	SourceType  SourceLeverHiringLeverHiring  `json:"sourceType"`
+	Environment *SourceLeverHiringEnvironment `default:"Sandbox" json:"environment"`
+	sourceType  SourceLeverHiringLeverHiring  `const:"lever-hiring" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceLeverHiring) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLeverHiring) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLeverHiring) GetCredentials() *SourceLeverHiringAuthenticationMechanism {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceLeverHiring) GetEnvironment() *SourceLeverHiringEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *SourceLeverHiring) GetSourceType() SourceLeverHiringLeverHiring {
+	return SourceLeverHiringLeverHiringLeverHiring
+}
+
+func (o *SourceLeverHiring) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

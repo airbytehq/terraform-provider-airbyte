@@ -60,15 +60,6 @@ func (r *SourceSurveymonkeyDataSource) Schema(ctx context.Context, req datasourc
 								Computed:    true,
 								Description: `Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.`,
 							},
-							"auth_method": schema.StringAttribute{
-								Computed: true,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"oauth2.0",
-									),
-								},
-								Description: `must be one of ["oauth2.0"]`,
-							},
 							"client_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The Client ID of the SurveyMonkey developer application.`,
@@ -89,17 +80,8 @@ func (r *SourceSurveymonkeyDataSource) Schema(ctx context.Context, req datasourc
 								"Canada",
 							),
 						},
-						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]` + "\n" +
+						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]; Default: "USA"` + "\n" +
 							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"surveymonkey",
-							),
-						},
-						Description: `must be one of ["surveymonkey"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

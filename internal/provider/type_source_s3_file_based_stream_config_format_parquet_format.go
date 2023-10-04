@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceS3FileBasedStreamConfigFormatParquetFormat struct {
-	DecimalAsFloat types.Bool   `tfsdk:"decimal_as_float"`
-	Filetype       types.String `tfsdk:"filetype"`
+	DecimalAsFloat types.Bool `tfsdk:"decimal_as_float"`
 }

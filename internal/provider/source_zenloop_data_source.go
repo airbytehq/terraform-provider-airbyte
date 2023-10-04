@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,15 +57,6 @@ func (r *SourceZenloopDataSource) Schema(ctx context.Context, req datasource.Sch
 					"date_from": schema.StringAttribute{
 						Computed:    true,
 						Description: `Zenloop date_from. Format: 2021-10-24T03:30:30Z or 2021-10-24. Leave empty if only data from current data should be synced`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zenloop",
-							),
-						},
-						Description: `must be one of ["zenloop"]`,
 					},
 					"survey_group_id": schema.StringAttribute{
 						Computed:    true,

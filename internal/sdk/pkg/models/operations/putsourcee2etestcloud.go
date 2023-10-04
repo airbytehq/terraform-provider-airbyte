@@ -12,8 +12,46 @@ type PutSourceE2eTestCloudRequest struct {
 	SourceID                     string                               `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceE2eTestCloudRequest) GetSourceE2eTestCloudPutRequest() *shared.SourceE2eTestCloudPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceE2eTestCloudPutRequest
+}
+
+func (o *PutSourceE2eTestCloudRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceE2eTestCloudResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceE2eTestCloudResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceE2eTestCloudResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceE2eTestCloudResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,7 +35,22 @@ func (e *SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) Un
 
 // SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
 type SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor struct {
-	Method SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
+	method SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `const:"STANDARD" json:"method"`
+}
+
+func (s SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) GetMethod() SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod {
+	return SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethodStandard
 }
 
 type SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod string
@@ -65,10 +80,39 @@ func (e *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod) Unmars
 // SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.
 type SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                          `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod `json:"method"`
+	InitialWaitingSeconds *int64                                                          `default:"300" json:"initial_waiting_seconds"`
+	method                SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod `const:"CDC" json:"method"`
 	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 	ServerTimeZone *string `json:"server_time_zone,omitempty"`
+}
+
+func (s SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialWaitingSeconds
+}
+
+func (o *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC) GetMethod() SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod {
+	return SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethodCdc
+}
+
+func (o *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC) GetServerTimeZone() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ServerTimeZone
 }
 
 type SourceMysqlUpdateUpdateMethodType string
@@ -104,21 +148,16 @@ func CreateSourceMysqlUpdateUpdateMethodSourceMysqlUpdateUpdateMethodScanChanges
 }
 
 func (u *SourceMysqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor, "", true, true); err == nil {
 		u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
 		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
 		return nil
 	}
 
 	sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC, "", true, true); err == nil {
 		u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
 		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
 		return nil
@@ -128,15 +167,15 @@ func (u *SourceMysqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMysqlUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
-		return json.Marshal(u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
-	}
-
 	if u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
-		return json.Marshal(u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
+		return utils.MarshalJSON(u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC, "", true)
 	}
 
-	return nil, nil
+	if u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMysqlUpdateSSLModesVerifyIdentityMode string
@@ -173,7 +212,50 @@ type SourceMysqlUpdateSSLModesVerifyIdentity struct {
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                                     `json:"client_key_password,omitempty"`
-	Mode              SourceMysqlUpdateSSLModesVerifyIdentityMode `json:"mode"`
+	mode              SourceMysqlUpdateSSLModesVerifyIdentityMode `const:"verify_identity" json:"mode"`
+}
+
+func (s SourceMysqlUpdateSSLModesVerifyIdentity) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSLModesVerifyIdentity) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyIdentity) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyIdentity) GetClientCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCertificate
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyIdentity) GetClientKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKey
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyIdentity) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyIdentity) GetMode() SourceMysqlUpdateSSLModesVerifyIdentityMode {
+	return SourceMysqlUpdateSSLModesVerifyIdentityModeVerifyIdentity
 }
 
 type SourceMysqlUpdateSSLModesVerifyCAMode string
@@ -210,7 +292,50 @@ type SourceMysqlUpdateSSLModesVerifyCA struct {
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                               `json:"client_key_password,omitempty"`
-	Mode              SourceMysqlUpdateSSLModesVerifyCAMode `json:"mode"`
+	mode              SourceMysqlUpdateSSLModesVerifyCAMode `const:"verify_ca" json:"mode"`
+}
+
+func (s SourceMysqlUpdateSSLModesVerifyCA) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSLModesVerifyCA) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyCA) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyCA) GetClientCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCertificate
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyCA) GetClientKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKey
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyCA) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourceMysqlUpdateSSLModesVerifyCA) GetMode() SourceMysqlUpdateSSLModesVerifyCAMode {
+	return SourceMysqlUpdateSSLModesVerifyCAModeVerifyCa
 }
 
 type SourceMysqlUpdateSSLModesRequiredMode string
@@ -239,7 +364,22 @@ func (e *SourceMysqlUpdateSSLModesRequiredMode) UnmarshalJSON(data []byte) error
 
 // SourceMysqlUpdateSSLModesRequired - Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.
 type SourceMysqlUpdateSSLModesRequired struct {
-	Mode SourceMysqlUpdateSSLModesRequiredMode `json:"mode"`
+	mode SourceMysqlUpdateSSLModesRequiredMode `const:"required" json:"mode"`
+}
+
+func (s SourceMysqlUpdateSSLModesRequired) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSLModesRequired) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSLModesRequired) GetMode() SourceMysqlUpdateSSLModesRequiredMode {
+	return SourceMysqlUpdateSSLModesRequiredModeRequired
 }
 
 type SourceMysqlUpdateSSLModesPreferredMode string
@@ -268,7 +408,22 @@ func (e *SourceMysqlUpdateSSLModesPreferredMode) UnmarshalJSON(data []byte) erro
 
 // SourceMysqlUpdateSSLModesPreferred - Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.
 type SourceMysqlUpdateSSLModesPreferred struct {
-	Mode SourceMysqlUpdateSSLModesPreferredMode `json:"mode"`
+	mode SourceMysqlUpdateSSLModesPreferredMode `const:"preferred" json:"mode"`
+}
+
+func (s SourceMysqlUpdateSSLModesPreferred) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSLModesPreferred) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSLModesPreferred) GetMode() SourceMysqlUpdateSSLModesPreferredMode {
+	return SourceMysqlUpdateSSLModesPreferredModePreferred
 }
 
 type SourceMysqlUpdateSSLModesType string
@@ -326,39 +481,30 @@ func CreateSourceMysqlUpdateSSLModesSourceMysqlUpdateSSLModesVerifyIdentity(sour
 }
 
 func (u *SourceMysqlUpdateSSLModes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMysqlUpdateSSLModesPreferred := new(SourceMysqlUpdateSSLModesPreferred)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSLModesPreferred); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSLModesPreferred, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSLModesPreferred = sourceMysqlUpdateSSLModesPreferred
 		u.Type = SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateSSLModesPreferred
 		return nil
 	}
 
 	sourceMysqlUpdateSSLModesRequired := new(SourceMysqlUpdateSSLModesRequired)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSLModesRequired); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSLModesRequired, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSLModesRequired = sourceMysqlUpdateSSLModesRequired
 		u.Type = SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateSSLModesRequired
 		return nil
 	}
 
 	sourceMysqlUpdateSSLModesVerifyCA := new(SourceMysqlUpdateSSLModesVerifyCA)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSLModesVerifyCA); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSLModesVerifyCA, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSLModesVerifyCA = sourceMysqlUpdateSSLModesVerifyCA
 		u.Type = SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateSSLModesVerifyCA
 		return nil
 	}
 
 	sourceMysqlUpdateSSLModesVerifyIdentity := new(SourceMysqlUpdateSSLModesVerifyIdentity)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSLModesVerifyIdentity); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSLModesVerifyIdentity, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSLModesVerifyIdentity = sourceMysqlUpdateSSLModesVerifyIdentity
 		u.Type = SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateSSLModesVerifyIdentity
 		return nil
@@ -369,22 +515,22 @@ func (u *SourceMysqlUpdateSSLModes) UnmarshalJSON(data []byte) error {
 
 func (u SourceMysqlUpdateSSLModes) MarshalJSON() ([]byte, error) {
 	if u.SourceMysqlUpdateSSLModesPreferred != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSLModesPreferred)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSLModesPreferred, "", true)
 	}
 
 	if u.SourceMysqlUpdateSSLModesRequired != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSLModesRequired)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSLModesRequired, "", true)
 	}
 
 	if u.SourceMysqlUpdateSSLModesVerifyCA != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSLModesVerifyCA)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSLModesVerifyCA, "", true)
 	}
 
 	if u.SourceMysqlUpdateSSLModesVerifyIdentity != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSLModesVerifyIdentity)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSLModesVerifyIdentity, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -417,13 +563,56 @@ type SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (s SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() SourceMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return SourceMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -458,11 +647,54 @@ type SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (s SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -493,7 +725,22 @@ func (e *SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(dat
 // SourceMysqlUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMysqlUpdateSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceMysqlUpdateSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdateSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdateSSHTunnelMethodNoTunnel) GetTunnelMethod() SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+	return SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type SourceMysqlUpdateSSHTunnelMethodType string
@@ -540,30 +787,23 @@ func CreateSourceMysqlUpdateSSHTunnelMethodSourceMysqlUpdateSSHTunnelMethodPassw
 }
 
 func (u *SourceMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMysqlUpdateSSHTunnelMethodNoTunnel := new(SourceMysqlUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSHTunnelMethodNoTunnel = sourceMysqlUpdateSSHTunnelMethodNoTunnel
 		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication := new(SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication = sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication
 		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication := new(SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication = sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication
 		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -574,18 +814,18 @@ func (u *SourceMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u SourceMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceMysqlUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMysqlUpdate struct {
@@ -598,7 +838,7 @@ type SourceMysqlUpdate struct {
 	// The password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// The port to connect to.
-	Port int64 `json:"port"`
+	Port *int64 `default:"3306" json:"port"`
 	// Configures how data is extracted from the database.
 	ReplicationMethod SourceMysqlUpdateUpdateMethod `json:"replication_method"`
 	// SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
@@ -607,4 +847,78 @@ type SourceMysqlUpdate struct {
 	TunnelMethod *SourceMysqlUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceMysqlUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceMysqlUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceMysqlUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceMysqlUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMysqlUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceMysqlUpdate) GetReplicationMethod() SourceMysqlUpdateUpdateMethod {
+	if o == nil {
+		return SourceMysqlUpdateUpdateMethod{}
+	}
+	return o.ReplicationMethod
+}
+
+func (o *SourceMysqlUpdate) GetSslMode() *SourceMysqlUpdateSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
+func (o *SourceMysqlUpdate) GetTunnelMethod() *SourceMysqlUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceMysqlUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

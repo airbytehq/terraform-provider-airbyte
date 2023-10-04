@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -67,15 +66,6 @@ func (r *SourceYandexMetricaDataSource) Schema(ctx context.Context, req datasour
 							validators.IsValidDate(),
 						},
 						Description: `Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"yandex-metrica",
-							),
-						},
-						Description: `must be one of ["yandex-metrica"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

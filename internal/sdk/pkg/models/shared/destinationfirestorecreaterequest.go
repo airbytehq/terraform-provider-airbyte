@@ -7,3 +7,24 @@ type DestinationFirestoreCreateRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *DestinationFirestoreCreateRequest) GetConfiguration() DestinationFirestore {
+	if o == nil {
+		return DestinationFirestore{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationFirestoreCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationFirestoreCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -28,16 +28,14 @@ func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCr
 		host = nil
 	}
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceFireboltFirebolt(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceFirebolt{
-		Account:    account,
-		Database:   database,
-		Engine:     engine,
-		Host:       host,
-		Password:   password,
-		SourceType: sourceType,
-		Username:   username,
+		Account:  account,
+		Database: database,
+		Engine:   engine,
+		Host:     host,
+		Password: password,
+		Username: username,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

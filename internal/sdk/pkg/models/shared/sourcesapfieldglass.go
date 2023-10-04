@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceSapFieldglassSapFieldglass) UnmarshalJSON(data []byte) error {
 type SourceSapFieldglass struct {
 	// API Key
 	APIKey     string                           `json:"api_key"`
-	SourceType SourceSapFieldglassSapFieldglass `json:"sourceType"`
+	sourceType SourceSapFieldglassSapFieldglass `const:"sap-fieldglass" json:"sourceType"`
+}
+
+func (s SourceSapFieldglass) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSapFieldglass) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSapFieldglass) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSapFieldglass) GetSourceType() SourceSapFieldglassSapFieldglass {
+	return SourceSapFieldglassSapFieldglassSapFieldglass
 }

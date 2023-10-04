@@ -9,3 +9,31 @@ type SourceTwilioTaskrouterCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTwilioTaskrouterCreateRequest) GetConfiguration() SourceTwilioTaskrouter {
+	if o == nil {
+		return SourceTwilioTaskrouter{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTwilioTaskrouterCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTwilioTaskrouterCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTwilioTaskrouterCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

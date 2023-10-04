@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFaunaCollectionDeletionModeEnabled struct {
-	Column       types.String `tfsdk:"column"`
-	DeletionMode types.String `tfsdk:"deletion_mode"`
+	Column types.String `tfsdk:"column"`
 }

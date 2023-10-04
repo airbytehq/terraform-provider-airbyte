@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -124,11 +125,71 @@ type SourceZohoCrmUpdate struct {
 	// Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
 	DcRegion SourceZohoCrmUpdateDataCenterLocation `json:"dc_region"`
 	// Choose your Edition of Zoho CRM to determine API Concurrency Limits
-	Edition SourceZohoCRMUpdateZohoCRMEdition `json:"edition"`
+	Edition *SourceZohoCRMUpdateZohoCRMEdition `default:"Free" json:"edition"`
 	// Please choose the environment
 	Environment SourceZohoCrmUpdateEnvironment `json:"environment"`
 	// OAuth2.0 Refresh Token
 	RefreshToken string `json:"refresh_token"`
 	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 	StartDatetime *time.Time `json:"start_datetime,omitempty"`
+}
+
+func (s SourceZohoCrmUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZohoCrmUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZohoCrmUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZohoCrmUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZohoCrmUpdate) GetDcRegion() SourceZohoCrmUpdateDataCenterLocation {
+	if o == nil {
+		return SourceZohoCrmUpdateDataCenterLocation("")
+	}
+	return o.DcRegion
+}
+
+func (o *SourceZohoCrmUpdate) GetEdition() *SourceZohoCRMUpdateZohoCRMEdition {
+	if o == nil {
+		return nil
+	}
+	return o.Edition
+}
+
+func (o *SourceZohoCrmUpdate) GetEnvironment() SourceZohoCrmUpdateEnvironment {
+	if o == nil {
+		return SourceZohoCrmUpdateEnvironment("")
+	}
+	return o.Environment
+}
+
+func (o *SourceZohoCrmUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceZohoCrmUpdate) GetStartDatetime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDatetime
 }

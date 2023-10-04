@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-										Description: `must be one of ["api_password"]`,
-									},
 								},
 								Description: `API Password Auth`,
 							},
@@ -83,15 +73,6 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 									"access_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `The Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -111,15 +92,6 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-										Description: `must be one of ["api_password"]`,
-									},
 								},
 								Description: `API Password Auth`,
 							},
@@ -129,15 +101,6 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 									"access_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `The Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -160,21 +123,13 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Required:    true,
 						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"shopify",
-							),
-						},
-						Description: `must be one of ["shopify"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
+						MarkdownDescription: `Default: "2020-01-01"` + "\n" +
+							`The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -248,7 +203,7 @@ func (r *SourceShopifyResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceShopify(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

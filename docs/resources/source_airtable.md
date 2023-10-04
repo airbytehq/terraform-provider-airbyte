@@ -18,18 +18,16 @@ resource "airbyte_source_airtable" "my_source_airtable" {
     credentials = {
       source_airtable_authentication_o_auth2_0 = {
         access_token      = "...my_access_token..."
-        auth_method       = "oauth2.0"
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2021-08-01T09:41:55.270Z"
+        token_expiry_date = "2022-02-15T01:33:45.237Z"
       }
     }
-    source_type = "airtable"
   }
-  name         = "Tommie Klocko"
+  name         = "Vicki Smitham"
   secret_id    = "...my_secret_id..."
-  workspace_id = "eac55a97-41d3-4113-9296-5bb8a7202611"
+  workspace_id = "48e4e42a-5305-40a9-afbc-66c913a5b780"
 }
 ```
 
@@ -57,7 +55,6 @@ resource "airbyte_source_airtable" "my_source_airtable" {
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["airtable"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -81,7 +78,6 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
@@ -91,10 +87,6 @@ Optional:
 Required:
 
 - `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-
-Optional:
-
-- `auth_method` (String) must be one of ["api_key"]
 
 
 <a id="nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0"></a>
@@ -109,7 +101,6 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
@@ -119,9 +110,5 @@ Optional:
 Required:
 
 - `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-
-Optional:
-
-- `auth_method` (String) must be one of ["api_key"]
 
 

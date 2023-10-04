@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationMilvusIndexingAuthenticationAPIToken struct {
-	Mode  types.String `tfsdk:"mode"`
 	Token types.String `tfsdk:"token"`
 }

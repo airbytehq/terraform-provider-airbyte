@@ -7,3 +7,24 @@ type SourcePunkAPIPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourcePunkAPIPutRequest) GetConfiguration() SourcePunkAPIUpdate {
+	if o == nil {
+		return SourcePunkAPIUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePunkAPIPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePunkAPIPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

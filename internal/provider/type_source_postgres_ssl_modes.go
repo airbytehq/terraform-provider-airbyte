@@ -3,16 +3,16 @@
 package provider
 
 type SourcePostgresSSLModes struct {
-	SourcePostgresSSLModesAllow            *SourcePostgresSSLModesAllow            `tfsdk:"source_postgres_ssl_modes_allow"`
-	SourcePostgresSSLModesDisable          *SourcePostgresSSLModesDisable          `tfsdk:"source_postgres_ssl_modes_disable"`
-	SourcePostgresSSLModesPrefer           *SourcePostgresSSLModesPrefer           `tfsdk:"source_postgres_ssl_modes_prefer"`
-	SourcePostgresSSLModesRequire          *SourcePostgresSSLModesRequire          `tfsdk:"source_postgres_ssl_modes_require"`
-	SourcePostgresSSLModesVerifyCa         *SourcePostgresSSLModesVerifyCa         `tfsdk:"source_postgres_ssl_modes_verify_ca"`
-	SourcePostgresSSLModesVerifyFull       *SourcePostgresSSLModesVerifyFull       `tfsdk:"source_postgres_ssl_modes_verify_full"`
-	SourcePostgresUpdateSSLModesAllow      *SourcePostgresUpdateSSLModesAllow      `tfsdk:"source_postgres_update_ssl_modes_allow"`
-	SourcePostgresUpdateSSLModesDisable    *SourcePostgresUpdateSSLModesDisable    `tfsdk:"source_postgres_update_ssl_modes_disable"`
-	SourcePostgresUpdateSSLModesPrefer     *SourcePostgresUpdateSSLModesPrefer     `tfsdk:"source_postgres_update_ssl_modes_prefer"`
-	SourcePostgresUpdateSSLModesRequire    *SourcePostgresUpdateSSLModesRequire    `tfsdk:"source_postgres_update_ssl_modes_require"`
-	SourcePostgresUpdateSSLModesVerifyCa   *SourcePostgresUpdateSSLModesVerifyCa   `tfsdk:"source_postgres_update_ssl_modes_verify_ca"`
-	SourcePostgresUpdateSSLModesVerifyFull *SourcePostgresUpdateSSLModesVerifyFull `tfsdk:"source_postgres_update_ssl_modes_verify_full"`
+	SourcePostgresSSLModesAllow            *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_ssl_modes_allow"`
+	SourcePostgresSSLModesDisable          *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_ssl_modes_disable"`
+	SourcePostgresSSLModesPrefer           *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_ssl_modes_prefer"`
+	SourcePostgresSSLModesRequire          *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_ssl_modes_require"`
+	SourcePostgresSSLModesVerifyCa         *SourceAlloydbSSLModesVerifyCa `tfsdk:"source_postgres_ssl_modes_verify_ca"`
+	SourcePostgresSSLModesVerifyFull       *SourceAlloydbSSLModesVerifyCa `tfsdk:"source_postgres_ssl_modes_verify_full"`
+	SourcePostgresUpdateSSLModesAllow      *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_update_ssl_modes_allow"`
+	SourcePostgresUpdateSSLModesDisable    *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_update_ssl_modes_disable"`
+	SourcePostgresUpdateSSLModesPrefer     *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_update_ssl_modes_prefer"`
+	SourcePostgresUpdateSSLModesRequire    *SourceAlloydbSSLModesAllow    `tfsdk:"source_postgres_update_ssl_modes_require"`
+	SourcePostgresUpdateSSLModesVerifyCa   *SourceAlloydbSSLModesVerifyCa `tfsdk:"source_postgres_update_ssl_modes_verify_ca"`
+	SourcePostgresUpdateSSLModesVerifyFull *SourceAlloydbSSLModesVerifyCa `tfsdk:"source_postgres_update_ssl_modes_verify_full"`
 }

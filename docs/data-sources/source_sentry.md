@@ -43,9 +43,9 @@ Read-Only:
 
 - `auth_token` (String) Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
 - `discover_fields` (List of String) Fields to retrieve when fetching discover events
-- `hostname` (String) Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.
+- `hostname` (String) Default: "sentry.io"
+Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.
 - `organization` (String) The slug of the organization the groups belong to.
 - `project` (String) The name (slug) of the Project you want to sync.
-- `source_type` (String) must be one of ["sentry"]
 
 

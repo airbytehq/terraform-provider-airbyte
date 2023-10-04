@@ -13,12 +13,10 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 	if r.Configuration.Credentials != nil {
 		var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
 		if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-			authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
 			clientID := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret.ValueString()
 			refreshToken := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken.ValueString()
 			sourceSquareAuthenticationOauthAuthentication = &shared.SourceSquareAuthenticationOauthAuthentication{
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -32,10 +30,8 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		var sourceSquareAuthenticationAPIKey *shared.SourceSquareAuthenticationAPIKey
 		if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
 			apiKey := r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.APIKey.ValueString()
-			authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
 			sourceSquareAuthenticationAPIKey = &shared.SourceSquareAuthenticationAPIKey{
-				APIKey:   apiKey,
-				AuthType: authType1,
+				APIKey: apiKey,
 			}
 		}
 		if sourceSquareAuthenticationAPIKey != nil {
@@ -50,8 +46,12 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 	} else {
 		includeDeletedObjects = nil
 	}
-	isSandbox := r.Configuration.IsSandbox.ValueBool()
-	sourceType := shared.SourceSquareSquare(r.Configuration.SourceType.ValueString())
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -62,7 +62,6 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		Credentials:           credentials,
 		IncludeDeletedObjects: includeDeletedObjects,
 		IsSandbox:             isSandbox,
-		SourceType:            sourceType,
 		StartDate:             startDate,
 	}
 	name := r.Name.ValueString()
@@ -92,12 +91,10 @@ func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutReq
 	if r.Configuration.Credentials != nil {
 		var sourceSquareUpdateAuthenticationOauthAuthentication *shared.SourceSquareUpdateAuthenticationOauthAuthentication
 		if r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
-			authType := shared.SourceSquareUpdateAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.AuthType.ValueString())
 			clientID := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientSecret.ValueString()
 			refreshToken := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.RefreshToken.ValueString()
 			sourceSquareUpdateAuthenticationOauthAuthentication = &shared.SourceSquareUpdateAuthenticationOauthAuthentication{
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -111,10 +108,8 @@ func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutReq
 		var sourceSquareUpdateAuthenticationAPIKey *shared.SourceSquareUpdateAuthenticationAPIKey
 		if r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey != nil {
 			apiKey := r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.APIKey.ValueString()
-			authType1 := shared.SourceSquareUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.AuthType.ValueString())
 			sourceSquareUpdateAuthenticationAPIKey = &shared.SourceSquareUpdateAuthenticationAPIKey{
-				APIKey:   apiKey,
-				AuthType: authType1,
+				APIKey: apiKey,
 			}
 		}
 		if sourceSquareUpdateAuthenticationAPIKey != nil {
@@ -129,7 +124,12 @@ func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutReq
 	} else {
 		includeDeletedObjects = nil
 	}
-	isSandbox := r.Configuration.IsSandbox.ValueBool()
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())

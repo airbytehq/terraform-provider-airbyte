@@ -18,18 +18,16 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
     credentials = {
       source_outbrain_amplify_authentication_method_access_token = {
         access_token = "...my_access_token..."
-        type         = "access_token"
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "subregion"
-    report_granularity     = "daily"
-    source_type            = "outbrain-amplify"
+    geo_location_breakdown = "country"
+    report_granularity     = "monthly"
     start_date             = "...my_start_date..."
   }
-  name         = "Cynthia Boyer"
+  name         = "Robin Ankunding"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2cd55cc0-584a-4184-976d-971fc820c65b"
+  workspace_id = "ab840e56-112c-41fd-a021-0a5cfbec2876"
 }
 ```
 
@@ -57,7 +55,6 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
 Required:
 
 - `credentials` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["outbrain-amplify"]
 - `start_date` (String) Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
 
 Optional:
@@ -84,7 +81,6 @@ Optional:
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_outbrain_amplify_authentication_method_username_password"></a>
@@ -93,7 +89,6 @@ Required:
 Required:
 
 - `password` (String) Add Password for authentication.
-- `type` (String) must be one of ["username_password"]
 - `username` (String) Add Username for authentication.
 
 
@@ -103,7 +98,6 @@ Required:
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_outbrain_amplify_update_authentication_method_username_password"></a>
@@ -112,7 +106,6 @@ Required:
 Required:
 
 - `password` (String) Add Password for authentication.
-- `type` (String) must be one of ["username_password"]
 - `username` (String) Add Username for authentication.
 
 

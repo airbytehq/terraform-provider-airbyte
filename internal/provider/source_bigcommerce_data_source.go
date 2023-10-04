@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,15 +53,6 @@ func (r *SourceBigcommerceDataSource) Schema(ctx context.Context, req datasource
 					"access_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `Access Token for making authenticated requests.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bigcommerce",
-							),
-						},
-						Description: `must be one of ["bigcommerce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

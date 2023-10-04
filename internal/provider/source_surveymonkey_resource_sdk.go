@@ -12,7 +12,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	var credentials *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		authMethod := shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod(r.Configuration.Credentials.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -27,7 +26,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 		}
 		credentials = &shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod{
 			AccessToken:  accessToken,
-			AuthMethod:   authMethod,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 		}
@@ -38,7 +36,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	} else {
 		origin = nil
 	}
-	sourceType := shared.SourceSurveymonkeySurveymonkey(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var surveyIds []string = nil
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
@@ -47,7 +44,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	configuration := shared.SourceSurveymonkey{
 		Credentials: credentials,
 		Origin:      origin,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 		SurveyIds:   surveyIds,
 	}
@@ -77,7 +73,6 @@ func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurvey
 	var credentials *shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		authMethod := shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethodAuthMethod(r.Configuration.Credentials.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -92,7 +87,6 @@ func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurvey
 		}
 		credentials = &shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod{
 			AccessToken:  accessToken,
-			AuthMethod:   authMethod,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 		}

@@ -9,10 +9,8 @@ import (
 
 func (r *SourceK6CloudResourceModel) ToCreateSDKType() *shared.SourceK6CloudCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceK6CloudK6Cloud(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceK6Cloud{
-		APIToken:   apiToken,
-		SourceType: sourceType,
+		APIToken: apiToken,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

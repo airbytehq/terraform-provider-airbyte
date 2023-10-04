@@ -47,7 +47,6 @@ Read-Only:
 Period of time (in days)
 - `share_type` (String) must be one of ["facebook"]
 Share Type
-- `source_type` (String) must be one of ["nytimes"]
 - `start_date` (String) Start date to begin the article retrieval (format YYYY-MM)
 
 

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -41,7 +42,57 @@ type SourceSnapchatMarketing struct {
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string                                   `json:"refresh_token"`
-	SourceType   SourceSnapchatMarketingSnapchatMarketing `json:"sourceType"`
+	sourceType   SourceSnapchatMarketingSnapchatMarketing `const:"snapchat-marketing" json:"sourceType"`
 	// Date in the format 2022-01-01. Any data before this date will not be replicated.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2022-01-01" json:"start_date"`
+}
+
+func (s SourceSnapchatMarketing) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSnapchatMarketing) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSnapchatMarketing) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSnapchatMarketing) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSnapchatMarketing) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceSnapchatMarketing) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceSnapchatMarketing) GetSourceType() SourceSnapchatMarketingSnapchatMarketing {
+	return SourceSnapchatMarketingSnapchatMarketingSnapchatMarketing
+}
+
+func (o *SourceSnapchatMarketing) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

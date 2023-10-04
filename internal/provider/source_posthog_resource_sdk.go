@@ -22,13 +22,11 @@ func (r *SourcePosthogResourceModel) ToCreateSDKType() *shared.SourcePosthogCrea
 	} else {
 		eventsTimeStep = nil
 	}
-	sourceType := shared.SourcePosthogPosthog(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePosthog{
 		APIKey:         apiKey,
 		BaseURL:        baseURL,
 		EventsTimeStep: eventsTimeStep,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()

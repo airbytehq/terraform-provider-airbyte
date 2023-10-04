@@ -7,3 +7,24 @@ type SourceAircallPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceAircallPutRequest) GetConfiguration() SourceAircallUpdate {
+	if o == nil {
+		return SourceAircallUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAircallPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAircallPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type DestinationConvex struct {
 	AccessKey string `json:"access_key"`
 	// URL of the Convex deployment that is the destination
 	DeploymentURL   string                  `json:"deployment_url"`
-	DestinationType DestinationConvexConvex `json:"destinationType"`
+	destinationType DestinationConvexConvex `const:"convex" json:"destinationType"`
+}
+
+func (d DestinationConvex) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationConvex) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationConvex) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *DestinationConvex) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
+}
+
+func (o *DestinationConvex) GetDestinationType() DestinationConvexConvex {
+	return DestinationConvexConvexConvex
 }

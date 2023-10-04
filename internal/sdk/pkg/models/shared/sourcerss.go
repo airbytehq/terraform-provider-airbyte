@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,7 +33,29 @@ func (e *SourceRssRss) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRss struct {
-	SourceType SourceRssRss `json:"sourceType"`
+	sourceType SourceRssRss `const:"rss" json:"sourceType"`
 	// RSS Feed URL
 	URL string `json:"url"`
+}
+
+func (s SourceRss) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRss) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRss) GetSourceType() SourceRssRss {
+	return SourceRssRssRss
+}
+
+func (o *SourceRss) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

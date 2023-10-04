@@ -44,6 +44,5 @@ Read-Only:
 - `api_key` (String) Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.
 - `begin_time` (String) ISO8601 timestamp from which the replication from Recurly API will start from.
 - `end_time` (String) ISO8601 timestamp to which the replication from Recurly API will stop. Records after that date won't be imported.
-- `source_type` (String) must be one of ["recurly"]
 
 

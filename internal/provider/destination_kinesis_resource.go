@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -58,17 +56,9 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 						Description: `Generate the AWS Access Key for current user.`,
 					},
 					"buffer_size": schema.Int64Attribute{
-						Required:    true,
-						Description: `Buffer size for storing kinesis records before being batch streamed.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kinesis",
-							),
-						},
-						Description: `must be one of ["kinesis"]`,
+						Optional: true,
+						MarkdownDescription: `Default: 100` + "\n" +
+							`Buffer size for storing kinesis records before being batch streamed.`,
 					},
 					"endpoint": schema.StringAttribute{
 						Required:    true,
@@ -83,8 +73,9 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 						Description: `AWS region. Your account determines the Regions that are available to you.`,
 					},
 					"shard_count": schema.Int64Attribute{
-						Required:    true,
-						Description: `Number of shards to which the data should be streamed.`,
+						Optional: true,
+						MarkdownDescription: `Default: 5` + "\n" +
+							`Number of shards to which the data should be streamed.`,
 					},
 				},
 			},
@@ -154,7 +145,7 @@ func (r *DestinationKinesisResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationKinesis(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -39,11 +40,57 @@ type SourceAmplitudeUpdate struct {
 	// Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 	APIKey string `json:"api_key"`
 	// Amplitude data region server
-	DataRegion *SourceAmplitudeUpdateDataRegion `json:"data_region,omitempty"`
+	DataRegion *SourceAmplitudeUpdateDataRegion `default:"Standard Server" json:"data_region"`
 	// According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
-	RequestTimeRange *int64 `json:"request_time_range,omitempty"`
+	RequestTimeRange *int64 `default:"24" json:"request_time_range"`
 	// Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 	SecretKey string `json:"secret_key"`
 	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceAmplitudeUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmplitudeUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmplitudeUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceAmplitudeUpdate) GetDataRegion() *SourceAmplitudeUpdateDataRegion {
+	if o == nil {
+		return nil
+	}
+	return o.DataRegion
+}
+
+func (o *SourceAmplitudeUpdate) GetRequestTimeRange() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestTimeRange
+}
+
+func (o *SourceAmplitudeUpdate) GetSecretKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretKey
+}
+
+func (o *SourceAmplitudeUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

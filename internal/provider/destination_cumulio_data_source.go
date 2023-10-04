@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -52,8 +50,9 @@ func (r *DestinationCumulioDataSource) Schema(ctx context.Context, req datasourc
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"api_host": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.`,
+						Computed: true,
+						MarkdownDescription: `Default: "https://api.cumul.io"` + "\n" +
+							`URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.`,
 					},
 					"api_key": schema.StringAttribute{
 						Computed:    true,
@@ -62,15 +61,6 @@ func (r *DestinationCumulioDataSource) Schema(ctx context.Context, req datasourc
 					"api_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"cumulio",
-							),
-						},
-						Description: `must be one of ["cumulio"]`,
 					},
 				},
 			},

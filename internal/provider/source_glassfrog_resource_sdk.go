@@ -9,10 +9,8 @@ import (
 
 func (r *SourceGlassfrogResourceModel) ToCreateSDKType() *shared.SourceGlassfrogCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGlassfrogGlassfrog(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGlassfrog{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

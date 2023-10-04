@@ -43,7 +43,6 @@ Read-Only:
 
 - `client_id` (String) Client ID (client_id)
 - `secret_key` (String) Secret key (secret_key)
-- `source_type` (String) must be one of ["railz"]
 - `start_date` (String) Start date
 
 

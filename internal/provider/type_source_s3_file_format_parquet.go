@@ -8,5 +8,4 @@ type SourceS3FileFormatParquet struct {
 	BatchSize  types.Int64    `tfsdk:"batch_size"`
 	BufferSize types.Int64    `tfsdk:"buffer_size"`
 	Columns    []types.String `tfsdk:"columns"`
-	Filetype   types.String   `tfsdk:"filetype"`
 }

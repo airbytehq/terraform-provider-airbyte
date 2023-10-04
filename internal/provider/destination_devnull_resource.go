@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -54,46 +53,17 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dev-null",
-							),
-						},
-						Description: `must be one of ["dev-null"]`,
-					},
 					"test_destination": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_dev_null_test_destination_silent": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"test_destination_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SILENT",
-											),
-										},
-										Description: `must be one of ["SILENT"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `The type of destination to be used`,
 							},
 							"destination_dev_null_update_test_destination_silent": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"test_destination_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SILENT",
-											),
-										},
-										Description: `must be one of ["SILENT"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `The type of destination to be used`,
 							},
 						},
@@ -170,7 +140,7 @@ func (r *DestinationDevNullResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationDevNull(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

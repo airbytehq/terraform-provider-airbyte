@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,9 +36,31 @@ func (e *SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthType) UnmarshalJSON(
 
 // SourceTrustpilotUpdateAuthorizationMethodAPIKey - The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.
 type SourceTrustpilotUpdateAuthorizationMethodAPIKey struct {
-	AuthType *SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthType `json:"auth_type,omitempty"`
+	authType *SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthType `const:"apikey" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application.
 	ClientID string `json:"client_id"`
+}
+
+func (s SourceTrustpilotUpdateAuthorizationMethodAPIKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTrustpilotUpdateAuthorizationMethodAPIKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodAPIKey) GetAuthType() *SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthType {
+	return SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthTypeApikey.ToPointer()
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodAPIKey) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
 }
 
 type SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType string
@@ -68,7 +90,7 @@ func (e *SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType) UnmarshalJSON
 type SourceTrustpilotUpdateAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                                    `json:"access_token"`
-	AuthType    *SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	authType    *SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application. (represents the OAuth Client ID)
 	ClientID string `json:"client_id"`
 	// The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
@@ -77,6 +99,56 @@ type SourceTrustpilotUpdateAuthorizationMethodOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
 	TokenExpiryDate time.Time `json:"token_expiry_date"`
+}
+
+func (s SourceTrustpilotUpdateAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTrustpilotUpdateAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodOAuth20) GetAuthType() *SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType {
+	return SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceTrustpilotUpdateAuthorizationMethodOAuth20) GetTokenExpiryDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceTrustpilotUpdateAuthorizationMethodType string
@@ -112,21 +184,16 @@ func CreateSourceTrustpilotUpdateAuthorizationMethodSourceTrustpilotUpdateAuthor
 }
 
 func (u *SourceTrustpilotUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceTrustpilotUpdateAuthorizationMethodAPIKey := new(SourceTrustpilotUpdateAuthorizationMethodAPIKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTrustpilotUpdateAuthorizationMethodAPIKey); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceTrustpilotUpdateAuthorizationMethodAPIKey, "", true, true); err == nil {
 		u.SourceTrustpilotUpdateAuthorizationMethodAPIKey = sourceTrustpilotUpdateAuthorizationMethodAPIKey
 		u.Type = SourceTrustpilotUpdateAuthorizationMethodTypeSourceTrustpilotUpdateAuthorizationMethodAPIKey
 		return nil
 	}
 
 	sourceTrustpilotUpdateAuthorizationMethodOAuth20 := new(SourceTrustpilotUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTrustpilotUpdateAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceTrustpilotUpdateAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceTrustpilotUpdateAuthorizationMethodOAuth20 = sourceTrustpilotUpdateAuthorizationMethodOAuth20
 		u.Type = SourceTrustpilotUpdateAuthorizationMethodTypeSourceTrustpilotUpdateAuthorizationMethodOAuth20
 		return nil
@@ -136,15 +203,15 @@ func (u *SourceTrustpilotUpdateAuthorizationMethod) UnmarshalJSON(data []byte) e
 }
 
 func (u SourceTrustpilotUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTrustpilotUpdateAuthorizationMethodAPIKey != nil {
-		return json.Marshal(u.SourceTrustpilotUpdateAuthorizationMethodAPIKey)
-	}
-
 	if u.SourceTrustpilotUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTrustpilotUpdateAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceTrustpilotUpdateAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceTrustpilotUpdateAuthorizationMethodAPIKey != nil {
+		return utils.MarshalJSON(u.SourceTrustpilotUpdateAuthorizationMethodAPIKey, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceTrustpilotUpdate struct {
@@ -153,4 +220,25 @@ type SourceTrustpilotUpdate struct {
 	Credentials   SourceTrustpilotUpdateAuthorizationMethod `json:"credentials"`
 	// For streams with sync. method incremental the start date time to be used
 	StartDate string `json:"start_date"`
+}
+
+func (o *SourceTrustpilotUpdate) GetBusinessUnits() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.BusinessUnits
+}
+
+func (o *SourceTrustpilotUpdate) GetCredentials() SourceTrustpilotUpdateAuthorizationMethod {
+	if o == nil {
+		return SourceTrustpilotUpdateAuthorizationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceTrustpilotUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

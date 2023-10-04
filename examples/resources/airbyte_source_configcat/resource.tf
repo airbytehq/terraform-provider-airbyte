@@ -1,10 +1,9 @@
 resource "airbyte_source_configcat" "my_source_configcat" {
   configuration = {
-    password    = "...my_password..."
-    source_type = "configcat"
-    username    = "Art_Wiegand"
+    password = "...my_password..."
+    username = "Uriah_MacGyver16"
   }
-  name         = "Lowell Oberbrunner"
+  name         = "Crystal Mueller"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5a60a04c-495c-4c69-9171-b51c1bdb1cf4"
+  workspace_id = "7597e801-e676-489a-86f3-96c7c6bf7372"
 }

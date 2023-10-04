@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,59 +36,48 @@ func (e *SourceZendeskSupportAuthenticationAPITokenCredentials) UnmarshalJSON(da
 
 // SourceZendeskSupportAuthenticationAPIToken - Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 type SourceZendeskSupportAuthenticationAPIToken struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.
 	APIToken    string                                                 `json:"api_token"`
-	Credentials *SourceZendeskSupportAuthenticationAPITokenCredentials `json:"credentials,omitempty"`
+	credentials *SourceZendeskSupportAuthenticationAPITokenCredentials `const:"api_token" json:"credentials,omitempty"`
 	// The user email for your Zendesk account.
 	Email string `json:"email"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourceZendeskSupportAuthenticationAPIToken SourceZendeskSupportAuthenticationAPIToken
 
-func (c *SourceZendeskSupportAuthenticationAPIToken) UnmarshalJSON(bs []byte) error {
-	data := _SourceZendeskSupportAuthenticationAPIToken{}
+func (s SourceZendeskSupportAuthenticationAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceZendeskSupportAuthenticationAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceZendeskSupportAuthenticationAPIToken(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "api_token")
-	delete(additionalFields, "credentials")
-	delete(additionalFields, "email")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceZendeskSupportAuthenticationAPIToken) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceZendeskSupportAuthenticationAPIToken(c))
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationAPIToken) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
 	}
+	return o.APIToken
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationAPIToken) GetCredentials() *SourceZendeskSupportAuthenticationAPITokenCredentials {
+	return SourceZendeskSupportAuthenticationAPITokenCredentialsAPIToken.ToPointer()
+}
+
+func (o *SourceZendeskSupportAuthenticationAPIToken) GetEmail() string {
+	if o == nil {
+		return ""
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.Email
 }
 
 type SourceZendeskSupportAuthenticationOAuth20Credentials string
@@ -117,62 +106,57 @@ func (e *SourceZendeskSupportAuthenticationOAuth20Credentials) UnmarshalJSON(dat
 
 // SourceZendeskSupportAuthenticationOAuth20 - Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 type SourceZendeskSupportAuthenticationOAuth20 struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
 	AccessToken string `json:"access_token"`
 	// The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 	ClientID *string `json:"client_id,omitempty"`
 	// The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 	ClientSecret *string                                               `json:"client_secret,omitempty"`
-	Credentials  *SourceZendeskSupportAuthenticationOAuth20Credentials `json:"credentials,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
+	credentials  *SourceZendeskSupportAuthenticationOAuth20Credentials `const:"oauth2.0" json:"credentials,omitempty"`
 }
-type _SourceZendeskSupportAuthenticationOAuth20 SourceZendeskSupportAuthenticationOAuth20
 
-func (c *SourceZendeskSupportAuthenticationOAuth20) UnmarshalJSON(bs []byte) error {
-	data := _SourceZendeskSupportAuthenticationOAuth20{}
+func (s SourceZendeskSupportAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceZendeskSupportAuthenticationOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceZendeskSupportAuthenticationOAuth20(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "access_token")
-	delete(additionalFields, "client_id")
-	delete(additionalFields, "client_secret")
-	delete(additionalFields, "credentials")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceZendeskSupportAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceZendeskSupportAuthenticationOAuth20(c))
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationOAuth20) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
 	}
+	return o.AccessToken
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
 	}
+	return o.ClientID
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceZendeskSupportAuthenticationOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
 	}
+	return o.ClientSecret
+}
 
-	return json.Marshal(out)
+func (o *SourceZendeskSupportAuthenticationOAuth20) GetCredentials() *SourceZendeskSupportAuthenticationOAuth20Credentials {
+	return SourceZendeskSupportAuthenticationOAuth20CredentialsOauth20.ToPointer()
 }
 
 type SourceZendeskSupportAuthenticationType string
@@ -208,21 +192,16 @@ func CreateSourceZendeskSupportAuthenticationSourceZendeskSupportAuthenticationA
 }
 
 func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceZendeskSupportAuthenticationAPIToken := new(SourceZendeskSupportAuthenticationAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSupportAuthenticationAPIToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportAuthenticationAPIToken, "", true, true); err == nil {
 		u.SourceZendeskSupportAuthenticationAPIToken = sourceZendeskSupportAuthenticationAPIToken
 		u.Type = SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAuthenticationAPIToken
 		return nil
 	}
 
 	sourceZendeskSupportAuthenticationOAuth20 := new(SourceZendeskSupportAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSupportAuthenticationOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportAuthenticationOAuth20, "", true, true); err == nil {
 		u.SourceZendeskSupportAuthenticationOAuth20 = sourceZendeskSupportAuthenticationOAuth20
 		u.Type = SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAuthenticationOAuth20
 		return nil
@@ -232,15 +211,15 @@ func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceZendeskSupportAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskSupportAuthenticationAPIToken != nil {
-		return json.Marshal(u.SourceZendeskSupportAuthenticationAPIToken)
-	}
-
 	if u.SourceZendeskSupportAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskSupportAuthenticationOAuth20)
+		return utils.MarshalJSON(u.SourceZendeskSupportAuthenticationOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceZendeskSupportAuthenticationAPIToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskSupportAuthenticationAPIToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceZendeskSupportZendeskSupport string
@@ -271,10 +250,53 @@ type SourceZendeskSupport struct {
 	// Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 	Credentials *SourceZendeskSupportAuthentication `json:"credentials,omitempty"`
 	// Makes each stream read a single page of data.
-	IgnorePagination *bool                              `json:"ignore_pagination,omitempty"`
-	SourceType       SourceZendeskSupportZendeskSupport `json:"sourceType"`
+	IgnorePagination *bool                              `default:"false" json:"ignore_pagination"`
+	sourceType       SourceZendeskSupportZendeskSupport `const:"zendesk-support" json:"sourceType"`
 	// The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
 	Subdomain string `json:"subdomain"`
+}
+
+func (s SourceZendeskSupport) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskSupport) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskSupport) GetCredentials() *SourceZendeskSupportAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceZendeskSupport) GetIgnorePagination() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IgnorePagination
+}
+
+func (o *SourceZendeskSupport) GetSourceType() SourceZendeskSupportZendeskSupport {
+	return SourceZendeskSupportZendeskSupportZendeskSupport
+}
+
+func (o *SourceZendeskSupport) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceZendeskSupport) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }

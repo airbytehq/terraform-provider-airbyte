@@ -42,6 +42,5 @@ data "airbyte_source_appfollow" "my_source_appfollow" {
 Read-Only:
 
 - `api_secret` (String) API Key provided by Appfollow
-- `source_type` (String) must be one of ["appfollow"]
 
 

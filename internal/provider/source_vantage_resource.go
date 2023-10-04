@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -34,12 +32,12 @@ type SourceVantageResource struct {
 
 // SourceVantageResourceModel describes the resource data model.
 type SourceVantageResourceModel struct {
-	Configuration SourceVantage `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceAuth0AuthenticationMethodOAuth2AccessToken `tfsdk:"configuration"`
+	Name          types.String                                     `tfsdk:"name"`
+	SecretID      types.String                                     `tfsdk:"secret_id"`
+	SourceID      types.String                                     `tfsdk:"source_id"`
+	SourceType    types.String                                     `tfsdk:"source_type"`
+	WorkspaceID   types.String                                     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceVantageResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,15 +55,6 @@ func (r *SourceVantageResource) Schema(ctx context.Context, req resource.SchemaR
 					"access_token": schema.StringAttribute{
 						Required:    true,
 						Description: `Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"vantage",
-							),
-						},
-						Description: `must be one of ["vantage"]`,
 					},
 				},
 			},
@@ -139,7 +128,7 @@ func (r *SourceVantageResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceVantage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,29 +60,20 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 							"source_zendesk_talk_authentication_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
-									"email": schema.StringAttribute{
-										Required:    true,
-										Description: `The user email for your Zendesk account.`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
 										Description: `Parsed as JSON.`,
+									},
+									"api_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
+									},
+									"email": schema.StringAttribute{
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
@@ -95,14 +85,12 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										Required:    true,
 										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
 									},
-									"auth_type": schema.StringAttribute{
+									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
+											validators.IsValidJSON(),
 										},
-										Description: `must be one of ["oauth2.0"]`,
+										Description: `Parsed as JSON.`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -111,13 +99,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
 										Description: `Client Secret`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
@@ -125,23 +106,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 							"source_zendesk_talk_update_authentication_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
-									"email": schema.StringAttribute{
-										Required:    true,
-										Description: `The user email for your Zendesk account.`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -149,24 +113,30 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										},
 										Description: `Parsed as JSON.`,
 									},
+									"api_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
+									},
+									"email": schema.StringAttribute{
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
+									},
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
 							},
 							"source_zendesk_talk_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -175,13 +145,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
 										Description: `Client Secret`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
@@ -191,15 +154,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 							validators.ExactlyOneChild(),
 						},
 						Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-talk",
-							),
-						},
-						Description: `must be one of ["zendesk-talk"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -284,7 +238,7 @@ func (r *SourceZendeskTalkResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceZendeskTalk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

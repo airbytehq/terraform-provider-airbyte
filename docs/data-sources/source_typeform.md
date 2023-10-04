@@ -43,7 +43,6 @@ Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `form_ids` (List of String) When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
-- `source_type` (String) must be one of ["typeform"]
 - `start_date` (String) The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -62,7 +61,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of the Typeform developer application.
 - `client_secret` (String) The Client Secret the Typeform developer application.
 - `refresh_token` (String) The key to refresh the expired access_token.
@@ -75,7 +73,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
-- `auth_type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_typeform_update_authorization_method_o_auth2_0"></a>
@@ -84,7 +81,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of the Typeform developer application.
 - `client_secret` (String) The Client Secret the Typeform developer application.
 - `refresh_token` (String) The key to refresh the expired access_token.
@@ -97,6 +93,5 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
-- `auth_type` (String) must be one of ["access_token"]
 
 

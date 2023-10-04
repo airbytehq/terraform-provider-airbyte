@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -39,7 +40,50 @@ type SourceWoocommerce struct {
 	APISecret string `json:"api_secret"`
 	// The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
 	Shop       string                       `json:"shop"`
-	SourceType SourceWoocommerceWoocommerce `json:"sourceType"`
+	sourceType SourceWoocommerceWoocommerce `const:"woocommerce" json:"sourceType"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceWoocommerce) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWoocommerce) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceWoocommerce) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceWoocommerce) GetAPISecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.APISecret
+}
+
+func (o *SourceWoocommerce) GetShop() string {
+	if o == nil {
+		return ""
+	}
+	return o.Shop
+}
+
+func (o *SourceWoocommerce) GetSourceType() SourceWoocommerceWoocommerce {
+	return SourceWoocommerceWoocommerceWoocommerce
+}
+
+func (o *SourceWoocommerce) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

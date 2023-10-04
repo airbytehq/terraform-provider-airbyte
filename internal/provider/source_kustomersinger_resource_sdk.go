@@ -9,12 +9,10 @@ import (
 
 func (r *SourceKustomerSingerResourceModel) ToCreateSDKType() *shared.SourceKustomerSingerCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceKustomerSingerKustomerSinger(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceKustomerSinger{
-		APIToken:   apiToken,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIToken:  apiToken,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

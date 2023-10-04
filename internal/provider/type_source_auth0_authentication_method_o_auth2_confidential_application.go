@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication struct {
 	Audience     types.String `tfsdk:"audience"`
-	AuthType     types.String `tfsdk:"auth_type"`
 	ClientID     types.String `tfsdk:"client_id"`
 	ClientSecret types.String `tfsdk:"client_secret"`
 }

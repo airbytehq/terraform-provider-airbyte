@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -77,15 +76,6 @@ func (r *SourceXeroDataSource) Schema(ctx context.Context, req datasource.Schema
 								Description: `The date-time when the access token should be refreshed`,
 							},
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"xero",
-							),
-						},
-						Description: `must be one of ["xero"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

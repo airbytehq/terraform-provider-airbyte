@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance struct {
-	Host     types.String `tfsdk:"host"`
-	Instance types.String `tfsdk:"instance"`
-	Port     types.Int64  `tfsdk:"port"`
+	Host types.String `tfsdk:"host"`
+	Port types.Int64  `tfsdk:"port"`
 }

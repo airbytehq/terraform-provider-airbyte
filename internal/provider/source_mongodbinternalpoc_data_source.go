@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -53,8 +51,9 @@ func (r *SourceMongodbInternalPocDataSource) Schema(ctx context.Context, req dat
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_source": schema.StringAttribute{
-						Computed:    true,
-						Description: `The authentication source where the user information is stored.`,
+						Computed: true,
+						MarkdownDescription: `Default: "admin"` + "\n" +
+							`The authentication source where the user information is stored.`,
 					},
 					"connection_string": schema.StringAttribute{
 						Computed:    true,
@@ -67,15 +66,6 @@ func (r *SourceMongodbInternalPocDataSource) Schema(ctx context.Context, req dat
 					"replica_set": schema.StringAttribute{
 						Computed:    true,
 						Description: `The name of the replica set to be replicated.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mongodb-internal-poc",
-							),
-						},
-						Description: `must be one of ["mongodb-internal-poc"]`,
 					},
 					"user": schema.StringAttribute{
 						Computed:    true,

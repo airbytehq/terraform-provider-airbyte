@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -37,8 +38,51 @@ type SourceYounium struct {
 	// Account password for younium account API key
 	Password string `json:"password"`
 	// Property defining if connector is used against playground or production environment
-	Playground *bool                `json:"playground,omitempty"`
-	SourceType SourceYouniumYounium `json:"sourceType"`
+	Playground *bool                `default:"false" json:"playground"`
+	sourceType SourceYouniumYounium `const:"younium" json:"sourceType"`
 	// Username for Younium account
 	Username string `json:"username"`
+}
+
+func (s SourceYounium) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceYounium) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceYounium) GetLegalEntity() string {
+	if o == nil {
+		return ""
+	}
+	return o.LegalEntity
+}
+
+func (o *SourceYounium) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceYounium) GetPlayground() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Playground
+}
+
+func (o *SourceYounium) GetSourceType() SourceYouniumYounium {
+	return SourceYouniumYouniumYounium
+}
+
+func (o *SourceYounium) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

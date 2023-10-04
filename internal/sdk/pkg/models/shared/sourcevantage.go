@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceVantageVantage) UnmarshalJSON(data []byte) error {
 type SourceVantage struct {
 	// Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
 	AccessToken string               `json:"access_token"`
-	SourceType  SourceVantageVantage `json:"sourceType"`
+	sourceType  SourceVantageVantage `const:"vantage" json:"sourceType"`
+}
+
+func (s SourceVantage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceVantage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceVantage) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceVantage) GetSourceType() SourceVantageVantage {
+	return SourceVantageVantageVantage
 }

@@ -1,25 +1,23 @@
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      1,
+      6,
     ]
     ad_analytics_reports = [
       {
-        name             = "Kara Rohan"
-        pivot_by         = "MEMBER_REGION_V2"
-        time_granularity = "MONTHLY"
+        name             = "Cary Bernier"
+        pivot_by         = "CAMPAIGN"
+        time_granularity = "YEARLY"
       },
     ]
     credentials = {
       source_linkedin_ads_authentication_access_token = {
         access_token = "...my_access_token..."
-        auth_method  = "access_token"
       }
     }
-    source_type = "linkedin-ads"
-    start_date  = "2021-05-17"
+    start_date = "2021-05-17"
   }
-  name         = "Elsa Adams"
+  name         = "Jonathon Huels"
   secret_id    = "...my_secret_id..."
-  workspace_id = "930b69f7-ac2f-472f-8850-090491160820"
+  workspace_id = "ff332bdf-1457-475f-8bb8-1a7466bf78b3"
 }

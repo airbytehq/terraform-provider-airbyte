@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -63,13 +63,56 @@ type DestinationClickhouseSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (d DestinationClickhouseSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationClickhouseSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -104,11 +147,54 @@ type DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (d DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -139,7 +225,22 @@ func (e *DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON
 // DestinationClickhouseSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationClickhouseSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationClickhouseSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationClickhouseSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationClickhouseSSHTunnelMethodNoTunnel) GetTunnelMethod() DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethod {
+	return DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type DestinationClickhouseSSHTunnelMethodType string
@@ -186,30 +287,23 @@ func CreateDestinationClickhouseSSHTunnelMethodDestinationClickhouseSSHTunnelMet
 }
 
 func (u *DestinationClickhouseSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationClickhouseSSHTunnelMethodNoTunnel := new(DestinationClickhouseSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationClickhouseSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationClickhouseSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.DestinationClickhouseSSHTunnelMethodNoTunnel = destinationClickhouseSSHTunnelMethodNoTunnel
 		u.Type = DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	destinationClickhouseSSHTunnelMethodSSHKeyAuthentication := new(DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationClickhouseSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationClickhouseSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication = destinationClickhouseSSHTunnelMethodSSHKeyAuthentication
 		u.Type = DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	destinationClickhouseSSHTunnelMethodPasswordAuthentication := new(DestinationClickhouseSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationClickhouseSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationClickhouseSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.DestinationClickhouseSSHTunnelMethodPasswordAuthentication = destinationClickhouseSSHTunnelMethodPasswordAuthentication
 		u.Type = DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -220,24 +314,24 @@ func (u *DestinationClickhouseSSHTunnelMethod) UnmarshalJSON(data []byte) error 
 
 func (u DestinationClickhouseSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationClickhouseSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationClickhouseSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.DestinationClickhouseSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.DestinationClickhouseSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationClickhouseSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.DestinationClickhouseSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationClickhouse struct {
 	// Name of the database.
 	Database        string                          `json:"database"`
-	DestinationType DestinationClickhouseClickhouse `json:"destinationType"`
+	destinationType DestinationClickhouseClickhouse `const:"clickhouse" json:"destinationType"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -245,9 +339,73 @@ type DestinationClickhouse struct {
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// HTTP port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"8123" json:"port"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationClickhouseSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationClickhouse) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationClickhouse) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationClickhouse) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationClickhouse) GetDestinationType() DestinationClickhouseClickhouse {
+	return DestinationClickhouseClickhouseClickhouse
+}
+
+func (o *DestinationClickhouse) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationClickhouse) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationClickhouse) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationClickhouse) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationClickhouse) GetTunnelMethod() *DestinationClickhouseSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationClickhouse) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

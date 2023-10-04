@@ -42,7 +42,6 @@ data "airbyte_source_salesloft" "my_source_salesloft" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["salesloft"]
 - `start_date` (String) The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -61,7 +60,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
-- `auth_type` (String) must be one of ["api_key"]
 
 
 <a id="nestedatt--configuration--credentials--source_salesloft_credentials_authenticate_via_o_auth"></a>
@@ -70,7 +68,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your Salesloft developer application.
 - `client_secret` (String) The Client Secret of your Salesloft developer application.
 - `refresh_token` (String) The token for obtaining a new access token.
@@ -83,7 +80,6 @@ Read-Only:
 Read-Only:
 
 - `api_key` (String) API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
-- `auth_type` (String) must be one of ["api_key"]
 
 
 <a id="nestedatt--configuration--credentials--source_salesloft_update_credentials_authenticate_via_o_auth"></a>
@@ -92,7 +88,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your Salesloft developer application.
 - `client_secret` (String) The Client Secret of your Salesloft developer application.
 - `refresh_token` (String) The token for obtaining a new access token.

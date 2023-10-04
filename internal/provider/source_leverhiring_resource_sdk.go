@@ -12,12 +12,6 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 	if r.Configuration.Credentials != nil {
 		var sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth *shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth
 		if r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
-			authType := new(shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthType)
-			if !r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType.IsNull() {
-				*authType = shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuthAuthType(r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID.ValueString()
@@ -32,7 +26,6 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 			}
 			refreshToken := r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth.RefreshToken.ValueString()
 			sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth = &shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth{
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -46,15 +39,8 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 		var sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey *shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey
 		if r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
 			apiKey := r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.APIKey.ValueString()
-			authType1 := new(shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType)
-			if !r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType.IsNull() {
-				*authType1 = shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType(r.Configuration.Credentials.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey = &shared.SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey{
-				APIKey:   apiKey,
-				AuthType: authType1,
+				APIKey: apiKey,
 			}
 		}
 		if sourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
@@ -69,12 +55,10 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 	} else {
 		environment = nil
 	}
-	sourceType := shared.SourceLeverHiringLeverHiring(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceLeverHiring{
 		Credentials: credentials,
 		Environment: environment,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -104,12 +88,6 @@ func (r *SourceLeverHiringResourceModel) ToUpdateSDKType() *shared.SourceLeverHi
 	if r.Configuration.Credentials != nil {
 		var sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth *shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth
 		if r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
-			authType := new(shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuthAuthType)
-			if !r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType.IsNull() {
-				*authType = shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuthAuthType(r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.ClientID.ValueString()
@@ -124,7 +102,6 @@ func (r *SourceLeverHiringResourceModel) ToUpdateSDKType() *shared.SourceLeverHi
 			}
 			refreshToken := r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth.RefreshToken.ValueString()
 			sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth = &shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth{
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -138,15 +115,8 @@ func (r *SourceLeverHiringResourceModel) ToUpdateSDKType() *shared.SourceLeverHi
 		var sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey *shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey
 		if r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
 			apiKey := r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey.APIKey.ValueString()
-			authType1 := new(shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType)
-			if !r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType.IsNull() {
-				*authType1 = shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKeyAuthType(r.Configuration.Credentials.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey = &shared.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey{
-				APIKey:   apiKey,
-				AuthType: authType1,
+				APIKey: apiKey,
 			}
 		}
 		if sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {

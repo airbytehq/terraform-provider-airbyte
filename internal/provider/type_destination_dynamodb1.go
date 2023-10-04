@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationDynamodb1 struct {
 	AccessKeyID             types.String `tfsdk:"access_key_id"`
-	DestinationType         types.String `tfsdk:"destination_type"`
 	DynamodbEndpoint        types.String `tfsdk:"dynamodb_endpoint"`
 	DynamodbRegion          types.String `tfsdk:"dynamodb_region"`
 	DynamodbTableNamePrefix types.String `tfsdk:"dynamodb_table_name_prefix"`

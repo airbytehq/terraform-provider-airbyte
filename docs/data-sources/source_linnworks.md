@@ -43,7 +43,6 @@ Read-Only:
 
 - `application_id` (String) Linnworks Application ID
 - `application_secret` (String) Linnworks Application Secret
-- `source_type` (String) must be one of ["linnworks"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `token` (String)
 

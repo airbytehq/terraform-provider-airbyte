@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,15 +57,6 @@ func (r *SourceFreshsalesDataSource) Schema(ctx context.Context, req datasource.
 					"domain_name": schema.StringAttribute{
 						Computed:    true,
 						Description: `The Name of your Freshsales domain`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"freshsales",
-							),
-						},
-						Description: `must be one of ["freshsales"]`,
 					},
 				},
 			},

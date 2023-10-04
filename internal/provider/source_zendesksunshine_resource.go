@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
@@ -86,15 +76,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Long-term access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -113,15 +94,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
@@ -134,15 +106,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Long-term access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -158,15 +121,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-sunshine",
-							),
-						},
-						Description: `must be one of ["zendesk-sunshine"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -251,7 +205,7 @@ func (r *SourceZendeskSunshineResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceZendeskSunshine(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

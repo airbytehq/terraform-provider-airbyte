@@ -38,6 +38,5 @@ Read-Only:
 
 - `api_key` (String) API Key to connect.
 - `db_url` (String) URL pointing to your workspace.
-- `destination_type` (String) must be one of ["xata"]
 
 

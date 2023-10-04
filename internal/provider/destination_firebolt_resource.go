@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -62,15 +61,6 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 						Required:    true,
 						Description: `The database to connect to.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"firebolt",
-							),
-						},
-						Description: `must be one of ["firebolt"]`,
-					},
 					"engine": schema.StringAttribute{
 						Optional:    true,
 						Description: `Engine name or url to connect to.`,
@@ -93,15 +83,6 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 										Required:    true,
 										Description: `Corresponding secret part of the AWS Key`,
 									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-										Description: `must be one of ["S3"]`,
-									},
 									"s3_bucket": schema.StringAttribute{
 										Required:    true,
 										Description: `The name of the S3 bucket.`,
@@ -114,18 +95,8 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 							"destination_firebolt_loading_method_sql_inserts": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SQL",
-											),
-										},
-										Description: `must be one of ["SQL"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 							"destination_firebolt_update_loading_method_external_table_via_s3": schema.SingleNestedAttribute{
@@ -139,15 +110,6 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 										Required:    true,
 										Description: `Corresponding secret part of the AWS Key`,
 									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-										Description: `must be one of ["S3"]`,
-									},
 									"s3_bucket": schema.StringAttribute{
 										Required:    true,
 										Description: `The name of the S3 bucket.`,
@@ -160,18 +122,8 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 							"destination_firebolt_update_loading_method_sql_inserts": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SQL",
-											),
-										},
-										Description: `must be one of ["SQL"]`,
-									},
-								},
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 						},
@@ -256,7 +208,7 @@ func (r *DestinationFireboltResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationFirebolt(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

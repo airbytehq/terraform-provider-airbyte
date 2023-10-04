@@ -14,7 +14,6 @@ type SourceS3 struct {
 	PathPattern        types.String                    `tfsdk:"path_pattern"`
 	Provider           *SourceS3S3AmazonWebServices    `tfsdk:"provider"`
 	Schema             types.String                    `tfsdk:"schema"`
-	SourceType         types.String                    `tfsdk:"source_type"`
 	StartDate          types.String                    `tfsdk:"start_date"`
 	Streams            []SourceS3FileBasedStreamConfig `tfsdk:"streams"`
 }

@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -39,8 +39,30 @@ func (e *SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode) UnmarshalJS
 // Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaUpdateCollectionDeletionModeEnabled struct {
 	// Name of the "deleted at" column.
-	Column       string                                                     `json:"column"`
-	DeletionMode SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode `json:"deletion_mode"`
+	Column       *string                                                    `default:"deleted_at" json:"column"`
+	deletionMode SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode `const:"deleted_field" json:"deletion_mode"`
+}
+
+func (s SourceFaunaUpdateCollectionDeletionModeEnabled) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFaunaUpdateCollectionDeletionModeEnabled) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFaunaUpdateCollectionDeletionModeEnabled) GetColumn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Column
+}
+
+func (o *SourceFaunaUpdateCollectionDeletionModeEnabled) GetDeletionMode() SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode {
+	return SourceFaunaUpdateCollectionDeletionModeEnabledDeletionModeDeletedField
 }
 
 type SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode string
@@ -72,7 +94,22 @@ func (e *SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode) UnmarshalJ
 // Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 // Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaUpdateCollectionDeletionModeDisabled struct {
-	DeletionMode SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode `json:"deletion_mode"`
+	deletionMode SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode `const:"ignore" json:"deletion_mode"`
+}
+
+func (s SourceFaunaUpdateCollectionDeletionModeDisabled) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFaunaUpdateCollectionDeletionModeDisabled) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFaunaUpdateCollectionDeletionModeDisabled) GetDeletionMode() SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode {
+	return SourceFaunaUpdateCollectionDeletionModeDisabledDeletionModeIgnore
 }
 
 type SourceFaunaUpdateCollectionDeletionModeType string
@@ -108,21 +145,16 @@ func CreateSourceFaunaUpdateCollectionDeletionModeSourceFaunaUpdateCollectionDel
 }
 
 func (u *SourceFaunaUpdateCollectionDeletionMode) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceFaunaUpdateCollectionDeletionModeDisabled := new(SourceFaunaUpdateCollectionDeletionModeDisabled)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFaunaUpdateCollectionDeletionModeDisabled); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceFaunaUpdateCollectionDeletionModeDisabled, "", true, true); err == nil {
 		u.SourceFaunaUpdateCollectionDeletionModeDisabled = sourceFaunaUpdateCollectionDeletionModeDisabled
 		u.Type = SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeDisabled
 		return nil
 	}
 
 	sourceFaunaUpdateCollectionDeletionModeEnabled := new(SourceFaunaUpdateCollectionDeletionModeEnabled)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFaunaUpdateCollectionDeletionModeEnabled); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceFaunaUpdateCollectionDeletionModeEnabled, "", true, true); err == nil {
 		u.SourceFaunaUpdateCollectionDeletionModeEnabled = sourceFaunaUpdateCollectionDeletionModeEnabled
 		u.Type = SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeEnabled
 		return nil
@@ -133,14 +165,14 @@ func (u *SourceFaunaUpdateCollectionDeletionMode) UnmarshalJSON(data []byte) err
 
 func (u SourceFaunaUpdateCollectionDeletionMode) MarshalJSON() ([]byte, error) {
 	if u.SourceFaunaUpdateCollectionDeletionModeDisabled != nil {
-		return json.Marshal(u.SourceFaunaUpdateCollectionDeletionModeDisabled)
+		return utils.MarshalJSON(u.SourceFaunaUpdateCollectionDeletionModeDisabled, "", true)
 	}
 
 	if u.SourceFaunaUpdateCollectionDeletionModeEnabled != nil {
-		return json.Marshal(u.SourceFaunaUpdateCollectionDeletionModeEnabled)
+		return utils.MarshalJSON(u.SourceFaunaUpdateCollectionDeletionModeEnabled, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceFaunaUpdateCollection - Settings for the Fauna Collection.
@@ -153,18 +185,89 @@ type SourceFaunaUpdateCollection struct {
 	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
 	// Choose your page size based on how large the documents are. <br>
 	// See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
-	PageSize int64 `json:"page_size"`
+	PageSize *int64 `default:"64" json:"page_size"`
+}
+
+func (s SourceFaunaUpdateCollection) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFaunaUpdateCollection) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFaunaUpdateCollection) GetDeletions() SourceFaunaUpdateCollectionDeletionMode {
+	if o == nil {
+		return SourceFaunaUpdateCollectionDeletionMode{}
+	}
+	return o.Deletions
+}
+
+func (o *SourceFaunaUpdateCollection) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
 }
 
 type SourceFaunaUpdate struct {
 	// Settings for the Fauna Collection.
 	Collection *SourceFaunaUpdateCollection `json:"collection,omitempty"`
 	// Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
-	Domain string `json:"domain"`
+	Domain *string `default:"db.fauna.com" json:"domain"`
 	// Endpoint port.
-	Port int64 `json:"port"`
+	Port *int64 `default:"443" json:"port"`
 	// URL scheme.
-	Scheme string `json:"scheme"`
+	Scheme *string `default:"https" json:"scheme"`
 	// Fauna secret, used when authenticating with the database.
 	Secret string `json:"secret"`
+}
+
+func (s SourceFaunaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFaunaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFaunaUpdate) GetCollection() *SourceFaunaUpdateCollection {
+	if o == nil {
+		return nil
+	}
+	return o.Collection
+}
+
+func (o *SourceFaunaUpdate) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourceFaunaUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceFaunaUpdate) GetScheme() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Scheme
+}
+
+func (o *SourceFaunaUpdate) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
 }

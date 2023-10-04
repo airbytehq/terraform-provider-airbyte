@@ -7,3 +7,24 @@ type SourceLinnworksPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceLinnworksPutRequest) GetConfiguration() SourceLinnworksUpdate {
+	if o == nil {
+		return SourceLinnworksUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLinnworksPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLinnworksPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

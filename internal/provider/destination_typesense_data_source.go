@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -58,15 +56,6 @@ func (r *DestinationTypesenseDataSource) Schema(ctx context.Context, req datasou
 					"batch_size": schema.Int64Attribute{
 						Computed:    true,
 						Description: `How many documents should be imported together. Default 1000`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"typesense",
-							),
-						},
-						Description: `must be one of ["typesense"]`,
 					},
 					"host": schema.StringAttribute{
 						Computed:    true,

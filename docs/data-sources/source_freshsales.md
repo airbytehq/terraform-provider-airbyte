@@ -43,6 +43,5 @@ Read-Only:
 
 - `api_key` (String) Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
 - `domain_name` (String) The Name of your Freshsales domain
-- `source_type` (String) must be one of ["freshsales"]
 
 

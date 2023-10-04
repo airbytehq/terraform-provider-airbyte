@@ -56,8 +56,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Optional:    true,
-						Description: ` A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.`,
+						Optional: true,
+						MarkdownDescription: `Default: 5` + "\n" +
+							` A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -69,30 +70,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 										Required:    true,
 										Description: `Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.`,
 									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Project Secret",
-											),
-										},
-										Description: `must be one of ["Project Secret"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service Account",
-											),
-										},
-										Description: `must be one of ["Service Account"]`,
-									},
 									"secret": schema.StringAttribute{
 										Required:    true,
 										Description: `Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
@@ -111,30 +94,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 										Required:    true,
 										Description: `Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.`,
 									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Project Secret",
-											),
-										},
-										Description: `must be one of ["Project Secret"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_update_authentication_wildcard_service_account": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service Account",
-											),
-										},
-										Description: `must be one of ["Service Account"]`,
-									},
 									"secret": schema.StringAttribute{
 										Required:    true,
 										Description: `Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
@@ -153,8 +118,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Choose how to authenticate to Mixpanel`,
 					},
 					"date_window_size": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.`,
+						Optional: true,
+						MarkdownDescription: `Default: 30` + "\n" +
+							`Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
@@ -168,8 +134,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.`,
 					},
 					"project_timezone": schema.StringAttribute{
-						Optional:    true,
-						Description: `Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.`,
+						Optional: true,
+						MarkdownDescription: `Default: "US/Pacific"` + "\n" +
+							`Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.`,
 					},
 					"region": schema.StringAttribute{
 						Optional: true,
@@ -179,21 +146,13 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								"EU",
 							),
 						},
-						MarkdownDescription: `must be one of ["US", "EU"]` + "\n" +
+						MarkdownDescription: `must be one of ["US", "EU"]; Default: "US"` + "\n" +
 							`The region of mixpanel domain instance either US or EU.`,
 					},
 					"select_properties_by_default": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.`,
-					},
-					"source_type": schema.StringAttribute{
 						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mixpanel",
-							),
-						},
-						Description: `must be one of ["mixpanel"]`,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -274,7 +233,7 @@ func (r *SourceMixpanelResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMixpanel(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

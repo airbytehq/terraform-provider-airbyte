@@ -7,3 +7,24 @@ type SourceHubspotPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceHubspotPutRequest) GetConfiguration() SourceHubspotUpdate {
+	if o == nil {
+		return SourceHubspotUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceHubspotPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceHubspotPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

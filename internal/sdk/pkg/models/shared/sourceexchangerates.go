@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,8 +39,51 @@ type SourceExchangeRates struct {
 	// ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR
 	Base *string `json:"base,omitempty"`
 	// Ignore weekends? (Exchanges don't run on weekends)
-	IgnoreWeekends *bool                            `json:"ignore_weekends,omitempty"`
-	SourceType     SourceExchangeRatesExchangeRates `json:"sourceType"`
+	IgnoreWeekends *bool                            `default:"true" json:"ignore_weekends"`
+	sourceType     SourceExchangeRatesExchangeRates `const:"exchange-rates" json:"sourceType"`
 	// Start getting data from that date.
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceExchangeRates) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceExchangeRates) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceExchangeRates) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *SourceExchangeRates) GetBase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Base
+}
+
+func (o *SourceExchangeRates) GetIgnoreWeekends() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IgnoreWeekends
+}
+
+func (o *SourceExchangeRates) GetSourceType() SourceExchangeRatesExchangeRates {
+	return SourceExchangeRatesExchangeRatesExchangeRates
+}
+
+func (o *SourceExchangeRates) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

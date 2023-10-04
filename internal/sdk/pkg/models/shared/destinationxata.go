@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type DestinationXata struct {
 	APIKey string `json:"api_key"`
 	// URL pointing to your workspace.
 	DbURL           string              `json:"db_url"`
-	DestinationType DestinationXataXata `json:"destinationType"`
+	destinationType DestinationXataXata `const:"xata" json:"destinationType"`
+}
+
+func (d DestinationXata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationXata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationXata) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationXata) GetDbURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DbURL
+}
+
+func (o *DestinationXata) GetDestinationType() DestinationXataXata {
+	return DestinationXataXataXata
 }

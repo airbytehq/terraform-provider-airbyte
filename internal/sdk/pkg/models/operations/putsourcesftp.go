@@ -12,8 +12,46 @@ type PutSourceSftpRequest struct {
 	SourceID             string                       `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceSftpRequest) GetSourceSftpPutRequest() *shared.SourceSftpPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceSftpPutRequest
+}
+
+func (o *PutSourceSftpRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceSftpResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceSftpResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceSftpResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceSftpResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

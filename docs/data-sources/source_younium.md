@@ -43,8 +43,8 @@ Read-Only:
 
 - `legal_entity` (String) Legal Entity that data should be pulled from
 - `password` (String) Account password for younium account API key
-- `playground` (Boolean) Property defining if connector is used against playground or production environment
-- `source_type` (String) must be one of ["younium"]
+- `playground` (Boolean) Default: false
+Property defining if connector is used against playground or production environment
 - `username` (String) Username for Younium account
 
 

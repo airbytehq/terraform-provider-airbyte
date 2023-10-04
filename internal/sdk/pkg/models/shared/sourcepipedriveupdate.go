@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -35,11 +36,58 @@ func (e *SourcePipedriveUpdateAPIKeyAuthenticationAuthType) UnmarshalJSON(data [
 type SourcePipedriveUpdateAPIKeyAuthentication struct {
 	// The Pipedrive API Token.
 	APIToken string                                            `json:"api_token"`
-	AuthType SourcePipedriveUpdateAPIKeyAuthenticationAuthType `json:"auth_type"`
+	authType SourcePipedriveUpdateAPIKeyAuthenticationAuthType `const:"Token" json:"auth_type"`
+}
+
+func (s SourcePipedriveUpdateAPIKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedriveUpdateAPIKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedriveUpdateAPIKeyAuthentication) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourcePipedriveUpdateAPIKeyAuthentication) GetAuthType() SourcePipedriveUpdateAPIKeyAuthenticationAuthType {
+	return SourcePipedriveUpdateAPIKeyAuthenticationAuthTypeToken
 }
 
 type SourcePipedriveUpdate struct {
 	Authorization *SourcePipedriveUpdateAPIKeyAuthentication `json:"authorization,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
 	ReplicationStartDate time.Time `json:"replication_start_date"`
+}
+
+func (s SourcePipedriveUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedriveUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedriveUpdate) GetAuthorization() *SourcePipedriveUpdateAPIKeyAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Authorization
+}
+
+func (o *SourcePipedriveUpdate) GetReplicationStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ReplicationStartDate
 }

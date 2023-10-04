@@ -87,7 +87,7 @@ func (r *SourceZohoCrmDataSource) Schema(ctx context.Context, req datasource.Sch
 								"Ultimate",
 							),
 						},
-						MarkdownDescription: `must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]` + "\n" +
+						MarkdownDescription: `must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]; Default: "Free"` + "\n" +
 							`Choose your Edition of Zoho CRM to determine API Concurrency Limits`,
 					},
 					"environment": schema.StringAttribute{
@@ -105,15 +105,6 @@ func (r *SourceZohoCrmDataSource) Schema(ctx context.Context, req datasource.Sch
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `OAuth2.0 Refresh Token`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zoho-crm",
-							),
-						},
-						Description: `must be one of ["zoho-crm"]`,
 					},
 					"start_datetime": schema.StringAttribute{
 						Computed: true,

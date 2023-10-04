@@ -57,8 +57,9 @@ func (r *SourceKlarnaDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)`,
 					},
 					"playground": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Propertie defining if connector is used against playground or production environment`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Propertie defining if connector is used against playground or production environment`,
 					},
 					"region": schema.StringAttribute{
 						Computed: true,
@@ -71,15 +72,6 @@ func (r *SourceKlarnaDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						MarkdownDescription: `must be one of ["eu", "us", "oc"]` + "\n" +
 							`Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"klarna",
-							),
-						},
-						Description: `must be one of ["klarna"]`,
 					},
 					"username": schema.StringAttribute{
 						Computed:    true,

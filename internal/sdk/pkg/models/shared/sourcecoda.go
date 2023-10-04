@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceCodaCoda) UnmarshalJSON(data []byte) error {
 type SourceCoda struct {
 	// Bearer token
 	AuthToken  string         `json:"auth_token"`
-	SourceType SourceCodaCoda `json:"sourceType"`
+	sourceType SourceCodaCoda `const:"coda" json:"sourceType"`
+}
+
+func (s SourceCoda) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceCoda) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceCoda) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceCoda) GetSourceType() SourceCodaCoda {
+	return SourceCodaCodaCoda
 }

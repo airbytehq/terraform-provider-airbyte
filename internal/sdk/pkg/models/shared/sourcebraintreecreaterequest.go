@@ -9,3 +9,31 @@ type SourceBraintreeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceBraintreeCreateRequest) GetConfiguration() SourceBraintree {
+	if o == nil {
+		return SourceBraintree{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBraintreeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBraintreeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceBraintreeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

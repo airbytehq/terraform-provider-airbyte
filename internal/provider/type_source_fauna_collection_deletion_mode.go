@@ -3,8 +3,8 @@
 package provider
 
 type SourceFaunaCollectionDeletionMode struct {
-	SourceFaunaCollectionDeletionModeDisabled       *SourceFaunaCollectionDeletionModeDisabled `tfsdk:"source_fauna_collection_deletion_mode_disabled"`
-	SourceFaunaCollectionDeletionModeEnabled        *SourceFaunaCollectionDeletionModeEnabled  `tfsdk:"source_fauna_collection_deletion_mode_enabled"`
-	SourceFaunaUpdateCollectionDeletionModeDisabled *SourceFaunaCollectionDeletionModeDisabled `tfsdk:"source_fauna_update_collection_deletion_mode_disabled"`
-	SourceFaunaUpdateCollectionDeletionModeEnabled  *SourceFaunaCollectionDeletionModeEnabled  `tfsdk:"source_fauna_update_collection_deletion_mode_enabled"`
+	SourceFaunaCollectionDeletionModeDisabled       *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_fauna_collection_deletion_mode_disabled"`
+	SourceFaunaCollectionDeletionModeEnabled        *SourceFaunaCollectionDeletionModeEnabled                             `tfsdk:"source_fauna_collection_deletion_mode_enabled"`
+	SourceFaunaUpdateCollectionDeletionModeDisabled *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_fauna_update_collection_deletion_mode_disabled"`
+	SourceFaunaUpdateCollectionDeletionModeEnabled  *SourceFaunaCollectionDeletionModeEnabled                             `tfsdk:"source_fauna_update_collection_deletion_mode_enabled"`
 }

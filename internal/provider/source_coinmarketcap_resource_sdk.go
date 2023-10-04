@@ -10,16 +10,14 @@ import (
 func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinmarketcapCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.SourceCoinmarketcapDataType(r.Configuration.DataType.ValueString())
-	sourceType := shared.SourceCoinmarketcapCoinmarketcap(r.Configuration.SourceType.ValueString())
 	var symbols []string = nil
 	for _, symbolsItem := range r.Configuration.Symbols {
 		symbols = append(symbols, symbolsItem.ValueString())
 	}
 	configuration := shared.SourceCoinmarketcap{
-		APIKey:     apiKey,
-		DataType:   dataType,
-		SourceType: sourceType,
-		Symbols:    symbols,
+		APIKey:   apiKey,
+		DataType: dataType,
+		Symbols:  symbols,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

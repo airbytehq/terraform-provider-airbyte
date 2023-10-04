@@ -12,8 +12,46 @@ type PutSourceGoogleAnalyticsV4Request struct {
 	SourceID                          string                                    `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceGoogleAnalyticsV4Request) GetSourceGoogleAnalyticsV4PutRequest() *shared.SourceGoogleAnalyticsV4PutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceGoogleAnalyticsV4PutRequest
+}
+
+func (o *PutSourceGoogleAnalyticsV4Request) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceGoogleAnalyticsV4Response struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceGoogleAnalyticsV4Response) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceGoogleAnalyticsV4Response) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceGoogleAnalyticsV4Response) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

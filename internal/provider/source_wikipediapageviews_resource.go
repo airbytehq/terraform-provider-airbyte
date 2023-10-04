@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -77,15 +75,6 @@ func (r *SourceWikipediaPageviewsResource) Schema(ctx context.Context, req resou
 					"project": schema.StringAttribute{
 						Required:    true,
 						Description: `If you want to filter by project, use the domain of any Wikimedia project.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"wikipedia-pageviews",
-							),
-						},
-						Description: `must be one of ["wikipedia-pageviews"]`,
 					},
 					"start": schema.StringAttribute{
 						Required:    true,
@@ -163,7 +152,7 @@ func (r *SourceWikipediaPageviewsResource) Create(ctx context.Context, req resou
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceWikipediaPageviews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

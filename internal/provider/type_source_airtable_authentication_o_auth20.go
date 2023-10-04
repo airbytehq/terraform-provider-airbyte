@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAirtableAuthenticationOAuth20 struct {
 	AccessToken     types.String `tfsdk:"access_token"`
-	AuthMethod      types.String `tfsdk:"auth_method"`
 	ClientID        types.String `tfsdk:"client_id"`
 	ClientSecret    types.String `tfsdk:"client_secret"`
 	RefreshToken    types.String `tfsdk:"refresh_token"`

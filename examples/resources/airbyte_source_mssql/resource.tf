@@ -6,30 +6,24 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     password        = "...my_password..."
     port            = 1433
     replication_method = {
-      source_mssql_update_method_read_changes_using_change_data_capture_cdc_ = {
-        data_to_sync            = "New Changes Only"
-        initial_waiting_seconds = 7
-        method                  = "CDC"
+      source_mssql_update_method_read_changes_using_change_data_capture_cdc = {
+        data_to_sync            = "Existing and New"
+        initial_waiting_seconds = 0
         snapshot_isolation      = "Snapshot"
       }
     }
     schemas = [
       "...",
     ]
-    source_type = "mssql"
     ssl_method = {
-      source_mssql_ssl_method_encrypted_trust_server_certificate_ = {
-        ssl_method = "encrypted_trust_server_certificate"
-      }
+      source_mssql_ssl_method_encrypted_trust_server_certificate = {}
     }
     tunnel_method = {
-      source_mssql_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      source_mssql_ssh_tunnel_method_no_tunnel = {}
     }
-    username = "Bobbie60"
+    username = "Jaylon.Block"
   }
-  name         = "Clarence Murazik"
+  name         = "Mercedes Abernathy"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1ef5725f-1169-4ac1-a41d-8a23c23e34f2"
+  workspace_id = "f4b5e4c1-9596-4433-a1d5-1484aac586d0"
 }

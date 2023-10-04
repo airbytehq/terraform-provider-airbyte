@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,21 +57,13 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Your My Hours username`,
 					},
 					"logs_batch_size": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Pagination size used for retrieving logs in days`,
+						Optional: true,
+						MarkdownDescription: `Default: 30` + "\n" +
+							`Pagination size used for retrieving logs in days`,
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
 						Description: `The password associated to the username`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"my-hours",
-							),
-						},
-						Description: `must be one of ["my-hours"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -151,7 +141,7 @@ func (r *SourceMyHoursResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMyHours(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

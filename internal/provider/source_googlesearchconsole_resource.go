@@ -65,15 +65,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										Optional:    true,
 										Description: `Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
@@ -91,15 +82,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The email of the user which has permissions to access the Google Workspace Admin APIs.`,
@@ -116,15 +98,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 									"access_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -143,15 +116,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 							"source_google_search_console_update_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The email of the user which has permissions to access the Google Workspace Admin APIs.`,
@@ -196,7 +160,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								"all",
 							),
 						},
-						MarkdownDescription: `must be one of ["final", "all"]` + "\n" +
+						MarkdownDescription: `must be one of ["final", "all"]; Default: "final"` + "\n" +
 							`If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.`,
 					},
 					"end_date": schema.StringAttribute{
@@ -211,21 +175,13 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						ElementType: types.StringType,
 						Description: `The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-search-console",
-							),
-						},
-						Description: `must be one of ["google-search-console"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
+						MarkdownDescription: `Default: "2021-01-01"` + "\n" +
+							`UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -299,7 +255,7 @@ func (r *SourceGoogleSearchConsoleResource) Create(ctx context.Context, req reso
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGoogleSearchConsole(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

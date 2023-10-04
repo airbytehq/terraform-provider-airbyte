@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,15 +60,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -88,15 +78,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -119,15 +100,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -146,15 +118,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -183,15 +146,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 					"period": schema.StringAttribute{
 						Required:    true,
 						Description: `Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"microsoft-teams",
-							),
-						},
-						Description: `must be one of ["microsoft-teams"]`,
 					},
 				},
 			},
@@ -265,7 +219,7 @@ func (r *SourceMicrosoftTeamsResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMicrosoftTeams(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

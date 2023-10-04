@@ -43,6 +43,5 @@ Read-Only:
 
 - `access_key` (String) API access key used to retrieve data from Convex.
 - `deployment_url` (String)
-- `source_type` (String) must be one of ["convex"]
 
 

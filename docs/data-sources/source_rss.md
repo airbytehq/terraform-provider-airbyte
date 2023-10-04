@@ -41,7 +41,6 @@ data "airbyte_source_rss" "my_source_rss" {
 
 Read-Only:
 
-- `source_type` (String) must be one of ["rss"]
 - `url` (String) RSS Feed URL
 
 

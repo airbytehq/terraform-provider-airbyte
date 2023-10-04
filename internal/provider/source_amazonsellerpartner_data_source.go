@@ -56,15 +56,6 @@ func (r *SourceAmazonSellerPartnerDataSource) Schema(ctx context.Context, req da
 						Computed:    true,
 						Description: `Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.`,
 					},
-					"auth_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
 					"aws_access_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Specifies the AWS access key used as part of the credentials to authenticate the user.`,
@@ -77,7 +68,7 @@ func (r *SourceAmazonSellerPartnerDataSource) Schema(ctx context.Context, req da
 								"SANDBOX",
 							),
 						},
-						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]` + "\n" +
+						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"` + "\n" +
 							`Select the AWS Environment.`,
 					},
 					"aws_secret_key": schema.StringAttribute{
@@ -93,12 +84,14 @@ func (r *SourceAmazonSellerPartnerDataSource) Schema(ctx context.Context, req da
 						Description: `Your Login with Amazon Client Secret.`,
 					},
 					"max_wait_seconds": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.`,
+						Computed: true,
+						MarkdownDescription: `Default: 500` + "\n" +
+							`Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.`,
 					},
 					"period_in_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
+						Computed: true,
+						MarkdownDescription: `Default: 90` + "\n" +
+							`Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,
@@ -132,7 +125,7 @@ func (r *SourceAmazonSellerPartnerDataSource) Schema(ctx context.Context, req da
 								"US",
 							),
 						},
-						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]` + "\n" +
+						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"` + "\n" +
 							`Select the AWS Region.`,
 					},
 					"replication_end_date": schema.StringAttribute{
@@ -150,15 +143,6 @@ func (r *SourceAmazonSellerPartnerDataSource) Schema(ctx context.Context, req da
 					"role_arn": schema.StringAttribute{
 						Computed:    true,
 						Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-seller-partner",
-							),
-						},
-						Description: `must be one of ["amazon-seller-partner"]`,
 					},
 				},
 			},

@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,11 +35,43 @@ func (e *DestinationGcsUpdateAuthenticationHMACKeyCredentialType) UnmarshalJSON(
 
 // DestinationGcsUpdateAuthenticationHMACKey - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type DestinationGcsUpdateAuthenticationHMACKey struct {
-	CredentialType DestinationGcsUpdateAuthenticationHMACKeyCredentialType `json:"credential_type"`
+	CredentialType *DestinationGcsUpdateAuthenticationHMACKeyCredentialType `default:"HMAC_KEY" json:"credential_type"`
 	// When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.
 	HmacKeyAccessID string `json:"hmac_key_access_id"`
 	// The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.
 	HmacKeySecret string `json:"hmac_key_secret"`
+}
+
+func (d DestinationGcsUpdateAuthenticationHMACKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateAuthenticationHMACKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateAuthenticationHMACKey) GetCredentialType() *DestinationGcsUpdateAuthenticationHMACKeyCredentialType {
+	if o == nil {
+		return nil
+	}
+	return o.CredentialType
+}
+
+func (o *DestinationGcsUpdateAuthenticationHMACKey) GetHmacKeyAccessID() string {
+	if o == nil {
+		return ""
+	}
+	return o.HmacKeyAccessID
+}
+
+func (o *DestinationGcsUpdateAuthenticationHMACKey) GetHmacKeySecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.HmacKeySecret
 }
 
 type DestinationGcsUpdateAuthenticationType string
@@ -64,12 +96,9 @@ func CreateDestinationGcsUpdateAuthenticationDestinationGcsUpdateAuthenticationH
 }
 
 func (u *DestinationGcsUpdateAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationGcsUpdateAuthenticationHMACKey := new(DestinationGcsUpdateAuthenticationHMACKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateAuthenticationHMACKey); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateAuthenticationHMACKey, "", true, true); err == nil {
 		u.DestinationGcsUpdateAuthenticationHMACKey = destinationGcsUpdateAuthenticationHMACKey
 		u.Type = DestinationGcsUpdateAuthenticationTypeDestinationGcsUpdateAuthenticationHMACKey
 		return nil
@@ -80,10 +109,10 @@ func (u *DestinationGcsUpdateAuthentication) UnmarshalJSON(data []byte) error {
 
 func (u DestinationGcsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 	if u.DestinationGcsUpdateAuthenticationHMACKey != nil {
-		return json.Marshal(u.DestinationGcsUpdateAuthenticationHMACKey)
+		return utils.MarshalJSON(u.DestinationGcsUpdateAuthenticationHMACKey, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec - The compression algorithm used to compress data pages.
@@ -156,18 +185,78 @@ func (e *DestinationGcsUpdateOutputFormatParquetColumnarStorageFormatType) Unmar
 // DestinationGcsUpdateOutputFormatParquetColumnarStorage - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type DestinationGcsUpdateOutputFormatParquetColumnarStorage struct {
 	// This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
-	BlockSizeMb *int64 `json:"block_size_mb,omitempty"`
+	BlockSizeMb *int64 `default:"128" json:"block_size_mb"`
 	// The compression algorithm used to compress data pages.
-	CompressionCodec *DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec `json:"compression_codec,omitempty"`
+	CompressionCodec *DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec `default:"UNCOMPRESSED" json:"compression_codec"`
 	// Default: true.
-	DictionaryEncoding *bool `json:"dictionary_encoding,omitempty"`
+	DictionaryEncoding *bool `default:"true" json:"dictionary_encoding"`
 	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-	DictionaryPageSizeKb *int64                                                           `json:"dictionary_page_size_kb,omitempty"`
-	FormatType           DestinationGcsUpdateOutputFormatParquetColumnarStorageFormatType `json:"format_type"`
+	DictionaryPageSizeKb *int64                                                            `default:"1024" json:"dictionary_page_size_kb"`
+	FormatType           *DestinationGcsUpdateOutputFormatParquetColumnarStorageFormatType `default:"Parquet" json:"format_type"`
 	// Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
-	MaxPaddingSizeMb *int64 `json:"max_padding_size_mb,omitempty"`
+	MaxPaddingSizeMb *int64 `default:"8" json:"max_padding_size_mb"`
 	// The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
-	PageSizeKb *int64 `json:"page_size_kb,omitempty"`
+	PageSizeKb *int64 `default:"1024" json:"page_size_kb"`
+}
+
+func (d DestinationGcsUpdateOutputFormatParquetColumnarStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatParquetColumnarStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetBlockSizeMb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BlockSizeMb
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetCompressionCodec() *DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionCodec
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetDictionaryEncoding() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DictionaryEncoding
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetDictionaryPageSizeKb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DictionaryPageSizeKb
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetFormatType() *DestinationGcsUpdateOutputFormatParquetColumnarStorageFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetMaxPaddingSizeMb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxPaddingSizeMb
+}
+
+func (o *DestinationGcsUpdateOutputFormatParquetColumnarStorage) GetPageSizeKb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSizeKb
 }
 
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType string
@@ -196,7 +285,25 @@ func (e *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressio
 
 // DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP struct {
-	CompressionType *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `default:"GZIP" json:"compression_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) GetCompressionType() *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
 }
 
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType string
@@ -225,7 +332,25 @@ func (e *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressio
 
 // DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression struct {
-	CompressionType *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `default:"No Compression" json:"compression_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) GetCompressionType() *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
 }
 
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionType string
@@ -261,21 +386,16 @@ func CreateDestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompress
 }
 
 func (u *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression := new(DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
 		u.Type = DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP := new(DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
 		u.Type = DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
 		return nil
@@ -286,14 +406,14 @@ func (u *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressio
 
 func (u DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression) MarshalJSON() ([]byte, error) {
 	if u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType string
@@ -324,7 +444,32 @@ func (e *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType
 type DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
-	FormatType  DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType   `json:"format_type"`
+	FormatType  *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType  `default:"JSONL" json:"format_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON) GetCompression() *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType string
@@ -353,7 +498,25 @@ func (e *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPC
 
 // DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP struct {
-	CompressionType *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType `default:"GZIP" json:"compression_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP) GetCompressionType() *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
 }
 
 type DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType string
@@ -382,7 +545,25 @@ func (e *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCom
 
 // DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression struct {
-	CompressionType *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType `default:"No Compression" json:"compression_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression) GetCompressionType() *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
 }
 
 type DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionType string
@@ -418,21 +599,16 @@ func CreateDestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionDes
 }
 
 func (u *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression := new(DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
 		u.Type = DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP := new(DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP = destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP
 		u.Type = DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP
 		return nil
@@ -443,14 +619,14 @@ func (u *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression) Unm
 
 func (u DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression) MarshalJSON() ([]byte, error) {
 	if u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
@@ -510,8 +686,40 @@ type DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 	Compression *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression `json:"compression,omitempty"`
 	// Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-	Flattening *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization `json:"flattening,omitempty"`
-	FormatType DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesFormatType     `json:"format_type"`
+	Flattening *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization `default:"No flattening" json:"flattening"`
+	FormatType *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesFormatType    `default:"CSV" json:"format_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues) GetCompression() *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues) GetFlattening() *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization {
+	if o == nil {
+		return nil
+	}
+	return o.Flattening
+}
+
+func (o *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues) GetFormatType() *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec string
@@ -540,7 +748,25 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCod
 
 // DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy struct {
-	Codec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec `json:"codec"`
+	Codec *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec `default:"snappy" json:"codec"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy) GetCodec() *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec string
@@ -569,11 +795,43 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard
 
 // DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard struct {
-	Codec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec `json:"codec"`
+	Codec *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec `default:"zstandard" json:"codec"`
 	// Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
-	CompressionLevel *int64 `json:"compression_level,omitempty"`
+	CompressionLevel *int64 `default:"3" json:"compression_level"`
 	// If true, include a checksum with each data block.
-	IncludeChecksum *bool `json:"include_checksum,omitempty"`
+	IncludeChecksum *bool `default:"false" json:"include_checksum"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard) GetCodec() *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard) GetCompressionLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionLevel
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard) GetIncludeChecksum() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeChecksum
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec string
@@ -602,9 +860,34 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec) 
 
 // DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz struct {
-	Codec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec `json:"codec"`
+	Codec *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec `default:"xz" json:"codec"`
 	// The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
-	CompressionLevel *int64 `json:"compression_level,omitempty"`
+	CompressionLevel *int64 `default:"6" json:"compression_level"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz) GetCodec() *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz) GetCompressionLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionLevel
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec string
@@ -633,7 +916,25 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Code
 
 // DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 struct {
-	Codec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec `json:"codec"`
+	Codec *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec `default:"bzip2" json:"codec"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2) GetCodec() *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec string
@@ -662,9 +963,34 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCo
 
 // DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate struct {
-	Codec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec `json:"codec"`
+	Codec *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec `default:"Deflate" json:"codec"`
 	// 0: no compression & fastest, 9: best compression & slowest.
-	CompressionLevel *int64 `json:"compression_level,omitempty"`
+	CompressionLevel *int64 `default:"0" json:"compression_level"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate) GetCodec() *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate) GetCompressionLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionLevel
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec string
@@ -693,7 +1019,25 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompres
 
 // DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression struct {
-	Codec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec `json:"codec"`
+	Codec *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec `default:"no compression" json:"codec"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression) GetCodec() *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecType string
@@ -773,57 +1117,44 @@ func CreateDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDestina
 }
 
 func (u *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard
 		return nil
@@ -834,30 +1165,30 @@ func (u *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) Unmarsh
 
 func (u DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) MarshalJSON() ([]byte, error) {
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression)
-	}
-
-	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2)
-	}
-
-	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate, "", true)
+	}
+
+	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard, "", true)
 	}
 
-	return nil, nil
+	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType string
@@ -888,7 +1219,32 @@ func (e *DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType) UnmarshalJSON
 type DestinationGcsUpdateOutputFormatAvroApacheAvro struct {
 	// The compression algorithm used to compress data. Default to no compression.
 	CompressionCodec DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec `json:"compression_codec"`
-	FormatType       DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType       `json:"format_type"`
+	FormatType       *DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType      `default:"Avro" json:"format_type"`
+}
+
+func (d DestinationGcsUpdateOutputFormatAvroApacheAvro) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdateOutputFormatAvroApacheAvro) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvro) GetCompressionCodec() DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec {
+	if o == nil {
+		return DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec{}
+	}
+	return o.CompressionCodec
+}
+
+func (o *DestinationGcsUpdateOutputFormatAvroApacheAvro) GetFormatType() *DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationGcsUpdateOutputFormatType string
@@ -946,39 +1302,30 @@ func CreateDestinationGcsUpdateOutputFormatDestinationGcsUpdateOutputFormatParqu
 }
 
 func (u *DestinationGcsUpdateOutputFormat) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationGcsUpdateOutputFormatAvroApacheAvro := new(DestinationGcsUpdateOutputFormatAvroApacheAvro)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvro); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatAvroApacheAvro, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvro = destinationGcsUpdateOutputFormatAvroApacheAvro
 		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatAvroApacheAvro
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON := new(DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON = destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON
 		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatCSVCommaSeparatedValues := new(DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatCSVCommaSeparatedValues); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatCSVCommaSeparatedValues, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues = destinationGcsUpdateOutputFormatCSVCommaSeparatedValues
 		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatCSVCommaSeparatedValues
 		return nil
 	}
 
 	destinationGcsUpdateOutputFormatParquetColumnarStorage := new(DestinationGcsUpdateOutputFormatParquetColumnarStorage)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatParquetColumnarStorage); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationGcsUpdateOutputFormatParquetColumnarStorage, "", true, true); err == nil {
 		u.DestinationGcsUpdateOutputFormatParquetColumnarStorage = destinationGcsUpdateOutputFormatParquetColumnarStorage
 		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatParquetColumnarStorage
 		return nil
@@ -989,22 +1336,22 @@ func (u *DestinationGcsUpdateOutputFormat) UnmarshalJSON(data []byte) error {
 
 func (u DestinationGcsUpdateOutputFormat) MarshalJSON() ([]byte, error) {
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvro != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvro)
-	}
-
-	if u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatAvroApacheAvro, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues, "", true)
+	}
+
+	if u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatParquetColumnarStorage != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatParquetColumnarStorage)
+		return utils.MarshalJSON(u.DestinationGcsUpdateOutputFormatParquetColumnarStorage, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationGCSUpdateGCSBucketRegion - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
@@ -1144,5 +1491,51 @@ type DestinationGcsUpdate struct {
 	// GCS Bucket Path string Subdirectory under the above bucket to sync the data into.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-	GcsBucketRegion *DestinationGCSUpdateGCSBucketRegion `json:"gcs_bucket_region,omitempty"`
+	GcsBucketRegion *DestinationGCSUpdateGCSBucketRegion `default:"us" json:"gcs_bucket_region"`
+}
+
+func (d DestinationGcsUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGcsUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGcsUpdate) GetCredential() DestinationGcsUpdateAuthentication {
+	if o == nil {
+		return DestinationGcsUpdateAuthentication{}
+	}
+	return o.Credential
+}
+
+func (o *DestinationGcsUpdate) GetFormat() DestinationGcsUpdateOutputFormat {
+	if o == nil {
+		return DestinationGcsUpdateOutputFormat{}
+	}
+	return o.Format
+}
+
+func (o *DestinationGcsUpdate) GetGcsBucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsBucketName
+}
+
+func (o *DestinationGcsUpdate) GetGcsBucketPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsBucketPath
+}
+
+func (o *DestinationGcsUpdate) GetGcsBucketRegion() *DestinationGCSUpdateGCSBucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.GcsBucketRegion
 }

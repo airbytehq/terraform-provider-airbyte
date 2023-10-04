@@ -9,3 +9,31 @@ type SourceBingAdsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceBingAdsCreateRequest) GetConfiguration() SourceBingAds {
+	if o == nil {
+		return SourceBingAds{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBingAdsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBingAdsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceBingAdsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

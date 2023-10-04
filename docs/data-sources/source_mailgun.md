@@ -41,9 +41,9 @@ data "airbyte_source_mailgun" "my_source_mailgun" {
 
 Read-Only:
 
-- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+- `domain_region` (String) Default: "US"
+Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
 - `private_key` (String) Primary account API key to access your Mailgun data.
-- `source_type` (String) must be one of ["mailgun"]
 - `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 

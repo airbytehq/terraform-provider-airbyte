@@ -15,26 +15,24 @@ SourceAmazonSellerPartner Resource
 ```terraform
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
-    advanced_stream_options = "{\"GET_SALES_AND_TRAFFIC_REPORT\": {\"availability_sla_days\": 3}}"
-    auth_type               = "oauth2.0"
+    advanced_stream_options = "{\"GET_SOME_REPORT\": {\"custom\": \"true\"}}"
     aws_access_key          = "...my_aws_access_key..."
-    aws_environment         = "PRODUCTION"
+    aws_environment         = "SANDBOX"
     aws_secret_key          = "...my_aws_secret_key..."
     lwa_app_id              = "...my_lwa_app_id..."
     lwa_client_secret       = "...my_lwa_client_secret..."
-    max_wait_seconds        = 1980
-    period_in_days          = 5
+    max_wait_seconds        = 500
+    period_in_days          = 1
     refresh_token           = "...my_refresh_token..."
-    region                  = "SA"
+    region                  = "IT"
     replication_end_date    = "2017-01-25T00:00:00Z"
     replication_start_date  = "2017-01-25T00:00:00Z"
     report_options          = "{\"GET_SOME_REPORT\": {\"custom\": \"true\"}}"
     role_arn                = "...my_role_arn..."
-    source_type             = "amazon-seller-partner"
   }
-  name         = "Phyllis Quitzon"
+  name         = "Linda Kutch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5c537c64-54ef-4b0b-b489-6c3ca5acfbe2"
+  workspace_id = "58c67348-eaa4-4356-b389-ad49dbc4fabb"
 }
 ```
 
@@ -61,24 +59,24 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 
 Required:
 
-- `aws_environment` (String) must be one of ["PRODUCTION", "SANDBOX"]
-Select the AWS Environment.
 - `lwa_app_id` (String) Your Login with Amazon Client ID.
 - `lwa_client_secret` (String) Your Login with Amazon Client Secret.
 - `refresh_token` (String) The Refresh Token obtained via OAuth flow authorization.
-- `region` (String) must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]
-Select the AWS Region.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-- `source_type` (String) must be one of ["amazon-seller-partner"]
 
 Optional:
 
 - `advanced_stream_options` (String) Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `aws_access_key` (String) Specifies the AWS access key used as part of the credentials to authenticate the user.
+- `aws_environment` (String) must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"
+Select the AWS Environment.
 - `aws_secret_key` (String) Specifies the AWS secret key used as part of the credentials to authenticate the user.
-- `max_wait_seconds` (Number) Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.
-- `period_in_days` (Number) Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
+- `max_wait_seconds` (Number) Default: 500
+Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.
+- `period_in_days` (Number) Default: 90
+Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
+- `region` (String) must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"
+Select the AWS Region.
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 - `report_options` (String) Additional information passed to reports. This varies by report type. Must be a valid json string.
 - `role_arn` (String) Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).

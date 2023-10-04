@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -66,12 +65,14 @@ func (r *SourceJiraDataSource) Schema(ctx context.Context, req datasource.Schema
 						Description: `The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.`,
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Expand the changelog when replicating issues.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Expand the changelog when replicating issues.`,
 					},
 					"projects": schema.ListAttribute{
 						Computed:    true,
@@ -79,17 +80,9 @@ func (r *SourceJiraDataSource) Schema(ctx context.Context, req datasource.Schema
 						Description: `List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.`,
 					},
 					"render_fields": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Render issue fields in HTML format in addition to Jira JSON-like format.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"jira",
-							),
-						},
-						Description: `must be one of ["jira"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Render issue fields in HTML format in addition to Jira JSON-like format.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

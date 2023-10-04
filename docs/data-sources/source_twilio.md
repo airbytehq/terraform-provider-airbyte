@@ -43,8 +43,8 @@ Read-Only:
 
 - `account_sid` (String) Twilio account SID
 - `auth_token` (String) Twilio Auth Token.
-- `lookback_window` (Number) How far into the past to look for records. (in minutes)
-- `source_type` (String) must be one of ["twilio"]
+- `lookback_window` (Number) Default: 0
+How far into the past to look for records. (in minutes)
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,7 +35,36 @@ func (e *SourceKustomerSingerKustomerSinger) UnmarshalJSON(data []byte) error {
 type SourceKustomerSinger struct {
 	// Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
 	APIToken   string                             `json:"api_token"`
-	SourceType SourceKustomerSingerKustomerSinger `json:"sourceType"`
+	sourceType SourceKustomerSingerKustomerSinger `const:"kustomer-singer" json:"sourceType"`
 	// The date from which you'd like to replicate the data
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceKustomerSinger) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceKustomerSinger) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceKustomerSinger) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceKustomerSinger) GetSourceType() SourceKustomerSingerKustomerSinger {
+	return SourceKustomerSingerKustomerSingerKustomerSinger
+}
+
+func (o *SourceKustomerSinger) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

@@ -41,7 +41,6 @@ data "airbyte_source_todoist" "my_source_todoist" {
 
 Read-Only:
 
-- `source_type` (String) must be one of ["todoist"]
 - `token` (String) Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 
 

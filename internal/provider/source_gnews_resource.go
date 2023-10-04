@@ -171,15 +171,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
 							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gnews",
-							),
-						},
-						Description: `must be one of ["gnews"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)`,
@@ -291,7 +282,7 @@ func (r *SourceGnewsResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGnews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

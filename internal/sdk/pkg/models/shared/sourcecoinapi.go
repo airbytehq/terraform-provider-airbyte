@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -69,19 +70,83 @@ type SourceCoinAPI struct {
 	EndDate *string `json:"end_date,omitempty"`
 	// The environment to use. Either sandbox or production.
 	//
-	Environment SourceCoinAPIEnvironment `json:"environment"`
+	Environment *SourceCoinAPIEnvironment `default:"sandbox" json:"environment"`
 	// The maximum number of elements to return. If not supplied, the default
 	// is 100. For numbers larger than 100, each 100 items is counted as one
 	// request for pricing purposes. Maximum value is 100000.
 	//
-	Limit *int64 `json:"limit,omitempty"`
+	Limit *int64 `default:"100" json:"limit"`
 	// The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
 	Period     string               `json:"period"`
-	SourceType SourceCoinAPICoinAPI `json:"sourceType"`
+	sourceType SourceCoinAPICoinAPI `const:"coin-api" json:"sourceType"`
 	// The start date in ISO 8601 format.
 	StartDate string `json:"start_date"`
 	// The symbol ID to use. See the documentation for a list.
 	// https://docs.coinapi.io/#list-all-symbols-get
 	//
 	SymbolID string `json:"symbol_id"`
+}
+
+func (s SourceCoinAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceCoinAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceCoinAPI) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceCoinAPI) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceCoinAPI) GetEnvironment() *SourceCoinAPIEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *SourceCoinAPI) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *SourceCoinAPI) GetPeriod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Period
+}
+
+func (o *SourceCoinAPI) GetSourceType() SourceCoinAPICoinAPI {
+	return SourceCoinAPICoinAPICoinAPI
+}
+
+func (o *SourceCoinAPI) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceCoinAPI) GetSymbolID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SymbolID
 }

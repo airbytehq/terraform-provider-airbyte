@@ -9,10 +9,8 @@ import (
 
 func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunchdarklyCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceLaunchdarklyLaunchdarkly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLaunchdarkly{
 		AccessToken: accessToken,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

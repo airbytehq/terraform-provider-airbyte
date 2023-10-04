@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken struct {
-	APIToken             types.String `tfsdk:"api_token"`
-	AuthType             types.String `tfsdk:"auth_type"`
 	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	APIToken             types.String `tfsdk:"api_token"`
 }

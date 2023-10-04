@@ -42,7 +42,6 @@ data "airbyte_source_pypi" "my_source_pypi" {
 Read-Only:
 
 - `project_name` (String) Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
-- `source_type` (String) must be one of ["pypi"]
 - `version` (String) Version of the project/package.  Use it to find a particular release instead of all releases.
 
 

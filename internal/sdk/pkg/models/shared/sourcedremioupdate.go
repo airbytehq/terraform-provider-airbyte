@@ -2,9 +2,38 @@
 
 package shared
 
+import (
+	"airbyte/internal/sdk/pkg/utils"
+)
+
 type SourceDremioUpdate struct {
 	// API Key that is generated when you authenticate to Dremio API
 	APIKey string `json:"api_key"`
 	// URL of your Dremio instance
-	BaseURL string `json:"base_url"`
+	BaseURL *string `default:"https://app.dremio.cloud" json:"base_url"`
+}
+
+func (s SourceDremioUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDremioUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDremioUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceDremioUpdate) GetBaseURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BaseURL
 }

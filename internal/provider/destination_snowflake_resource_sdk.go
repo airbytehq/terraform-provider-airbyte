@@ -13,12 +13,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		var destinationSnowflakeAuthorizationMethodOAuth20 *shared.DestinationSnowflakeAuthorizationMethodOAuth20
 		if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
 			accessToken := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType := new(shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType)
-			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsNull() {
-				*authType = shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID.ValueString()
@@ -34,7 +28,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 			refreshToken := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.RefreshToken.ValueString()
 			destinationSnowflakeAuthorizationMethodOAuth20 = &shared.DestinationSnowflakeAuthorizationMethodOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -47,12 +40,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 		var destinationSnowflakeAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication
 		if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
-			authType1 := new(shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType)
-			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
-				*authType1 = shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			privateKey := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKey.ValueString()
 			privateKeyPassword := new(string)
 			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsNull() {
@@ -61,7 +48,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 				privateKeyPassword = nil
 			}
 			destinationSnowflakeAuthorizationMethodKeyPairAuthentication = &shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication{
-				AuthType:           authType1,
 				PrivateKey:         privateKey,
 				PrivateKeyPassword: privateKeyPassword,
 			}
@@ -73,15 +59,8 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 		var destinationSnowflakeAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword
 		if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-			authType2 := new(shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType)
-			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
-				*authType2 = shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
-			} else {
-				authType2 = nil
-			}
 			password := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
 			destinationSnowflakeAuthorizationMethodUsernameAndPassword = &shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword{
-				AuthType: authType2,
 				Password: password,
 			}
 		}
@@ -92,7 +71,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 	}
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationSnowflakeSnowflake(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -111,16 +89,15 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflake{
-		Credentials:     credentials,
-		Database:        database,
-		DestinationType: destinationType,
-		Host:            host,
-		JdbcURLParams:   jdbcURLParams,
-		RawDataSchema:   rawDataSchema,
-		Role:            role,
-		Schema:          schema,
-		Username:        username,
-		Warehouse:       warehouse,
+		Credentials:   credentials,
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		RawDataSchema: rawDataSchema,
+		Role:          role,
+		Schema:        schema,
+		Username:      username,
+		Warehouse:     warehouse,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -143,12 +120,6 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		var destinationSnowflakeUpdateAuthorizationMethodOAuth20 *shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20
 		if r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
 			accessToken := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType := new(shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20AuthType)
-			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
-				*authType = shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
@@ -164,7 +135,6 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 			refreshToken := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
 			destinationSnowflakeUpdateAuthorizationMethodOAuth20 = &shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
@@ -177,12 +147,6 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		}
 		var destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication
 		if r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication != nil {
-			authType1 := new(shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthenticationAuthType)
-			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
-				*authType1 = shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
 			privateKey := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKey.ValueString()
 			privateKeyPassword := new(string)
 			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsNull() {
@@ -191,7 +155,6 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 				privateKeyPassword = nil
 			}
 			destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication = &shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication{
-				AuthType:           authType1,
 				PrivateKey:         privateKey,
 				PrivateKeyPassword: privateKeyPassword,
 			}
@@ -203,15 +166,8 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		}
 		var destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword
 		if r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
-			authType2 := new(shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType)
-			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
-				*authType2 = shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
-			} else {
-				authType2 = nil
-			}
 			password := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.Password.ValueString()
 			destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword = &shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword{
-				AuthType: authType2,
 				Password: password,
 			}
 		}

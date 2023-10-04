@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -38,10 +39,60 @@ type SourcePaypalTransaction struct {
 	// The Client Secret of your Paypal developer application.
 	ClientSecret string `json:"client_secret"`
 	// Determines whether to use the sandbox or production environment.
-	IsSandbox bool `json:"is_sandbox"`
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// The key to refresh the expired access token.
 	RefreshToken *string                                  `json:"refresh_token,omitempty"`
-	SourceType   SourcePaypalTransactionPaypalTransaction `json:"sourceType"`
+	sourceType   SourcePaypalTransactionPaypalTransaction `const:"paypal-transaction" json:"sourceType"`
 	// Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourcePaypalTransaction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePaypalTransaction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePaypalTransaction) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourcePaypalTransaction) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourcePaypalTransaction) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *SourcePaypalTransaction) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
+}
+
+func (o *SourcePaypalTransaction) GetSourceType() SourcePaypalTransactionPaypalTransaction {
+	return SourcePaypalTransactionPaypalTransactionPaypalTransaction
+}
+
+func (o *SourcePaypalTransaction) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

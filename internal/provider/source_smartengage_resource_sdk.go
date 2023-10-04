@@ -9,10 +9,8 @@ import (
 
 func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmartengageCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceSmartengageSmartengage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSmartengage{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

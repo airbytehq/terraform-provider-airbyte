@@ -6,13 +6,12 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
       "...",
     ]
     realm          = "...my_realm..."
-    source_type    = "netsuite"
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 7
+    window_in_days = 4
   }
-  name         = "Miss Meredith Hand"
+  name         = "Sylvia Bernhard"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4bf01bad-8706-4d46-882b-fbdc41ff5d4e"
+  workspace_id = "ace02f96-b833-4556-b7e4-181b36cf1afc"
 }

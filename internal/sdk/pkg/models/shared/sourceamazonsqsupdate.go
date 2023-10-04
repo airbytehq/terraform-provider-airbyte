@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -110,7 +111,7 @@ type SourceAmazonSqsUpdate struct {
 	// Comma separated list of Mesage Attribute names to return
 	AttributesToReturn *string `json:"attributes_to_return,omitempty"`
 	// If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail.
-	DeleteMessages bool `json:"delete_messages"`
+	DeleteMessages *bool `default:"false" json:"delete_messages"`
 	// Max amount of messages to get in one batch (10 max)
 	MaxBatchSize *int64 `json:"max_batch_size,omitempty"`
 	// Max amount of time in seconds to wait for messages in a single poll (20 max)
@@ -123,4 +124,78 @@ type SourceAmazonSqsUpdate struct {
 	SecretKey *string `json:"secret_key,omitempty"`
 	// Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
 	VisibilityTimeout *int64 `json:"visibility_timeout,omitempty"`
+}
+
+func (s SourceAmazonSqsUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmazonSqsUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmazonSqsUpdate) GetAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessKey
+}
+
+func (o *SourceAmazonSqsUpdate) GetAttributesToReturn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AttributesToReturn
+}
+
+func (o *SourceAmazonSqsUpdate) GetDeleteMessages() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteMessages
+}
+
+func (o *SourceAmazonSqsUpdate) GetMaxBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxBatchSize
+}
+
+func (o *SourceAmazonSqsUpdate) GetMaxWaitTime() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxWaitTime
+}
+
+func (o *SourceAmazonSqsUpdate) GetQueueURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.QueueURL
+}
+
+func (o *SourceAmazonSqsUpdate) GetRegion() SourceAmazonSqsUpdateAWSRegion {
+	if o == nil {
+		return SourceAmazonSqsUpdateAWSRegion("")
+	}
+	return o.Region
+}
+
+func (o *SourceAmazonSqsUpdate) GetSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretKey
+}
+
+func (o *SourceAmazonSqsUpdate) GetVisibilityTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.VisibilityTimeout
 }

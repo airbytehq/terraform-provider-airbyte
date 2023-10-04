@@ -38,7 +38,6 @@ Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `database` (String) Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
-- `destination_type` (String) must be one of ["snowflake"]
 - `host` (String) Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
 - `raw_data_schema` (String) The schema to write raw tables into
@@ -64,7 +63,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Key Pair Authentication"]
 - `private_key` (String) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 - `private_key_password` (String) Passphrase for private key
 
@@ -75,7 +73,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Enter you application's Access Token
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 - `refresh_token` (String) Enter your application's Refresh Token
@@ -86,7 +83,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Username and Password"]
 - `password` (String) Enter the password associated with the username.
 
 
@@ -95,7 +91,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Key Pair Authentication"]
 - `private_key` (String) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 - `private_key_password` (String) Passphrase for private key
 
@@ -106,7 +101,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Enter you application's Access Token
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 - `refresh_token` (String) Enter your application's Refresh Token
@@ -117,7 +111,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Username and Password"]
 - `password` (String) Enter the password associated with the username.
 
 

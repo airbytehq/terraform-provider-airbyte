@@ -17,19 +17,18 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
   configuration = {
     credentials = {
       source_zendesk_support_authentication_api_token = {
-        api_token   = "...my_api_token..."
-        credentials = "api_token"
-        email       = "Ezequiel.Lindgren56@yahoo.com"
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_token             = "...my_api_token..."
+        email                 = "Yolanda.Strosin35@yahoo.com"
       }
     }
-    ignore_pagination = true
-    source_type       = "zendesk-support"
+    ignore_pagination = false
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "Alexander Friesen"
+  name         = "Miss Jodi Berge"
   secret_id    = "...my_secret_id..."
-  workspace_id = "82dbec75-c68c-4606-9946-8ce304d8849b"
+  workspace_id = "c447712b-4a02-4088-b0aa-beffb8d97651"
 }
 ```
 
@@ -56,13 +55,13 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 
 Required:
 
-- `source_type` (String) must be one of ["zendesk-support"]
 - `subdomain` (String) This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
 
 Optional:
 
 - `credentials` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `ignore_pagination` (Boolean) Makes each stream read a single page of data.
+- `ignore_pagination` (Boolean) Default: false
+Makes each stream read a single page of data.
 - `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -86,7 +85,6 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_authentication_o_auth2_0"></a>
@@ -101,7 +99,6 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `client_id` (String) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 - `client_secret` (String) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-- `credentials` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_api_token"></a>
@@ -115,7 +112,6 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_o_auth2_0"></a>
@@ -130,6 +126,5 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `client_id` (String) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 - `client_secret` (String) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-- `credentials` (String) must be one of ["oauth2.0"]
 
 

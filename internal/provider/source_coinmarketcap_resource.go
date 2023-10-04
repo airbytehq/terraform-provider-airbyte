@@ -69,15 +69,6 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 						MarkdownDescription: `must be one of ["latest", "historical"]` + "\n" +
 							`/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"coinmarketcap",
-							),
-						},
-						Description: `must be one of ["coinmarketcap"]`,
-					},
 					"symbols": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
@@ -155,7 +146,7 @@ func (r *SourceCoinmarketcapResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceCoinmarketcap(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

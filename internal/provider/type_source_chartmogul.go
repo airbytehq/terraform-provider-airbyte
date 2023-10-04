@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceChartmogul struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	Interval   types.String `tfsdk:"interval"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
+	APIKey    types.String `tfsdk:"api_key"`
+	Interval  types.String `tfsdk:"interval"`
+	StartDate types.String `tfsdk:"start_date"`
 }

@@ -15,7 +15,6 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 	} else {
 		batchSize = nil
 	}
-	destinationType := shared.DestinationTypesenseTypesense(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	port := new(string)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
@@ -30,12 +29,11 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 		protocol = nil
 	}
 	configuration := shared.DestinationTypesense{
-		APIKey:          apiKey,
-		BatchSize:       batchSize,
-		DestinationType: destinationType,
-		Host:            host,
-		Port:            port,
-		Protocol:        protocol,
+		APIKey:    apiKey,
+		BatchSize: batchSize,
+		Host:      host,
+		Port:      port,
+		Protocol:  protocol,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

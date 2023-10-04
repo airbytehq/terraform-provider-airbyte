@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceTiktokMarketingAuthenticationMethodSandboxAccessToken struct {
 	AccessToken  types.String `tfsdk:"access_token"`
 	AdvertiserID types.String `tfsdk:"advertiser_id"`
-	AuthType     types.String `tfsdk:"auth_type"`
 }

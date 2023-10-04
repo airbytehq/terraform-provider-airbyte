@@ -18,7 +18,6 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 		endDate = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceSnapchatMarketingSnapchatMarketing(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -30,7 +29,6 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 		ClientSecret: clientSecret,
 		EndDate:      endDate,
 		RefreshToken: refreshToken,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()

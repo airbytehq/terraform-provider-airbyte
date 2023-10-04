@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,14 +64,12 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
+									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
+											validators.IsValidJSON(),
 										},
-										Description: `must be one of ["Client"]`,
+										Description: `Parsed as JSON.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -85,13 +82,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Refresh Token to renew the expired Access Token.`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Choose how to authenticate to Harvest.`,
@@ -99,19 +89,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							"source_harvest_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -119,20 +96,22 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 										Description: `Parsed as JSON.`,
 									},
+									"api_token": schema.StringAttribute{
+										Required:    true,
+										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
+									},
 								},
 								Description: `Choose how to authenticate to Harvest.`,
 							},
 							"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
+									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
+											validators.IsValidJSON(),
 										},
-										Description: `must be one of ["Client"]`,
+										Description: `Parsed as JSON.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -146,38 +125,22 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `Refresh Token to renew the expired Access Token.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 								Description: `Choose how to authenticate to Harvest.`,
 							},
 							"source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
 										Description: `Parsed as JSON.`,
+									},
+									"api_token": schema.StringAttribute{
+										Required:    true,
+										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
 									},
 								},
 								Description: `Choose how to authenticate to Harvest.`,
@@ -201,15 +164,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							validators.IsRFC3339(),
 						},
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"harvest",
-							),
-						},
-						Description: `must be one of ["harvest"]`,
 					},
 				},
 			},
@@ -283,7 +237,7 @@ func (r *SourceHarvestResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceHarvest(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

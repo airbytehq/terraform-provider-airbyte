@@ -10,8 +10,12 @@ import (
 func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dataQuery := shared.SourceZuoraDataQueryType(r.Configuration.DataQuery.ValueString())
-	sourceType := shared.SourceZuoraZuora(r.Configuration.SourceType.ValueString())
+	dataQuery := new(shared.SourceZuoraDataQueryType)
+	if !r.Configuration.DataQuery.IsUnknown() && !r.Configuration.DataQuery.IsNull() {
+		*dataQuery = shared.SourceZuoraDataQueryType(r.Configuration.DataQuery.ValueString())
+	} else {
+		dataQuery = nil
+	}
 	startDate := r.Configuration.StartDate.ValueString()
 	tenantEndpoint := shared.SourceZuoraTenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
 	windowInDays := new(string)
@@ -24,7 +28,6 @@ func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRe
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
 		DataQuery:      dataQuery,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 		TenantEndpoint: tenantEndpoint,
 		WindowInDays:   windowInDays,
@@ -54,7 +57,12 @@ func (r *SourceZuoraResourceModel) ToGetSDKType() *shared.SourceZuoraCreateReque
 func (r *SourceZuoraResourceModel) ToUpdateSDKType() *shared.SourceZuoraPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dataQuery := shared.SourceZuoraUpdateDataQueryType(r.Configuration.DataQuery.ValueString())
+	dataQuery := new(shared.SourceZuoraUpdateDataQueryType)
+	if !r.Configuration.DataQuery.IsUnknown() && !r.Configuration.DataQuery.IsNull() {
+		*dataQuery = shared.SourceZuoraUpdateDataQueryType(r.Configuration.DataQuery.ValueString())
+	} else {
+		dataQuery = nil
+	}
 	startDate := r.Configuration.StartDate.ValueString()
 	tenantEndpoint := shared.SourceZuoraUpdateTenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
 	windowInDays := new(string)

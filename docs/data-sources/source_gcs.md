@@ -44,6 +44,5 @@ Read-Only:
 - `gcs_bucket` (String) GCS bucket name
 - `gcs_path` (String) GCS path to data
 - `service_account` (String) Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
-- `source_type` (String) must be one of ["gcs"]
 
 

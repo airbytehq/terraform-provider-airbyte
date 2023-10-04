@@ -7,3 +7,24 @@ type SourceVantagePutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceVantagePutRequest) GetConfiguration() SourceVantageUpdate {
+	if o == nil {
+		return SourceVantageUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceVantagePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceVantagePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

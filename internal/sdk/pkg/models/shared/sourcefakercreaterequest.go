@@ -9,3 +9,31 @@ type SourceFakerCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceFakerCreateRequest) GetConfiguration() SourceFaker {
+	if o == nil {
+		return SourceFaker{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFakerCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFakerCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceFakerCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -42,7 +42,6 @@ data "airbyte_source_aha" "my_source_aha" {
 Read-Only:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["aha"]
 - `url` (String) URL
 
 

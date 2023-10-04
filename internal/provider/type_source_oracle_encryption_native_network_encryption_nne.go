@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOracleEncryptionNativeNetworkEncryptionNNE struct {
 	EncryptionAlgorithm types.String `tfsdk:"encryption_algorithm"`
-	EncryptionMethod    types.String `tfsdk:"encryption_method"`
 }

@@ -16,11 +16,10 @@ SourceVantage Resource
 resource "airbyte_source_vantage" "my_source_vantage" {
   configuration = {
     access_token = "...my_access_token..."
-    source_type  = "vantage"
   }
-  name         = "Corey Pacocha"
+  name         = "Ismael Becker Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "6487c5fc-2b86-42a0-8bef-69e100157630"
+  workspace_id = "ffd3df11-978b-4385-957e-3c921cc9284a"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_vantage" "my_source_vantage" {
 Required:
 
 - `access_token` (String) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
-- `source_type` (String) must be one of ["vantage"]
 
 

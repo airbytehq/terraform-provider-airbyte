@@ -19,17 +19,16 @@ resource "airbyte_source_mongodb" "my_source_mongodb" {
     database    = "...my_database..."
     instance_type = {
       source_mongodb_mongo_db_instance_type_mongo_db_atlas = {
-        cluster_url = "...my_cluster_url..."
-        instance    = "atlas"
+        additional_properties = "{ \"see\": \"documentation\" }"
+        cluster_url           = "...my_cluster_url..."
       }
     }
-    password    = "...my_password..."
-    source_type = "mongodb"
-    user        = "...my_user..."
+    password = "...my_password..."
+    user     = "...my_user..."
   }
-  name         = "Doreen Mayer"
+  name         = "Shelley Parker"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5ca006f5-392c-411a-a5a8-bf92f97428ad"
+  workspace_id = "4726a8cd-9c5a-4ad4-bafd-a11e10d002e1"
 }
 ```
 
@@ -57,11 +56,11 @@ resource "airbyte_source_mongodb" "my_source_mongodb" {
 Required:
 
 - `database` (String) The database you want to replicate.
-- `source_type` (String) must be one of ["mongodb"]
 
 Optional:
 
-- `auth_source` (String) The authentication source where the user information is stored.
+- `auth_source` (String) Default: "admin"
+The authentication source where the user information is stored.
 - `instance_type` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type))
 - `password` (String) The password associated with this username.
 - `user` (String) The username which is used to access the database.
@@ -84,7 +83,6 @@ Optional:
 Required:
 
 - `cluster_url` (String) The URL of a cluster to connect to.
-- `instance` (String) must be one of ["atlas"]
 
 Optional:
 
@@ -96,7 +94,6 @@ Optional:
 
 Required:
 
-- `instance` (String) must be one of ["replica"]
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
 Optional:
@@ -110,8 +107,11 @@ Optional:
 Required:
 
 - `host` (String) The host name of the Mongo database.
-- `instance` (String) must be one of ["standalone"]
-- `port` (Number) The port of the Mongo database.
+
+Optional:
+
+- `port` (Number) Default: 27017
+The port of the Mongo database.
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
@@ -120,7 +120,6 @@ Required:
 Required:
 
 - `cluster_url` (String) The URL of a cluster to connect to.
-- `instance` (String) must be one of ["atlas"]
 
 Optional:
 
@@ -132,7 +131,6 @@ Optional:
 
 Required:
 
-- `instance` (String) must be one of ["replica"]
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
 Optional:
@@ -146,7 +144,10 @@ Optional:
 Required:
 
 - `host` (String) The host name of the Mongo database.
-- `instance` (String) must be one of ["standalone"]
-- `port` (Number) The port of the Mongo database.
+
+Optional:
+
+- `port` (Number) Default: 27017
+The port of the Mongo database.
 
 

@@ -15,12 +15,11 @@ SourceOmnisend Resource
 ```terraform
 resource "airbyte_source_omnisend" "my_source_omnisend" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "omnisend"
+    api_key = "...my_api_key..."
   }
-  name         = "Lynn Miller"
+  name         = "Shawna Treutel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3e5953c0-0113-4986-baa4-1e6c31cc2f1f"
+  workspace_id = "76bd271d-6f7a-477e-91b0-4b8d52e6bc1e"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
 Required:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["omnisend"]
 
 

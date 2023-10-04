@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,8 +53,9 @@ func (r *SourceGoogleAdsDataSource) Schema(ctx context.Context, req datasource.S
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"conversion_window_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.`,
+						Computed: true,
+						MarkdownDescription: `Default: 14` + "\n" +
+							`A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
@@ -111,15 +111,6 @@ func (r *SourceGoogleAdsDataSource) Schema(ctx context.Context, req datasource.S
 					"login_customer_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-ads",
-							),
-						},
-						Description: `must be one of ["google-ads"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

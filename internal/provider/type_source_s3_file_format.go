@@ -3,12 +3,12 @@
 package provider
 
 type SourceS3FileFormat struct {
-	SourceS3FileFormatAvro          *SourceS3FileFormatAvro    `tfsdk:"source_s3_file_format_avro"`
-	SourceS3FileFormatCSV           *SourceS3FileFormatCSV     `tfsdk:"source_s3_file_format_csv"`
-	SourceS3FileFormatJsonl         *SourceS3FileFormatJsonl   `tfsdk:"source_s3_file_format_jsonl"`
-	SourceS3FileFormatParquet       *SourceS3FileFormatParquet `tfsdk:"source_s3_file_format_parquet"`
-	SourceS3UpdateFileFormatAvro    *SourceS3FileFormatAvro    `tfsdk:"source_s3_update_file_format_avro"`
-	SourceS3UpdateFileFormatCSV     *SourceS3FileFormatCSV     `tfsdk:"source_s3_update_file_format_csv"`
-	SourceS3UpdateFileFormatJsonl   *SourceS3FileFormatJsonl   `tfsdk:"source_s3_update_file_format_jsonl"`
-	SourceS3UpdateFileFormatParquet *SourceS3FileFormatParquet `tfsdk:"source_s3_update_file_format_parquet"`
+	SourceS3FileFormatAvro          *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_s3_file_format_avro"`
+	SourceS3FileFormatCSV           *SourceS3FileFormatCSV                                                `tfsdk:"source_s3_file_format_csv"`
+	SourceS3FileFormatJsonl         *SourceS3FileFormatJsonl                                              `tfsdk:"source_s3_file_format_jsonl"`
+	SourceS3FileFormatParquet       *SourceS3FileFormatParquet                                            `tfsdk:"source_s3_file_format_parquet"`
+	SourceS3UpdateFileFormatAvro    *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"source_s3_update_file_format_avro"`
+	SourceS3UpdateFileFormatCSV     *SourceS3FileFormatCSV                                                `tfsdk:"source_s3_update_file_format_csv"`
+	SourceS3UpdateFileFormatJsonl   *SourceS3FileFormatJsonl                                              `tfsdk:"source_s3_update_file_format_jsonl"`
+	SourceS3UpdateFileFormatParquet *SourceS3FileFormatParquet                                            `tfsdk:"source_s3_update_file_format_parquet"`
 }

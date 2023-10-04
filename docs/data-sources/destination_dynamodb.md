@@ -37,9 +37,9 @@ data "airbyte_destination_dynamodb" "my_destination_dynamodb" {
 Read-Only:
 
 - `access_key_id` (String) The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
-- `destination_type` (String) must be one of ["dynamodb"]
-- `dynamodb_endpoint` (String) This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
-- `dynamodb_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
+- `dynamodb_endpoint` (String) Default: ""
+This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
+- `dynamodb_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
 The region of the DynamoDB.
 - `dynamodb_table_name_prefix` (String) The prefix to use when naming DynamoDB tables.
 - `secret_access_key` (String) The corresponding secret to the access key id.

@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationLangchainIndexingDocArrayHnswSearch struct {
 	DestinationPath types.String `tfsdk:"destination_path"`
-	Mode            types.String `tfsdk:"mode"`
 }

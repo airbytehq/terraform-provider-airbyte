@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -60,15 +59,6 @@ func (r *SourceAircallDataSource) Schema(ctx context.Context, req datasource.Sch
 					"api_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"aircall",
-							),
-						},
-						Description: `must be one of ["aircall"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

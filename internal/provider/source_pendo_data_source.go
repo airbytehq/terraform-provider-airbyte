@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourcePendoDataSource struct {
 
 // SourcePendoDataSourceModel describes the data model.
 type SourcePendoDataSourceModel struct {
-	Configuration SourcePendo  `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"configuration"`
+	Name          types.String                                    `tfsdk:"name"`
+	SecretID      types.String                                    `tfsdk:"secret_id"`
+	SourceID      types.String                                    `tfsdk:"source_id"`
+	WorkspaceID   types.String                                    `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -54,15 +52,6 @@ func (r *SourcePendoDataSource) Schema(ctx context.Context, req datasource.Schem
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Computed: true,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pendo",
-							),
-						},
-						Description: `must be one of ["pendo"]`,
 					},
 				},
 			},

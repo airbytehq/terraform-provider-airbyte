@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -167,16 +168,108 @@ type SourcePocket struct {
 	// Only return items from a particular `domain`.
 	Domain *string `json:"domain,omitempty"`
 	// Retrieve only favorited items.
-	Favorite *bool `json:"favorite,omitempty"`
+	Favorite *bool `default:"false" json:"favorite"`
 	// Only return items whose title or url contain the `search` string.
 	Search *string `json:"search,omitempty"`
 	// Only return items modified since the given timestamp.
 	Since *string `json:"since,omitempty"`
 	// Sort retrieved items by the given criteria.
 	Sort       *SourcePocketSortBy `json:"sort,omitempty"`
-	SourceType SourcePocketPocket  `json:"sourceType"`
+	sourceType SourcePocketPocket  `const:"pocket" json:"sourceType"`
 	// Select the state of the items to retrieve.
 	State *SourcePocketState `json:"state,omitempty"`
 	// Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 	Tag *string `json:"tag,omitempty"`
+}
+
+func (s SourcePocket) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePocket) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePocket) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourcePocket) GetConsumerKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerKey
+}
+
+func (o *SourcePocket) GetContentType() *SourcePocketContentType {
+	if o == nil {
+		return nil
+	}
+	return o.ContentType
+}
+
+func (o *SourcePocket) GetDetailType() *SourcePocketDetailType {
+	if o == nil {
+		return nil
+	}
+	return o.DetailType
+}
+
+func (o *SourcePocket) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourcePocket) GetFavorite() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Favorite
+}
+
+func (o *SourcePocket) GetSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Search
+}
+
+func (o *SourcePocket) GetSince() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *SourcePocket) GetSort() *SourcePocketSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourcePocket) GetSourceType() SourcePocketPocket {
+	return SourcePocketPocketPocket
+}
+
+func (o *SourcePocket) GetState() *SourcePocketState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *SourcePocket) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
 }

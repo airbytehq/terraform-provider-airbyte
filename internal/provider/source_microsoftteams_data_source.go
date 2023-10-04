@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -59,15 +58,6 @@ func (r *SourceMicrosoftTeamsDataSource) Schema(ctx context.Context, req datasou
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -86,15 +76,6 @@ func (r *SourceMicrosoftTeamsDataSource) Schema(ctx context.Context, req datasou
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -117,15 +98,6 @@ func (r *SourceMicrosoftTeamsDataSource) Schema(ctx context.Context, req datasou
 							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -144,15 +116,6 @@ func (r *SourceMicrosoftTeamsDataSource) Schema(ctx context.Context, req datasou
 							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Microsoft Teams developer application.`,
@@ -181,15 +144,6 @@ func (r *SourceMicrosoftTeamsDataSource) Schema(ctx context.Context, req datasou
 					"period": schema.StringAttribute{
 						Computed:    true,
 						Description: `Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"microsoft-teams",
-							),
-						},
-						Description: `must be one of ["microsoft-teams"]`,
 					},
 				},
 			},

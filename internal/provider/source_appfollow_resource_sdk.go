@@ -14,10 +14,8 @@ func (r *SourceAppfollowResourceModel) ToCreateSDKType() *shared.SourceAppfollow
 	} else {
 		apiSecret = nil
 	}
-	sourceType := shared.SourceAppfollowAppfollow(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAppfollow{
-		APISecret:  apiSecret,
-		SourceType: sourceType,
+		APISecret: apiSecret,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

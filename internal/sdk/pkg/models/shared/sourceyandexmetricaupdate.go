@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 )
 
 type SourceYandexMetricaUpdate struct {
@@ -15,4 +16,43 @@ type SourceYandexMetricaUpdate struct {
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD".
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceYandexMetricaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceYandexMetricaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceYandexMetricaUpdate) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceYandexMetricaUpdate) GetCounterID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CounterID
+}
+
+func (o *SourceYandexMetricaUpdate) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceYandexMetricaUpdate) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

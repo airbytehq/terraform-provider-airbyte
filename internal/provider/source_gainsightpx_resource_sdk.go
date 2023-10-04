@@ -9,10 +9,8 @@ import (
 
 func (r *SourceGainsightPxResourceModel) ToCreateSDKType() *shared.SourceGainsightPxCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGainsightPxGainsightPx(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGainsightPx{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

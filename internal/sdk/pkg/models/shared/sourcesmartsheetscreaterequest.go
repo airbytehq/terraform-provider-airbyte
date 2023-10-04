@@ -9,3 +9,31 @@ type SourceSmartsheetsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSmartsheetsCreateRequest) GetConfiguration() SourceSmartsheets {
+	if o == nil {
+		return SourceSmartsheets{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSmartsheetsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSmartsheetsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSmartsheetsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

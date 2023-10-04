@@ -42,7 +42,6 @@ data "airbyte_source_braze" "my_source_braze" {
 Read-Only:
 
 - `api_key` (String) Braze REST API key
-- `source_type` (String) must be one of ["braze"]
 - `start_date` (String) Rows after this date will be synced
 - `url` (String) Braze REST API endpoint
 

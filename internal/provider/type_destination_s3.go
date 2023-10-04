@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3 struct {
 	AccessKeyID     types.String              `tfsdk:"access_key_id"`
-	DestinationType types.String              `tfsdk:"destination_type"`
 	FileNamePattern types.String              `tfsdk:"file_name_pattern"`
 	Format          DestinationS3OutputFormat `tfsdk:"format"`
 	S3BucketName    types.String              `tfsdk:"s3_bucket_name"`

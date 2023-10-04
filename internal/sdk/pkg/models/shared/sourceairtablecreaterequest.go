@@ -9,3 +9,31 @@ type SourceAirtableCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAirtableCreateRequest) GetConfiguration() SourceAirtable {
+	if o == nil {
+		return SourceAirtable{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAirtableCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAirtableCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAirtableCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

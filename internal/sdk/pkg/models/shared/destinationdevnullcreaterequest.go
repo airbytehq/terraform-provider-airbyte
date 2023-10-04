@@ -7,3 +7,24 @@ type DestinationDevNullCreateRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *DestinationDevNullCreateRequest) GetConfiguration() DestinationDevNull {
+	if o == nil {
+		return DestinationDevNull{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationDevNullCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationDevNullCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

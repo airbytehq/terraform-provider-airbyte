@@ -45,7 +45,7 @@ Read-Only:
 - `client_secret` (String) The Client Secret of your Snapchat developer application.
 - `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
 - `refresh_token` (String) Refresh Token to renew the expired Access Token.
-- `source_type` (String) must be one of ["snapchat-marketing"]
-- `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated.
+- `start_date` (String) Default: "2022-01-01"
+Date in the format 2022-01-01. Any data before this date will not be replicated.
 
 

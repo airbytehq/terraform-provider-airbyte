@@ -42,6 +42,5 @@ data "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
 Read-Only:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["sap-fieldglass"]
 
 

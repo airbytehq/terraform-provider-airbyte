@@ -45,13 +45,13 @@ Read-Only:
 - `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
 from the start date to the current time, or when the count of result
 elements reaches its limit.
-- `environment` (String) must be one of ["sandbox", "production"]
+- `environment` (String) must be one of ["sandbox", "production"]; Default: "sandbox"
 The environment to use. Either sandbox or production.
-- `limit` (Number) The maximum number of elements to return. If not supplied, the default
+- `limit` (Number) Default: 100
+The maximum number of elements to return. If not supplied, the default
 is 100. For numbers larger than 100, each 100 items is counted as one
 request for pricing purposes. Maximum value is 100000.
 - `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
-- `source_type` (String) must be one of ["coin-api"]
 - `start_date` (String) The start date in ISO 8601 format.
 - `symbol_id` (String) The symbol ID to use. See the documentation for a list.
 https://docs.coinapi.io/#list-all-symbols-get

@@ -1,9 +1,8 @@
 resource "airbyte_source_instatus" "my_source_instatus" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "instatus"
+    api_key = "...my_api_key..."
   }
-  name         = "Bobbie Johnston"
+  name         = "Jackie Miller"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1af388ce-0361-4444-8c79-77a0ef2f5360"
+  workspace_id = "2d2f4597-4a2e-4bc3-a80a-bb376bce66a7"
 }

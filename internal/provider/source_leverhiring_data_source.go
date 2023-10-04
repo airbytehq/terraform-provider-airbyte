@@ -63,30 +63,12 @@ func (r *SourceLeverHiringDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `The Api Key of your Lever Hiring account.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Api Key",
-											),
-										},
-										Description: `must be one of ["Api Key"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Lever Hiring.`,
 							},
 							"source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Lever Hiring developer application.`,
@@ -109,30 +91,12 @@ func (r *SourceLeverHiringDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `The Api Key of your Lever Hiring account.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Api Key",
-											),
-										},
-										Description: `must be one of ["Api Key"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Lever Hiring.`,
 							},
 							"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Lever Hiring developer application.`,
@@ -162,17 +126,8 @@ func (r *SourceLeverHiringDataSource) Schema(ctx context.Context, req datasource
 								"Sandbox",
 							),
 						},
-						MarkdownDescription: `must be one of ["Production", "Sandbox"]` + "\n" +
+						MarkdownDescription: `must be one of ["Production", "Sandbox"]; Default: "Sandbox"` + "\n" +
 							`The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"lever-hiring",
-							),
-						},
-						Description: `must be one of ["lever-hiring"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

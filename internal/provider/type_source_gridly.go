@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGridly struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	GridID     types.String `tfsdk:"grid_id"`
-	SourceType types.String `tfsdk:"source_type"`
+	APIKey types.String `tfsdk:"api_key"`
+	GridID types.String `tfsdk:"grid_id"`
 }

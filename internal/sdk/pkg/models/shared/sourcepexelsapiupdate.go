@@ -16,3 +16,45 @@ type SourcePexelsAPIUpdate struct {
 	// Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
 	Size *string `json:"size,omitempty"`
 }
+
+func (o *SourcePexelsAPIUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePexelsAPIUpdate) GetColor() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Color
+}
+
+func (o *SourcePexelsAPIUpdate) GetLocale() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *SourcePexelsAPIUpdate) GetOrientation() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Orientation
+}
+
+func (o *SourcePexelsAPIUpdate) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourcePexelsAPIUpdate) GetSize() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Size
+}

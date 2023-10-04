@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceFreshsales struct {
 	APIKey string `json:"api_key"`
 	// The Name of your Freshsales domain
 	DomainName string                     `json:"domain_name"`
-	SourceType SourceFreshsalesFreshsales `json:"sourceType"`
+	sourceType SourceFreshsalesFreshsales `const:"freshsales" json:"sourceType"`
+}
+
+func (s SourceFreshsales) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshsales) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshsales) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshsales) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
+}
+
+func (o *SourceFreshsales) GetSourceType() SourceFreshsalesFreshsales {
+	return SourceFreshsalesFreshsalesFreshsales
 }

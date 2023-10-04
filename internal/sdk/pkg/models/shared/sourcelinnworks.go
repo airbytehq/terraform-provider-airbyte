@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -37,8 +38,51 @@ type SourceLinnworks struct {
 	ApplicationID string `json:"application_id"`
 	// Linnworks Application Secret
 	ApplicationSecret string                   `json:"application_secret"`
-	SourceType        SourceLinnworksLinnworks `json:"sourceType"`
+	sourceType        SourceLinnworksLinnworks `const:"linnworks" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	Token     string    `json:"token"`
+}
+
+func (s SourceLinnworks) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLinnworks) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLinnworks) GetApplicationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ApplicationID
+}
+
+func (o *SourceLinnworks) GetApplicationSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ApplicationSecret
+}
+
+func (o *SourceLinnworks) GetSourceType() SourceLinnworksLinnworks {
+	return SourceLinnworksLinnworksLinnworks
+}
+
+func (o *SourceLinnworks) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceLinnworks) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

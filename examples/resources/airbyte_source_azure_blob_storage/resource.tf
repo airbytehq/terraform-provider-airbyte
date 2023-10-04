@@ -7,13 +7,10 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     azure_blob_storage_endpoint               = "blob.core.windows.net"
     azure_blob_storage_schema_inference_limit = 500
     format = {
-      source_azure_blob_storage_input_format_json_lines_newline_delimited_json = {
-        format_type = "JSONL"
-      }
+      source_azure_blob_storage_input_format_json_lines_newline_delimited_json = {}
     }
-    source_type = "azure-blob-storage"
   }
-  name         = "Patty Mraz"
+  name         = "Margie Kutch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3f2ceda7-e23f-4225-b411-faf4b7544e47"
+  workspace_id = "187a0987-5344-412b-8321-7acbe2ad9f31"
 }

@@ -7,3 +7,24 @@ type SourceLaunchdarklyPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *SourceLaunchdarklyPutRequest) GetConfiguration() SourceLaunchdarklyUpdate {
+	if o == nil {
+		return SourceLaunchdarklyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLaunchdarklyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLaunchdarklyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

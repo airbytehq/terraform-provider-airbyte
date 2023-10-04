@@ -43,7 +43,6 @@ Read-Only:
 
 - `domestic_schedule_country_code` (String) Country code for domestic TV schedule retrieval.
 - `end_date` (String) End date for TV schedule retrieval. May be in the future. Optional.
-- `source_type` (String) must be one of ["tvmaze-schedule"]
 - `start_date` (String) Start date for TV schedule retrieval. May be in the future.
 - `web_schedule_country_code` (String) ISO 3166-1 country code for web TV schedule retrieval. Leave blank for
 all countries plus global web channels (e.g. Netflix). Alternatively,

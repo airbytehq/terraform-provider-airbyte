@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,5 +36,34 @@ type SourceConvex struct {
 	// API access key used to retrieve data from Convex.
 	AccessKey     string             `json:"access_key"`
 	DeploymentURL string             `json:"deployment_url"`
-	SourceType    SourceConvexConvex `json:"sourceType"`
+	sourceType    SourceConvexConvex `const:"convex" json:"sourceType"`
+}
+
+func (s SourceConvex) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceConvex) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceConvex) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *SourceConvex) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
+}
+
+func (o *SourceConvex) GetSourceType() SourceConvexConvex {
+	return SourceConvexConvexConvex
 }

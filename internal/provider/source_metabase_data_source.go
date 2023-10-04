@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -67,15 +65,6 @@ func (r *SourceMetabaseDataSource) Schema(ctx context.Context, req datasource.Sc
 							`  http://localhost:3000/api/session` + "\n" +
 							`` + "```" + ` Then copy the value of the ` + "`" + `id` + "`" + ` field returned by a successful call to that API.` + "\n" +
 							`Note that by default, sessions are good for 14 days and needs to be regenerated.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"metabase",
-							),
-						},
-						Description: `must be one of ["metabase"]`,
 					},
 					"username": schema.StringAttribute{
 						Computed: true,

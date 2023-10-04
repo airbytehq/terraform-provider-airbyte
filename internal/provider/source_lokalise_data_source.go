@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,15 +57,6 @@ func (r *SourceLokaliseDataSource) Schema(ctx context.Context, req datasource.Sc
 					"project_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `Lokalise project ID. Available at Project Settings > General.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"lokalise",
-							),
-						},
-						Description: `must be one of ["lokalise"]`,
 					},
 				},
 			},

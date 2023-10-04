@@ -7,3 +7,24 @@ type DestinationPubsubCreateRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *DestinationPubsubCreateRequest) GetConfiguration() DestinationPubsub {
+	if o == nil {
+		return DestinationPubsub{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationPubsubCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationPubsubCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

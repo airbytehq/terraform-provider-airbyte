@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -99,9 +100,52 @@ type SourceGooglePagespeedInsights struct {
 	APIKey *string `json:"api_key,omitempty"`
 	// Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".
 	Categories []SourceGooglePagespeedInsightsCategories            `json:"categories"`
-	SourceType SourceGooglePagespeedInsightsGooglePagespeedInsights `json:"sourceType"`
+	sourceType SourceGooglePagespeedInsightsGooglePagespeedInsights `const:"google-pagespeed-insights" json:"sourceType"`
 	// The analyses strategy to use. Either "desktop" or "mobile".
 	Strategies []SourceGooglePagespeedInsightsStrategies `json:"strategies"`
 	// The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 	Urls []string `json:"urls"`
+}
+
+func (s SourceGooglePagespeedInsights) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGooglePagespeedInsights) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGooglePagespeedInsights) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *SourceGooglePagespeedInsights) GetCategories() []SourceGooglePagespeedInsightsCategories {
+	if o == nil {
+		return []SourceGooglePagespeedInsightsCategories{}
+	}
+	return o.Categories
+}
+
+func (o *SourceGooglePagespeedInsights) GetSourceType() SourceGooglePagespeedInsightsGooglePagespeedInsights {
+	return SourceGooglePagespeedInsightsGooglePagespeedInsightsGooglePagespeedInsights
+}
+
+func (o *SourceGooglePagespeedInsights) GetStrategies() []SourceGooglePagespeedInsightsStrategies {
+	if o == nil {
+		return []SourceGooglePagespeedInsightsStrategies{}
+	}
+	return o.Strategies
+}
+
+func (o *SourceGooglePagespeedInsights) GetUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Urls
 }

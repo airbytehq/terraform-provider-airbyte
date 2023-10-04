@@ -37,10 +37,10 @@ data "airbyte_destination_sftp_json" "my_destination_sftpjson" {
 Read-Only:
 
 - `destination_path` (String) Path to the directory where json files will be written.
-- `destination_type` (String) must be one of ["sftp-json"]
 - `host` (String) Hostname of the SFTP server.
 - `password` (String) Password associated with the username.
-- `port` (Number) Port of the SFTP server.
+- `port` (Number) Default: 22
+Port of the SFTP server.
 - `username` (String) Username to use to access the SFTP server.
 
 

@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC struct {
 	DataToSync            types.String `tfsdk:"data_to_sync"`
 	InitialWaitingSeconds types.Int64  `tfsdk:"initial_waiting_seconds"`
-	Method                types.String `tfsdk:"method"`
 	SnapshotIsolation     types.String `tfsdk:"snapshot_isolation"`
 }

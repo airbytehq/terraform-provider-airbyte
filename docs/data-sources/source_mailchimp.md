@@ -43,7 +43,6 @@ Read-Only:
 
 - `campaign_id` (String)
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["mailchimp"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -61,7 +60,6 @@ Read-Only:
 Read-Only:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0"></a>
@@ -70,7 +68,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
@@ -81,7 +78,6 @@ Read-Only:
 Read-Only:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0"></a>
@@ -90,7 +86,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 

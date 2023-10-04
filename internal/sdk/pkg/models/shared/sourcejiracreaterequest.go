@@ -9,3 +9,31 @@ type SourceJiraCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceJiraCreateRequest) GetConfiguration() SourceJira {
+	if o == nil {
+		return SourceJira{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceJiraCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceJiraCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceJiraCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

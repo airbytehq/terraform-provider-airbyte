@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -111,11 +112,57 @@ type DestinationDynamodbUpdate struct {
 	// The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
 	AccessKeyID string `json:"access_key_id"`
 	// This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
-	DynamodbEndpoint *string `json:"dynamodb_endpoint,omitempty"`
+	DynamodbEndpoint *string `default:"" json:"dynamodb_endpoint"`
 	// The region of the DynamoDB.
-	DynamodbRegion DestinationDynamodbUpdateDynamoDBRegion `json:"dynamodb_region"`
+	DynamodbRegion *DestinationDynamodbUpdateDynamoDBRegion `default:"" json:"dynamodb_region"`
 	// The prefix to use when naming DynamoDB tables.
 	DynamodbTableNamePrefix string `json:"dynamodb_table_name_prefix"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey string `json:"secret_access_key"`
+}
+
+func (d DestinationDynamodbUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDynamodbUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDynamodbUpdate) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationDynamodbUpdate) GetDynamodbEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DynamodbEndpoint
+}
+
+func (o *DestinationDynamodbUpdate) GetDynamodbRegion() *DestinationDynamodbUpdateDynamoDBRegion {
+	if o == nil {
+		return nil
+	}
+	return o.DynamodbRegion
+}
+
+func (o *DestinationDynamodbUpdate) GetDynamodbTableNamePrefix() string {
+	if o == nil {
+		return ""
+	}
+	return o.DynamodbTableNamePrefix
+}
+
+func (o *DestinationDynamodbUpdate) GetSecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretAccessKey
 }

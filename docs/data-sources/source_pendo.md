@@ -42,6 +42,5 @@ data "airbyte_source_pendo" "my_source_pendo" {
 Read-Only:
 
 - `api_key` (String)
-- `source_type` (String) must be one of ["pendo"]
 
 

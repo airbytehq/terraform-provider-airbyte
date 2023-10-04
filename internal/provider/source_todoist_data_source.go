@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceTodoistDataSource struct {
 
 // SourceTodoistDataSourceModel describes the data model.
 type SourceTodoistDataSourceModel struct {
-	Configuration SourceTodoist `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration DestinationMilvusIndexingAuthenticationAPIToken `tfsdk:"configuration"`
+	Name          types.String                                    `tfsdk:"name"`
+	SecretID      types.String                                    `tfsdk:"secret_id"`
+	SourceID      types.String                                    `tfsdk:"source_id"`
+	WorkspaceID   types.String                                    `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -52,15 +50,6 @@ func (r *SourceTodoistDataSource) Schema(ctx context.Context, req datasource.Sch
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"todoist",
-							),
-						},
-						Description: `must be one of ["todoist"]`,
-					},
 					"token": schema.StringAttribute{
 						Computed:    true,
 						Description: `Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.`,

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,7 +35,36 @@ func (e *SourceConfigcatConfigcat) UnmarshalJSON(data []byte) error {
 type SourceConfigcat struct {
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Password   string                   `json:"password"`
-	SourceType SourceConfigcatConfigcat `json:"sourceType"`
+	sourceType SourceConfigcatConfigcat `const:"configcat" json:"sourceType"`
 	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Username string `json:"username"`
+}
+
+func (s SourceConfigcat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceConfigcat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceConfigcat) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceConfigcat) GetSourceType() SourceConfigcatConfigcat {
+	return SourceConfigcatConfigcatConfigcat
+}
+
+func (o *SourceConfigcat) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

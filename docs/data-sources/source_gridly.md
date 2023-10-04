@@ -43,6 +43,5 @@ Read-Only:
 
 - `api_key` (String)
 - `grid_id` (String) ID of a grid, or can be ID of a branch
-- `source_type` (String) must be one of ["gridly"]
 
 

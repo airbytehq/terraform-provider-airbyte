@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceLemlistLemlist) UnmarshalJSON(data []byte) error {
 type SourceLemlist struct {
 	// Lemlist API key,
 	APIKey     string               `json:"api_key"`
-	SourceType SourceLemlistLemlist `json:"sourceType"`
+	sourceType SourceLemlistLemlist `const:"lemlist" json:"sourceType"`
+}
+
+func (s SourceLemlist) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLemlist) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLemlist) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceLemlist) GetSourceType() SourceLemlistLemlist {
+	return SourceLemlistLemlistLemlist
 }

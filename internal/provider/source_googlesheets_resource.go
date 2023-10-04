@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,15 +60,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 							"source_google_sheets_authentication_authenticate_via_google_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
@@ -88,15 +78,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 							"source_google_sheets_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
@@ -107,15 +88,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 							"source_google_sheets_update_authentication_authenticate_via_google_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
@@ -134,15 +106,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 							"source_google_sheets_update_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
@@ -157,17 +120,9 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						Description: `Credentials for connecting to the Google Sheets API`,
 					},
 					"names_conversion": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-sheets",
-							),
-						},
-						Description: `must be one of ["google-sheets"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Required:    true,
@@ -245,7 +200,7 @@ func (r *SourceGoogleSheetsResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGoogleSheets(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

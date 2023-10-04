@@ -4,6 +4,7 @@ package operations
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"airbyte/internal/sdk/pkg/utils"
 	"net/http"
 )
 
@@ -11,15 +12,78 @@ type GetStreamPropertiesRequest struct {
 	// ID of the destination
 	DestinationID string `queryParam:"style=form,explode=true,name=destinationId"`
 	// If true pull the latest schema from the source, else pull from cache (default false)
-	IgnoreCache *bool `queryParam:"style=form,explode=true,name=ignoreCache"`
+	IgnoreCache *bool `default:"false" queryParam:"style=form,explode=true,name=ignoreCache"`
 	// ID of the source
 	SourceID string `queryParam:"style=form,explode=true,name=sourceId"`
 }
 
+func (g GetStreamPropertiesRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GetStreamPropertiesRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetStreamPropertiesRequest) GetDestinationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationID
+}
+
+func (o *GetStreamPropertiesRequest) GetIgnoreCache() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IgnoreCache
+}
+
+func (o *GetStreamPropertiesRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type GetStreamPropertiesResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Get the available streams properties for a source/destination pair.
 	StreamPropertiesResponse *shared.StreamPropertiesResponse
+}
+
+func (o *GetStreamPropertiesResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetStreamPropertiesResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetStreamPropertiesResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetStreamPropertiesResponse) GetStreamPropertiesResponse() *shared.StreamPropertiesResponse {
+	if o == nil {
+		return nil
+	}
+	return o.StreamPropertiesResponse
 }

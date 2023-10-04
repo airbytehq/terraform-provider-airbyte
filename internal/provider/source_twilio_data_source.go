@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,17 +61,9 @@ func (r *SourceTwilioDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `Twilio Auth Token.`,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How far into the past to look for records. (in minutes)`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"twilio",
-							),
-						},
-						Description: `must be one of ["twilio"]`,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`How far into the past to look for records. (in minutes)`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

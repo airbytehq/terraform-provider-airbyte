@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -68,15 +66,6 @@ func (r *DestinationGoogleSheetsDataSource) Schema(ctx context.Context, req data
 							},
 						},
 						Description: `Google API Credentials for connecting to Google Sheets and Google Drive APIs`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-sheets",
-							),
-						},
-						Description: `must be one of ["google-sheets"]`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Computed:    true,

@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,7 +35,22 @@ func (e *SourceAlloydbUpdateReplicationMethodStandardMethod) UnmarshalJSON(data 
 
 // SourceAlloydbUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
 type SourceAlloydbUpdateReplicationMethodStandard struct {
-	Method SourceAlloydbUpdateReplicationMethodStandardMethod `json:"method"`
+	method SourceAlloydbUpdateReplicationMethodStandardMethod `const:"Standard" json:"method"`
+}
+
+func (s SourceAlloydbUpdateReplicationMethodStandard) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAlloydbUpdateReplicationMethodStandard) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAlloydbUpdateReplicationMethodStandard) GetMethod() SourceAlloydbUpdateReplicationMethodStandardMethod {
+	return SourceAlloydbUpdateReplicationMethodStandardMethodStandard
 }
 
 // SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
@@ -117,71 +132,84 @@ func (e *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin) Unmars
 
 // SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC - Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.
 type SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
+	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
 	// Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour `json:"lsn_commit_behaviour,omitempty"`
-	Method             SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCMethod              `json:"method"`
+	LsnCommitBehaviour *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
+	method             SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCMethod              `const:"CDC" json:"method"`
 	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin `json:"plugin,omitempty"`
+	Plugin *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin `default:"pgoutput" json:"plugin"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
 	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
-	QueueSize *int64 `json:"queue_size,omitempty"`
+	QueueSize *int64 `default:"10000" json:"queue_size"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
 
-func (c *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC{}
+func (s SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "initial_waiting_seconds")
-	delete(additionalFields, "lsn_commit_behaviour")
-	delete(additionalFields, "method")
-	delete(additionalFields, "plugin")
-	delete(additionalFields, "publication")
-	delete(additionalFields, "queue_size")
-	delete(additionalFields, "replication_slot")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
 	}
+	return o.InitialWaitingSeconds
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetLsnCommitBehaviour() *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour {
+	if o == nil {
+		return nil
 	}
+	return o.LsnCommitBehaviour
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetMethod() SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCMethod {
+	return SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCMethodCdc
+}
+
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetPlugin() *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin {
+	if o == nil {
+		return nil
 	}
+	return o.Plugin
+}
 
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetPublication() string {
+	if o == nil {
+		return ""
+	}
+	return o.Publication
+}
+
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetQueueSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.QueueSize
+}
+
+func (o *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) GetReplicationSlot() string {
+	if o == nil {
+		return ""
+	}
+	return o.ReplicationSlot
 }
 
 type SourceAlloydbUpdateReplicationMethodStandardXminMethod string
@@ -210,7 +238,22 @@ func (e *SourceAlloydbUpdateReplicationMethodStandardXminMethod) UnmarshalJSON(d
 
 // SourceAlloydbUpdateReplicationMethodStandardXmin - Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.
 type SourceAlloydbUpdateReplicationMethodStandardXmin struct {
-	Method SourceAlloydbUpdateReplicationMethodStandardXminMethod `json:"method"`
+	method SourceAlloydbUpdateReplicationMethodStandardXminMethod `const:"Xmin" json:"method"`
+}
+
+func (s SourceAlloydbUpdateReplicationMethodStandardXmin) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAlloydbUpdateReplicationMethodStandardXmin) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAlloydbUpdateReplicationMethodStandardXmin) GetMethod() SourceAlloydbUpdateReplicationMethodStandardXminMethod {
+	return SourceAlloydbUpdateReplicationMethodStandardXminMethodXmin
 }
 
 type SourceAlloydbUpdateReplicationMethodType string
@@ -257,30 +300,23 @@ func CreateSourceAlloydbUpdateReplicationMethodSourceAlloydbUpdateReplicationMet
 }
 
 func (u *SourceAlloydbUpdateReplicationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceAlloydbUpdateReplicationMethodStandardXmin := new(SourceAlloydbUpdateReplicationMethodStandardXmin)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodStandardXmin); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateReplicationMethodStandardXmin, "", true, true); err == nil {
 		u.SourceAlloydbUpdateReplicationMethodStandardXmin = sourceAlloydbUpdateReplicationMethodStandardXmin
 		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandardXmin
 		return nil
 	}
 
 	sourceAlloydbUpdateReplicationMethodStandard := new(SourceAlloydbUpdateReplicationMethodStandard)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodStandard); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateReplicationMethodStandard, "", true, true); err == nil {
 		u.SourceAlloydbUpdateReplicationMethodStandard = sourceAlloydbUpdateReplicationMethodStandard
 		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard
 		return nil
 	}
 
 	sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC := new(SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC, "", true, true); err == nil {
 		u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC = sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
 		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
 		return nil
@@ -291,18 +327,18 @@ func (u *SourceAlloydbUpdateReplicationMethod) UnmarshalJSON(data []byte) error 
 
 func (u SourceAlloydbUpdateReplicationMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceAlloydbUpdateReplicationMethodStandardXmin != nil {
-		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandardXmin)
-	}
-
-	if u.SourceAlloydbUpdateReplicationMethodStandard != nil {
-		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandard)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateReplicationMethodStandardXmin, "", true)
 	}
 
 	if u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
-		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC, "", true)
 	}
 
-	return nil, nil
+	if u.SourceAlloydbUpdateReplicationMethodStandard != nil {
+		return utils.MarshalJSON(u.SourceAlloydbUpdateReplicationMethodStandard, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAlloydbUpdateSSLModesVerifyFullMode string
@@ -331,6 +367,7 @@ func (e *SourceAlloydbUpdateSSLModesVerifyFullMode) UnmarshalJSON(data []byte) e
 
 // SourceAlloydbUpdateSSLModesVerifyFull - This is the most secure mode. Always require encryption and verifies the identity of the source database server.
 type SourceAlloydbUpdateSSLModesVerifyFull struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -339,57 +376,57 @@ type SourceAlloydbUpdateSSLModesVerifyFull struct {
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                                   `json:"client_key_password,omitempty"`
-	Mode              SourceAlloydbUpdateSSLModesVerifyFullMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	mode              SourceAlloydbUpdateSSLModesVerifyFullMode `const:"verify-full" json:"mode"`
 }
-type _SourceAlloydbUpdateSSLModesVerifyFull SourceAlloydbUpdateSSLModesVerifyFull
 
-func (c *SourceAlloydbUpdateSSLModesVerifyFull) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateSSLModesVerifyFull{}
+func (s SourceAlloydbUpdateSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateSSLModesVerifyFull) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateSSLModesVerifyFull(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "ca_certificate")
-	delete(additionalFields, "client_certificate")
-	delete(additionalFields, "client_key")
-	delete(additionalFields, "client_key_password")
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateSSLModesVerifyFull(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyFull) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyFull) GetCaCertificate() string {
+	if o == nil {
+		return ""
 	}
+	return o.CaCertificate
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyFull) GetClientCertificate() *string {
+	if o == nil {
+		return nil
 	}
+	return o.ClientCertificate
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyFull) GetClientKey() *string {
+	if o == nil {
+		return nil
 	}
+	return o.ClientKey
+}
 
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateSSLModesVerifyFull) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourceAlloydbUpdateSSLModesVerifyFull) GetMode() SourceAlloydbUpdateSSLModesVerifyFullMode {
+	return SourceAlloydbUpdateSSLModesVerifyFullModeVerifyFull
 }
 
 type SourceAlloydbUpdateSSLModesVerifyCaMode string
@@ -418,6 +455,7 @@ func (e *SourceAlloydbUpdateSSLModesVerifyCaMode) UnmarshalJSON(data []byte) err
 
 // SourceAlloydbUpdateSSLModesVerifyCa - Always require encryption and verifies that the source database server has a valid SSL certificate.
 type SourceAlloydbUpdateSSLModesVerifyCa struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -426,57 +464,57 @@ type SourceAlloydbUpdateSSLModesVerifyCa struct {
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                                 `json:"client_key_password,omitempty"`
-	Mode              SourceAlloydbUpdateSSLModesVerifyCaMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	mode              SourceAlloydbUpdateSSLModesVerifyCaMode `const:"verify-ca" json:"mode"`
 }
-type _SourceAlloydbUpdateSSLModesVerifyCa SourceAlloydbUpdateSSLModesVerifyCa
 
-func (c *SourceAlloydbUpdateSSLModesVerifyCa) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateSSLModesVerifyCa{}
+func (s SourceAlloydbUpdateSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateSSLModesVerifyCa) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateSSLModesVerifyCa(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "ca_certificate")
-	delete(additionalFields, "client_certificate")
-	delete(additionalFields, "client_key")
-	delete(additionalFields, "client_key_password")
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateSSLModesVerifyCa(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyCa) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyCa) GetCaCertificate() string {
+	if o == nil {
+		return ""
 	}
+	return o.CaCertificate
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyCa) GetClientCertificate() *string {
+	if o == nil {
+		return nil
 	}
+	return o.ClientCertificate
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesVerifyCa) GetClientKey() *string {
+	if o == nil {
+		return nil
 	}
+	return o.ClientKey
+}
 
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateSSLModesVerifyCa) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourceAlloydbUpdateSSLModesVerifyCa) GetMode() SourceAlloydbUpdateSSLModesVerifyCaMode {
+	return SourceAlloydbUpdateSSLModesVerifyCaModeVerifyCa
 }
 
 type SourceAlloydbUpdateSSLModesRequireMode string
@@ -505,53 +543,30 @@ func (e *SourceAlloydbUpdateSSLModesRequireMode) UnmarshalJSON(data []byte) erro
 
 // SourceAlloydbUpdateSSLModesRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
 type SourceAlloydbUpdateSSLModesRequire struct {
-	Mode SourceAlloydbUpdateSSLModesRequireMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	AdditionalProperties interface{}                            `additionalProperties:"true" json:"-"`
+	mode                 SourceAlloydbUpdateSSLModesRequireMode `const:"require" json:"mode"`
 }
-type _SourceAlloydbUpdateSSLModesRequire SourceAlloydbUpdateSSLModesRequire
 
-func (c *SourceAlloydbUpdateSSLModesRequire) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateSSLModesRequire{}
+func (s SourceAlloydbUpdateSSLModesRequire) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateSSLModesRequire) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateSSLModesRequire(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateSSLModesRequire) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateSSLModesRequire(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesRequire) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateSSLModesRequire) GetMode() SourceAlloydbUpdateSSLModesRequireMode {
+	return SourceAlloydbUpdateSSLModesRequireModeRequire
 }
 
 type SourceAlloydbUpdateSSLModesPreferMode string
@@ -580,53 +595,30 @@ func (e *SourceAlloydbUpdateSSLModesPreferMode) UnmarshalJSON(data []byte) error
 
 // SourceAlloydbUpdateSSLModesPrefer - Allows unencrypted connection only if the source database does not support encryption.
 type SourceAlloydbUpdateSSLModesPrefer struct {
-	Mode SourceAlloydbUpdateSSLModesPreferMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	AdditionalProperties interface{}                           `additionalProperties:"true" json:"-"`
+	mode                 SourceAlloydbUpdateSSLModesPreferMode `const:"prefer" json:"mode"`
 }
-type _SourceAlloydbUpdateSSLModesPrefer SourceAlloydbUpdateSSLModesPrefer
 
-func (c *SourceAlloydbUpdateSSLModesPrefer) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateSSLModesPrefer{}
+func (s SourceAlloydbUpdateSSLModesPrefer) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateSSLModesPrefer) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateSSLModesPrefer(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateSSLModesPrefer) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateSSLModesPrefer(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesPrefer) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateSSLModesPrefer) GetMode() SourceAlloydbUpdateSSLModesPreferMode {
+	return SourceAlloydbUpdateSSLModesPreferModePrefer
 }
 
 type SourceAlloydbUpdateSSLModesAllowMode string
@@ -655,53 +647,30 @@ func (e *SourceAlloydbUpdateSSLModesAllowMode) UnmarshalJSON(data []byte) error 
 
 // SourceAlloydbUpdateSSLModesAllow - Enables encryption only when required by the source database.
 type SourceAlloydbUpdateSSLModesAllow struct {
-	Mode SourceAlloydbUpdateSSLModesAllowMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	AdditionalProperties interface{}                          `additionalProperties:"true" json:"-"`
+	mode                 SourceAlloydbUpdateSSLModesAllowMode `const:"allow" json:"mode"`
 }
-type _SourceAlloydbUpdateSSLModesAllow SourceAlloydbUpdateSSLModesAllow
 
-func (c *SourceAlloydbUpdateSSLModesAllow) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateSSLModesAllow{}
+func (s SourceAlloydbUpdateSSLModesAllow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateSSLModesAllow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateSSLModesAllow(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateSSLModesAllow) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateSSLModesAllow(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesAllow) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateSSLModesAllow) GetMode() SourceAlloydbUpdateSSLModesAllowMode {
+	return SourceAlloydbUpdateSSLModesAllowModeAllow
 }
 
 type SourceAlloydbUpdateSSLModesDisableMode string
@@ -730,53 +699,30 @@ func (e *SourceAlloydbUpdateSSLModesDisableMode) UnmarshalJSON(data []byte) erro
 
 // SourceAlloydbUpdateSSLModesDisable - Disables encryption of communication between Airbyte and source database.
 type SourceAlloydbUpdateSSLModesDisable struct {
-	Mode SourceAlloydbUpdateSSLModesDisableMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	AdditionalProperties interface{}                            `additionalProperties:"true" json:"-"`
+	mode                 SourceAlloydbUpdateSSLModesDisableMode `const:"disable" json:"mode"`
 }
-type _SourceAlloydbUpdateSSLModesDisable SourceAlloydbUpdateSSLModesDisable
 
-func (c *SourceAlloydbUpdateSSLModesDisable) UnmarshalJSON(bs []byte) error {
-	data := _SourceAlloydbUpdateSSLModesDisable{}
+func (s SourceAlloydbUpdateSSLModesDisable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceAlloydbUpdateSSLModesDisable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceAlloydbUpdateSSLModesDisable(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceAlloydbUpdateSSLModesDisable) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceAlloydbUpdateSSLModesDisable(c))
-	if err != nil {
-		return nil, err
+func (o *SourceAlloydbUpdateSSLModesDisable) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+func (o *SourceAlloydbUpdateSSLModesDisable) GetMode() SourceAlloydbUpdateSSLModesDisableMode {
+	return SourceAlloydbUpdateSSLModesDisableModeDisable
 }
 
 type SourceAlloydbUpdateSSLModesType string
@@ -856,57 +802,44 @@ func CreateSourceAlloydbUpdateSSLModesSourceAlloydbUpdateSSLModesVerifyFull(sour
 }
 
 func (u *SourceAlloydbUpdateSSLModes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceAlloydbUpdateSSLModesDisable := new(SourceAlloydbUpdateSSLModesDisable)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSLModesDisable); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSLModesDisable, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSLModesDisable = sourceAlloydbUpdateSSLModesDisable
 		u.Type = SourceAlloydbUpdateSSLModesTypeSourceAlloydbUpdateSSLModesDisable
 		return nil
 	}
 
 	sourceAlloydbUpdateSSLModesAllow := new(SourceAlloydbUpdateSSLModesAllow)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSLModesAllow); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSLModesAllow, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSLModesAllow = sourceAlloydbUpdateSSLModesAllow
 		u.Type = SourceAlloydbUpdateSSLModesTypeSourceAlloydbUpdateSSLModesAllow
 		return nil
 	}
 
 	sourceAlloydbUpdateSSLModesPrefer := new(SourceAlloydbUpdateSSLModesPrefer)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSLModesPrefer); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSLModesPrefer, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSLModesPrefer = sourceAlloydbUpdateSSLModesPrefer
 		u.Type = SourceAlloydbUpdateSSLModesTypeSourceAlloydbUpdateSSLModesPrefer
 		return nil
 	}
 
 	sourceAlloydbUpdateSSLModesRequire := new(SourceAlloydbUpdateSSLModesRequire)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSLModesRequire); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSLModesRequire, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSLModesRequire = sourceAlloydbUpdateSSLModesRequire
 		u.Type = SourceAlloydbUpdateSSLModesTypeSourceAlloydbUpdateSSLModesRequire
 		return nil
 	}
 
 	sourceAlloydbUpdateSSLModesVerifyCa := new(SourceAlloydbUpdateSSLModesVerifyCa)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSLModesVerifyCa); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSLModesVerifyCa, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSLModesVerifyCa = sourceAlloydbUpdateSSLModesVerifyCa
 		u.Type = SourceAlloydbUpdateSSLModesTypeSourceAlloydbUpdateSSLModesVerifyCa
 		return nil
 	}
 
 	sourceAlloydbUpdateSSLModesVerifyFull := new(SourceAlloydbUpdateSSLModesVerifyFull)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSLModesVerifyFull); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSLModesVerifyFull, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSLModesVerifyFull = sourceAlloydbUpdateSSLModesVerifyFull
 		u.Type = SourceAlloydbUpdateSSLModesTypeSourceAlloydbUpdateSSLModesVerifyFull
 		return nil
@@ -917,30 +850,30 @@ func (u *SourceAlloydbUpdateSSLModes) UnmarshalJSON(data []byte) error {
 
 func (u SourceAlloydbUpdateSSLModes) MarshalJSON() ([]byte, error) {
 	if u.SourceAlloydbUpdateSSLModesDisable != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSLModesDisable)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSLModesDisable, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSLModesAllow != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSLModesAllow)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSLModesAllow, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSLModesPrefer != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSLModesPrefer)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSLModesPrefer, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSLModesRequire != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSLModesRequire)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSLModesRequire, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSLModesVerifyCa != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSLModesVerifyCa)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSLModesVerifyCa, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSLModesVerifyFull != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSLModesVerifyFull)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSLModesVerifyFull, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceAlloydbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -973,13 +906,56 @@ type SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceAlloydbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceAlloydbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (s SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() SourceAlloydbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return SourceAlloydbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -1014,11 +990,54 @@ type SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (s SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -1049,7 +1068,22 @@ func (e *SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(d
 // SourceAlloydbUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceAlloydbUpdateSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceAlloydbUpdateSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAlloydbUpdateSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAlloydbUpdateSSHTunnelMethodNoTunnel) GetTunnelMethod() SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+	return SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type SourceAlloydbUpdateSSHTunnelMethodType string
@@ -1096,30 +1130,23 @@ func CreateSourceAlloydbUpdateSSHTunnelMethodSourceAlloydbUpdateSSHTunnelMethodP
 }
 
 func (u *SourceAlloydbUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceAlloydbUpdateSSHTunnelMethodNoTunnel := new(SourceAlloydbUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSHTunnelMethodNoTunnel = sourceAlloydbUpdateSSHTunnelMethodNoTunnel
 		u.Type = SourceAlloydbUpdateSSHTunnelMethodTypeSourceAlloydbUpdateSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication := new(SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication = sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication
 		u.Type = SourceAlloydbUpdateSSHTunnelMethodTypeSourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication := new(SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication = sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication
 		u.Type = SourceAlloydbUpdateSSHTunnelMethodTypeSourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -1130,18 +1157,18 @@ func (u *SourceAlloydbUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
 func (u SourceAlloydbUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceAlloydbUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAlloydbUpdate struct {
@@ -1154,7 +1181,7 @@ type SourceAlloydbUpdate struct {
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"5432" json:"port"`
 	// Replication method for extracting data from the database.
 	ReplicationMethod *SourceAlloydbUpdateReplicationMethod `json:"replication_method,omitempty"`
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
@@ -1166,4 +1193,85 @@ type SourceAlloydbUpdate struct {
 	TunnelMethod *SourceAlloydbUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceAlloydbUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAlloydbUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAlloydbUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceAlloydbUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceAlloydbUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceAlloydbUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceAlloydbUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceAlloydbUpdate) GetReplicationMethod() *SourceAlloydbUpdateReplicationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicationMethod
+}
+
+func (o *SourceAlloydbUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceAlloydbUpdate) GetSslMode() *SourceAlloydbUpdateSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
+func (o *SourceAlloydbUpdate) GetTunnelMethod() *SourceAlloydbUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceAlloydbUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

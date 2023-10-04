@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -56,15 +55,6 @@ func (r *SourceBrazeDataSource) Schema(ctx context.Context, req datasource.Schem
 					"api_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Braze REST API key`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"braze",
-							),
-						},
-						Description: `must be one of ["braze"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

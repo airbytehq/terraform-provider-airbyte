@@ -45,12 +45,11 @@ Read-Only:
 - `client_secret` (String) OAuth2.0 Client Secret
 - `dc_region` (String) must be one of ["US", "AU", "EU", "IN", "CN", "JP"]
 Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
-- `edition` (String) must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]
+- `edition` (String) must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]; Default: "Free"
 Choose your Edition of Zoho CRM to determine API Concurrency Limits
 - `environment` (String) must be one of ["Production", "Developer", "Sandbox"]
 Please choose the environment
 - `refresh_token` (String) OAuth2.0 Refresh Token
-- `source_type` (String) must be one of ["zoho-crm"]
 - `start_datetime` (String) ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 
 

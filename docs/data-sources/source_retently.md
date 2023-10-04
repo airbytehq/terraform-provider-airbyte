@@ -42,7 +42,6 @@ data "airbyte_source_retently" "my_source_retently" {
 Read-Only:
 
 - `credentials` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["retently"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -57,13 +56,9 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_retently_authentication_mechanism_authenticate_via_retently_o_auth`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
-- `auth_type` (String) must be one of ["Client"]
+- `additional_properties` (String) Parsed as JSON.
 - `client_id` (String) The Client ID of your Retently developer application.
 - `client_secret` (String) The Client Secret of your Retently developer application.
 - `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
@@ -72,26 +67,18 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_retently_authentication_mechanism_authenticate_with_api_token`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
+- `additional_properties` (String) Parsed as JSON.
 - `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
-- `auth_type` (String) must be one of ["Token"]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
-- `auth_type` (String) must be one of ["Client"]
+- `additional_properties` (String) Parsed as JSON.
 - `client_id` (String) The Client ID of your Retently developer application.
 - `client_secret` (String) The Client Secret of your Retently developer application.
 - `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
@@ -100,13 +87,9 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_with_api_token`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
+- `additional_properties` (String) Parsed as JSON.
 - `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
-- `auth_type` (String) must be one of ["Token"]
 
 

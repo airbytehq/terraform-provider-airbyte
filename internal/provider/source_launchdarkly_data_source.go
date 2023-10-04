@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceLaunchdarklyDataSource struct {
 
 // SourceLaunchdarklyDataSourceModel describes the data model.
 type SourceLaunchdarklyDataSourceModel struct {
-	Configuration SourceLaunchdarkly `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration SourceAuth0AuthenticationMethodOAuth2AccessToken `tfsdk:"configuration"`
+	Name          types.String                                     `tfsdk:"name"`
+	SecretID      types.String                                     `tfsdk:"secret_id"`
+	SourceID      types.String                                     `tfsdk:"source_id"`
+	WorkspaceID   types.String                                     `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -55,15 +53,6 @@ func (r *SourceLaunchdarklyDataSource) Schema(ctx context.Context, req datasourc
 					"access_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"launchdarkly",
-							),
-						},
-						Description: `must be one of ["launchdarkly"]`,
 					},
 				},
 			},

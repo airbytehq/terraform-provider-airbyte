@@ -18,12 +18,11 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     email           = "john@doe.com"
     logs_batch_size = 30
     password        = "...my_password..."
-    source_type     = "my-hours"
-    start_date      = "2016-01-01"
+    start_date      = "%Y-%m-%d"
   }
-  name         = "Elsa Kerluke"
+  name         = "Stacey Herzog"
   secret_id    = "...my_secret_id..."
-  workspace_id = "922151fe-1712-4099-853e-9f543d854439"
+  workspace_id = "57a2c261-8fe1-4b91-9cce-8e649d7675fb"
 }
 ```
 
@@ -52,11 +51,11 @@ Required:
 
 - `email` (String) Your My Hours username
 - `password` (String) The password associated to the username
-- `source_type` (String) must be one of ["my-hours"]
 - `start_date` (String) Start date for collecting time logs
 
 Optional:
 
-- `logs_batch_size` (Number) Pagination size used for retrieving logs in days
+- `logs_batch_size` (Number) Default: 30
+Pagination size used for retrieving logs in days
 
 

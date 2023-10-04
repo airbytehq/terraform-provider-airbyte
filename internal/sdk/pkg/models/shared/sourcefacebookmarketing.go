@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -666,7 +667,7 @@ type SourceFacebookMarketingInsightConfig struct {
 	// A list of chosen action_breakdowns for action_breakdowns
 	ActionBreakdowns []SourceFacebookMarketingInsightConfigValidActionBreakdowns `json:"action_breakdowns,omitempty"`
 	// Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
-	ActionReportTime *SourceFacebookMarketingInsightConfigActionReportTime `json:"action_report_time,omitempty"`
+	ActionReportTime *SourceFacebookMarketingInsightConfigActionReportTime `default:"mixed" json:"action_report_time"`
 	// A list of chosen breakdowns for breakdowns
 	Breakdowns []SourceFacebookMarketingInsightConfigValidBreakdowns `json:"breakdowns,omitempty"`
 	// The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
@@ -674,15 +675,96 @@ type SourceFacebookMarketingInsightConfig struct {
 	// A list of chosen fields for fields parameter
 	Fields []SourceFacebookMarketingInsightConfigValidEnums `json:"fields,omitempty"`
 	// The attribution window
-	InsightsLookbackWindow *int64 `json:"insights_lookback_window,omitempty"`
+	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
 	// Chosen level for API
-	Level *SourceFacebookMarketingInsightConfigLevel `json:"level,omitempty"`
+	Level *SourceFacebookMarketingInsightConfigLevel `default:"ad" json:"level"`
 	// The name value of insight
 	Name string `json:"name"`
 	// The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).
-	TimeIncrement *int64 `json:"time_increment,omitempty"`
+	TimeIncrement *int64 `default:"1" json:"time_increment"`
+}
+
+func (s SourceFacebookMarketingInsightConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFacebookMarketingInsightConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetActionBreakdowns() []SourceFacebookMarketingInsightConfigValidActionBreakdowns {
+	if o == nil {
+		return nil
+	}
+	return o.ActionBreakdowns
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetActionReportTime() *SourceFacebookMarketingInsightConfigActionReportTime {
+	if o == nil {
+		return nil
+	}
+	return o.ActionReportTime
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetBreakdowns() []SourceFacebookMarketingInsightConfigValidBreakdowns {
+	if o == nil {
+		return nil
+	}
+	return o.Breakdowns
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetFields() []SourceFacebookMarketingInsightConfigValidEnums {
+	if o == nil {
+		return nil
+	}
+	return o.Fields
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetInsightsLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsLookbackWindow
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetLevel() *SourceFacebookMarketingInsightConfigLevel {
+	if o == nil {
+		return nil
+	}
+	return o.Level
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetTimeIncrement() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TimeIncrement
 }
 
 type SourceFacebookMarketingFacebookMarketing string
@@ -715,7 +797,7 @@ type SourceFacebookMarketing struct {
 	// The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. Open your Meta Ads Manager. The Ad account ID number is in the account dropdown menu or in your browser's address bar. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
 	AccountID string `json:"account_id"`
 	// Allows action_breakdowns to be an empty list
-	ActionBreakdownsAllowEmpty *bool `json:"action_breakdowns_allow_empty,omitempty"`
+	ActionBreakdownsAllowEmpty *bool `default:"true" json:"action_breakdowns_allow_empty"`
 	// The Client Id for your OAuth app
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret for your OAuth app
@@ -725,16 +807,122 @@ type SourceFacebookMarketing struct {
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
-	FetchThumbnailImages *bool `json:"fetch_thumbnail_images,omitempty"`
+	FetchThumbnailImages *bool `default:"false" json:"fetch_thumbnail_images"`
 	// Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.
-	IncludeDeleted *bool `json:"include_deleted,omitempty"`
+	IncludeDeleted *bool `default:"false" json:"include_deleted"`
 	// The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
-	InsightsLookbackWindow *int64 `json:"insights_lookback_window,omitempty"`
+	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
 	// Maximum batch size used when sending batch requests to Facebook API. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
-	MaxBatchSize *int64 `json:"max_batch_size,omitempty"`
+	MaxBatchSize *int64 `default:"50" json:"max_batch_size"`
 	// Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
-	PageSize   *int64                                   `json:"page_size,omitempty"`
-	SourceType SourceFacebookMarketingFacebookMarketing `json:"sourceType"`
+	PageSize   *int64                                   `default:"100" json:"page_size"`
+	sourceType SourceFacebookMarketingFacebookMarketing `const:"facebook-marketing" json:"sourceType"`
 	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceFacebookMarketing) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFacebookMarketing) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFacebookMarketing) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceFacebookMarketing) GetAccountID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountID
+}
+
+func (o *SourceFacebookMarketing) GetActionBreakdownsAllowEmpty() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ActionBreakdownsAllowEmpty
+}
+
+func (o *SourceFacebookMarketing) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceFacebookMarketing) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceFacebookMarketing) GetCustomInsights() []SourceFacebookMarketingInsightConfig {
+	if o == nil {
+		return nil
+	}
+	return o.CustomInsights
+}
+
+func (o *SourceFacebookMarketing) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceFacebookMarketing) GetFetchThumbnailImages() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FetchThumbnailImages
+}
+
+func (o *SourceFacebookMarketing) GetIncludeDeleted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeDeleted
+}
+
+func (o *SourceFacebookMarketing) GetInsightsLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsLookbackWindow
+}
+
+func (o *SourceFacebookMarketing) GetMaxBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxBatchSize
+}
+
+func (o *SourceFacebookMarketing) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *SourceFacebookMarketing) GetSourceType() SourceFacebookMarketingFacebookMarketing {
+	return SourceFacebookMarketingFacebookMarketingFacebookMarketing
+}
+
+func (o *SourceFacebookMarketing) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

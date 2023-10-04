@@ -17,11 +17,10 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
   configuration = {
     account_sid = "...my_account_sid..."
     auth_token  = "...my_auth_token..."
-    source_type = "twilio-taskrouter"
   }
-  name         = "Cathy Ratke"
+  name         = "Erik Prohaska"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6065c0ef-a6f9-43b9-8a1b-8c95be1254b7"
+  workspace_id = "82d54ce5-98cc-459e-b952-f06231c57fd8"
 }
 ```
 
@@ -50,6 +49,5 @@ Required:
 
 - `account_sid` (String) Twilio Account ID
 - `auth_token` (String) Twilio Auth Token
-- `source_type` (String) must be one of ["twilio-taskrouter"]
 
 

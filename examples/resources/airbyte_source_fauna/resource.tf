@@ -2,19 +2,16 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        source_fauna_collection_deletion_mode_disabled = {
-          deletion_mode = "ignore"
-        }
+        source_fauna_collection_deletion_mode_disabled = {}
       }
-      page_size = 4
+      page_size = 5
     }
-    domain      = "...my_domain..."
-    port        = 5
-    scheme      = "...my_scheme..."
-    secret      = "...my_secret..."
-    source_type = "fauna"
+    domain = "...my_domain..."
+    port   = 7
+    scheme = "...my_scheme..."
+    secret = "...my_secret..."
   }
-  name         = "Irvin Klein"
+  name         = "Sherri Ruecker"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1ffc71dc-a163-4f2a-bc80-a97ff334cddf"
+  workspace_id = "e6b85628-652e-40ff-83c2-1b517b16f1f8"
 }

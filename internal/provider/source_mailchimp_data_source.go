@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -66,15 +65,6 @@ func (r *SourceMailchimpDataSource) Schema(ctx context.Context, req datasource.S
 										Computed:    true,
 										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
 								},
 							},
 							"source_mailchimp_authentication_o_auth2_0": schema.SingleNestedAttribute{
@@ -83,15 +73,6 @@ func (r *SourceMailchimpDataSource) Schema(ctx context.Context, req datasource.S
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `An access token generated using the above client ID and secret.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -110,15 +91,6 @@ func (r *SourceMailchimpDataSource) Schema(ctx context.Context, req datasource.S
 										Computed:    true,
 										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
 								},
 							},
 							"source_mailchimp_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
@@ -127,15 +99,6 @@ func (r *SourceMailchimpDataSource) Schema(ctx context.Context, req datasource.S
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `An access token generated using the above client ID and secret.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -151,15 +114,6 @@ func (r *SourceMailchimpDataSource) Schema(ctx context.Context, req datasource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mailchimp",
-							),
-						},
-						Description: `must be one of ["mailchimp"]`,
 					},
 				},
 			},

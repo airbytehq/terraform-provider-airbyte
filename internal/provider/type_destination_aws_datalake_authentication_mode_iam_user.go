@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationAwsDatalakeAuthenticationModeIAMUser struct {
 	AwsAccessKeyID     types.String `tfsdk:"aws_access_key_id"`
 	AwsSecretAccessKey types.String `tfsdk:"aws_secret_access_key"`
-	CredentialsTitle   types.String `tfsdk:"credentials_title"`
 }

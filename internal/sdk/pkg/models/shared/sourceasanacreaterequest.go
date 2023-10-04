@@ -9,3 +9,31 @@ type SourceAsanaCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAsanaCreateRequest) GetConfiguration() SourceAsana {
+	if o == nil {
+		return SourceAsana{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAsanaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAsanaCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAsanaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

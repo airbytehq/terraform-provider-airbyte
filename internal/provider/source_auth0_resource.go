@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -69,15 +68,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 										Required:    true,
 										Description: `Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_access_token",
-											),
-										},
-										Description: `must be one of ["oauth2_access_token"]`,
-									},
 								},
 							},
 							"source_auth0_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
@@ -86,15 +76,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 									"audience": schema.StringAttribute{
 										Required:    true,
 										Description: `The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_confidential_application",
-											),
-										},
-										Description: `must be one of ["oauth2_confidential_application"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -113,15 +94,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 										Required:    true,
 										Description: `Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_access_token",
-											),
-										},
-										Description: `must be one of ["oauth2_access_token"]`,
-									},
 								},
 							},
 							"source_auth0_update_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
@@ -130,15 +102,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 									"audience": schema.StringAttribute{
 										Required:    true,
 										Description: `The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_confidential_application",
-											),
-										},
-										Description: `must be one of ["oauth2_confidential_application"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -155,18 +118,10 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 							validators.ExactlyOneChild(),
 						},
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"auth0",
-							),
-						},
-						Description: `must be one of ["auth0"]`,
-					},
 					"start_date": schema.StringAttribute{
-						Optional:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
+						Optional: true,
+						MarkdownDescription: `Default: "2023-08-05T00:43:59.244Z"` + "\n" +
+							`UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -240,7 +195,7 @@ func (r *SourceAuth0Resource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAuth0(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

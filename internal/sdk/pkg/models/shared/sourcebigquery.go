@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceBigquery struct {
 	DatasetID *string `json:"dataset_id,omitempty"`
 	// The GCP project ID for the project containing the target BigQuery dataset.
 	ProjectID  string                 `json:"project_id"`
-	SourceType SourceBigqueryBigquery `json:"sourceType"`
+	sourceType SourceBigqueryBigquery `const:"bigquery" json:"sourceType"`
+}
+
+func (s SourceBigquery) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBigquery) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBigquery) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+func (o *SourceBigquery) GetDatasetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DatasetID
+}
+
+func (o *SourceBigquery) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *SourceBigquery) GetSourceType() SourceBigqueryBigquery {
+	return SourceBigqueryBigqueryBigquery
 }

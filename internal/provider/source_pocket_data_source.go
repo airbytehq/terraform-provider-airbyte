@@ -88,8 +88,9 @@ func (r *SourcePocketDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `Only return items from a particular ` + "`" + `domain` + "`" + `.`,
 					},
 					"favorite": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Retrieve only favorited items.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Retrieve only favorited items.`,
 					},
 					"search": schema.StringAttribute{
 						Computed:    true,
@@ -111,15 +112,6 @@ func (r *SourcePocketDataSource) Schema(ctx context.Context, req datasource.Sche
 						},
 						MarkdownDescription: `must be one of ["newest", "oldest", "title", "site"]` + "\n" +
 							`Sort retrieved items by the given criteria.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pocket",
-							),
-						},
-						Description: `must be one of ["pocket"]`,
 					},
 					"state": schema.StringAttribute{
 						Computed: true,

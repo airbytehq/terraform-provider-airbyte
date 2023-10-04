@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceEmailoctopusEmailoctopus) UnmarshalJSON(data []byte) error {
 type SourceEmailoctopus struct {
 	// EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
 	APIKey     string                         `json:"api_key"`
-	SourceType SourceEmailoctopusEmailoctopus `json:"sourceType"`
+	sourceType SourceEmailoctopusEmailoctopus `const:"emailoctopus" json:"sourceType"`
+}
+
+func (s SourceEmailoctopus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceEmailoctopus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceEmailoctopus) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceEmailoctopus) GetSourceType() SourceEmailoctopusEmailoctopus {
+	return SourceEmailoctopusEmailoctopusEmailoctopus
 }

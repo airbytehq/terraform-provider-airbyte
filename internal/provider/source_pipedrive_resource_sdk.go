@@ -12,18 +12,14 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	var authorization *shared.SourcePipedriveAPIKeyAuthentication
 	if r.Configuration.Authorization != nil {
 		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
 		authorization = &shared.SourcePipedriveAPIKeyAuthentication{
 			APIToken: apiToken,
-			AuthType: authType,
 		}
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	sourceType := shared.SourcePipedrivePipedrive(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePipedrive{
 		Authorization:        authorization,
 		ReplicationStartDate: replicationStartDate,
-		SourceType:           sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -51,10 +47,8 @@ func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrive
 	var authorization *shared.SourcePipedriveUpdateAPIKeyAuthentication
 	if r.Configuration.Authorization != nil {
 		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveUpdateAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
 		authorization = &shared.SourcePipedriveUpdateAPIKeyAuthentication{
 			APIToken: apiToken,
-			AuthType: authType,
 		}
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())

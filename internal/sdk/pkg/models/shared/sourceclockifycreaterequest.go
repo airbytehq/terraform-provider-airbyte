@@ -9,3 +9,31 @@ type SourceClockifyCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceClockifyCreateRequest) GetConfiguration() SourceClockify {
+	if o == nil {
+		return SourceClockify{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceClockifyCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceClockifyCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceClockifyCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

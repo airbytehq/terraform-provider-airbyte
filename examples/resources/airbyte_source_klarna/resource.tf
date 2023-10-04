@@ -1,12 +1,11 @@
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
-    password    = "...my_password..."
-    playground  = true
-    region      = "us"
-    source_type = "klarna"
-    username    = "Chase50"
+    password   = "...my_password..."
+    playground = false
+    region     = "eu"
+    username   = "Elwyn21"
   }
-  name         = "Caleb Rau"
+  name         = "Edward Boyer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "873f5033-f19d-4bf1-a5ce-4152eab9cd7e"
+  workspace_id = "f446900c-8feb-4a7b-85cf-ea08abdda328"
 }

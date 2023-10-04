@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -56,21 +55,13 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"lookback_window_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.`,
+						Optional: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.`,
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
 						Description: `The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"paystack",
-							),
-						},
-						Description: `must be one of ["paystack"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -151,7 +142,7 @@ func (r *SourcePaystackResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePaystack(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

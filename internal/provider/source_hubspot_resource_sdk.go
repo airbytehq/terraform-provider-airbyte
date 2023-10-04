@@ -14,13 +14,11 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	if r.Configuration.Credentials.SourceHubspotAuthenticationOAuth != nil {
 		clientID := r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientSecret.ValueString()
-		credentialsTitle := shared.SourceHubspotAuthenticationOAuthAuthType(r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle.ValueString())
 		refreshToken := r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.RefreshToken.ValueString()
 		sourceHubspotAuthenticationOAuth = &shared.SourceHubspotAuthenticationOAuth{
-			ClientID:         clientID,
-			ClientSecret:     clientSecret,
-			CredentialsTitle: credentialsTitle,
-			RefreshToken:     refreshToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
 		}
 	}
 	if sourceHubspotAuthenticationOAuth != nil {
@@ -31,10 +29,8 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	var sourceHubspotAuthenticationPrivateApp *shared.SourceHubspotAuthenticationPrivateApp
 	if r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp != nil {
 		accessToken := r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.AccessToken.ValueString()
-		credentialsTitle1 := shared.SourceHubspotAuthenticationPrivateAppAuthType(r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle.ValueString())
 		sourceHubspotAuthenticationPrivateApp = &shared.SourceHubspotAuthenticationPrivateApp{
-			AccessToken:      accessToken,
-			CredentialsTitle: credentialsTitle1,
+			AccessToken: accessToken,
 		}
 	}
 	if sourceHubspotAuthenticationPrivateApp != nil {
@@ -42,11 +38,9 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 			SourceHubspotAuthenticationPrivateApp: sourceHubspotAuthenticationPrivateApp,
 		}
 	}
-	sourceType := shared.SourceHubspotHubspot(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHubspot{
 		Credentials: credentials,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -77,13 +71,11 @@ func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutR
 	if r.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth != nil {
 		clientID := r.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth.ClientSecret.ValueString()
-		credentialsTitle := shared.SourceHubspotUpdateAuthenticationOAuthAuthType(r.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth.CredentialsTitle.ValueString())
 		refreshToken := r.Configuration.Credentials.SourceHubspotUpdateAuthenticationOAuth.RefreshToken.ValueString()
 		sourceHubspotUpdateAuthenticationOAuth = &shared.SourceHubspotUpdateAuthenticationOAuth{
-			ClientID:         clientID,
-			ClientSecret:     clientSecret,
-			CredentialsTitle: credentialsTitle,
-			RefreshToken:     refreshToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
 		}
 	}
 	if sourceHubspotUpdateAuthenticationOAuth != nil {
@@ -94,10 +86,8 @@ func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutR
 	var sourceHubspotUpdateAuthenticationPrivateApp *shared.SourceHubspotUpdateAuthenticationPrivateApp
 	if r.Configuration.Credentials.SourceHubspotUpdateAuthenticationPrivateApp != nil {
 		accessToken := r.Configuration.Credentials.SourceHubspotUpdateAuthenticationPrivateApp.AccessToken.ValueString()
-		credentialsTitle1 := shared.SourceHubspotUpdateAuthenticationPrivateAppAuthType(r.Configuration.Credentials.SourceHubspotUpdateAuthenticationPrivateApp.CredentialsTitle.ValueString())
 		sourceHubspotUpdateAuthenticationPrivateApp = &shared.SourceHubspotUpdateAuthenticationPrivateApp{
-			AccessToken:      accessToken,
-			CredentialsTitle: credentialsTitle1,
+			AccessToken: accessToken,
 		}
 	}
 	if sourceHubspotUpdateAuthenticationPrivateApp != nil {

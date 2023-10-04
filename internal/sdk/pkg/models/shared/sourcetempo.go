@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceTempoTempo) UnmarshalJSON(data []byte) error {
 type SourceTempo struct {
 	// Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
 	APIToken   string           `json:"api_token"`
-	SourceType SourceTempoTempo `json:"sourceType"`
+	sourceType SourceTempoTempo `const:"tempo" json:"sourceType"`
+}
+
+func (s SourceTempo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTempo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTempo) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceTempo) GetSourceType() SourceTempoTempo {
+	return SourceTempoTempoTempo
 }

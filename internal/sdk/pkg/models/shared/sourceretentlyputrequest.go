@@ -7,3 +7,24 @@ type SourceRetentlyPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceRetentlyPutRequest) GetConfiguration() SourceRetentlyUpdate {
+	if o == nil {
+		return SourceRetentlyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRetentlyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRetentlyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

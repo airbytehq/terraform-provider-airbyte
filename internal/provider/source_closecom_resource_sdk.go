@@ -10,7 +10,6 @@ import (
 
 func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceCloseComCloseCom(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -18,9 +17,8 @@ func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCr
 		startDate = nil
 	}
 	configuration := shared.SourceCloseCom{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

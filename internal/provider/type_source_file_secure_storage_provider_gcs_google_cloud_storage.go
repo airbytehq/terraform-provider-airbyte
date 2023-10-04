@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFileSecureStorageProviderGCSGoogleCloudStorage struct {
 	ServiceAccountJSON types.String `tfsdk:"service_account_json"`
-	Storage            types.String `tfsdk:"storage"`
 }

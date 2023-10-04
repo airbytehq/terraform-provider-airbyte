@@ -42,7 +42,7 @@ data "airbyte_source_dremio" "my_source_dremio" {
 Read-Only:
 
 - `api_key` (String) API Key that is generated when you authenticate to Dremio API
-- `base_url` (String) URL of your Dremio instance
-- `source_type` (String) must be one of ["dremio"]
+- `base_url` (String) Default: "https://app.dremio.cloud"
+URL of your Dremio instance
 
 

@@ -43,7 +43,6 @@ Read-Only:
 
 - `business_units` (List of String) The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["trustpilot"]
 - `start_date` (String) For streams with sync. method incremental the start date time to be used
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -61,7 +60,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["apikey"]
 - `client_id` (String) The API key of the Trustpilot API application.
 
 
@@ -71,7 +69,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
 - `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
 - `refresh_token` (String) The key to refresh the expired access_token.
@@ -83,7 +80,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["apikey"]
 - `client_id` (String) The API key of the Trustpilot API application.
 
 
@@ -93,7 +89,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
 - `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
 - `refresh_token` (String) The key to refresh the expired access_token.

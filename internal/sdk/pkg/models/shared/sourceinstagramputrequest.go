@@ -7,3 +7,24 @@ type SourceInstagramPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceInstagramPutRequest) GetConfiguration() SourceInstagramUpdate {
+	if o == nil {
+		return SourceInstagramUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceInstagramPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceInstagramPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

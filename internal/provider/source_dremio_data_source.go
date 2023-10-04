@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,17 +55,9 @@ func (r *SourceDremioDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `API Key that is generated when you authenticate to Dremio API`,
 					},
 					"base_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL of your Dremio instance`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dremio",
-							),
-						},
-						Description: `must be one of ["dremio"]`,
+						MarkdownDescription: `Default: "https://app.dremio.cloud"` + "\n" +
+							`URL of your Dremio instance`,
 					},
 				},
 			},

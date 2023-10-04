@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -40,10 +40,53 @@ type DestinationDatabricksDataSourceAzureBlobStorage struct {
 	// The name of the Azure blob storage container.
 	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
 	// This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-	AzureBlobStorageEndpointDomainName *string `json:"azure_blob_storage_endpoint_domain_name,omitempty"`
+	AzureBlobStorageEndpointDomainName *string `default:"blob.core.windows.net" json:"azure_blob_storage_endpoint_domain_name"`
 	// Shared access signature (SAS) token to grant limited access to objects in your storage account.
 	AzureBlobStorageSasToken string                                                        `json:"azure_blob_storage_sas_token"`
-	DataSourceType           DestinationDatabricksDataSourceAzureBlobStorageDataSourceType `json:"data_source_type"`
+	dataSourceType           DestinationDatabricksDataSourceAzureBlobStorageDataSourceType `const:"AZURE_BLOB_STORAGE" json:"data_source_type"`
+}
+
+func (d DestinationDatabricksDataSourceAzureBlobStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDatabricksDataSourceAzureBlobStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDatabricksDataSourceAzureBlobStorage) GetAzureBlobStorageAccountName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountName
+}
+
+func (o *DestinationDatabricksDataSourceAzureBlobStorage) GetAzureBlobStorageContainerName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageContainerName
+}
+
+func (o *DestinationDatabricksDataSourceAzureBlobStorage) GetAzureBlobStorageEndpointDomainName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AzureBlobStorageEndpointDomainName
+}
+
+func (o *DestinationDatabricksDataSourceAzureBlobStorage) GetAzureBlobStorageSasToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageSasToken
+}
+
+func (o *DestinationDatabricksDataSourceAzureBlobStorage) GetDataSourceType() DestinationDatabricksDataSourceAzureBlobStorageDataSourceType {
+	return DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeAzureBlobStorage
 }
 
 type DestinationDatabricksDataSourceAmazonS3DataSourceType string
@@ -172,7 +215,7 @@ func (e *DestinationDatabricksDataSourceAmazonS3S3BucketRegion) UnmarshalJSON(da
 
 // DestinationDatabricksDataSourceAmazonS3 - Storage on which the delta lake is built.
 type DestinationDatabricksDataSourceAmazonS3 struct {
-	DataSourceType DestinationDatabricksDataSourceAmazonS3DataSourceType `json:"data_source_type"`
+	dataSourceType DestinationDatabricksDataSourceAmazonS3DataSourceType `const:"S3_STORAGE" json:"data_source_type"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
 	// The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
@@ -182,9 +225,66 @@ type DestinationDatabricksDataSourceAmazonS3 struct {
 	// The directory under the S3 bucket where data will be written.
 	S3BucketPath string `json:"s3_bucket_path"`
 	// The region of the S3 staging bucket to use if utilising a copy strategy.
-	S3BucketRegion DestinationDatabricksDataSourceAmazonS3S3BucketRegion `json:"s3_bucket_region"`
+	S3BucketRegion *DestinationDatabricksDataSourceAmazonS3S3BucketRegion `default:"" json:"s3_bucket_region"`
 	// The corresponding secret to the above access key id.
 	S3SecretAccessKey string `json:"s3_secret_access_key"`
+}
+
+func (d DestinationDatabricksDataSourceAmazonS3) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDatabricksDataSourceAmazonS3) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetDataSourceType() DestinationDatabricksDataSourceAmazonS3DataSourceType {
+	return DestinationDatabricksDataSourceAmazonS3DataSourceTypeS3Storage
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetFileNamePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNamePattern
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetS3AccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3AccessKeyID
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetS3BucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketName
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetS3BucketPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketPath
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetS3BucketRegion() *DestinationDatabricksDataSourceAmazonS3S3BucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.S3BucketRegion
+}
+
+func (o *DestinationDatabricksDataSourceAmazonS3) GetS3SecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3SecretAccessKey
 }
 
 type DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceType string
@@ -213,7 +313,22 @@ func (e *DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceType) 
 
 // DestinationDatabricksDataSourceRecommendedManagedTables - Storage on which the delta lake is built.
 type DestinationDatabricksDataSourceRecommendedManagedTables struct {
-	DataSourceType DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceType `json:"data_source_type"`
+	dataSourceType DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceType `const:"MANAGED_TABLES_STORAGE" json:"data_source_type"`
+}
+
+func (d DestinationDatabricksDataSourceRecommendedManagedTables) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDatabricksDataSourceRecommendedManagedTables) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDatabricksDataSourceRecommendedManagedTables) GetDataSourceType() DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceType {
+	return DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeManagedTablesStorage
 }
 
 type DestinationDatabricksDataSourceType string
@@ -260,30 +375,23 @@ func CreateDestinationDatabricksDataSourceDestinationDatabricksDataSourceAzureBl
 }
 
 func (u *DestinationDatabricksDataSource) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationDatabricksDataSourceRecommendedManagedTables := new(DestinationDatabricksDataSourceRecommendedManagedTables)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDatabricksDataSourceRecommendedManagedTables); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksDataSourceRecommendedManagedTables, "", true, true); err == nil {
 		u.DestinationDatabricksDataSourceRecommendedManagedTables = destinationDatabricksDataSourceRecommendedManagedTables
 		u.Type = DestinationDatabricksDataSourceTypeDestinationDatabricksDataSourceRecommendedManagedTables
 		return nil
 	}
 
 	destinationDatabricksDataSourceAzureBlobStorage := new(DestinationDatabricksDataSourceAzureBlobStorage)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDatabricksDataSourceAzureBlobStorage); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksDataSourceAzureBlobStorage, "", true, true); err == nil {
 		u.DestinationDatabricksDataSourceAzureBlobStorage = destinationDatabricksDataSourceAzureBlobStorage
 		u.Type = DestinationDatabricksDataSourceTypeDestinationDatabricksDataSourceAzureBlobStorage
 		return nil
 	}
 
 	destinationDatabricksDataSourceAmazonS3 := new(DestinationDatabricksDataSourceAmazonS3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDatabricksDataSourceAmazonS3); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksDataSourceAmazonS3, "", true, true); err == nil {
 		u.DestinationDatabricksDataSourceAmazonS3 = destinationDatabricksDataSourceAmazonS3
 		u.Type = DestinationDatabricksDataSourceTypeDestinationDatabricksDataSourceAmazonS3
 		return nil
@@ -294,18 +402,18 @@ func (u *DestinationDatabricksDataSource) UnmarshalJSON(data []byte) error {
 
 func (u DestinationDatabricksDataSource) MarshalJSON() ([]byte, error) {
 	if u.DestinationDatabricksDataSourceRecommendedManagedTables != nil {
-		return json.Marshal(u.DestinationDatabricksDataSourceRecommendedManagedTables)
-	}
-
-	if u.DestinationDatabricksDataSourceAzureBlobStorage != nil {
-		return json.Marshal(u.DestinationDatabricksDataSourceAzureBlobStorage)
+		return utils.MarshalJSON(u.DestinationDatabricksDataSourceRecommendedManagedTables, "", true)
 	}
 
 	if u.DestinationDatabricksDataSourceAmazonS3 != nil {
-		return json.Marshal(u.DestinationDatabricksDataSourceAmazonS3)
+		return utils.MarshalJSON(u.DestinationDatabricksDataSourceAmazonS3, "", true)
 	}
 
-	return nil, nil
+	if u.DestinationDatabricksDataSourceAzureBlobStorage != nil {
+		return utils.MarshalJSON(u.DestinationDatabricksDataSourceAzureBlobStorage, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationDatabricksDatabricks string
@@ -334,7 +442,7 @@ func (e *DestinationDatabricksDatabricks) UnmarshalJSON(data []byte) error {
 
 type DestinationDatabricks struct {
 	// You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.
-	AcceptTerms bool `json:"accept_terms"`
+	AcceptTerms *bool `default:"false" json:"accept_terms"`
 	// Storage on which the delta lake is built.
 	DataSource DestinationDatabricksDataSource `json:"data_source"`
 	// The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.
@@ -344,14 +452,99 @@ type DestinationDatabricks struct {
 	// Databricks Personal Access Token for making authenticated requests.
 	DatabricksPersonalAccessToken string `json:"databricks_personal_access_token"`
 	// Databricks Cluster Port.
-	DatabricksPort *string `json:"databricks_port,omitempty"`
+	DatabricksPort *string `default:"443" json:"databricks_port"`
 	// Databricks Cluster Server Hostname.
 	DatabricksServerHostname string                          `json:"databricks_server_hostname"`
-	DestinationType          DestinationDatabricksDatabricks `json:"destinationType"`
+	destinationType          DestinationDatabricksDatabricks `const:"databricks" json:"destinationType"`
 	// Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
-	EnableSchemaEvolution *bool `json:"enable_schema_evolution,omitempty"`
+	EnableSchemaEvolution *bool `default:"false" json:"enable_schema_evolution"`
 	// Default to 'true'. Switch it to 'false' for debugging purpose.
-	PurgeStagingData *bool `json:"purge_staging_data,omitempty"`
+	PurgeStagingData *bool `default:"true" json:"purge_staging_data"`
 	// The default schema tables are written. If not specified otherwise, the "default" will be used.
-	Schema *string `json:"schema,omitempty"`
+	Schema *string `default:"default" json:"schema"`
+}
+
+func (d DestinationDatabricks) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDatabricks) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDatabricks) GetAcceptTerms() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AcceptTerms
+}
+
+func (o *DestinationDatabricks) GetDataSource() DestinationDatabricksDataSource {
+	if o == nil {
+		return DestinationDatabricksDataSource{}
+	}
+	return o.DataSource
+}
+
+func (o *DestinationDatabricks) GetDatabase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Database
+}
+
+func (o *DestinationDatabricks) GetDatabricksHTTPPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatabricksHTTPPath
+}
+
+func (o *DestinationDatabricks) GetDatabricksPersonalAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatabricksPersonalAccessToken
+}
+
+func (o *DestinationDatabricks) GetDatabricksPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DatabricksPort
+}
+
+func (o *DestinationDatabricks) GetDatabricksServerHostname() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatabricksServerHostname
+}
+
+func (o *DestinationDatabricks) GetDestinationType() DestinationDatabricksDatabricks {
+	return DestinationDatabricksDatabricksDatabricks
+}
+
+func (o *DestinationDatabricks) GetEnableSchemaEvolution() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnableSchemaEvolution
+}
+
+func (o *DestinationDatabricks) GetPurgeStagingData() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PurgeStagingData
+}
+
+func (o *DestinationDatabricks) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }

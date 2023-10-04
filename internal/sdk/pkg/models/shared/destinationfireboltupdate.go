@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -39,11 +39,54 @@ type DestinationFireboltUpdateLoadingMethodExternalTableViaS3 struct {
 	AwsKeyID string `json:"aws_key_id"`
 	// Corresponding secret part of the AWS Key
 	AwsKeySecret string                                                         `json:"aws_key_secret"`
-	Method       DestinationFireboltUpdateLoadingMethodExternalTableViaS3Method `json:"method"`
+	method       DestinationFireboltUpdateLoadingMethodExternalTableViaS3Method `const:"S3" json:"method"`
 	// The name of the S3 bucket.
 	S3Bucket string `json:"s3_bucket"`
 	// Region name of the S3 bucket.
 	S3Region string `json:"s3_region"`
+}
+
+func (d DestinationFireboltUpdateLoadingMethodExternalTableViaS3) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationFireboltUpdateLoadingMethodExternalTableViaS3) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationFireboltUpdateLoadingMethodExternalTableViaS3) GetAwsKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeyID
+}
+
+func (o *DestinationFireboltUpdateLoadingMethodExternalTableViaS3) GetAwsKeySecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeySecret
+}
+
+func (o *DestinationFireboltUpdateLoadingMethodExternalTableViaS3) GetMethod() DestinationFireboltUpdateLoadingMethodExternalTableViaS3Method {
+	return DestinationFireboltUpdateLoadingMethodExternalTableViaS3MethodS3
+}
+
+func (o *DestinationFireboltUpdateLoadingMethodExternalTableViaS3) GetS3Bucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3Bucket
+}
+
+func (o *DestinationFireboltUpdateLoadingMethodExternalTableViaS3) GetS3Region() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3Region
 }
 
 type DestinationFireboltUpdateLoadingMethodSQLInsertsMethod string
@@ -72,7 +115,22 @@ func (e *DestinationFireboltUpdateLoadingMethodSQLInsertsMethod) UnmarshalJSON(d
 
 // DestinationFireboltUpdateLoadingMethodSQLInserts - Loading method used to select the way data will be uploaded to Firebolt
 type DestinationFireboltUpdateLoadingMethodSQLInserts struct {
-	Method DestinationFireboltUpdateLoadingMethodSQLInsertsMethod `json:"method"`
+	method DestinationFireboltUpdateLoadingMethodSQLInsertsMethod `const:"SQL" json:"method"`
+}
+
+func (d DestinationFireboltUpdateLoadingMethodSQLInserts) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationFireboltUpdateLoadingMethodSQLInserts) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationFireboltUpdateLoadingMethodSQLInserts) GetMethod() DestinationFireboltUpdateLoadingMethodSQLInsertsMethod {
+	return DestinationFireboltUpdateLoadingMethodSQLInsertsMethodSQL
 }
 
 type DestinationFireboltUpdateLoadingMethodType string
@@ -108,21 +166,16 @@ func CreateDestinationFireboltUpdateLoadingMethodDestinationFireboltUpdateLoadin
 }
 
 func (u *DestinationFireboltUpdateLoadingMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationFireboltUpdateLoadingMethodSQLInserts := new(DestinationFireboltUpdateLoadingMethodSQLInserts)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationFireboltUpdateLoadingMethodSQLInserts); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationFireboltUpdateLoadingMethodSQLInserts, "", true, true); err == nil {
 		u.DestinationFireboltUpdateLoadingMethodSQLInserts = destinationFireboltUpdateLoadingMethodSQLInserts
 		u.Type = DestinationFireboltUpdateLoadingMethodTypeDestinationFireboltUpdateLoadingMethodSQLInserts
 		return nil
 	}
 
 	destinationFireboltUpdateLoadingMethodExternalTableViaS3 := new(DestinationFireboltUpdateLoadingMethodExternalTableViaS3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationFireboltUpdateLoadingMethodExternalTableViaS3); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationFireboltUpdateLoadingMethodExternalTableViaS3, "", true, true); err == nil {
 		u.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 = destinationFireboltUpdateLoadingMethodExternalTableViaS3
 		u.Type = DestinationFireboltUpdateLoadingMethodTypeDestinationFireboltUpdateLoadingMethodExternalTableViaS3
 		return nil
@@ -133,14 +186,14 @@ func (u *DestinationFireboltUpdateLoadingMethod) UnmarshalJSON(data []byte) erro
 
 func (u DestinationFireboltUpdateLoadingMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationFireboltUpdateLoadingMethodSQLInserts != nil {
-		return json.Marshal(u.DestinationFireboltUpdateLoadingMethodSQLInserts)
+		return utils.MarshalJSON(u.DestinationFireboltUpdateLoadingMethodSQLInserts, "", true)
 	}
 
 	if u.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {
-		return json.Marshal(u.DestinationFireboltUpdateLoadingMethodExternalTableViaS3)
+		return utils.MarshalJSON(u.DestinationFireboltUpdateLoadingMethodExternalTableViaS3, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationFireboltUpdate struct {
@@ -158,4 +211,53 @@ type DestinationFireboltUpdate struct {
 	Password string `json:"password"`
 	// Firebolt email address you use to login.
 	Username string `json:"username"`
+}
+
+func (o *DestinationFireboltUpdate) GetAccount() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Account
+}
+
+func (o *DestinationFireboltUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationFireboltUpdate) GetEngine() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Engine
+}
+
+func (o *DestinationFireboltUpdate) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
+}
+
+func (o *DestinationFireboltUpdate) GetLoadingMethod() *DestinationFireboltUpdateLoadingMethod {
+	if o == nil {
+		return nil
+	}
+	return o.LoadingMethod
+}
+
+func (o *DestinationFireboltUpdate) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationFireboltUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

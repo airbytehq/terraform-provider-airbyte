@@ -52,7 +52,6 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourcePocketPocket(r.Configuration.SourceType.ValueString())
 	state := new(shared.SourcePocketState)
 	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
 		*state = shared.SourcePocketState(r.Configuration.State.ValueString())
@@ -75,7 +74,6 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 		Search:      search,
 		Since:       since,
 		Sort:        sort,
-		SourceType:  sourceType,
 		State:       state,
 		Tag:         tag,
 	}

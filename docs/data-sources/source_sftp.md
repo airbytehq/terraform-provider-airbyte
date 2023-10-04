@@ -42,12 +42,15 @@ data "airbyte_source_sftp" "my_source_sftp" {
 Read-Only:
 
 - `credentials` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
-- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
-- `file_types` (String) Coma separated file types. Currently only 'csv' and 'json' types are supported.
-- `folder_path` (String) The directory to search files for sync
+- `file_pattern` (String) Default: ""
+The regular expression to specify files for sync in a chosen Folder Path
+- `file_types` (String) Default: "csv,json"
+Coma separated file types. Currently only 'csv' and 'json' types are supported.
+- `folder_path` (String) Default: ""
+The directory to search files for sync
 - `host` (String) The server host address
-- `port` (Number) The server port
-- `source_type` (String) must be one of ["sftp"]
+- `port` (Number) Default: 22
+The server port
 - `user` (String) The server user
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -65,8 +68,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through password authentication
 - `auth_user_password` (String) OS-level password for logging into the jump server host
 
 
@@ -75,8 +76,6 @@ Connect through password authentication
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through ssh key
 - `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 
@@ -85,8 +84,6 @@ Connect through ssh key
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through password authentication
 - `auth_user_password` (String) OS-level password for logging into the jump server host
 
 
@@ -95,8 +92,6 @@ Connect through password authentication
 
 Read-Only:
 
-- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through ssh key
 - `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 

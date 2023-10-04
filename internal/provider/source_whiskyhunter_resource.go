@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -34,12 +32,12 @@ type SourceWhiskyHunterResource struct {
 
 // SourceWhiskyHunterResourceModel describes the resource data model.
 type SourceWhiskyHunterResourceModel struct {
-	Configuration SourceWhiskyHunter `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	SourceType    types.String       `tfsdk:"source_type"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"configuration"`
+	Name          types.String                                                         `tfsdk:"name"`
+	SecretID      types.String                                                         `tfsdk:"secret_id"`
+	SourceID      types.String                                                         `tfsdk:"source_id"`
+	SourceType    types.String                                                         `tfsdk:"source_type"`
+	WorkspaceID   types.String                                                         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceWhiskyHunterResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,18 +50,8 @@ func (r *SourceWhiskyHunterResource) Schema(ctx context.Context, req resource.Sc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				Required: true,
-				Attributes: map[string]schema.Attribute{
-					"source_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"whisky-hunter",
-							),
-						},
-						Description: `must be one of ["whisky-hunter"]`,
-					},
-				},
+				Required:   true,
+				Attributes: map[string]schema.Attribute{},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -135,7 +123,7 @@ func (r *SourceWhiskyHunterResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceWhiskyHunter(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

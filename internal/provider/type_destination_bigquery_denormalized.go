@@ -9,7 +9,6 @@ type DestinationBigqueryDenormalized struct {
 	CredentialsJSON            types.String                                  `tfsdk:"credentials_json"`
 	DatasetID                  types.String                                  `tfsdk:"dataset_id"`
 	DatasetLocation            types.String                                  `tfsdk:"dataset_location"`
-	DestinationType            types.String                                  `tfsdk:"destination_type"`
 	LoadingMethod              *DestinationBigqueryDenormalizedLoadingMethod `tfsdk:"loading_method"`
 	ProjectID                  types.String                                  `tfsdk:"project_id"`
 }

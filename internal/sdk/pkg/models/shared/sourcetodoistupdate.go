@@ -6,3 +6,10 @@ type SourceTodoistUpdate struct {
 	// Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 	Token string `json:"token"`
 }
+
+func (o *SourceTodoistUpdate) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}

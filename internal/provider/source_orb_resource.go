@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,8 +57,9 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						Description: `Orb API Key, issued from the Orb admin console.`,
 					},
 					"lookback_window_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.`,
+						Optional: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.`,
 					},
 					"numeric_event_properties_keys": schema.ListAttribute{
 						Optional:    true,
@@ -70,15 +69,6 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 					"plan_id": schema.StringAttribute{
 						Optional:    true,
 						Description: `Orb Plan ID to filter subscriptions that should have usage fetched.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"orb",
-							),
-						},
-						Description: `must be one of ["orb"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -165,7 +155,7 @@ func (r *SourceOrbResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceOrb(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -61,17 +59,9 @@ func (r *SourceYouniumDataSource) Schema(ctx context.Context, req datasource.Sch
 						Description: `Account password for younium account API key`,
 					},
 					"playground": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Property defining if connector is used against playground or production environment`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"younium",
-							),
-						},
-						Description: `must be one of ["younium"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Property defining if connector is used against playground or production environment`,
 					},
 					"username": schema.StringAttribute{
 						Computed:    true,

@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,21 +55,13 @@ func (r *SourceMyHoursDataSource) Schema(ctx context.Context, req datasource.Sch
 						Description: `Your My Hours username`,
 					},
 					"logs_batch_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Pagination size used for retrieving logs in days`,
+						Computed: true,
+						MarkdownDescription: `Default: 30` + "\n" +
+							`Pagination size used for retrieving logs in days`,
 					},
 					"password": schema.StringAttribute{
 						Computed:    true,
 						Description: `The password associated to the username`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"my-hours",
-							),
-						},
-						Description: `must be one of ["my-hours"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

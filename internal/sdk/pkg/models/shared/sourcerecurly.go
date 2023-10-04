@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceRecurly struct {
 	BeginTime *string `json:"begin_time,omitempty"`
 	// ISO8601 timestamp to which the replication from Recurly API will stop. Records after that date won't be imported.
 	EndTime    *string              `json:"end_time,omitempty"`
-	SourceType SourceRecurlyRecurly `json:"sourceType"`
+	sourceType SourceRecurlyRecurly `const:"recurly" json:"sourceType"`
+}
+
+func (s SourceRecurly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRecurly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRecurly) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceRecurly) GetBeginTime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BeginTime
+}
+
+func (o *SourceRecurly) GetEndTime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndTime
+}
+
+func (o *SourceRecurly) GetSourceType() SourceRecurlyRecurly {
+	return SourceRecurlyRecurlyRecurly
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,5 +36,34 @@ type SourceGridly struct {
 	APIKey string `json:"api_key"`
 	// ID of a grid, or can be ID of a branch
 	GridID     string             `json:"grid_id"`
-	SourceType SourceGridlyGridly `json:"sourceType"`
+	sourceType SourceGridlyGridly `const:"gridly" json:"sourceType"`
+}
+
+func (s SourceGridly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGridly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGridly) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGridly) GetGridID() string {
+	if o == nil {
+		return ""
+	}
+	return o.GridID
+}
+
+func (o *SourceGridly) GetSourceType() SourceGridlyGridly {
+	return SourceGridlyGridlyGridly
 }

@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -56,15 +55,6 @@ func (r *SourceIterableDataSource) Schema(ctx context.Context, req datasource.Sc
 					"api_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"iterable",
-							),
-						},
-						Description: `must be one of ["iterable"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

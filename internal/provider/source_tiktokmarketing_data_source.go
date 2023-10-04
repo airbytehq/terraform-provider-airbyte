@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,8 +53,9 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The attribution window in days.`,
+						Computed: true,
+						MarkdownDescription: `Default: 3` + "\n" +
+							`The attribution window in days.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
@@ -75,15 +75,6 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The Developer Application App ID.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"secret": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Developer Application Secret.`,
@@ -101,15 +92,6 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 									"advertiser_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-										Description: `must be one of ["sandbox_access_token"]`,
 									},
 								},
 								Description: `Authentication method`,
@@ -129,15 +111,6 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The Developer Application App ID.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"secret": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Developer Application Secret.`,
@@ -156,15 +129,6 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-										Description: `must be one of ["sandbox_access_token"]`,
-									},
 								},
 								Description: `Authentication method`,
 							},
@@ -182,24 +146,17 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.`,
 					},
 					"include_deleted": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Set to active if you want to include deleted data in reports.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"tiktok-marketing",
-							),
-						},
-						Description: `must be one of ["tiktok-marketing"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Set to active if you want to include deleted data in reports.`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.`,
+						MarkdownDescription: `Default: "2016-09-01"` + "\n" +
+							`The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.`,
 					},
 				},
 			},

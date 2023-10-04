@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -63,21 +61,13 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 						Description: `The ID of your folder in your space. Retrieve it from the ` + "`" + `/space/{space_id}/folder` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.`,
 					},
 					"include_closed_tasks": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.`,
 					},
 					"list_id": schema.StringAttribute{
 						Optional:    true,
 						Description: `The ID of your list in your folder. Retrieve it from the ` + "`" + `/folder/{folder_id}/list` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"clickup-api",
-							),
-						},
-						Description: `must be one of ["clickup-api"]`,
 					},
 					"space_id": schema.StringAttribute{
 						Optional:    true,
@@ -159,7 +149,7 @@ func (r *SourceClickupAPIResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceClickupAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

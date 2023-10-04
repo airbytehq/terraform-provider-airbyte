@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken struct {
-	OptionTitle         types.String `tfsdk:"option_title"`
 	PersonalAccessToken types.String `tfsdk:"personal_access_token"`
 }

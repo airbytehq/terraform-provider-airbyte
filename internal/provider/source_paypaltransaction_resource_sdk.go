@@ -11,21 +11,24 @@ import (
 func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourcePaypalTransactionCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	isSandbox := r.Configuration.IsSandbox.ValueBool()
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	refreshToken := new(string)
 	if !r.Configuration.RefreshToken.IsUnknown() && !r.Configuration.RefreshToken.IsNull() {
 		*refreshToken = r.Configuration.RefreshToken.ValueString()
 	} else {
 		refreshToken = nil
 	}
-	sourceType := shared.SourcePaypalTransactionPaypalTransaction(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePaypalTransaction{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		IsSandbox:    isSandbox,
 		RefreshToken: refreshToken,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()
@@ -53,7 +56,12 @@ func (r *SourcePaypalTransactionResourceModel) ToGetSDKType() *shared.SourcePayp
 func (r *SourcePaypalTransactionResourceModel) ToUpdateSDKType() *shared.SourcePaypalTransactionPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	isSandbox := r.Configuration.IsSandbox.ValueBool()
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	refreshToken := new(string)
 	if !r.Configuration.RefreshToken.IsUnknown() && !r.Configuration.RefreshToken.IsNull() {
 		*refreshToken = r.Configuration.RefreshToken.ValueString()

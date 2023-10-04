@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceDelighted struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	Since      types.String `tfsdk:"since"`
-	SourceType types.String `tfsdk:"source_type"`
+	APIKey types.String `tfsdk:"api_key"`
+	Since  types.String `tfsdk:"since"`
 }

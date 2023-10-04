@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -90,11 +91,64 @@ type SourceZuoraUpdate struct {
 	// Your OAuth user Client Secret
 	ClientSecret string `json:"client_secret"`
 	// Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-	DataQuery SourceZuoraUpdateDataQueryType `json:"data_query"`
+	DataQuery *SourceZuoraUpdateDataQueryType `default:"Live" json:"data_query"`
 	// Start Date in format: YYYY-MM-DD
 	StartDate string `json:"start_date"`
 	// Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
 	TenantEndpoint SourceZuoraUpdateTenantEndpointLocation `json:"tenant_endpoint"`
 	// The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
-	WindowInDays *string `json:"window_in_days,omitempty"`
+	WindowInDays *string `default:"90" json:"window_in_days"`
+}
+
+func (s SourceZuoraUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZuoraUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZuoraUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZuoraUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZuoraUpdate) GetDataQuery() *SourceZuoraUpdateDataQueryType {
+	if o == nil {
+		return nil
+	}
+	return o.DataQuery
+}
+
+func (o *SourceZuoraUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceZuoraUpdate) GetTenantEndpoint() SourceZuoraUpdateTenantEndpointLocation {
+	if o == nil {
+		return SourceZuoraUpdateTenantEndpointLocation("")
+	}
+	return o.TenantEndpoint
+}
+
+func (o *SourceZuoraUpdate) GetWindowInDays() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

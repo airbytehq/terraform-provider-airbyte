@@ -41,7 +41,6 @@ data "airbyte_source_insightly" "my_source_insightly" {
 
 Read-Only:
 
-- `source_type` (String) must be one of ["insightly"]
 - `start_date` (String) The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 - `token` (String) Your Insightly API token.
 

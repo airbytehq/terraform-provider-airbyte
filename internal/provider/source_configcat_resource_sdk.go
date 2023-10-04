@@ -9,12 +9,10 @@ import (
 
 func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcatCreateRequest {
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceConfigcatConfigcat(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceConfigcat{
-		Password:   password,
-		SourceType: sourceType,
-		Username:   username,
+		Password: password,
+		Username: username,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

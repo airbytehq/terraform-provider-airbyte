@@ -5,13 +5,12 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationRedis struct {
-	CacheType       types.String                     `tfsdk:"cache_type"`
-	DestinationType types.String                     `tfsdk:"destination_type"`
-	Host            types.String                     `tfsdk:"host"`
-	Password        types.String                     `tfsdk:"password"`
-	Port            types.Int64                      `tfsdk:"port"`
-	Ssl             types.Bool                       `tfsdk:"ssl"`
-	SslMode         *DestinationRedisSSLModes        `tfsdk:"ssl_mode"`
-	TunnelMethod    *DestinationRedisSSHTunnelMethod `tfsdk:"tunnel_method"`
-	Username        types.String                     `tfsdk:"username"`
+	CacheType    types.String                     `tfsdk:"cache_type"`
+	Host         types.String                     `tfsdk:"host"`
+	Password     types.String                     `tfsdk:"password"`
+	Port         types.Int64                      `tfsdk:"port"`
+	Ssl          types.Bool                       `tfsdk:"ssl"`
+	SslMode      *DestinationRedisSSLModes        `tfsdk:"ssl_mode"`
+	TunnelMethod *DestinationRedisSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username     types.String                     `tfsdk:"username"`
 }

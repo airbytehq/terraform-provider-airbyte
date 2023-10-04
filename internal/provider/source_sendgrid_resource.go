@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -58,15 +57,6 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 					"apikey": schema.StringAttribute{
 						Required:    true,
 						Description: `API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sendgrid",
-							),
-						},
-						Description: `must be one of ["sendgrid"]`,
 					},
 					"start_time": schema.StringAttribute{
 						Optional: true,
@@ -147,7 +137,7 @@ func (r *SourceSendgridResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSendgrid(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

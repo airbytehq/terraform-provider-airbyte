@@ -9,12 +9,15 @@ import (
 
 func (r *SourceDremioResourceModel) ToCreateSDKType() *shared.SourceDremioCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	baseURL := r.Configuration.BaseURL.ValueString()
-	sourceType := shared.SourceDremioDremio(r.Configuration.SourceType.ValueString())
+	baseURL := new(string)
+	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
+		*baseURL = r.Configuration.BaseURL.ValueString()
+	} else {
+		baseURL = nil
+	}
 	configuration := shared.SourceDremio{
-		APIKey:     apiKey,
-		BaseURL:    baseURL,
-		SourceType: sourceType,
+		APIKey:  apiKey,
+		BaseURL: baseURL,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -40,7 +43,12 @@ func (r *SourceDremioResourceModel) ToGetSDKType() *shared.SourceDremioCreateReq
 
 func (r *SourceDremioResourceModel) ToUpdateSDKType() *shared.SourceDremioPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	baseURL := r.Configuration.BaseURL.ValueString()
+	baseURL := new(string)
+	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
+		*baseURL = r.Configuration.BaseURL.ValueString()
+	} else {
+		baseURL = nil
+	}
 	configuration := shared.SourceDremioUpdate{
 		APIKey:  apiKey,
 		BaseURL: baseURL,

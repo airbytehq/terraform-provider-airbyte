@@ -43,9 +43,9 @@ Read-Only:
 
 - `client_id` (String) The Client ID of your Paypal developer application.
 - `client_secret` (String) The Client Secret of your Paypal developer application.
-- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
+- `is_sandbox` (Boolean) Default: false
+Determines whether to use the sandbox or production environment.
 - `refresh_token` (String) The key to refresh the expired access token.
-- `source_type` (String) must be one of ["paypal-transaction"]
 - `start_date` (String) Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 
 

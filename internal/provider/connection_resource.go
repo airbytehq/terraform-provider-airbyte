@@ -142,7 +142,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"eu",
 					),
 				},
-				Description: `must be one of ["auto", "us", "eu"]`,
+				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
 			},
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -171,7 +171,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"custom_format",
 					),
 				},
-				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]` + "\n" +
+				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]; Default: "destination"` + "\n" +
 					`Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
@@ -179,8 +179,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Optional:    true,
-				Description: `Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
+				Optional: true,
+				MarkdownDescription: `Default: null` + "\n" +
+					`Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
@@ -196,7 +197,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"propagate_fully",
 					),
 				},
-				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]` + "\n" +
+				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"` + "\n" +
 					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{

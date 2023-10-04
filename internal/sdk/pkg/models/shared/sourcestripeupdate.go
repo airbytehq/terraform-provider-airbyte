@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -12,9 +13,55 @@ type SourceStripeUpdate struct {
 	// Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
 	ClientSecret string `json:"client_secret"`
 	// When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. Applies only to streams that do not support event-based incremental syncs: CheckoutSessionLineItems,  Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>
-	LookbackWindowDays *int64 `json:"lookback_window_days,omitempty"`
+	LookbackWindowDays *int64 `default:"0" json:"lookback_window_days"`
 	// The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.
-	SliceRange *int64 `json:"slice_range,omitempty"`
+	SliceRange *int64 `default:"365" json:"slice_range"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
+	StartDate *time.Time `default:"2017-01-25T00:00:00Z" json:"start_date"`
+}
+
+func (s SourceStripeUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceStripeUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceStripeUpdate) GetAccountID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountID
+}
+
+func (o *SourceStripeUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceStripeUpdate) GetLookbackWindowDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindowDays
+}
+
+func (o *SourceStripeUpdate) GetSliceRange() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SliceRange
+}
+
+func (o *SourceStripeUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

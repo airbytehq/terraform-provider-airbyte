@@ -7,3 +7,24 @@ type SourceFileSecurePutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceFileSecurePutRequest) GetConfiguration() SourceFileSecureUpdate {
+	if o == nil {
+		return SourceFileSecureUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFileSecurePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFileSecurePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

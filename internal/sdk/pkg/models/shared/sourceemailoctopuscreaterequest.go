@@ -9,3 +9,31 @@ type SourceEmailoctopusCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceEmailoctopusCreateRequest) GetConfiguration() SourceEmailoctopus {
+	if o == nil {
+		return SourceEmailoctopus{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceEmailoctopusCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceEmailoctopusCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceEmailoctopusCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

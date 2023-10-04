@@ -21,12 +21,10 @@ func (r *SourceXeroResourceModel) ToCreateSDKType() *shared.SourceXeroCreateRequ
 		RefreshToken:    refreshToken,
 		TokenExpiryDate: tokenExpiryDate,
 	}
-	sourceType := shared.SourceXeroXero(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	tenantID := r.Configuration.TenantID.ValueString()
 	configuration := shared.SourceXero{
 		Authentication: authentication,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 		TenantID:       tenantID,
 	}

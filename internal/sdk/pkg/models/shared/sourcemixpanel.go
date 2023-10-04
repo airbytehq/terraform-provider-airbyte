@@ -4,7 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -38,7 +38,29 @@ func (e *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle) Unmarshal
 type SourceMixpanelAuthenticationWildcardProjectSecret struct {
 	// Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
 	APISecret   string                                                        `json:"api_secret"`
-	OptionTitle *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle `json:"option_title,omitempty"`
+	optionTitle *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle `const:"Project Secret" json:"option_title,omitempty"`
+}
+
+func (s SourceMixpanelAuthenticationWildcardProjectSecret) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMixpanelAuthenticationWildcardProjectSecret) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMixpanelAuthenticationWildcardProjectSecret) GetAPISecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.APISecret
+}
+
+func (o *SourceMixpanelAuthenticationWildcardProjectSecret) GetOptionTitle() *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle {
+	return SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleProjectSecret.ToPointer()
 }
 
 type SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle string
@@ -67,11 +89,40 @@ func (e *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle) Unmarsha
 
 // SourceMixpanelAuthenticationWildcardServiceAccount - Choose how to authenticate to Mixpanel
 type SourceMixpanelAuthenticationWildcardServiceAccount struct {
-	OptionTitle *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle `json:"option_title,omitempty"`
+	optionTitle *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle `const:"Service Account" json:"option_title,omitempty"`
 	// Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 	Secret string `json:"secret"`
 	// Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 	Username string `json:"username"`
+}
+
+func (s SourceMixpanelAuthenticationWildcardServiceAccount) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMixpanelAuthenticationWildcardServiceAccount) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMixpanelAuthenticationWildcardServiceAccount) GetOptionTitle() *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle {
+	return SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleServiceAccount.ToPointer()
+}
+
+func (o *SourceMixpanelAuthenticationWildcardServiceAccount) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
+}
+
+func (o *SourceMixpanelAuthenticationWildcardServiceAccount) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type SourceMixpanelAuthenticationWildcardType string
@@ -107,21 +158,16 @@ func CreateSourceMixpanelAuthenticationWildcardSourceMixpanelAuthenticationWildc
 }
 
 func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMixpanelAuthenticationWildcardProjectSecret := new(SourceMixpanelAuthenticationWildcardProjectSecret)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMixpanelAuthenticationWildcardProjectSecret); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMixpanelAuthenticationWildcardProjectSecret, "", true, true); err == nil {
 		u.SourceMixpanelAuthenticationWildcardProjectSecret = sourceMixpanelAuthenticationWildcardProjectSecret
 		u.Type = SourceMixpanelAuthenticationWildcardTypeSourceMixpanelAuthenticationWildcardProjectSecret
 		return nil
 	}
 
 	sourceMixpanelAuthenticationWildcardServiceAccount := new(SourceMixpanelAuthenticationWildcardServiceAccount)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMixpanelAuthenticationWildcardServiceAccount); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMixpanelAuthenticationWildcardServiceAccount, "", true, true); err == nil {
 		u.SourceMixpanelAuthenticationWildcardServiceAccount = sourceMixpanelAuthenticationWildcardServiceAccount
 		u.Type = SourceMixpanelAuthenticationWildcardTypeSourceMixpanelAuthenticationWildcardServiceAccount
 		return nil
@@ -131,15 +177,15 @@ func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error 
 }
 
 func (u SourceMixpanelAuthenticationWildcard) MarshalJSON() ([]byte, error) {
-	if u.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
-		return json.Marshal(u.SourceMixpanelAuthenticationWildcardProjectSecret)
-	}
-
 	if u.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
-		return json.Marshal(u.SourceMixpanelAuthenticationWildcardServiceAccount)
+		return utils.MarshalJSON(u.SourceMixpanelAuthenticationWildcardServiceAccount, "", true)
 	}
 
-	return nil, nil
+	if u.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
+		return utils.MarshalJSON(u.SourceMixpanelAuthenticationWildcardProjectSecret, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourceMixpanelRegion - The region of mixpanel domain instance either US or EU.
@@ -196,22 +242,100 @@ func (e *SourceMixpanelMixpanel) UnmarshalJSON(data []byte) error {
 
 type SourceMixpanel struct {
 	//  A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.
-	AttributionWindow *int64 `json:"attribution_window,omitempty"`
+	AttributionWindow *int64 `default:"5" json:"attribution_window"`
 	// Choose how to authenticate to Mixpanel
 	Credentials *SourceMixpanelAuthenticationWildcard `json:"credentials,omitempty"`
 	// Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.
-	DateWindowSize *int64 `json:"date_window_size,omitempty"`
+	DateWindowSize *int64 `default:"30" json:"date_window_size"`
 	// The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
 	ProjectID *int64 `json:"project_id,omitempty"`
 	// Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
-	ProjectTimezone *string `json:"project_timezone,omitempty"`
+	ProjectTimezone *string `default:"US/Pacific" json:"project_timezone"`
 	// The region of mixpanel domain instance either US or EU.
-	Region *SourceMixpanelRegion `json:"region,omitempty"`
+	Region *SourceMixpanelRegion `default:"US" json:"region"`
 	// Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
-	SelectPropertiesByDefault *bool                   `json:"select_properties_by_default,omitempty"`
-	SourceType                *SourceMixpanelMixpanel `json:"sourceType,omitempty"`
+	SelectPropertiesByDefault *bool                   `default:"true" json:"select_properties_by_default"`
+	sourceType                *SourceMixpanelMixpanel `const:"mixpanel" json:"sourceType,omitempty"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 	StartDate *types.Date `json:"start_date,omitempty"`
+}
+
+func (s SourceMixpanel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMixpanel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMixpanel) GetAttributionWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AttributionWindow
+}
+
+func (o *SourceMixpanel) GetCredentials() *SourceMixpanelAuthenticationWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceMixpanel) GetDateWindowSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DateWindowSize
+}
+
+func (o *SourceMixpanel) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceMixpanel) GetProjectID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *SourceMixpanel) GetProjectTimezone() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectTimezone
+}
+
+func (o *SourceMixpanel) GetRegion() *SourceMixpanelRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceMixpanel) GetSelectPropertiesByDefault() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SelectPropertiesByDefault
+}
+
+func (o *SourceMixpanel) GetSourceType() *SourceMixpanelMixpanel {
+	return SourceMixpanelMixpanelMixpanel.ToPointer()
+}
+
+func (o *SourceMixpanel) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

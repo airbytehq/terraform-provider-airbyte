@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -61,15 +60,6 @@ func (r *SourceTrelloDataSource) Schema(ctx context.Context, req datasource.Sche
 					"key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"trello",
-							),
-						},
-						Description: `must be one of ["trello"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

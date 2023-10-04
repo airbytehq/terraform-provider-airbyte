@@ -15,12 +15,11 @@ SourceHubplanner Resource
 ```terraform
 resource "airbyte_source_hubplanner" "my_source_hubplanner" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "hubplanner"
+    api_key = "...my_api_key..."
   }
-  name         = "Cary Emmerich Sr."
+  name         = "Clarence Hodkiewicz"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b63c205f-da84-4077-8a68-a9a35d086b6f"
+  workspace_id = "c187087d-37ac-499f-9785-1612305e0c1f"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
 Required:
 
 - `api_key` (String) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-- `source_type` (String) must be one of ["hubplanner"]
 
 

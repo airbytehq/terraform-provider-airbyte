@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -14,13 +15,80 @@ type SourceJiraUpdate struct {
 	// The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.
 	Email string `json:"email"`
 	// Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.
-	EnableExperimentalStreams *bool `json:"enable_experimental_streams,omitempty"`
+	EnableExperimentalStreams *bool `default:"false" json:"enable_experimental_streams"`
 	// Expand the changelog when replicating issues.
-	ExpandIssueChangelog *bool `json:"expand_issue_changelog,omitempty"`
+	ExpandIssueChangelog *bool `default:"false" json:"expand_issue_changelog"`
 	// List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
 	Projects []string `json:"projects,omitempty"`
 	// Render issue fields in HTML format in addition to Jira JSON-like format.
-	RenderFields *bool `json:"render_fields,omitempty"`
+	RenderFields *bool `default:"false" json:"render_fields"`
 	// The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceJiraUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceJiraUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceJiraUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceJiraUpdate) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *SourceJiraUpdate) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *SourceJiraUpdate) GetEnableExperimentalStreams() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnableExperimentalStreams
+}
+
+func (o *SourceJiraUpdate) GetExpandIssueChangelog() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ExpandIssueChangelog
+}
+
+func (o *SourceJiraUpdate) GetProjects() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *SourceJiraUpdate) GetRenderFields() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RenderFields
+}
+
+func (o *SourceJiraUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

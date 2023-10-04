@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication struct {
-	AuthType        types.String `tfsdk:"auth_type"`
 	CredentialsJSON types.String `tfsdk:"credentials_json"`
 }

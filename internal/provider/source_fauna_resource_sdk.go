@@ -13,10 +13,7 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 		var deletions shared.SourceFaunaCollectionDeletionMode
 		var sourceFaunaCollectionDeletionModeDisabled *shared.SourceFaunaCollectionDeletionModeDisabled
 		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled != nil {
-			deletionMode := shared.SourceFaunaCollectionDeletionModeDisabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode.ValueString())
-			sourceFaunaCollectionDeletionModeDisabled = &shared.SourceFaunaCollectionDeletionModeDisabled{
-				DeletionMode: deletionMode,
-			}
+			sourceFaunaCollectionDeletionModeDisabled = &shared.SourceFaunaCollectionDeletionModeDisabled{}
 		}
 		if sourceFaunaCollectionDeletionModeDisabled != nil {
 			deletions = shared.SourceFaunaCollectionDeletionMode{
@@ -25,11 +22,14 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 		}
 		var sourceFaunaCollectionDeletionModeEnabled *shared.SourceFaunaCollectionDeletionModeEnabled
 		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled != nil {
-			column := r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.ValueString()
-			deletionMode1 := shared.SourceFaunaCollectionDeletionModeEnabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode.ValueString())
+			column := new(string)
+			if !r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.IsUnknown() && !r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.IsNull() {
+				*column = r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.ValueString()
+			} else {
+				column = nil
+			}
 			sourceFaunaCollectionDeletionModeEnabled = &shared.SourceFaunaCollectionDeletionModeEnabled{
-				Column:       column,
-				DeletionMode: deletionMode1,
+				Column: column,
 			}
 		}
 		if sourceFaunaCollectionDeletionModeEnabled != nil {
@@ -37,24 +37,42 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 				SourceFaunaCollectionDeletionModeEnabled: sourceFaunaCollectionDeletionModeEnabled,
 			}
 		}
-		pageSize := r.Configuration.Collection.PageSize.ValueInt64()
+		pageSize := new(int64)
+		if !r.Configuration.Collection.PageSize.IsUnknown() && !r.Configuration.Collection.PageSize.IsNull() {
+			*pageSize = r.Configuration.Collection.PageSize.ValueInt64()
+		} else {
+			pageSize = nil
+		}
 		collection = &shared.SourceFaunaCollection{
 			Deletions: deletions,
 			PageSize:  pageSize,
 		}
 	}
-	domain := r.Configuration.Domain.ValueString()
-	port := r.Configuration.Port.ValueInt64()
-	scheme := r.Configuration.Scheme.ValueString()
+	domain := new(string)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = r.Configuration.Domain.ValueString()
+	} else {
+		domain = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	scheme := new(string)
+	if !r.Configuration.Scheme.IsUnknown() && !r.Configuration.Scheme.IsNull() {
+		*scheme = r.Configuration.Scheme.ValueString()
+	} else {
+		scheme = nil
+	}
 	secret := r.Configuration.Secret.ValueString()
-	sourceType := shared.SourceFaunaFauna(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFauna{
 		Collection: collection,
 		Domain:     domain,
 		Port:       port,
 		Scheme:     scheme,
 		Secret:     secret,
-		SourceType: sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -84,10 +102,7 @@ func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutReque
 		var deletions shared.SourceFaunaUpdateCollectionDeletionMode
 		var sourceFaunaUpdateCollectionDeletionModeDisabled *shared.SourceFaunaUpdateCollectionDeletionModeDisabled
 		if r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeDisabled != nil {
-			deletionMode := shared.SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeDisabled.DeletionMode.ValueString())
-			sourceFaunaUpdateCollectionDeletionModeDisabled = &shared.SourceFaunaUpdateCollectionDeletionModeDisabled{
-				DeletionMode: deletionMode,
-			}
+			sourceFaunaUpdateCollectionDeletionModeDisabled = &shared.SourceFaunaUpdateCollectionDeletionModeDisabled{}
 		}
 		if sourceFaunaUpdateCollectionDeletionModeDisabled != nil {
 			deletions = shared.SourceFaunaUpdateCollectionDeletionMode{
@@ -96,11 +111,14 @@ func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutReque
 		}
 		var sourceFaunaUpdateCollectionDeletionModeEnabled *shared.SourceFaunaUpdateCollectionDeletionModeEnabled
 		if r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled != nil {
-			column := r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.Column.ValueString()
-			deletionMode1 := shared.SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.DeletionMode.ValueString())
+			column := new(string)
+			if !r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.Column.IsUnknown() && !r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.Column.IsNull() {
+				*column = r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.Column.ValueString()
+			} else {
+				column = nil
+			}
 			sourceFaunaUpdateCollectionDeletionModeEnabled = &shared.SourceFaunaUpdateCollectionDeletionModeEnabled{
-				Column:       column,
-				DeletionMode: deletionMode1,
+				Column: column,
 			}
 		}
 		if sourceFaunaUpdateCollectionDeletionModeEnabled != nil {
@@ -108,15 +126,35 @@ func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutReque
 				SourceFaunaUpdateCollectionDeletionModeEnabled: sourceFaunaUpdateCollectionDeletionModeEnabled,
 			}
 		}
-		pageSize := r.Configuration.Collection.PageSize.ValueInt64()
+		pageSize := new(int64)
+		if !r.Configuration.Collection.PageSize.IsUnknown() && !r.Configuration.Collection.PageSize.IsNull() {
+			*pageSize = r.Configuration.Collection.PageSize.ValueInt64()
+		} else {
+			pageSize = nil
+		}
 		collection = &shared.SourceFaunaUpdateCollection{
 			Deletions: deletions,
 			PageSize:  pageSize,
 		}
 	}
-	domain := r.Configuration.Domain.ValueString()
-	port := r.Configuration.Port.ValueInt64()
-	scheme := r.Configuration.Scheme.ValueString()
+	domain := new(string)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = r.Configuration.Domain.ValueString()
+	} else {
+		domain = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	scheme := new(string)
+	if !r.Configuration.Scheme.IsUnknown() && !r.Configuration.Scheme.IsNull() {
+		*scheme = r.Configuration.Scheme.ValueString()
+	} else {
+		scheme = nil
+	}
 	secret := r.Configuration.Secret.ValueString()
 	configuration := shared.SourceFaunaUpdate{
 		Collection: collection,

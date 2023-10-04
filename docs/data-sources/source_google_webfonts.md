@@ -45,6 +45,5 @@ Read-Only:
 - `api_key` (String) API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts
 - `pretty_print` (String) Optional, boolean type
 - `sort` (String) Optional, to find how to sort
-- `source_type` (String) must be one of ["google-webfonts"]
 
 

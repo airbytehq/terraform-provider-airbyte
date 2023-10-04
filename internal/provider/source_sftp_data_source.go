@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -59,16 +58,6 @@ func (r *SourceSftpDataSource) Schema(ctx context.Context, req datasource.Schema
 							"source_sftp_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through password authentication`,
-									},
 									"auth_user_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `OS-level password for logging into the jump server host`,
@@ -79,16 +68,6 @@ func (r *SourceSftpDataSource) Schema(ctx context.Context, req datasource.Schema
 							"source_sftp_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through ssh key`,
-									},
 									"auth_ssh_key": schema.StringAttribute{
 										Computed:    true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
@@ -99,16 +78,6 @@ func (r *SourceSftpDataSource) Schema(ctx context.Context, req datasource.Schema
 							"source_sftp_update_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through password authentication`,
-									},
 									"auth_user_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `OS-level password for logging into the jump server host`,
@@ -119,16 +88,6 @@ func (r *SourceSftpDataSource) Schema(ctx context.Context, req datasource.Schema
 							"source_sftp_update_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through ssh key`,
-									},
 									"auth_ssh_key": schema.StringAttribute{
 										Computed:    true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
@@ -143,33 +102,28 @@ func (r *SourceSftpDataSource) Schema(ctx context.Context, req datasource.Schema
 						Description: `The server authentication method`,
 					},
 					"file_pattern": schema.StringAttribute{
-						Computed:    true,
-						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
+						Computed: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The regular expression to specify files for sync in a chosen Folder Path`,
 					},
 					"file_types": schema.StringAttribute{
-						Computed:    true,
-						Description: `Coma separated file types. Currently only 'csv' and 'json' types are supported.`,
+						Computed: true,
+						MarkdownDescription: `Default: "csv,json"` + "\n" +
+							`Coma separated file types. Currently only 'csv' and 'json' types are supported.`,
 					},
 					"folder_path": schema.StringAttribute{
-						Computed:    true,
-						Description: `The directory to search files for sync`,
+						Computed: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The directory to search files for sync`,
 					},
 					"host": schema.StringAttribute{
 						Computed:    true,
 						Description: `The server host address`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The server port`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp",
-							),
-						},
-						Description: `must be one of ["sftp"]`,
+						MarkdownDescription: `Default: 22` + "\n" +
+							`The server port`,
 					},
 					"user": schema.StringAttribute{
 						Computed:    true,

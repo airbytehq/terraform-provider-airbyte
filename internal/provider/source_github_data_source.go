@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -75,30 +74,12 @@ func (r *SourceGithubDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `OAuth Client secret`,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `must be one of ["OAuth Credentials"]`,
-									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
 							},
 							"source_github_authentication_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `must be one of ["PAT Credentials"]`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
@@ -121,30 +102,12 @@ func (r *SourceGithubDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `OAuth Client secret`,
 									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `must be one of ["OAuth Credentials"]`,
-									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
 							},
 							"source_github_update_authentication_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `must be one of ["PAT Credentials"]`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
@@ -165,15 +128,6 @@ func (r *SourceGithubDataSource) Schema(ctx context.Context, req datasource.Sche
 					"requests_per_hour": schema.Int64Attribute{
 						Computed:    true,
 						Description: `The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"github",
-							),
-						},
-						Description: `must be one of ["github"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

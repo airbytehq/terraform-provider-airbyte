@@ -42,6 +42,5 @@ data "airbyte_source_coda" "my_source_coda" {
 Read-Only:
 
 - `auth_token` (String) Bearer token
-- `source_type` (String) must be one of ["coda"]
 
 

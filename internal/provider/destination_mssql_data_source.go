@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -56,15 +55,6 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 						Computed:    true,
 						Description: `The name of the MSSQL database.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mssql",
-							),
-						},
-						Description: `must be one of ["mssql"]`,
-					},
 					"host": schema.StringAttribute{
 						Computed:    true,
 						Description: `The host name of the MSSQL database.`,
@@ -78,29 +68,21 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 						Description: `The password associated with this username.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The port of the MSSQL database.`,
+						Computed: true,
+						MarkdownDescription: `Default: 1433` + "\n" +
+							`The port of the MSSQL database.`,
 					},
 					"schema": schema.StringAttribute{
-						Computed:    true,
-						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".`,
+						Computed: true,
+						MarkdownDescription: `Default: "public"` + "\n" +
+							`The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".`,
 					},
 					"ssl_method": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mssql_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_trust_server_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_trust_server_certificate"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"destination_mssql_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
@@ -110,31 +92,12 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
 									},
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
-									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
 							},
 							"destination_mssql_update_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_trust_server_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_trust_server_certificate"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"destination_mssql_update_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
@@ -143,15 +106,6 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 									"host_name_in_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
-									},
-									"ssl_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -166,19 +120,8 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -188,19 +131,10 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -224,19 +158,10 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -246,19 +171,8 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mssql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -268,19 +182,10 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -304,19 +209,10 @@ func (r *DestinationMssqlDataSource) Schema(ctx context.Context, req datasource.
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,

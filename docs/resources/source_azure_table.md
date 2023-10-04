@@ -15,14 +15,13 @@ SourceAzureTable Resource
 ```terraform
 resource "airbyte_source_azure_table" "my_source_azuretable" {
   configuration = {
-    source_type             = "azure-table"
     storage_access_key      = "...my_storage_access_key..."
     storage_account_name    = "...my_storage_account_name..."
-    storage_endpoint_suffix = "core.windows.net"
+    storage_endpoint_suffix = "core.chinacloudapi.cn"
   }
-  name         = "Ian Baumbach"
+  name         = "Lucille Lubowitz"
   secret_id    = "...my_secret_id..."
-  workspace_id = "57a5b404-63a7-4d57-9f14-00e764ad7334"
+  workspace_id = "c7b23d6b-848f-4403-86c0-4b193fb28918"
 }
 ```
 
@@ -49,12 +48,12 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
 
 Required:
 
-- `source_type` (String) must be one of ["azure-table"]
 - `storage_access_key` (String) Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
 - `storage_account_name` (String) The name of your storage account.
 
 Optional:
 
-- `storage_endpoint_suffix` (String) Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix
+- `storage_endpoint_suffix` (String) Default: "core.windows.net"
+Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix
 
 

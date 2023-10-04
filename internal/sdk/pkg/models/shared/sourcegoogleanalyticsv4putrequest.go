@@ -7,3 +7,24 @@ type SourceGoogleAnalyticsV4PutRequest struct {
 	Name          string                        `json:"name"`
 	WorkspaceID   string                        `json:"workspaceId"`
 }
+
+func (o *SourceGoogleAnalyticsV4PutRequest) GetConfiguration() SourceGoogleAnalyticsV4Update {
+	if o == nil {
+		return SourceGoogleAnalyticsV4Update{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleAnalyticsV4PutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleAnalyticsV4PutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

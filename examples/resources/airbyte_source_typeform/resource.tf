@@ -3,20 +3,18 @@ resource "airbyte_source_typeform" "my_source_typeform" {
     credentials = {
       source_typeform_authorization_method_o_auth2_0 = {
         access_token      = "...my_access_token..."
-        auth_type         = "oauth2.0"
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2021-02-23T09:05:08.511Z"
+        token_expiry_date = "2022-04-17T02:08:52.624Z"
       }
     }
     form_ids = [
       "...",
     ]
-    source_type = "typeform"
-    start_date  = "2021-03-01T00:00:00Z"
+    start_date = "2021-03-01T00:00:00Z"
   }
-  name         = "Rosemarie Spencer"
+  name         = "Kelly Davis"
   secret_id    = "...my_secret_id..."
-  workspace_id = "aac9b4ca-a1cf-4e9e-95df-903907f37831"
+  workspace_id = "eaf419bc-59e0-44a8-a9e9-d149f3b04e32"
 }

@@ -9,3 +9,31 @@ type SourceBigcommerceCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceBigcommerceCreateRequest) GetConfiguration() SourceBigcommerce {
+	if o == nil {
+		return SourceBigcommerce{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBigcommerceCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBigcommerceCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceBigcommerceCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

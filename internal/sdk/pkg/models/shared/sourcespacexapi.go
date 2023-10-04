@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,34 @@ func (e *SourceSpacexAPISpacexAPI) UnmarshalJSON(data []byte) error {
 type SourceSpacexAPI struct {
 	ID         *string                   `json:"id,omitempty"`
 	Options    *string                   `json:"options,omitempty"`
-	SourceType *SourceSpacexAPISpacexAPI `json:"sourceType,omitempty"`
+	sourceType *SourceSpacexAPISpacexAPI `const:"spacex-api" json:"sourceType,omitempty"`
+}
+
+func (s SourceSpacexAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSpacexAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSpacexAPI) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *SourceSpacexAPI) GetOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Options
+}
+
+func (o *SourceSpacexAPI) GetSourceType() *SourceSpacexAPISpacexAPI {
+	return SourceSpacexAPISpacexAPISpacexAPI.ToPointer()
 }

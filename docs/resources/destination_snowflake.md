@@ -17,23 +17,21 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
   configuration = {
     credentials = {
       destination_snowflake_authorization_method_key_pair_authentication = {
-        auth_type            = "Key Pair Authentication"
         private_key          = "...my_private_key..."
         private_key_password = "...my_private_key_password..."
       }
     }
-    database         = "AIRBYTE_DATABASE"
-    destination_type = "snowflake"
-    host             = "accountname.snowflakecomputing.com"
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    raw_data_schema  = "...my_raw_data_schema..."
-    role             = "AIRBYTE_ROLE"
-    schema           = "AIRBYTE_SCHEMA"
-    username         = "AIRBYTE_USER"
-    warehouse        = "AIRBYTE_WAREHOUSE"
+    database        = "AIRBYTE_DATABASE"
+    host            = "accountname.us-east-2.aws.snowflakecomputing.com"
+    jdbc_url_params = "...my_jdbc_url_params..."
+    raw_data_schema = "...my_raw_data_schema..."
+    role            = "AIRBYTE_ROLE"
+    schema          = "AIRBYTE_SCHEMA"
+    username        = "AIRBYTE_USER"
+    warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Shaun Osinski"
-  workspace_id = "851d6c64-5b08-4b61-891b-aa0fe1ade008"
+  name         = "Van Leuschke"
+  workspace_id = "e4a6f8bb-810e-4d64-af80-2e7b2183b2bc"
 }
 ```
 
@@ -57,7 +55,6 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
 Required:
 
 - `database` (String) Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
-- `destination_type` (String) must be one of ["snowflake"]
 - `host` (String) Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 - `role` (String) Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 - `schema` (String) Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
@@ -91,7 +88,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of ["Key Pair Authentication"]
 - `private_key_password` (String) Passphrase for private key
 
 
@@ -105,7 +101,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 
@@ -117,10 +112,6 @@ Required:
 
 - `password` (String) Enter the password associated with the username.
 
-Optional:
-
-- `auth_type` (String) must be one of ["Username and Password"]
-
 
 <a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_key_pair_authentication"></a>
 ### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_key_pair_authentication`
@@ -131,7 +122,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of ["Key Pair Authentication"]
 - `private_key_password` (String) Passphrase for private key
 
 
@@ -145,7 +135,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 
@@ -156,9 +145,5 @@ Optional:
 Required:
 
 - `password` (String) Enter the password associated with the username.
-
-Optional:
-
-- `auth_type` (String) must be one of ["Username and Password"]
 
 

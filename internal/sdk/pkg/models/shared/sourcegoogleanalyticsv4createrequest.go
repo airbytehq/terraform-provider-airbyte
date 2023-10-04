@@ -9,3 +9,31 @@ type SourceGoogleAnalyticsV4CreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGoogleAnalyticsV4CreateRequest) GetConfiguration() SourceGoogleAnalyticsV4 {
+	if o == nil {
+		return SourceGoogleAnalyticsV4{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleAnalyticsV4CreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleAnalyticsV4CreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleAnalyticsV4CreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

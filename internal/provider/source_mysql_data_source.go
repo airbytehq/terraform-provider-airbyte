@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -70,8 +69,9 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The port to connect to.`,
+						Computed: true,
+						MarkdownDescription: `Default: 3306` + "\n" +
+							`The port to connect to.`,
 					},
 					"replication_method": schema.SingleNestedAttribute{
 						Computed: true,
@@ -80,17 +80,9 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"method": schema.StringAttribute{
 										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"server_time_zone": schema.StringAttribute{
 										Computed:    true,
@@ -100,35 +92,17 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.`,
 							},
 							"source_mysql_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-										Description: `must be one of ["STANDARD"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 							"source_mysql_update_update_method_read_changes_using_binary_log_cdc": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"method": schema.StringAttribute{
 										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"server_time_zone": schema.StringAttribute{
 										Computed:    true,
@@ -138,18 +112,8 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.`,
 							},
 							"source_mysql_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-										Description: `must be one of ["STANDARD"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
@@ -158,46 +122,17 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 						},
 						Description: `Configures how data is extracted from the database.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mysql",
-							),
-						},
-						Description: `must be one of ["mysql"]`,
-					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mysql_ssl_modes_preferred": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"preferred",
-											),
-										},
-										Description: `must be one of ["preferred"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
 							},
 							"source_mysql_ssl_modes_required": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"required",
-											),
-										},
-										Description: `must be one of ["required"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
 							},
 							"source_mysql_ssl_modes_verify_ca": schema.SingleNestedAttribute{
@@ -218,15 +153,6 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 									"client_key_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify_ca",
-											),
-										},
-										Description: `must be one of ["verify_ca"]`,
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
@@ -250,46 +176,17 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify_identity",
-											),
-										},
-										Description: `must be one of ["verify_identity"]`,
-									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
 							},
 							"source_mysql_update_ssl_modes_preferred": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"preferred",
-											),
-										},
-										Description: `must be one of ["preferred"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
 							},
 							"source_mysql_update_ssl_modes_required": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"required",
-											),
-										},
-										Description: `must be one of ["required"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
 							},
 							"source_mysql_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
@@ -310,15 +207,6 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 									"client_key_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify_ca",
-											),
-										},
-										Description: `must be one of ["verify_ca"]`,
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
@@ -342,15 +230,6 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify_identity",
-											),
-										},
-										Description: `must be one of ["verify_identity"]`,
-									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
 							},
@@ -364,19 +243,8 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mysql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mysql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -386,19 +254,10 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -422,19 +281,10 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -444,19 +294,8 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mysql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mysql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -466,19 +305,10 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -502,19 +332,10 @@ func (r *SourceMysqlDataSource) Schema(ctx context.Context, req datasource.Schem
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,

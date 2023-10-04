@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -40,7 +41,57 @@ type SourceOutreach struct {
 	RedirectURI string `json:"redirect_uri"`
 	// The token for obtaining the new access token.
 	RefreshToken string                 `json:"refresh_token"`
-	SourceType   SourceOutreachOutreach `json:"sourceType"`
+	sourceType   SourceOutreachOutreach `const:"outreach" json:"sourceType"`
 	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceOutreach) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOutreach) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOutreach) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceOutreach) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceOutreach) GetRedirectURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.RedirectURI
+}
+
+func (o *SourceOutreach) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceOutreach) GetSourceType() SourceOutreachOutreach {
+	return SourceOutreachOutreachOutreach
+}
+
+func (o *SourceOutreach) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

@@ -10,7 +10,6 @@ import (
 
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,63 +61,23 @@ func (r *SourceSurveySparrowDataSource) Schema(ctx context.Context, req datasour
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_base_url_global_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 						},
@@ -126,15 +85,6 @@ func (r *SourceSurveySparrowDataSource) Schema(ctx context.Context, req datasour
 							validators.ExactlyOneChild(),
 						},
 						Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"survey-sparrow",
-							),
-						},
-						Description: `must be one of ["survey-sparrow"]`,
 					},
 					"survey_id": schema.ListAttribute{
 						Computed:    true,

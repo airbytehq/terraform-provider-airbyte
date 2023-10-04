@@ -5,11 +5,10 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFirebolt struct {
-	Account    types.String `tfsdk:"account"`
-	Database   types.String `tfsdk:"database"`
-	Engine     types.String `tfsdk:"engine"`
-	Host       types.String `tfsdk:"host"`
-	Password   types.String `tfsdk:"password"`
-	SourceType types.String `tfsdk:"source_type"`
-	Username   types.String `tfsdk:"username"`
+	Account  types.String `tfsdk:"account"`
+	Database types.String `tfsdk:"database"`
+	Engine   types.String `tfsdk:"engine"`
+	Host     types.String `tfsdk:"host"`
+	Password types.String `tfsdk:"password"`
+	Username types.String `tfsdk:"username"`
 }

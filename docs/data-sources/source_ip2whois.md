@@ -43,6 +43,5 @@ Read-Only:
 
 - `api_key` (String) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 - `domain` (String) Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
-- `source_type` (String) must be one of ["ip2whois"]
 
 

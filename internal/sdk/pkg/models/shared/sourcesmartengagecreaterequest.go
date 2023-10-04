@@ -9,3 +9,31 @@ type SourceSmartengageCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSmartengageCreateRequest) GetConfiguration() SourceSmartengage {
+	if o == nil {
+		return SourceSmartengage{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSmartengageCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSmartengageCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSmartengageCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

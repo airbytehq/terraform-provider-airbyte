@@ -15,16 +15,15 @@ DestinationKinesis Resource
 ```terraform
 resource "airbyte_destination_kinesis" "my_destination_kinesis" {
   configuration = {
-    access_key       = "...my_access_key..."
-    buffer_size      = 1
-    destination_type = "kinesis"
-    endpoint         = "kinesis.us‑west‑1.amazonaws.com"
-    private_key      = "...my_private_key..."
-    region           = "us‑west‑1"
-    shard_count      = 9
+    access_key  = "...my_access_key..."
+    buffer_size = 0
+    endpoint    = "kinesis.us‑west‑1.amazonaws.com"
+    private_key = "...my_private_key..."
+    region      = "us‑west‑1"
+    shard_count = 4
   }
-  name         = "Opal Kozey"
-  workspace_id = "5bc0ab3c-20c4-4f37-89fd-871f99dd2efd"
+  name         = "Kristin Lowe"
+  workspace_id = "40d1987e-d52c-4bff-8185-8935bdfe2750"
 }
 ```
 
@@ -48,11 +47,15 @@ resource "airbyte_destination_kinesis" "my_destination_kinesis" {
 Required:
 
 - `access_key` (String) Generate the AWS Access Key for current user.
-- `buffer_size` (Number) Buffer size for storing kinesis records before being batch streamed.
-- `destination_type` (String) must be one of ["kinesis"]
 - `endpoint` (String) AWS Kinesis endpoint.
 - `private_key` (String) The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".
 - `region` (String) AWS region. Your account determines the Regions that are available to you.
-- `shard_count` (Number) Number of shards to which the data should be streamed.
+
+Optional:
+
+- `buffer_size` (Number) Default: 100
+Buffer size for storing kinesis records before being batch streamed.
+- `shard_count` (Number) Default: 5
+Number of shards to which the data should be streamed.
 
 

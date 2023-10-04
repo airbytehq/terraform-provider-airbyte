@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationMilvusEmbeddingCohere struct {
 	CohereKey types.String `tfsdk:"cohere_key"`
-	Mode      types.String `tfsdk:"mode"`
 }

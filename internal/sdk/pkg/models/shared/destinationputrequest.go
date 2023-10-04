@@ -7,3 +7,17 @@ type DestinationPutRequest struct {
 	Configuration interface{} `json:"configuration"`
 	Name          string      `json:"name"`
 }
+
+func (o *DestinationPutRequest) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *DestinationPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}

@@ -42,7 +42,6 @@ data "airbyte_source_monday" "my_source_monday" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["monday"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -60,7 +59,6 @@ Read-Only:
 Read-Only:
 
 - `api_token` (String) API Token for making authenticated requests.
-- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_monday_authorization_method_o_auth2_0"></a>
@@ -69,10 +67,10 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
-- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+- `subdomain` (String) Default: ""
+Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 
 <a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_api_token"></a>
@@ -81,7 +79,6 @@ Read-Only:
 Read-Only:
 
 - `api_token` (String) API Token for making authenticated requests.
-- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_o_auth2_0"></a>
@@ -90,9 +87,9 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
-- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+- `subdomain` (String) Default: ""
+Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 

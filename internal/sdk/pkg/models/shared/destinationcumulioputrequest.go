@@ -7,3 +7,24 @@ type DestinationCumulioPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *DestinationCumulioPutRequest) GetConfiguration() DestinationCumulioUpdate {
+	if o == nil {
+		return DestinationCumulioUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationCumulioPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationCumulioPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSftpAuthenticationWildcardPasswordAuthentication struct {
-	AuthMethod       types.String `tfsdk:"auth_method"`
 	AuthUserPassword types.String `tfsdk:"auth_user_password"`
 }

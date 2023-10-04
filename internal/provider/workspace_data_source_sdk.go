@@ -8,7 +8,11 @@ import (
 )
 
 func (r *WorkspaceDataSourceModel) RefreshFromGetResponse(resp *shared.WorkspaceResponse) {
-	r.DataResidency = types.StringValue(string(resp.DataResidency))
+	if resp.DataResidency != nil {
+		r.DataResidency = types.StringValue(string(*resp.DataResidency))
+	} else {
+		r.DataResidency = types.StringNull()
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

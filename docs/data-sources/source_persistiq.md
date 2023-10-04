@@ -42,6 +42,5 @@ data "airbyte_source_persistiq" "my_source_persistiq" {
 Read-Only:
 
 - `api_key` (String) PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
-- `source_type` (String) must be one of ["persistiq"]
 
 

@@ -129,7 +129,6 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	} else {
 		pageSize = nil
 	}
-	sourceType := shared.SourceFacebookMarketingFacebookMarketing(r.Configuration.SourceType.ValueString())
 	startDate1, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFacebookMarketing{
 		AccessToken:                accessToken,
@@ -144,7 +143,6 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		InsightsLookbackWindow:     insightsLookbackWindow1,
 		MaxBatchSize:               maxBatchSize,
 		PageSize:                   pageSize,
-		SourceType:                 sourceType,
 		StartDate:                  startDate1,
 	}
 	name1 := r.Name.ValueString()

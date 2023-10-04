@@ -13,3 +13,31 @@ type InitiateOauthRequest struct {
 	// The workspace to create the secret and eventually the full source.
 	WorkspaceID string `json:"workspaceId"`
 }
+
+func (o *InitiateOauthRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *InitiateOauthRequest) GetOAuthInputConfiguration() *OAuthInputConfiguration {
+	if o == nil {
+		return nil
+	}
+	return o.OAuthInputConfiguration
+}
+
+func (o *InitiateOauthRequest) GetRedirectURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.RedirectURL
+}
+
+func (o *InitiateOauthRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

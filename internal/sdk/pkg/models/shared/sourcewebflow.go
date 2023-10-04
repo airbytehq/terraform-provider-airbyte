@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,5 +37,34 @@ type SourceWebflow struct {
 	APIKey string `json:"api_key"`
 	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
 	SiteID     string               `json:"site_id"`
-	SourceType SourceWebflowWebflow `json:"sourceType"`
+	sourceType SourceWebflowWebflow `const:"webflow" json:"sourceType"`
+}
+
+func (s SourceWebflow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWebflow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceWebflow) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceWebflow) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
+}
+
+func (o *SourceWebflow) GetSourceType() SourceWebflowWebflow {
+	return SourceWebflowWebflowWebflow
 }

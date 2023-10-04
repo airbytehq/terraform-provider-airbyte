@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,29 +60,20 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							"source_zendesk_support_authentication_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.`,
-									},
-									"credentials": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
-									"email": schema.StringAttribute{
-										Required:    true,
-										Description: `The user email for your Zendesk account.`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
 										Description: `Parsed as JSON.`,
+									},
+									"api_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.`,
+									},
+									"email": schema.StringAttribute{
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 								},
 								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
@@ -95,6 +85,13 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Required:    true,
 										Description: `The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.`,
 									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
 										Description: `The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
@@ -103,51 +100,26 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Optional:    true,
 										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
-									"credentials": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 							},
 							"source_zendesk_support_update_authentication_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.`,
-									},
-									"credentials": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
-									"email": schema.StringAttribute{
-										Required:    true,
-										Description: `The user email for your Zendesk account.`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
 										Description: `Parsed as JSON.`,
+									},
+									"api_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.`,
+									},
+									"email": schema.StringAttribute{
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 								},
 								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
@@ -155,6 +127,13 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							"source_zendesk_support_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.`,
@@ -167,22 +146,6 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Optional:    true,
 										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
-									"credentials": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 							},
@@ -193,17 +156,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 						Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 					},
 					"ignore_pagination": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Makes each stream read a single page of data.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-support",
-							),
-						},
-						Description: `must be one of ["zendesk-support"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Makes each stream read a single page of data.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -288,7 +243,7 @@ func (r *SourceZendeskSupportResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceZendeskSupport(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

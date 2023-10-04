@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourcePunkAPI struct {
 	BrewedBefore string `json:"brewed_before"`
 	// To extract specific data with Unique ID
 	ID         *string              `json:"id,omitempty"`
-	SourceType SourcePunkAPIPunkAPI `json:"sourceType"`
+	sourceType SourcePunkAPIPunkAPI `const:"punk-api" json:"sourceType"`
+}
+
+func (s SourcePunkAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePunkAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePunkAPI) GetBrewedAfter() string {
+	if o == nil {
+		return ""
+	}
+	return o.BrewedAfter
+}
+
+func (o *SourcePunkAPI) GetBrewedBefore() string {
+	if o == nil {
+		return ""
+	}
+	return o.BrewedBefore
+}
+
+func (o *SourcePunkAPI) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *SourcePunkAPI) GetSourceType() SourcePunkAPIPunkAPI {
+	return SourcePunkAPIPunkAPIPunkAPI
 }

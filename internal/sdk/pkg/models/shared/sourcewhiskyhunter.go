@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,5 +33,20 @@ func (e *SourceWhiskyHunterWhiskyHunter) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWhiskyHunter struct {
-	SourceType *SourceWhiskyHunterWhiskyHunter `json:"sourceType,omitempty"`
+	sourceType *SourceWhiskyHunterWhiskyHunter `const:"whisky-hunter" json:"sourceType,omitempty"`
+}
+
+func (s SourceWhiskyHunter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWhiskyHunter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceWhiskyHunter) GetSourceType() *SourceWhiskyHunterWhiskyHunter {
+	return SourceWhiskyHunterWhiskyHunterWhiskyHunter.ToPointer()
 }

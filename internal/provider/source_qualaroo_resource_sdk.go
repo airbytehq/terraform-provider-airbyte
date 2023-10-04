@@ -9,7 +9,6 @@ import (
 
 func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCreateRequest {
 	key := r.Configuration.Key.ValueString()
-	sourceType := shared.SourceQualarooQualaroo(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	var surveyIds []string = nil
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
@@ -17,11 +16,10 @@ func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCr
 	}
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceQualaroo{
-		Key:        key,
-		SourceType: sourceType,
-		StartDate:  startDate,
-		SurveyIds:  surveyIds,
-		Token:      token,
+		Key:       key,
+		StartDate: startDate,
+		SurveyIds: surveyIds,
+		Token:     token,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

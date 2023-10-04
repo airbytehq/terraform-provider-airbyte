@@ -4,6 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,9 +36,45 @@ func (e *SourcePrestashopPrestashop) UnmarshalJSON(data []byte) error {
 type SourcePrestashop struct {
 	// Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
 	AccessKey  string                     `json:"access_key"`
-	SourceType SourcePrestashopPrestashop `json:"sourceType"`
+	sourceType SourcePrestashopPrestashop `const:"prestashop" json:"sourceType"`
 	// The Start date in the format YYYY-MM-DD.
 	StartDate types.Date `json:"start_date"`
 	// Shop URL without trailing slash.
 	URL string `json:"url"`
+}
+
+func (s SourcePrestashop) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePrestashop) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePrestashop) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *SourcePrestashop) GetSourceType() SourcePrestashopPrestashop {
+	return SourcePrestashopPrestashopPrestashop
+}
+
+func (o *SourcePrestashop) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePrestashop) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

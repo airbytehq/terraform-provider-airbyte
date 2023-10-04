@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthType) UnmarshalJSO
 type SourceGitlabUpdateAuthorizationMethodPrivateToken struct {
 	// Log into your Gitlab account and then generate a personal Access Token.
 	AccessToken string                                                     `json:"access_token"`
-	AuthType    *SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthType `json:"auth_type,omitempty"`
+	authType    *SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthType `const:"access_token" json:"auth_type,omitempty"`
+}
+
+func (s SourceGitlabUpdateAuthorizationMethodPrivateToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGitlabUpdateAuthorizationMethodPrivateToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodPrivateToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodPrivateToken) GetAuthType() *SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthType {
+	return SourceGitlabUpdateAuthorizationMethodPrivateTokenAuthTypeAccessToken.ToPointer()
 }
 
 type SourceGitlabUpdateAuthorizationMethodOAuth20AuthType string
@@ -67,7 +89,7 @@ func (e *SourceGitlabUpdateAuthorizationMethodOAuth20AuthType) UnmarshalJSON(dat
 type SourceGitlabUpdateAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                                `json:"access_token"`
-	AuthType    *SourceGitlabUpdateAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	authType    *SourceGitlabUpdateAuthorizationMethodOAuth20AuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API ID of the Gitlab developer application.
 	ClientID string `json:"client_id"`
 	// The API Secret the Gitlab developer application.
@@ -76,6 +98,56 @@ type SourceGitlabUpdateAuthorizationMethodOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 	// The date-time when the access token should be refreshed.
 	TokenExpiryDate time.Time `json:"token_expiry_date"`
+}
+
+func (s SourceGitlabUpdateAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGitlabUpdateAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodOAuth20) GetAuthType() *SourceGitlabUpdateAuthorizationMethodOAuth20AuthType {
+	return SourceGitlabUpdateAuthorizationMethodOAuth20AuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceGitlabUpdateAuthorizationMethodOAuth20) GetTokenExpiryDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.TokenExpiryDate
 }
 
 type SourceGitlabUpdateAuthorizationMethodType string
@@ -111,21 +183,16 @@ func CreateSourceGitlabUpdateAuthorizationMethodSourceGitlabUpdateAuthorizationM
 }
 
 func (u *SourceGitlabUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceGitlabUpdateAuthorizationMethodPrivateToken := new(SourceGitlabUpdateAuthorizationMethodPrivateToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGitlabUpdateAuthorizationMethodPrivateToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceGitlabUpdateAuthorizationMethodPrivateToken, "", true, true); err == nil {
 		u.SourceGitlabUpdateAuthorizationMethodPrivateToken = sourceGitlabUpdateAuthorizationMethodPrivateToken
 		u.Type = SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateAuthorizationMethodPrivateToken
 		return nil
 	}
 
 	sourceGitlabUpdateAuthorizationMethodOAuth20 := new(SourceGitlabUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGitlabUpdateAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceGitlabUpdateAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourceGitlabUpdateAuthorizationMethodOAuth20 = sourceGitlabUpdateAuthorizationMethodOAuth20
 		u.Type = SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateAuthorizationMethodOAuth20
 		return nil
@@ -135,20 +202,20 @@ func (u *SourceGitlabUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceGitlabUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceGitlabUpdateAuthorizationMethodPrivateToken != nil {
-		return json.Marshal(u.SourceGitlabUpdateAuthorizationMethodPrivateToken)
-	}
-
 	if u.SourceGitlabUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceGitlabUpdateAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourceGitlabUpdateAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceGitlabUpdateAuthorizationMethodPrivateToken != nil {
+		return utils.MarshalJSON(u.SourceGitlabUpdateAuthorizationMethodPrivateToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceGitlabUpdate struct {
 	// Please enter your basic URL from GitLab instance.
-	APIURL      *string                               `json:"api_url,omitempty"`
+	APIURL      *string                               `default:"gitlab.com" json:"api_url"`
 	Credentials SourceGitlabUpdateAuthorizationMethod `json:"credentials"`
 	// Space-delimited list of groups. e.g. airbyte.io.
 	Groups *string `json:"groups,omitempty"`
@@ -156,4 +223,50 @@ type SourceGitlabUpdate struct {
 	Projects *string `json:"projects,omitempty"`
 	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceGitlabUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGitlabUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGitlabUpdate) GetAPIURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIURL
+}
+
+func (o *SourceGitlabUpdate) GetCredentials() SourceGitlabUpdateAuthorizationMethod {
+	if o == nil {
+		return SourceGitlabUpdateAuthorizationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceGitlabUpdate) GetGroups() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Groups
+}
+
+func (o *SourceGitlabUpdate) GetProjects() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *SourceGitlabUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

@@ -15,12 +15,10 @@ func (r *SourceClockifyResourceModel) ToCreateSDKType() *shared.SourceClockifyCr
 	} else {
 		apiURL = nil
 	}
-	sourceType := shared.SourceClockifyClockify(r.Configuration.SourceType.ValueString())
 	workspaceID := r.Configuration.WorkspaceID.ValueString()
 	configuration := shared.SourceClockify{
 		APIKey:      apiKey,
 		APIURL:      apiURL,
-		SourceType:  sourceType,
 		WorkspaceID: workspaceID,
 	}
 	name := r.Name.ValueString()

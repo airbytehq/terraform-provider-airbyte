@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,8 +36,8 @@ type DestinationKinesis struct {
 	// Generate the AWS Access Key for current user.
 	AccessKey string `json:"accessKey"`
 	// Buffer size for storing kinesis records before being batch streamed.
-	BufferSize      int64                     `json:"bufferSize"`
-	DestinationType DestinationKinesisKinesis `json:"destinationType"`
+	BufferSize      *int64                    `default:"100" json:"bufferSize"`
+	destinationType DestinationKinesisKinesis `const:"kinesis" json:"destinationType"`
 	// AWS Kinesis endpoint.
 	Endpoint string `json:"endpoint"`
 	// The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".
@@ -44,5 +45,62 @@ type DestinationKinesis struct {
 	// AWS region. Your account determines the Regions that are available to you.
 	Region string `json:"region"`
 	// Number of shards to which the data should be streamed.
-	ShardCount int64 `json:"shardCount"`
+	ShardCount *int64 `default:"5" json:"shardCount"`
+}
+
+func (d DestinationKinesis) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationKinesis) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationKinesis) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *DestinationKinesis) GetBufferSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BufferSize
+}
+
+func (o *DestinationKinesis) GetDestinationType() DestinationKinesisKinesis {
+	return DestinationKinesisKinesisKinesis
+}
+
+func (o *DestinationKinesis) GetEndpoint() string {
+	if o == nil {
+		return ""
+	}
+	return o.Endpoint
+}
+
+func (o *DestinationKinesis) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
+}
+
+func (o *DestinationKinesis) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *DestinationKinesis) GetShardCount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ShardCount
 }

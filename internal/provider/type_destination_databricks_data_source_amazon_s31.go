@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationDatabricksDataSourceAmazonS31 struct {
-	DataSourceType    types.String `tfsdk:"data_source_type"`
 	FileNamePattern   types.String `tfsdk:"file_name_pattern"`
 	S3AccessKeyID     types.String `tfsdk:"s3_access_key_id"`
 	S3BucketName      types.String `tfsdk:"s3_bucket_name"`

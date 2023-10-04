@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationFireboltLoadingMethodExternalTableViaS3 struct {
 	AwsKeyID     types.String `tfsdk:"aws_key_id"`
 	AwsKeySecret types.String `tfsdk:"aws_key_secret"`
-	Method       types.String `tfsdk:"method"`
 	S3Bucket     types.String `tfsdk:"s3_bucket"`
 	S3Region     types.String `tfsdk:"s3_region"`
 }

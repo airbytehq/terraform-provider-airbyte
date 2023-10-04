@@ -64,25 +64,17 @@ func (r *SourceAmplitudeDataSource) Schema(ctx context.Context, req datasource.S
 								"EU Residency Server",
 							),
 						},
-						MarkdownDescription: `must be one of ["Standard Server", "EU Residency Server"]` + "\n" +
+						MarkdownDescription: `must be one of ["Standard Server", "EU Residency Server"]; Default: "Standard Server"` + "\n" +
 							`Amplitude data region server`,
 					},
 					"request_time_range": schema.Int64Attribute{
-						Computed:    true,
-						Description: `According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.`,
+						Computed: true,
+						MarkdownDescription: `Default: 24` + "\n" +
+							`According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.`,
 					},
 					"secret_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amplitude",
-							),
-						},
-						Description: `must be one of ["amplitude"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

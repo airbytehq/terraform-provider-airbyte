@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,15 +55,6 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 						Required:    true,
 						Description: `Name of the database.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"databend",
-							),
-						},
-						Description: `must be one of ["databend"]`,
-					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `Hostname of the database.`,
@@ -75,12 +64,14 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Port of the database.`,
+						Optional: true,
+						MarkdownDescription: `Default: 443` + "\n" +
+							`Port of the database.`,
 					},
 					"table": schema.StringAttribute{
-						Optional:    true,
-						Description: `The default  table was written to.`,
+						Optional: true,
+						MarkdownDescription: `Default: "default"` + "\n" +
+							`The default  table was written to.`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
@@ -154,7 +145,7 @@ func (r *DestinationDatabendResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationDatabend(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

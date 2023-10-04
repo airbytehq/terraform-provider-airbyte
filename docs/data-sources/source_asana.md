@@ -42,7 +42,6 @@ data "airbyte_source_asana" "my_source_asana" {
 Read-Only:
 
 - `credentials` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["asana"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -61,8 +60,6 @@ Read-Only:
 
 - `client_id` (String)
 - `client_secret` (String)
-- `option_title` (String) must be one of ["OAuth Credentials"]
-OAuth Credentials
 - `refresh_token` (String)
 
 
@@ -71,8 +68,6 @@ OAuth Credentials
 
 Read-Only:
 
-- `option_title` (String) must be one of ["PAT Credentials"]
-PAT Credentials
 - `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 
 
@@ -83,8 +78,6 @@ Read-Only:
 
 - `client_id` (String)
 - `client_secret` (String)
-- `option_title` (String) must be one of ["OAuth Credentials"]
-OAuth Credentials
 - `refresh_token` (String)
 
 
@@ -93,8 +86,6 @@ OAuth Credentials
 
 Read-Only:
 
-- `option_title` (String) must be one of ["PAT Credentials"]
-PAT Credentials
 - `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 
 

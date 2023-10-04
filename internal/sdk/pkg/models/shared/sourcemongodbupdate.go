@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,56 +35,39 @@ func (e *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance) UnmarshalJS
 
 // SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The URL of a cluster to connect to.
 	ClusterURL string                                                     `json:"cluster_url"`
-	Instance   SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance `json:"instance"`
-
-	AdditionalProperties interface{} `json:"-"`
+	instance   SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance `const:"atlas" json:"instance"`
 }
-type _SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
 
-func (c *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) UnmarshalJSON(bs []byte) error {
-	data := _SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{}
+func (s SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "cluster_url")
-	delete(additionalFields, "instance")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas(c))
-	if err != nil {
-		return nil, err
+func (o *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) GetClusterURL() string {
+	if o == nil {
+		return ""
 	}
+	return o.ClusterURL
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+func (o *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) GetInstance() SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance {
+	return SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstanceAtlas
 }
 
 type SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance string
@@ -113,11 +96,40 @@ func (e *SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance) UnmarshalJSON
 
 // SourceMongodbUpdateMongoDbInstanceTypeReplicaSet - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type SourceMongodbUpdateMongoDbInstanceTypeReplicaSet struct {
-	Instance SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance `json:"instance"`
+	instance SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance `const:"replica" json:"instance"`
 	// A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 	ReplicaSet *string `json:"replica_set,omitempty"`
 	// The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 	ServerAddresses string `json:"server_addresses"`
+}
+
+func (s SourceMongodbUpdateMongoDbInstanceTypeReplicaSet) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbUpdateMongoDbInstanceTypeReplicaSet) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbUpdateMongoDbInstanceTypeReplicaSet) GetInstance() SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance {
+	return SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstanceReplica
+}
+
+func (o *SourceMongodbUpdateMongoDbInstanceTypeReplicaSet) GetReplicaSet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicaSet
+}
+
+func (o *SourceMongodbUpdateMongoDbInstanceTypeReplicaSet) GetServerAddresses() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerAddresses
 }
 
 type SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance string
@@ -148,9 +160,38 @@ func (e *SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance
 type SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance struct {
 	// The host name of the Mongo database.
 	Host     string                                                                  `json:"host"`
-	Instance SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance `json:"instance"`
+	instance SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance `const:"standalone" json:"instance"`
 	// The port of the Mongo database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"27017" json:"port"`
+}
+
+func (s SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance) GetInstance() SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance {
+	return SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceStandalone
+}
+
+func (o *SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 type SourceMongodbUpdateMongoDbInstanceTypeType string
@@ -197,32 +238,25 @@ func CreateSourceMongodbUpdateMongoDbInstanceTypeSourceMongodbUpdateMongoDBInsta
 }
 
 func (u *SourceMongodbUpdateMongoDbInstanceType) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas := new(SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas); err == nil {
-		u.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
-		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
-		return nil
-	}
 
 	sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance := new(SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance, "", true, true); err == nil {
 		u.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance = sourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance
 		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance
 		return nil
 	}
 
 	sourceMongodbUpdateMongoDbInstanceTypeReplicaSet := new(SourceMongodbUpdateMongoDbInstanceTypeReplicaSet)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbUpdateMongoDbInstanceTypeReplicaSet); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMongodbUpdateMongoDbInstanceTypeReplicaSet, "", true, true); err == nil {
 		u.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet = sourceMongodbUpdateMongoDbInstanceTypeReplicaSet
 		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDbInstanceTypeReplicaSet
+		return nil
+	}
+
+	sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas := new(SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas, "", true, true); err == nil {
+		u.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
+		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
 		return nil
 	}
 
@@ -230,24 +264,24 @@ func (u *SourceMongodbUpdateMongoDbInstanceType) UnmarshalJSON(data []byte) erro
 }
 
 func (u SourceMongodbUpdateMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
-		return json.Marshal(u.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas)
-	}
-
 	if u.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
-		return json.Marshal(u.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance)
+		return utils.MarshalJSON(u.SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance, "", true)
 	}
 
 	if u.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet != nil {
-		return json.Marshal(u.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet)
+		return utils.MarshalJSON(u.SourceMongodbUpdateMongoDbInstanceTypeReplicaSet, "", true)
 	}
 
-	return nil, nil
+	if u.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
+		return utils.MarshalJSON(u.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMongodbUpdate struct {
 	// The authentication source where the user information is stored.
-	AuthSource *string `json:"auth_source,omitempty"`
+	AuthSource *string `default:"admin" json:"auth_source"`
 	// The database you want to replicate.
 	Database string `json:"database"`
 	// The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
@@ -256,4 +290,50 @@ type SourceMongodbUpdate struct {
 	Password *string `json:"password,omitempty"`
 	// The username which is used to access the database.
 	User *string `json:"user,omitempty"`
+}
+
+func (s SourceMongodbUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbUpdate) GetAuthSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthSource
+}
+
+func (o *SourceMongodbUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceMongodbUpdate) GetInstanceType() *SourceMongodbUpdateMongoDbInstanceType {
+	if o == nil {
+		return nil
+	}
+	return o.InstanceType
+}
+
+func (o *SourceMongodbUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMongodbUpdate) GetUser() *string {
+	if o == nil {
+		return nil
+	}
+	return o.User
 }

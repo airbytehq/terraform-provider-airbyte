@@ -4,7 +4,7 @@ package shared
 
 import (
 	"airbyte/internal/sdk/pkg/types"
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,7 +37,29 @@ func (e *SourcePinterestAuthorizationMethodAccessTokenAuthMethod) UnmarshalJSON(
 type SourcePinterestAuthorizationMethodAccessToken struct {
 	// The Access Token to make authenticated requests.
 	AccessToken string                                                  `json:"access_token"`
-	AuthMethod  SourcePinterestAuthorizationMethodAccessTokenAuthMethod `json:"auth_method"`
+	authMethod  SourcePinterestAuthorizationMethodAccessTokenAuthMethod `const:"access_token" json:"auth_method"`
+}
+
+func (s SourcePinterestAuthorizationMethodAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePinterestAuthorizationMethodAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePinterestAuthorizationMethodAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourcePinterestAuthorizationMethodAccessToken) GetAuthMethod() SourcePinterestAuthorizationMethodAccessTokenAuthMethod {
+	return SourcePinterestAuthorizationMethodAccessTokenAuthMethodAccessToken
 }
 
 type SourcePinterestAuthorizationMethodOAuth20AuthMethod string
@@ -65,13 +87,49 @@ func (e *SourcePinterestAuthorizationMethodOAuth20AuthMethod) UnmarshalJSON(data
 }
 
 type SourcePinterestAuthorizationMethodOAuth20 struct {
-	AuthMethod SourcePinterestAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
+	authMethod SourcePinterestAuthorizationMethodOAuth20AuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of your OAuth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
 	ClientSecret *string `json:"client_secret,omitempty"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SourcePinterestAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePinterestAuthorizationMethodOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePinterestAuthorizationMethodOAuth20) GetAuthMethod() SourcePinterestAuthorizationMethodOAuth20AuthMethod {
+	return SourcePinterestAuthorizationMethodOAuth20AuthMethodOauth20
+}
+
+func (o *SourcePinterestAuthorizationMethodOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourcePinterestAuthorizationMethodOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourcePinterestAuthorizationMethodOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourcePinterestAuthorizationMethodType string
@@ -107,21 +165,16 @@ func CreateSourcePinterestAuthorizationMethodSourcePinterestAuthorizationMethodA
 }
 
 func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourcePinterestAuthorizationMethodAccessToken := new(SourcePinterestAuthorizationMethodAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePinterestAuthorizationMethodAccessToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourcePinterestAuthorizationMethodAccessToken, "", true, true); err == nil {
 		u.SourcePinterestAuthorizationMethodAccessToken = sourcePinterestAuthorizationMethodAccessToken
 		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodAccessToken
 		return nil
 	}
 
 	sourcePinterestAuthorizationMethodOAuth20 := new(SourcePinterestAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePinterestAuthorizationMethodOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourcePinterestAuthorizationMethodOAuth20, "", true, true); err == nil {
 		u.SourcePinterestAuthorizationMethodOAuth20 = sourcePinterestAuthorizationMethodOAuth20
 		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodOAuth20
 		return nil
@@ -131,15 +184,15 @@ func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePinterestAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePinterestAuthorizationMethodAccessToken != nil {
-		return json.Marshal(u.SourcePinterestAuthorizationMethodAccessToken)
-	}
-
 	if u.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourcePinterestAuthorizationMethodOAuth20)
+		return utils.MarshalJSON(u.SourcePinterestAuthorizationMethodOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourcePinterestAuthorizationMethodAccessToken != nil {
+		return utils.MarshalJSON(u.SourcePinterestAuthorizationMethodAccessToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourcePinterestPinterest string
@@ -198,9 +251,45 @@ func (e *SourcePinterestStatus) UnmarshalJSON(data []byte) error {
 
 type SourcePinterest struct {
 	Credentials *SourcePinterestAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourcePinterestPinterest            `json:"sourceType"`
+	sourceType  SourcePinterestPinterest            `const:"pinterest" json:"sourceType"`
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 	StartDate types.Date `json:"start_date"`
 	// Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
 	Status []SourcePinterestStatus `json:"status,omitempty"`
+}
+
+func (s SourcePinterest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePinterest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePinterest) GetCredentials() *SourcePinterestAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourcePinterest) GetSourceType() SourcePinterestPinterest {
+	return SourcePinterestPinterestPinterest
+}
+
+func (o *SourcePinterest) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePinterest) GetStatus() []SourcePinterestStatus {
+	if o == nil {
+		return nil
+	}
+	return o.Status
 }

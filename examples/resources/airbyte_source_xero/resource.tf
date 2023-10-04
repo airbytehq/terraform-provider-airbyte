@@ -7,11 +7,10 @@ resource "airbyte_source_xero" "my_source_xero" {
       refresh_token     = "...my_refresh_token..."
       token_expiry_date = "...my_token_expiry_date..."
     }
-    source_type = "xero"
-    start_date  = "2022-03-01T00:00:00Z"
-    tenant_id   = "...my_tenant_id..."
+    start_date = "2022-03-01T00:00:00Z"
+    tenant_id  = "...my_tenant_id..."
   }
-  name         = "Roger Hudson"
+  name         = "Miss Patty Schimmel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6beb68a0-f657-4b7d-83a1-480f8de30f06"
+  workspace_id = "f166aee7-8925-4477-b387-c53022ba4aed"
 }

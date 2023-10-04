@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,5 +35,27 @@ func (e *SourceZoomZoom) UnmarshalJSON(data []byte) error {
 type SourceZoom struct {
 	// JWT Token
 	JwtToken   string         `json:"jwt_token"`
-	SourceType SourceZoomZoom `json:"sourceType"`
+	sourceType SourceZoomZoom `const:"zoom" json:"sourceType"`
+}
+
+func (s SourceZoom) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZoom) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZoom) GetJwtToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.JwtToken
+}
+
+func (o *SourceZoom) GetSourceType() SourceZoomZoom {
+	return SourceZoomZoomZoom
 }

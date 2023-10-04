@@ -59,8 +59,9 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)`,
 					},
 					"playground": schema.BoolAttribute{
-						Required:    true,
-						Description: `Propertie defining if connector is used against playground or production environment`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Propertie defining if connector is used against playground or production environment`,
 					},
 					"region": schema.StringAttribute{
 						Required: true,
@@ -73,15 +74,6 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 						MarkdownDescription: `must be one of ["eu", "us", "oc"]` + "\n" +
 							`Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"klarna",
-							),
-						},
-						Description: `must be one of ["klarna"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
@@ -159,7 +151,7 @@ func (r *SourceKlarnaResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceKlarna(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

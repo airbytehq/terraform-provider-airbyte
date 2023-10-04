@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -73,15 +72,6 @@ func (r *SourceOnesignalDataSource) Schema(ctx context.Context, req datasource.S
 					"outcome_names": schema.StringAttribute{
 						Computed:    true,
 						Description: `Comma-separated list of names and the value (sum/count) for the returned outcome data. See the <a href="https://documentation.onesignal.com/reference/view-outcomes">docs</a> for more details`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"onesignal",
-							),
-						},
-						Description: `must be one of ["onesignal"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

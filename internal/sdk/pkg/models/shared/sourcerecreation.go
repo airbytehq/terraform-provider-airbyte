@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -35,5 +36,34 @@ type SourceRecreation struct {
 	// API Key
 	Apikey         string                     `json:"apikey"`
 	QueryCampsites *string                    `json:"query_campsites,omitempty"`
-	SourceType     SourceRecreationRecreation `json:"sourceType"`
+	sourceType     SourceRecreationRecreation `const:"recreation" json:"sourceType"`
+}
+
+func (s SourceRecreation) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRecreation) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRecreation) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *SourceRecreation) GetQueryCampsites() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryCampsites
+}
+
+func (o *SourceRecreation) GetSourceType() SourceRecreationRecreation {
+	return SourceRecreationRecreationRecreation
 }

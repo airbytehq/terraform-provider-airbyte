@@ -8,7 +8,6 @@ import (
 )
 
 func (r *DestinationSftpJSONResourceModel) ToCreateSDKType() *shared.DestinationSftpJSONCreateRequest {
-	destinationType := shared.DestinationSftpJSONSftpJSON(r.Configuration.DestinationType.ValueString())
 	destinationPath := r.Configuration.DestinationPath.ValueString()
 	host := r.Configuration.Host.ValueString()
 	password := r.Configuration.Password.ValueString()
@@ -20,7 +19,6 @@ func (r *DestinationSftpJSONResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationSftpJSON{
-		DestinationType: destinationType,
 		DestinationPath: destinationPath,
 		Host:            host,
 		Password:        password,

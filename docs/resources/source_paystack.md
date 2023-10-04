@@ -15,14 +15,13 @@ SourcePaystack Resource
 ```terraform
 resource "airbyte_source_paystack" "my_source_paystack" {
   configuration = {
-    lookback_window_days = 6
+    lookback_window_days = 8
     secret_key           = "...my_secret_key..."
-    source_type          = "paystack"
     start_date           = "2017-01-25T00:00:00Z"
   }
-  name         = "Dr. Boyd Wilderman"
+  name         = "Elias Kautzer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2216cbe0-71bc-4163-a279-a3b084da9925"
+  workspace_id = "faeff480-df14-43ee-90f8-279e427b2c34"
 }
 ```
 
@@ -50,11 +49,11 @@ resource "airbyte_source_paystack" "my_source_paystack" {
 Required:
 
 - `secret_key` (String) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
-- `source_type` (String) must be one of ["paystack"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `lookback_window_days` (Number) When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
+- `lookback_window_days` (Number) Default: 0
+When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
 
 

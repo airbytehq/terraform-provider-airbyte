@@ -3,8 +3,8 @@
 package provider
 
 type SourceMondayAuthorizationMethod struct {
-	SourceMondayAuthorizationMethodAPIToken       *SourceMondayAuthorizationMethodAPIToken `tfsdk:"source_monday_authorization_method_api_token"`
-	SourceMondayAuthorizationMethodOAuth20        *SourceMondayAuthorizationMethodOAuth20  `tfsdk:"source_monday_authorization_method_o_auth2_0"`
-	SourceMondayUpdateAuthorizationMethodAPIToken *SourceMondayAuthorizationMethodAPIToken `tfsdk:"source_monday_update_authorization_method_api_token"`
-	SourceMondayUpdateAuthorizationMethodOAuth20  *SourceMondayAuthorizationMethodOAuth20  `tfsdk:"source_monday_update_authorization_method_o_auth2_0"`
+	SourceMondayAuthorizationMethodAPIToken       *SourceK6Cloud                          `tfsdk:"source_monday_authorization_method_api_token"`
+	SourceMondayAuthorizationMethodOAuth20        *SourceMondayAuthorizationMethodOAuth20 `tfsdk:"source_monday_authorization_method_o_auth2_0"`
+	SourceMondayUpdateAuthorizationMethodAPIToken *SourceK6Cloud                          `tfsdk:"source_monday_update_authorization_method_api_token"`
+	SourceMondayUpdateAuthorizationMethodOAuth20  *SourceMondayAuthorizationMethodOAuth20 `tfsdk:"source_monday_update_authorization_method_o_auth2_0"`
 }

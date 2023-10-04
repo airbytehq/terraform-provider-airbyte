@@ -23,12 +23,11 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     schemas = [
       "...",
     ]
-    source_type = "redshift"
-    username    = "Nelda.Jaskolski"
+    username = "Montana1"
   }
-  name         = "Clay Hintz"
+  name         = "Duane Kirlin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c18edc7f-787e-432e-84b3-d3ed0c5670ef"
+  workspace_id = "b731c6d5-241e-4982-9d4f-c03242ccd276"
 }
 ```
 
@@ -58,13 +57,13 @@ Required:
 - `database` (String) Name of the database.
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com).
 - `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
-- `source_type` (String) must be one of ["redshift"]
 - `username` (String) Username to use to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `port` (Number) Default: 5439
+Port of the database.
 - `schemas` (List of String) The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
 
 

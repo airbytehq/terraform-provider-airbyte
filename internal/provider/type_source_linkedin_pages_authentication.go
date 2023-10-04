@@ -3,8 +3,8 @@
 package provider
 
 type SourceLinkedinPagesAuthentication struct {
-	SourceLinkedinPagesAuthenticationAccessToken       *SourceLinkedinAdsAuthenticationAccessToken `tfsdk:"source_linkedin_pages_authentication_access_token"`
-	SourceLinkedinPagesAuthenticationOAuth20           *SourceLinkedinAdsAuthenticationOAuth20     `tfsdk:"source_linkedin_pages_authentication_o_auth2_0"`
-	SourceLinkedinPagesUpdateAuthenticationAccessToken *SourceLinkedinAdsAuthenticationAccessToken `tfsdk:"source_linkedin_pages_update_authentication_access_token"`
-	SourceLinkedinPagesUpdateAuthenticationOAuth20     *SourceLinkedinAdsAuthenticationOAuth20     `tfsdk:"source_linkedin_pages_update_authentication_o_auth2_0"`
+	SourceLinkedinPagesAuthenticationAccessToken       *SourceAuth0AuthenticationMethodOAuth2AccessToken    `tfsdk:"source_linkedin_pages_authentication_access_token"`
+	SourceLinkedinPagesAuthenticationOAuth20           *DestinationGoogleSheetsAuthenticationViaGoogleOAuth `tfsdk:"source_linkedin_pages_authentication_o_auth2_0"`
+	SourceLinkedinPagesUpdateAuthenticationAccessToken *SourceAuth0AuthenticationMethodOAuth2AccessToken    `tfsdk:"source_linkedin_pages_update_authentication_access_token"`
+	SourceLinkedinPagesUpdateAuthenticationOAuth20     *DestinationGoogleSheetsAuthenticationViaGoogleOAuth `tfsdk:"source_linkedin_pages_update_authentication_o_auth2_0"`
 }

@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -64,15 +63,6 @@ func (r *SourceFreshdeskDataSource) Schema(ctx context.Context, req datasource.S
 					"requests_per_minute": schema.Int64Attribute{
 						Computed:    true,
 						Description: `The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"freshdesk",
-							),
-						},
-						Description: `must be one of ["freshdesk"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

@@ -11,6 +11,5 @@ type SourceRedshift struct {
 	Password      types.String   `tfsdk:"password"`
 	Port          types.Int64    `tfsdk:"port"`
 	Schemas       []types.String `tfsdk:"schemas"`
-	SourceType    types.String   `tfsdk:"source_type"`
 	Username      types.String   `tfsdk:"username"`
 }

@@ -9,3 +9,31 @@ type SourceLinnworksCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceLinnworksCreateRequest) GetConfiguration() SourceLinnworks {
+	if o == nil {
+		return SourceLinnworks{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLinnworksCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLinnworksCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceLinnworksCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

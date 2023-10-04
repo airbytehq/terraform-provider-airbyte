@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceConfluence struct {
 	DomainName string `json:"domain_name"`
 	// Your Confluence login email
 	Email      string                     `json:"email"`
-	SourceType SourceConfluenceConfluence `json:"sourceType"`
+	sourceType SourceConfluenceConfluence `const:"confluence" json:"sourceType"`
+}
+
+func (s SourceConfluence) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceConfluence) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceConfluence) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceConfluence) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
+}
+
+func (o *SourceConfluence) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *SourceConfluence) GetSourceType() SourceConfluenceConfluence {
+	return SourceConfluenceConfluenceConfluence
 }

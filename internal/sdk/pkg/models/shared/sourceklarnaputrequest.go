@@ -7,3 +7,24 @@ type SourceKlarnaPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceKlarnaPutRequest) GetConfiguration() SourceKlarnaUpdate {
+	if o == nil {
+		return SourceKlarnaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceKlarnaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceKlarnaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -10,3 +10,24 @@ type SourceConfluenceUpdate struct {
 	// Your Confluence login email
 	Email string `json:"email"`
 }
+
+func (o *SourceConfluenceUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceConfluenceUpdate) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
+}
+
+func (o *SourceConfluenceUpdate) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}

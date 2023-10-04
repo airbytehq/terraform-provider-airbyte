@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,7 +35,36 @@ func (e *DestinationFirestoreFirestore) UnmarshalJSON(data []byte) error {
 type DestinationFirestore struct {
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 	CredentialsJSON *string                       `json:"credentials_json,omitempty"`
-	DestinationType DestinationFirestoreFirestore `json:"destinationType"`
+	destinationType DestinationFirestoreFirestore `const:"firestore" json:"destinationType"`
 	// The GCP project ID for the project containing the target BigQuery dataset.
 	ProjectID string `json:"project_id"`
+}
+
+func (d DestinationFirestore) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationFirestore) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationFirestore) GetCredentialsJSON() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CredentialsJSON
+}
+
+func (o *DestinationFirestore) GetDestinationType() DestinationFirestoreFirestore {
+	return DestinationFirestoreFirestoreFirestore
+}
+
+func (o *DestinationFirestore) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
 }

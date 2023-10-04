@@ -6,8 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZendeskSupportAuthenticationOAuth20 struct {
 	AccessToken          types.String `tfsdk:"access_token"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 	ClientID             types.String `tfsdk:"client_id"`
 	ClientSecret         types.String `tfsdk:"client_secret"`
-	Credentials          types.String `tfsdk:"credentials"`
-	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

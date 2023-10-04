@@ -7,3 +7,24 @@ type SourceK6CloudPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceK6CloudPutRequest) GetConfiguration() SourceK6CloudUpdate {
+	if o == nil {
+		return SourceK6CloudUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceK6CloudPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceK6CloudPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

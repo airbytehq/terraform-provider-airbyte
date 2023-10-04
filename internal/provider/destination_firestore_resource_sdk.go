@@ -14,11 +14,9 @@ func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.Destinatio
 	} else {
 		credentialsJSON = nil
 	}
-	destinationType := shared.DestinationFirestoreFirestore(r.Configuration.DestinationType.ValueString())
 	projectID := r.Configuration.ProjectID.ValueString()
 	configuration := shared.DestinationFirestore{
 		CredentialsJSON: credentialsJSON,
-		DestinationType: destinationType,
 		ProjectID:       projectID,
 	}
 	name := r.Name.ValueString()

@@ -42,7 +42,6 @@ data "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
 Read-Only:
 
 - `end_date` (Number) Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.
-- `source_type` (String) must be one of ["mailjet-sms"]
 - `start_date` (Number) Retrieve SMS messages created after the specified timestamp. Required format - Unix timestamp.
 - `token` (String) Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
 

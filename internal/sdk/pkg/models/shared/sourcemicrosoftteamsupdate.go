@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,13 +35,49 @@ func (e *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicroso
 
 // SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft struct {
-	AuthType *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftAuthType `json:"auth_type,omitempty"`
+	authType *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftAuthType `const:"Token" json:"auth_type"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Teams developer application.
 	ClientSecret string `json:"client_secret"`
 	// A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 	TenantID string `json:"tenant_id"`
+}
+
+func (s SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft) GetAuthType() *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftAuthType {
+	return SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeToken.ToPointer()
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }
 
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType string
@@ -70,7 +106,7 @@ func (e *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicroso
 
 // SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 struct {
-	AuthType *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType `json:"auth_type,omitempty"`
+	authType *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Teams developer application.
@@ -79,6 +115,49 @@ type SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOA
 	RefreshToken string `json:"refresh_token"`
 	// A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 	TenantID string `json:"tenant_id"`
+}
+
+func (s SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) GetAuthType() *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType {
+	return SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeClient.ToPointer()
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }
 
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismType string
@@ -114,21 +193,16 @@ func CreateSourceMicrosoftTeamsUpdateAuthenticationMechanismSourceMicrosoftTeams
 }
 
 func (u *SourceMicrosoftTeamsUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft := new(SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft, "", true, true); err == nil {
 		u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft = sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft
 		u.Type = SourceMicrosoftTeamsUpdateAuthenticationMechanismTypeSourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft
 		return nil
 	}
 
 	sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 := new(SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20, "", true, true); err == nil {
 		u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 = sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
 		u.Type = SourceMicrosoftTeamsUpdateAuthenticationMechanismTypeSourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
 		return nil
@@ -138,15 +212,15 @@ func (u *SourceMicrosoftTeamsUpdateAuthenticationMechanism) UnmarshalJSON(data [
 }
 
 func (u SourceMicrosoftTeamsUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft != nil {
-		return json.Marshal(u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft)
-	}
-
 	if u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
-		return json.Marshal(u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20)
+		return utils.MarshalJSON(u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoft, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMicrosoftTeamsUpdate struct {
@@ -154,4 +228,18 @@ type SourceMicrosoftTeamsUpdate struct {
 	Credentials *SourceMicrosoftTeamsUpdateAuthenticationMechanism `json:"credentials,omitempty"`
 	// Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
 	Period string `json:"period"`
+}
+
+func (o *SourceMicrosoftTeamsUpdate) GetCredentials() *SourceMicrosoftTeamsUpdateAuthenticationMechanism {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceMicrosoftTeamsUpdate) GetPeriod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Period
 }

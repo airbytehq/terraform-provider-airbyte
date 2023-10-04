@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -63,15 +62,6 @@ func (r *SourceGoogleAnalyticsDataAPIDataSource) Schema(ctx context.Context, req
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client ID of your Google Analytics developer application.`,
@@ -90,15 +80,6 @@ func (r *SourceGoogleAnalyticsDataAPIDataSource) Schema(ctx context.Context, req
 							"source_google_analytics_data_api_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"credentials_json": schema.StringAttribute{
 										Computed:    true,
 										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
@@ -112,15 +93,6 @@ func (r *SourceGoogleAnalyticsDataAPIDataSource) Schema(ctx context.Context, req
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -140,15 +112,6 @@ func (r *SourceGoogleAnalyticsDataAPIDataSource) Schema(ctx context.Context, req
 							"source_google_analytics_data_api_update_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"credentials_json": schema.StringAttribute{
 										Computed:    true,
 										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
@@ -177,18 +140,10 @@ func (r *SourceGoogleAnalyticsDataAPIDataSource) Schema(ctx context.Context, req
 						Computed:    true,
 						Description: `The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-analytics-data-api",
-							),
-						},
-						Description: `must be one of ["google-analytics-data-api"]`,
-					},
 					"window_in_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.`,
+						Computed: true,
+						MarkdownDescription: `Default: 1` + "\n" +
+							`The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.`,
 					},
 				},
 			},

@@ -8,11 +8,10 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
       },
     ]
     outcome_names = "os__session_duration.count,os__click.count,CustomOutcomeName.sum"
-    source_type   = "onesignal"
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  name         = "Joan Schaefer"
+  name         = "Mattie Bode"
   secret_id    = "...my_secret_id..."
-  workspace_id = "41ffbe9c-bd79-45ee-a5e0-76cc7abf616e"
+  workspace_id = "c2e9642f-3c2f-4e19-832e-dfee92bc3373"
 }

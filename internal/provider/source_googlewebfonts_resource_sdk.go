@@ -27,13 +27,11 @@ func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoog
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourceGoogleWebfontsGoogleWebfonts(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleWebfonts{
 		Alt:         alt,
 		APIKey:      apiKey,
 		PrettyPrint: prettyPrint,
 		Sort:        sort,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

@@ -42,6 +42,5 @@ data "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 Read-Only:
 
 - `access_token` (String) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
-- `source_type` (String) must be one of ["launchdarkly"]
 
 

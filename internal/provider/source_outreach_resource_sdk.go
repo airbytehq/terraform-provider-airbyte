@@ -12,14 +12,12 @@ func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCr
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	redirectURI := r.Configuration.RedirectURI.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceOutreachOutreach(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceOutreach{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RedirectURI:  redirectURI,
 		RefreshToken: refreshToken,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()

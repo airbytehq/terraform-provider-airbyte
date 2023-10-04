@@ -45,9 +45,9 @@ Read-Only:
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com).
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
+- `port` (Number) Default: 5439
+Port of the database.
 - `schemas` (List of String) The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
-- `source_type` (String) must be one of ["redshift"]
 - `username` (String) Username to use to access the database.
 
 

@@ -8,15 +8,7 @@ import (
 )
 
 func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequest {
-	sourceType := new(shared.SourceXkcdXkcd)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceXkcdXkcd(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
-	configuration := shared.SourceXkcd{
-		SourceType: sourceType,
-	}
+	configuration := shared.SourceXkcd{}
 	name := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {

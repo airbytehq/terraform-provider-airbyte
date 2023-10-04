@@ -41,11 +41,11 @@ data "airbyte_source_mongodb" "my_source_mongodb" {
 
 Read-Only:
 
-- `auth_source` (String) The authentication source where the user information is stored.
+- `auth_source` (String) Default: "admin"
+The authentication source where the user information is stored.
 - `database` (String) The database you want to replicate.
 - `instance_type` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type))
 - `password` (String) The password associated with this username.
-- `source_type` (String) must be one of ["mongodb"]
 - `user` (String) The username which is used to access the database.
 
 <a id="nestedatt--configuration--instance_type"></a>
@@ -63,14 +63,10 @@ Read-Only:
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_mongo_db_instance_type_mongo_db_atlas`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
+- `additional_properties` (String) Parsed as JSON.
 - `cluster_url` (String) The URL of a cluster to connect to.
-- `instance` (String) must be one of ["atlas"]
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_replica_set"></a>
@@ -78,7 +74,6 @@ Read-Only:
 
 Read-Only:
 
-- `instance` (String) must be one of ["replica"]
 - `replica_set` (String) A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
@@ -89,21 +84,17 @@ Read-Only:
 Read-Only:
 
 - `host` (String) The host name of the Mongo database.
-- `instance` (String) must be one of ["standalone"]
-- `port` (Number) The port of the Mongo database.
+- `port` (Number) Default: 27017
+The port of the Mongo database.
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_update_mongo_db_instance_type_mongo_db_atlas`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
+- `additional_properties` (String) Parsed as JSON.
 - `cluster_url` (String) The URL of a cluster to connect to.
-- `instance` (String) must be one of ["atlas"]
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_replica_set"></a>
@@ -111,7 +102,6 @@ Read-Only:
 
 Read-Only:
 
-- `instance` (String) must be one of ["replica"]
 - `replica_set` (String) A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
@@ -122,7 +112,7 @@ Read-Only:
 Read-Only:
 
 - `host` (String) The host name of the Mongo database.
-- `instance` (String) must be one of ["standalone"]
-- `port` (Number) The port of the Mongo database.
+- `port` (Number) Default: 27017
+The port of the Mongo database.
 
 

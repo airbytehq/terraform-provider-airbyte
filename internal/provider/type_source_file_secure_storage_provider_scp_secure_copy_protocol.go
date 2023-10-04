@@ -8,6 +8,5 @@ type SourceFileSecureStorageProviderSCPSecureCopyProtocol struct {
 	Host     types.String `tfsdk:"host"`
 	Password types.String `tfsdk:"password"`
 	Port     types.String `tfsdk:"port"`
-	Storage  types.String `tfsdk:"storage"`
 	User     types.String `tfsdk:"user"`
 }

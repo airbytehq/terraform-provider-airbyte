@@ -43,7 +43,6 @@ Read-Only:
 
 - `credentials` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials))
 - `period` (String) Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
-- `source_type` (String) must be one of ["microsoft-teams"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -60,7 +59,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Token"]
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
 - `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
 - `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
@@ -71,7 +69,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
 - `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
 - `refresh_token` (String) A Refresh Token to renew the expired Access Token.
@@ -83,7 +80,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Token"]
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
 - `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
 - `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
@@ -94,7 +90,6 @@ Read-Only:
 
 Read-Only:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
 - `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
 - `refresh_token` (String) A Refresh Token to renew the expired Access Token.

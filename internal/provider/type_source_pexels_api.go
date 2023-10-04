@@ -11,5 +11,4 @@ type SourcePexelsAPI struct {
 	Orientation types.String `tfsdk:"orientation"`
 	Query       types.String `tfsdk:"query"`
 	Size        types.String `tfsdk:"size"`
-	SourceType  types.String `tfsdk:"source_type"`
 }

@@ -44,7 +44,6 @@ Read-Only:
 - `component_keys` (List of String) Comma-separated list of component keys.
 - `end_date` (String) To retrieve issues created before the given date (inclusive).
 - `organization` (String) Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.
-- `source_type` (String) must be one of ["sonar-cloud"]
 - `start_date` (String) To retrieve issues created after the given date (inclusive).
 - `user_token` (String) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 

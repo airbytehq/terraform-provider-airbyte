@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -57,21 +56,13 @@ func (r *SourceCloseComDataSource) Schema(ctx context.Context, req datasource.Sc
 						Computed:    true,
 						Description: `Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"close-com",
-							),
-						},
-						Description: `must be one of ["close-com"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.`,
+						MarkdownDescription: `Default: "2021-01-01"` + "\n" +
+							`The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.`,
 					},
 				},
 			},

@@ -9,6 +9,5 @@ type SourceSnapchatMarketing struct {
 	ClientSecret types.String `tfsdk:"client_secret"`
 	EndDate      types.String `tfsdk:"end_date"`
 	RefreshToken types.String `tfsdk:"refresh_token"`
-	SourceType   types.String `tfsdk:"source_type"`
 	StartDate    types.String `tfsdk:"start_date"`
 }

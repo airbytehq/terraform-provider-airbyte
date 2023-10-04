@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -66,10 +67,53 @@ type SourceKlarna struct {
 	// A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
 	Password string `json:"password"`
 	// Propertie defining if connector is used against playground or production environment
-	Playground bool `json:"playground"`
+	Playground *bool `default:"false" json:"playground"`
 	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
 	Region     SourceKlarnaRegion `json:"region"`
-	SourceType SourceKlarnaKlarna `json:"sourceType"`
+	sourceType SourceKlarnaKlarna `const:"klarna" json:"sourceType"`
 	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
 	Username string `json:"username"`
+}
+
+func (s SourceKlarna) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceKlarna) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceKlarna) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceKlarna) GetPlayground() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Playground
+}
+
+func (o *SourceKlarna) GetRegion() SourceKlarnaRegion {
+	if o == nil {
+		return SourceKlarnaRegion("")
+	}
+	return o.Region
+}
+
+func (o *SourceKlarna) GetSourceType() SourceKlarnaKlarna {
+	return SourceKlarnaKlarnaKlarna
+}
+
+func (o *SourceKlarna) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -59,15 +58,6 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 							"source_google_sheets_authentication_authenticate_via_google_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
@@ -86,15 +76,6 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 							"source_google_sheets_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"service_account_info": schema.StringAttribute{
 										Computed:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
@@ -105,15 +86,6 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 							"source_google_sheets_update_authentication_authenticate_via_google_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
 										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
@@ -132,15 +104,6 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 							"source_google_sheets_update_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"service_account_info": schema.StringAttribute{
 										Computed:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
@@ -155,17 +118,9 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 						Description: `Credentials for connecting to the Google Sheets API`,
 					},
 					"names_conversion": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-sheets",
-							),
-						},
-						Description: `must be one of ["google-sheets"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Computed:    true,

@@ -3,8 +3,8 @@
 package provider
 
 type DestinationLangchainEmbedding struct {
-	DestinationLangchainEmbeddingFake         *DestinationLangchainEmbeddingFake   `tfsdk:"destination_langchain_embedding_fake"`
-	DestinationLangchainEmbeddingOpenAI       *DestinationLangchainEmbeddingOpenAI `tfsdk:"destination_langchain_embedding_open_ai"`
-	DestinationLangchainUpdateEmbeddingFake   *DestinationLangchainEmbeddingFake   `tfsdk:"destination_langchain_update_embedding_fake"`
-	DestinationLangchainUpdateEmbeddingOpenAI *DestinationLangchainEmbeddingOpenAI `tfsdk:"destination_langchain_update_embedding_open_ai"`
+	DestinationLangchainEmbeddingFake         *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_langchain_embedding_fake"`
+	DestinationLangchainEmbeddingOpenAI       *DestinationLangchainEmbeddingOpenAI                                  `tfsdk:"destination_langchain_embedding_open_ai"`
+	DestinationLangchainUpdateEmbeddingFake   *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_langchain_update_embedding_fake"`
+	DestinationLangchainUpdateEmbeddingOpenAI *DestinationLangchainEmbeddingOpenAI                                  `tfsdk:"destination_langchain_update_embedding_open_ai"`
 }

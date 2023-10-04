@@ -42,6 +42,5 @@ data "airbyte_source_dockerhub" "my_source_dockerhub" {
 Read-Only:
 
 - `docker_username` (String) Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
-- `source_type` (String) must be one of ["dockerhub"]
 
 

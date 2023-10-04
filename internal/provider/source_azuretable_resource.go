@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -54,15 +52,6 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-table",
-							),
-						},
-						Description: `must be one of ["azure-table"]`,
-					},
 					"storage_access_key": schema.StringAttribute{
 						Required:    true,
 						Description: `Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.`,
@@ -72,8 +61,9 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 						Description: `The name of your storage account.`,
 					},
 					"storage_endpoint_suffix": schema.StringAttribute{
-						Optional:    true,
-						Description: `Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix`,
+						Optional: true,
+						MarkdownDescription: `Default: "core.windows.net"` + "\n" +
+							`Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix`,
 					},
 				},
 			},
@@ -147,7 +137,7 @@ func (r *SourceAzureTableResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAzureTable(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

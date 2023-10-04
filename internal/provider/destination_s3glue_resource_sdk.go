@@ -14,7 +14,6 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 	} else {
 		accessKeyID = nil
 	}
-	destinationType := shared.DestinationS3GlueS3Glue(r.Configuration.DestinationType.ValueString())
 	fileNamePattern := new(string)
 	if !r.Configuration.FileNamePattern.IsUnknown() && !r.Configuration.FileNamePattern.IsNull() {
 		*fileNamePattern = r.Configuration.FileNamePattern.ValueString()
@@ -67,7 +66,12 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 		} else {
 			flattening = nil
 		}
-		formatType := shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType)
+		if !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
 		destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression,
 			Flattening:  flattening,
@@ -80,10 +84,20 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 		}
 	}
 	glueDatabase := r.Configuration.GlueDatabase.ValueString()
-	glueSerializationLibrary := shared.DestinationS3GlueSerializationLibrary(r.Configuration.GlueSerializationLibrary.ValueString())
+	glueSerializationLibrary := new(shared.DestinationS3GlueSerializationLibrary)
+	if !r.Configuration.GlueSerializationLibrary.IsUnknown() && !r.Configuration.GlueSerializationLibrary.IsNull() {
+		*glueSerializationLibrary = shared.DestinationS3GlueSerializationLibrary(r.Configuration.GlueSerializationLibrary.ValueString())
+	} else {
+		glueSerializationLibrary = nil
+	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
-	s3BucketRegion := shared.DestinationS3GlueS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	s3BucketRegion := new(shared.DestinationS3GlueS3BucketRegion)
+	if !r.Configuration.S3BucketRegion.IsUnknown() && !r.Configuration.S3BucketRegion.IsNull() {
+		*s3BucketRegion = shared.DestinationS3GlueS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	} else {
+		s3BucketRegion = nil
+	}
 	s3Endpoint := new(string)
 	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
 		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
@@ -104,7 +118,6 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 	}
 	configuration := shared.DestinationS3Glue{
 		AccessKeyID:              accessKeyID,
-		DestinationType:          destinationType,
 		FileNamePattern:          fileNamePattern,
 		Format:                   format,
 		GlueDatabase:             glueDatabase,
@@ -190,7 +203,12 @@ func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3
 		} else {
 			flattening = nil
 		}
-		formatType := shared.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType := new(shared.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType)
+		if !r.Configuration.Format.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType = shared.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
 		destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression,
 			Flattening:  flattening,
@@ -203,10 +221,20 @@ func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3
 		}
 	}
 	glueDatabase := r.Configuration.GlueDatabase.ValueString()
-	glueSerializationLibrary := shared.DestinationS3GlueUpdateSerializationLibrary(r.Configuration.GlueSerializationLibrary.ValueString())
+	glueSerializationLibrary := new(shared.DestinationS3GlueUpdateSerializationLibrary)
+	if !r.Configuration.GlueSerializationLibrary.IsUnknown() && !r.Configuration.GlueSerializationLibrary.IsNull() {
+		*glueSerializationLibrary = shared.DestinationS3GlueUpdateSerializationLibrary(r.Configuration.GlueSerializationLibrary.ValueString())
+	} else {
+		glueSerializationLibrary = nil
+	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
-	s3BucketRegion := shared.DestinationS3GlueUpdateS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	s3BucketRegion := new(shared.DestinationS3GlueUpdateS3BucketRegion)
+	if !r.Configuration.S3BucketRegion.IsUnknown() && !r.Configuration.S3BucketRegion.IsNull() {
+		*s3BucketRegion = shared.DestinationS3GlueUpdateS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
+	} else {
+		s3BucketRegion = nil
+	}
 	s3Endpoint := new(string)
 	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
 		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,7 +37,43 @@ type SourceApifyDataset struct {
 	Clean *bool `json:"clean,omitempty"`
 	// ID of the dataset you would like to load to Airbyte.
 	DatasetID  *string                        `json:"datasetId,omitempty"`
-	SourceType SourceApifyDatasetApifyDataset `json:"sourceType"`
+	sourceType SourceApifyDatasetApifyDataset `const:"apify-dataset" json:"sourceType"`
 	// Your application's Client Secret. You can find this value on the <a href="https://console.apify.com/account/integrations">console integrations tab</a> after you login.
 	Token string `json:"token"`
+}
+
+func (s SourceApifyDataset) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceApifyDataset) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceApifyDataset) GetClean() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Clean
+}
+
+func (o *SourceApifyDataset) GetDatasetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DatasetID
+}
+
+func (o *SourceApifyDataset) GetSourceType() SourceApifyDatasetApifyDataset {
+	return SourceApifyDatasetApifyDatasetApifyDataset
+}
+
+func (o *SourceApifyDataset) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

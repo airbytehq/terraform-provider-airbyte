@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,14 +60,12 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 							"source_retently_authentication_mechanism_authenticate_via_retently_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
+									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
+											validators.IsValidJSON(),
 										},
-										Description: `must be one of ["Client"]`,
+										Description: `Parsed as JSON.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -81,13 +78,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Choose how to authenticate to Retently`,
@@ -95,19 +85,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 							"source_retently_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Required:    true,
-										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -115,20 +92,22 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										},
 										Description: `Parsed as JSON.`,
 									},
+									"api_key": schema.StringAttribute{
+										Required:    true,
+										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
+									},
 								},
 								Description: `Choose how to authenticate to Retently`,
 							},
 							"source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
+									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
+											validators.IsValidJSON(),
 										},
-										Description: `must be one of ["Client"]`,
+										Description: `Parsed as JSON.`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -142,38 +121,22 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										Required:    true,
 										Description: `Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 								Description: `Choose how to authenticate to Retently`,
 							},
 							"source_retently_update_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Required:    true,
-										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-										Description: `must be one of ["Token"]`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
 										Description: `Parsed as JSON.`,
+									},
+									"api_key": schema.StringAttribute{
+										Required:    true,
+										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
 									},
 								},
 								Description: `Choose how to authenticate to Retently`,
@@ -183,15 +146,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 							validators.ExactlyOneChild(),
 						},
 						Description: `Choose how to authenticate to Retently`,
-					},
-					"source_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"retently",
-							),
-						},
-						Description: `must be one of ["retently"]`,
 					},
 				},
 			},
@@ -265,7 +219,7 @@ func (r *SourceRetentlyResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceRetently(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

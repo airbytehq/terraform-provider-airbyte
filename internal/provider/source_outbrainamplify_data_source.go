@@ -63,15 +63,6 @@ func (r *SourceOutbrainAmplifyDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 							},
@@ -81,15 +72,6 @@ func (r *SourceOutbrainAmplifyDataSource) Schema(ctx context.Context, req dataso
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Add Password for authentication.`,
-									},
-									"type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username_password",
-											),
-										},
-										Description: `must be one of ["username_password"]`,
 									},
 									"username": schema.StringAttribute{
 										Computed:    true,
@@ -105,15 +87,6 @@ func (r *SourceOutbrainAmplifyDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
 									},
-									"type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 							},
@@ -123,15 +96,6 @@ func (r *SourceOutbrainAmplifyDataSource) Schema(ctx context.Context, req dataso
 									"password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Add Password for authentication.`,
-									},
-									"type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username_password",
-											),
-										},
-										Description: `must be one of ["username_password"]`,
 									},
 									"username": schema.StringAttribute{
 										Computed:    true,
@@ -173,15 +137,6 @@ func (r *SourceOutbrainAmplifyDataSource) Schema(ctx context.Context, req dataso
 						},
 						MarkdownDescription: `must be one of ["daily", "weekly", "monthly"]` + "\n" +
 							`The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"outbrain-amplify",
-							),
-						},
-						Description: `must be one of ["outbrain-amplify"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

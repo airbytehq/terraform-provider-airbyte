@@ -37,12 +37,13 @@ data "airbyte_destination_postgres" "my_destination_postgres" {
 Read-Only:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of ["postgres"]
 - `host` (String) Hostname of the database.
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
-- `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+- `port` (Number) Default: 5432
+Port of the database.
+- `schema` (String) Default: "public"
+The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
 - `ssl_mode` (Attributes) SSL connection modes. 
  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
  <b>allow</b> - Chose this mode to enable encryption only when required by the source database
@@ -75,33 +76,17 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_allow"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_ssl_modes_allow`
 
-Read-Only:
-
-- `mode` (String) must be one of ["allow"]
-
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_ssl_modes_disable`
-
-Read-Only:
-
-- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_prefer"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_ssl_modes_prefer`
 
-Read-Only:
-
-- `mode` (String) must be one of ["prefer"]
-
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_require"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_ssl_modes_require`
-
-Read-Only:
-
-- `mode` (String) must be one of ["require"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_verify_ca"></a>
@@ -111,7 +96,6 @@ Read-Only:
 
 - `ca_certificate` (String) CA certificate
 - `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-- `mode` (String) must be one of ["verify-ca"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_verify_full"></a>
@@ -123,39 +107,22 @@ Read-Only:
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
 - `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-- `mode` (String) must be one of ["verify-full"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_allow"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_allow`
 
-Read-Only:
-
-- `mode` (String) must be one of ["allow"]
-
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_disable`
-
-Read-Only:
-
-- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_prefer"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_prefer`
 
-Read-Only:
-
-- `mode` (String) must be one of ["prefer"]
-
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_require"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_require`
-
-Read-Only:
-
-- `mode` (String) must be one of ["require"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_verify_ca"></a>
@@ -165,7 +132,6 @@ Read-Only:
 
 - `ca_certificate` (String) CA certificate
 - `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-- `mode` (String) must be one of ["verify-ca"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_verify_full"></a>
@@ -177,7 +143,6 @@ Read-Only:
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
 - `client_key_password` (String) Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-- `mode` (String) must be one of ["verify-full"]
 
 
 
@@ -196,11 +161,6 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_postgres_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
 
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_postgres_ssh_tunnel_method_password_authentication`
@@ -208,9 +168,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -222,19 +181,13 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_postgres_update_ssh_tunnel_method_no_tunnel`
-
-Read-Only:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_password_authentication"></a>
@@ -243,9 +196,8 @@ No ssh tunnel needed to connect to database
 Read-Only:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
 - `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
@@ -257,9 +209,8 @@ Read-Only:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

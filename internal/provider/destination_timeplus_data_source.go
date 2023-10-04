@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -55,18 +53,10 @@ func (r *DestinationTimeplusDataSource) Schema(ctx context.Context, req datasour
 						Computed:    true,
 						Description: `Personal API key`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"timeplus",
-							),
-						},
-						Description: `must be one of ["timeplus"]`,
-					},
 					"endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `Timeplus workspace endpoint`,
+						Computed: true,
+						MarkdownDescription: `Default: "https://us.timeplus.cloud/<workspace_id>"` + "\n" +
+							`Timeplus workspace endpoint`,
 					},
 				},
 			},

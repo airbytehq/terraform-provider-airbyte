@@ -5,9 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceQualaroo struct {
-	Key        types.String   `tfsdk:"key"`
-	SourceType types.String   `tfsdk:"source_type"`
-	StartDate  types.String   `tfsdk:"start_date"`
-	SurveyIds  []types.String `tfsdk:"survey_ids"`
-	Token      types.String   `tfsdk:"token"`
+	Key       types.String   `tfsdk:"key"`
+	StartDate types.String   `tfsdk:"start_date"`
+	SurveyIds []types.String `tfsdk:"survey_ids"`
+	Token     types.String   `tfsdk:"token"`
 }

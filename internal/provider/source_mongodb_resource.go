@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -56,8 +55,9 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_source": schema.StringAttribute{
-						Optional:    true,
-						Description: `The authentication source where the user information is stored.`,
+						Optional: true,
+						MarkdownDescription: `Default: "admin"` + "\n" +
+							`The authentication source where the user information is stored.`,
 					},
 					"database": schema.StringAttribute{
 						Required:    true,
@@ -69,19 +69,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 							"source_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"cluster_url": schema.StringAttribute{
-										Required:    true,
-										Description: `The URL of a cluster to connect to.`,
-									},
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"atlas",
-											),
-										},
-										Description: `must be one of ["atlas"]`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -89,21 +76,16 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 										Description: `Parsed as JSON.`,
 									},
+									"cluster_url": schema.StringAttribute{
+										Required:    true,
+										Description: `The URL of a cluster to connect to.`,
+									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"source_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"replica",
-											),
-										},
-										Description: `must be one of ["replica"]`,
-									},
 									"replica_set": schema.StringAttribute{
 										Optional:    true,
 										Description: `A replica set in MongoDB is a group of mongod processes that maintain the same data set.`,
@@ -122,18 +104,10 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `The host name of the Mongo database.`,
 									},
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"standalone",
-											),
-										},
-										Description: `must be one of ["standalone"]`,
-									},
 									"port": schema.Int64Attribute{
-										Required:    true,
-										Description: `The port of the Mongo database.`,
+										Optional: true,
+										MarkdownDescription: `Default: 27017` + "\n" +
+											`The port of the Mongo database.`,
 									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -141,19 +115,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 							"source_mongodb_update_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"cluster_url": schema.StringAttribute{
-										Required:    true,
-										Description: `The URL of a cluster to connect to.`,
-									},
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"atlas",
-											),
-										},
-										Description: `must be one of ["atlas"]`,
-									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -161,21 +122,16 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 										Description: `Parsed as JSON.`,
 									},
+									"cluster_url": schema.StringAttribute{
+										Required:    true,
+										Description: `The URL of a cluster to connect to.`,
+									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"source_mongodb_update_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"replica",
-											),
-										},
-										Description: `must be one of ["replica"]`,
-									},
 									"replica_set": schema.StringAttribute{
 										Optional:    true,
 										Description: `A replica set in MongoDB is a group of mongod processes that maintain the same data set.`,
@@ -194,18 +150,10 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `The host name of the Mongo database.`,
 									},
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"standalone",
-											),
-										},
-										Description: `must be one of ["standalone"]`,
-									},
 									"port": schema.Int64Attribute{
-										Required:    true,
-										Description: `The port of the Mongo database.`,
+										Optional: true,
+										MarkdownDescription: `Default: 27017` + "\n" +
+											`The port of the Mongo database.`,
 									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -219,15 +167,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 					"password": schema.StringAttribute{
 						Optional:    true,
 						Description: `The password associated with this username.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mongodb",
-							),
-						},
-						Description: `must be one of ["mongodb"]`,
 					},
 					"user": schema.StringAttribute{
 						Optional:    true,
@@ -305,7 +244,7 @@ func (r *SourceMongodbResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMongodb(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

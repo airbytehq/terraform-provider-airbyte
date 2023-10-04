@@ -7,3 +7,24 @@ type SourceGoogleAdsPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceGoogleAdsPutRequest) GetConfiguration() SourceGoogleAdsUpdate {
+	if o == nil {
+		return SourceGoogleAdsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleAdsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleAdsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

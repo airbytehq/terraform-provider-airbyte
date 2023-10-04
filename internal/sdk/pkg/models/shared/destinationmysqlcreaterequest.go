@@ -7,3 +7,24 @@ type DestinationMysqlCreateRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *DestinationMysqlCreateRequest) GetConfiguration() DestinationMysql {
+	if o == nil {
+		return DestinationMysql{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMysqlCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMysqlCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,8 +3,8 @@
 package provider
 
 type SourceSnowflakeAuthorizationMethod struct {
-	SourceSnowflakeAuthorizationMethodOAuth20                   *SourceSnowflakeAuthorizationMethodOAuth20             `tfsdk:"source_snowflake_authorization_method_o_auth2_0"`
-	SourceSnowflakeAuthorizationMethodUsernameAndPassword       *SourceSnowflakeAuthorizationMethodUsernameAndPassword `tfsdk:"source_snowflake_authorization_method_username_and_password"`
-	SourceSnowflakeUpdateAuthorizationMethodOAuth20             *SourceSnowflakeAuthorizationMethodOAuth20             `tfsdk:"source_snowflake_update_authorization_method_o_auth2_0"`
-	SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword *SourceSnowflakeAuthorizationMethodUsernameAndPassword `tfsdk:"source_snowflake_update_authorization_method_username_and_password"`
+	SourceSnowflakeAuthorizationMethodOAuth20                   *SourceSnowflakeAuthorizationMethodOAuth20                    `tfsdk:"source_snowflake_authorization_method_o_auth2_0"`
+	SourceSnowflakeAuthorizationMethodUsernameAndPassword       *DestinationElasticsearchAuthenticationMethodUsernamePassword `tfsdk:"source_snowflake_authorization_method_username_and_password"`
+	SourceSnowflakeUpdateAuthorizationMethodOAuth20             *SourceSnowflakeAuthorizationMethodOAuth20                    `tfsdk:"source_snowflake_update_authorization_method_o_auth2_0"`
+	SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword *DestinationElasticsearchAuthenticationMethodUsernamePassword `tfsdk:"source_snowflake_update_authorization_method_username_and_password"`
 }

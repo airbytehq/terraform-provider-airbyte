@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -81,15 +80,6 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 					"sort": schema.StringAttribute{
 						Optional:    true,
 						Description: `Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"polygon-stock-api",
-							),
-						},
-						Description: `must be one of ["polygon-stock-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -178,7 +168,7 @@ func (r *SourcePolygonStockAPIResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePolygonStockAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

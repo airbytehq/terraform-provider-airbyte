@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,21 +61,13 @@ func (r *SourcePaypalTransactionDataSource) Schema(ctx context.Context, req data
 						Description: `The Client Secret of your Paypal developer application.`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
+						Computed: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Determines whether to use the sandbox or production environment.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,
 						Description: `The key to refresh the expired access token.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"paypal-transaction",
-							),
-						},
-						Description: `must be one of ["paypal-transaction"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

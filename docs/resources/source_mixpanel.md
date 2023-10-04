@@ -15,25 +15,23 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 2
+    attribution_window = 6
     credentials = {
       source_mixpanel_authentication_wildcard_project_secret = {
-        api_secret   = "...my_api_secret..."
-        option_title = "Project Secret"
+        api_secret = "...my_api_secret..."
       }
     }
     date_window_size             = 10
     end_date                     = "2021-11-16"
-    project_id                   = 7
-    project_timezone             = "UTC"
-    region                       = "US"
+    project_id                   = 3
+    project_timezone             = "US/Pacific"
+    region                       = "EU"
     select_properties_by_default = true
-    source_type                  = "mixpanel"
     start_date                   = "2021-11-16"
   }
-  name         = "Donald Ernser"
+  name         = "Peggy Cormier"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f37e4aa8-6855-4596-a732-aa5dcb6682cb"
+  workspace_id = "a41c80b2-3345-4c94-9a95-559f5a34ff68"
 }
 ```
 
@@ -60,16 +58,19 @@ resource "airbyte_source_mixpanel" "my_source_mixpanel" {
 
 Optional:
 
-- `attribution_window` (Number) A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.
+- `attribution_window` (Number) Default: 5
+ A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.
 - `credentials` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials))
-- `date_window_size` (Number) Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.
+- `date_window_size` (Number) Default: 30
+Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.
 - `end_date` (String) The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
 - `project_id` (Number) Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
-- `project_timezone` (String) Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
-- `region` (String) must be one of ["US", "EU"]
+- `project_timezone` (String) Default: "US/Pacific"
+Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
+- `region` (String) must be one of ["US", "EU"]; Default: "US"
 The region of mixpanel domain instance either US or EU.
-- `select_properties_by_default` (Boolean) Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
-- `source_type` (String) must be one of ["mixpanel"]
+- `select_properties_by_default` (Boolean) Default: true
+Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
 - `start_date` (String) The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -89,10 +90,6 @@ Required:
 
 - `api_secret` (String) Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
 
-Optional:
-
-- `option_title` (String) must be one of ["Project Secret"]
-
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_authentication_wildcard_service_account"></a>
 ### Nested Schema for `configuration.credentials.source_mixpanel_authentication_wildcard_service_account`
@@ -102,10 +99,6 @@ Required:
 - `secret` (String) Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 - `username` (String) Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 
-Optional:
-
-- `option_title` (String) must be one of ["Service Account"]
-
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_project_secret"></a>
 ### Nested Schema for `configuration.credentials.source_mixpanel_update_authentication_wildcard_project_secret`
@@ -113,10 +106,6 @@ Optional:
 Required:
 
 - `api_secret` (String) Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
-
-Optional:
-
-- `option_title` (String) must be one of ["Project Secret"]
 
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_service_account"></a>
@@ -126,9 +115,5 @@ Required:
 
 - `secret` (String) Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 - `username` (String) Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
-
-Optional:
-
-- `option_title` (String) must be one of ["Service Account"]
 
 

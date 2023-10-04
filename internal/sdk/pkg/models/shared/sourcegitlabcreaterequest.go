@@ -9,3 +9,31 @@ type SourceGitlabCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGitlabCreateRequest) GetConfiguration() SourceGitlab {
+	if o == nil {
+		return SourceGitlab{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGitlabCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGitlabCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGitlabCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

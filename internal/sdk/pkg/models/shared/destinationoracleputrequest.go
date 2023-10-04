@@ -7,3 +7,24 @@ type DestinationOraclePutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *DestinationOraclePutRequest) GetConfiguration() DestinationOracleUpdate {
+	if o == nil {
+		return DestinationOracleUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationOraclePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationOraclePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

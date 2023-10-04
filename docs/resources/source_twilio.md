@@ -18,12 +18,11 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     account_sid     = "...my_account_sid..."
     auth_token      = "...my_auth_token..."
     lookback_window = 60
-    source_type     = "twilio"
     start_date      = "2020-10-01T00:00:00Z"
   }
-  name         = "Andre Sporer"
+  name         = "Deborah Mante Jr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "9e5635b3-3bc0-4f97-8c42-fc9f4844225e"
+  workspace_id = "1aad5e5f-9cfb-40d1-a8d3-acce90aeed10"
 }
 ```
 
@@ -52,11 +51,11 @@ Required:
 
 - `account_sid` (String) Twilio account SID
 - `auth_token` (String) Twilio Auth Token.
-- `source_type` (String) must be one of ["twilio"]
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `lookback_window` (Number) How far into the past to look for records. (in minutes)
+- `lookback_window` (Number) Default: 0
+How far into the past to look for records. (in minutes)
 
 

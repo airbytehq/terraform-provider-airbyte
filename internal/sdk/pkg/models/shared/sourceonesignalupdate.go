@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -10,6 +11,27 @@ type SourceOnesignalUpdateApplications struct {
 	AppAPIKey string  `json:"app_api_key"`
 	AppID     string  `json:"app_id"`
 	AppName   *string `json:"app_name,omitempty"`
+}
+
+func (o *SourceOnesignalUpdateApplications) GetAppAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppAPIKey
+}
+
+func (o *SourceOnesignalUpdateApplications) GetAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppID
+}
+
+func (o *SourceOnesignalUpdateApplications) GetAppName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppName
 }
 
 type SourceOnesignalUpdate struct {
@@ -21,4 +43,43 @@ type SourceOnesignalUpdate struct {
 	StartDate time.Time `json:"start_date"`
 	// OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
 	UserAuthKey string `json:"user_auth_key"`
+}
+
+func (s SourceOnesignalUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOnesignalUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOnesignalUpdate) GetApplications() []SourceOnesignalUpdateApplications {
+	if o == nil {
+		return []SourceOnesignalUpdateApplications{}
+	}
+	return o.Applications
+}
+
+func (o *SourceOnesignalUpdate) GetOutcomeNames() string {
+	if o == nil {
+		return ""
+	}
+	return o.OutcomeNames
+}
+
+func (o *SourceOnesignalUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceOnesignalUpdate) GetUserAuthKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserAuthKey
 }

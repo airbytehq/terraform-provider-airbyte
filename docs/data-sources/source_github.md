@@ -45,7 +45,6 @@ Read-Only:
 - `credentials` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials))
 - `repository` (String) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
 - `requests_per_hour` (Number) The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.
-- `source_type` (String) must be one of ["github"]
 - `start_date` (String) The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -66,7 +65,6 @@ Read-Only:
 - `access_token` (String) OAuth access token
 - `client_id` (String) OAuth Client Id
 - `client_secret` (String) OAuth Client secret
-- `option_title` (String) must be one of ["OAuth Credentials"]
 
 
 <a id="nestedatt--configuration--credentials--source_github_authentication_personal_access_token"></a>
@@ -74,7 +72,6 @@ Read-Only:
 
 Read-Only:
 
-- `option_title` (String) must be one of ["PAT Credentials"]
 - `personal_access_token` (String) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
 
 
@@ -86,7 +83,6 @@ Read-Only:
 - `access_token` (String) OAuth access token
 - `client_id` (String) OAuth Client Id
 - `client_secret` (String) OAuth Client secret
-- `option_title` (String) must be one of ["OAuth Credentials"]
 
 
 <a id="nestedatt--configuration--credentials--source_github_update_authentication_personal_access_token"></a>
@@ -94,7 +90,6 @@ Read-Only:
 
 Read-Only:
 
-- `option_title` (String) must be one of ["PAT Credentials"]
 - `personal_access_token` (String) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
 
 

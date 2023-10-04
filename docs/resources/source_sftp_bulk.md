@@ -15,23 +15,22 @@ SourceSftpBulk Resource
 ```terraform
 resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
   configuration = {
-    file_most_recent = false
+    file_most_recent = true
     file_pattern     = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
     file_type        = "json"
     folder_path      = "/logs/2022"
-    host             = "192.0.2.1"
+    host             = "www.host.com"
     password         = "...my_password..."
     port             = 22
     private_key      = "...my_private_key..."
     separator        = ","
-    source_type      = "sftp-bulk"
     start_date       = "2017-01-25T00:00:00Z"
     stream_name      = "ftp_contacts"
-    username         = "Pearline_Bailey"
+    username         = "Olin92"
   }
-  name         = "Wm Bartoletti"
+  name         = "Marie Johns"
   secret_id    = "...my_secret_id..."
-  workspace_id = "50edf22a-94d2-40ec-90ea-41d1f465e851"
+  workspace_id = "f8929e4d-23a0-40b4-94f7-d68d64a810b2"
 }
 ```
 
@@ -58,22 +57,26 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
 
 Required:
 
-- `folder_path` (String) The directory to search files for sync
 - `host` (String) The server host address
-- `port` (Number) The server port
-- `source_type` (String) must be one of ["sftp-bulk"]
 - `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `stream_name` (String) The name of the stream or table you want to create
 - `username` (String) The server user
 
 Optional:
 
-- `file_most_recent` (Boolean) Sync only the most recent file for the configured folder path and file pattern
-- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
-- `file_type` (String) must be one of ["csv", "json"]
+- `file_most_recent` (Boolean) Default: false
+Sync only the most recent file for the configured folder path and file pattern
+- `file_pattern` (String) Default: ""
+The regular expression to specify files for sync in a chosen Folder Path
+- `file_type` (String) must be one of ["csv", "json"]; Default: "csv"
 The file type you want to sync. Currently only 'csv' and 'json' files are supported.
+- `folder_path` (String) Default: ""
+The directory to search files for sync
 - `password` (String) OS-level password for logging into the jump server host
+- `port` (Number) Default: 22
+The server port
 - `private_key` (String) The private key
-- `separator` (String) The separator used in the CSV files. Define None if you want to use the Sniffer functionality
+- `separator` (String) Default: ","
+The separator used in the CSV files. Define None if you want to use the Sniffer functionality
 
 

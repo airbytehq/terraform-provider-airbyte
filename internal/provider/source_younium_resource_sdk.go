@@ -16,13 +16,11 @@ func (r *SourceYouniumResourceModel) ToCreateSDKType() *shared.SourceYouniumCrea
 	} else {
 		playground = nil
 	}
-	sourceType := shared.SourceYouniumYounium(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceYounium{
 		LegalEntity: legalEntity,
 		Password:    password,
 		Playground:  playground,
-		SourceType:  sourceType,
 		Username:    username,
 	}
 	name := r.Name.ValueString()

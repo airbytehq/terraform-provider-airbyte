@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationLangchainEmbeddingOpenAI struct {
-	Mode      types.String `tfsdk:"mode"`
 	OpenaiKey types.String `tfsdk:"openai_key"`
 }

@@ -9,10 +9,8 @@ import (
 
 func (r *SourceVantageResourceModel) ToCreateSDKType() *shared.SourceVantageCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceVantageVantage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceVantage{
 		AccessToken: accessToken,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

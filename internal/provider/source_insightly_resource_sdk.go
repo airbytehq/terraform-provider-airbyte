@@ -8,7 +8,6 @@ import (
 )
 
 func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightlyCreateRequest {
-	sourceType := shared.SourceInsightlyInsightly(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -22,9 +21,8 @@ func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightly
 		token = nil
 	}
 	configuration := shared.SourceInsightly{
-		SourceType: sourceType,
-		StartDate:  startDate,
-		Token:      token,
+		StartDate: startDate,
+		Token:     token,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

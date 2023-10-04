@@ -42,7 +42,6 @@ data "airbyte_source_prestashop" "my_source_prestashop" {
 Read-Only:
 
 - `access_key` (String) Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
-- `source_type` (String) must be one of ["prestashop"]
 - `start_date` (String) The Start date in the format YYYY-MM-DD.
 - `url` (String) Shop URL without trailing slash.
 

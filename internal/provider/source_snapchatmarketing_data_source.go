@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -72,21 +71,13 @@ func (r *SourceSnapchatMarketingDataSource) Schema(ctx context.Context, req data
 						Computed:    true,
 						Description: `Refresh Token to renew the expired Access Token.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snapchat-marketing",
-							),
-						},
-						Description: `must be one of ["snapchat-marketing"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `Date in the format 2022-01-01. Any data before this date will not be replicated.`,
+						MarkdownDescription: `Default: "2022-01-01"` + "\n" +
+							`Date in the format 2022-01-01. Any data before this date will not be replicated.`,
 					},
 				},
 			},

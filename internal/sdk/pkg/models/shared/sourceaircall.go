@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -37,7 +38,43 @@ type SourceAircall struct {
 	APIID string `json:"api_id"`
 	// App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)
 	APIToken   string               `json:"api_token"`
-	SourceType SourceAircallAircall `json:"sourceType"`
+	sourceType SourceAircallAircall `const:"aircall" json:"sourceType"`
 	// Date time filter for incremental filter, Specify which date to extract from.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceAircall) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAircall) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAircall) GetAPIID() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIID
+}
+
+func (o *SourceAircall) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceAircall) GetSourceType() SourceAircallAircall {
+	return SourceAircallAircallAircall
+}
+
+func (o *SourceAircall) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

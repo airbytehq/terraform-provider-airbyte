@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,8 +53,9 @@ func (r *SourceGitlabDataSource) Schema(ctx context.Context, req datasource.Sche
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"api_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `Please enter your basic URL from GitLab instance.`,
+						Computed: true,
+						MarkdownDescription: `Default: "gitlab.com"` + "\n" +
+							`Please enter your basic URL from GitLab instance.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
@@ -66,15 +66,6 @@ func (r *SourceGitlabDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -104,15 +95,6 @@ func (r *SourceGitlabDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_gitlab_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -121,15 +103,6 @@ func (r *SourceGitlabDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
@@ -159,15 +132,6 @@ func (r *SourceGitlabDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 						},
@@ -182,15 +146,6 @@ func (r *SourceGitlabDataSource) Schema(ctx context.Context, req datasource.Sche
 					"projects": schema.StringAttribute{
 						Computed:    true,
 						Description: `Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gitlab",
-							),
-						},
-						Description: `must be one of ["gitlab"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

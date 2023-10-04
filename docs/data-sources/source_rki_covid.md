@@ -41,7 +41,6 @@ data "airbyte_source_rki_covid" "my_source_rkicovid" {
 
 Read-Only:
 
-- `source_type` (String) must be one of ["rki-covid"]
 - `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 

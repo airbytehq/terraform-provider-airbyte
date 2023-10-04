@@ -42,7 +42,6 @@ data "airbyte_source_orbit" "my_source_orbit" {
 Read-Only:
 
 - `api_token` (String) Authorizes you to work with Orbit workspaces associated with the token.
-- `source_type` (String) must be one of ["orbit"]
 - `start_date` (String) Date in the format 2022-06-26. Only load members whose last activities are after this date.
 - `workspace` (String) The unique name of the workspace that your API token is associated with.
 

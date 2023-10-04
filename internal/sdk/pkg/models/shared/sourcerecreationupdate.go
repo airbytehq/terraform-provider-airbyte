@@ -7,3 +7,17 @@ type SourceRecreationUpdate struct {
 	Apikey         string  `json:"apikey"`
 	QueryCampsites *string `json:"query_campsites,omitempty"`
 }
+
+func (o *SourceRecreationUpdate) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *SourceRecreationUpdate) GetQueryCampsites() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryCampsites
+}

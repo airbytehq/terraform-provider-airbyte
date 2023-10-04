@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -138,13 +139,13 @@ func (e *SourceAmazonAdsUpdateStateFilter) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAmazonAdsUpdate struct {
-	AuthType *SourceAmazonAdsUpdateAuthType `json:"auth_type,omitempty"`
+	authType *SourceAmazonAdsUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientID string `json:"client_id"`
 	// The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientSecret string `json:"client_secret"`
 	// The amount of days to go back in time to get the updated data from Amazon Ads
-	LookBackWindow *int64 `json:"look_back_window,omitempty"`
+	LookBackWindow *int64 `default:"3" json:"look_back_window"`
 	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
 	// Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
@@ -152,11 +153,96 @@ type SourceAmazonAdsUpdate struct {
 	// Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 	RefreshToken string `json:"refresh_token"`
 	// Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
-	Region *SourceAmazonAdsUpdateRegion `json:"region,omitempty"`
+	Region *SourceAmazonAdsUpdateRegion `default:"NA" json:"region"`
 	// Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
 	ReportRecordTypes []SourceAmazonAdsUpdateReportRecordTypes `json:"report_record_types,omitempty"`
 	// The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
 	StartDate *string `json:"start_date,omitempty"`
 	// Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.
 	StateFilter []SourceAmazonAdsUpdateStateFilter `json:"state_filter,omitempty"`
+}
+
+func (s SourceAmazonAdsUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmazonAdsUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmazonAdsUpdate) GetAuthType() *SourceAmazonAdsUpdateAuthType {
+	return SourceAmazonAdsUpdateAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceAmazonAdsUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceAmazonAdsUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceAmazonAdsUpdate) GetLookBackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookBackWindow
+}
+
+func (o *SourceAmazonAdsUpdate) GetMarketplaceIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MarketplaceIds
+}
+
+func (o *SourceAmazonAdsUpdate) GetProfiles() []int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Profiles
+}
+
+func (o *SourceAmazonAdsUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceAmazonAdsUpdate) GetRegion() *SourceAmazonAdsUpdateRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceAmazonAdsUpdate) GetReportRecordTypes() []SourceAmazonAdsUpdateReportRecordTypes {
+	if o == nil {
+		return nil
+	}
+	return o.ReportRecordTypes
+}
+
+func (o *SourceAmazonAdsUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceAmazonAdsUpdate) GetStateFilter() []SourceAmazonAdsUpdateStateFilter {
+	if o == nil {
+		return nil
+	}
+	return o.StateFilter
 }

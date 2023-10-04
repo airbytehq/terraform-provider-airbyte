@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -37,9 +38,52 @@ type SourceTrello struct {
 	BoardIds []string `json:"board_ids,omitempty"`
 	// Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 	Key        string             `json:"key"`
-	SourceType SourceTrelloTrello `json:"sourceType"`
+	sourceType SourceTrelloTrello `const:"trello" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 	Token string `json:"token"`
+}
+
+func (s SourceTrello) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTrello) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTrello) GetBoardIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.BoardIds
+}
+
+func (o *SourceTrello) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *SourceTrello) GetSourceType() SourceTrelloTrello {
+	return SourceTrelloTrelloTrello
+}
+
+func (o *SourceTrello) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceTrello) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

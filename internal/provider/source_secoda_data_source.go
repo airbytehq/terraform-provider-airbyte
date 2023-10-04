@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceSecodaDataSource struct {
 
 // SourceSecodaDataSourceModel describes the data model.
 type SourceSecodaDataSourceModel struct {
-	Configuration SourceSecoda `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"configuration"`
+	Name          types.String                                    `tfsdk:"name"`
+	SecretID      types.String                                    `tfsdk:"secret_id"`
+	SourceID      types.String                                    `tfsdk:"source_id"`
+	WorkspaceID   types.String                                    `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -55,15 +53,6 @@ func (r *SourceSecodaDataSource) Schema(ctx context.Context, req datasource.Sche
 					"api_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"secoda",
-							),
-						},
-						Description: `must be one of ["secoda"]`,
 					},
 				},
 			},

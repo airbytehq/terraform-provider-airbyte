@@ -44,7 +44,6 @@ Read-Only:
 - `api_key` (String) Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.
 - `domain` (String) Freshdesk domain
 - `requests_per_minute` (Number) The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
-- `source_type` (String) must be one of ["freshdesk"]
 - `start_date` (String) UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.
 
 

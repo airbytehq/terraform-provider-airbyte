@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceFacebookPages struct {
 	AccessToken types.String `tfsdk:"access_token"`
 	PageID      types.String `tfsdk:"page_id"`
-	SourceType  types.String `tfsdk:"source_type"`
 }

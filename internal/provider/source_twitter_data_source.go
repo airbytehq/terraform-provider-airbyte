@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -67,15 +66,6 @@ func (r *SourceTwitterDataSource) Schema(ctx context.Context, req datasource.Sch
 					"query": schema.StringAttribute{
 						Computed:    true,
 						Description: `Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"twitter",
-							),
-						},
-						Description: `must be one of ["twitter"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

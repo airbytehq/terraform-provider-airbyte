@@ -9,3 +9,31 @@ type SourceMongodbInternalPocCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMongodbInternalPocCreateRequest) GetConfiguration() SourceMongodbInternalPoc {
+	if o == nil {
+		return SourceMongodbInternalPoc{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMongodbInternalPocCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMongodbInternalPocCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMongodbInternalPocCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

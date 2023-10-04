@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `API Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 								},
 							},
 							"source_monday_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -82,15 +72,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -101,8 +82,9 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"subdomain": schema.StringAttribute{
-										Optional:    true,
-										Description: `Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
+										Optional: true,
+										MarkdownDescription: `Default: ""` + "\n" +
+											`Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
 									},
 								},
 							},
@@ -113,15 +95,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `API Token for making authenticated requests.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-										Description: `must be one of ["api_token"]`,
-									},
 								},
 							},
 							"source_monday_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -130,15 +103,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -149,8 +113,9 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"subdomain": schema.StringAttribute{
-										Optional:    true,
-										Description: `Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
+										Optional: true,
+										MarkdownDescription: `Default: ""` + "\n" +
+											`Slug/subdomain of the account, or the first part of the URL that comes before .monday.com`,
 									},
 								},
 							},
@@ -158,15 +123,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"monday",
-							),
-						},
-						Description: `must be one of ["monday"]`,
 					},
 				},
 			},
@@ -240,7 +196,7 @@ func (r *SourceMondayResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMonday(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -33,5 +34,27 @@ func (e *SourcePendoPendo) UnmarshalJSON(data []byte) error {
 
 type SourcePendo struct {
 	APIKey     string           `json:"api_key"`
-	SourceType SourcePendoPendo `json:"sourceType"`
+	sourceType SourcePendoPendo `const:"pendo" json:"sourceType"`
+}
+
+func (s SourcePendo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePendo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePendo) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePendo) GetSourceType() SourcePendoPendo {
+	return SourcePendoPendoPendo
 }

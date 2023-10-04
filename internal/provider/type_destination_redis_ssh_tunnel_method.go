@@ -3,10 +3,10 @@
 package provider
 
 type DestinationRedisSSHTunnelMethod struct {
-	DestinationRedisSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_redis_ssh_tunnel_method_no_tunnel"`
-	DestinationRedisSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redis_ssh_tunnel_method_password_authentication"`
-	DestinationRedisSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redis_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationRedisUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_redis_update_ssh_tunnel_method_no_tunnel"`
-	DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redis_update_ssh_tunnel_method_password_authentication"`
-	DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redis_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedisSSHTunnelMethodNoTunnel                     *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_redis_ssh_tunnel_method_no_tunnel"`
+	DestinationRedisSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_redis_ssh_tunnel_method_password_authentication"`
+	DestinationRedisSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_redis_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedisUpdateSSHTunnelMethodNoTunnel               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_redis_update_ssh_tunnel_method_no_tunnel"`
+	DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_redis_update_ssh_tunnel_method_password_authentication"`
+	DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_redis_update_ssh_tunnel_method_ssh_key_authentication"`
 }

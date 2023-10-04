@@ -8,14 +8,16 @@ import (
 )
 
 func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.DestinationDatabricksCreateRequest {
-	acceptTerms := r.Configuration.AcceptTerms.ValueBool()
+	acceptTerms := new(bool)
+	if !r.Configuration.AcceptTerms.IsUnknown() && !r.Configuration.AcceptTerms.IsNull() {
+		*acceptTerms = r.Configuration.AcceptTerms.ValueBool()
+	} else {
+		acceptTerms = nil
+	}
 	var dataSource shared.DestinationDatabricksDataSource
 	var destinationDatabricksDataSourceRecommendedManagedTables *shared.DestinationDatabricksDataSourceRecommendedManagedTables
 	if r.Configuration.DataSource.DestinationDatabricksDataSourceRecommendedManagedTables != nil {
-		dataSourceType := shared.DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceType(r.Configuration.DataSource.DestinationDatabricksDataSourceRecommendedManagedTables.DataSourceType.ValueString())
-		destinationDatabricksDataSourceRecommendedManagedTables = &shared.DestinationDatabricksDataSourceRecommendedManagedTables{
-			DataSourceType: dataSourceType,
-		}
+		destinationDatabricksDataSourceRecommendedManagedTables = &shared.DestinationDatabricksDataSourceRecommendedManagedTables{}
 	}
 	if destinationDatabricksDataSourceRecommendedManagedTables != nil {
 		dataSource = shared.DestinationDatabricksDataSource{
@@ -24,7 +26,6 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	}
 	var destinationDatabricksDataSourceAmazonS3 *shared.DestinationDatabricksDataSourceAmazonS3
 	if r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3 != nil {
-		dataSourceType1 := shared.DestinationDatabricksDataSourceAmazonS3DataSourceType(r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.DataSourceType.ValueString())
 		fileNamePattern := new(string)
 		if !r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern.IsUnknown() && !r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern.IsNull() {
 			*fileNamePattern = r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.FileNamePattern.ValueString()
@@ -34,10 +35,14 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 		s3AccessKeyID := r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3AccessKeyID.ValueString()
 		s3BucketName := r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketName.ValueString()
 		s3BucketPath := r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketPath.ValueString()
-		s3BucketRegion := shared.DestinationDatabricksDataSourceAmazonS3S3BucketRegion(r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketRegion.ValueString())
+		s3BucketRegion := new(shared.DestinationDatabricksDataSourceAmazonS3S3BucketRegion)
+		if !r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketRegion.IsUnknown() && !r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketRegion.IsNull() {
+			*s3BucketRegion = shared.DestinationDatabricksDataSourceAmazonS3S3BucketRegion(r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3BucketRegion.ValueString())
+		} else {
+			s3BucketRegion = nil
+		}
 		s3SecretAccessKey := r.Configuration.DataSource.DestinationDatabricksDataSourceAmazonS3.S3SecretAccessKey.ValueString()
 		destinationDatabricksDataSourceAmazonS3 = &shared.DestinationDatabricksDataSourceAmazonS3{
-			DataSourceType:    dataSourceType1,
 			FileNamePattern:   fileNamePattern,
 			S3AccessKeyID:     s3AccessKeyID,
 			S3BucketName:      s3BucketName,
@@ -62,13 +67,11 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 			azureBlobStorageEndpointDomainName = nil
 		}
 		azureBlobStorageSasToken := r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.AzureBlobStorageSasToken.ValueString()
-		dataSourceType2 := shared.DestinationDatabricksDataSourceAzureBlobStorageDataSourceType(r.Configuration.DataSource.DestinationDatabricksDataSourceAzureBlobStorage.DataSourceType.ValueString())
 		destinationDatabricksDataSourceAzureBlobStorage = &shared.DestinationDatabricksDataSourceAzureBlobStorage{
 			AzureBlobStorageAccountName:        azureBlobStorageAccountName,
 			AzureBlobStorageContainerName:      azureBlobStorageContainerName,
 			AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
 			AzureBlobStorageSasToken:           azureBlobStorageSasToken,
-			DataSourceType:                     dataSourceType2,
 		}
 	}
 	if destinationDatabricksDataSourceAzureBlobStorage != nil {
@@ -91,7 +94,6 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 		databricksPort = nil
 	}
 	databricksServerHostname := r.Configuration.DatabricksServerHostname.ValueString()
-	destinationType := shared.DestinationDatabricksDatabricks(r.Configuration.DestinationType.ValueString())
 	enableSchemaEvolution := new(bool)
 	if !r.Configuration.EnableSchemaEvolution.IsUnknown() && !r.Configuration.EnableSchemaEvolution.IsNull() {
 		*enableSchemaEvolution = r.Configuration.EnableSchemaEvolution.ValueBool()
@@ -118,7 +120,6 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 		DatabricksPersonalAccessToken: databricksPersonalAccessToken,
 		DatabricksPort:                databricksPort,
 		DatabricksServerHostname:      databricksServerHostname,
-		DestinationType:               destinationType,
 		EnableSchemaEvolution:         enableSchemaEvolution,
 		PurgeStagingData:              purgeStagingData,
 		Schema:                        schema,
@@ -139,14 +140,16 @@ func (r *DestinationDatabricksResourceModel) ToGetSDKType() *shared.DestinationD
 }
 
 func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.DestinationDatabricksPutRequest {
-	acceptTerms := r.Configuration.AcceptTerms.ValueBool()
+	acceptTerms := new(bool)
+	if !r.Configuration.AcceptTerms.IsUnknown() && !r.Configuration.AcceptTerms.IsNull() {
+		*acceptTerms = r.Configuration.AcceptTerms.ValueBool()
+	} else {
+		acceptTerms = nil
+	}
 	var dataSource shared.DestinationDatabricksUpdateDataSource
 	var destinationDatabricksUpdateDataSourceRecommendedManagedTables *shared.DestinationDatabricksUpdateDataSourceRecommendedManagedTables
 	if r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceRecommendedManagedTables != nil {
-		dataSourceType := shared.DestinationDatabricksUpdateDataSourceRecommendedManagedTablesDataSourceType(r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceRecommendedManagedTables.DataSourceType.ValueString())
-		destinationDatabricksUpdateDataSourceRecommendedManagedTables = &shared.DestinationDatabricksUpdateDataSourceRecommendedManagedTables{
-			DataSourceType: dataSourceType,
-		}
+		destinationDatabricksUpdateDataSourceRecommendedManagedTables = &shared.DestinationDatabricksUpdateDataSourceRecommendedManagedTables{}
 	}
 	if destinationDatabricksUpdateDataSourceRecommendedManagedTables != nil {
 		dataSource = shared.DestinationDatabricksUpdateDataSource{
@@ -155,7 +158,6 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 	}
 	var destinationDatabricksUpdateDataSourceAmazonS3 *shared.DestinationDatabricksUpdateDataSourceAmazonS3
 	if r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3 != nil {
-		dataSourceType1 := shared.DestinationDatabricksUpdateDataSourceAmazonS3DataSourceType(r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.DataSourceType.ValueString())
 		fileNamePattern := new(string)
 		if !r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.FileNamePattern.IsUnknown() && !r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.FileNamePattern.IsNull() {
 			*fileNamePattern = r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.FileNamePattern.ValueString()
@@ -165,10 +167,14 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 		s3AccessKeyID := r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3AccessKeyID.ValueString()
 		s3BucketName := r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3BucketName.ValueString()
 		s3BucketPath := r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3BucketPath.ValueString()
-		s3BucketRegion := shared.DestinationDatabricksUpdateDataSourceAmazonS3S3BucketRegion(r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3BucketRegion.ValueString())
+		s3BucketRegion := new(shared.DestinationDatabricksUpdateDataSourceAmazonS3S3BucketRegion)
+		if !r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3BucketRegion.IsUnknown() && !r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3BucketRegion.IsNull() {
+			*s3BucketRegion = shared.DestinationDatabricksUpdateDataSourceAmazonS3S3BucketRegion(r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3BucketRegion.ValueString())
+		} else {
+			s3BucketRegion = nil
+		}
 		s3SecretAccessKey := r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAmazonS3.S3SecretAccessKey.ValueString()
 		destinationDatabricksUpdateDataSourceAmazonS3 = &shared.DestinationDatabricksUpdateDataSourceAmazonS3{
-			DataSourceType:    dataSourceType1,
 			FileNamePattern:   fileNamePattern,
 			S3AccessKeyID:     s3AccessKeyID,
 			S3BucketName:      s3BucketName,
@@ -193,13 +199,11 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 			azureBlobStorageEndpointDomainName = nil
 		}
 		azureBlobStorageSasToken := r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAzureBlobStorage.AzureBlobStorageSasToken.ValueString()
-		dataSourceType2 := shared.DestinationDatabricksUpdateDataSourceAzureBlobStorageDataSourceType(r.Configuration.DataSource.DestinationDatabricksUpdateDataSourceAzureBlobStorage.DataSourceType.ValueString())
 		destinationDatabricksUpdateDataSourceAzureBlobStorage = &shared.DestinationDatabricksUpdateDataSourceAzureBlobStorage{
 			AzureBlobStorageAccountName:        azureBlobStorageAccountName,
 			AzureBlobStorageContainerName:      azureBlobStorageContainerName,
 			AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
 			AzureBlobStorageSasToken:           azureBlobStorageSasToken,
-			DataSourceType:                     dataSourceType2,
 		}
 	}
 	if destinationDatabricksUpdateDataSourceAzureBlobStorage != nil {

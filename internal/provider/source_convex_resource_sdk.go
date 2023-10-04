@@ -10,11 +10,9 @@ import (
 func (r *SourceConvexResourceModel) ToCreateSDKType() *shared.SourceConvexCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
-	sourceType := shared.SourceConvexConvex(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceConvex{
 		AccessKey:     accessKey,
 		DeploymentURL: deploymentURL,
-		SourceType:    sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

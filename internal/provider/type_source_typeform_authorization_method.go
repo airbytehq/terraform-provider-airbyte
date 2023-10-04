@@ -3,8 +3,8 @@
 package provider
 
 type SourceTypeformAuthorizationMethod struct {
-	SourceTypeformAuthorizationMethodOAuth20            *SourceGitlabAuthorizationMethodOAuth20      `tfsdk:"source_typeform_authorization_method_o_auth2_0"`
-	SourceTypeformAuthorizationMethodPrivateToken       *SourceGitlabAuthorizationMethodPrivateToken `tfsdk:"source_typeform_authorization_method_private_token"`
-	SourceTypeformUpdateAuthorizationMethodOAuth20      *SourceGitlabAuthorizationMethodOAuth20      `tfsdk:"source_typeform_update_authorization_method_o_auth2_0"`
-	SourceTypeformUpdateAuthorizationMethodPrivateToken *SourceGitlabAuthorizationMethodPrivateToken `tfsdk:"source_typeform_update_authorization_method_private_token"`
+	SourceTypeformAuthorizationMethodOAuth20            *SourceGitlabAuthorizationMethodOAuth20           `tfsdk:"source_typeform_authorization_method_o_auth2_0"`
+	SourceTypeformAuthorizationMethodPrivateToken       *SourceAuth0AuthenticationMethodOAuth2AccessToken `tfsdk:"source_typeform_authorization_method_private_token"`
+	SourceTypeformUpdateAuthorizationMethodOAuth20      *SourceGitlabAuthorizationMethodOAuth20           `tfsdk:"source_typeform_update_authorization_method_o_auth2_0"`
+	SourceTypeformUpdateAuthorizationMethodPrivateToken *SourceAuth0AuthenticationMethodOAuth2AccessToken `tfsdk:"source_typeform_update_authorization_method_private_token"`
 }

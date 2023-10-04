@@ -10,7 +10,6 @@ import (
 
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -67,8 +66,9 @@ func (r *SourceSentryDataSource) Schema(ctx context.Context, req datasource.Sche
 						Description: `Fields to retrieve when fetching discover events`,
 					},
 					"hostname": schema.StringAttribute{
-						Computed:    true,
-						Description: `Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.`,
+						Computed: true,
+						MarkdownDescription: `Default: "sentry.io"` + "\n" +
+							`Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.`,
 					},
 					"organization": schema.StringAttribute{
 						Computed:    true,
@@ -77,15 +77,6 @@ func (r *SourceSentryDataSource) Schema(ctx context.Context, req datasource.Sche
 					"project": schema.StringAttribute{
 						Computed:    true,
 						Description: `The name (slug) of the Project you want to sync.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sentry",
-							),
-						},
-						Description: `must be one of ["sentry"]`,
 					},
 				},
 			},

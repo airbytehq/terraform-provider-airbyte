@@ -11,12 +11,10 @@ func (r *SourceGcsResourceModel) ToCreateSDKType() *shared.SourceGcsCreateReques
 	gcsBucket := r.Configuration.GcsBucket.ValueString()
 	gcsPath := r.Configuration.GcsPath.ValueString()
 	serviceAccount := r.Configuration.ServiceAccount.ValueString()
-	sourceType := shared.SourceGcsGcs(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGcs{
 		GcsBucket:      gcsBucket,
 		GcsPath:        gcsPath,
 		ServiceAccount: serviceAccount,
-		SourceType:     sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

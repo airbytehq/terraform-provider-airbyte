@@ -42,8 +42,8 @@ data "airbyte_source_dixa" "my_source_dixa" {
 Read-Only:
 
 - `api_token` (String) Dixa API token
-- `batch_size` (Number) Number of days to batch into one request. Max 31.
-- `source_type` (String) must be one of ["dixa"]
+- `batch_size` (Number) Default: 31
+Number of days to batch into one request. Max 31.
 - `start_date` (String) The connector pulls records updated from this date onwards.
 
 

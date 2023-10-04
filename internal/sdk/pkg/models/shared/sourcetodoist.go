@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -32,7 +33,29 @@ func (e *SourceTodoistTodoist) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTodoist struct {
-	SourceType SourceTodoistTodoist `json:"sourceType"`
+	sourceType SourceTodoistTodoist `const:"todoist" json:"sourceType"`
 	// Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 	Token string `json:"token"`
+}
+
+func (s SourceTodoist) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTodoist) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTodoist) GetSourceType() SourceTodoistTodoist {
+	return SourceTodoistTodoistTodoist
+}
+
+func (o *SourceTodoist) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

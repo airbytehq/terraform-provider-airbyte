@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -57,29 +55,22 @@ func (r *SourceKyveDataSource) Schema(ctx context.Context, req datasource.Schema
 						Description: `The maximum amount of pages to go trough. Set to 'null' for all pages.`,
 					},
 					"page_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The pagesize for pagination, smaller numbers are used in integration tests.`,
+						Computed: true,
+						MarkdownDescription: `Default: 100` + "\n" +
+							`The pagesize for pagination, smaller numbers are used in integration tests.`,
 					},
 					"pool_ids": schema.StringAttribute{
 						Computed:    true,
 						Description: `The IDs of the KYVE storage pool you want to archive. (Comma separated)`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kyve",
-							),
-						},
-						Description: `must be one of ["kyve"]`,
 					},
 					"start_ids": schema.StringAttribute{
 						Computed:    true,
 						Description: `The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)`,
 					},
 					"url_base": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL to the KYVE Chain API.`,
+						Computed: true,
+						MarkdownDescription: `Default: "https://api.korellia.kyve.network"` + "\n" +
+							`URL to the KYVE Chain API.`,
 					},
 				},
 			},

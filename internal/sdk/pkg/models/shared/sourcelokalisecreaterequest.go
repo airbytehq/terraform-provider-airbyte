@@ -9,3 +9,31 @@ type SourceLokaliseCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceLokaliseCreateRequest) GetConfiguration() SourceLokalise {
+	if o == nil {
+		return SourceLokalise{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLokaliseCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLokaliseCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceLokaliseCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,12 +34,12 @@ type SourceKlaviyoResource struct {
 
 // SourceKlaviyoResourceModel describes the resource data model.
 type SourceKlaviyoResourceModel struct {
-	Configuration SourceKlaviyo `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceIterable `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceKlaviyoResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,15 +57,6 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 					"api_key": schema.StringAttribute{
 						Required:    true,
 						Description: `Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"klaviyo",
-							),
-						},
-						Description: `must be one of ["klaviyo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -147,7 +137,7 @@ func (r *SourceKlaviyoResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceKlaviyo(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

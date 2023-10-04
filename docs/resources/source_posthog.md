@@ -17,13 +17,12 @@ resource "airbyte_source_posthog" "my_source_posthog" {
   configuration = {
     api_key          = "...my_api_key..."
     base_url         = "https://posthog.example.com"
-    events_time_step = 30
-    source_type      = "posthog"
+    events_time_step = 5
     start_date       = "2021-01-01T00:00:00Z"
   }
-  name         = "Terence Wisozk"
+  name         = "Freda Kulas"
   secret_id    = "...my_secret_id..."
-  workspace_id = "21ec2053-b749-4366-ac8e-e0f2bf19588d"
+  workspace_id = "fcaa386d-a1d2-4ddf-8351-c49c68690051"
 }
 ```
 
@@ -51,12 +50,13 @@ resource "airbyte_source_posthog" "my_source_posthog" {
 Required:
 
 - `api_key` (String) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
-- `source_type` (String) must be one of ["posthog"]
 - `start_date` (String) The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 
 Optional:
 
-- `base_url` (String) Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
-- `events_time_step` (Number) Set lower value in case of failing long running sync of events stream.
+- `base_url` (String) Default: "https://app.posthog.com"
+Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
+- `events_time_step` (Number) Default: 30
+Set lower value in case of failing long running sync of events stream.
 
 

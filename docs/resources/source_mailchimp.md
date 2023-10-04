@@ -18,15 +18,13 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
     campaign_id = "...my_campaign_id..."
     credentials = {
       source_mailchimp_authentication_api_key = {
-        apikey    = "...my_apikey..."
-        auth_type = "apikey"
+        apikey = "...my_apikey..."
       }
     }
-    source_type = "mailchimp"
   }
-  name         = "Benny Williamson"
+  name         = "Dr. Everett Keebler"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da18a782-2bf9-4589-8e68-61adb55f9e5d"
+  workspace_id = "e85198c1-16e7-4265-81ee-6770fa8ec1ba"
 }
 ```
 
@@ -51,10 +49,6 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["mailchimp"]
-
 Optional:
 
 - `campaign_id` (String)
@@ -76,7 +70,6 @@ Optional:
 Required:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0"></a>
@@ -85,7 +78,6 @@ Required:
 Required:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of ["oauth2.0"]
 
 Optional:
 
@@ -99,7 +91,6 @@ Optional:
 Required:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0"></a>
@@ -108,7 +99,6 @@ Required:
 Required:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of ["oauth2.0"]
 
 Optional:
 

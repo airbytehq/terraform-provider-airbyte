@@ -7,3 +7,24 @@ type DestinationKeenCreateRequest struct {
 	Name          string          `json:"name"`
 	WorkspaceID   string          `json:"workspaceId"`
 }
+
+func (o *DestinationKeenCreateRequest) GetConfiguration() DestinationKeen {
+	if o == nil {
+		return DestinationKeen{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationKeenCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationKeenCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -38,5 +39,41 @@ type SourceUsCensus struct {
 	QueryParams *string `json:"query_params,omitempty"`
 	// The path portion of the GET request
 	QueryPath  string                 `json:"query_path"`
-	SourceType SourceUsCensusUsCensus `json:"sourceType"`
+	sourceType SourceUsCensusUsCensus `const:"us-census" json:"sourceType"`
+}
+
+func (s SourceUsCensus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceUsCensus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceUsCensus) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceUsCensus) GetQueryParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryParams
+}
+
+func (o *SourceUsCensus) GetQueryPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.QueryPath
+}
+
+func (o *SourceUsCensus) GetSourceType() SourceUsCensusUsCensus {
+	return SourceUsCensusUsCensusUsCensus
 }

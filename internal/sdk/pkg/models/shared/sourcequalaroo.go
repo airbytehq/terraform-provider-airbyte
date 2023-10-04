@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,11 +35,54 @@ func (e *SourceQualarooQualaroo) UnmarshalJSON(data []byte) error {
 type SourceQualaroo struct {
 	// A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 	Key        string                 `json:"key"`
-	SourceType SourceQualarooQualaroo `json:"sourceType"`
+	sourceType SourceQualarooQualaroo `const:"qualaroo" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
 	// IDs of the surveys from which you'd like to replicate data. If left empty, data from all surveys to which you have access will be replicated.
 	SurveyIds []string `json:"survey_ids,omitempty"`
 	// A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 	Token string `json:"token"`
+}
+
+func (s SourceQualaroo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceQualaroo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceQualaroo) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *SourceQualaroo) GetSourceType() SourceQualarooQualaroo {
+	return SourceQualarooQualarooQualaroo
+}
+
+func (o *SourceQualaroo) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceQualaroo) GetSurveyIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.SurveyIds
+}
+
+func (o *SourceQualaroo) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

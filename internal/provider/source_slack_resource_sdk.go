@@ -20,12 +20,10 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 			accessToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
 			clientID := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
-			optionTitle := shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
 			sourceSlackAuthenticationMechanismSignInViaSlackOAuth = &shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuth{
 				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
 			}
 		}
 		if sourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
@@ -36,10 +34,8 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 		var sourceSlackAuthenticationMechanismAPIToken *shared.SourceSlackAuthenticationMechanismAPIToken
 		if r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
 			apiToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken.ValueString()
-			optionTitle1 := shared.SourceSlackAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
 			sourceSlackAuthenticationMechanismAPIToken = &shared.SourceSlackAuthenticationMechanismAPIToken{
-				APIToken:    apiToken,
-				OptionTitle: optionTitle1,
+				APIToken: apiToken,
 			}
 		}
 		if sourceSlackAuthenticationMechanismAPIToken != nil {
@@ -48,16 +44,24 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 			}
 		}
 	}
-	joinChannels := r.Configuration.JoinChannels.ValueBool()
-	lookbackWindow := r.Configuration.LookbackWindow.ValueInt64()
-	sourceType := shared.SourceSlackSlack(r.Configuration.SourceType.ValueString())
+	joinChannels := new(bool)
+	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
+		*joinChannels = r.Configuration.JoinChannels.ValueBool()
+	} else {
+		joinChannels = nil
+	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlack{
 		ChannelFilter:  channelFilter,
 		Credentials:    credentials,
 		JoinChannels:   joinChannels,
 		LookbackWindow: lookbackWindow,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()
@@ -94,12 +98,10 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 			accessToken := r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
 			clientID := r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
-			optionTitle := shared.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
 			sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth = &shared.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth{
 				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
 			}
 		}
 		if sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth != nil {
@@ -110,10 +112,8 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 		var sourceSlackUpdateAuthenticationMechanismAPIToken *shared.SourceSlackUpdateAuthenticationMechanismAPIToken
 		if r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismAPIToken != nil {
 			apiToken := r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismAPIToken.APIToken.ValueString()
-			optionTitle1 := shared.SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackUpdateAuthenticationMechanismAPIToken.OptionTitle.ValueString())
 			sourceSlackUpdateAuthenticationMechanismAPIToken = &shared.SourceSlackUpdateAuthenticationMechanismAPIToken{
-				APIToken:    apiToken,
-				OptionTitle: optionTitle1,
+				APIToken: apiToken,
 			}
 		}
 		if sourceSlackUpdateAuthenticationMechanismAPIToken != nil {
@@ -122,8 +122,18 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 			}
 		}
 	}
-	joinChannels := r.Configuration.JoinChannels.ValueBool()
-	lookbackWindow := r.Configuration.LookbackWindow.ValueInt64()
+	joinChannels := new(bool)
+	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
+		*joinChannels = r.Configuration.JoinChannels.ValueBool()
+	} else {
+		joinChannels = nil
+	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlackUpdate{
 		ChannelFilter:  channelFilter,

@@ -42,11 +42,9 @@ data "airbyte_source_strava" "my_source_strava" {
 Read-Only:
 
 - `athlete_id` (Number) The Athlete ID of your Strava developer application.
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The Client ID of your Strava developer application.
 - `client_secret` (String) The Client Secret of your Strava developer application.
 - `refresh_token` (String) The Refresh Token with the activity: read_all permissions.
-- `source_type` (String) must be one of ["strava"]
 - `start_date` (String) UTC date and time. Any data before this date will not be replicated.
 
 

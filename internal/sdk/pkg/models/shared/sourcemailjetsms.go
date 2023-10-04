@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -34,9 +35,45 @@ func (e *SourceMailjetSmsMailjetSms) UnmarshalJSON(data []byte) error {
 type SourceMailjetSms struct {
 	// Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.
 	EndDate    *int64                     `json:"end_date,omitempty"`
-	SourceType SourceMailjetSmsMailjetSms `json:"sourceType"`
+	sourceType SourceMailjetSmsMailjetSms `const:"mailjet-sms" json:"sourceType"`
 	// Retrieve SMS messages created after the specified timestamp. Required format - Unix timestamp.
 	StartDate *int64 `json:"start_date,omitempty"`
 	// Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
 	Token string `json:"token"`
+}
+
+func (s SourceMailjetSms) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMailjetSms) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMailjetSms) GetEndDate() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceMailjetSms) GetSourceType() SourceMailjetSmsMailjetSms {
+	return SourceMailjetSmsMailjetSmsMailjetSms
+}
+
+func (o *SourceMailjetSms) GetStartDate() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceMailjetSms) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

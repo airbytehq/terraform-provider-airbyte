@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -58,6 +57,13 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
+							"additional_properties": schema.StringAttribute{
+								Optional: true,
+								Validators: []validator.String{
+									validators.IsValidJSON(),
+								},
+								Description: `Parsed as JSON.`,
+							},
 							"client_id": schema.StringAttribute{
 								Required:    true,
 								Description: `The Client ID of your developer application`,
@@ -70,23 +76,7 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 								Required:    true,
 								Description: `A refresh token generated using the above client ID and secret`,
 							},
-							"additional_properties": schema.StringAttribute{
-								Optional: true,
-								Validators: []validator.String{
-									validators.IsValidJSON(),
-								},
-								Description: `Parsed as JSON.`,
-							},
 						},
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"youtube-analytics",
-							),
-						},
-						Description: `must be one of ["youtube-analytics"]`,
 					},
 				},
 			},
@@ -160,7 +150,7 @@ func (r *SourceYoutubeAnalyticsResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceYoutubeAnalytics(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

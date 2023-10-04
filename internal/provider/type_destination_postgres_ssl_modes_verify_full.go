@@ -9,5 +9,4 @@ type DestinationPostgresSSLModesVerifyFull struct {
 	ClientCertificate types.String `tfsdk:"client_certificate"`
 	ClientKey         types.String `tfsdk:"client_key"`
 	ClientKeyPassword types.String `tfsdk:"client_key_password"`
-	Mode              types.String `tfsdk:"mode"`
 }

@@ -15,13 +15,12 @@ SourceDelighted Resource
 ```terraform
 resource "airbyte_source_delighted" "my_source_delighted" {
   configuration = {
-    api_key     = "...my_api_key..."
-    since       = "2022-05-30 04:50:23"
-    source_type = "delighted"
+    api_key = "...my_api_key..."
+    since   = "2022-05-30 04:50:23"
   }
-  name         = "Sarah Collier"
+  name         = "Katherine Cronin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "14f4cc6f-18bf-4962-9a6a-4f77a87ee3e4"
+  workspace_id = "7f29336e-2378-418d-9537-3da8d6eef047"
 }
 ```
 
@@ -50,6 +49,5 @@ Required:
 
 - `api_key` (String) A Delighted API key.
 - `since` (String) The date from which you'd like to replicate the data
-- `source_type` (String) must be one of ["delighted"]
 
 

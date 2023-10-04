@@ -16,12 +16,10 @@ func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.Destina
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
 	}
-	destinationType := shared.DestinationGoogleSheetsGoogleSheets(r.Configuration.DestinationType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.DestinationGoogleSheets{
-		Credentials:     credentials,
-		DestinationType: destinationType,
-		SpreadsheetID:   spreadsheetID,
+		Credentials:   credentials,
+		SpreadsheetID: spreadsheetID,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

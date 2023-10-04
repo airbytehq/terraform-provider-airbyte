@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -67,8 +67,51 @@ type DestinationRedisUpdateSSLModesVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                      `json:"client_key_password,omitempty"`
-	Mode              DestinationRedisUpdateSSLModesVerifyFullMode `json:"mode"`
+	ClientKeyPassword *string                                       `json:"client_key_password,omitempty"`
+	mode              *DestinationRedisUpdateSSLModesVerifyFullMode `const:"verify-full" json:"mode"`
+}
+
+func (d DestinationRedisUpdateSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisUpdateSSLModesVerifyFull) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedisUpdateSSLModesVerifyFull) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *DestinationRedisUpdateSSLModesVerifyFull) GetClientCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientCertificate
+}
+
+func (o *DestinationRedisUpdateSSLModesVerifyFull) GetClientKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientKey
+}
+
+func (o *DestinationRedisUpdateSSLModesVerifyFull) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *DestinationRedisUpdateSSLModesVerifyFull) GetMode() *DestinationRedisUpdateSSLModesVerifyFullMode {
+	return DestinationRedisUpdateSSLModesVerifyFullModeVerifyFull.ToPointer()
 }
 
 type DestinationRedisUpdateSSLModesDisableMode string
@@ -97,7 +140,22 @@ func (e *DestinationRedisUpdateSSLModesDisableMode) UnmarshalJSON(data []byte) e
 
 // DestinationRedisUpdateSSLModesDisable - Disable SSL.
 type DestinationRedisUpdateSSLModesDisable struct {
-	Mode DestinationRedisUpdateSSLModesDisableMode `json:"mode"`
+	mode *DestinationRedisUpdateSSLModesDisableMode `const:"disable" json:"mode"`
+}
+
+func (d DestinationRedisUpdateSSLModesDisable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisUpdateSSLModesDisable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedisUpdateSSLModesDisable) GetMode() *DestinationRedisUpdateSSLModesDisableMode {
+	return DestinationRedisUpdateSSLModesDisableModeDisable.ToPointer()
 }
 
 type DestinationRedisUpdateSSLModesType string
@@ -133,21 +191,16 @@ func CreateDestinationRedisUpdateSSLModesDestinationRedisUpdateSSLModesVerifyFul
 }
 
 func (u *DestinationRedisUpdateSSLModes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationRedisUpdateSSLModesDisable := new(DestinationRedisUpdateSSLModesDisable)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedisUpdateSSLModesDisable); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationRedisUpdateSSLModesDisable, "", true, true); err == nil {
 		u.DestinationRedisUpdateSSLModesDisable = destinationRedisUpdateSSLModesDisable
 		u.Type = DestinationRedisUpdateSSLModesTypeDestinationRedisUpdateSSLModesDisable
 		return nil
 	}
 
 	destinationRedisUpdateSSLModesVerifyFull := new(DestinationRedisUpdateSSLModesVerifyFull)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedisUpdateSSLModesVerifyFull); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationRedisUpdateSSLModesVerifyFull, "", true, true); err == nil {
 		u.DestinationRedisUpdateSSLModesVerifyFull = destinationRedisUpdateSSLModesVerifyFull
 		u.Type = DestinationRedisUpdateSSLModesTypeDestinationRedisUpdateSSLModesVerifyFull
 		return nil
@@ -158,14 +211,14 @@ func (u *DestinationRedisUpdateSSLModes) UnmarshalJSON(data []byte) error {
 
 func (u DestinationRedisUpdateSSLModes) MarshalJSON() ([]byte, error) {
 	if u.DestinationRedisUpdateSSLModesDisable != nil {
-		return json.Marshal(u.DestinationRedisUpdateSSLModesDisable)
+		return utils.MarshalJSON(u.DestinationRedisUpdateSSLModesDisable, "", true)
 	}
 
 	if u.DestinationRedisUpdateSSLModesVerifyFull != nil {
-		return json.Marshal(u.DestinationRedisUpdateSSLModesVerifyFull)
+		return utils.MarshalJSON(u.DestinationRedisUpdateSSLModesVerifyFull, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -198,13 +251,56 @@ type DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
+}
+
+func (d DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelMethod() DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+	return DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
 }
 
 // DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
@@ -239,11 +335,54 @@ type DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
+}
+
+func (d DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelMethod() DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+	return DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
 }
 
 // DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
@@ -274,7 +413,22 @@ func (e *DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSO
 // DestinationRedisUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedisUpdateSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationRedisUpdateSSHTunnelMethodNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisUpdateSSHTunnelMethodNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedisUpdateSSHTunnelMethodNoTunnel) GetTunnelMethod() DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+	return DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel
 }
 
 type DestinationRedisUpdateSSHTunnelMethodType string
@@ -321,30 +475,23 @@ func CreateDestinationRedisUpdateSSHTunnelMethodDestinationRedisUpdateSSHTunnelM
 }
 
 func (u *DestinationRedisUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	destinationRedisUpdateSSHTunnelMethodNoTunnel := new(DestinationRedisUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedisUpdateSSHTunnelMethodNoTunnel); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationRedisUpdateSSHTunnelMethodNoTunnel, "", true, true); err == nil {
 		u.DestinationRedisUpdateSSHTunnelMethodNoTunnel = destinationRedisUpdateSSHTunnelMethodNoTunnel
 		u.Type = DestinationRedisUpdateSSHTunnelMethodTypeDestinationRedisUpdateSSHTunnelMethodNoTunnel
 		return nil
 	}
 
 	destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication := new(DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication, "", true, true); err == nil {
 		u.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication = destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication
 		u.Type = DestinationRedisUpdateSSHTunnelMethodTypeDestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication
 		return nil
 	}
 
 	destinationRedisUpdateSSHTunnelMethodPasswordAuthentication := new(DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedisUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
+	if err := utils.UnmarshalJSON(data, &destinationRedisUpdateSSHTunnelMethodPasswordAuthentication, "", true, true); err == nil {
 		u.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication = destinationRedisUpdateSSHTunnelMethodPasswordAuthentication
 		u.Type = DestinationRedisUpdateSSHTunnelMethodTypeDestinationRedisUpdateSSHTunnelMethodPasswordAuthentication
 		return nil
@@ -355,31 +502,31 @@ func (u *DestinationRedisUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error
 
 func (u DestinationRedisUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	if u.DestinationRedisUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationRedisUpdateSSHTunnelMethodNoTunnel)
+		return utils.MarshalJSON(u.DestinationRedisUpdateSSHTunnelMethodNoTunnel, "", true)
 	}
 
 	if u.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication)
+		return utils.MarshalJSON(u.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication, "", true)
 	}
 
 	if u.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication)
+		return utils.MarshalJSON(u.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationRedisUpdate struct {
 	// Redis cache type to store data in.
-	CacheType DestinationRedisUpdateCacheType `json:"cache_type"`
+	CacheType *DestinationRedisUpdateCacheType `default:"hash" json:"cache_type"`
 	// Redis host to connect to.
 	Host string `json:"host"`
 	// Password associated with Redis.
 	Password *string `json:"password,omitempty"`
 	// Port of Redis.
-	Port int64 `json:"port"`
+	Port *int64 `default:"6379" json:"port"`
 	// Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
-	Ssl *bool `json:"ssl,omitempty"`
+	Ssl *bool `default:"false" json:"ssl"`
 	// SSL connection modes.
 	//   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
 	SslMode *DestinationRedisUpdateSSLModes `json:"ssl_mode,omitempty"`
@@ -387,4 +534,71 @@ type DestinationRedisUpdate struct {
 	TunnelMethod *DestinationRedisUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username associated with Redis.
 	Username string `json:"username"`
+}
+
+func (d DestinationRedisUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedisUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedisUpdate) GetCacheType() *DestinationRedisUpdateCacheType {
+	if o == nil {
+		return nil
+	}
+	return o.CacheType
+}
+
+func (o *DestinationRedisUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationRedisUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationRedisUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationRedisUpdate) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
+}
+
+func (o *DestinationRedisUpdate) GetSslMode() *DestinationRedisUpdateSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
+func (o *DestinationRedisUpdate) GetTunnelMethod() *DestinationRedisUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationRedisUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

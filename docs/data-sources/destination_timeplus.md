@@ -37,7 +37,7 @@ data "airbyte_destination_timeplus" "my_destination_timeplus" {
 Read-Only:
 
 - `apikey` (String) Personal API key
-- `destination_type` (String) must be one of ["timeplus"]
-- `endpoint` (String) Timeplus workspace endpoint
+- `endpoint` (String) Default: "https://us.timeplus.cloud/<workspace_id>"
+Timeplus workspace endpoint
 
 

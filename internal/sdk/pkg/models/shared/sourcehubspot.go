@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -40,7 +40,29 @@ type SourceHubspotAuthenticationPrivateApp struct {
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
 	// Name of the credentials set
-	CredentialsTitle SourceHubspotAuthenticationPrivateAppAuthType `json:"credentials_title"`
+	credentialsTitle SourceHubspotAuthenticationPrivateAppAuthType `const:"Private App Credentials" json:"credentials_title"`
+}
+
+func (s SourceHubspotAuthenticationPrivateApp) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubspotAuthenticationPrivateApp) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubspotAuthenticationPrivateApp) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceHubspotAuthenticationPrivateApp) GetCredentialsTitle() SourceHubspotAuthenticationPrivateAppAuthType {
+	return SourceHubspotAuthenticationPrivateAppAuthTypePrivateAppCredentials
 }
 
 // SourceHubspotAuthenticationOAuthAuthType - Name of the credentials
@@ -75,9 +97,45 @@ type SourceHubspotAuthenticationOAuth struct {
 	// The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
 	ClientSecret string `json:"client_secret"`
 	// Name of the credentials
-	CredentialsTitle SourceHubspotAuthenticationOAuthAuthType `json:"credentials_title"`
+	credentialsTitle SourceHubspotAuthenticationOAuthAuthType `const:"OAuth Credentials" json:"credentials_title"`
 	// Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SourceHubspotAuthenticationOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubspotAuthenticationOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubspotAuthenticationOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceHubspotAuthenticationOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceHubspotAuthenticationOAuth) GetCredentialsTitle() SourceHubspotAuthenticationOAuthAuthType {
+	return SourceHubspotAuthenticationOAuthAuthTypeOAuthCredentials
+}
+
+func (o *SourceHubspotAuthenticationOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourceHubspotAuthenticationType string
@@ -113,21 +171,16 @@ func CreateSourceHubspotAuthenticationSourceHubspotAuthenticationPrivateApp(sour
 }
 
 func (u *SourceHubspotAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceHubspotAuthenticationPrivateApp := new(SourceHubspotAuthenticationPrivateApp)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceHubspotAuthenticationPrivateApp); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceHubspotAuthenticationPrivateApp, "", true, true); err == nil {
 		u.SourceHubspotAuthenticationPrivateApp = sourceHubspotAuthenticationPrivateApp
 		u.Type = SourceHubspotAuthenticationTypeSourceHubspotAuthenticationPrivateApp
 		return nil
 	}
 
 	sourceHubspotAuthenticationOAuth := new(SourceHubspotAuthenticationOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceHubspotAuthenticationOAuth); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceHubspotAuthenticationOAuth, "", true, true); err == nil {
 		u.SourceHubspotAuthenticationOAuth = sourceHubspotAuthenticationOAuth
 		u.Type = SourceHubspotAuthenticationTypeSourceHubspotAuthenticationOAuth
 		return nil
@@ -137,15 +190,15 @@ func (u *SourceHubspotAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceHubspotAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceHubspotAuthenticationPrivateApp != nil {
-		return json.Marshal(u.SourceHubspotAuthenticationPrivateApp)
-	}
-
 	if u.SourceHubspotAuthenticationOAuth != nil {
-		return json.Marshal(u.SourceHubspotAuthenticationOAuth)
+		return utils.MarshalJSON(u.SourceHubspotAuthenticationOAuth, "", true)
 	}
 
-	return nil, nil
+	if u.SourceHubspotAuthenticationPrivateApp != nil {
+		return utils.MarshalJSON(u.SourceHubspotAuthenticationPrivateApp, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceHubspotHubspot string
@@ -175,7 +228,36 @@ func (e *SourceHubspotHubspot) UnmarshalJSON(data []byte) error {
 type SourceHubspot struct {
 	// Choose how to authenticate to HubSpot.
 	Credentials SourceHubspotAuthentication `json:"credentials"`
-	SourceType  SourceHubspotHubspot        `json:"sourceType"`
+	sourceType  SourceHubspotHubspot        `const:"hubspot" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceHubspot) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubspot) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubspot) GetCredentials() SourceHubspotAuthentication {
+	if o == nil {
+		return SourceHubspotAuthentication{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceHubspot) GetSourceType() SourceHubspotHubspot {
+	return SourceHubspotHubspotHubspot
+}
+
+func (o *SourceHubspot) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

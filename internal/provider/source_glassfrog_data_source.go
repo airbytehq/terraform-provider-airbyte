@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceGlassfrogDataSource struct {
 
 // SourceGlassfrogDataSourceModel describes the data model.
 type SourceGlassfrogDataSourceModel struct {
-	Configuration SourceGlassfrog `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"configuration"`
+	Name          types.String                                    `tfsdk:"name"`
+	SecretID      types.String                                    `tfsdk:"secret_id"`
+	SourceID      types.String                                    `tfsdk:"source_id"`
+	WorkspaceID   types.String                                    `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -55,15 +53,6 @@ func (r *SourceGlassfrogDataSource) Schema(ctx context.Context, req datasource.S
 					"api_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `API key provided by Glassfrog`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"glassfrog",
-							),
-						},
-						Description: `must be one of ["glassfrog"]`,
 					},
 				},
 			},

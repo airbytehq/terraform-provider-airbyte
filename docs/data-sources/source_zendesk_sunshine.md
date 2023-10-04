@@ -42,7 +42,6 @@ data "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["zendesk-sunshine"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
 - `subdomain` (String) The subdomain for your Zendesk Account.
 
@@ -62,7 +61,6 @@ Read-Only:
 Read-Only:
 
 - `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["api_token"]
 - `email` (String) The user email for your Zendesk account
 
 
@@ -72,7 +70,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Long-term access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
@@ -83,7 +80,6 @@ Read-Only:
 Read-Only:
 
 - `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["api_token"]
 - `email` (String) The user email for your Zendesk account
 
 
@@ -93,7 +89,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Long-term access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 

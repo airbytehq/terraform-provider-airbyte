@@ -9,3 +9,31 @@ type SourceTvmazeScheduleCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTvmazeScheduleCreateRequest) GetConfiguration() SourceTvmazeSchedule {
+	if o == nil {
+		return SourceTvmazeSchedule{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTvmazeScheduleCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTvmazeScheduleCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTvmazeScheduleCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

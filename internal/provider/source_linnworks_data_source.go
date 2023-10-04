@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -60,15 +59,6 @@ func (r *SourceLinnworksDataSource) Schema(ctx context.Context, req datasource.S
 					"application_secret": schema.StringAttribute{
 						Computed:    true,
 						Description: `Linnworks Application Secret`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"linnworks",
-							),
-						},
-						Description: `must be one of ["linnworks"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

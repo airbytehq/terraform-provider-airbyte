@@ -18,3 +18,52 @@ type SourceWikipediaPageviewsUpdate struct {
 	// The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
 	Start string `json:"start"`
 }
+
+func (o *SourceWikipediaPageviewsUpdate) GetAccess() string {
+	if o == nil {
+		return ""
+	}
+	return o.Access
+}
+
+func (o *SourceWikipediaPageviewsUpdate) GetAgent() string {
+	if o == nil {
+		return ""
+	}
+	return o.Agent
+}
+
+func (o *SourceWikipediaPageviewsUpdate) GetArticle() string {
+	if o == nil {
+		return ""
+	}
+	return o.Article
+}
+
+func (o *SourceWikipediaPageviewsUpdate) GetCountry() string {
+	if o == nil {
+		return ""
+	}
+	return o.Country
+}
+
+func (o *SourceWikipediaPageviewsUpdate) GetEnd() string {
+	if o == nil {
+		return ""
+	}
+	return o.End
+}
+
+func (o *SourceWikipediaPageviewsUpdate) GetProject() string {
+	if o == nil {
+		return ""
+	}
+	return o.Project
+}
+
+func (o *SourceWikipediaPageviewsUpdate) GetStart() string {
+	if o == nil {
+		return ""
+	}
+	return o.Start
+}

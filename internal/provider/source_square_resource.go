@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,30 +64,12 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `The API key for a Square application`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Key",
-											),
-										},
-										Description: `must be one of ["API Key"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Square.`,
 							},
 							"source_square_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Square-issued ID of your application`,
@@ -111,30 +92,12 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `The API key for a Square application`,
 									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Key",
-											),
-										},
-										Description: `must be one of ["API Key"]`,
-									},
 								},
 								Description: `Choose how to authenticate to Square.`,
 							},
 							"source_square_update_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Square-issued ID of your application`,
@@ -157,28 +120,22 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Choose how to authenticate to Square.`,
 					},
 					"include_deleted_objects": schema.BoolAttribute{
-						Optional:    true,
-						Description: `In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Required:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"square",
-							),
-						},
-						Description: `must be one of ["square"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Determines whether to use the sandbox or production environment.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
+						MarkdownDescription: `Default: "2021-01-01"` + "\n" +
+							`UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
 					},
 				},
 			},
@@ -252,7 +209,7 @@ func (r *SourceSquareResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSquare(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

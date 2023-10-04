@@ -22,14 +22,12 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 		requestTimeRange = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceAmplitudeAmplitude(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceAmplitude{
 		APIKey:           apiKey,
 		DataRegion:       dataRegion,
 		RequestTimeRange: requestTimeRange,
 		SecretKey:        secretKey,
-		SourceType:       sourceType,
 		StartDate:        startDate,
 	}
 	name := r.Name.ValueString()

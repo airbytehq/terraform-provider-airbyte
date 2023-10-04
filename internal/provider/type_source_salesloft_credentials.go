@@ -3,8 +3,8 @@
 package provider
 
 type SourceSalesloftCredentials struct {
-	SourceSalesloftCredentialsAuthenticateViaAPIKey       *SourceSalesloftCredentialsAuthenticateViaAPIKey `tfsdk:"source_salesloft_credentials_authenticate_via_api_key"`
+	SourceSalesloftCredentialsAuthenticateViaAPIKey       *SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"source_salesloft_credentials_authenticate_via_api_key"`
 	SourceSalesloftCredentialsAuthenticateViaOAuth        *SourceGitlabAuthorizationMethodOAuth20          `tfsdk:"source_salesloft_credentials_authenticate_via_o_auth"`
-	SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey *SourceSalesloftCredentialsAuthenticateViaAPIKey `tfsdk:"source_salesloft_update_credentials_authenticate_via_api_key"`
+	SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey *SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"source_salesloft_update_credentials_authenticate_via_api_key"`
 	SourceSalesloftUpdateCredentialsAuthenticateViaOAuth  *SourceGitlabAuthorizationMethodOAuth20          `tfsdk:"source_salesloft_update_credentials_authenticate_via_o_auth"`
 }

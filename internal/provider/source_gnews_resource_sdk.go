@@ -42,7 +42,6 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	} else {
 		sortby = nil
 	}
-	sourceType := shared.SourceGnewsGnews(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -70,7 +69,6 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 		Nullable:          nullable,
 		Query:             query,
 		Sortby:            sortby,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 		TopHeadlinesQuery: topHeadlinesQuery,
 		TopHeadlinesTopic: topHeadlinesTopic,

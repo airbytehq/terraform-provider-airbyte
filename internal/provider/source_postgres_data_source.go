@@ -32,11 +32,11 @@ type SourcePostgresDataSource struct {
 
 // SourcePostgresDataSourceModel describes the data model.
 type SourcePostgresDataSourceModel struct {
-	Configuration SourcePostgres1 `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourcePostgres `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -70,33 +70,32 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Port of the database.`,
+						Computed: true,
+						MarkdownDescription: `Default: 5432` + "\n" +
+							`Port of the database.`,
 					},
 					"replication_method": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_update_method_detect_changes_with_xmin_system_column": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Xmin",
-											),
-										},
-										Description: `must be one of ["Xmin"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.`,
 							},
 							"source_postgres_update_method_read_changes_using_write_ahead_log_cdc": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.`,
+										Computed: true,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.`,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed: true,
@@ -106,17 +105,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 												"After loading Data in the destination",
 											),
 										},
-										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]` + "\n" +
+										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"` + "\n" +
 											`Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
 									},
 									"plugin": schema.StringAttribute{
 										Computed: true,
@@ -125,7 +115,7 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 												"pgoutput",
 											),
 										},
-										MarkdownDescription: `must be one of ["pgoutput"]` + "\n" +
+										MarkdownDescription: `must be one of ["pgoutput"]; Default: "pgoutput"` + "\n" +
 											`A logical decoding plugin installed on the PostgreSQL server.`,
 									},
 									"publication": schema.StringAttribute{
@@ -133,59 +123,41 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
 									"queue_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+										Computed: true,
+										MarkdownDescription: `Default: 10000` + "\n" +
+											`The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
 									},
 									"replication_slot": schema.StringAttribute{
 										Computed:    true,
 										Description: `A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.`,
 							},
 							"source_postgres_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 							"source_postgres_update_update_method_detect_changes_with_xmin_system_column": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Xmin",
-											),
-										},
-										Description: `must be one of ["Xmin"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.`,
 							},
 							"source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.`,
+										Computed: true,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.`,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed: true,
@@ -195,17 +167,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 												"After loading Data in the destination",
 											),
 										},
-										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]` + "\n" +
+										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"` + "\n" +
 											`Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
 									},
 									"plugin": schema.StringAttribute{
 										Computed: true,
@@ -214,7 +177,7 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 												"pgoutput",
 											),
 										},
-										MarkdownDescription: `must be one of ["pgoutput"]` + "\n" +
+										MarkdownDescription: `must be one of ["pgoutput"]; Default: "pgoutput"` + "\n" +
 											`A logical decoding plugin installed on the PostgreSQL server.`,
 									},
 									"publication": schema.StringAttribute{
@@ -222,36 +185,20 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
 									"queue_size": schema.Int64Attribute{
-										Computed:    true,
-										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+										Computed: true,
+										MarkdownDescription: `Default: 10000` + "\n" +
+											`The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
 									},
 									"replication_slot": schema.StringAttribute{
 										Computed:    true,
 										Description: `A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.`,
 							},
 							"source_postgres_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
@@ -265,32 +212,14 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 						ElementType: types.StringType,
 						Description: `The list of schemas (case sensitive) to sync from. Defaults to public.`,
 					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"postgres",
-							),
-						},
-						Description: `must be one of ["postgres"]`,
-					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_ssl_modes_allow": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"allow",
-											),
-										},
-										Description: `must be one of ["allow"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -302,17 +231,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_ssl_modes_disable": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"disable",
-											),
-										},
-										Description: `must be one of ["disable"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -324,17 +244,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_ssl_modes_prefer": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"prefer",
-											),
-										},
-										Description: `must be one of ["prefer"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -346,17 +257,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_ssl_modes_require": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"require",
-											),
-										},
-										Description: `must be one of ["require"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -368,6 +270,13 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"ca_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `CA certificate`,
@@ -383,22 +292,6 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 									"client_key_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-ca",
-											),
-										},
-										Description: `must be one of ["verify-ca"]`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
@@ -406,6 +299,13 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_ssl_modes_verify_full": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"ca_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `CA certificate`,
@@ -422,39 +322,14 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-full",
-											),
-										},
-										Description: `must be one of ["verify-full"]`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
 							},
 							"source_postgres_update_ssl_modes_allow": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"allow",
-											),
-										},
-										Description: `must be one of ["allow"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -466,17 +341,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_update_ssl_modes_disable": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"disable",
-											),
-										},
-										Description: `must be one of ["disable"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -488,17 +354,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_update_ssl_modes_prefer": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"prefer",
-											),
-										},
-										Description: `must be one of ["prefer"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -510,17 +367,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_update_ssl_modes_require": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"require",
-											),
-										},
-										Description: `must be one of ["require"]`,
-									},
 									"additional_properties": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
 										},
@@ -532,6 +380,13 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"ca_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `CA certificate`,
@@ -547,22 +402,6 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 									"client_key_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-ca",
-											),
-										},
-										Description: `must be one of ["verify-ca"]`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
@@ -570,6 +409,13 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 							"source_postgres_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 									"ca_certificate": schema.StringAttribute{
 										Computed:    true,
 										Description: `CA certificate`,
@@ -585,22 +431,6 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 									"client_key_password": schema.StringAttribute{
 										Computed:    true,
 										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-full",
-											),
-										},
-										Description: `must be one of ["verify-full"]`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
@@ -616,19 +446,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_postgres_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -638,19 +457,10 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -674,19 +484,10 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -696,19 +497,8 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_postgres_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_postgres_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
@@ -718,19 +508,10 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,
@@ -754,19 +535,10 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Computed:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Computed:    true,

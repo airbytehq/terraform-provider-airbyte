@@ -9,12 +9,15 @@ import (
 
 func (r *DestinationTimeplusResourceModel) ToCreateSDKType() *shared.DestinationTimeplusCreateRequest {
 	apikey := r.Configuration.Apikey.ValueString()
-	destinationType := shared.DestinationTimeplusTimeplus(r.Configuration.DestinationType.ValueString())
-	endpoint := r.Configuration.Endpoint.ValueString()
+	endpoint := new(string)
+	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
+		*endpoint = r.Configuration.Endpoint.ValueString()
+	} else {
+		endpoint = nil
+	}
 	configuration := shared.DestinationTimeplus{
-		Apikey:          apikey,
-		DestinationType: destinationType,
-		Endpoint:        endpoint,
+		Apikey:   apikey,
+		Endpoint: endpoint,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -33,7 +36,12 @@ func (r *DestinationTimeplusResourceModel) ToGetSDKType() *shared.DestinationTim
 
 func (r *DestinationTimeplusResourceModel) ToUpdateSDKType() *shared.DestinationTimeplusPutRequest {
 	apikey := r.Configuration.Apikey.ValueString()
-	endpoint := r.Configuration.Endpoint.ValueString()
+	endpoint := new(string)
+	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
+		*endpoint = r.Configuration.Endpoint.ValueString()
+	} else {
+		endpoint = nil
+	}
 	configuration := shared.DestinationTimeplusUpdate{
 		Apikey:   apikey,
 		Endpoint: endpoint,

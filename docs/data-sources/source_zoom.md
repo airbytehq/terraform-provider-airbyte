@@ -42,6 +42,5 @@ data "airbyte_source_zoom" "my_source_zoom" {
 Read-Only:
 
 - `jwt_token` (String) JWT Token
-- `source_type` (String) must be one of ["zoom"]
 
 

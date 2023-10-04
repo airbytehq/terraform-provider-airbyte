@@ -9,12 +9,10 @@ import (
 
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -34,12 +32,12 @@ type SourceEmailoctopusResource struct {
 
 // SourceEmailoctopusResourceModel describes the resource data model.
 type SourceEmailoctopusResourceModel struct {
-	Configuration SourceEmailoctopus `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	SourceType    types.String       `tfsdk:"source_type"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration SourceAirtableAuthenticationPersonalAccessToken `tfsdk:"configuration"`
+	Name          types.String                                    `tfsdk:"name"`
+	SecretID      types.String                                    `tfsdk:"secret_id"`
+	SourceID      types.String                                    `tfsdk:"source_id"`
+	SourceType    types.String                                    `tfsdk:"source_type"`
+	WorkspaceID   types.String                                    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceEmailoctopusResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,15 +55,6 @@ func (r *SourceEmailoctopusResource) Schema(ctx context.Context, req resource.Sc
 					"api_key": schema.StringAttribute{
 						Required:    true,
 						Description: `EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"emailoctopus",
-							),
-						},
-						Description: `must be one of ["emailoctopus"]`,
 					},
 				},
 			},
@@ -139,7 +128,7 @@ func (r *SourceEmailoctopusResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceEmailoctopus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

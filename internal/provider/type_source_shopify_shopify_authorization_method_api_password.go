@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceShopifyShopifyAuthorizationMethodAPIPassword struct {
 	APIPassword types.String `tfsdk:"api_password"`
-	AuthMethod  types.String `tfsdk:"auth_method"`
 }

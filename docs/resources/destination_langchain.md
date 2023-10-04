@@ -15,29 +15,25 @@ DestinationLangchain Resource
 ```terraform
 resource "airbyte_destination_langchain" "my_destination_langchain" {
   configuration = {
-    destination_type = "langchain"
     embedding = {
-      destination_langchain_embedding_fake = {
-        mode = "fake"
-      }
+      destination_langchain_embedding_fake = {}
     }
     indexing = {
-      destination_langchain_indexing_chroma_local_persistance_ = {
+      destination_langchain_indexing_chroma_local_persistance = {
         collection_name  = "...my_collection_name..."
         destination_path = "/local/my_chroma_db"
-        mode             = "chroma_local"
       }
     }
     processing = {
-      chunk_overlap = 0
-      chunk_size    = 1
+      chunk_overlap = 3
+      chunk_size    = 2
       text_fields = [
         "...",
       ]
     }
   }
-  name         = "Hattie Nader"
-  workspace_id = "1e674bdb-04f1-4575-a082-d68ea19f1d17"
+  name         = "Randal Goyette"
+  workspace_id = "07f993ef-ae2d-4caf-8658-9dab1153f466"
 }
 ```
 
@@ -60,7 +56,6 @@ resource "airbyte_destination_langchain" "my_destination_langchain" {
 
 Required:
 
-- `destination_type` (String) must be one of ["langchain"]
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Indexing configuration (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
@@ -78,10 +73,6 @@ Optional:
 <a id="nestedatt--configuration--embedding--destination_langchain_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_langchain_embedding_fake`
 
-Optional:
-
-- `mode` (String) must be one of ["fake"]
-
 
 <a id="nestedatt--configuration--embedding--destination_langchain_embedding_open_ai"></a>
 ### Nested Schema for `configuration.embedding.destination_langchain_embedding_open_ai`
@@ -90,17 +81,9 @@ Required:
 
 - `openai_key` (String)
 
-Optional:
-
-- `mode` (String) must be one of ["openai"]
-
 
 <a id="nestedatt--configuration--embedding--destination_langchain_update_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_langchain_update_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_langchain_update_embedding_open_ai"></a>
@@ -109,10 +92,6 @@ Optional:
 Required:
 
 - `openai_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["openai"]
 
 
 
@@ -137,8 +116,8 @@ Required:
 
 Optional:
 
-- `collection_name` (String) Name of the collection to use.
-- `mode` (String) must be one of ["chroma_local"]
+- `collection_name` (String) Default: "langchain"
+Name of the collection to use.
 
 
 <a id="nestedatt--configuration--indexing--destination_langchain_indexing_doc_array_hnsw_search"></a>
@@ -147,10 +126,6 @@ Optional:
 Required:
 
 - `destination_path` (String) Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.
-
-Optional:
-
-- `mode` (String) must be one of ["DocArrayHnswSearch"]
 
 
 <a id="nestedatt--configuration--indexing--destination_langchain_indexing_pinecone"></a>
@@ -162,10 +137,6 @@ Required:
 - `pinecone_environment` (String) Pinecone environment to use
 - `pinecone_key` (String)
 
-Optional:
-
-- `mode` (String) must be one of ["pinecone"]
-
 
 <a id="nestedatt--configuration--indexing--destination_langchain_update_indexing_chroma_local_persistance"></a>
 ### Nested Schema for `configuration.indexing.destination_langchain_update_indexing_chroma_local_persistance`
@@ -176,8 +147,8 @@ Required:
 
 Optional:
 
-- `collection_name` (String) Name of the collection to use.
-- `mode` (String) must be one of ["chroma_local"]
+- `collection_name` (String) Default: "langchain"
+Name of the collection to use.
 
 
 <a id="nestedatt--configuration--indexing--destination_langchain_update_indexing_doc_array_hnsw_search"></a>
@@ -186,10 +157,6 @@ Optional:
 Required:
 
 - `destination_path` (String) Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.
-
-Optional:
-
-- `mode` (String) must be one of ["DocArrayHnswSearch"]
 
 
 <a id="nestedatt--configuration--indexing--destination_langchain_update_indexing_pinecone"></a>
@@ -200,10 +167,6 @@ Required:
 - `index` (String) Pinecone index to use
 - `pinecone_environment` (String) Pinecone environment to use
 - `pinecone_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["pinecone"]
 
 
 
@@ -217,6 +180,7 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Default: 0
+Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 
 

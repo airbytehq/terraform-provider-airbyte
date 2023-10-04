@@ -11,3 +11,31 @@ type SourceS3CreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceS3CreateRequest) GetConfiguration() SourceS3 {
+	if o == nil {
+		return SourceS3{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceS3CreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceS3CreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceS3CreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

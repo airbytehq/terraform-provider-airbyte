@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,17 +61,9 @@ func (r *SourceExchangeRatesDataSource) Schema(ctx context.Context, req datasour
 						Description: `ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR`,
 					},
 					"ignore_weekends": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Ignore weekends? (Exchanges don't run on weekends)`,
-					},
-					"source_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"exchange-rates",
-							),
-						},
-						Description: `must be one of ["exchange-rates"]`,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Ignore weekends? (Exchanges don't run on weekends)`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,

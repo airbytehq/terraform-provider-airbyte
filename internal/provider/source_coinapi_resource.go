@@ -66,20 +66,21 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 							``,
 					},
 					"environment": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"sandbox",
 								"production",
 							),
 						},
-						MarkdownDescription: `must be one of ["sandbox", "production"]` + "\n" +
+						MarkdownDescription: `must be one of ["sandbox", "production"]; Default: "sandbox"` + "\n" +
 							`The environment to use. Either sandbox or production.` + "\n" +
 							``,
 					},
 					"limit": schema.Int64Attribute{
 						Optional: true,
-						MarkdownDescription: `The maximum number of elements to return. If not supplied, the default` + "\n" +
+						MarkdownDescription: `Default: 100` + "\n" +
+							`The maximum number of elements to return. If not supplied, the default` + "\n" +
 							`is 100. For numbers larger than 100, each 100 items is counted as one` + "\n" +
 							`request for pricing purposes. Maximum value is 100000.` + "\n" +
 							``,
@@ -87,15 +88,6 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 					"period": schema.StringAttribute{
 						Required:    true,
 						Description: `The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"coin-api",
-							),
-						},
-						Description: `must be one of ["coin-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -179,7 +171,7 @@ func (r *SourceCoinAPIResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceCoinAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

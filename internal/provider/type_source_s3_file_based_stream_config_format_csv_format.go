@@ -10,7 +10,6 @@ type SourceS3FileBasedStreamConfigFormatCSVFormat struct {
 	Encoding             types.String                                                     `tfsdk:"encoding"`
 	EscapeChar           types.String                                                     `tfsdk:"escape_char"`
 	FalseValues          []types.String                                                   `tfsdk:"false_values"`
-	Filetype             types.String                                                     `tfsdk:"filetype"`
 	HeaderDefinition     *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition `tfsdk:"header_definition"`
 	InferenceType        types.String                                                     `tfsdk:"inference_type"`
 	NullValues           []types.String                                                   `tfsdk:"null_values"`

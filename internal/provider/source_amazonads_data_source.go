@@ -52,15 +52,6 @@ func (r *SourceAmazonAdsDataSource) Schema(ctx context.Context, req datasource.S
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"auth_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Computed:    true,
 						Description: `The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.`,
@@ -70,8 +61,9 @@ func (r *SourceAmazonAdsDataSource) Schema(ctx context.Context, req datasource.S
 						Description: `The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.`,
 					},
 					"look_back_window": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The amount of days to go back in time to get the updated data from Amazon Ads`,
+						Computed: true,
+						MarkdownDescription: `Default: 3` + "\n" +
+							`The amount of days to go back in time to get the updated data from Amazon Ads`,
 					},
 					"marketplace_ids": schema.ListAttribute{
 						Computed:    true,
@@ -96,22 +88,13 @@ func (r *SourceAmazonAdsDataSource) Schema(ctx context.Context, req datasource.S
 								"FE",
 							),
 						},
-						MarkdownDescription: `must be one of ["NA", "EU", "FE"]` + "\n" +
+						MarkdownDescription: `must be one of ["NA", "EU", "FE"]; Default: "NA"` + "\n" +
 							`Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
 						Computed:    true,
 						ElementType: types.StringType,
 						Description: `Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-ads",
-							),
-						},
-						Description: `must be one of ["amazon-ads"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

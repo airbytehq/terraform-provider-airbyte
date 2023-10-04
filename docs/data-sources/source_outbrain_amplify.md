@@ -47,7 +47,6 @@ Read-Only:
 The granularity used for geo location data in reports.
 - `report_granularity` (String) must be one of ["daily", "weekly", "monthly"]
 The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-- `source_type` (String) must be one of ["outbrain-amplify"]
 - `start_date` (String) Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -66,7 +65,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_outbrain_amplify_authentication_method_username_password"></a>
@@ -75,7 +73,6 @@ Read-Only:
 Read-Only:
 
 - `password` (String) Add Password for authentication.
-- `type` (String) must be one of ["username_password"]
 - `username` (String) Add Username for authentication.
 
 
@@ -85,7 +82,6 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_outbrain_amplify_update_authentication_method_username_password"></a>
@@ -94,7 +90,6 @@ Read-Only:
 Read-Only:
 
 - `password` (String) Add Password for authentication.
-- `type` (String) must be one of ["username_password"]
 - `username` (String) Add Username for authentication.
 
 

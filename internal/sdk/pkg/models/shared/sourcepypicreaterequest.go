@@ -9,3 +9,31 @@ type SourcePypiCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePypiCreateRequest) GetConfiguration() SourcePypi {
+	if o == nil {
+		return SourcePypi{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePypiCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePypiCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePypiCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

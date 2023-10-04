@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -60,15 +59,6 @@ func (r *DestinationFireboltDataSource) Schema(ctx context.Context, req datasour
 						Computed:    true,
 						Description: `The database to connect to.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"firebolt",
-							),
-						},
-						Description: `must be one of ["firebolt"]`,
-					},
 					"engine": schema.StringAttribute{
 						Computed:    true,
 						Description: `Engine name or url to connect to.`,
@@ -91,15 +81,6 @@ func (r *DestinationFireboltDataSource) Schema(ctx context.Context, req datasour
 										Computed:    true,
 										Description: `Corresponding secret part of the AWS Key`,
 									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-										Description: `must be one of ["S3"]`,
-									},
 									"s3_bucket": schema.StringAttribute{
 										Computed:    true,
 										Description: `The name of the S3 bucket.`,
@@ -112,18 +93,8 @@ func (r *DestinationFireboltDataSource) Schema(ctx context.Context, req datasour
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 							"destination_firebolt_loading_method_sql_inserts": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SQL",
-											),
-										},
-										Description: `must be one of ["SQL"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 							"destination_firebolt_update_loading_method_external_table_via_s3": schema.SingleNestedAttribute{
@@ -137,15 +108,6 @@ func (r *DestinationFireboltDataSource) Schema(ctx context.Context, req datasour
 										Computed:    true,
 										Description: `Corresponding secret part of the AWS Key`,
 									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-										Description: `must be one of ["S3"]`,
-									},
 									"s3_bucket": schema.StringAttribute{
 										Computed:    true,
 										Description: `The name of the S3 bucket.`,
@@ -158,18 +120,8 @@ func (r *DestinationFireboltDataSource) Schema(ctx context.Context, req datasour
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 							"destination_firebolt_update_loading_method_sql_inserts": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SQL",
-											),
-										},
-										Description: `must be one of ["SQL"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
 						},

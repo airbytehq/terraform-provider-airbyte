@@ -3,10 +3,10 @@
 package provider
 
 type DestinationClickhouseSSHTunnelMethod struct {
-	DestinationClickhouseSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_clickhouse_ssh_tunnel_method_no_tunnel"`
-	DestinationClickhouseSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_clickhouse_ssh_tunnel_method_password_authentication"`
-	DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_clickhouse_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_no_tunnel"`
-	DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_password_authentication"`
-	DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationClickhouseSSHTunnelMethodNoTunnel                     *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_clickhouse_ssh_tunnel_method_no_tunnel"`
+	DestinationClickhouseSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_clickhouse_ssh_tunnel_method_password_authentication"`
+	DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_clickhouse_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_no_tunnel"`
+	DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication           `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_password_authentication"`
+	DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication             `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_ssh_key_authentication"`
 }

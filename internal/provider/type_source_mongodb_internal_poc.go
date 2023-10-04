@@ -9,6 +9,5 @@ type SourceMongodbInternalPoc struct {
 	ConnectionString types.String `tfsdk:"connection_string"`
 	Password         types.String `tfsdk:"password"`
 	ReplicaSet       types.String `tfsdk:"replica_set"`
-	SourceType       types.String `tfsdk:"source_type"`
 	User             types.String `tfsdk:"user"`
 }

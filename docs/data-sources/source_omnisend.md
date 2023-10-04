@@ -42,6 +42,5 @@ data "airbyte_source_omnisend" "my_source_omnisend" {
 Read-Only:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["omnisend"]
 
 

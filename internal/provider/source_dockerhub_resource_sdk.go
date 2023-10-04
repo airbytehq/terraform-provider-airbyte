@@ -9,10 +9,8 @@ import (
 
 func (r *SourceDockerhubResourceModel) ToCreateSDKType() *shared.SourceDockerhubCreateRequest {
 	dockerUsername := r.Configuration.DockerUsername.ValueString()
-	sourceType := shared.SourceDockerhubDockerhub(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDockerhub{
 		DockerUsername: dockerUsername,
-		SourceType:     sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

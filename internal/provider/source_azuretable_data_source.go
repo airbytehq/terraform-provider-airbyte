@@ -8,10 +8,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -52,15 +50,6 @@ func (r *SourceAzureTableDataSource) Schema(ctx context.Context, req datasource.
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-table",
-							),
-						},
-						Description: `must be one of ["azure-table"]`,
-					},
 					"storage_access_key": schema.StringAttribute{
 						Computed:    true,
 						Description: `Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.`,
@@ -70,8 +59,9 @@ func (r *SourceAzureTableDataSource) Schema(ctx context.Context, req datasource.
 						Description: `The name of your storage account.`,
 					},
 					"storage_endpoint_suffix": schema.StringAttribute{
-						Computed:    true,
-						Description: `Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix`,
+						Computed: true,
+						MarkdownDescription: `Default: "core.windows.net"` + "\n" +
+							`Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix`,
 					},
 				},
 			},

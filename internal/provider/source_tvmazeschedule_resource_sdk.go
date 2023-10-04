@@ -15,7 +15,6 @@ func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvma
 	} else {
 		endDate = nil
 	}
-	sourceType := shared.SourceTvmazeScheduleTvmazeSchedule(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	webScheduleCountryCode := new(string)
 	if !r.Configuration.WebScheduleCountryCode.IsUnknown() && !r.Configuration.WebScheduleCountryCode.IsNull() {
@@ -26,7 +25,6 @@ func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvma
 	configuration := shared.SourceTvmazeSchedule{
 		DomesticScheduleCountryCode: domesticScheduleCountryCode,
 		EndDate:                     endDate,
-		SourceType:                  sourceType,
 		StartDate:                   startDate,
 		WebScheduleCountryCode:      webScheduleCountryCode,
 	}

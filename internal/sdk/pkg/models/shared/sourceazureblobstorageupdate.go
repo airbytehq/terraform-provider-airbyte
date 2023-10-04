@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -35,7 +35,22 @@ func (e *SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFor
 
 // SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON - Input data format
 type SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON struct {
-	FormatType SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType `json:"format_type"`
+	formatType SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType `const:"JSONL" json:"format_type"`
+}
+
+func (s SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON) GetFormatType() SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType {
+	return SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl
 }
 
 type SourceAzureBlobStorageUpdateInputFormatType string
@@ -60,12 +75,9 @@ func CreateSourceAzureBlobStorageUpdateInputFormatSourceAzureBlobStorageUpdateIn
 }
 
 func (u *SourceAzureBlobStorageUpdateInputFormat) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON := new(SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
 		u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON = sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
 		u.Type = SourceAzureBlobStorageUpdateInputFormatTypeSourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
 		return nil
@@ -76,10 +88,10 @@ func (u *SourceAzureBlobStorageUpdateInputFormat) UnmarshalJSON(data []byte) err
 
 func (u SourceAzureBlobStorageUpdateInputFormat) MarshalJSON() ([]byte, error) {
 	if u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON)
+		return utils.MarshalJSON(u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAzureBlobStorageUpdate struct {
@@ -92,9 +104,69 @@ type SourceAzureBlobStorageUpdate struct {
 	// The name of the Azure blob storage container.
 	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
 	// This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-	AzureBlobStorageEndpoint *string `json:"azure_blob_storage_endpoint,omitempty"`
+	AzureBlobStorageEndpoint *string `default:"blob.core.windows.net" json:"azure_blob_storage_endpoint"`
 	// The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure
 	AzureBlobStorageSchemaInferenceLimit *int64 `json:"azure_blob_storage_schema_inference_limit,omitempty"`
 	// Input data format
 	Format SourceAzureBlobStorageUpdateInputFormat `json:"format"`
+}
+
+func (s SourceAzureBlobStorageUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAzureBlobStorageUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageAccountKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountKey
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageAccountName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountName
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageBlobsPrefix() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AzureBlobStorageBlobsPrefix
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageContainerName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageContainerName
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AzureBlobStorageEndpoint
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageSchemaInferenceLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AzureBlobStorageSchemaInferenceLimit
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetFormat() SourceAzureBlobStorageUpdateInputFormat {
+	if o == nil {
+		return SourceAzureBlobStorageUpdateInputFormat{}
+	}
+	return o.Format
 }

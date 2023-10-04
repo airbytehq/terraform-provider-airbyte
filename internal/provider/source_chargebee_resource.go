@@ -74,15 +74,6 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 						Required:    true,
 						Description: `Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"chargebee",
-							),
-						},
-						Description: `must be one of ["chargebee"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -162,7 +153,7 @@ func (r *SourceChargebeeResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceChargebee(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

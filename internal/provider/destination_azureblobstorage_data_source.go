@@ -65,25 +65,19 @@ func (r *DestinationAzureBlobStorageDataSource) Schema(ctx context.Context, req 
 						Description: `The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp`,
 					},
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-						Computed:    true,
-						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
+						Computed: true,
+						MarkdownDescription: `Default: "blob.core.windows.net"` + "\n" +
+							`This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 					},
 					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.`,
+						Computed: true,
+						MarkdownDescription: `Default: 5` + "\n" +
+							`The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.`,
 					},
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable`,
-					},
-					"destination_type": schema.StringAttribute{
 						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-blob-storage",
-							),
-						},
-						Description: `must be one of ["azure-blob-storage"]`,
+						MarkdownDescription: `Default: 500` + "\n" +
+							`The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Computed: true,
@@ -99,34 +93,15 @@ func (r *DestinationAzureBlobStorageDataSource) Schema(ctx context.Context, req 
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CSV",
-											),
-										},
-										Description: `must be one of ["CSV"]`,
 									},
 								},
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
@@ -140,34 +115,15 @@ func (r *DestinationAzureBlobStorageDataSource) Schema(ctx context.Context, req 
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CSV",
-											),
-										},
-										Description: `must be one of ["CSV"]`,
 									},
 								},
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Output data format`,
 							},
 						},

@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"bytes"
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,9 +36,31 @@ func (e *SourceNotionUpdateAuthenticateUsingAccessTokenAuthType) UnmarshalJSON(d
 
 // SourceNotionUpdateAuthenticateUsingAccessToken - Pick an authentication method.
 type SourceNotionUpdateAuthenticateUsingAccessToken struct {
-	AuthType SourceNotionUpdateAuthenticateUsingAccessTokenAuthType `json:"auth_type"`
+	authType SourceNotionUpdateAuthenticateUsingAccessTokenAuthType `const:"token" json:"auth_type"`
 	// Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 	Token string `json:"token"`
+}
+
+func (s SourceNotionUpdateAuthenticateUsingAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNotionUpdateAuthenticateUsingAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNotionUpdateAuthenticateUsingAccessToken) GetAuthType() SourceNotionUpdateAuthenticateUsingAccessTokenAuthType {
+	return SourceNotionUpdateAuthenticateUsingAccessTokenAuthTypeToken
+}
+
+func (o *SourceNotionUpdateAuthenticateUsingAccessToken) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }
 
 type SourceNotionUpdateAuthenticateUsingOAuth20AuthType string
@@ -69,11 +91,47 @@ func (e *SourceNotionUpdateAuthenticateUsingOAuth20AuthType) UnmarshalJSON(data 
 type SourceNotionUpdateAuthenticateUsingOAuth20 struct {
 	// Access Token is a token you received by complete the OauthWebFlow of Notion.
 	AccessToken string                                             `json:"access_token"`
-	AuthType    SourceNotionUpdateAuthenticateUsingOAuth20AuthType `json:"auth_type"`
+	authType    SourceNotionUpdateAuthenticateUsingOAuth20AuthType `const:"OAuth2.0" json:"auth_type"`
 	// The ClientID of your Notion integration.
 	ClientID string `json:"client_id"`
 	// The ClientSecret of your Notion integration.
 	ClientSecret string `json:"client_secret"`
+}
+
+func (s SourceNotionUpdateAuthenticateUsingOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNotionUpdateAuthenticateUsingOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNotionUpdateAuthenticateUsingOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceNotionUpdateAuthenticateUsingOAuth20) GetAuthType() SourceNotionUpdateAuthenticateUsingOAuth20AuthType {
+	return SourceNotionUpdateAuthenticateUsingOAuth20AuthTypeOAuth20
+}
+
+func (o *SourceNotionUpdateAuthenticateUsingOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceNotionUpdateAuthenticateUsingOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 type SourceNotionUpdateAuthenticateUsingType string
@@ -109,21 +167,16 @@ func CreateSourceNotionUpdateAuthenticateUsingSourceNotionUpdateAuthenticateUsin
 }
 
 func (u *SourceNotionUpdateAuthenticateUsing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	sourceNotionUpdateAuthenticateUsingAccessToken := new(SourceNotionUpdateAuthenticateUsingAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceNotionUpdateAuthenticateUsingAccessToken); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceNotionUpdateAuthenticateUsingAccessToken, "", true, true); err == nil {
 		u.SourceNotionUpdateAuthenticateUsingAccessToken = sourceNotionUpdateAuthenticateUsingAccessToken
 		u.Type = SourceNotionUpdateAuthenticateUsingTypeSourceNotionUpdateAuthenticateUsingAccessToken
 		return nil
 	}
 
 	sourceNotionUpdateAuthenticateUsingOAuth20 := new(SourceNotionUpdateAuthenticateUsingOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceNotionUpdateAuthenticateUsingOAuth20); err == nil {
+	if err := utils.UnmarshalJSON(data, &sourceNotionUpdateAuthenticateUsingOAuth20, "", true, true); err == nil {
 		u.SourceNotionUpdateAuthenticateUsingOAuth20 = sourceNotionUpdateAuthenticateUsingOAuth20
 		u.Type = SourceNotionUpdateAuthenticateUsingTypeSourceNotionUpdateAuthenticateUsingOAuth20
 		return nil
@@ -133,15 +186,15 @@ func (u *SourceNotionUpdateAuthenticateUsing) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceNotionUpdateAuthenticateUsing) MarshalJSON() ([]byte, error) {
-	if u.SourceNotionUpdateAuthenticateUsingAccessToken != nil {
-		return json.Marshal(u.SourceNotionUpdateAuthenticateUsingAccessToken)
-	}
-
 	if u.SourceNotionUpdateAuthenticateUsingOAuth20 != nil {
-		return json.Marshal(u.SourceNotionUpdateAuthenticateUsingOAuth20)
+		return utils.MarshalJSON(u.SourceNotionUpdateAuthenticateUsingOAuth20, "", true)
 	}
 
-	return nil, nil
+	if u.SourceNotionUpdateAuthenticateUsingAccessToken != nil {
+		return utils.MarshalJSON(u.SourceNotionUpdateAuthenticateUsingAccessToken, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceNotionUpdate struct {
@@ -149,4 +202,29 @@ type SourceNotionUpdate struct {
 	Credentials *SourceNotionUpdateAuthenticateUsing `json:"credentials,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceNotionUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNotionUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNotionUpdate) GetCredentials() *SourceNotionUpdateAuthenticateUsing {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceNotionUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -39,7 +40,50 @@ type SourceMarketo struct {
 	ClientSecret string `json:"client_secret"`
 	// Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 	DomainURL  string               `json:"domain_url"`
-	SourceType SourceMarketoMarketo `json:"sourceType"`
+	sourceType SourceMarketoMarketo `const:"marketo" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceMarketo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMarketo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMarketo) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMarketo) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMarketo) GetDomainURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainURL
+}
+
+func (o *SourceMarketo) GetSourceType() SourceMarketoMarketo {
+	return SourceMarketoMarketoMarketo
+}
+
+func (o *SourceMarketo) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

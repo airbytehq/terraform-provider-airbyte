@@ -1,23 +1,18 @@
 resource "airbyte_destination_redis" "my_destination_redis" {
   configuration = {
-    cache_type       = "hash"
-    destination_type = "redis"
-    host             = "localhost,127.0.0.1"
-    password         = "...my_password..."
-    port             = 9
-    ssl              = false
+    cache_type = "hash"
+    host       = "localhost,127.0.0.1"
+    password   = "...my_password..."
+    port       = 2
+    ssl        = true
     ssl_mode = {
-      destination_redis_ssl_modes_disable = {
-        mode = "disable"
-      }
+      destination_redis_ssl_modes_disable = {}
     }
     tunnel_method = {
-      destination_redis_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_redis_ssh_tunnel_method_no_tunnel = {}
     }
-    username = "Vivianne.Baumbach3"
+    username = "Kathryne_Monahan22"
   }
-  name         = "Bonnie Halvorson"
-  workspace_id = "f94e29e9-73e9-422a-97a1-5be3e060807e"
+  name         = "Gerard Ratke"
+  workspace_id = "3d3987f0-9ed8-432d-98dd-dbef1f87bb50"
 }

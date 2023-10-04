@@ -9,7 +9,6 @@ type SourceClickhouse struct {
 	Host         types.String                     `tfsdk:"host"`
 	Password     types.String                     `tfsdk:"password"`
 	Port         types.Int64                      `tfsdk:"port"`
-	SourceType   types.String                     `tfsdk:"source_type"`
 	TunnelMethod *SourceClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
 	Username     types.String                     `tfsdk:"username"`
 }

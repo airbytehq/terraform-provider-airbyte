@@ -10,7 +10,6 @@ import (
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,15 +64,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 										Required:    true,
 										Description: `The Access Token to make authenticated requests.`,
 									},
-									"credentials": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
 								},
 							},
 							"source_zendesk_chat_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -91,15 +81,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 										Optional:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"credentials": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
@@ -112,15 +93,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `The Access Token to make authenticated requests.`,
-									},
-									"credentials": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
 									},
 								},
 							},
@@ -139,15 +111,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 										Optional:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"credentials": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
@@ -159,15 +122,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 							validators.ExactlyOneChild(),
 						},
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-chat",
-							),
-						},
-						Description: `must be one of ["zendesk-chat"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -176,8 +130,9 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 						Description: `The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{
-						Optional:    true,
-						Description: `Required if you access Zendesk Chat from a Zendesk Support subdomain.`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Required if you access Zendesk Chat from a Zendesk Support subdomain.`,
 					},
 				},
 			},
@@ -251,7 +206,7 @@ func (r *SourceZendeskChatResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceZendeskChat(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())

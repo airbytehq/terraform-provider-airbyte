@@ -44,6 +44,5 @@ Read-Only:
 - `credentials_json` (String) The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
 - `dataset_id` (String) The dataset ID to search for tables and views. If you are only loading data from one dataset, setting this option could result in much faster schema discovery.
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
-- `source_type` (String) must be one of ["bigquery"]
 
 

@@ -9,3 +9,31 @@ type SourceQuickbooksCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceQuickbooksCreateRequest) GetConfiguration() SourceQuickbooks {
+	if o == nil {
+		return SourceQuickbooks{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceQuickbooksCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceQuickbooksCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceQuickbooksCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

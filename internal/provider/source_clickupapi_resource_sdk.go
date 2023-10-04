@@ -27,7 +27,6 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	} else {
 		listID = nil
 	}
-	sourceType := shared.SourceClickupAPIClickupAPI(r.Configuration.SourceType.ValueString())
 	spaceID := new(string)
 	if !r.Configuration.SpaceID.IsUnknown() && !r.Configuration.SpaceID.IsNull() {
 		*spaceID = r.Configuration.SpaceID.ValueString()
@@ -45,7 +44,6 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 		FolderID:           folderID,
 		IncludeClosedTasks: includeClosedTasks,
 		ListID:             listID,
-		SourceType:         sourceType,
 		SpaceID:            spaceID,
 		TeamID:             teamID,
 	}

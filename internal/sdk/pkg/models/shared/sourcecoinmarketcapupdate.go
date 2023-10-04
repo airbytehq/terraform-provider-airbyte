@@ -43,3 +43,24 @@ type SourceCoinmarketcapUpdate struct {
 	// Cryptocurrency symbols. (only used for quotes stream)
 	Symbols []string `json:"symbols,omitempty"`
 }
+
+func (o *SourceCoinmarketcapUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceCoinmarketcapUpdate) GetDataType() SourceCoinmarketcapUpdateDataType {
+	if o == nil {
+		return SourceCoinmarketcapUpdateDataType("")
+	}
+	return o.DataType
+}
+
+func (o *SourceCoinmarketcapUpdate) GetSymbols() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Symbols
+}

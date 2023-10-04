@@ -15,11 +15,9 @@ DestinationPinecone Resource
 ```terraform
 resource "airbyte_destination_pinecone" "my_destination_pinecone" {
   configuration = {
-    destination_type = "pinecone"
     embedding = {
       destination_pinecone_embedding_cohere = {
         cohere_key = "...my_cohere_key..."
-        mode       = "cohere"
       }
     }
     indexing = {
@@ -28,8 +26,8 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       pinecone_key         = "...my_pinecone_key..."
     }
     processing = {
-      chunk_overlap = 2
-      chunk_size    = 3
+      chunk_overlap = 7
+      chunk_size    = 6
       metadata_fields = [
         "...",
       ]
@@ -38,8 +36,8 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       ]
     }
   }
-  name         = "Cecelia Braun"
-  workspace_id = "8b6a89fb-e3a5-4aa8-a482-4d0ab4075088"
+  name         = "Peggy Renner"
+  workspace_id = "88e15f86-8bf0-4372-97dc-d66bcb9a13f0"
 }
 ```
 
@@ -62,7 +60,6 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
 
 Required:
 
-- `destination_type` (String) must be one of ["pinecone"]
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
@@ -86,17 +83,9 @@ Required:
 
 - `cohere_key` (String)
 
-Optional:
-
-- `mode` (String) must be one of ["cohere"]
-
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_pinecone_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_embedding_open_ai"></a>
@@ -106,10 +95,6 @@ Required:
 
 - `openai_key` (String)
 
-Optional:
-
-- `mode` (String) must be one of ["openai"]
-
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_cohere"></a>
 ### Nested Schema for `configuration.embedding.destination_pinecone_update_embedding_cohere`
@@ -118,17 +103,9 @@ Required:
 
 - `cohere_key` (String)
 
-Optional:
-
-- `mode` (String) must be one of ["cohere"]
-
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_fake"></a>
 ### Nested Schema for `configuration.embedding.destination_pinecone_update_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
 
 
 <a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_open_ai"></a>
@@ -137,10 +114,6 @@ Optional:
 Required:
 
 - `openai_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["openai"]
 
 
 
@@ -163,7 +136,8 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Default: 0
+Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
 

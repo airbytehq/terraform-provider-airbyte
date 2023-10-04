@@ -15,7 +15,6 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}
 	realm := r.Configuration.Realm.ValueString()
-	sourceType := shared.SourceNetsuiteNetsuite(r.Configuration.SourceType.ValueString())
 	startDatetime := r.Configuration.StartDatetime.ValueString()
 	tokenKey := r.Configuration.TokenKey.ValueString()
 	tokenSecret := r.Configuration.TokenSecret.ValueString()
@@ -30,7 +29,6 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 		ConsumerSecret: consumerSecret,
 		ObjectTypes:    objectTypes,
 		Realm:          realm,
-		SourceType:     sourceType,
 		StartDatetime:  startDatetime,
 		TokenKey:       tokenKey,
 		TokenSecret:    tokenSecret,

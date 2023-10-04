@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 )
@@ -36,7 +37,43 @@ type SourceRailz struct {
 	ClientID string `json:"client_id"`
 	// Secret key (secret_key)
 	SecretKey  string           `json:"secret_key"`
-	SourceType SourceRailzRailz `json:"sourceType"`
+	sourceType SourceRailzRailz `const:"railz" json:"sourceType"`
 	// Start date
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceRailz) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRailz) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRailz) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceRailz) GetSecretKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretKey
+}
+
+func (o *SourceRailz) GetSourceType() SourceRailzRailz {
+	return SourceRailzRailzRailz
+}
+
+func (o *SourceRailz) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

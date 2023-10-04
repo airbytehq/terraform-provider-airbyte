@@ -9,3 +9,31 @@ type SourcePaystackCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePaystackCreateRequest) GetConfiguration() SourcePaystack {
+	if o == nil {
+		return SourcePaystack{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePaystackCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePaystackCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePaystackCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

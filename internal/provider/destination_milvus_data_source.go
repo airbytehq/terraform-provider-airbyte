@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -52,15 +51,6 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"milvus",
-							),
-						},
-						Description: `must be one of ["milvus"]`,
-					},
 					"embedding": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -70,31 +60,12 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 									"cohere_key": schema.StringAttribute{
 										Computed: true,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_milvus_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_milvus_embedding_from_field": schema.SingleNestedAttribute{
@@ -108,30 +79,12 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `Name of the field in the record that contains the embedding`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"from_field",
-											),
-										},
-										Description: `must be one of ["from_field"]`,
-									},
 								},
 								Description: `Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.`,
 							},
 							"destination_milvus_embedding_open_ai": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Computed: true,
 									},
@@ -144,31 +97,12 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 									"cohere_key": schema.StringAttribute{
 										Computed: true,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
 							"destination_milvus_update_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+								Computed:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
 							"destination_milvus_update_embedding_from_field": schema.SingleNestedAttribute{
@@ -182,30 +116,12 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 										Computed:    true,
 										Description: `Name of the field in the record that contains the embedding`,
 									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"from_field",
-											),
-										},
-										Description: `must be one of ["from_field"]`,
-									},
 								},
 								Description: `Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.`,
 							},
 							"destination_milvus_update_embedding_open_ai": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
 										Computed: true,
 									},
@@ -227,15 +143,6 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 									"destination_milvus_indexing_authentication_api_token": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"token",
-													),
-												},
-												Description: `must be one of ["token"]`,
-											},
 											"token": schema.StringAttribute{
 												Computed:    true,
 												Description: `API Token for the Milvus instance`,
@@ -244,32 +151,13 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 										Description: `Authenticate using an API token (suitable for Zilliz Cloud)`,
 									},
 									"destination_milvus_indexing_authentication_no_auth": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"no_auth",
-													),
-												},
-												Description: `must be one of ["no_auth"]`,
-											},
-										},
+										Computed:    true,
+										Attributes:  map[string]schema.Attribute{},
 										Description: `Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)`,
 									},
 									"destination_milvus_indexing_authentication_username_password": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"username_password",
-													),
-												},
-												Description: `must be one of ["username_password"]`,
-											},
 											"password": schema.StringAttribute{
 												Computed:    true,
 												Description: `Password for the Milvus instance`,
@@ -284,15 +172,6 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 									"destination_milvus_update_indexing_authentication_api_token": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"token",
-													),
-												},
-												Description: `must be one of ["token"]`,
-											},
 											"token": schema.StringAttribute{
 												Computed:    true,
 												Description: `API Token for the Milvus instance`,
@@ -301,32 +180,13 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 										Description: `Authenticate using an API token (suitable for Zilliz Cloud)`,
 									},
 									"destination_milvus_update_indexing_authentication_no_auth": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"no_auth",
-													),
-												},
-												Description: `must be one of ["no_auth"]`,
-											},
-										},
+										Computed:    true,
+										Attributes:  map[string]schema.Attribute{},
 										Description: `Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)`,
 									},
 									"destination_milvus_update_indexing_authentication_username_password": schema.SingleNestedAttribute{
 										Computed: true,
 										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"username_password",
-													),
-												},
-												Description: `must be one of ["username_password"]`,
-											},
 											"password": schema.StringAttribute{
 												Computed:    true,
 												Description: `Password for the Milvus instance`,
@@ -349,20 +209,23 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 								Description: `The collection to load data into`,
 							},
 							"db": schema.StringAttribute{
-								Computed:    true,
-								Description: `The database to connect to`,
+								Computed: true,
+								MarkdownDescription: `Default: ""` + "\n" +
+									`The database to connect to`,
 							},
 							"host": schema.StringAttribute{
 								Computed:    true,
 								Description: `The public endpoint of the Milvus instance. `,
 							},
 							"text_field": schema.StringAttribute{
-								Computed:    true,
-								Description: `The field in the entity that contains the embedded text`,
+								Computed: true,
+								MarkdownDescription: `Default: "text"` + "\n" +
+									`The field in the entity that contains the embedded text`,
 							},
 							"vector_field": schema.StringAttribute{
-								Computed:    true,
-								Description: `The field in the entity that contains the vector`,
+								Computed: true,
+								MarkdownDescription: `Default: "vector"` + "\n" +
+									`The field in the entity that contains the vector`,
 							},
 						},
 						Description: `Indexing configuration`,
@@ -371,8 +234,9 @@ func (r *DestinationMilvusDataSource) Schema(ctx context.Context, req datasource
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
+								Computed: true,
+								MarkdownDescription: `Default: 0` + "\n" +
+									`Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
 							},
 							"chunk_size": schema.Int64Attribute{
 								Computed:    true,

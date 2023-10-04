@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -35,7 +36,36 @@ func (e *SourceIterableIterable) UnmarshalJSON(data []byte) error {
 type SourceIterable struct {
 	// Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.
 	APIKey     string                 `json:"api_key"`
-	SourceType SourceIterableIterable `json:"sourceType"`
+	sourceType SourceIterableIterable `const:"iterable" json:"sourceType"`
 	// The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceIterable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceIterable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceIterable) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceIterable) GetSourceType() SourceIterableIterable {
+	return SourceIterableIterableIterable
+}
+
+func (o *SourceIterable) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
