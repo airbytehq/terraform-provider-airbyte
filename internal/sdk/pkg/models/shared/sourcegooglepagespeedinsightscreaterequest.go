@@ -9,3 +9,31 @@ type SourceGooglePagespeedInsightsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGooglePagespeedInsightsCreateRequest) GetConfiguration() SourceGooglePagespeedInsights {
+	if o == nil {
+		return SourceGooglePagespeedInsights{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGooglePagespeedInsightsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGooglePagespeedInsightsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGooglePagespeedInsightsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

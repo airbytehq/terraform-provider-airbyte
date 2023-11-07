@@ -9,3 +9,31 @@ type SourceZendeskSunshineCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceZendeskSunshineCreateRequest) GetConfiguration() SourceZendeskSunshine {
+	if o == nil {
+		return SourceZendeskSunshine{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZendeskSunshineCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZendeskSunshineCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceZendeskSunshineCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

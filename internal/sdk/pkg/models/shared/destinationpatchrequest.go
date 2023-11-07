@@ -7,3 +7,17 @@ type DestinationPatchRequest struct {
 	Configuration interface{} `json:"configuration,omitempty"`
 	Name          *string     `json:"name,omitempty"`
 }
+
+func (o *DestinationPatchRequest) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *DestinationPatchRequest) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}

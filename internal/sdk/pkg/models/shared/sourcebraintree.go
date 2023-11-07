@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -42,27 +43,27 @@ func (e *SourceBraintreeEnvironment) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceBraintreeBraintree string
+type Braintree string
 
 const (
-	SourceBraintreeBraintreeBraintree SourceBraintreeBraintree = "braintree"
+	BraintreeBraintree Braintree = "braintree"
 )
 
-func (e SourceBraintreeBraintree) ToPointer() *SourceBraintreeBraintree {
+func (e Braintree) ToPointer() *Braintree {
 	return &e
 }
 
-func (e *SourceBraintreeBraintree) UnmarshalJSON(data []byte) error {
+func (e *Braintree) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "braintree":
-		*e = SourceBraintreeBraintree(v)
+		*e = Braintree(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBraintreeBraintree: %v", v)
+		return fmt.Errorf("invalid value for Braintree: %v", v)
 	}
 }
 
@@ -74,8 +75,58 @@ type SourceBraintree struct {
 	// Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-	PublicKey  string                   `json:"public_key"`
-	SourceType SourceBraintreeBraintree `json:"sourceType"`
+	PublicKey  string    `json:"public_key"`
+	sourceType Braintree `const:"braintree" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceBraintree) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBraintree) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBraintree) GetEnvironment() SourceBraintreeEnvironment {
+	if o == nil {
+		return SourceBraintreeEnvironment("")
+	}
+	return o.Environment
+}
+
+func (o *SourceBraintree) GetMerchantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.MerchantID
+}
+
+func (o *SourceBraintree) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
+}
+
+func (o *SourceBraintree) GetPublicKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PublicKey
+}
+
+func (o *SourceBraintree) GetSourceType() Braintree {
+	return BraintreeBraintree
+}
+
+func (o *SourceBraintree) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

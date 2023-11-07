@@ -3,145 +3,93 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMilvusCreateRequest {
-	destinationType := shared.DestinationMilvusMilvus(r.Configuration.DestinationType.ValueString())
 	var embedding shared.DestinationMilvusEmbedding
-	var destinationMilvusEmbeddingOpenAI *shared.DestinationMilvusEmbeddingOpenAI
-	if r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationMilvusEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationMilvusEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
-		openaiKey := r.Configuration.Embedding.DestinationMilvusEmbeddingOpenAI.OpenaiKey.ValueString()
-		destinationMilvusEmbeddingOpenAI = &shared.DestinationMilvusEmbeddingOpenAI{
-			Mode:      mode,
+	var destinationMilvusOpenAI *shared.DestinationMilvusOpenAI
+	if r.Configuration.Embedding.OpenAI != nil {
+		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
+		destinationMilvusOpenAI = &shared.DestinationMilvusOpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if destinationMilvusEmbeddingOpenAI != nil {
+	if destinationMilvusOpenAI != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			DestinationMilvusEmbeddingOpenAI: destinationMilvusEmbeddingOpenAI,
+			OpenAI: destinationMilvusOpenAI,
 		}
 	}
-	var destinationMilvusEmbeddingCohere *shared.DestinationMilvusEmbeddingCohere
-	if r.Configuration.Embedding.DestinationMilvusEmbeddingCohere != nil {
-		cohereKey := r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.CohereKey.ValueString()
-		mode1 := new(shared.DestinationMilvusEmbeddingCohereMode)
-		if !r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode.IsNull() {
-			*mode1 = shared.DestinationMilvusEmbeddingCohereMode(r.Configuration.Embedding.DestinationMilvusEmbeddingCohere.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
-		destinationMilvusEmbeddingCohere = &shared.DestinationMilvusEmbeddingCohere{
+	var destinationMilvusCohere *shared.DestinationMilvusCohere
+	if r.Configuration.Embedding.Cohere != nil {
+		cohereKey := r.Configuration.Embedding.Cohere.CohereKey.ValueString()
+		destinationMilvusCohere = &shared.DestinationMilvusCohere{
 			CohereKey: cohereKey,
-			Mode:      mode1,
 		}
 	}
-	if destinationMilvusEmbeddingCohere != nil {
+	if destinationMilvusCohere != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			DestinationMilvusEmbeddingCohere: destinationMilvusEmbeddingCohere,
+			Cohere: destinationMilvusCohere,
 		}
 	}
-	var destinationMilvusEmbeddingFake *shared.DestinationMilvusEmbeddingFake
-	if r.Configuration.Embedding.DestinationMilvusEmbeddingFake != nil {
-		mode2 := new(shared.DestinationMilvusEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode.IsNull() {
-			*mode2 = shared.DestinationMilvusEmbeddingFakeMode(r.Configuration.Embedding.DestinationMilvusEmbeddingFake.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		destinationMilvusEmbeddingFake = &shared.DestinationMilvusEmbeddingFake{
-			Mode: mode2,
-		}
+	var destinationMilvusFake *shared.DestinationMilvusFake
+	if r.Configuration.Embedding.Fake != nil {
+		destinationMilvusFake = &shared.DestinationMilvusFake{}
 	}
-	if destinationMilvusEmbeddingFake != nil {
+	if destinationMilvusFake != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			DestinationMilvusEmbeddingFake: destinationMilvusEmbeddingFake,
+			Fake: destinationMilvusFake,
 		}
 	}
-	var destinationMilvusEmbeddingFromField *shared.DestinationMilvusEmbeddingFromField
-	if r.Configuration.Embedding.DestinationMilvusEmbeddingFromField != nil {
-		dimensions := r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Dimensions.ValueInt64()
-		fieldName := r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.FieldName.ValueString()
-		mode3 := new(shared.DestinationMilvusEmbeddingFromFieldMode)
-		if !r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode.IsNull() {
-			*mode3 = shared.DestinationMilvusEmbeddingFromFieldMode(r.Configuration.Embedding.DestinationMilvusEmbeddingFromField.Mode.ValueString())
-		} else {
-			mode3 = nil
-		}
-		destinationMilvusEmbeddingFromField = &shared.DestinationMilvusEmbeddingFromField{
+	var destinationMilvusFromField *shared.DestinationMilvusFromField
+	if r.Configuration.Embedding.FromField != nil {
+		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
+		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
+		destinationMilvusFromField = &shared.DestinationMilvusFromField{
 			Dimensions: dimensions,
 			FieldName:  fieldName,
-			Mode:       mode3,
 		}
 	}
-	if destinationMilvusEmbeddingFromField != nil {
+	if destinationMilvusFromField != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			DestinationMilvusEmbeddingFromField: destinationMilvusEmbeddingFromField,
+			FromField: destinationMilvusFromField,
 		}
 	}
-	var auth shared.DestinationMilvusIndexingAuthentication
-	var destinationMilvusIndexingAuthenticationAPIToken *shared.DestinationMilvusIndexingAuthenticationAPIToken
-	if r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken != nil {
-		mode4 := new(shared.DestinationMilvusIndexingAuthenticationAPITokenMode)
-		if !r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode.IsUnknown() && !r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode.IsNull() {
-			*mode4 = shared.DestinationMilvusIndexingAuthenticationAPITokenMode(r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Mode.ValueString())
-		} else {
-			mode4 = nil
-		}
-		token := r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationAPIToken.Token.ValueString()
-		destinationMilvusIndexingAuthenticationAPIToken = &shared.DestinationMilvusIndexingAuthenticationAPIToken{
-			Mode:  mode4,
+	var auth shared.DestinationMilvusAuthentication
+	var destinationMilvusAPIToken *shared.DestinationMilvusAPIToken
+	if r.Configuration.Indexing.Auth.APIToken != nil {
+		token := r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
+		destinationMilvusAPIToken = &shared.DestinationMilvusAPIToken{
 			Token: token,
 		}
 	}
-	if destinationMilvusIndexingAuthenticationAPIToken != nil {
-		auth = shared.DestinationMilvusIndexingAuthentication{
-			DestinationMilvusIndexingAuthenticationAPIToken: destinationMilvusIndexingAuthenticationAPIToken,
+	if destinationMilvusAPIToken != nil {
+		auth = shared.DestinationMilvusAuthentication{
+			APIToken: destinationMilvusAPIToken,
 		}
 	}
-	var destinationMilvusIndexingAuthenticationUsernamePassword *shared.DestinationMilvusIndexingAuthenticationUsernamePassword
-	if r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword != nil {
-		mode5 := new(shared.DestinationMilvusIndexingAuthenticationUsernamePasswordMode)
-		if !r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode.IsUnknown() && !r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode.IsNull() {
-			*mode5 = shared.DestinationMilvusIndexingAuthenticationUsernamePasswordMode(r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Mode.ValueString())
-		} else {
-			mode5 = nil
-		}
-		password := r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Password.ValueString()
-		username := r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationUsernamePassword.Username.ValueString()
-		destinationMilvusIndexingAuthenticationUsernamePassword = &shared.DestinationMilvusIndexingAuthenticationUsernamePassword{
-			Mode:     mode5,
+	var destinationMilvusUsernamePassword *shared.DestinationMilvusUsernamePassword
+	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
+		password := r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
+		username := r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
+		destinationMilvusUsernamePassword = &shared.DestinationMilvusUsernamePassword{
 			Password: password,
 			Username: username,
 		}
 	}
-	if destinationMilvusIndexingAuthenticationUsernamePassword != nil {
-		auth = shared.DestinationMilvusIndexingAuthentication{
-			DestinationMilvusIndexingAuthenticationUsernamePassword: destinationMilvusIndexingAuthenticationUsernamePassword,
+	if destinationMilvusUsernamePassword != nil {
+		auth = shared.DestinationMilvusAuthentication{
+			UsernamePassword: destinationMilvusUsernamePassword,
 		}
 	}
-	var destinationMilvusIndexingAuthenticationNoAuth *shared.DestinationMilvusIndexingAuthenticationNoAuth
-	if r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth != nil {
-		mode6 := new(shared.DestinationMilvusIndexingAuthenticationNoAuthMode)
-		if !r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode.IsUnknown() && !r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode.IsNull() {
-			*mode6 = shared.DestinationMilvusIndexingAuthenticationNoAuthMode(r.Configuration.Indexing.Auth.DestinationMilvusIndexingAuthenticationNoAuth.Mode.ValueString())
-		} else {
-			mode6 = nil
-		}
-		destinationMilvusIndexingAuthenticationNoAuth = &shared.DestinationMilvusIndexingAuthenticationNoAuth{
-			Mode: mode6,
-		}
+	var destinationMilvusNoAuth *shared.DestinationMilvusNoAuth
+	if r.Configuration.Indexing.Auth.NoAuth != nil {
+		destinationMilvusNoAuth = &shared.DestinationMilvusNoAuth{}
 	}
-	if destinationMilvusIndexingAuthenticationNoAuth != nil {
-		auth = shared.DestinationMilvusIndexingAuthentication{
-			DestinationMilvusIndexingAuthenticationNoAuth: destinationMilvusIndexingAuthenticationNoAuth,
+	if destinationMilvusNoAuth != nil {
+		auth = shared.DestinationMilvusAuthentication{
+			NoAuth: destinationMilvusNoAuth,
 		}
 	}
 	collection := r.Configuration.Indexing.Collection.ValueString()
@@ -194,10 +142,9 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 		TextFields:     textFields,
 	}
 	configuration := shared.DestinationMilvus{
-		DestinationType: destinationType,
-		Embedding:       embedding,
-		Indexing:        indexing,
-		Processing:      processing,
+		Embedding:  embedding,
+		Indexing:   indexing,
+		Processing: processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -216,138 +163,87 @@ func (r *DestinationMilvusResourceModel) ToGetSDKType() *shared.DestinationMilvu
 
 func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMilvusPutRequest {
 	var embedding shared.DestinationMilvusUpdateEmbedding
-	var destinationMilvusUpdateEmbeddingOpenAI *shared.DestinationMilvusUpdateEmbeddingOpenAI
-	if r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationMilvusUpdateEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationMilvusUpdateEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
-		openaiKey := r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingOpenAI.OpenaiKey.ValueString()
-		destinationMilvusUpdateEmbeddingOpenAI = &shared.DestinationMilvusUpdateEmbeddingOpenAI{
-			Mode:      mode,
+	var destinationMilvusUpdateOpenAI *shared.DestinationMilvusUpdateOpenAI
+	if r.Configuration.Embedding.OpenAI != nil {
+		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
+		destinationMilvusUpdateOpenAI = &shared.DestinationMilvusUpdateOpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if destinationMilvusUpdateEmbeddingOpenAI != nil {
+	if destinationMilvusUpdateOpenAI != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			DestinationMilvusUpdateEmbeddingOpenAI: destinationMilvusUpdateEmbeddingOpenAI,
+			OpenAI: destinationMilvusUpdateOpenAI,
 		}
 	}
-	var destinationMilvusUpdateEmbeddingCohere *shared.DestinationMilvusUpdateEmbeddingCohere
-	if r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere != nil {
-		cohereKey := r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere.CohereKey.ValueString()
-		mode1 := new(shared.DestinationMilvusUpdateEmbeddingCohereMode)
-		if !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere.Mode.IsNull() {
-			*mode1 = shared.DestinationMilvusUpdateEmbeddingCohereMode(r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingCohere.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
-		destinationMilvusUpdateEmbeddingCohere = &shared.DestinationMilvusUpdateEmbeddingCohere{
+	var cohere *shared.Cohere
+	if r.Configuration.Embedding.Cohere != nil {
+		cohereKey := r.Configuration.Embedding.Cohere.CohereKey.ValueString()
+		cohere = &shared.Cohere{
 			CohereKey: cohereKey,
-			Mode:      mode1,
 		}
 	}
-	if destinationMilvusUpdateEmbeddingCohere != nil {
+	if cohere != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			DestinationMilvusUpdateEmbeddingCohere: destinationMilvusUpdateEmbeddingCohere,
+			Cohere: cohere,
 		}
 	}
-	var destinationMilvusUpdateEmbeddingFake *shared.DestinationMilvusUpdateEmbeddingFake
-	if r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFake != nil {
-		mode2 := new(shared.DestinationMilvusUpdateEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFake.Mode.IsNull() {
-			*mode2 = shared.DestinationMilvusUpdateEmbeddingFakeMode(r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFake.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		destinationMilvusUpdateEmbeddingFake = &shared.DestinationMilvusUpdateEmbeddingFake{
-			Mode: mode2,
-		}
+	var destinationMilvusUpdateFake *shared.DestinationMilvusUpdateFake
+	if r.Configuration.Embedding.Fake != nil {
+		destinationMilvusUpdateFake = &shared.DestinationMilvusUpdateFake{}
 	}
-	if destinationMilvusUpdateEmbeddingFake != nil {
+	if destinationMilvusUpdateFake != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			DestinationMilvusUpdateEmbeddingFake: destinationMilvusUpdateEmbeddingFake,
+			Fake: destinationMilvusUpdateFake,
 		}
 	}
-	var destinationMilvusUpdateEmbeddingFromField *shared.DestinationMilvusUpdateEmbeddingFromField
-	if r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField != nil {
-		dimensions := r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField.Dimensions.ValueInt64()
-		fieldName := r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField.FieldName.ValueString()
-		mode3 := new(shared.DestinationMilvusUpdateEmbeddingFromFieldMode)
-		if !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField.Mode.IsNull() {
-			*mode3 = shared.DestinationMilvusUpdateEmbeddingFromFieldMode(r.Configuration.Embedding.DestinationMilvusUpdateEmbeddingFromField.Mode.ValueString())
-		} else {
-			mode3 = nil
-		}
-		destinationMilvusUpdateEmbeddingFromField = &shared.DestinationMilvusUpdateEmbeddingFromField{
+	var fromField *shared.FromField
+	if r.Configuration.Embedding.FromField != nil {
+		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
+		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
+		fromField = &shared.FromField{
 			Dimensions: dimensions,
 			FieldName:  fieldName,
-			Mode:       mode3,
 		}
 	}
-	if destinationMilvusUpdateEmbeddingFromField != nil {
+	if fromField != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			DestinationMilvusUpdateEmbeddingFromField: destinationMilvusUpdateEmbeddingFromField,
+			FromField: fromField,
 		}
 	}
-	var auth shared.DestinationMilvusUpdateIndexingAuthentication
-	var destinationMilvusUpdateIndexingAuthenticationAPIToken *shared.DestinationMilvusUpdateIndexingAuthenticationAPIToken
-	if r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken != nil {
-		mode4 := new(shared.DestinationMilvusUpdateIndexingAuthenticationAPITokenMode)
-		if !r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken.Mode.IsUnknown() && !r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken.Mode.IsNull() {
-			*mode4 = shared.DestinationMilvusUpdateIndexingAuthenticationAPITokenMode(r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken.Mode.ValueString())
-		} else {
-			mode4 = nil
-		}
-		token := r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationAPIToken.Token.ValueString()
-		destinationMilvusUpdateIndexingAuthenticationAPIToken = &shared.DestinationMilvusUpdateIndexingAuthenticationAPIToken{
-			Mode:  mode4,
+	var auth shared.DestinationMilvusUpdateAuthentication
+	var destinationMilvusUpdateAPIToken *shared.DestinationMilvusUpdateAPIToken
+	if r.Configuration.Indexing.Auth.APIToken != nil {
+		token := r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
+		destinationMilvusUpdateAPIToken = &shared.DestinationMilvusUpdateAPIToken{
 			Token: token,
 		}
 	}
-	if destinationMilvusUpdateIndexingAuthenticationAPIToken != nil {
-		auth = shared.DestinationMilvusUpdateIndexingAuthentication{
-			DestinationMilvusUpdateIndexingAuthenticationAPIToken: destinationMilvusUpdateIndexingAuthenticationAPIToken,
+	if destinationMilvusUpdateAPIToken != nil {
+		auth = shared.DestinationMilvusUpdateAuthentication{
+			APIToken: destinationMilvusUpdateAPIToken,
 		}
 	}
-	var destinationMilvusUpdateIndexingAuthenticationUsernamePassword *shared.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword
-	if r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword != nil {
-		mode5 := new(shared.DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode)
-		if !r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword.Mode.IsUnknown() && !r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword.Mode.IsNull() {
-			*mode5 = shared.DestinationMilvusUpdateIndexingAuthenticationUsernamePasswordMode(r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword.Mode.ValueString())
-		} else {
-			mode5 = nil
-		}
-		password := r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword.Password.ValueString()
-		username := r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword.Username.ValueString()
-		destinationMilvusUpdateIndexingAuthenticationUsernamePassword = &shared.DestinationMilvusUpdateIndexingAuthenticationUsernamePassword{
-			Mode:     mode5,
+	var destinationMilvusUpdateUsernamePassword *shared.DestinationMilvusUpdateUsernamePassword
+	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
+		password := r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
+		username := r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
+		destinationMilvusUpdateUsernamePassword = &shared.DestinationMilvusUpdateUsernamePassword{
 			Password: password,
 			Username: username,
 		}
 	}
-	if destinationMilvusUpdateIndexingAuthenticationUsernamePassword != nil {
-		auth = shared.DestinationMilvusUpdateIndexingAuthentication{
-			DestinationMilvusUpdateIndexingAuthenticationUsernamePassword: destinationMilvusUpdateIndexingAuthenticationUsernamePassword,
+	if destinationMilvusUpdateUsernamePassword != nil {
+		auth = shared.DestinationMilvusUpdateAuthentication{
+			UsernamePassword: destinationMilvusUpdateUsernamePassword,
 		}
 	}
-	var destinationMilvusUpdateIndexingAuthenticationNoAuth *shared.DestinationMilvusUpdateIndexingAuthenticationNoAuth
-	if r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationNoAuth != nil {
-		mode6 := new(shared.DestinationMilvusUpdateIndexingAuthenticationNoAuthMode)
-		if !r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationNoAuth.Mode.IsUnknown() && !r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationNoAuth.Mode.IsNull() {
-			*mode6 = shared.DestinationMilvusUpdateIndexingAuthenticationNoAuthMode(r.Configuration.Indexing.Auth.DestinationMilvusUpdateIndexingAuthenticationNoAuth.Mode.ValueString())
-		} else {
-			mode6 = nil
-		}
-		destinationMilvusUpdateIndexingAuthenticationNoAuth = &shared.DestinationMilvusUpdateIndexingAuthenticationNoAuth{
-			Mode: mode6,
-		}
+	var noAuth *shared.NoAuth
+	if r.Configuration.Indexing.Auth.NoAuth != nil {
+		noAuth = &shared.NoAuth{}
 	}
-	if destinationMilvusUpdateIndexingAuthenticationNoAuth != nil {
-		auth = shared.DestinationMilvusUpdateIndexingAuthentication{
-			DestinationMilvusUpdateIndexingAuthenticationNoAuth: destinationMilvusUpdateIndexingAuthenticationNoAuth,
+	if noAuth != nil {
+		auth = shared.DestinationMilvusUpdateAuthentication{
+			NoAuth: noAuth,
 		}
 	}
 	collection := r.Configuration.Indexing.Collection.ValueString()

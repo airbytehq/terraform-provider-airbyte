@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -55,15 +56,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"auth_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Client",
-							),
-						},
-						Description: `must be one of ["Client"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>`,
@@ -73,25 +65,18 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
 					"force_use_bulk_api": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Toggle to use Bulk API (this might cause empty fields for some streams)`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Toggle to use Bulk API (this might cause empty fields for some streams)`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"salesforce",
-							),
-						},
-						Description: `must be one of ["salesforce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -105,7 +90,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"criteria": schema.StringAttribute{
-									Required: true,
+									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"starts with",
@@ -118,7 +103,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 											"not exacts",
 										),
 									},
-									Description: `must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]`,
+									Description: `must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]; Default: "contains"`,
 								},
 								"value": schema.StringAttribute{
 									Required: true,
@@ -136,6 +121,9 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -199,7 +187,7 @@ func (r *SourceSalesforceResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSalesforce(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -375,5 +363,5 @@ func (r *SourceSalesforceResource) Delete(ctx context.Context, req resource.Dele
 }
 
 func (r *SourceSalesforceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

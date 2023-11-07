@@ -3,21 +3,24 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceChartmogulResourceModel) ToCreateSDKType() *shared.SourceChartmogulCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	interval := shared.SourceChartmogulInterval(r.Configuration.Interval.ValueString())
-	sourceType := shared.SourceChartmogulChartmogul(r.Configuration.SourceType.ValueString())
+	interval := new(shared.SourceChartmogulInterval)
+	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
+		*interval = shared.SourceChartmogulInterval(r.Configuration.Interval.ValueString())
+	} else {
+		interval = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChartmogul{
-		APIKey:     apiKey,
-		Interval:   interval,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		Interval:  interval,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -43,7 +46,12 @@ func (r *SourceChartmogulResourceModel) ToGetSDKType() *shared.SourceChartmogulC
 
 func (r *SourceChartmogulResourceModel) ToUpdateSDKType() *shared.SourceChartmogulPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	interval := shared.SourceChartmogulUpdateInterval(r.Configuration.Interval.ValueString())
+	interval := new(shared.Interval)
+	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
+		*interval = shared.Interval(r.Configuration.Interval.ValueString())
+	} else {
+		interval = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChartmogulUpdate{
 		APIKey:    apiKey,

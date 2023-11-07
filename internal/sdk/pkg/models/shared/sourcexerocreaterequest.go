@@ -9,3 +9,31 @@ type SourceXeroCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceXeroCreateRequest) GetConfiguration() SourceXero {
+	if o == nil {
+		return SourceXero{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceXeroCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceXeroCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceXeroCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

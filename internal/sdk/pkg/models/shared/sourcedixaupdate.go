@@ -2,11 +2,47 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type SourceDixaUpdate struct {
 	// Dixa API token
 	APIToken string `json:"api_token"`
 	// Number of days to batch into one request. Max 31.
-	BatchSize *int64 `json:"batch_size,omitempty"`
+	BatchSize *int64 `default:"31" json:"batch_size"`
 	// The connector pulls records updated from this date onwards.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceDixaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDixaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDixaUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceDixaUpdate) GetBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BatchSize
+}
+
+func (o *SourceDixaUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

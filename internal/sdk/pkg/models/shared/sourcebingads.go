@@ -3,9 +3,10 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 type SourceBingAdsAuthMethod string
@@ -32,45 +33,113 @@ func (e *SourceBingAdsAuthMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceBingAdsBingAds string
+type BingAds string
 
 const (
-	SourceBingAdsBingAdsBingAds SourceBingAdsBingAds = "bing-ads"
+	BingAdsBingAds BingAds = "bing-ads"
 )
 
-func (e SourceBingAdsBingAds) ToPointer() *SourceBingAdsBingAds {
+func (e BingAds) ToPointer() *BingAds {
 	return &e
 }
 
-func (e *SourceBingAdsBingAds) UnmarshalJSON(data []byte) error {
+func (e *BingAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bing-ads":
-		*e = SourceBingAdsBingAds(v)
+		*e = BingAds(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBingAdsBingAds: %v", v)
+		return fmt.Errorf("invalid value for BingAds: %v", v)
 	}
 }
 
 type SourceBingAds struct {
-	AuthMethod *SourceBingAdsAuthMethod `json:"auth_method,omitempty"`
+	authMethod *SourceBingAdsAuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Advertising developer application.
-	ClientSecret *string `json:"client_secret,omitempty"`
+	ClientSecret *string `default:"" json:"client_secret"`
 	// Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
 	DeveloperToken string `json:"developer_token"`
 	// Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
-	LookbackWindow *int64 `json:"lookback_window,omitempty"`
+	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
-	ReportsStartDate types.Date           `json:"reports_start_date"`
-	SourceType       SourceBingAdsBingAds `json:"sourceType"`
+	ReportsStartDate *types.Date `default:"2020-01-01" json:"reports_start_date"`
+	sourceType       BingAds     `const:"bing-ads" json:"sourceType"`
 	// The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
-	TenantID *string `json:"tenant_id,omitempty"`
+	TenantID *string `default:"common" json:"tenant_id"`
+}
+
+func (s SourceBingAds) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBingAds) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBingAds) GetAuthMethod() *SourceBingAdsAuthMethod {
+	return SourceBingAdsAuthMethodOauth20.ToPointer()
+}
+
+func (o *SourceBingAds) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceBingAds) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceBingAds) GetDeveloperToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeveloperToken
+}
+
+func (o *SourceBingAds) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
+}
+
+func (o *SourceBingAds) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceBingAds) GetReportsStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.ReportsStartDate
+}
+
+func (o *SourceBingAds) GetSourceType() BingAds {
+	return BingAdsBingAds
+}
+
+func (o *SourceBingAds) GetTenantID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TenantID
 }

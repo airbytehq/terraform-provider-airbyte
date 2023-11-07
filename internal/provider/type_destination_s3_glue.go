@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3Glue struct {
 	AccessKeyID              types.String                  `tfsdk:"access_key_id"`
-	DestinationType          types.String                  `tfsdk:"destination_type"`
 	FileNamePattern          types.String                  `tfsdk:"file_name_pattern"`
 	Format                   DestinationS3GlueOutputFormat `tfsdk:"format"`
 	GlueDatabase             types.String                  `tfsdk:"glue_database"`

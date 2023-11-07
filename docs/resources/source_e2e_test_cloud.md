@@ -15,21 +15,18 @@ SourceE2eTestCloud Resource
 ```terraform
 resource "airbyte_source_e2e_test_cloud" "my_source_e2etestcloud" {
   configuration = {
-    max_messages        = 6
-    message_interval_ms = 0
+    max_messages        = 3
+    message_interval_ms = 2
     mock_catalog = {
-      source_e2e_test_cloud_mock_catalog_multi_schema = {
+      multi_schema = {
         stream_schemas = "...my_stream_schemas..."
-        type           = "MULTI_STREAM"
       }
     }
-    seed        = 42
-    source_type = "e2e-test-cloud"
-    type        = "CONTINUOUS_FEED"
+    seed = 42
   }
-  name         = "Gertrude Grant"
+  name         = "Angel Pagac"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c15dfbac-e188-4b1c-8ee2-c8c6ce611fee"
+  workspace_id = "a6ef9fc3-c374-44fd-a52e-57aa673d2825"
 }
 ```
 
@@ -56,69 +53,44 @@ resource "airbyte_source_e2e_test_cloud" "my_source_e2etestcloud" {
 
 Required:
 
-- `max_messages` (Number) Number of records to emit per stream. Min 1. Max 100 billion.
 - `mock_catalog` (Attributes) (see [below for nested schema](#nestedatt--configuration--mock_catalog))
-- `source_type` (String) must be one of ["e2e-test-cloud"]
 
 Optional:
 
-- `message_interval_ms` (Number) Interval between messages in ms. Min 0 ms. Max 60000 ms (1 minute).
-- `seed` (Number) When the seed is unspecified, the current time millis will be used as the seed. Range: [0, 1000000].
-- `type` (String) must be one of ["CONTINUOUS_FEED"]
+- `max_messages` (Number) Default: 100
+Number of records to emit per stream. Min 1. Max 100 billion.
+- `message_interval_ms` (Number) Default: 0
+Interval between messages in ms. Min 0 ms. Max 60000 ms (1 minute).
+- `seed` (Number) Default: 0
+When the seed is unspecified, the current time millis will be used as the seed. Range: [0, 1000000].
 
 <a id="nestedatt--configuration--mock_catalog"></a>
 ### Nested Schema for `configuration.mock_catalog`
 
 Optional:
 
-- `source_e2e_test_cloud_mock_catalog_multi_schema` (Attributes) A catalog with multiple data streams, each with a different schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_multi_schema))
-- `source_e2e_test_cloud_mock_catalog_single_schema` (Attributes) A catalog with one or multiple streams that share the same schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_single_schema))
-- `source_e2e_test_cloud_update_mock_catalog_multi_schema` (Attributes) A catalog with multiple data streams, each with a different schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_multi_schema))
-- `source_e2e_test_cloud_update_mock_catalog_single_schema` (Attributes) A catalog with one or multiple streams that share the same schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_single_schema))
+- `multi_schema` (Attributes) A catalog with multiple data streams, each with a different schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--multi_schema))
+- `single_schema` (Attributes) A catalog with one or multiple streams that share the same schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--single_schema))
 
-<a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_multi_schema"></a>
-### Nested Schema for `configuration.mock_catalog.source_e2e_test_cloud_mock_catalog_multi_schema`
-
-Required:
-
-- `stream_schemas` (String) A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of ["MULTI_STREAM"]
-
-
-<a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_single_schema"></a>
-### Nested Schema for `configuration.mock_catalog.source_e2e_test_cloud_mock_catalog_single_schema`
-
-Required:
-
-- `stream_name` (String) Name of the data stream.
-- `stream_schema` (String) A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of ["SINGLE_STREAM"]
+<a id="nestedatt--configuration--mock_catalog--multi_schema"></a>
+### Nested Schema for `configuration.mock_catalog.multi_schema`
 
 Optional:
 
-- `stream_duplication` (Number) Duplicate the stream for easy load testing. Each stream name will have a number suffix. For example, if the stream name is "ds", the duplicated streams will be "ds_0", "ds_1", etc.
+- `stream_schemas` (String) Default: "{ \"stream1\": { \"type\": \"object\", \"properties\": { \"field1\": { \"type\": \"string\" } } }, \"stream2\": { \"type\": \"object\", \"properties\": { \"field1\": { \"type\": \"boolean\" } } } }"
+A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
 
 
-<a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_multi_schema"></a>
-### Nested Schema for `configuration.mock_catalog.source_e2e_test_cloud_update_mock_catalog_multi_schema`
-
-Required:
-
-- `stream_schemas` (String) A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of ["MULTI_STREAM"]
-
-
-<a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_single_schema"></a>
-### Nested Schema for `configuration.mock_catalog.source_e2e_test_cloud_update_mock_catalog_single_schema`
-
-Required:
-
-- `stream_name` (String) Name of the data stream.
-- `stream_schema` (String) A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of ["SINGLE_STREAM"]
+<a id="nestedatt--configuration--mock_catalog--single_schema"></a>
+### Nested Schema for `configuration.mock_catalog.single_schema`
 
 Optional:
 
-- `stream_duplication` (Number) Duplicate the stream for easy load testing. Each stream name will have a number suffix. For example, if the stream name is "ds", the duplicated streams will be "ds_0", "ds_1", etc.
+- `stream_duplication` (Number) Default: 1
+Duplicate the stream for easy load testing. Each stream name will have a number suffix. For example, if the stream name is "ds", the duplicated streams will be "ds_0", "ds_1", etc.
+- `stream_name` (String) Default: "data_stream"
+Name of the data stream.
+- `stream_schema` (String) Default: "{ \"type\": \"object\", \"properties\": { \"column1\": { \"type\": \"string\" } } }"
+A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
 
 

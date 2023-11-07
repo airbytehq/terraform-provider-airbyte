@@ -16,14 +16,13 @@ DestinationSftpJSON Resource
 resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
   configuration = {
     destination_path = "/json_data"
-    destination_type = "sftp-json"
     host             = "...my_host..."
     password         = "...my_password..."
     port             = 22
-    username         = "Dayton98"
+    username         = "Christop6"
   }
-  name         = "Terence Beer"
-  workspace_id = "71778ff6-1d01-4747-a360-a15db6a66065"
+  name         = "Matthew Friesen"
+  workspace_id = "78c254cd-184f-4d11-ae75-f1c50c9ec767"
 }
 ```
 
@@ -47,13 +46,13 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
 Required:
 
 - `destination_path` (String) Path to the directory where json files will be written.
-- `destination_type` (String) must be one of ["sftp-json"]
 - `host` (String) Hostname of the SFTP server.
 - `password` (String) Password associated with the username.
 - `username` (String) Username to use to access the SFTP server.
 
 Optional:
 
-- `port` (Number) Port of the SFTP server.
+- `port` (Number) Default: 22
+Port of the SFTP server.
 
 

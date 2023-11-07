@@ -9,3 +9,31 @@ type SourceGoogleSheetsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGoogleSheetsCreateRequest) GetConfiguration() SourceGoogleSheets {
+	if o == nil {
+		return SourceGoogleSheets{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

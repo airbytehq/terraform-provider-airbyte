@@ -6,3 +6,10 @@ type SourceZoomUpdate struct {
 	// JWT Token
 	JwtToken string `json:"jwt_token"`
 }
+
+func (o *SourceZoomUpdate) GetJwtToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.JwtToken
+}

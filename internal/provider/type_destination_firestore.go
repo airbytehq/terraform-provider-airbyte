@@ -6,6 +6,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationFirestore struct {
 	CredentialsJSON types.String `tfsdk:"credentials_json"`
-	DestinationType types.String `tfsdk:"destination_type"`
 	ProjectID       types.String `tfsdk:"project_id"`
 }

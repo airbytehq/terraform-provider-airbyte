@@ -3,46 +3,41 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRequest {
 	baseURL := r.Configuration.BaseURL.ValueString()
 	var credentials shared.SourceAuth0AuthenticationMethod
-	var sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication *shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
-	if r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
-		audience := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience.ValueString()
-		authType := shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret.ValueString()
-		sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = &shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication{
+	var sourceAuth0OAuth2ConfidentialApplication *shared.SourceAuth0OAuth2ConfidentialApplication
+	if r.Configuration.Credentials.OAuth2ConfidentialApplication != nil {
+		audience := r.Configuration.Credentials.OAuth2ConfidentialApplication.Audience.ValueString()
+		clientID := r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientSecret.ValueString()
+		sourceAuth0OAuth2ConfidentialApplication = &shared.SourceAuth0OAuth2ConfidentialApplication{
 			Audience:     audience,
-			AuthType:     authType,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 		}
 	}
-	if sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
+	if sourceAuth0OAuth2ConfidentialApplication != nil {
 		credentials = shared.SourceAuth0AuthenticationMethod{
-			SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication: sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication,
+			OAuth2ConfidentialApplication: sourceAuth0OAuth2ConfidentialApplication,
 		}
 	}
-	var sourceAuth0AuthenticationMethodOAuth2AccessToken *shared.SourceAuth0AuthenticationMethodOAuth2AccessToken
-	if r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken.ValueString()
-		authType1 := shared.SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
-		sourceAuth0AuthenticationMethodOAuth2AccessToken = &shared.SourceAuth0AuthenticationMethodOAuth2AccessToken{
+	var sourceAuth0OAuth2AccessToken *shared.SourceAuth0OAuth2AccessToken
+	if r.Configuration.Credentials.OAuth2AccessToken != nil {
+		accessToken := r.Configuration.Credentials.OAuth2AccessToken.AccessToken.ValueString()
+		sourceAuth0OAuth2AccessToken = &shared.SourceAuth0OAuth2AccessToken{
 			AccessToken: accessToken,
-			AuthType:    authType1,
 		}
 	}
-	if sourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
+	if sourceAuth0OAuth2AccessToken != nil {
 		credentials = shared.SourceAuth0AuthenticationMethod{
-			SourceAuth0AuthenticationMethodOAuth2AccessToken: sourceAuth0AuthenticationMethodOAuth2AccessToken,
+			OAuth2AccessToken: sourceAuth0OAuth2AccessToken,
 		}
 	}
-	sourceType := shared.SourceAuth0Auth0(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -52,7 +47,6 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	configuration := shared.SourceAuth0{
 		BaseURL:     baseURL,
 		Credentials: credentials,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -80,36 +74,32 @@ func (r *SourceAuth0ResourceModel) ToGetSDKType() *shared.SourceAuth0CreateReque
 func (r *SourceAuth0ResourceModel) ToUpdateSDKType() *shared.SourceAuth0PutRequest {
 	baseURL := r.Configuration.BaseURL.ValueString()
 	var credentials shared.SourceAuth0UpdateAuthenticationMethod
-	var sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication *shared.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
-	if r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
-		audience := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.Audience.ValueString()
-		authType := shared.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.ClientSecret.ValueString()
-		sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication = &shared.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication{
+	var oAuth2ConfidentialApplication *shared.OAuth2ConfidentialApplication
+	if r.Configuration.Credentials.OAuth2ConfidentialApplication != nil {
+		audience := r.Configuration.Credentials.OAuth2ConfidentialApplication.Audience.ValueString()
+		clientID := r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientSecret.ValueString()
+		oAuth2ConfidentialApplication = &shared.OAuth2ConfidentialApplication{
 			Audience:     audience,
-			AuthType:     authType,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 		}
 	}
-	if sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
+	if oAuth2ConfidentialApplication != nil {
 		credentials = shared.SourceAuth0UpdateAuthenticationMethod{
-			SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication: sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication,
+			OAuth2ConfidentialApplication: oAuth2ConfidentialApplication,
 		}
 	}
-	var sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken *shared.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken
-	if r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken.AccessToken.ValueString()
-		authType1 := shared.SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod(r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
-		sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken = &shared.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken{
+	var oAuth2AccessToken *shared.OAuth2AccessToken
+	if r.Configuration.Credentials.OAuth2AccessToken != nil {
+		accessToken := r.Configuration.Credentials.OAuth2AccessToken.AccessToken.ValueString()
+		oAuth2AccessToken = &shared.OAuth2AccessToken{
 			AccessToken: accessToken,
-			AuthType:    authType1,
 		}
 	}
-	if sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
+	if oAuth2AccessToken != nil {
 		credentials = shared.SourceAuth0UpdateAuthenticationMethod{
-			SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken: sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken,
+			OAuth2AccessToken: oAuth2AccessToken,
 		}
 	}
 	startDate := new(string)

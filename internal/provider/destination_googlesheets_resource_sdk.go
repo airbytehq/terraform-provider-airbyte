@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -16,12 +16,10 @@ func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.Destina
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
 	}
-	destinationType := shared.DestinationGoogleSheetsGoogleSheets(r.Configuration.DestinationType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.DestinationGoogleSheets{
-		Credentials:     credentials,
-		DestinationType: destinationType,
-		SpreadsheetID:   spreadsheetID,
+		Credentials:   credentials,
+		SpreadsheetID: spreadsheetID,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -42,7 +40,7 @@ func (r *DestinationGoogleSheetsResourceModel) ToUpdateSDKType() *shared.Destina
 	clientID := r.Configuration.Credentials.ClientID.ValueString()
 	clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
 	refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
-	credentials := shared.DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth{
+	credentials := shared.AuthenticationViaGoogleOAuth{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,

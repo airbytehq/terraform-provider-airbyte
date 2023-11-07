@@ -9,3 +9,31 @@ type SourcePocketCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePocketCreateRequest) GetConfiguration() SourcePocket {
+	if o == nil {
+		return SourcePocket{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePocketCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePocketCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePocketCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

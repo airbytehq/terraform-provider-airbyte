@@ -9,3 +9,31 @@ type SourceTheGuardianAPICreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTheGuardianAPICreateRequest) GetConfiguration() SourceTheGuardianAPI {
+	if o == nil {
+		return SourceTheGuardianAPI{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTheGuardianAPICreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTheGuardianAPICreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTheGuardianAPICreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

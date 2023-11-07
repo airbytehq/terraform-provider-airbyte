@@ -15,18 +15,17 @@ DestinationPubsub Resource
 ```terraform
 resource "airbyte_destination_pubsub" "my_destination_pubsub" {
   configuration = {
-    batching_delay_threshold         = 7
-    batching_element_count_threshold = 5
-    batching_enabled                 = true
-    batching_request_bytes_threshold = 3
+    batching_delay_threshold         = 9
+    batching_element_count_threshold = 10
+    batching_enabled                 = false
+    batching_request_bytes_threshold = 4
     credentials_json                 = "...my_credentials_json..."
-    destination_type                 = "pubsub"
-    ordering_enabled                 = true
+    ordering_enabled                 = false
     project_id                       = "...my_project_id..."
     topic_id                         = "...my_topic_id..."
   }
-  name         = "Phil Boyer"
-  workspace_id = "f86bc173-d689-4eee-9526-f8d986e881ea"
+  name         = "Eddie Conroy"
+  workspace_id = "2f48f6e5-43a0-4f0f-b9a6-c151a78cf13c"
 }
 ```
 
@@ -49,17 +48,21 @@ resource "airbyte_destination_pubsub" "my_destination_pubsub" {
 
 Required:
 
-- `batching_enabled` (Boolean) If TRUE messages will be buffered instead of sending them one by one
 - `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.
-- `destination_type` (String) must be one of ["pubsub"]
-- `ordering_enabled` (Boolean) If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream
 - `project_id` (String) The GCP project ID for the project containing the target PubSub.
 - `topic_id` (String) The PubSub topic ID in the given GCP project ID.
 
 Optional:
 
-- `batching_delay_threshold` (Number) Number of ms before the buffer is flushed
-- `batching_element_count_threshold` (Number) Number of messages before the buffer is flushed
-- `batching_request_bytes_threshold` (Number) Number of bytes before the buffer is flushed
+- `batching_delay_threshold` (Number) Default: 1
+Number of ms before the buffer is flushed
+- `batching_element_count_threshold` (Number) Default: 1
+Number of messages before the buffer is flushed
+- `batching_enabled` (Boolean) Default: false
+If TRUE messages will be buffered instead of sending them one by one
+- `batching_request_bytes_threshold` (Number) Default: 1
+Number of bytes before the buffer is flushed
+- `ordering_enabled` (Boolean) Default: false
+If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream
 
 

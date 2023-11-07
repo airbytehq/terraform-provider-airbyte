@@ -3,191 +3,285 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod string
 
 const (
-	SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	SourceClickhouseUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication struct {
+// SourceClickhouseUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceClickhouseUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (s SourceClickhouseUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceClickhouseUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceClickhouseUpdatePasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceClickhouseUpdatePasswordAuthentication) GetTunnelMethod() SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod {
+	return SourceClickhouseUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceClickhouseUpdatePasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceClickhouseUpdatePasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceClickhouseUpdatePasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// SourceClickhouseUpdateSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceClickhouseUpdateSchemasTunnelMethod string
 
 const (
-	SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	SourceClickhouseUpdateSchemasTunnelMethodSSHKeyAuth SourceClickhouseUpdateSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e SourceClickhouseUpdateSchemasTunnelMethod) ToPointer() *SourceClickhouseUpdateSchemasTunnelMethod {
 	return &e
 }
 
-func (e *SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = SourceClickhouseUpdateSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseUpdateSchemasTunnelMethod: %v", v)
 	}
 }
 
-// SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication struct {
+// SourceClickhouseUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceClickhouseUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceClickhouseUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod string
+func (s SourceClickhouseUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceClickhouseUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceClickhouseUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceClickhouseUpdateSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceClickhouseUpdateSSHKeyAuthentication) GetTunnelMethod() SourceClickhouseUpdateSchemasTunnelMethod {
+	return SourceClickhouseUpdateSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceClickhouseUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceClickhouseUpdateSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// SourceClickhouseUpdateTunnelMethod - No ssh tunnel needed to connect to database
+type SourceClickhouseUpdateTunnelMethod string
 
 const (
-	SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	SourceClickhouseUpdateTunnelMethodNoTunnel SourceClickhouseUpdateTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+func (e SourceClickhouseUpdateTunnelMethod) ToPointer() *SourceClickhouseUpdateTunnelMethod {
 	return &e
 }
 
-func (e *SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = SourceClickhouseUpdateTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseUpdateTunnelMethod: %v", v)
 	}
 }
 
-// SourceClickhouseUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceClickhouseUpdateSSHTunnelMethodNoTunnel struct {
+// SourceClickhouseUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceClickhouseUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceClickhouseUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceClickhouseUpdateNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceClickhouseUpdateNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceClickhouseUpdateNoTunnel) GetTunnelMethod() SourceClickhouseUpdateTunnelMethod {
+	return SourceClickhouseUpdateTunnelMethodNoTunnel
 }
 
 type SourceClickhouseUpdateSSHTunnelMethodType string
 
 const (
-	SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodNoTunnel               SourceClickhouseUpdateSSHTunnelMethodType = "source-clickhouse-update_SSH Tunnel Method_No Tunnel"
-	SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   SourceClickhouseUpdateSSHTunnelMethodType = "source-clickhouse-update_SSH Tunnel Method_SSH Key Authentication"
-	SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication SourceClickhouseUpdateSSHTunnelMethodType = "source-clickhouse-update_SSH Tunnel Method_Password Authentication"
+	SourceClickhouseUpdateSSHTunnelMethodTypeNoTunnel               SourceClickhouseUpdateSSHTunnelMethodType = "NoTunnel"
+	SourceClickhouseUpdateSSHTunnelMethodTypeSSHKeyAuthentication   SourceClickhouseUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
+	SourceClickhouseUpdateSSHTunnelMethodTypePasswordAuthentication SourceClickhouseUpdateSSHTunnelMethodType = "PasswordAuthentication"
 )
 
 type SourceClickhouseUpdateSSHTunnelMethod struct {
-	SourceClickhouseUpdateSSHTunnelMethodNoTunnel               *SourceClickhouseUpdateSSHTunnelMethodNoTunnel
-	SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   *SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication
-	SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication *SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication
+	NoTunnel               *SourceClickhouseUpdateNoTunnel
+	SSHKeyAuthentication   *SourceClickhouseUpdateSSHKeyAuthentication
+	PasswordAuthentication *SourceClickhouseUpdatePasswordAuthentication
 
 	Type SourceClickhouseUpdateSSHTunnelMethodType
 }
 
-func CreateSourceClickhouseUpdateSSHTunnelMethodSourceClickhouseUpdateSSHTunnelMethodNoTunnel(sourceClickhouseUpdateSSHTunnelMethodNoTunnel SourceClickhouseUpdateSSHTunnelMethodNoTunnel) SourceClickhouseUpdateSSHTunnelMethod {
-	typ := SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodNoTunnel
+func CreateSourceClickhouseUpdateSSHTunnelMethodNoTunnel(noTunnel SourceClickhouseUpdateNoTunnel) SourceClickhouseUpdateSSHTunnelMethod {
+	typ := SourceClickhouseUpdateSSHTunnelMethodTypeNoTunnel
 
 	return SourceClickhouseUpdateSSHTunnelMethod{
-		SourceClickhouseUpdateSSHTunnelMethodNoTunnel: &sourceClickhouseUpdateSSHTunnelMethodNoTunnel,
-		Type: typ,
+		NoTunnel: &noTunnel,
+		Type:     typ,
 	}
 }
 
-func CreateSourceClickhouseUpdateSSHTunnelMethodSourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication(sourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication) SourceClickhouseUpdateSSHTunnelMethod {
-	typ := SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication
+func CreateSourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceClickhouseUpdateSSHKeyAuthentication) SourceClickhouseUpdateSSHTunnelMethod {
+	typ := SourceClickhouseUpdateSSHTunnelMethodTypeSSHKeyAuthentication
 
 	return SourceClickhouseUpdateSSHTunnelMethod{
-		SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication: &sourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		SSHKeyAuthentication: &sshKeyAuthentication,
+		Type:                 typ,
 	}
 }
 
-func CreateSourceClickhouseUpdateSSHTunnelMethodSourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication(sourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication) SourceClickhouseUpdateSSHTunnelMethod {
-	typ := SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication
+func CreateSourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceClickhouseUpdatePasswordAuthentication) SourceClickhouseUpdateSSHTunnelMethod {
+	typ := SourceClickhouseUpdateSSHTunnelMethodTypePasswordAuthentication
 
 	return SourceClickhouseUpdateSSHTunnelMethod{
-		SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication: &sourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication,
-		Type: typ,
+		PasswordAuthentication: &passwordAuthentication,
+		Type:                   typ,
 	}
 }
 
 func (u *SourceClickhouseUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceClickhouseUpdateSSHTunnelMethodNoTunnel := new(SourceClickhouseUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceClickhouseUpdateSSHTunnelMethodNoTunnel); err == nil {
-		u.SourceClickhouseUpdateSSHTunnelMethodNoTunnel = sourceClickhouseUpdateSSHTunnelMethodNoTunnel
-		u.Type = SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodNoTunnel
+	noTunnel := new(SourceClickhouseUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
+		u.NoTunnel = noTunnel
+		u.Type = SourceClickhouseUpdateSSHTunnelMethodTypeNoTunnel
 		return nil
 	}
 
-	sourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication := new(SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication = sourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication
-		u.Type = SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication
+	sshKeyAuthentication := new(SourceClickhouseUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
+		u.SSHKeyAuthentication = sshKeyAuthentication
+		u.Type = SourceClickhouseUpdateSSHTunnelMethodTypeSSHKeyAuthentication
 		return nil
 	}
 
-	sourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication := new(SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication = sourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication
-		u.Type = SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication
+	passwordAuthentication := new(SourceClickhouseUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
+		u.PasswordAuthentication = passwordAuthentication
+		u.Type = SourceClickhouseUpdateSSHTunnelMethodTypePasswordAuthentication
 		return nil
 	}
 
@@ -195,19 +289,19 @@ func (u *SourceClickhouseUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceClickhouseUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceClickhouseUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceClickhouseUpdateSSHTunnelMethodNoTunnel)
+	if u.NoTunnel != nil {
+		return utils.MarshalJSON(u.NoTunnel, "", true)
 	}
 
-	if u.SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication)
+	if u.SSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
 	}
 
-	if u.SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication)
+	if u.PasswordAuthentication != nil {
+		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceClickhouseUpdate struct {
@@ -218,9 +312,62 @@ type SourceClickhouseUpdate struct {
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
 	// The port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"8123" json:"port"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceClickhouseUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceClickhouseUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceClickhouseUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceClickhouseUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceClickhouseUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceClickhouseUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceClickhouseUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceClickhouseUpdate) GetTunnelMethod() *SourceClickhouseUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceClickhouseUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

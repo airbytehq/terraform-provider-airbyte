@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,19 +14,18 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		advancedStreamOptions = nil
 	}
-	authType := new(shared.SourceAmazonSellerPartnerAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonSellerPartnerAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	awsAccessKey := new(string)
 	if !r.Configuration.AwsAccessKey.IsUnknown() && !r.Configuration.AwsAccessKey.IsNull() {
 		*awsAccessKey = r.Configuration.AwsAccessKey.ValueString()
 	} else {
 		awsAccessKey = nil
 	}
-	awsEnvironment := shared.SourceAmazonSellerPartnerAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
+	awsEnvironment := new(shared.SourceAmazonSellerPartnerAWSEnvironment)
+	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
+		*awsEnvironment = shared.SourceAmazonSellerPartnerAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
+	} else {
+		awsEnvironment = nil
+	}
 	awsSecretKey := new(string)
 	if !r.Configuration.AwsSecretKey.IsUnknown() && !r.Configuration.AwsSecretKey.IsNull() {
 		*awsSecretKey = r.Configuration.AwsSecretKey.ValueString()
@@ -48,7 +47,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 		periodInDays = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	region := shared.SourceAmazonSellerPartnerAWSRegion(r.Configuration.Region.ValueString())
+	region := new(shared.SourceAmazonSellerPartnerAWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceAmazonSellerPartnerAWSRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
 	replicationEndDate := new(string)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
 		*replicationEndDate = r.Configuration.ReplicationEndDate.ValueString()
@@ -68,10 +72,8 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		roleArn = nil
 	}
-	sourceType := shared.SourceAmazonSellerPartnerAmazonSellerPartner(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAmazonSellerPartner{
 		AdvancedStreamOptions: advancedStreamOptions,
-		AuthType:              authType,
 		AwsAccessKey:          awsAccessKey,
 		AwsEnvironment:        awsEnvironment,
 		AwsSecretKey:          awsSecretKey,
@@ -85,7 +87,6 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 		ReplicationStartDate:  replicationStartDate,
 		ReportOptions:         reportOptions,
 		RoleArn:               roleArn,
-		SourceType:            sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -116,19 +117,18 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.Sourc
 	} else {
 		advancedStreamOptions = nil
 	}
-	authType := new(shared.SourceAmazonSellerPartnerUpdateAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonSellerPartnerUpdateAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	awsAccessKey := new(string)
 	if !r.Configuration.AwsAccessKey.IsUnknown() && !r.Configuration.AwsAccessKey.IsNull() {
 		*awsAccessKey = r.Configuration.AwsAccessKey.ValueString()
 	} else {
 		awsAccessKey = nil
 	}
-	awsEnvironment := shared.SourceAmazonSellerPartnerUpdateAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
+	awsEnvironment := new(shared.AWSEnvironment)
+	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
+		*awsEnvironment = shared.AWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
+	} else {
+		awsEnvironment = nil
+	}
 	awsSecretKey := new(string)
 	if !r.Configuration.AwsSecretKey.IsUnknown() && !r.Configuration.AwsSecretKey.IsNull() {
 		*awsSecretKey = r.Configuration.AwsSecretKey.ValueString()
@@ -150,7 +150,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.Sourc
 		periodInDays = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	region := shared.SourceAmazonSellerPartnerUpdateAWSRegion(r.Configuration.Region.ValueString())
+	region := new(shared.AWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.AWSRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
 	replicationEndDate := new(string)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
 		*replicationEndDate = r.Configuration.ReplicationEndDate.ValueString()
@@ -172,7 +177,6 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.Sourc
 	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
 		AdvancedStreamOptions: advancedStreamOptions,
-		AuthType:              authType,
 		AwsAccessKey:          awsAccessKey,
 		AwsEnvironment:        awsEnvironment,
 		AwsSecretKey:          awsSecretKey,

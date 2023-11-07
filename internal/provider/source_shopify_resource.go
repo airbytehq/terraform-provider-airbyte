@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -58,86 +58,22 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_shopify_shopify_authorization_method_api_password": schema.SingleNestedAttribute{
+							"api_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_password": schema.StringAttribute{
 										Required:    true,
 										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-										Description: `must be one of ["api_password"]`,
-									},
 								},
 								Description: `API Password Auth`,
 							},
-							"source_shopify_shopify_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
 										Description: `The Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client ID of the Shopify developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client Secret of the Shopify developer application.`,
-									},
-								},
-								Description: `OAuth2.0`,
-							},
-							"source_shopify_update_shopify_authorization_method_api_password": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_password": schema.StringAttribute{
-										Required:    true,
-										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-										Description: `must be one of ["api_password"]`,
-									},
-								},
-								Description: `API Password Auth`,
-							},
-							"source_shopify_update_shopify_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Access Token for making authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -160,21 +96,13 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Required:    true,
 						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"shopify",
-							),
-						},
-						Description: `must be one of ["shopify"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
+						MarkdownDescription: `Default: "2020-01-01"` + "\n" +
+							`The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -185,6 +113,9 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -248,7 +179,7 @@ func (r *SourceShopifyResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceShopify(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -424,5 +355,5 @@ func (r *SourceShopifyResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *SourceShopifyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

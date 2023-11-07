@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -30,19 +30,15 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 		azureBlobStorageSchemaInferenceLimit = nil
 	}
 	var format shared.SourceAzureBlobStorageInputFormat
-	var sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType := shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON{
-			FormatType: formatType,
-		}
+	var sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
+		sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON{}
 	}
-	if sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
+	if sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.SourceAzureBlobStorageInputFormat{
-			SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON,
+			JSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON,
 		}
 	}
-	sourceType := shared.SourceAzureBlobStorageAzureBlobStorage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAzureBlobStorage{
 		AzureBlobStorageAccountKey:           azureBlobStorageAccountKey,
 		AzureBlobStorageAccountName:          azureBlobStorageAccountName,
@@ -51,7 +47,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 		AzureBlobStorageEndpoint:             azureBlobStorageEndpoint,
 		AzureBlobStorageSchemaInferenceLimit: azureBlobStorageSchemaInferenceLimit,
 		Format:                               format,
-		SourceType:                           sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -97,17 +92,14 @@ func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAz
 	} else {
 		azureBlobStorageSchemaInferenceLimit = nil
 	}
-	var format shared.SourceAzureBlobStorageUpdateInputFormat
-	var sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType := shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON{
-			FormatType: formatType,
-		}
+	var format shared.InputFormat
+	var sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
+		sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON{}
 	}
-	if sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		format = shared.SourceAzureBlobStorageUpdateInputFormat{
-			SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON,
+	if sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON != nil {
+		format = shared.InputFormat{
+			JSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.SourceAzureBlobStorageUpdate{

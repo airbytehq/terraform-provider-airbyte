@@ -17,16 +17,15 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
   configuration = {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
-    environment = "sandbox"
-    limit       = 10
-    period      = "2MTH"
-    source_type = "coin-api"
+    environment = "production"
+    limit       = 7
+    period      = "5SEC"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  name         = "Francis Boyle"
+  name         = "Rebecca Brekke"
   secret_id    = "...my_secret_id..."
-  workspace_id = "bc0b80a6-924d-43b2-acfc-c8f895010f5d"
+  workspace_id = "e8db1144-f7f4-4dcb-a810-858467e5cd33"
 }
 ```
 
@@ -54,10 +53,7 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 Required:
 
 - `api_key` (String) API Key
-- `environment` (String) must be one of ["sandbox", "production"]
-The environment to use. Either sandbox or production.
 - `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
-- `source_type` (String) must be one of ["coin-api"]
 - `start_date` (String) The start date in ISO 8601 format.
 - `symbol_id` (String) The symbol ID to use. See the documentation for a list.
 https://docs.coinapi.io/#list-all-symbols-get
@@ -67,7 +63,10 @@ Optional:
 - `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
 from the start date to the current time, or when the count of result
 elements reaches its limit.
-- `limit` (Number) The maximum number of elements to return. If not supplied, the default
+- `environment` (String) must be one of ["sandbox", "production"]; Default: "sandbox"
+The environment to use. Either sandbox or production.
+- `limit` (Number) Default: 100
+The maximum number of elements to return. If not supplied, the default
 is 100. For numbers larger than 100, each 100 items is counted as one
 request for pricing purposes. Maximum value is 100000.
 

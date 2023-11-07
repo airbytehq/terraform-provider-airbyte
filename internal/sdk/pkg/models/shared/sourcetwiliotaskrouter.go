@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceTwilioTaskrouterTwilioTaskrouter string
+type TwilioTaskrouter string
 
 const (
-	SourceTwilioTaskrouterTwilioTaskrouterTwilioTaskrouter SourceTwilioTaskrouterTwilioTaskrouter = "twilio-taskrouter"
+	TwilioTaskrouterTwilioTaskrouter TwilioTaskrouter = "twilio-taskrouter"
 )
 
-func (e SourceTwilioTaskrouterTwilioTaskrouter) ToPointer() *SourceTwilioTaskrouterTwilioTaskrouter {
+func (e TwilioTaskrouter) ToPointer() *TwilioTaskrouter {
 	return &e
 }
 
-func (e *SourceTwilioTaskrouterTwilioTaskrouter) UnmarshalJSON(data []byte) error {
+func (e *TwilioTaskrouter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "twilio-taskrouter":
-		*e = SourceTwilioTaskrouterTwilioTaskrouter(v)
+		*e = TwilioTaskrouter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTwilioTaskrouterTwilioTaskrouter: %v", v)
+		return fmt.Errorf("invalid value for TwilioTaskrouter: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourceTwilioTaskrouter struct {
 	// Twilio Account ID
 	AccountSid string `json:"account_sid"`
 	// Twilio Auth Token
-	AuthToken  string                                 `json:"auth_token"`
-	SourceType SourceTwilioTaskrouterTwilioTaskrouter `json:"sourceType"`
+	AuthToken  string           `json:"auth_token"`
+	sourceType TwilioTaskrouter `const:"twilio-taskrouter" json:"sourceType"`
+}
+
+func (s SourceTwilioTaskrouter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTwilioTaskrouter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTwilioTaskrouter) GetAccountSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountSid
+}
+
+func (o *SourceTwilioTaskrouter) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceTwilioTaskrouter) GetSourceType() TwilioTaskrouter {
+	return TwilioTaskrouterTwilioTaskrouter
 }

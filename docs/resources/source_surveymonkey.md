@@ -17,20 +17,18 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
   configuration = {
     credentials = {
       access_token  = "...my_access_token..."
-      auth_method   = "oauth2.0"
       client_id     = "...my_client_id..."
       client_secret = "...my_client_secret..."
     }
-    origin      = "USA"
-    source_type = "surveymonkey"
-    start_date  = "2021-01-01T00:00:00Z"
+    origin     = "USA"
+    start_date = "2021-01-01T00:00:00Z"
     survey_ids = [
       "...",
     ]
   }
-  name         = "Pearl Trantow"
+  name         = "Jeannie Blick PhD"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b8955d41-3e13-4a48-a310-907bd354c092"
+  workspace_id = "4fbef253-f33a-4c13-9dc9-0f63794a97d5"
 }
 ```
 
@@ -57,13 +55,12 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
 
 Required:
 
-- `source_type` (String) must be one of ["surveymonkey"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
 - `credentials` (Attributes) The authorization method to use to retrieve data from SurveyMonkey (see [below for nested schema](#nestedatt--configuration--credentials))
-- `origin` (String) must be one of ["USA", "Europe", "Canada"]
+- `origin` (String) must be one of ["USA", "Europe", "Canada"]; Default: "USA"
 Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
 - `survey_ids` (List of String) IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.
 
@@ -73,7 +70,6 @@ Depending on the originating datacenter of the SurveyMonkey account, the API acc
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["oauth2.0"]
 
 Optional:
 

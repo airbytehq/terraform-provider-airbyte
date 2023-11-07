@@ -3,64 +3,49 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCreateRequest {
 	var credentials shared.SourceTypeformAuthorizationMethod
-	var sourceTypeformAuthorizationMethodOAuth20 *shared.SourceTypeformAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceTypeformAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceTypeformAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
-		clientID := r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceTypeformAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
-		sourceTypeformAuthorizationMethodOAuth20 = &shared.SourceTypeformAuthorizationMethodOAuth20{
+	var sourceTypeformOAuth20 *shared.SourceTypeformOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+		sourceTypeformOAuth20 = &shared.SourceTypeformOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
-	if sourceTypeformAuthorizationMethodOAuth20 != nil {
+	if sourceTypeformOAuth20 != nil {
 		credentials = shared.SourceTypeformAuthorizationMethod{
-			SourceTypeformAuthorizationMethodOAuth20: sourceTypeformAuthorizationMethodOAuth20,
+			OAuth20: sourceTypeformOAuth20,
 		}
 	}
-	var sourceTypeformAuthorizationMethodPrivateToken *shared.SourceTypeformAuthorizationMethodPrivateToken
-	if r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken != nil {
-		accessToken1 := r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceTypeformAuthorizationMethodPrivateTokenAuthType)
-		if !r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType.IsNull() {
-			*authType1 = shared.SourceTypeformAuthorizationMethodPrivateTokenAuthType(r.Configuration.Credentials.SourceTypeformAuthorizationMethodPrivateToken.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
-		sourceTypeformAuthorizationMethodPrivateToken = &shared.SourceTypeformAuthorizationMethodPrivateToken{
+	var sourceTypeformPrivateToken *shared.SourceTypeformPrivateToken
+	if r.Configuration.Credentials.PrivateToken != nil {
+		accessToken1 := r.Configuration.Credentials.PrivateToken.AccessToken.ValueString()
+		sourceTypeformPrivateToken = &shared.SourceTypeformPrivateToken{
 			AccessToken: accessToken1,
-			AuthType:    authType1,
 		}
 	}
-	if sourceTypeformAuthorizationMethodPrivateToken != nil {
+	if sourceTypeformPrivateToken != nil {
 		credentials = shared.SourceTypeformAuthorizationMethod{
-			SourceTypeformAuthorizationMethodPrivateToken: sourceTypeformAuthorizationMethodPrivateToken,
+			PrivateToken: sourceTypeformPrivateToken,
 		}
 	}
 	var formIds []string = nil
 	for _, formIdsItem := range r.Configuration.FormIds {
 		formIds = append(formIds, formIdsItem.ValueString())
 	}
-	sourceType := shared.SourceTypeformTypeform(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -70,7 +55,6 @@ func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCr
 	configuration := shared.SourceTypeform{
 		Credentials: credentials,
 		FormIds:     formIds,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -97,50 +81,36 @@ func (r *SourceTypeformResourceModel) ToGetSDKType() *shared.SourceTypeformCreat
 
 func (r *SourceTypeformResourceModel) ToUpdateSDKType() *shared.SourceTypeformPutRequest {
 	var credentials shared.SourceTypeformUpdateAuthorizationMethod
-	var sourceTypeformUpdateAuthorizationMethodOAuth20 *shared.SourceTypeformUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceTypeformUpdateAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceTypeformUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
-		clientID := r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
-		sourceTypeformUpdateAuthorizationMethodOAuth20 = &shared.SourceTypeformUpdateAuthorizationMethodOAuth20{
+	var sourceTypeformUpdateOAuth20 *shared.SourceTypeformUpdateOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+		sourceTypeformUpdateOAuth20 = &shared.SourceTypeformUpdateOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
-	if sourceTypeformUpdateAuthorizationMethodOAuth20 != nil {
+	if sourceTypeformUpdateOAuth20 != nil {
 		credentials = shared.SourceTypeformUpdateAuthorizationMethod{
-			SourceTypeformUpdateAuthorizationMethodOAuth20: sourceTypeformUpdateAuthorizationMethodOAuth20,
+			OAuth20: sourceTypeformUpdateOAuth20,
 		}
 	}
-	var sourceTypeformUpdateAuthorizationMethodPrivateToken *shared.SourceTypeformUpdateAuthorizationMethodPrivateToken
-	if r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken != nil {
-		accessToken1 := r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthType)
-		if !r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken.AuthType.IsNull() {
-			*authType1 = shared.SourceTypeformUpdateAuthorizationMethodPrivateTokenAuthType(r.Configuration.Credentials.SourceTypeformUpdateAuthorizationMethodPrivateToken.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
-		sourceTypeformUpdateAuthorizationMethodPrivateToken = &shared.SourceTypeformUpdateAuthorizationMethodPrivateToken{
+	var sourceTypeformUpdatePrivateToken *shared.SourceTypeformUpdatePrivateToken
+	if r.Configuration.Credentials.PrivateToken != nil {
+		accessToken1 := r.Configuration.Credentials.PrivateToken.AccessToken.ValueString()
+		sourceTypeformUpdatePrivateToken = &shared.SourceTypeformUpdatePrivateToken{
 			AccessToken: accessToken1,
-			AuthType:    authType1,
 		}
 	}
-	if sourceTypeformUpdateAuthorizationMethodPrivateToken != nil {
+	if sourceTypeformUpdatePrivateToken != nil {
 		credentials = shared.SourceTypeformUpdateAuthorizationMethod{
-			SourceTypeformUpdateAuthorizationMethodPrivateToken: sourceTypeformUpdateAuthorizationMethodPrivateToken,
+			PrivateToken: sourceTypeformUpdatePrivateToken,
 		}
 	}
 	var formIds []string = nil

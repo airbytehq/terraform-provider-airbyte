@@ -7,3 +7,24 @@ type SourceStripePutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceStripePutRequest) GetConfiguration() SourceStripeUpdate {
+	if o == nil {
+		return SourceStripeUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceStripePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceStripePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

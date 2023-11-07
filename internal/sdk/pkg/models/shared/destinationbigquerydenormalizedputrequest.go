@@ -7,3 +7,24 @@ type DestinationBigqueryDenormalizedPutRequest struct {
 	Name          string                                `json:"name"`
 	WorkspaceID   string                                `json:"workspaceId"`
 }
+
+func (o *DestinationBigqueryDenormalizedPutRequest) GetConfiguration() DestinationBigqueryDenormalizedUpdate {
+	if o == nil {
+		return DestinationBigqueryDenormalizedUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationBigqueryDenormalizedPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationBigqueryDenormalizedPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

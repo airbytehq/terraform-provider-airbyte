@@ -16,18 +16,16 @@ SourceShopify Resource
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
     credentials = {
-      source_shopify_shopify_authorization_method_api_password = {
+      api_password = {
         api_password = "...my_api_password..."
-        auth_method  = "api_password"
       }
     }
-    shop        = "my-store"
-    source_type = "shopify"
-    start_date  = "2022-01-02"
+    shop       = "my-store.myshopify.com"
+    start_date = "2022-06-08"
   }
-  name         = "Randal Kris"
+  name         = "Christy Kuhn"
   secret_id    = "...my_secret_id..."
-  workspace_id = "df54fdd5-ea95-4433-98da-fb42a8d63388"
+  workspace_id = "0c47c0f9-ce33-4c0f-a94c-11e4e993d294"
 }
 ```
 
@@ -55,61 +53,31 @@ resource "airbyte_source_shopify" "my_source_shopify" {
 Required:
 
 - `shop` (String) The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
-- `source_type` (String) must be one of ["shopify"]
 
 Optional:
 
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
-- `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
+- `start_date` (String) Default: "2020-01-01"
+The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_shopify_shopify_authorization_method_api_password` (Attributes) API Password Auth (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_api_password))
-- `source_shopify_shopify_authorization_method_o_auth2_0` (Attributes) OAuth2.0 (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_o_auth2_0))
-- `source_shopify_update_shopify_authorization_method_api_password` (Attributes) API Password Auth (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_api_password))
-- `source_shopify_update_shopify_authorization_method_o_auth2_0` (Attributes) OAuth2.0 (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0))
+- `api_password` (Attributes) API Password Auth (see [below for nested schema](#nestedatt--configuration--credentials--api_password))
+- `o_auth20` (Attributes) OAuth2.0 (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_api_password"></a>
-### Nested Schema for `configuration.credentials.source_shopify_shopify_authorization_method_api_password`
+<a id="nestedatt--configuration--credentials--api_password"></a>
+### Nested Schema for `configuration.credentials.api_password`
 
 Required:
 
 - `api_password` (String) The API Password for your private application in the `Shopify` store.
-- `auth_method` (String) must be one of ["api_password"]
 
 
-<a id="nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_shopify_shopify_authorization_method_o_auth2_0`
-
-Required:
-
-- `auth_method` (String) must be one of ["oauth2.0"]
-
-Optional:
-
-- `access_token` (String) The Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of the Shopify developer application.
-- `client_secret` (String) The Client Secret of the Shopify developer application.
-
-
-<a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_api_password"></a>
-### Nested Schema for `configuration.credentials.source_shopify_update_shopify_authorization_method_api_password`
-
-Required:
-
-- `api_password` (String) The API Password for your private application in the `Shopify` store.
-- `auth_method` (String) must be one of ["api_password"]
-
-
-<a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_shopify_update_shopify_authorization_method_o_auth2_0`
-
-Required:
-
-- `auth_method` (String) must be one of ["oauth2.0"]
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Optional:
 

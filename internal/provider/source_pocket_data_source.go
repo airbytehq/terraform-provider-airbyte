@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,10 +31,10 @@ type SourcePocketDataSource struct {
 
 // SourcePocketDataSourceModel describes the data model.
 type SourcePocketDataSourceModel struct {
-	Configuration SourcePocket `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -49,105 +49,22 @@ func (r *SourcePocketDataSource) Schema(ctx context.Context, req datasource.Sche
 		MarkdownDescription: "SourcePocket DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `The user's Pocket access token.`,
-					},
-					"consumer_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your application's Consumer Key.`,
-					},
-					"content_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"article",
-								"video",
-								"image",
-							),
-						},
-						MarkdownDescription: `must be one of ["article", "video", "image"]` + "\n" +
-							`Select the content type of the items to retrieve.`,
-					},
-					"detail_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"simple",
-								"complete",
-							),
-						},
-						MarkdownDescription: `must be one of ["simple", "complete"]` + "\n" +
-							`Select the granularity of the information about each item.`,
-					},
-					"domain": schema.StringAttribute{
-						Computed:    true,
-						Description: `Only return items from a particular ` + "`" + `domain` + "`" + `.`,
-					},
-					"favorite": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Retrieve only favorited items.`,
-					},
-					"search": schema.StringAttribute{
-						Computed:    true,
-						Description: `Only return items whose title or url contain the ` + "`" + `search` + "`" + ` string.`,
-					},
-					"since": schema.StringAttribute{
-						Computed:    true,
-						Description: `Only return items modified since the given timestamp.`,
-					},
-					"sort": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"newest",
-								"oldest",
-								"title",
-								"site",
-							),
-						},
-						MarkdownDescription: `must be one of ["newest", "oldest", "title", "site"]` + "\n" +
-							`Sort retrieved items by the given criteria.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pocket",
-							),
-						},
-						Description: `must be one of ["pocket"]`,
-					},
-					"state": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"unread",
-								"archive",
-								"all",
-							),
-						},
-						MarkdownDescription: `must be one of ["unread", "archive", "all"]` + "\n" +
-							`Select the state of the items to retrieve.`,
-					},
-					"tag": schema.StringAttribute{
-						Computed:    true,
-						Description: `Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

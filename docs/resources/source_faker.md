@@ -16,15 +16,14 @@ SourceFaker Resource
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
     always_updated    = false
-    count             = 3
-    parallelism       = 9
-    records_per_slice = 5
-    seed              = 6
-    source_type       = "faker"
+    count             = 6
+    parallelism       = 10
+    records_per_slice = 7
+    seed              = 9
   }
-  name         = "Delbert Reynolds"
+  name         = "Kerry Hickle"
   secret_id    = "...my_secret_id..."
-  workspace_id = "cfda8d0c-549e-4f03-8049-78a61fa1cf20"
+  workspace_id = "690efc6e-828b-41d2-9db5-daa9ea927cae"
 }
 ```
 
@@ -49,16 +48,17 @@ resource "airbyte_source_faker" "my_source_faker" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `count` (Number) How many users should be generated in total.  This setting does not apply to the purchases or products stream.
-- `source_type` (String) must be one of ["faker"]
-
 Optional:
 
-- `always_updated` (Boolean) Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.
-- `parallelism` (Number) How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
-- `records_per_slice` (Number) How many fake records will be in each page (stream slice), before a state message is emitted?
-- `seed` (Number) Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
+- `always_updated` (Boolean) Default: true
+Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.
+- `count` (Number) Default: 1000
+How many users should be generated in total.  This setting does not apply to the purchases or products stream.
+- `parallelism` (Number) Default: 4
+How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
+- `records_per_slice` (Number) Default: 1000
+How many fake records will be in each page (stream slice), before a state message is emitted?
+- `seed` (Number) Default: -1
+Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
 
 

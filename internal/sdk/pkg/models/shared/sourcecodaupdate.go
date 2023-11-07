@@ -6,3 +6,10 @@ type SourceCodaUpdate struct {
 	// Bearer token
 	AuthToken string `json:"auth_token"`
 }
+
+func (o *SourceCodaUpdate) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}

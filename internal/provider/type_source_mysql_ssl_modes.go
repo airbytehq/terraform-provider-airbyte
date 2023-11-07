@@ -3,12 +3,8 @@
 package provider
 
 type SourceMysqlSSLModes struct {
-	SourceMysqlSSLModesPreferred            *SourceMysqlSSLModesPreferred      `tfsdk:"source_mysql_ssl_modes_preferred"`
-	SourceMysqlSSLModesRequired             *SourceMysqlSSLModesRequired       `tfsdk:"source_mysql_ssl_modes_required"`
-	SourceMysqlSSLModesVerifyCA             *SourceMysqlSSLModesVerifyCA       `tfsdk:"source_mysql_ssl_modes_verify_ca"`
-	SourceMysqlSSLModesVerifyIdentity       *SourceMysqlSSLModesVerifyIdentity `tfsdk:"source_mysql_ssl_modes_verify_identity"`
-	SourceMysqlUpdateSSLModesPreferred      *SourceMysqlSSLModesPreferred      `tfsdk:"source_mysql_update_ssl_modes_preferred"`
-	SourceMysqlUpdateSSLModesRequired       *SourceMysqlSSLModesRequired       `tfsdk:"source_mysql_update_ssl_modes_required"`
-	SourceMysqlUpdateSSLModesVerifyCA       *SourceMysqlSSLModesVerifyCA       `tfsdk:"source_mysql_update_ssl_modes_verify_ca"`
-	SourceMysqlUpdateSSLModesVerifyIdentity *SourceMysqlSSLModesVerifyIdentity `tfsdk:"source_mysql_update_ssl_modes_verify_identity"`
+	Preferred      *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"preferred"`
+	Required       *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"required"`
+	VerifyCA       *SourceMysqlVerifyCA                                      `tfsdk:"verify_ca"`
+	VerifyIdentity *SourceMysqlVerifyCA                                      `tfsdk:"verify_identity"`
 }

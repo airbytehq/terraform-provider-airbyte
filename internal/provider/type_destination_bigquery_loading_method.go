@@ -3,8 +3,6 @@
 package provider
 
 type DestinationBigqueryLoadingMethod struct {
-	DestinationBigqueryLoadingMethodGCSStaging            *DestinationBigqueryLoadingMethodGCSStaging       `tfsdk:"destination_bigquery_loading_method_gcs_staging"`
-	DestinationBigqueryLoadingMethodStandardInserts       *DestinationBigqueryLoadingMethodStandardInserts  `tfsdk:"destination_bigquery_loading_method_standard_inserts"`
-	DestinationBigqueryUpdateLoadingMethodGCSStaging      *DestinationBigqueryUpdateLoadingMethodGCSStaging `tfsdk:"destination_bigquery_update_loading_method_gcs_staging"`
-	DestinationBigqueryUpdateLoadingMethodStandardInserts *DestinationBigqueryLoadingMethodStandardInserts  `tfsdk:"destination_bigquery_update_loading_method_standard_inserts"`
+	GCSStaging      *DestinationBigqueryGCSStaging                            `tfsdk:"gcs_staging"`
+	StandardInserts *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"standard_inserts"`
 }

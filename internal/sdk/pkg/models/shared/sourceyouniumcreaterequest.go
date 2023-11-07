@@ -9,3 +9,31 @@ type SourceYouniumCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceYouniumCreateRequest) GetConfiguration() SourceYounium {
+	if o == nil {
+		return SourceYounium{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceYouniumCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceYouniumCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceYouniumCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

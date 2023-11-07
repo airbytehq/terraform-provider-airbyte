@@ -15,13 +15,12 @@ SourceIterable Resource
 ```terraform
 resource "airbyte_source_iterable" "my_source_iterable" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "iterable"
-    start_date  = "2021-04-01T00:00:00Z"
+    api_key    = "...my_api_key..."
+    start_date = "2021-04-01T00:00:00Z"
   }
-  name         = "Archie Jaskolski"
+  name         = "Miguel McLaughlin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c4b425e9-9e62-434c-9f7b-79dfeb77a5c3"
+  workspace_id = "517f0e32-c2e3-402e-ade9-2b3e43098446"
 }
 ```
 
@@ -49,7 +48,6 @@ resource "airbyte_source_iterable" "my_source_iterable" {
 Required:
 
 - `api_key` (String) Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["iterable"]
 - `start_date` (String) The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

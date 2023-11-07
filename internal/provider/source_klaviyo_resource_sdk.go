@@ -3,19 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceKlaviyoResourceModel) ToCreateSDKType() *shared.SourceKlaviyoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceKlaviyoKlaviyo(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceKlaviyo{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

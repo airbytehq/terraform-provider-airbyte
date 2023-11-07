@@ -14,7 +14,6 @@ type SourcePocket struct {
 	Search      types.String `tfsdk:"search"`
 	Since       types.String `tfsdk:"since"`
 	Sort        types.String `tfsdk:"sort"`
-	SourceType  types.String `tfsdk:"source_type"`
 	State       types.String `tfsdk:"state"`
 	Tag         types.String `tfsdk:"tag"`
 }

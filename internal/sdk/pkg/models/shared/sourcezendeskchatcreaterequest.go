@@ -9,3 +9,31 @@ type SourceZendeskChatCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceZendeskChatCreateRequest) GetConfiguration() SourceZendeskChat {
+	if o == nil {
+		return SourceZendeskChat{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZendeskChatCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZendeskChatCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceZendeskChatCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

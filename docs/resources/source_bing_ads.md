@@ -15,19 +15,17 @@ SourceBingAds Resource
 ```terraform
 resource "airbyte_source_bing_ads" "my_source_bingads" {
   configuration = {
-    auth_method        = "oauth2.0"
     client_id          = "...my_client_id..."
     client_secret      = "...my_client_secret..."
     developer_token    = "...my_developer_token..."
-    lookback_window    = 4
+    lookback_window    = 7
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2022-08-23"
-    source_type        = "bing-ads"
+    reports_start_date = "2021-04-13"
     tenant_id          = "...my_tenant_id..."
   }
-  name         = "Kathryn Nitzsche"
+  name         = "Alfred Littel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "408f05e3-d48f-4daf-b13a-1f5fd94259c0"
+  workspace_id = "495eab20-ebb3-405f-b624-c43900725fa3"
 }
 ```
 
@@ -57,14 +55,16 @@ Required:
 - `client_id` (String) The Client ID of your Microsoft Advertising developer application.
 - `developer_token` (String) Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
 - `refresh_token` (String) Refresh Token to renew the expired Access Token.
-- `reports_start_date` (String) The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
-- `source_type` (String) must be one of ["bing-ads"]
 
 Optional:
 
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `client_secret` (String) The Client Secret of your Microsoft Advertising developer application.
-- `lookback_window` (Number) Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
-- `tenant_id` (String) The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
+- `client_secret` (String) Default: ""
+The Client Secret of your Microsoft Advertising developer application.
+- `lookback_window` (Number) Default: 0
+Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
+- `reports_start_date` (String) Default: "2020-01-01"
+The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
+- `tenant_id` (String) Default: "common"
+The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
 
 

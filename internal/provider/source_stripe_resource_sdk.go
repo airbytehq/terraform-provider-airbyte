@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -23,7 +23,6 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	} else {
 		sliceRange = nil
 	}
-	sourceType := shared.SourceStripeStripe(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -35,7 +34,6 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 		ClientSecret:       clientSecret,
 		LookbackWindowDays: lookbackWindowDays,
 		SliceRange:         sliceRange,
-		SourceType:         sourceType,
 		StartDate:          startDate,
 	}
 	name := r.Name.ValueString()

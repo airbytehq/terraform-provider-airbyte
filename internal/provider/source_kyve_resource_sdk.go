@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -21,7 +21,6 @@ func (r *SourceKyveResourceModel) ToCreateSDKType() *shared.SourceKyveCreateRequ
 		pageSize = nil
 	}
 	poolIds := r.Configuration.PoolIds.ValueString()
-	sourceType := shared.SourceKyveKyve(r.Configuration.SourceType.ValueString())
 	startIds := r.Configuration.StartIds.ValueString()
 	urlBase := new(string)
 	if !r.Configuration.URLBase.IsUnknown() && !r.Configuration.URLBase.IsNull() {
@@ -30,12 +29,11 @@ func (r *SourceKyveResourceModel) ToCreateSDKType() *shared.SourceKyveCreateRequ
 		urlBase = nil
 	}
 	configuration := shared.SourceKyve{
-		MaxPages:   maxPages,
-		PageSize:   pageSize,
-		PoolIds:    poolIds,
-		SourceType: sourceType,
-		StartIds:   startIds,
-		URLBase:    urlBase,
+		MaxPages: maxPages,
+		PageSize: pageSize,
+		PoolIds:  poolIds,
+		StartIds: startIds,
+		URLBase:  urlBase,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

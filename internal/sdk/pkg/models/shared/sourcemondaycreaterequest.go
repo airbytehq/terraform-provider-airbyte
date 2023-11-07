@@ -9,3 +9,31 @@ type SourceMondayCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMondayCreateRequest) GetConfiguration() SourceMonday {
+	if o == nil {
+		return SourceMonday{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMondayCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMondayCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMondayCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

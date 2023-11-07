@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceFreshcallerFreshcaller string
+type Freshcaller string
 
 const (
-	SourceFreshcallerFreshcallerFreshcaller SourceFreshcallerFreshcaller = "freshcaller"
+	FreshcallerFreshcaller Freshcaller = "freshcaller"
 )
 
-func (e SourceFreshcallerFreshcaller) ToPointer() *SourceFreshcallerFreshcaller {
+func (e Freshcaller) ToPointer() *Freshcaller {
 	return &e
 }
 
-func (e *SourceFreshcallerFreshcaller) UnmarshalJSON(data []byte) error {
+func (e *Freshcaller) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "freshcaller":
-		*e = SourceFreshcallerFreshcaller(v)
+		*e = Freshcaller(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshcallerFreshcaller: %v", v)
+		return fmt.Errorf("invalid value for Freshcaller: %v", v)
 	}
 }
 
@@ -38,10 +39,60 @@ type SourceFreshcaller struct {
 	// Used to construct Base URL for the Freshcaller APIs
 	Domain string `json:"domain"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
-	RequestsPerMinute *int64                       `json:"requests_per_minute,omitempty"`
-	SourceType        SourceFreshcallerFreshcaller `json:"sourceType"`
+	RequestsPerMinute *int64      `json:"requests_per_minute,omitempty"`
+	sourceType        Freshcaller `const:"freshcaller" json:"sourceType"`
 	// UTC date and time. Any data created after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 	SyncLagMinutes *int64 `json:"sync_lag_minutes,omitempty"`
+}
+
+func (s SourceFreshcaller) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshcaller) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshcaller) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshcaller) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *SourceFreshcaller) GetRequestsPerMinute() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestsPerMinute
+}
+
+func (o *SourceFreshcaller) GetSourceType() Freshcaller {
+	return FreshcallerFreshcaller
+}
+
+func (o *SourceFreshcaller) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceFreshcaller) GetSyncLagMinutes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SyncLagMinutes
 }

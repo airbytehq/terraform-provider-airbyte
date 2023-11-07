@@ -7,3 +7,24 @@ type DestinationRedisPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *DestinationRedisPutRequest) GetConfiguration() DestinationRedisUpdate {
+	if o == nil {
+		return DestinationRedisUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationRedisPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationRedisPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

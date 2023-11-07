@@ -10,7 +10,6 @@ type DestinationPubsub struct {
 	BatchingEnabled               types.Bool   `tfsdk:"batching_enabled"`
 	BatchingRequestBytesThreshold types.Int64  `tfsdk:"batching_request_bytes_threshold"`
 	CredentialsJSON               types.String `tfsdk:"credentials_json"`
-	DestinationType               types.String `tfsdk:"destination_type"`
 	OrderingEnabled               types.Bool   `tfsdk:"ordering_enabled"`
 	ProjectID                     types.String `tfsdk:"project_id"`
 	TopicID                       types.String `tfsdk:"topic_id"`

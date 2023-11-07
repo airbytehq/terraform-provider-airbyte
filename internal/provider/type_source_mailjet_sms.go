@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMailjetSms struct {
-	EndDate    types.Int64  `tfsdk:"end_date"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.Int64  `tfsdk:"start_date"`
-	Token      types.String `tfsdk:"token"`
+	EndDate   types.Int64  `tfsdk:"end_date"`
+	StartDate types.Int64  `tfsdk:"start_date"`
+	Token     types.String `tfsdk:"token"`
 }

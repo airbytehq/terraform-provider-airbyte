@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,11 +31,11 @@ type SourceTiktokMarketingDataSource struct {
 
 // SourceTiktokMarketingDataSourceModel describes the data model.
 type SourceTiktokMarketingDataSourceModel struct {
-	Configuration SourceTiktokMarketing `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,168 +49,22 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 		MarkdownDescription: "SourceTiktokMarketing DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"attribution_window": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The attribution window in days.`,
-					},
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_tiktok_marketing_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Long-term Authorized Access Token.`,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Advertiser ID to filter reports and streams. Let this empty to retrieve all.`,
-									},
-									"app_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Developer Application App ID.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Developer Application Secret.`,
-									},
-								},
-								Description: `Authentication method`,
-							},
-							"source_tiktok_marketing_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The long-term authorized access token.`,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-										Description: `must be one of ["sandbox_access_token"]`,
-									},
-								},
-								Description: `Authentication method`,
-							},
-							"source_tiktok_marketing_update_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Long-term Authorized Access Token.`,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Advertiser ID to filter reports and streams. Let this empty to retrieve all.`,
-									},
-									"app_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Developer Application App ID.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Developer Application Secret.`,
-									},
-								},
-								Description: `Authentication method`,
-							},
-							"source_tiktok_marketing_update_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The long-term authorized access token.`,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-										Description: `must be one of ["sandbox_access_token"]`,
-									},
-								},
-								Description: `Authentication method`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Authentication method`,
-					},
-					"end_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.`,
-					},
-					"include_deleted": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Set to active if you want to include deleted data in reports.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"tiktok-marketing",
-							),
-						},
-						Description: `must be one of ["tiktok-marketing"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

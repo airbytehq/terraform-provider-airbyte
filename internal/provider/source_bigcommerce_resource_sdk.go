@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBigcommerceResourceModel) ToCreateSDKType() *shared.SourceBigcommerceCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceBigcommerceBigcommerce(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	storeHash := r.Configuration.StoreHash.ValueString()
 	configuration := shared.SourceBigcommerce{
 		AccessToken: accessToken,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 		StoreHash:   storeHash,
 	}

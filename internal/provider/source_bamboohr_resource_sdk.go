@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -21,13 +21,11 @@ func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCr
 	} else {
 		customReportsIncludeDefaultFields = nil
 	}
-	sourceType := shared.SourceBambooHrBambooHr(r.Configuration.SourceType.ValueString())
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceBambooHr{
 		APIKey:                            apiKey,
 		CustomReportsFields:               customReportsFields,
 		CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
-		SourceType:                        sourceType,
 		Subdomain:                         subdomain,
 	}
 	name := r.Name.ValueString()

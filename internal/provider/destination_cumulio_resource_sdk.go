@@ -3,20 +3,23 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationCumulioResourceModel) ToCreateSDKType() *shared.DestinationCumulioCreateRequest {
-	apiHost := r.Configuration.APIHost.ValueString()
+	apiHost := new(string)
+	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
+		*apiHost = r.Configuration.APIHost.ValueString()
+	} else {
+		apiHost = nil
+	}
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
-	destinationType := shared.DestinationCumulioCumulio(r.Configuration.DestinationType.ValueString())
 	configuration := shared.DestinationCumulio{
-		APIHost:         apiHost,
-		APIKey:          apiKey,
-		APIToken:        apiToken,
-		DestinationType: destinationType,
+		APIHost:  apiHost,
+		APIKey:   apiKey,
+		APIToken: apiToken,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -34,7 +37,12 @@ func (r *DestinationCumulioResourceModel) ToGetSDKType() *shared.DestinationCumu
 }
 
 func (r *DestinationCumulioResourceModel) ToUpdateSDKType() *shared.DestinationCumulioPutRequest {
-	apiHost := r.Configuration.APIHost.ValueString()
+	apiHost := new(string)
+	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
+		*apiHost = r.Configuration.APIHost.ValueString()
+	} else {
+		apiHost = nil
+	}
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
 	configuration := shared.DestinationCumulioUpdate{

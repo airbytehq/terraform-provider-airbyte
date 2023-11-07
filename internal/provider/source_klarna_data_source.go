@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,10 +31,10 @@ type SourceKlarnaDataSource struct {
 
 // SourceKlarnaDataSourceModel describes the data model.
 type SourceKlarnaDataSourceModel struct {
-	Configuration SourceKlarna `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -49,53 +49,22 @@ func (r *SourceKlarnaDataSource) Schema(ctx context.Context, req datasource.Sche
 		MarkdownDescription: "SourceKlarna DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"password": schema.StringAttribute{
-						Computed:    true,
-						Description: `A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)`,
-					},
-					"playground": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Propertie defining if connector is used against playground or production environment`,
-					},
-					"region": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"eu",
-								"us",
-								"oc",
-							),
-						},
-						MarkdownDescription: `must be one of ["eu", "us", "oc"]` + "\n" +
-							`Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"klarna",
-							),
-						},
-						Description: `must be one of ["klarna"]`,
-					},
-					"username": schema.StringAttribute{
-						Computed:    true,
-						Description: `Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

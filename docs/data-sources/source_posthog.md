@@ -14,7 +14,6 @@ SourcePosthog DataSource
 
 ```terraform
 data "airbyte_source_posthog" "my_source_posthog" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_posthog" "my_source_posthog" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
-- `base_url` (String) Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
-- `events_time_step` (Number) Set lower value in case of failing long running sync of events stream.
-- `source_type` (String) must be one of ["posthog"]
-- `start_date` (String) The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 
 

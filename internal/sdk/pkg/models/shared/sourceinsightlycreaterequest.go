@@ -9,3 +9,31 @@ type SourceInsightlyCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceInsightlyCreateRequest) GetConfiguration() SourceInsightly {
+	if o == nil {
+		return SourceInsightly{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceInsightlyCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceInsightlyCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceInsightlyCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

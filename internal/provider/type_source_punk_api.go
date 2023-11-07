@@ -8,5 +8,4 @@ type SourcePunkAPI struct {
 	BrewedAfter  types.String `tfsdk:"brewed_after"`
 	BrewedBefore types.String `tfsdk:"brewed_before"`
 	ID           types.String `tfsdk:"id"`
-	SourceType   types.String `tfsdk:"source_type"`
 }

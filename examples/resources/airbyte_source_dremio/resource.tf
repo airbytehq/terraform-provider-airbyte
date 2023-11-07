@@ -1,10 +1,9 @@
 resource "airbyte_source_dremio" "my_source_dremio" {
   configuration = {
-    api_key     = "...my_api_key..."
-    base_url    = "...my_base_url..."
-    source_type = "dremio"
+    api_key  = "...my_api_key..."
+    base_url = "...my_base_url..."
   }
-  name         = "Aaron Connelly"
+  name         = "Bessie Towne"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2d309470-bf7a-44fa-87cf-535a6fae54eb"
+  workspace_id = "1b638bd6-48d5-4481-8afe-b93d4bbde9f2"
 }

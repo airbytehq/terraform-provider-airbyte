@@ -9,3 +9,31 @@ type SourceDelightedCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceDelightedCreateRequest) GetConfiguration() SourceDelighted {
+	if o == nil {
+		return SourceDelighted{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDelightedCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDelightedCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceDelightedCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

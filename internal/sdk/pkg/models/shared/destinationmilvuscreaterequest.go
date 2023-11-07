@@ -7,3 +7,24 @@ type DestinationMilvusCreateRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *DestinationMilvusCreateRequest) GetConfiguration() DestinationMilvus {
+	if o == nil {
+		return DestinationMilvus{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMilvusCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMilvusCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

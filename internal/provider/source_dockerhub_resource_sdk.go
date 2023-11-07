@@ -3,16 +3,14 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceDockerhubResourceModel) ToCreateSDKType() *shared.SourceDockerhubCreateRequest {
 	dockerUsername := r.Configuration.DockerUsername.ValueString()
-	sourceType := shared.SourceDockerhubDockerhub(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDockerhub{
 		DockerUsername: dockerUsername,
-		SourceType:     sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceUsCensusUsCensus string
+type UsCensus string
 
 const (
-	SourceUsCensusUsCensusUsCensus SourceUsCensusUsCensus = "us-census"
+	UsCensusUsCensus UsCensus = "us-census"
 )
 
-func (e SourceUsCensusUsCensus) ToPointer() *SourceUsCensusUsCensus {
+func (e UsCensus) ToPointer() *UsCensus {
 	return &e
 }
 
-func (e *SourceUsCensusUsCensus) UnmarshalJSON(data []byte) error {
+func (e *UsCensus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "us-census":
-		*e = SourceUsCensusUsCensus(v)
+		*e = UsCensus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceUsCensusUsCensus: %v", v)
+		return fmt.Errorf("invalid value for UsCensus: %v", v)
 	}
 }
 
@@ -37,6 +38,42 @@ type SourceUsCensus struct {
 	// The query parameters portion of the GET request, without the api key
 	QueryParams *string `json:"query_params,omitempty"`
 	// The path portion of the GET request
-	QueryPath  string                 `json:"query_path"`
-	SourceType SourceUsCensusUsCensus `json:"sourceType"`
+	QueryPath  string   `json:"query_path"`
+	sourceType UsCensus `const:"us-census" json:"sourceType"`
+}
+
+func (s SourceUsCensus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceUsCensus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceUsCensus) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceUsCensus) GetQueryParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryParams
+}
+
+func (o *SourceUsCensus) GetQueryPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.QueryPath
+}
+
+func (o *SourceUsCensus) GetSourceType() UsCensus {
+	return UsCensusUsCensus
 }

@@ -8,3 +8,17 @@ type DestinationXataUpdate struct {
 	// URL pointing to your workspace.
 	DbURL string `json:"db_url"`
 }
+
+func (o *DestinationXataUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationXataUpdate) GetDbURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DbURL
+}

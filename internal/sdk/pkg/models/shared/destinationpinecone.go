@@ -3,195 +3,247 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationPineconePinecone string
+type Pinecone string
 
 const (
-	DestinationPineconePineconePinecone DestinationPineconePinecone = "pinecone"
+	PineconePinecone Pinecone = "pinecone"
 )
 
-func (e DestinationPineconePinecone) ToPointer() *DestinationPineconePinecone {
+func (e Pinecone) ToPointer() *Pinecone {
 	return &e
 }
 
-func (e *DestinationPineconePinecone) UnmarshalJSON(data []byte) error {
+func (e *Pinecone) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pinecone":
-		*e = DestinationPineconePinecone(v)
+		*e = Pinecone(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPineconePinecone: %v", v)
+		return fmt.Errorf("invalid value for Pinecone: %v", v)
 	}
 }
 
-type DestinationPineconeEmbeddingFakeMode string
+type DestinationPineconeSchemasEmbeddingMode string
 
 const (
-	DestinationPineconeEmbeddingFakeModeFake DestinationPineconeEmbeddingFakeMode = "fake"
+	DestinationPineconeSchemasEmbeddingModeFake DestinationPineconeSchemasEmbeddingMode = "fake"
 )
 
-func (e DestinationPineconeEmbeddingFakeMode) ToPointer() *DestinationPineconeEmbeddingFakeMode {
+func (e DestinationPineconeSchemasEmbeddingMode) ToPointer() *DestinationPineconeSchemasEmbeddingMode {
 	return &e
 }
 
-func (e *DestinationPineconeEmbeddingFakeMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationPineconeSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "fake":
-		*e = DestinationPineconeEmbeddingFakeMode(v)
+		*e = DestinationPineconeSchemasEmbeddingMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPineconeEmbeddingFakeMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationPineconeSchemasEmbeddingMode: %v", v)
 	}
 }
 
-// DestinationPineconeEmbeddingFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
-type DestinationPineconeEmbeddingFake struct {
-	Mode *DestinationPineconeEmbeddingFakeMode `json:"mode,omitempty"`
+// DestinationPineconeFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
+type DestinationPineconeFake struct {
+	mode *DestinationPineconeSchemasEmbeddingMode `const:"fake" json:"mode"`
 }
 
-type DestinationPineconeEmbeddingCohereMode string
+func (d DestinationPineconeFake) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPineconeFake) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPineconeFake) GetMode() *DestinationPineconeSchemasEmbeddingMode {
+	return DestinationPineconeSchemasEmbeddingModeFake.ToPointer()
+}
+
+type DestinationPineconeSchemasMode string
 
 const (
-	DestinationPineconeEmbeddingCohereModeCohere DestinationPineconeEmbeddingCohereMode = "cohere"
+	DestinationPineconeSchemasModeCohere DestinationPineconeSchemasMode = "cohere"
 )
 
-func (e DestinationPineconeEmbeddingCohereMode) ToPointer() *DestinationPineconeEmbeddingCohereMode {
+func (e DestinationPineconeSchemasMode) ToPointer() *DestinationPineconeSchemasMode {
 	return &e
 }
 
-func (e *DestinationPineconeEmbeddingCohereMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationPineconeSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cohere":
-		*e = DestinationPineconeEmbeddingCohereMode(v)
+		*e = DestinationPineconeSchemasMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPineconeEmbeddingCohereMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationPineconeSchemasMode: %v", v)
 	}
 }
 
-// DestinationPineconeEmbeddingCohere - Use the Cohere API to embed text.
-type DestinationPineconeEmbeddingCohere struct {
-	CohereKey string                                  `json:"cohere_key"`
-	Mode      *DestinationPineconeEmbeddingCohereMode `json:"mode,omitempty"`
+// DestinationPineconeCohere - Use the Cohere API to embed text.
+type DestinationPineconeCohere struct {
+	CohereKey string                          `json:"cohere_key"`
+	mode      *DestinationPineconeSchemasMode `const:"cohere" json:"mode"`
 }
 
-type DestinationPineconeEmbeddingOpenAIMode string
+func (d DestinationPineconeCohere) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPineconeCohere) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPineconeCohere) GetCohereKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.CohereKey
+}
+
+func (o *DestinationPineconeCohere) GetMode() *DestinationPineconeSchemasMode {
+	return DestinationPineconeSchemasModeCohere.ToPointer()
+}
+
+type DestinationPineconeMode string
 
 const (
-	DestinationPineconeEmbeddingOpenAIModeOpenai DestinationPineconeEmbeddingOpenAIMode = "openai"
+	DestinationPineconeModeOpenai DestinationPineconeMode = "openai"
 )
 
-func (e DestinationPineconeEmbeddingOpenAIMode) ToPointer() *DestinationPineconeEmbeddingOpenAIMode {
+func (e DestinationPineconeMode) ToPointer() *DestinationPineconeMode {
 	return &e
 }
 
-func (e *DestinationPineconeEmbeddingOpenAIMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationPineconeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "openai":
-		*e = DestinationPineconeEmbeddingOpenAIMode(v)
+		*e = DestinationPineconeMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPineconeEmbeddingOpenAIMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationPineconeMode: %v", v)
 	}
 }
 
-// DestinationPineconeEmbeddingOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
-type DestinationPineconeEmbeddingOpenAI struct {
-	Mode      *DestinationPineconeEmbeddingOpenAIMode `json:"mode,omitempty"`
-	OpenaiKey string                                  `json:"openai_key"`
+// DestinationPineconeOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
+type DestinationPineconeOpenAI struct {
+	mode      *DestinationPineconeMode `const:"openai" json:"mode"`
+	OpenaiKey string                   `json:"openai_key"`
+}
+
+func (d DestinationPineconeOpenAI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPineconeOpenAI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPineconeOpenAI) GetMode() *DestinationPineconeMode {
+	return DestinationPineconeModeOpenai.ToPointer()
+}
+
+func (o *DestinationPineconeOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationPineconeEmbeddingType string
 
 const (
-	DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingOpenAI DestinationPineconeEmbeddingType = "destination-pinecone_Embedding_OpenAI"
-	DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingCohere DestinationPineconeEmbeddingType = "destination-pinecone_Embedding_Cohere"
-	DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingFake   DestinationPineconeEmbeddingType = "destination-pinecone_Embedding_Fake"
+	DestinationPineconeEmbeddingTypeOpenAI DestinationPineconeEmbeddingType = "OpenAI"
+	DestinationPineconeEmbeddingTypeCohere DestinationPineconeEmbeddingType = "Cohere"
+	DestinationPineconeEmbeddingTypeFake   DestinationPineconeEmbeddingType = "Fake"
 )
 
 type DestinationPineconeEmbedding struct {
-	DestinationPineconeEmbeddingOpenAI *DestinationPineconeEmbeddingOpenAI
-	DestinationPineconeEmbeddingCohere *DestinationPineconeEmbeddingCohere
-	DestinationPineconeEmbeddingFake   *DestinationPineconeEmbeddingFake
+	OpenAI *DestinationPineconeOpenAI
+	Cohere *DestinationPineconeCohere
+	Fake   *DestinationPineconeFake
 
 	Type DestinationPineconeEmbeddingType
 }
 
-func CreateDestinationPineconeEmbeddingDestinationPineconeEmbeddingOpenAI(destinationPineconeEmbeddingOpenAI DestinationPineconeEmbeddingOpenAI) DestinationPineconeEmbedding {
-	typ := DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingOpenAI
+func CreateDestinationPineconeEmbeddingOpenAI(openAI DestinationPineconeOpenAI) DestinationPineconeEmbedding {
+	typ := DestinationPineconeEmbeddingTypeOpenAI
 
 	return DestinationPineconeEmbedding{
-		DestinationPineconeEmbeddingOpenAI: &destinationPineconeEmbeddingOpenAI,
-		Type:                               typ,
+		OpenAI: &openAI,
+		Type:   typ,
 	}
 }
 
-func CreateDestinationPineconeEmbeddingDestinationPineconeEmbeddingCohere(destinationPineconeEmbeddingCohere DestinationPineconeEmbeddingCohere) DestinationPineconeEmbedding {
-	typ := DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingCohere
+func CreateDestinationPineconeEmbeddingCohere(cohere DestinationPineconeCohere) DestinationPineconeEmbedding {
+	typ := DestinationPineconeEmbeddingTypeCohere
 
 	return DestinationPineconeEmbedding{
-		DestinationPineconeEmbeddingCohere: &destinationPineconeEmbeddingCohere,
-		Type:                               typ,
+		Cohere: &cohere,
+		Type:   typ,
 	}
 }
 
-func CreateDestinationPineconeEmbeddingDestinationPineconeEmbeddingFake(destinationPineconeEmbeddingFake DestinationPineconeEmbeddingFake) DestinationPineconeEmbedding {
-	typ := DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingFake
+func CreateDestinationPineconeEmbeddingFake(fake DestinationPineconeFake) DestinationPineconeEmbedding {
+	typ := DestinationPineconeEmbeddingTypeFake
 
 	return DestinationPineconeEmbedding{
-		DestinationPineconeEmbeddingFake: &destinationPineconeEmbeddingFake,
-		Type:                             typ,
+		Fake: &fake,
+		Type: typ,
 	}
 }
 
 func (u *DestinationPineconeEmbedding) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationPineconeEmbeddingFake := new(DestinationPineconeEmbeddingFake)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPineconeEmbeddingFake); err == nil {
-		u.DestinationPineconeEmbeddingFake = destinationPineconeEmbeddingFake
-		u.Type = DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingFake
+	fake := new(DestinationPineconeFake)
+	if err := utils.UnmarshalJSON(data, &fake, "", true, true); err == nil {
+		u.Fake = fake
+		u.Type = DestinationPineconeEmbeddingTypeFake
 		return nil
 	}
 
-	destinationPineconeEmbeddingOpenAI := new(DestinationPineconeEmbeddingOpenAI)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPineconeEmbeddingOpenAI); err == nil {
-		u.DestinationPineconeEmbeddingOpenAI = destinationPineconeEmbeddingOpenAI
-		u.Type = DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingOpenAI
+	openAI := new(DestinationPineconeOpenAI)
+	if err := utils.UnmarshalJSON(data, &openAI, "", true, true); err == nil {
+		u.OpenAI = openAI
+		u.Type = DestinationPineconeEmbeddingTypeOpenAI
 		return nil
 	}
 
-	destinationPineconeEmbeddingCohere := new(DestinationPineconeEmbeddingCohere)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationPineconeEmbeddingCohere); err == nil {
-		u.DestinationPineconeEmbeddingCohere = destinationPineconeEmbeddingCohere
-		u.Type = DestinationPineconeEmbeddingTypeDestinationPineconeEmbeddingCohere
+	cohere := new(DestinationPineconeCohere)
+	if err := utils.UnmarshalJSON(data, &cohere, "", true, true); err == nil {
+		u.Cohere = cohere
+		u.Type = DestinationPineconeEmbeddingTypeCohere
 		return nil
 	}
 
@@ -199,19 +251,19 @@ func (u *DestinationPineconeEmbedding) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationPineconeEmbedding) MarshalJSON() ([]byte, error) {
-	if u.DestinationPineconeEmbeddingFake != nil {
-		return json.Marshal(u.DestinationPineconeEmbeddingFake)
+	if u.OpenAI != nil {
+		return utils.MarshalJSON(u.OpenAI, "", true)
 	}
 
-	if u.DestinationPineconeEmbeddingOpenAI != nil {
-		return json.Marshal(u.DestinationPineconeEmbeddingOpenAI)
+	if u.Cohere != nil {
+		return utils.MarshalJSON(u.Cohere, "", true)
 	}
 
-	if u.DestinationPineconeEmbeddingCohere != nil {
-		return json.Marshal(u.DestinationPineconeEmbeddingCohere)
+	if u.Fake != nil {
+		return utils.MarshalJSON(u.Fake, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationPineconeIndexing - Pinecone is a popular vector store that can be used to store and retrieve embeddings.
@@ -223,9 +275,30 @@ type DestinationPineconeIndexing struct {
 	PineconeKey         string `json:"pinecone_key"`
 }
 
+func (o *DestinationPineconeIndexing) GetIndex() string {
+	if o == nil {
+		return ""
+	}
+	return o.Index
+}
+
+func (o *DestinationPineconeIndexing) GetPineconeEnvironment() string {
+	if o == nil {
+		return ""
+	}
+	return o.PineconeEnvironment
+}
+
+func (o *DestinationPineconeIndexing) GetPineconeKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PineconeKey
+}
+
 type DestinationPineconeProcessingConfigModel struct {
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
-	ChunkOverlap *int64 `json:"chunk_overlap,omitempty"`
+	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
 	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
 	ChunkSize int64 `json:"chunk_size"`
 	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
@@ -234,11 +307,86 @@ type DestinationPineconeProcessingConfigModel struct {
 	TextFields []string `json:"text_fields,omitempty"`
 }
 
+func (d DestinationPineconeProcessingConfigModel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPineconeProcessingConfigModel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPineconeProcessingConfigModel) GetChunkOverlap() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ChunkOverlap
+}
+
+func (o *DestinationPineconeProcessingConfigModel) GetChunkSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ChunkSize
+}
+
+func (o *DestinationPineconeProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
+}
+
+func (o *DestinationPineconeProcessingConfigModel) GetTextFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TextFields
+}
+
 type DestinationPinecone struct {
-	DestinationType DestinationPineconePinecone `json:"destinationType"`
+	destinationType Pinecone `const:"pinecone" json:"destinationType"`
 	// Embedding configuration
 	Embedding DestinationPineconeEmbedding `json:"embedding"`
 	// Pinecone is a popular vector store that can be used to store and retrieve embeddings.
 	Indexing   DestinationPineconeIndexing              `json:"indexing"`
 	Processing DestinationPineconeProcessingConfigModel `json:"processing"`
+}
+
+func (d DestinationPinecone) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPinecone) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationPinecone) GetDestinationType() Pinecone {
+	return PineconePinecone
+}
+
+func (o *DestinationPinecone) GetEmbedding() DestinationPineconeEmbedding {
+	if o == nil {
+		return DestinationPineconeEmbedding{}
+	}
+	return o.Embedding
+}
+
+func (o *DestinationPinecone) GetIndexing() DestinationPineconeIndexing {
+	if o == nil {
+		return DestinationPineconeIndexing{}
+	}
+	return o.Indexing
+}
+
+func (o *DestinationPinecone) GetProcessing() DestinationPineconeProcessingConfigModel {
+	if o == nil {
+		return DestinationPineconeProcessingConfigModel{}
+	}
+	return o.Processing
 }

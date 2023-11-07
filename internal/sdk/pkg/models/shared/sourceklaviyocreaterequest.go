@@ -9,3 +9,31 @@ type SourceKlaviyoCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceKlaviyoCreateRequest) GetConfiguration() SourceKlaviyo {
+	if o == nil {
+		return SourceKlaviyo{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceKlaviyoCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceKlaviyoCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceKlaviyoCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

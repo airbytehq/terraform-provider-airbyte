@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -15,7 +15,6 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 	} else {
 		dateFrom = nil
 	}
-	sourceType := shared.SourceZenloopZenloop(r.Configuration.SourceType.ValueString())
 	surveyGroupID := new(string)
 	if !r.Configuration.SurveyGroupID.IsUnknown() && !r.Configuration.SurveyGroupID.IsNull() {
 		*surveyGroupID = r.Configuration.SurveyGroupID.ValueString()
@@ -31,7 +30,6 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 	configuration := shared.SourceZenloop{
 		APIToken:      apiToken,
 		DateFrom:      dateFrom,
-		SourceType:    sourceType,
 		SurveyGroupID: surveyGroupID,
 		SurveyID:      surveyID,
 	}

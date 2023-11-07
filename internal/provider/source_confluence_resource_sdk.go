@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -11,12 +11,10 @@ func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluen
 	apiToken := r.Configuration.APIToken.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
 	email := r.Configuration.Email.ValueString()
-	sourceType := shared.SourceConfluenceConfluence(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceConfluence{
 		APIToken:   apiToken,
 		DomainName: domainName,
 		Email:      email,
-		SourceType: sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

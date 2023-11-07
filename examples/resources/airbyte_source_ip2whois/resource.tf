@@ -1,10 +1,9 @@
 resource "airbyte_source_ip2whois" "my_source_ip2whois" {
   configuration = {
-    api_key     = "...my_api_key..."
-    domain      = "www.facebook.com"
-    source_type = "ip2whois"
+    api_key = "...my_api_key..."
+    domain  = "www.facebook.com"
   }
-  name         = "Leland Wisoky"
+  name         = "Mr. Helen Heidenreich MD"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7aaf9bba-d185-4fe4-b1d6-bf5c838fbb8c"
+  workspace_id = "8862473b-7573-4910-8618-e91445d83c49"
 }

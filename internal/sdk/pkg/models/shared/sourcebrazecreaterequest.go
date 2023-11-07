@@ -9,3 +9,31 @@ type SourceBrazeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceBrazeCreateRequest) GetConfiguration() SourceBraze {
+	if o == nil {
+		return SourceBraze{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBrazeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBrazeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceBrazeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,13 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -58,15 +58,6 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Optional:    true,
 						Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"s3-glue",
-							),
-						},
-						Description: `must be one of ["s3-glue"]`,
-					},
 					"file_name_pattern": schema.StringAttribute{
 						Optional:    true,
 						Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
@@ -74,13 +65,13 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+											"gzip": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
@@ -90,12 +81,12 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
-											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
@@ -105,7 +96,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -124,82 +115,17 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "Root level flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
 											),
 										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
-							},
-							"destination_s3_glue_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"compression": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Optional: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-														Description: `must be one of ["No Compression"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
-											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Optional: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"GZIP",
-															),
-														},
-														Description: `must be one of ["GZIP"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-									},
-									"flattening": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"No flattening",
-												"Root level flattening",
-											),
-										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
-											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
+										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -215,14 +141,14 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Name of the glue database for creating the tables, leave blank if no integration`,
 					},
 					"glue_serialization_library": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"org.openx.data.jsonserde.JsonSerDe",
 								"org.apache.hive.hcatalog.data.JsonSerDe",
 							),
 						},
-						MarkdownDescription: `must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]` + "\n" +
+						MarkdownDescription: `must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]; Default: "org.openx.data.jsonserde.JsonSerDe"` + "\n" +
 							`The library that your query engine will use for reading and writing data in your lake.`,
 					},
 					"s3_bucket_name": schema.StringAttribute{
@@ -234,7 +160,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>`,
 					},
 					"s3_bucket_region": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"",
@@ -265,12 +191,13 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 								"us-gov-west-1",
 							),
 						},
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
+						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
 							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 					"s3_endpoint": schema.StringAttribute{
-						Optional:    true,
-						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
 					},
 					"s3_path_format": schema.StringAttribute{
 						Optional:    true,
@@ -348,7 +275,7 @@ func (r *DestinationS3GlueResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationS3Glue(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -524,5 +451,5 @@ func (r *DestinationS3GlueResource) Delete(ctx context.Context, req resource.Del
 }
 
 func (r *DestinationS3GlueResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

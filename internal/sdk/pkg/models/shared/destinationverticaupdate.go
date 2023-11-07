@@ -3,191 +3,285 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod string
 
 const (
-	DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	DestinationVerticaUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication struct {
+// DestinationVerticaUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationVerticaUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (d DestinationVerticaUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationVerticaUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationVerticaUpdatePasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationVerticaUpdatePasswordAuthentication) GetTunnelMethod() DestinationVerticaUpdateSchemasTunnelMethodTunnelMethod {
+	return DestinationVerticaUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationVerticaUpdatePasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationVerticaUpdatePasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationVerticaUpdatePasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// DestinationVerticaUpdateSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationVerticaUpdateSchemasTunnelMethod string
 
 const (
-	DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	DestinationVerticaUpdateSchemasTunnelMethodSSHKeyAuth DestinationVerticaUpdateSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e DestinationVerticaUpdateSchemasTunnelMethod) ToPointer() *DestinationVerticaUpdateSchemasTunnelMethod {
 	return &e
 }
 
-func (e *DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationVerticaUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = DestinationVerticaUpdateSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationVerticaUpdateSchemasTunnelMethod: %v", v)
 	}
 }
 
-// DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication struct {
+// DestinationVerticaUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationVerticaUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationVerticaUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod string
+func (d DestinationVerticaUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationVerticaUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationVerticaUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationVerticaUpdateSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationVerticaUpdateSSHKeyAuthentication) GetTunnelMethod() DestinationVerticaUpdateSchemasTunnelMethod {
+	return DestinationVerticaUpdateSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationVerticaUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationVerticaUpdateSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// DestinationVerticaUpdateTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationVerticaUpdateTunnelMethod string
 
 const (
-	DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	DestinationVerticaUpdateTunnelMethodNoTunnel DestinationVerticaUpdateTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+func (e DestinationVerticaUpdateTunnelMethod) ToPointer() *DestinationVerticaUpdateTunnelMethod {
 	return &e
 }
 
-func (e *DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationVerticaUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = DestinationVerticaUpdateTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationVerticaUpdateTunnelMethod: %v", v)
 	}
 }
 
-// DestinationVerticaUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationVerticaUpdateSSHTunnelMethodNoTunnel struct {
+// DestinationVerticaUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationVerticaUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationVerticaUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationVerticaUpdateNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationVerticaUpdateNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationVerticaUpdateNoTunnel) GetTunnelMethod() DestinationVerticaUpdateTunnelMethod {
+	return DestinationVerticaUpdateTunnelMethodNoTunnel
 }
 
 type DestinationVerticaUpdateSSHTunnelMethodType string
 
 const (
-	DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodNoTunnel               DestinationVerticaUpdateSSHTunnelMethodType = "destination-vertica-update_SSH Tunnel Method_No Tunnel"
-	DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication   DestinationVerticaUpdateSSHTunnelMethodType = "destination-vertica-update_SSH Tunnel Method_SSH Key Authentication"
-	DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication DestinationVerticaUpdateSSHTunnelMethodType = "destination-vertica-update_SSH Tunnel Method_Password Authentication"
+	DestinationVerticaUpdateSSHTunnelMethodTypeNoTunnel               DestinationVerticaUpdateSSHTunnelMethodType = "NoTunnel"
+	DestinationVerticaUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationVerticaUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
+	DestinationVerticaUpdateSSHTunnelMethodTypePasswordAuthentication DestinationVerticaUpdateSSHTunnelMethodType = "PasswordAuthentication"
 )
 
 type DestinationVerticaUpdateSSHTunnelMethod struct {
-	DestinationVerticaUpdateSSHTunnelMethodNoTunnel               *DestinationVerticaUpdateSSHTunnelMethodNoTunnel
-	DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication
-	DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication *DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication
+	NoTunnel               *DestinationVerticaUpdateNoTunnel
+	SSHKeyAuthentication   *DestinationVerticaUpdateSSHKeyAuthentication
+	PasswordAuthentication *DestinationVerticaUpdatePasswordAuthentication
 
 	Type DestinationVerticaUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationVerticaUpdateSSHTunnelMethodDestinationVerticaUpdateSSHTunnelMethodNoTunnel(destinationVerticaUpdateSSHTunnelMethodNoTunnel DestinationVerticaUpdateSSHTunnelMethodNoTunnel) DestinationVerticaUpdateSSHTunnelMethod {
-	typ := DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodNoTunnel
+func CreateDestinationVerticaUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationVerticaUpdateNoTunnel) DestinationVerticaUpdateSSHTunnelMethod {
+	typ := DestinationVerticaUpdateSSHTunnelMethodTypeNoTunnel
 
 	return DestinationVerticaUpdateSSHTunnelMethod{
-		DestinationVerticaUpdateSSHTunnelMethodNoTunnel: &destinationVerticaUpdateSSHTunnelMethodNoTunnel,
-		Type: typ,
+		NoTunnel: &noTunnel,
+		Type:     typ,
 	}
 }
 
-func CreateDestinationVerticaUpdateSSHTunnelMethodDestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication(destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
-	typ := DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication
+func CreateDestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationVerticaUpdateSSHKeyAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
+	typ := DestinationVerticaUpdateSSHTunnelMethodTypeSSHKeyAuthentication
 
 	return DestinationVerticaUpdateSSHTunnelMethod{
-		DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication: &destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		SSHKeyAuthentication: &sshKeyAuthentication,
+		Type:                 typ,
 	}
 }
 
-func CreateDestinationVerticaUpdateSSHTunnelMethodDestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication(destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
-	typ := DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication
+func CreateDestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationVerticaUpdatePasswordAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
+	typ := DestinationVerticaUpdateSSHTunnelMethodTypePasswordAuthentication
 
 	return DestinationVerticaUpdateSSHTunnelMethod{
-		DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication: &destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication,
-		Type: typ,
+		PasswordAuthentication: &passwordAuthentication,
+		Type:                   typ,
 	}
 }
 
 func (u *DestinationVerticaUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationVerticaUpdateSSHTunnelMethodNoTunnel := new(DestinationVerticaUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationVerticaUpdateSSHTunnelMethodNoTunnel); err == nil {
-		u.DestinationVerticaUpdateSSHTunnelMethodNoTunnel = destinationVerticaUpdateSSHTunnelMethodNoTunnel
-		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodNoTunnel
+	noTunnel := new(DestinationVerticaUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
+		u.NoTunnel = noTunnel
+		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeNoTunnel
 		return nil
 	}
 
-	destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication := new(DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication = destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication
-		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication
+	sshKeyAuthentication := new(DestinationVerticaUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
+		u.SSHKeyAuthentication = sshKeyAuthentication
+		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeSSHKeyAuthentication
 		return nil
 	}
 
-	destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication := new(DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication = destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication
-		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication
+	passwordAuthentication := new(DestinationVerticaUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
+		u.PasswordAuthentication = passwordAuthentication
+		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypePasswordAuthentication
 		return nil
 	}
 
@@ -195,19 +289,19 @@ func (u *DestinationVerticaUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationVerticaUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationVerticaUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationVerticaUpdateSSHTunnelMethodNoTunnel)
+	if u.NoTunnel != nil {
+		return utils.MarshalJSON(u.NoTunnel, "", true)
 	}
 
-	if u.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication)
+	if u.SSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
 	}
 
-	if u.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication)
+	if u.PasswordAuthentication != nil {
+		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationVerticaUpdate struct {
@@ -220,11 +314,78 @@ type DestinationVerticaUpdate struct {
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"5433" json:"port"`
 	// Schema for vertica destination
 	Schema string `json:"schema"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationVerticaUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationVerticaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationVerticaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationVerticaUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationVerticaUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationVerticaUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationVerticaUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationVerticaUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationVerticaUpdate) GetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schema
+}
+
+func (o *DestinationVerticaUpdate) GetTunnelMethod() *DestinationVerticaUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationVerticaUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

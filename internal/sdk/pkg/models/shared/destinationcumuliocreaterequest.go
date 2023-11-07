@@ -7,3 +7,24 @@ type DestinationCumulioCreateRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *DestinationCumulioCreateRequest) GetConfiguration() DestinationCumulio {
+	if o == nil {
+		return DestinationCumulio{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationCumulioCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationCumulioCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -17,11 +17,10 @@ resource "airbyte_source_recreation" "my_source_recreation" {
   configuration = {
     apikey          = "...my_apikey..."
     query_campsites = "...my_query_campsites..."
-    source_type     = "recreation"
   }
-  name         = "Taylor Kertzmann"
+  name         = "Krista Reilly"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f0441d2c-3b80-4809-8373-e060459bebba"
+  workspace_id = "00caee12-c4e6-45b5-be54-a27b617a012e"
 }
 ```
 
@@ -49,7 +48,6 @@ resource "airbyte_source_recreation" "my_source_recreation" {
 Required:
 
 - `apikey` (String) API Key
-- `source_type` (String) must be one of ["recreation"]
 
 Optional:
 

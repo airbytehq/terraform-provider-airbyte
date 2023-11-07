@@ -7,3 +7,24 @@ type SourcePosthogPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourcePosthogPutRequest) GetConfiguration() SourcePosthogUpdate {
+	if o == nil {
+		return SourcePosthogUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePosthogPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePosthogPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

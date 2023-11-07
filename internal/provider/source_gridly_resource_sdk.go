@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGridlyResourceModel) ToCreateSDKType() *shared.SourceGridlyCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	gridID := r.Configuration.GridID.ValueString()
-	sourceType := shared.SourceGridlyGridly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGridly{
-		APIKey:     apiKey,
-		GridID:     gridID,
-		SourceType: sourceType,
+		APIKey: apiKey,
+		GridID: gridID,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

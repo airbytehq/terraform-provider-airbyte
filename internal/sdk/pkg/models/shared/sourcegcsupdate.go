@@ -10,3 +10,24 @@ type SourceGcsUpdate struct {
 	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 	ServiceAccount string `json:"service_account"`
 }
+
+func (o *SourceGcsUpdate) GetGcsBucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsBucket
+}
+
+func (o *SourceGcsUpdate) GetGcsPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.GcsPath
+}
+
+func (o *SourceGcsUpdate) GetServiceAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceAccount
+}

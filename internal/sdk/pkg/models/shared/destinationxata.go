@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationXataXata string
+type Xata string
 
 const (
-	DestinationXataXataXata DestinationXataXata = "xata"
+	XataXata Xata = "xata"
 )
 
-func (e DestinationXataXata) ToPointer() *DestinationXataXata {
+func (e Xata) ToPointer() *Xata {
 	return &e
 }
 
-func (e *DestinationXataXata) UnmarshalJSON(data []byte) error {
+func (e *Xata) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "xata":
-		*e = DestinationXataXata(v)
+		*e = Xata(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationXataXata: %v", v)
+		return fmt.Errorf("invalid value for Xata: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type DestinationXata struct {
 	// API Key to connect.
 	APIKey string `json:"api_key"`
 	// URL pointing to your workspace.
-	DbURL           string              `json:"db_url"`
-	DestinationType DestinationXataXata `json:"destinationType"`
+	DbURL           string `json:"db_url"`
+	destinationType Xata   `const:"xata" json:"destinationType"`
+}
+
+func (d DestinationXata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationXata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationXata) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationXata) GetDbURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DbURL
+}
+
+func (o *DestinationXata) GetDestinationType() Xata {
+	return XataXata
 }

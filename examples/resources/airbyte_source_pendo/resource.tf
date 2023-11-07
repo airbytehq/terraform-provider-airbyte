@@ -1,9 +1,8 @@
 resource "airbyte_source_pendo" "my_source_pendo" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "pendo"
+    api_key = "...my_api_key..."
   }
-  name         = "Estelle Bechtelar"
+  name         = "Leigh Bruen"
   secret_id    = "...my_secret_id..."
-  workspace_id = "40847a74-2d84-4496-8bde-ecf6b99bc635"
+  workspace_id = "b428b10c-62ae-4eab-aa16-bc0f1be55677"
 }

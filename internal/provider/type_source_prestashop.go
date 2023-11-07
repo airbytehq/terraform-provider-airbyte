@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePrestashop struct {
-	AccessKey  types.String `tfsdk:"access_key"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
-	URL        types.String `tfsdk:"url"`
+	AccessKey types.String `tfsdk:"access_key"`
+	StartDate types.String `tfsdk:"start_date"`
+	URL       types.String `tfsdk:"url"`
 }

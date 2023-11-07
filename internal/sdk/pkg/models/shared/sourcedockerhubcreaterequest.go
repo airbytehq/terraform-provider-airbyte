@@ -9,3 +9,31 @@ type SourceDockerhubCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceDockerhubCreateRequest) GetConfiguration() SourceDockerhub {
+	if o == nil {
+		return SourceDockerhub{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDockerhubCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDockerhubCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceDockerhubCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

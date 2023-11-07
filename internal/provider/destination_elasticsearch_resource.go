@@ -3,14 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -57,7 +56,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 					"authentication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
+							"api_key_secret": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key_id": schema.StringAttribute{
@@ -68,76 +67,12 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 										Required:    true,
 										Description: `The secret associated with the API Key ID.`,
 									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-										Description: `must be one of ["secret"]`,
-									},
 								},
 								Description: `Use a api key and secret combination to authenticate`,
 							},
-							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
+							"username_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-										Description: `must be one of ["basic"]`,
-									},
-									"password": schema.StringAttribute{
-										Required:    true,
-										Description: `Basic auth password to access a secure Elasticsearch server`,
-									},
-									"username": schema.StringAttribute{
-										Required:    true,
-										Description: `Basic auth username to access a secure Elasticsearch server`,
-									},
-								},
-								Description: `Basic auth header with a username and password`,
-							},
-							"destination_elasticsearch_update_authentication_method_api_key_secret": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Key ID to used when accessing an enterprise Elasticsearch instance.`,
-									},
-									"api_key_secret": schema.StringAttribute{
-										Required:    true,
-										Description: `The secret associated with the API Key ID.`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-										Description: `must be one of ["secret"]`,
-									},
-								},
-								Description: `Use a api key and secret combination to authenticate`,
-							},
-							"destination_elasticsearch_update_authentication_method_username_password": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-										Description: `must be one of ["basic"]`,
-									},
 									"password": schema.StringAttribute{
 										Required:    true,
 										Description: `Basic auth password to access a secure Elasticsearch server`,
@@ -159,22 +94,14 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						Optional:    true,
 						Description: `CA certificate`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"elasticsearch",
-							),
-						},
-						Description: `must be one of ["elasticsearch"]`,
-					},
 					"endpoint": schema.StringAttribute{
 						Required:    true,
 						Description: `The full url of the Elasticsearch server`,
 					},
 					"upsert": schema.BoolAttribute{
-						Optional:    true,
-						Description: `If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.`,
+						Optional: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.`,
 					},
 				},
 			},
@@ -244,7 +171,7 @@ func (r *DestinationElasticsearchResource) Create(ctx context.Context, req resou
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationElasticsearch(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -420,5 +347,5 @@ func (r *DestinationElasticsearchResource) Delete(ctx context.Context, req resou
 }
 
 func (r *DestinationElasticsearchResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

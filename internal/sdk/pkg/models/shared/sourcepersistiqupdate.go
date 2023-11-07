@@ -6,3 +6,10 @@ type SourcePersistiqUpdate struct {
 	// PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourcePersistiqUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

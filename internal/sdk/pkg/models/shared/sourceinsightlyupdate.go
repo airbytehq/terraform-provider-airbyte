@@ -8,3 +8,17 @@ type SourceInsightlyUpdate struct {
 	// Your Insightly API token.
 	Token *string `json:"token"`
 }
+
+func (o *SourceInsightlyUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceInsightlyUpdate) GetToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Token
+}

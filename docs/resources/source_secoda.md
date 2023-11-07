@@ -15,12 +15,11 @@ SourceSecoda Resource
 ```terraform
 resource "airbyte_source_secoda" "my_source_secoda" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "secoda"
+    api_key = "...my_api_key..."
   }
-  name         = "Brett Leannon I"
+  name         = "Hazel Blick V"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ad421bd4-3d1f-40cb-8a00-03eb22d9b3a7"
+  workspace_id = "ce4fe165-bc48-440e-bfb5-df25477f370b"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_secoda" "my_source_secoda" {
 Required:
 
 - `api_key` (String) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["secoda"]
 
 

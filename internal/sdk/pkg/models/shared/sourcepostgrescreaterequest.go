@@ -9,3 +9,31 @@ type SourcePostgresCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePostgresCreateRequest) GetConfiguration() SourcePostgres {
+	if o == nil {
+		return SourcePostgres{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePostgresCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePostgresCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePostgresCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

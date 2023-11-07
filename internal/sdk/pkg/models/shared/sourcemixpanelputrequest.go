@@ -7,3 +7,24 @@ type SourceMixpanelPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceMixpanelPutRequest) GetConfiguration() SourceMixpanelUpdate {
+	if o == nil {
+		return SourceMixpanelUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMixpanelPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMixpanelPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

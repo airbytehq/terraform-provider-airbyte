@@ -1,9 +1,8 @@
 resource "airbyte_source_zoom" "my_source_zoom" {
   configuration = {
-    jwt_token   = "...my_jwt_token..."
-    source_type = "zoom"
+    jwt_token = "...my_jwt_token..."
   }
-  name         = "Alexis Gutmann IV"
+  name         = "Kenny Oberbrunner Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "0aa10418-6ec7-459e-82f3-702c5c8e2d30"
+  workspace_id = "d9d92226-9c9d-4648-b0bc-cdd2e95af6ed"
 }

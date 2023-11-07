@@ -16,15 +16,15 @@ SourceYoutubeAnalytics Resource
 resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
   configuration = {
     credentials = {
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      additional_properties = "{ \"see\": \"documentation\" }"
+      client_id             = "...my_client_id..."
+      client_secret         = "...my_client_secret..."
+      refresh_token         = "...my_refresh_token..."
     }
-    source_type = "youtube-analytics"
   }
-  name         = "Tommy Rippin"
+  name         = "Lucia Bergstrom"
   secret_id    = "...my_secret_id..."
-  workspace_id = "707f06b2-8ecc-4864-9238-6f62c969c4cc"
+  workspace_id = "7b350ebb-3981-4c89-b963-f1e6164cc878"
 }
 ```
 
@@ -52,7 +52,6 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["youtube-analytics"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

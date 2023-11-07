@@ -7,3 +7,24 @@ type DestinationGcsCreateRequest struct {
 	Name          string         `json:"name"`
 	WorkspaceID   string         `json:"workspaceId"`
 }
+
+func (o *DestinationGcsCreateRequest) GetConfiguration() DestinationGcs {
+	if o == nil {
+		return DestinationGcs{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationGcsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationGcsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

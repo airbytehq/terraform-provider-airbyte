@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -28,14 +28,12 @@ func (r *SourceDynamodbResourceModel) ToCreateSDKType() *shared.SourceDynamodbCr
 		reservedAttributeNames = nil
 	}
 	secretAccessKey := r.Configuration.SecretAccessKey.ValueString()
-	sourceType := shared.SourceDynamodbDynamodb(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDynamodb{
 		AccessKeyID:            accessKeyID,
 		Endpoint:               endpoint,
 		Region:                 region,
 		ReservedAttributeNames: reservedAttributeNames,
 		SecretAccessKey:        secretAccessKey,
-		SourceType:             sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

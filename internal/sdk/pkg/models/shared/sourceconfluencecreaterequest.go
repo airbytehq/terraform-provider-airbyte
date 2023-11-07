@@ -9,3 +9,31 @@ type SourceConfluenceCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceConfluenceCreateRequest) GetConfiguration() SourceConfluence {
+	if o == nil {
+		return SourceConfluence{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceConfluenceCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceConfluenceCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceConfluenceCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

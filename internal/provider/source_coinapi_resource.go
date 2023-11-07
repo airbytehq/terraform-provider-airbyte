@@ -3,17 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -66,20 +67,21 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 							``,
 					},
 					"environment": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"sandbox",
 								"production",
 							),
 						},
-						MarkdownDescription: `must be one of ["sandbox", "production"]` + "\n" +
+						MarkdownDescription: `must be one of ["sandbox", "production"]; Default: "sandbox"` + "\n" +
 							`The environment to use. Either sandbox or production.` + "\n" +
 							``,
 					},
 					"limit": schema.Int64Attribute{
 						Optional: true,
-						MarkdownDescription: `The maximum number of elements to return. If not supplied, the default` + "\n" +
+						MarkdownDescription: `Default: 100` + "\n" +
+							`The maximum number of elements to return. If not supplied, the default` + "\n" +
 							`is 100. For numbers larger than 100, each 100 items is counted as one` + "\n" +
 							`request for pricing purposes. Maximum value is 100000.` + "\n" +
 							``,
@@ -87,15 +89,6 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 					"period": schema.StringAttribute{
 						Required:    true,
 						Description: `The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"coin-api",
-							),
-						},
-						Description: `must be one of ["coin-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -116,6 +109,9 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -179,7 +175,7 @@ func (r *SourceCoinAPIResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceCoinAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -355,5 +351,5 @@ func (r *SourceCoinAPIResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *SourceCoinAPIResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

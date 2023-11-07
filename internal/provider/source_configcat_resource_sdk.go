@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcatCreateRequest {
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceConfigcatConfigcat(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceConfigcat{
-		Password:   password,
-		SourceType: sourceType,
-		Username:   username,
+		Password: password,
+		Username: username,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

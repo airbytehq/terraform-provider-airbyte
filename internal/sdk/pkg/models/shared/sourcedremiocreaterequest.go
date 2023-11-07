@@ -9,3 +9,31 @@ type SourceDremioCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceDremioCreateRequest) GetConfiguration() SourceDremio {
+	if o == nil {
+		return SourceDremio{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDremioCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDremioCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceDremioCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

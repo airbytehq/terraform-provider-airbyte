@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOrbitResourceModel) ToCreateSDKType() *shared.SourceOrbitCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceOrbitOrbit(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -18,10 +17,9 @@ func (r *SourceOrbitResourceModel) ToCreateSDKType() *shared.SourceOrbitCreateRe
 	}
 	workspace := r.Configuration.Workspace.ValueString()
 	configuration := shared.SourceOrbit{
-		APIToken:   apiToken,
-		SourceType: sourceType,
-		StartDate:  startDate,
-		Workspace:  workspace,
+		APIToken:  apiToken,
+		StartDate: startDate,
+		Workspace: workspace,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

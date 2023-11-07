@@ -12,5 +12,4 @@ type SourceAzureBlobStorage struct {
 	AzureBlobStorageEndpoint             types.String                      `tfsdk:"azure_blob_storage_endpoint"`
 	AzureBlobStorageSchemaInferenceLimit types.Int64                       `tfsdk:"azure_blob_storage_schema_inference_limit"`
 	Format                               SourceAzureBlobStorageInputFormat `tfsdk:"format"`
-	SourceType                           types.String                      `tfsdk:"source_type"`
 }

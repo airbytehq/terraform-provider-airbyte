@@ -15,17 +15,16 @@ SourceQualaroo Resource
 ```terraform
 resource "airbyte_source_qualaroo" "my_source_qualaroo" {
   configuration = {
-    key         = "...my_key..."
-    source_type = "qualaroo"
-    start_date  = "2021-03-01T00:00:00.000Z"
+    key        = "...my_key..."
+    start_date = "2021-03-01T00:00:00.000Z"
     survey_ids = [
       "...",
     ]
     token = "...my_token..."
   }
-  name         = "Sue Thompson"
+  name         = "Rosalie Hoppe"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b518c4da-1fad-4355-92f0-6d4e5b72f0f5"
+  workspace_id = "e2f08eb7-6e35-41ce-b20d-e4cfc332b42c"
 }
 ```
 
@@ -53,7 +52,6 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
 Required:
 
 - `key` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
-- `source_type` (String) must be one of ["qualaroo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `token` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 

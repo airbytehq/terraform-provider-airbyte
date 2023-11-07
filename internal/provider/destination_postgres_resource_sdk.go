@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.DestinationPostgresCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationPostgresPostgres(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -23,172 +22,168 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
-	schema := r.Configuration.Schema.ValueString()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	var sslMode *shared.DestinationPostgresSSLModes
 	if r.Configuration.SslMode != nil {
-		var destinationPostgresSSLModesDisable *shared.DestinationPostgresSSLModesDisable
-		if r.Configuration.SslMode.DestinationPostgresSSLModesDisable != nil {
-			mode := shared.DestinationPostgresSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
-			destinationPostgresSSLModesDisable = &shared.DestinationPostgresSSLModesDisable{
-				Mode: mode,
-			}
+		var destinationPostgresDisable *shared.DestinationPostgresDisable
+		if r.Configuration.SslMode.Disable != nil {
+			destinationPostgresDisable = &shared.DestinationPostgresDisable{}
 		}
-		if destinationPostgresSSLModesDisable != nil {
+		if destinationPostgresDisable != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				DestinationPostgresSSLModesDisable: destinationPostgresSSLModesDisable,
+				Disable: destinationPostgresDisable,
 			}
 		}
-		var destinationPostgresSSLModesAllow *shared.DestinationPostgresSSLModesAllow
-		if r.Configuration.SslMode.DestinationPostgresSSLModesAllow != nil {
-			mode1 := shared.DestinationPostgresSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
-			destinationPostgresSSLModesAllow = &shared.DestinationPostgresSSLModesAllow{
-				Mode: mode1,
-			}
+		var destinationPostgresAllow *shared.DestinationPostgresAllow
+		if r.Configuration.SslMode.Allow != nil {
+			destinationPostgresAllow = &shared.DestinationPostgresAllow{}
 		}
-		if destinationPostgresSSLModesAllow != nil {
+		if destinationPostgresAllow != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				DestinationPostgresSSLModesAllow: destinationPostgresSSLModesAllow,
+				Allow: destinationPostgresAllow,
 			}
 		}
-		var destinationPostgresSSLModesPrefer *shared.DestinationPostgresSSLModesPrefer
-		if r.Configuration.SslMode.DestinationPostgresSSLModesPrefer != nil {
-			mode2 := shared.DestinationPostgresSSLModesPreferMode(r.Configuration.SslMode.DestinationPostgresSSLModesPrefer.Mode.ValueString())
-			destinationPostgresSSLModesPrefer = &shared.DestinationPostgresSSLModesPrefer{
-				Mode: mode2,
-			}
+		var destinationPostgresPrefer *shared.DestinationPostgresPrefer
+		if r.Configuration.SslMode.Prefer != nil {
+			destinationPostgresPrefer = &shared.DestinationPostgresPrefer{}
 		}
-		if destinationPostgresSSLModesPrefer != nil {
+		if destinationPostgresPrefer != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				DestinationPostgresSSLModesPrefer: destinationPostgresSSLModesPrefer,
+				Prefer: destinationPostgresPrefer,
 			}
 		}
-		var destinationPostgresSSLModesRequire *shared.DestinationPostgresSSLModesRequire
-		if r.Configuration.SslMode.DestinationPostgresSSLModesRequire != nil {
-			mode3 := shared.DestinationPostgresSSLModesRequireMode(r.Configuration.SslMode.DestinationPostgresSSLModesRequire.Mode.ValueString())
-			destinationPostgresSSLModesRequire = &shared.DestinationPostgresSSLModesRequire{
-				Mode: mode3,
-			}
+		var destinationPostgresRequire *shared.DestinationPostgresRequire
+		if r.Configuration.SslMode.Require != nil {
+			destinationPostgresRequire = &shared.DestinationPostgresRequire{}
 		}
-		if destinationPostgresSSLModesRequire != nil {
+		if destinationPostgresRequire != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				DestinationPostgresSSLModesRequire: destinationPostgresSSLModesRequire,
+				Require: destinationPostgresRequire,
 			}
 		}
-		var destinationPostgresSSLModesVerifyCa *shared.DestinationPostgresSSLModesVerifyCa
-		if r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa != nil {
-			caCertificate := r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.CaCertificate.ValueString()
+		var destinationPostgresVerifyCa *shared.DestinationPostgresVerifyCa
+		if r.Configuration.SslMode.VerifyCa != nil {
+			caCertificate := r.Configuration.SslMode.VerifyCa.CaCertificate.ValueString()
 			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsNull() {
+				*clientKeyPassword = r.Configuration.SslMode.VerifyCa.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword = nil
 			}
-			mode4 := shared.DestinationPostgresSSLModesVerifyCaMode(r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.Mode.ValueString())
-			destinationPostgresSSLModesVerifyCa = &shared.DestinationPostgresSSLModesVerifyCa{
+			destinationPostgresVerifyCa = &shared.DestinationPostgresVerifyCa{
 				CaCertificate:     caCertificate,
 				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode4,
 			}
 		}
-		if destinationPostgresSSLModesVerifyCa != nil {
+		if destinationPostgresVerifyCa != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				DestinationPostgresSSLModesVerifyCa: destinationPostgresSSLModesVerifyCa,
+				VerifyCa: destinationPostgresVerifyCa,
 			}
 		}
-		var destinationPostgresSSLModesVerifyFull *shared.DestinationPostgresSSLModesVerifyFull
-		if r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull != nil {
-			caCertificate1 := r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.CaCertificate.ValueString()
-			clientCertificate := r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.ClientCertificate.ValueString()
-			clientKey := r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.ClientKey.ValueString()
+		var destinationPostgresVerifyFull *shared.DestinationPostgresVerifyFull
+		if r.Configuration.SslMode.VerifyFull != nil {
+			caCertificate1 := r.Configuration.SslMode.VerifyFull.CaCertificate.ValueString()
+			clientCertificate := r.Configuration.SslMode.VerifyFull.ClientCertificate.ValueString()
+			clientKey := r.Configuration.SslMode.VerifyFull.ClientKey.ValueString()
 			clientKeyPassword1 := new(string)
-			if !r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.ClientKeyPassword.IsNull() {
-				*clientKeyPassword1 = r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsNull() {
+				*clientKeyPassword1 = r.Configuration.SslMode.VerifyFull.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode5 := shared.DestinationPostgresSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.Mode.ValueString())
-			destinationPostgresSSLModesVerifyFull = &shared.DestinationPostgresSSLModesVerifyFull{
+			destinationPostgresVerifyFull = &shared.DestinationPostgresVerifyFull{
 				CaCertificate:     caCertificate1,
 				ClientCertificate: clientCertificate,
 				ClientKey:         clientKey,
 				ClientKeyPassword: clientKeyPassword1,
-				Mode:              mode5,
 			}
 		}
-		if destinationPostgresSSLModesVerifyFull != nil {
+		if destinationPostgresVerifyFull != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				DestinationPostgresSSLModesVerifyFull: destinationPostgresSSLModesVerifyFull,
+				VerifyFull: destinationPostgresVerifyFull,
 			}
 		}
 	}
 	var tunnelMethod *shared.DestinationPostgresSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var destinationPostgresSSHTunnelMethodNoTunnel *shared.DestinationPostgresSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationPostgresSSHTunnelMethodNoTunnel = &shared.DestinationPostgresSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var destinationPostgresNoTunnel *shared.DestinationPostgresNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			destinationPostgresNoTunnel = &shared.DestinationPostgresNoTunnel{}
 		}
-		if destinationPostgresSSHTunnelMethodNoTunnel != nil {
+		if destinationPostgresNoTunnel != nil {
 			tunnelMethod = &shared.DestinationPostgresSSHTunnelMethod{
-				DestinationPostgresSSHTunnelMethodNoTunnel: destinationPostgresSSHTunnelMethodNoTunnel,
+				NoTunnel: destinationPostgresNoTunnel,
 			}
 		}
-		var destinationPostgresSSHTunnelMethodSSHKeyAuthentication *shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			destinationPostgresSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var destinationPostgresSSHKeyAuthentication *shared.DestinationPostgresSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			destinationPostgresSSHKeyAuthentication = &shared.DestinationPostgresSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if destinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
+		if destinationPostgresSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresSSHTunnelMethod{
-				DestinationPostgresSSHTunnelMethodSSHKeyAuthentication: destinationPostgresSSHTunnelMethodSSHKeyAuthentication,
+				SSHKeyAuthentication: destinationPostgresSSHKeyAuthentication,
 			}
 		}
-		var destinationPostgresSSHTunnelMethodPasswordAuthentication *shared.DestinationPostgresSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			destinationPostgresSSHTunnelMethodPasswordAuthentication = &shared.DestinationPostgresSSHTunnelMethodPasswordAuthentication{
+		var destinationPostgresPasswordAuthentication *shared.DestinationPostgresPasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationPostgresPasswordAuthentication = &shared.DestinationPostgresPasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if destinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
+		if destinationPostgresPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresSSHTunnelMethod{
-				DestinationPostgresSSHTunnelMethodPasswordAuthentication: destinationPostgresSSHTunnelMethodPasswordAuthentication,
+				PasswordAuthentication: destinationPostgresPasswordAuthentication,
 			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationPostgres{
-		Database:        database,
-		DestinationType: destinationType,
-		Host:            host,
-		JdbcURLParams:   jdbcURLParams,
-		Password:        password,
-		Port:            port,
-		Schema:          schema,
-		SslMode:         sslMode,
-		TunnelMethod:    tunnelMethod,
-		Username:        username,
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
+		Schema:        schema,
+		SslMode:       sslMode,
+		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -220,157 +215,154 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
-	schema := r.Configuration.Schema.ValueString()
-	var sslMode *shared.DestinationPostgresUpdateSSLModes
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
+	} else {
+		schema = nil
+	}
+	var sslMode *shared.SSLModes
 	if r.Configuration.SslMode != nil {
-		var destinationPostgresUpdateSSLModesDisable *shared.DestinationPostgresUpdateSSLModesDisable
-		if r.Configuration.SslMode.DestinationPostgresUpdateSSLModesDisable != nil {
-			mode := shared.DestinationPostgresUpdateSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresUpdateSSLModesDisable.Mode.ValueString())
-			destinationPostgresUpdateSSLModesDisable = &shared.DestinationPostgresUpdateSSLModesDisable{
-				Mode: mode,
+		var disable *shared.Disable
+		if r.Configuration.SslMode.Disable != nil {
+			disable = &shared.Disable{}
+		}
+		if disable != nil {
+			sslMode = &shared.SSLModes{
+				Disable: disable,
 			}
 		}
-		if destinationPostgresUpdateSSLModesDisable != nil {
-			sslMode = &shared.DestinationPostgresUpdateSSLModes{
-				DestinationPostgresUpdateSSLModesDisable: destinationPostgresUpdateSSLModesDisable,
+		var allow *shared.Allow
+		if r.Configuration.SslMode.Allow != nil {
+			allow = &shared.Allow{}
+		}
+		if allow != nil {
+			sslMode = &shared.SSLModes{
+				Allow: allow,
 			}
 		}
-		var destinationPostgresUpdateSSLModesAllow *shared.DestinationPostgresUpdateSSLModesAllow
-		if r.Configuration.SslMode.DestinationPostgresUpdateSSLModesAllow != nil {
-			mode1 := shared.DestinationPostgresUpdateSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresUpdateSSLModesAllow.Mode.ValueString())
-			destinationPostgresUpdateSSLModesAllow = &shared.DestinationPostgresUpdateSSLModesAllow{
-				Mode: mode1,
+		var prefer *shared.Prefer
+		if r.Configuration.SslMode.Prefer != nil {
+			prefer = &shared.Prefer{}
+		}
+		if prefer != nil {
+			sslMode = &shared.SSLModes{
+				Prefer: prefer,
 			}
 		}
-		if destinationPostgresUpdateSSLModesAllow != nil {
-			sslMode = &shared.DestinationPostgresUpdateSSLModes{
-				DestinationPostgresUpdateSSLModesAllow: destinationPostgresUpdateSSLModesAllow,
+		var require *shared.Require
+		if r.Configuration.SslMode.Require != nil {
+			require = &shared.Require{}
+		}
+		if require != nil {
+			sslMode = &shared.SSLModes{
+				Require: require,
 			}
 		}
-		var destinationPostgresUpdateSSLModesPrefer *shared.DestinationPostgresUpdateSSLModesPrefer
-		if r.Configuration.SslMode.DestinationPostgresUpdateSSLModesPrefer != nil {
-			mode2 := shared.DestinationPostgresUpdateSSLModesPreferMode(r.Configuration.SslMode.DestinationPostgresUpdateSSLModesPrefer.Mode.ValueString())
-			destinationPostgresUpdateSSLModesPrefer = &shared.DestinationPostgresUpdateSSLModesPrefer{
-				Mode: mode2,
-			}
-		}
-		if destinationPostgresUpdateSSLModesPrefer != nil {
-			sslMode = &shared.DestinationPostgresUpdateSSLModes{
-				DestinationPostgresUpdateSSLModesPrefer: destinationPostgresUpdateSSLModesPrefer,
-			}
-		}
-		var destinationPostgresUpdateSSLModesRequire *shared.DestinationPostgresUpdateSSLModesRequire
-		if r.Configuration.SslMode.DestinationPostgresUpdateSSLModesRequire != nil {
-			mode3 := shared.DestinationPostgresUpdateSSLModesRequireMode(r.Configuration.SslMode.DestinationPostgresUpdateSSLModesRequire.Mode.ValueString())
-			destinationPostgresUpdateSSLModesRequire = &shared.DestinationPostgresUpdateSSLModesRequire{
-				Mode: mode3,
-			}
-		}
-		if destinationPostgresUpdateSSLModesRequire != nil {
-			sslMode = &shared.DestinationPostgresUpdateSSLModes{
-				DestinationPostgresUpdateSSLModesRequire: destinationPostgresUpdateSSLModesRequire,
-			}
-		}
-		var destinationPostgresUpdateSSLModesVerifyCa *shared.DestinationPostgresUpdateSSLModesVerifyCa
-		if r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyCa != nil {
-			caCertificate := r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyCa.CaCertificate.ValueString()
+		var verifyCa *shared.VerifyCa
+		if r.Configuration.SslMode.VerifyCa != nil {
+			caCertificate := r.Configuration.SslMode.VerifyCa.CaCertificate.ValueString()
 			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyCa.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyCa.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsNull() {
+				*clientKeyPassword = r.Configuration.SslMode.VerifyCa.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword = nil
 			}
-			mode4 := shared.DestinationPostgresUpdateSSLModesVerifyCaMode(r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyCa.Mode.ValueString())
-			destinationPostgresUpdateSSLModesVerifyCa = &shared.DestinationPostgresUpdateSSLModesVerifyCa{
+			verifyCa = &shared.VerifyCa{
 				CaCertificate:     caCertificate,
 				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode4,
 			}
 		}
-		if destinationPostgresUpdateSSLModesVerifyCa != nil {
-			sslMode = &shared.DestinationPostgresUpdateSSLModes{
-				DestinationPostgresUpdateSSLModesVerifyCa: destinationPostgresUpdateSSLModesVerifyCa,
+		if verifyCa != nil {
+			sslMode = &shared.SSLModes{
+				VerifyCa: verifyCa,
 			}
 		}
-		var destinationPostgresUpdateSSLModesVerifyFull *shared.DestinationPostgresUpdateSSLModesVerifyFull
-		if r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull != nil {
-			caCertificate1 := r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.CaCertificate.ValueString()
-			clientCertificate := r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.ClientCertificate.ValueString()
-			clientKey := r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.ClientKey.ValueString()
+		var verifyFull *shared.VerifyFull
+		if r.Configuration.SslMode.VerifyFull != nil {
+			caCertificate1 := r.Configuration.SslMode.VerifyFull.CaCertificate.ValueString()
+			clientCertificate := r.Configuration.SslMode.VerifyFull.ClientCertificate.ValueString()
+			clientKey := r.Configuration.SslMode.VerifyFull.ClientKey.ValueString()
 			clientKeyPassword1 := new(string)
-			if !r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.ClientKeyPassword.IsNull() {
-				*clientKeyPassword1 = r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsNull() {
+				*clientKeyPassword1 = r.Configuration.SslMode.VerifyFull.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode5 := shared.DestinationPostgresUpdateSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationPostgresUpdateSSLModesVerifyFull.Mode.ValueString())
-			destinationPostgresUpdateSSLModesVerifyFull = &shared.DestinationPostgresUpdateSSLModesVerifyFull{
+			verifyFull = &shared.VerifyFull{
 				CaCertificate:     caCertificate1,
 				ClientCertificate: clientCertificate,
 				ClientKey:         clientKey,
 				ClientKeyPassword: clientKeyPassword1,
-				Mode:              mode5,
 			}
 		}
-		if destinationPostgresUpdateSSLModesVerifyFull != nil {
-			sslMode = &shared.DestinationPostgresUpdateSSLModes{
-				DestinationPostgresUpdateSSLModesVerifyFull: destinationPostgresUpdateSSLModesVerifyFull,
+		if verifyFull != nil {
+			sslMode = &shared.SSLModes{
+				VerifyFull: verifyFull,
 			}
 		}
 	}
 	var tunnelMethod *shared.DestinationPostgresUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var destinationPostgresUpdateSSHTunnelMethodNoTunnel *shared.DestinationPostgresUpdateSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationPostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationPostgresUpdateSSHTunnelMethodNoTunnel = &shared.DestinationPostgresUpdateSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var destinationPostgresUpdateNoTunnel *shared.DestinationPostgresUpdateNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			destinationPostgresUpdateNoTunnel = &shared.DestinationPostgresUpdateNoTunnel{}
 		}
-		if destinationPostgresUpdateSSHTunnelMethodNoTunnel != nil {
+		if destinationPostgresUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationPostgresUpdateSSHTunnelMethod{
-				DestinationPostgresUpdateSSHTunnelMethodNoTunnel: destinationPostgresUpdateSSHTunnelMethodNoTunnel,
+				NoTunnel: destinationPostgresUpdateNoTunnel,
 			}
 		}
-		var destinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			destinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var destinationPostgresUpdateSSHKeyAuthentication *shared.DestinationPostgresUpdateSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			destinationPostgresUpdateSSHKeyAuthentication = &shared.DestinationPostgresUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if destinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		if destinationPostgresUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresUpdateSSHTunnelMethod{
-				DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication: destinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication,
+				SSHKeyAuthentication: destinationPostgresUpdateSSHKeyAuthentication,
 			}
 		}
-		var destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication{
+		var destinationPostgresUpdatePasswordAuthentication *shared.DestinationPostgresUpdatePasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationPostgresUpdatePasswordAuthentication = &shared.DestinationPostgresUpdatePasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		if destinationPostgresUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresUpdateSSHTunnelMethod{
-				DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication: destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication,
+				PasswordAuthentication: destinationPostgresUpdatePasswordAuthentication,
 			}
 		}
 	}

@@ -9,3 +9,31 @@ type SourceKustomerSingerCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceKustomerSingerCreateRequest) GetConfiguration() SourceKustomerSinger {
+	if o == nil {
+		return SourceKustomerSinger{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceKustomerSingerCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceKustomerSingerCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceKustomerSingerCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

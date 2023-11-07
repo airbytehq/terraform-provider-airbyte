@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceDatascopeResourceModel) ToCreateSDKType() *shared.SourceDatascopeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceDatascopeDatascope(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceDatascope{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

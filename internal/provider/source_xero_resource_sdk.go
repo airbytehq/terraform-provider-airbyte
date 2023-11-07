@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -21,12 +21,10 @@ func (r *SourceXeroResourceModel) ToCreateSDKType() *shared.SourceXeroCreateRequ
 		RefreshToken:    refreshToken,
 		TokenExpiryDate: tokenExpiryDate,
 	}
-	sourceType := shared.SourceXeroXero(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	tenantID := r.Configuration.TenantID.ValueString()
 	configuration := shared.SourceXero{
 		Authentication: authentication,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 		TenantID:       tenantID,
 	}
@@ -58,7 +56,7 @@ func (r *SourceXeroResourceModel) ToUpdateSDKType() *shared.SourceXeroPutRequest
 	clientSecret := r.Configuration.Authentication.ClientSecret.ValueString()
 	refreshToken := r.Configuration.Authentication.RefreshToken.ValueString()
 	tokenExpiryDate := r.Configuration.Authentication.TokenExpiryDate.ValueString()
-	authentication := shared.SourceXeroUpdateAuthenticateViaXeroOAuth{
+	authentication := shared.AuthenticateViaXeroOAuth{
 		AccessToken:     accessToken,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,

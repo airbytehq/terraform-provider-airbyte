@@ -15,13 +15,12 @@ SourceLokalise Resource
 ```terraform
 resource "airbyte_source_lokalise" "my_source_lokalise" {
   configuration = {
-    api_key     = "...my_api_key..."
-    project_id  = "...my_project_id..."
-    source_type = "lokalise"
+    api_key    = "...my_api_key..."
+    project_id = "...my_project_id..."
   }
-  name         = "Bernard Gottlieb"
+  name         = "Chris Cronin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "573fecd4-7353-4f63-8820-9379aa69cd5f"
+  workspace_id = "1c9f9cba-a542-4e6e-8809-61d84c3fbc24"
 }
 ```
 
@@ -50,6 +49,5 @@ Required:
 
 - `api_key` (String) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 - `project_id` (String) Lokalise project ID. Available at Project Settings > General.
-- `source_type` (String) must be one of ["lokalise"]
 
 

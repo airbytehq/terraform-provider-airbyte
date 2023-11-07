@@ -3,23 +3,21 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinmarketcapCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.SourceCoinmarketcapDataType(r.Configuration.DataType.ValueString())
-	sourceType := shared.SourceCoinmarketcapCoinmarketcap(r.Configuration.SourceType.ValueString())
 	var symbols []string = nil
 	for _, symbolsItem := range r.Configuration.Symbols {
 		symbols = append(symbols, symbolsItem.ValueString())
 	}
 	configuration := shared.SourceCoinmarketcap{
-		APIKey:     apiKey,
-		DataType:   dataType,
-		SourceType: sourceType,
-		Symbols:    symbols,
+		APIKey:   apiKey,
+		DataType: dataType,
+		Symbols:  symbols,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -45,7 +43,7 @@ func (r *SourceCoinmarketcapResourceModel) ToGetSDKType() *shared.SourceCoinmark
 
 func (r *SourceCoinmarketcapResourceModel) ToUpdateSDKType() *shared.SourceCoinmarketcapPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	dataType := shared.SourceCoinmarketcapUpdateDataType(r.Configuration.DataType.ValueString())
+	dataType := shared.DataType(r.Configuration.DataType.ValueString())
 	var symbols []string = nil
 	for _, symbolsItem := range r.Configuration.Symbols {
 		symbols = append(symbols, symbolsItem.ValueString())

@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOrbit struct {
-	APIToken   types.String `tfsdk:"api_token"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
-	Workspace  types.String `tfsdk:"workspace"`
+	APIToken  types.String `tfsdk:"api_token"`
+	StartDate types.String `tfsdk:"start_date"`
+	Workspace types.String `tfsdk:"workspace"`
 }

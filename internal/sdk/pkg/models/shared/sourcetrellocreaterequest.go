@@ -9,3 +9,31 @@ type SourceTrelloCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTrelloCreateRequest) GetConfiguration() SourceTrello {
+	if o == nil {
+		return SourceTrello{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTrelloCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTrelloCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTrelloCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

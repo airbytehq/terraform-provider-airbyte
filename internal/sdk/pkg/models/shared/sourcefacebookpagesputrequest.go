@@ -7,3 +7,24 @@ type SourceFacebookPagesPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *SourceFacebookPagesPutRequest) GetConfiguration() SourceFacebookPagesUpdate {
+	if o == nil {
+		return SourceFacebookPagesUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFacebookPagesPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFacebookPagesPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

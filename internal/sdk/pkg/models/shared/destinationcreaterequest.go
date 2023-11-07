@@ -8,3 +8,24 @@ type DestinationCreateRequest struct {
 	Name          string      `json:"name"`
 	WorkspaceID   string      `json:"workspaceId"`
 }
+
+func (o *DestinationCreateRequest) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *DestinationCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

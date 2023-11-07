@@ -3,64 +3,59 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCreateRequest {
 	var credentials *shared.SourceShopifyShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourceShopifyShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyShopifyAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
+		var sourceShopifyOAuth20 *shared.SourceShopifyOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authMethod := shared.SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
 			clientID := new(string)
-			if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 			} else {
 				clientID = nil
 			}
 			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			} else {
 				clientSecret = nil
 			}
-			sourceShopifyShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyShopifyAuthorizationMethodOAuth20{
+			sourceShopifyOAuth20 = &shared.SourceShopifyOAuth20{
 				AccessToken:  accessToken,
-				AuthMethod:   authMethod,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 			}
 		}
-		if sourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
+		if sourceShopifyOAuth20 != nil {
 			credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
-				SourceShopifyShopifyAuthorizationMethodOAuth20: sourceShopifyShopifyAuthorizationMethodOAuth20,
+				OAuth20: sourceShopifyOAuth20,
 			}
 		}
-		var sourceShopifyShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyShopifyAuthorizationMethodAPIPassword
-		if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
-			apiPassword := r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
-			authMethod1 := shared.SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
-			sourceShopifyShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyShopifyAuthorizationMethodAPIPassword{
+		var sourceShopifyAPIPassword *shared.SourceShopifyAPIPassword
+		if r.Configuration.Credentials.APIPassword != nil {
+			apiPassword := r.Configuration.Credentials.APIPassword.APIPassword.ValueString()
+			sourceShopifyAPIPassword = &shared.SourceShopifyAPIPassword{
 				APIPassword: apiPassword,
-				AuthMethod:  authMethod1,
 			}
 		}
-		if sourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
+		if sourceShopifyAPIPassword != nil {
 			credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
-				SourceShopifyShopifyAuthorizationMethodAPIPassword: sourceShopifyShopifyAuthorizationMethodAPIPassword,
+				APIPassword: sourceShopifyAPIPassword,
 			}
 		}
 	}
 	shop := r.Configuration.Shop.ValueString()
-	sourceType := shared.SourceShopifyShopify(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -70,7 +65,6 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 	configuration := shared.SourceShopify{
 		Credentials: credentials,
 		Shop:        shop,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -96,53 +90,49 @@ func (r *SourceShopifyResourceModel) ToGetSDKType() *shared.SourceShopifyCreateR
 }
 
 func (r *SourceShopifyResourceModel) ToUpdateSDKType() *shared.SourceShopifyPutRequest {
-	var credentials *shared.SourceShopifyUpdateShopifyAuthorizationMethod
+	var credentials *shared.ShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
+		var sourceShopifyUpdateOAuth20 *shared.SourceShopifyUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authMethod := shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
 			clientID := new(string)
-			if !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 			} else {
 				clientID = nil
 			}
 			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			} else {
 				clientSecret = nil
 			}
-			sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20{
+			sourceShopifyUpdateOAuth20 = &shared.SourceShopifyUpdateOAuth20{
 				AccessToken:  accessToken,
-				AuthMethod:   authMethod,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 			}
 		}
-		if sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
-			credentials = &shared.SourceShopifyUpdateShopifyAuthorizationMethod{
-				SourceShopifyUpdateShopifyAuthorizationMethodOAuth20: sourceShopifyUpdateShopifyAuthorizationMethodOAuth20,
+		if sourceShopifyUpdateOAuth20 != nil {
+			credentials = &shared.ShopifyAuthorizationMethod{
+				OAuth20: sourceShopifyUpdateOAuth20,
 			}
 		}
-		var sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
-		if r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
-			apiPassword := r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
-			authMethod1 := shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
-			sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword{
+		var apiPassword *shared.APIPassword
+		if r.Configuration.Credentials.APIPassword != nil {
+			apiPassword1 := r.Configuration.Credentials.APIPassword.APIPassword.ValueString()
+			apiPassword = &shared.APIPassword{
+				APIPassword: apiPassword1,
+			}
+		}
+		if apiPassword != nil {
+			credentials = &shared.ShopifyAuthorizationMethod{
 				APIPassword: apiPassword,
-				AuthMethod:  authMethod1,
-			}
-		}
-		if sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
-			credentials = &shared.SourceShopifyUpdateShopifyAuthorizationMethod{
-				SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword: sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword,
 			}
 		}
 	}

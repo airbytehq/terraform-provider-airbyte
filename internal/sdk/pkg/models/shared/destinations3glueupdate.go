@@ -3,151 +3,182 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType string
+type DestinationS3GlueUpdateSchemasCompressionType string
 
 const (
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeGzip DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType = "GZIP"
+	DestinationS3GlueUpdateSchemasCompressionTypeGzip DestinationS3GlueUpdateSchemasCompressionType = "GZIP"
 )
 
-func (e DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) ToPointer() *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType {
+func (e DestinationS3GlueUpdateSchemasCompressionType) ToPointer() *DestinationS3GlueUpdateSchemasCompressionType {
 	return &e
 }
 
-func (e *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueUpdateSchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GZIP":
-		*e = DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(v)
+		*e = DestinationS3GlueUpdateSchemasCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueUpdateSchemasCompressionType: %v", v)
 	}
 }
 
-// DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP struct {
-	CompressionType *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `json:"compression_type,omitempty"`
+// DestinationS3GlueUpdateGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
+type DestinationS3GlueUpdateGZIP struct {
+	CompressionType *DestinationS3GlueUpdateSchemasCompressionType `default:"GZIP" json:"compression_type"`
 }
 
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType string
+func (d DestinationS3GlueUpdateGZIP) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueUpdateGZIP) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueUpdateGZIP) GetCompressionType() *DestinationS3GlueUpdateSchemasCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
+}
+
+type DestinationS3GlueUpdateCompressionType string
 
 const (
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeNoCompression DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType = "No Compression"
+	DestinationS3GlueUpdateCompressionTypeNoCompression DestinationS3GlueUpdateCompressionType = "No Compression"
 )
 
-func (e DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) ToPointer() *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType {
+func (e DestinationS3GlueUpdateCompressionType) ToPointer() *DestinationS3GlueUpdateCompressionType {
 	return &e
 }
 
-func (e *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueUpdateCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(v)
+		*e = DestinationS3GlueUpdateCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueUpdateCompressionType: %v", v)
 	}
 }
 
-// DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression struct {
-	CompressionType *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
+// DestinationS3GlueUpdateNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
+type DestinationS3GlueUpdateNoCompression struct {
+	CompressionType *DestinationS3GlueUpdateCompressionType `default:"No Compression" json:"compression_type"`
 }
 
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionType string
+func (d DestinationS3GlueUpdateNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueUpdateNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueUpdateNoCompression) GetCompressionType() *DestinationS3GlueUpdateCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
+}
+
+type DestinationS3GlueUpdateCompressionUnionType string
 
 const (
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionType = "destination-s3-glue-update_Output Format_JSON Lines: Newline-delimited JSON_Compression_No Compression"
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP          DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionType = "destination-s3-glue-update_Output Format_JSON Lines: Newline-delimited JSON_Compression_GZIP"
+	DestinationS3GlueUpdateCompressionUnionTypeNoCompression DestinationS3GlueUpdateCompressionUnionType = "NoCompression"
+	DestinationS3GlueUpdateCompressionUnionTypeGzip          DestinationS3GlueUpdateCompressionUnionType = "Gzip"
 )
 
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression struct {
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP          *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+type DestinationS3GlueUpdateCompression struct {
+	NoCompression *DestinationS3GlueUpdateNoCompression
+	Gzip          *DestinationS3GlueUpdateGZIP
 
-	Type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionType
+	Type DestinationS3GlueUpdateCompressionUnionType
 }
 
-func CreateDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression(destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression {
-	typ := DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+func CreateDestinationS3GlueUpdateCompressionNoCompression(noCompression DestinationS3GlueUpdateNoCompression) DestinationS3GlueUpdateCompression {
+	typ := DestinationS3GlueUpdateCompressionUnionTypeNoCompression
 
-	return DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-		DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: &destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+	return DestinationS3GlueUpdateCompression{
+		NoCompression: &noCompression,
+		Type:          typ,
+	}
+}
+
+func CreateDestinationS3GlueUpdateCompressionGzip(gzip DestinationS3GlueUpdateGZIP) DestinationS3GlueUpdateCompression {
+	typ := DestinationS3GlueUpdateCompressionUnionTypeGzip
+
+	return DestinationS3GlueUpdateCompression{
+		Gzip: &gzip,
 		Type: typ,
 	}
 }
 
-func CreateDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP(destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression {
-	typ := DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+func (u *DestinationS3GlueUpdateCompression) UnmarshalJSON(data []byte) error {
 
-	return DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-		DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: &destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
-		Type: typ,
-	}
-}
-
-func (u *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression := new(DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression); err == nil {
-		u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-		u.Type = DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+	noCompression := new(DestinationS3GlueUpdateNoCompression)
+	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
+		u.NoCompression = noCompression
+		u.Type = DestinationS3GlueUpdateCompressionUnionTypeNoCompression
 		return nil
 	}
 
-	destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP := new(DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP); err == nil {
-		u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
-		u.Type = DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+	gzip := new(DestinationS3GlueUpdateGZIP)
+	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
+		u.Gzip = gzip
+		u.Type = DestinationS3GlueUpdateCompressionUnionTypeGzip
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-		return json.Marshal(u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
+func (u DestinationS3GlueUpdateCompression) MarshalJSON() ([]byte, error) {
+	if u.NoCompression != nil {
+		return utils.MarshalJSON(u.NoCompression, "", true)
 	}
 
-	if u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-		return json.Marshal(u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
+	if u.Gzip != nil {
+		return utils.MarshalJSON(u.Gzip, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening string
+// Flattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
+type Flattening string
 
 const (
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlatteningNoFlattening        DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening = "No flattening"
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlatteningRootLevelFlattening DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening = "Root level flattening"
+	FlatteningNoFlattening        Flattening = "No flattening"
+	FlatteningRootLevelFlattening Flattening = "Root level flattening"
 )
 
-func (e DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening) ToPointer() *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening {
+func (e Flattening) ToPointer() *Flattening {
 	return &e
 }
 
-func (e *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening) UnmarshalJSON(data []byte) error {
+func (e *Flattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -156,76 +187,105 @@ func (e *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlatten
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening(v)
+		*e = Flattening(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening: %v", v)
+		return fmt.Errorf("invalid value for Flattening: %v", v)
 	}
 }
 
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType string
+type DestinationS3GlueUpdateFormatType string
 
 const (
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType = "JSONL"
+	DestinationS3GlueUpdateFormatTypeJsonl DestinationS3GlueUpdateFormatType = "JSONL"
 )
 
-func (e DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType) ToPointer() *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType {
+func (e DestinationS3GlueUpdateFormatType) ToPointer() *DestinationS3GlueUpdateFormatType {
 	return &e
 }
 
-func (e *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueUpdateFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "JSONL":
-		*e = DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(v)
+		*e = DestinationS3GlueUpdateFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueUpdateFormatType: %v", v)
 	}
 }
 
-// DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
-type DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON struct {
+// DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
+type DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-	Compression *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
+	Compression *DestinationS3GlueUpdateCompression `json:"compression,omitempty"`
 	// Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-	Flattening *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening `json:"flattening,omitempty"`
-	FormatType DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType  `json:"format_type"`
+	Flattening *Flattening                        `default:"Root level flattening" json:"flattening"`
+	FormatType *DestinationS3GlueUpdateFormatType `default:"JSONL" json:"format_type"`
+}
+
+func (d DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) GetCompression() *DestinationS3GlueUpdateCompression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) GetFlattening() *Flattening {
+	if o == nil {
+		return nil
+	}
+	return o.Flattening
+}
+
+func (o *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationS3GlueUpdateFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationS3GlueUpdateOutputFormatType string
 
 const (
-	DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateOutputFormatType = "destination-s3-glue-update_Output Format_JSON Lines: Newline-delimited JSON"
+	DestinationS3GlueUpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateOutputFormatType = "JSONLinesNewlineDelimitedJSON"
 )
 
 type DestinationS3GlueUpdateOutputFormat struct {
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON
+	JSONLinesNewlineDelimitedJSON *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
 
 	Type DestinationS3GlueUpdateOutputFormatType
 }
 
-func CreateDestinationS3GlueUpdateOutputFormatDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON(destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON) DestinationS3GlueUpdateOutputFormat {
-	typ := DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON
+func CreateDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) DestinationS3GlueUpdateOutputFormat {
+	typ := DestinationS3GlueUpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON
 
 	return DestinationS3GlueUpdateOutputFormat{
-		DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON: &destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON,
-		Type: typ,
+		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
+		Type:                          typ,
 	}
 }
 
 func (u *DestinationS3GlueUpdateOutputFormat) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON := new(DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON); err == nil {
-		u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON = destinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON
-		u.Type = DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON
+	jsonLinesNewlineDelimitedJSON := new(DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
+		u.Type = DestinationS3GlueUpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
@@ -233,26 +293,26 @@ func (u *DestinationS3GlueUpdateOutputFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3GlueUpdateOutputFormat) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON)
+	if u.JSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// DestinationS3GlueUpdateSerializationLibrary - The library that your query engine will use for reading and writing data in your lake.
-type DestinationS3GlueUpdateSerializationLibrary string
+// SerializationLibrary - The library that your query engine will use for reading and writing data in your lake.
+type SerializationLibrary string
 
 const (
-	DestinationS3GlueUpdateSerializationLibraryOrgOpenxDataJsonserdeJSONSerDe     DestinationS3GlueUpdateSerializationLibrary = "org.openx.data.jsonserde.JsonSerDe"
-	DestinationS3GlueUpdateSerializationLibraryOrgApacheHiveHcatalogDataJSONSerDe DestinationS3GlueUpdateSerializationLibrary = "org.apache.hive.hcatalog.data.JsonSerDe"
+	SerializationLibraryOrgOpenxDataJsonserdeJSONSerDe     SerializationLibrary = "org.openx.data.jsonserde.JsonSerDe"
+	SerializationLibraryOrgApacheHiveHcatalogDataJSONSerDe SerializationLibrary = "org.apache.hive.hcatalog.data.JsonSerDe"
 )
 
-func (e DestinationS3GlueUpdateSerializationLibrary) ToPointer() *DestinationS3GlueUpdateSerializationLibrary {
+func (e SerializationLibrary) ToPointer() *SerializationLibrary {
 	return &e
 }
 
-func (e *DestinationS3GlueUpdateSerializationLibrary) UnmarshalJSON(data []byte) error {
+func (e *SerializationLibrary) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -261,10 +321,10 @@ func (e *DestinationS3GlueUpdateSerializationLibrary) UnmarshalJSON(data []byte)
 	case "org.openx.data.jsonserde.JsonSerDe":
 		fallthrough
 	case "org.apache.hive.hcatalog.data.JsonSerDe":
-		*e = DestinationS3GlueUpdateSerializationLibrary(v)
+		*e = SerializationLibrary(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueUpdateSerializationLibrary: %v", v)
+		return fmt.Errorf("invalid value for SerializationLibrary: %v", v)
 	}
 }
 
@@ -378,17 +438,105 @@ type DestinationS3GlueUpdate struct {
 	// Name of the glue database for creating the tables, leave blank if no integration
 	GlueDatabase string `json:"glue_database"`
 	// The library that your query engine will use for reading and writing data in your lake.
-	GlueSerializationLibrary DestinationS3GlueUpdateSerializationLibrary `json:"glue_serialization_library"`
+	GlueSerializationLibrary *SerializationLibrary `default:"org.openx.data.jsonserde.JsonSerDe" json:"glue_serialization_library"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 	S3BucketName string `json:"s3_bucket_name"`
 	// Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>
 	S3BucketPath string `json:"s3_bucket_path"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	S3BucketRegion DestinationS3GlueUpdateS3BucketRegion `json:"s3_bucket_region"`
+	S3BucketRegion *DestinationS3GlueUpdateS3BucketRegion `default:"" json:"s3_bucket_region"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
-	S3Endpoint *string `json:"s3_endpoint,omitempty"`
+	S3Endpoint *string `default:"" json:"s3_endpoint"`
 	// Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 	S3PathFormat *string `json:"s3_path_format,omitempty"`
 	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
 	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+}
+
+func (d DestinationS3GlueUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GlueUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GlueUpdate) GetAccessKeyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationS3GlueUpdate) GetFileNamePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNamePattern
+}
+
+func (o *DestinationS3GlueUpdate) GetFormat() DestinationS3GlueUpdateOutputFormat {
+	if o == nil {
+		return DestinationS3GlueUpdateOutputFormat{}
+	}
+	return o.Format
+}
+
+func (o *DestinationS3GlueUpdate) GetGlueDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.GlueDatabase
+}
+
+func (o *DestinationS3GlueUpdate) GetGlueSerializationLibrary() *SerializationLibrary {
+	if o == nil {
+		return nil
+	}
+	return o.GlueSerializationLibrary
+}
+
+func (o *DestinationS3GlueUpdate) GetS3BucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketName
+}
+
+func (o *DestinationS3GlueUpdate) GetS3BucketPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketPath
+}
+
+func (o *DestinationS3GlueUpdate) GetS3BucketRegion() *DestinationS3GlueUpdateS3BucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.S3BucketRegion
+}
+
+func (o *DestinationS3GlueUpdate) GetS3Endpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3Endpoint
+}
+
+func (o *DestinationS3GlueUpdate) GetS3PathFormat() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3PathFormat
+}
+
+func (o *DestinationS3GlueUpdate) GetSecretAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretAccessKey
 }

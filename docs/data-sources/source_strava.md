@@ -14,7 +14,6 @@ SourceStrava DataSource
 
 ```terraform
 data "airbyte_source_strava" "my_source_strava" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,27 +25,12 @@ data "airbyte_source_strava" "my_source_strava" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `athlete_id` (Number) The Athlete ID of your Strava developer application.
-- `auth_type` (String) must be one of ["Client"]
-- `client_id` (String) The Client ID of your Strava developer application.
-- `client_secret` (String) The Client Secret of your Strava developer application.
-- `refresh_token` (String) The Refresh Token with the activity: read_all permissions.
-- `source_type` (String) must be one of ["strava"]
-- `start_date` (String) UTC date and time. Any data before this date will not be replicated.
 
 

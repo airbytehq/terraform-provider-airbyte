@@ -10,3 +10,24 @@ type SourceApifyDatasetUpdate struct {
 	// Your application's Client Secret. You can find this value on the <a href="https://console.apify.com/account/integrations">console integrations tab</a> after you login.
 	Token string `json:"token"`
 }
+
+func (o *SourceApifyDatasetUpdate) GetClean() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Clean
+}
+
+func (o *SourceApifyDatasetUpdate) GetDatasetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DatasetID
+}
+
+func (o *SourceApifyDatasetUpdate) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}

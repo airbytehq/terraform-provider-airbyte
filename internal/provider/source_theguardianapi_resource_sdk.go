@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -27,7 +27,6 @@ func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheG
 	} else {
 		section = nil
 	}
-	sourceType := shared.SourceTheGuardianAPITheGuardianAPI(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	tag := new(string)
 	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
@@ -36,13 +35,12 @@ func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheG
 		tag = nil
 	}
 	configuration := shared.SourceTheGuardianAPI{
-		APIKey:     apiKey,
-		EndDate:    endDate,
-		Query:      query,
-		Section:    section,
-		SourceType: sourceType,
-		StartDate:  startDate,
-		Tag:        tag,
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Query:     query,
+		Section:   section,
+		StartDate: startDate,
+		Tag:       tag,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

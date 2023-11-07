@@ -9,3 +9,31 @@ type SourceKlarnaCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceKlarnaCreateRequest) GetConfiguration() SourceKlarna {
+	if o == nil {
+		return SourceKlarna{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceKlarnaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceKlarnaCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceKlarnaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

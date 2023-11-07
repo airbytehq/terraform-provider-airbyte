@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,16 +20,9 @@ func (r *SourceSpacexAPIResourceModel) ToCreateSDKType() *shared.SourceSpacexAPI
 	} else {
 		options = nil
 	}
-	sourceType := new(shared.SourceSpacexAPISpacexAPI)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceSpacexAPISpacexAPI(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
 	configuration := shared.SourceSpacexAPI{
-		ID:         id,
-		Options:    options,
-		SourceType: sourceType,
+		ID:      id,
+		Options: options,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

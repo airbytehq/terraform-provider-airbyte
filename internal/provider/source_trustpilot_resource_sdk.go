@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -14,58 +14,42 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
 	}
 	var credentials shared.SourceTrustpilotAuthorizationMethod
-	var sourceTrustpilotAuthorizationMethodOAuth20 *shared.SourceTrustpilotAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceTrustpilotAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceTrustpilotAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
-		clientID := r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
-		sourceTrustpilotAuthorizationMethodOAuth20 = &shared.SourceTrustpilotAuthorizationMethodOAuth20{
+	var sourceTrustpilotOAuth20 *shared.SourceTrustpilotOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+		sourceTrustpilotOAuth20 = &shared.SourceTrustpilotOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
-	if sourceTrustpilotAuthorizationMethodOAuth20 != nil {
+	if sourceTrustpilotOAuth20 != nil {
 		credentials = shared.SourceTrustpilotAuthorizationMethod{
-			SourceTrustpilotAuthorizationMethodOAuth20: sourceTrustpilotAuthorizationMethodOAuth20,
+			OAuth20: sourceTrustpilotOAuth20,
 		}
 	}
-	var sourceTrustpilotAuthorizationMethodAPIKey *shared.SourceTrustpilotAuthorizationMethodAPIKey
-	if r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey != nil {
-		authType1 := new(shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthType)
-		if !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.IsNull() {
-			*authType1 = shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthType(r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
-		clientId1 := r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID.ValueString()
-		sourceTrustpilotAuthorizationMethodAPIKey = &shared.SourceTrustpilotAuthorizationMethodAPIKey{
-			AuthType: authType1,
+	var sourceTrustpilotAPIKey *shared.SourceTrustpilotAPIKey
+	if r.Configuration.Credentials.APIKey != nil {
+		clientId1 := r.Configuration.Credentials.APIKey.ClientID.ValueString()
+		sourceTrustpilotAPIKey = &shared.SourceTrustpilotAPIKey{
 			ClientID: clientId1,
 		}
 	}
-	if sourceTrustpilotAuthorizationMethodAPIKey != nil {
+	if sourceTrustpilotAPIKey != nil {
 		credentials = shared.SourceTrustpilotAuthorizationMethod{
-			SourceTrustpilotAuthorizationMethodAPIKey: sourceTrustpilotAuthorizationMethodAPIKey,
+			APIKey: sourceTrustpilotAPIKey,
 		}
 	}
-	sourceType := shared.SourceTrustpilotTrustpilot(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceTrustpilot{
 		BusinessUnits: businessUnits,
 		Credentials:   credentials,
-		SourceType:    sourceType,
 		StartDate:     startDate,
 	}
 	name := r.Name.ValueString()
@@ -96,50 +80,36 @@ func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpil
 		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
 	}
 	var credentials shared.SourceTrustpilotUpdateAuthorizationMethod
-	var sourceTrustpilotUpdateAuthorizationMethodOAuth20 *shared.SourceTrustpilotUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceTrustpilotUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
-		clientID := r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
-		sourceTrustpilotUpdateAuthorizationMethodOAuth20 = &shared.SourceTrustpilotUpdateAuthorizationMethodOAuth20{
+	var sourceTrustpilotUpdateOAuth20 *shared.SourceTrustpilotUpdateOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+		sourceTrustpilotUpdateOAuth20 = &shared.SourceTrustpilotUpdateOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
-	if sourceTrustpilotUpdateAuthorizationMethodOAuth20 != nil {
+	if sourceTrustpilotUpdateOAuth20 != nil {
 		credentials = shared.SourceTrustpilotUpdateAuthorizationMethod{
-			SourceTrustpilotUpdateAuthorizationMethodOAuth20: sourceTrustpilotUpdateAuthorizationMethodOAuth20,
+			OAuth20: sourceTrustpilotUpdateOAuth20,
 		}
 	}
-	var sourceTrustpilotUpdateAuthorizationMethodAPIKey *shared.SourceTrustpilotUpdateAuthorizationMethodAPIKey
-	if r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey != nil {
-		authType1 := new(shared.SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthType)
-		if !r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey.AuthType.IsNull() {
-			*authType1 = shared.SourceTrustpilotUpdateAuthorizationMethodAPIKeyAuthType(r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey.AuthType.ValueString())
-		} else {
-			authType1 = nil
-		}
-		clientId1 := r.Configuration.Credentials.SourceTrustpilotUpdateAuthorizationMethodAPIKey.ClientID.ValueString()
-		sourceTrustpilotUpdateAuthorizationMethodAPIKey = &shared.SourceTrustpilotUpdateAuthorizationMethodAPIKey{
-			AuthType: authType1,
+	var sourceTrustpilotUpdateAPIKey *shared.SourceTrustpilotUpdateAPIKey
+	if r.Configuration.Credentials.APIKey != nil {
+		clientId1 := r.Configuration.Credentials.APIKey.ClientID.ValueString()
+		sourceTrustpilotUpdateAPIKey = &shared.SourceTrustpilotUpdateAPIKey{
 			ClientID: clientId1,
 		}
 	}
-	if sourceTrustpilotUpdateAuthorizationMethodAPIKey != nil {
+	if sourceTrustpilotUpdateAPIKey != nil {
 		credentials = shared.SourceTrustpilotUpdateAuthorizationMethod{
-			SourceTrustpilotUpdateAuthorizationMethodAPIKey: sourceTrustpilotUpdateAuthorizationMethodAPIKey,
+			APIKey: sourceTrustpilotUpdateAPIKey,
 		}
 	}
 	startDate := r.Configuration.StartDate.ValueString()

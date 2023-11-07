@@ -7,3 +7,24 @@ type DestinationElasticsearchCreateRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *DestinationElasticsearchCreateRequest) GetConfiguration() DestinationElasticsearch {
+	if o == nil {
+		return DestinationElasticsearch{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationElasticsearchCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationElasticsearchCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -15,13 +15,12 @@ SourceCloseCom Resource
 ```terraform
 resource "airbyte_source_close_com" "my_source_closecom" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "close-com"
-    start_date  = "2021-01-01"
+    api_key    = "...my_api_key..."
+    start_date = "2021-01-01"
   }
-  name         = "Ronnie Nikolaus"
+  name         = "Luis Fahey"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e0ac184c-2b9c-4247-8883-73a40e1942f3"
+  workspace_id = "e7edb401-c239-4e69-86f2-1d654173cccb"
 }
 ```
 
@@ -49,10 +48,10 @@ resource "airbyte_source_close_com" "my_source_closecom" {
 Required:
 
 - `api_key` (String) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
-- `source_type` (String) must be one of ["close-com"]
 
 Optional:
 
-- `start_date` (String) The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
+- `start_date` (String) Default: "2021-01-01"
+The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
 
 

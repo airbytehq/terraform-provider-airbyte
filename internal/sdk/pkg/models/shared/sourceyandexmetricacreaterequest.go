@@ -9,3 +9,31 @@ type SourceYandexMetricaCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceYandexMetricaCreateRequest) GetConfiguration() SourceYandexMetrica {
+	if o == nil {
+		return SourceYandexMetrica{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceYandexMetricaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceYandexMetricaCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceYandexMetricaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

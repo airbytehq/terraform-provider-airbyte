@@ -3,10 +3,9 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     api_key                               = "...my_api_key..."
     custom_reports_fields                 = "...my_custom_reports_fields..."
     custom_reports_include_default_fields = true
-    source_type                           = "bamboo-hr"
     subdomain                             = "...my_subdomain..."
   }
-  name         = "Ralph Rau"
+  name         = "Olga Crooks"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1b36a080-88d1-400e-bada-200ef0422eb2"
+  workspace_id = "6ed560cd-3f9e-41f9-aaf9-a8e2157a8560"
 }

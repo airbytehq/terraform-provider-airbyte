@@ -22,15 +22,12 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     azure_blob_storage_endpoint               = "blob.core.windows.net"
     azure_blob_storage_schema_inference_limit = 500
     format = {
-      source_azure_blob_storage_input_format_json_lines_newline_delimited_json = {
-        format_type = "JSONL"
-      }
+      source_azure_blob_storage_json_lines_newline_delimited_json = {}
     }
-    source_type = "azure-blob-storage"
   }
-  name         = "Patty Mraz"
+  name         = "Margie Kutch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3f2ceda7-e23f-4225-b411-faf4b7544e47"
+  workspace_id = "187a0987-5344-412b-8321-7acbe2ad9f31"
 }
 ```
 
@@ -61,12 +58,12 @@ Required:
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
 - `format` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format))
-- `source_type` (String) must be one of ["azure-blob-storage"]
 
 Optional:
 
 - `azure_blob_storage_blobs_prefix` (String) The Azure blob storage prefix to be applied
-- `azure_blob_storage_endpoint` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+- `azure_blob_storage_endpoint` (String) Default: "blob.core.windows.net"
+This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
 - `azure_blob_storage_schema_inference_limit` (Number) The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure
 
 <a id="nestedatt--configuration--format"></a>
@@ -74,22 +71,9 @@ Optional:
 
 Optional:
 
-- `source_azure_blob_storage_input_format_json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json))
-- `source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json))
+- `json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
 
-<a id="nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.source_azure_blob_storage_input_format_json_lines_newline_delimited_json`
-
-Required:
-
-- `format_type` (String) must be one of ["JSONL"]
-
-
-<a id="nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json`
-
-Required:
-
-- `format_type` (String) must be one of ["JSONL"]
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json`
 
 

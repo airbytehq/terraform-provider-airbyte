@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -18,7 +18,6 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToCreateSDKType() *shared.S
 	for _, categoriesItem := range r.Configuration.Categories {
 		categories = append(categories, shared.SourceGooglePagespeedInsightsCategories(categoriesItem.ValueString()))
 	}
-	sourceType := shared.SourceGooglePagespeedInsightsGooglePagespeedInsights(r.Configuration.SourceType.ValueString())
 	var strategies []shared.SourceGooglePagespeedInsightsStrategies = nil
 	for _, strategiesItem := range r.Configuration.Strategies {
 		strategies = append(strategies, shared.SourceGooglePagespeedInsightsStrategies(strategiesItem.ValueString()))
@@ -30,7 +29,6 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToCreateSDKType() *shared.S
 	configuration := shared.SourceGooglePagespeedInsights{
 		APIKey:     apiKey,
 		Categories: categories,
-		SourceType: sourceType,
 		Strategies: strategies,
 		Urls:       urls,
 	}
@@ -63,13 +61,13 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToUpdateSDKType() *shared.S
 	} else {
 		apiKey = nil
 	}
-	var categories []shared.SourceGooglePagespeedInsightsUpdateCategories = nil
+	var categories []shared.Categories = nil
 	for _, categoriesItem := range r.Configuration.Categories {
-		categories = append(categories, shared.SourceGooglePagespeedInsightsUpdateCategories(categoriesItem.ValueString()))
+		categories = append(categories, shared.Categories(categoriesItem.ValueString()))
 	}
-	var strategies []shared.SourceGooglePagespeedInsightsUpdateStrategies = nil
+	var strategies []shared.Strategies = nil
 	for _, strategiesItem := range r.Configuration.Strategies {
-		strategies = append(strategies, shared.SourceGooglePagespeedInsightsUpdateStrategies(strategiesItem.ValueString()))
+		strategies = append(strategies, shared.Strategies(strategiesItem.ValueString()))
 	}
 	var urls []string = nil
 	for _, urlsItem := range r.Configuration.Urls {

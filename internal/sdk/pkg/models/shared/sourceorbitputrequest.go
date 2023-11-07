@@ -7,3 +7,24 @@ type SourceOrbitPutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceOrbitPutRequest) GetConfiguration() SourceOrbitUpdate {
+	if o == nil {
+		return SourceOrbitUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOrbitPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOrbitPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

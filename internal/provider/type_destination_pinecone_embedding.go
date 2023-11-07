@@ -3,10 +3,7 @@
 package provider
 
 type DestinationPineconeEmbedding struct {
-	DestinationPineconeEmbeddingCohere       *DestinationMilvusEmbeddingCohere    `tfsdk:"destination_pinecone_embedding_cohere"`
-	DestinationPineconeEmbeddingFake         *DestinationLangchainEmbeddingFake   `tfsdk:"destination_pinecone_embedding_fake"`
-	DestinationPineconeEmbeddingOpenAI       *DestinationLangchainEmbeddingOpenAI `tfsdk:"destination_pinecone_embedding_open_ai"`
-	DestinationPineconeUpdateEmbeddingCohere *DestinationMilvusEmbeddingCohere    `tfsdk:"destination_pinecone_update_embedding_cohere"`
-	DestinationPineconeUpdateEmbeddingFake   *DestinationLangchainEmbeddingFake   `tfsdk:"destination_pinecone_update_embedding_fake"`
-	DestinationPineconeUpdateEmbeddingOpenAI *DestinationLangchainEmbeddingOpenAI `tfsdk:"destination_pinecone_update_embedding_open_ai"`
+	Cohere *Cohere                                                   `tfsdk:"cohere"`
+	Fake   *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"fake"`
+	OpenAI *OpenAI                                                   `tfsdk:"open_ai"`
 }

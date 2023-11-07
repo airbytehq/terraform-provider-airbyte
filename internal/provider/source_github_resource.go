@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -62,7 +62,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_github_authentication_o_auth": schema.SingleNestedAttribute{
+							"o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -77,76 +77,12 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										Optional:    true,
 										Description: `OAuth Client secret`,
 									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `must be one of ["OAuth Credentials"]`,
-									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
 							},
-							"source_github_authentication_personal_access_token": schema.SingleNestedAttribute{
+							"personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `must be one of ["PAT Credentials"]`,
-									},
-									"personal_access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
-									},
-								},
-								Description: `Choose how to authenticate to GitHub`,
-							},
-							"source_github_update_authentication_o_auth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `OAuth access token`,
-									},
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `OAuth Client Id`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `OAuth Client secret`,
-									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `must be one of ["OAuth Credentials"]`,
-									},
-								},
-								Description: `Choose how to authenticate to GitHub`,
-							},
-							"source_github_update_authentication_personal_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `must be one of ["PAT Credentials"]`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
@@ -168,15 +104,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						Optional:    true,
 						Description: `The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"github",
-							),
-						},
-						Description: `must be one of ["github"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -193,6 +120,9 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -256,7 +186,7 @@ func (r *SourceGithubResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGithub(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -432,5 +362,5 @@ func (r *SourceGithubResource) Delete(ctx context.Context, req resource.DeleteRe
 }
 
 func (r *SourceGithubResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

@@ -3,8 +3,6 @@
 package provider
 
 type SourceNotionAuthenticateUsing struct {
-	SourceNotionAuthenticateUsingAccessToken       *SourceNotionAuthenticateUsingAccessToken `tfsdk:"source_notion_authenticate_using_access_token"`
-	SourceNotionAuthenticateUsingOAuth20           *SourceNotionAuthenticateUsingOAuth20     `tfsdk:"source_notion_authenticate_using_o_auth2_0"`
-	SourceNotionUpdateAuthenticateUsingAccessToken *SourceNotionAuthenticateUsingAccessToken `tfsdk:"source_notion_update_authenticate_using_access_token"`
-	SourceNotionUpdateAuthenticateUsingOAuth20     *SourceNotionAuthenticateUsingOAuth20     `tfsdk:"source_notion_update_authenticate_using_o_auth2_0"`
+	AccessToken *DestinationMilvusAPIToken `tfsdk:"access_token"`
+	OAuth20     *SourceNotionOAuth20       `tfsdk:"o_auth20"`
 }

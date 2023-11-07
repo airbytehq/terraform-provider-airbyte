@@ -9,3 +9,31 @@ type SourceAuth0CreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAuth0CreateRequest) GetConfiguration() SourceAuth0 {
+	if o == nil {
+		return SourceAuth0{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAuth0CreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAuth0CreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAuth0CreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

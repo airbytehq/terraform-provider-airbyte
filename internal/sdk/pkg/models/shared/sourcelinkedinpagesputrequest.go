@@ -7,3 +7,24 @@ type SourceLinkedinPagesPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *SourceLinkedinPagesPutRequest) GetConfiguration() SourceLinkedinPagesUpdate {
+	if o == nil {
+		return SourceLinkedinPagesUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLinkedinPagesPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLinkedinPagesPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,9 +3,8 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
     brewed_after  = "MM-YYYY"
     brewed_before = "MM-YYYY"
     id            = 22
-    source_type   = "punk-api"
   }
-  name         = "Darnell Turcotte"
+  name         = "Richard Heller"
   secret_id    = "...my_secret_id..."
-  workspace_id = "540ef53a-34a1-4b8f-a997-31adc05d85ae"
+  workspace_id = "2040e069-282d-4d6a-92cb-01cbd9faeeda"
 }

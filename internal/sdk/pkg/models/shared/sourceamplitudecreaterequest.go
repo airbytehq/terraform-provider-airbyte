@@ -9,3 +9,31 @@ type SourceAmplitudeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceAmplitudeCreateRequest) GetConfiguration() SourceAmplitude {
+	if o == nil {
+		return SourceAmplitude{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAmplitudeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAmplitudeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceAmplitudeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

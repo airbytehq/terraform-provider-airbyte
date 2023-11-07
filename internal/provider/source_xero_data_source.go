@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,10 +31,10 @@ type SourceXeroDataSource struct {
 
 // SourceXeroDataSourceModel describes the data model.
 type SourceXeroDataSourceModel struct {
-	Configuration SourceXero   `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -50,65 +49,22 @@ func (r *SourceXeroDataSource) Schema(ctx context.Context, req datasource.Schema
 		MarkdownDescription: "SourceXero DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"authentication": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"access_token": schema.StringAttribute{
-								Computed:    true,
-								Description: `Enter your Xero application's access token`,
-							},
-							"client_id": schema.StringAttribute{
-								Computed:    true,
-								Description: `Enter your Xero application's Client ID`,
-							},
-							"client_secret": schema.StringAttribute{
-								Computed:    true,
-								Description: `Enter your Xero application's Client Secret`,
-							},
-							"refresh_token": schema.StringAttribute{
-								Computed:    true,
-								Description: `Enter your Xero application's refresh token`,
-							},
-							"token_expiry_date": schema.StringAttribute{
-								Computed:    true,
-								Description: `The date-time when the access token should be refreshed`,
-							},
-						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"xero",
-							),
-						},
-						Description: `must be one of ["xero"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.`,
-					},
-					"tenant_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter your Xero organization's Tenant ID`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

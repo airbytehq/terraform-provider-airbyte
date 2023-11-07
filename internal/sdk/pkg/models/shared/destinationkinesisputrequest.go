@@ -7,3 +7,24 @@ type DestinationKinesisPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *DestinationKinesisPutRequest) GetConfiguration() DestinationKinesisUpdate {
+	if o == nil {
+		return DestinationKinesisUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationKinesisPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationKinesisPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

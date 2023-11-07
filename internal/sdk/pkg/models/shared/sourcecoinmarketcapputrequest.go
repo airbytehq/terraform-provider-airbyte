@@ -7,3 +7,24 @@ type SourceCoinmarketcapPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *SourceCoinmarketcapPutRequest) GetConfiguration() SourceCoinmarketcapUpdate {
+	if o == nil {
+		return SourceCoinmarketcapUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceCoinmarketcapPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceCoinmarketcapPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,10 +3,7 @@
 package provider
 
 type SourcePostgresUpdateMethod struct {
-	SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn       *SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn      `tfsdk:"source_postgres_update_method_detect_changes_with_xmin_system_column"`
-	SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC        *SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC       `tfsdk:"source_postgres_update_method_read_changes_using_write_ahead_log_cdc"`
-	SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor        *SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor       `tfsdk:"source_postgres_update_method_scan_changes_with_user_defined_cursor"`
-	SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn *SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn      `tfsdk:"source_postgres_update_update_method_detect_changes_with_xmin_system_column"`
-	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC  *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC `tfsdk:"source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc"`
-	SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor  *SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor       `tfsdk:"source_postgres_update_update_method_scan_changes_with_user_defined_cursor"`
+	DetectChangesWithXminSystemColumn *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"detect_changes_with_xmin_system_column"`
+	ReadChangesUsingWriteAheadLogCDC  *LogicalReplicationCDC                                    `tfsdk:"read_changes_using_write_ahead_log_cdc"`
+	ScanChangesWithUserDefinedCursor  *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"scan_changes_with_user_defined_cursor"`
 }

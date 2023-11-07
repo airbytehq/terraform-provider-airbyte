@@ -7,3 +7,24 @@ type DestinationVerticaCreateRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *DestinationVerticaCreateRequest) GetConfiguration() DestinationVertica {
+	if o == nil {
+		return DestinationVertica{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationVerticaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationVerticaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

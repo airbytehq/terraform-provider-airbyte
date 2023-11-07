@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAzureTable struct {
-	SourceType            types.String `tfsdk:"source_type"`
 	StorageAccessKey      types.String `tfsdk:"storage_access_key"`
 	StorageAccountName    types.String `tfsdk:"storage_account_name"`
 	StorageEndpointSuffix types.String `tfsdk:"storage_endpoint_suffix"`

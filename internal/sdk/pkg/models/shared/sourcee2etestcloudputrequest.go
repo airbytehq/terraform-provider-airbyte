@@ -7,3 +7,24 @@ type SourceE2eTestCloudPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *SourceE2eTestCloudPutRequest) GetConfiguration() SourceE2eTestCloudUpdate {
+	if o == nil {
+		return SourceE2eTestCloudUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceE2eTestCloudPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceE2eTestCloudPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

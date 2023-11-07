@@ -9,3 +9,31 @@ type SourceTrustpilotCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTrustpilotCreateRequest) GetConfiguration() SourceTrustpilot {
+	if o == nil {
+		return SourceTrustpilot{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTrustpilotCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTrustpilotCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTrustpilotCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

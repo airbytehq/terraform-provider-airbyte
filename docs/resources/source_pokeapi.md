@@ -15,12 +15,11 @@ SourcePokeapi Resource
 ```terraform
 resource "airbyte_source_pokeapi" "my_source_pokeapi" {
   configuration = {
-    pokemon_name = "snorlax"
-    source_type  = "pokeapi"
+    pokemon_name = "luxray"
   }
-  name         = "Jeremiah Hahn"
+  name         = "Dean Gutkowski"
   secret_id    = "...my_secret_id..."
-  workspace_id = "aa2b2411-3695-4d1e-a698-fcc4596217c2"
+  workspace_id = "c369f9cb-0a3d-4d00-87da-ef770c81f95c"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_pokeapi" "my_source_pokeapi" {
 Required:
 
 - `pokemon_name` (String) Pokemon requested from the API.
-- `source_type` (String) must be one of ["pokeapi"]
 
 

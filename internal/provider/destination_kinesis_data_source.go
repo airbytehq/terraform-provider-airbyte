@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,10 +31,11 @@ type DestinationKinesisDataSource struct {
 
 // DestinationKinesisDataSourceModel describes the data model.
 type DestinationKinesisDataSourceModel struct {
-	Configuration DestinationKinesis `tfsdk:"configuration"`
-	DestinationID types.String       `tfsdk:"destination_id"`
-	Name          types.String       `tfsdk:"name"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,46 +49,19 @@ func (r *DestinationKinesisDataSource) Schema(ctx context.Context, req datasourc
 		MarkdownDescription: "DestinationKinesis DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Generate the AWS Access Key for current user.`,
-					},
-					"buffer_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Buffer size for storing kinesis records before being batch streamed.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kinesis",
-							),
-						},
-						Description: `must be one of ["kinesis"]`,
-					},
-					"endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `AWS Kinesis endpoint.`,
-					},
-					"private_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".`,
-					},
-					"region": schema.StringAttribute{
-						Computed:    true,
-						Description: `AWS region. Your account determines the Regions that are available to you.`,
-					},
-					"shard_count": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Number of shards to which the data should be streamed.`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

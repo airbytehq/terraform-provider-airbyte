@@ -2,9 +2,6 @@
 
 package provider
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
-
 type DestinationDevNull struct {
-	DestinationType types.String                      `tfsdk:"destination_type"`
 	TestDestination DestinationDevNullTestDestination `tfsdk:"test_destination"`
 }

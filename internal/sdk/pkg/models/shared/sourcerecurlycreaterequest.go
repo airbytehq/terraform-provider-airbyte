@@ -9,3 +9,31 @@ type SourceRecurlyCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceRecurlyCreateRequest) GetConfiguration() SourceRecurly {
+	if o == nil {
+		return SourceRecurly{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRecurlyCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRecurlyCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceRecurlyCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

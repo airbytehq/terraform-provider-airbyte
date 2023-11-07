@@ -3,18 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -71,15 +70,6 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 						Required:    true,
 						Description: `Netsuite realm e.g. 2344535, as for ` + "`" + `production` + "`" + ` or 2344535_SB1, as for the ` + "`" + `sandbox` + "`" + ``,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"netsuite",
-							),
-						},
-						Description: `must be one of ["netsuite"]`,
-					},
 					"start_datetime": schema.StringAttribute{
 						Required:    true,
 						Description: `Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"`,
@@ -93,8 +83,9 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Access token secret`,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.`,
+						Optional: true,
+						MarkdownDescription: `Default: 30` + "\n" +
+							`The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.`,
 					},
 				},
 			},
@@ -105,6 +96,9 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -168,7 +162,7 @@ func (r *SourceNetsuiteResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceNetsuite(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -344,5 +338,5 @@ func (r *SourceNetsuiteResource) Delete(ctx context.Context, req resource.Delete
 }
 
 func (r *SourceNetsuiteResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

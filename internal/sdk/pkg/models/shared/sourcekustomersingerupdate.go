@@ -8,3 +8,17 @@ type SourceKustomerSingerUpdate struct {
 	// The date from which you'd like to replicate the data
 	StartDate string `json:"start_date"`
 }
+
+func (o *SourceKustomerSingerUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceKustomerSingerUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}

@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,11 +31,11 @@ type SourceNetsuiteDataSource struct {
 
 // SourceNetsuiteDataSourceModel describes the data model.
 type SourceNetsuiteDataSourceModel struct {
-	Configuration SourceNetsuite `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,62 +49,22 @@ func (r *SourceNetsuiteDataSource) Schema(ctx context.Context, req datasource.Sc
 		MarkdownDescription: "SourceNetsuite DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"consumer_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Consumer key associated with your integration`,
-					},
-					"consumer_secret": schema.StringAttribute{
-						Computed:    true,
-						Description: `Consumer secret associated with your integration`,
-					},
-					"object_types": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.`,
-					},
-					"realm": schema.StringAttribute{
-						Computed:    true,
-						Description: `Netsuite realm e.g. 2344535, as for ` + "`" + `production` + "`" + ` or 2344535_SB1, as for the ` + "`" + `sandbox` + "`" + ``,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"netsuite",
-							),
-						},
-						Description: `must be one of ["netsuite"]`,
-					},
-					"start_datetime": schema.StringAttribute{
-						Computed:    true,
-						Description: `Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"`,
-					},
-					"token_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Access token key`,
-					},
-					"token_secret": schema.StringAttribute{
-						Computed:    true,
-						Description: `Access token secret`,
-					},
-					"window_in_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

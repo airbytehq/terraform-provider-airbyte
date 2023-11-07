@@ -3,20 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRailzResourceModel) ToCreateSDKType() *shared.SourceRailzCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceRailzRailz(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceRailz{
-		ClientID:   clientID,
-		SecretKey:  secretKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		ClientID:  clientID,
+		SecretKey: secretKey,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

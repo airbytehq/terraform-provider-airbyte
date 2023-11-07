@@ -3,40 +3,36 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOutbrainAmplifyCreateRequest {
 	var credentials shared.SourceOutbrainAmplifyAuthenticationMethod
-	var sourceOutbrainAmplifyAuthenticationMethodAccessToken *shared.SourceOutbrainAmplifyAuthenticationMethodAccessToken
-	if r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.AccessToken.ValueString()
-		typeVar := shared.SourceOutbrainAmplifyAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests(r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodAccessToken.Type.ValueString())
-		sourceOutbrainAmplifyAuthenticationMethodAccessToken = &shared.SourceOutbrainAmplifyAuthenticationMethodAccessToken{
+	var sourceOutbrainAmplifyAccessToken *shared.SourceOutbrainAmplifyAccessToken
+	if r.Configuration.Credentials.AccessToken != nil {
+		accessToken := r.Configuration.Credentials.AccessToken.AccessToken.ValueString()
+		sourceOutbrainAmplifyAccessToken = &shared.SourceOutbrainAmplifyAccessToken{
 			AccessToken: accessToken,
-			Type:        typeVar,
 		}
 	}
-	if sourceOutbrainAmplifyAuthenticationMethodAccessToken != nil {
+	if sourceOutbrainAmplifyAccessToken != nil {
 		credentials = shared.SourceOutbrainAmplifyAuthenticationMethod{
-			SourceOutbrainAmplifyAuthenticationMethodAccessToken: sourceOutbrainAmplifyAuthenticationMethodAccessToken,
+			AccessToken: sourceOutbrainAmplifyAccessToken,
 		}
 	}
-	var sourceOutbrainAmplifyAuthenticationMethodUsernamePassword *shared.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword
-	if r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword != nil {
-		password := r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Password.ValueString()
-		typeVar1 := shared.SourceOutbrainAmplifyAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest(r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Type.ValueString())
-		username := r.Configuration.Credentials.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword.Username.ValueString()
-		sourceOutbrainAmplifyAuthenticationMethodUsernamePassword = &shared.SourceOutbrainAmplifyAuthenticationMethodUsernamePassword{
+	var sourceOutbrainAmplifyUsernamePassword *shared.SourceOutbrainAmplifyUsernamePassword
+	if r.Configuration.Credentials.UsernamePassword != nil {
+		password := r.Configuration.Credentials.UsernamePassword.Password.ValueString()
+		username := r.Configuration.Credentials.UsernamePassword.Username.ValueString()
+		sourceOutbrainAmplifyUsernamePassword = &shared.SourceOutbrainAmplifyUsernamePassword{
 			Password: password,
-			Type:     typeVar1,
 			Username: username,
 		}
 	}
-	if sourceOutbrainAmplifyAuthenticationMethodUsernamePassword != nil {
+	if sourceOutbrainAmplifyUsernamePassword != nil {
 		credentials = shared.SourceOutbrainAmplifyAuthenticationMethod{
-			SourceOutbrainAmplifyAuthenticationMethodUsernamePassword: sourceOutbrainAmplifyAuthenticationMethodUsernamePassword,
+			UsernamePassword: sourceOutbrainAmplifyUsernamePassword,
 		}
 	}
 	endDate := new(string)
@@ -57,14 +53,12 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	} else {
 		reportGranularity = nil
 	}
-	sourceType := shared.SourceOutbrainAmplifyOutbrainAmplify(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceOutbrainAmplify{
 		Credentials:          credentials,
 		EndDate:              endDate,
 		GeoLocationBreakdown: geoLocationBreakdown,
 		ReportGranularity:    reportGranularity,
-		SourceType:           sourceType,
 		StartDate:            startDate,
 	}
 	name := r.Name.ValueString()
@@ -91,34 +85,30 @@ func (r *SourceOutbrainAmplifyResourceModel) ToGetSDKType() *shared.SourceOutbra
 
 func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOutbrainAmplifyPutRequest {
 	var credentials shared.SourceOutbrainAmplifyUpdateAuthenticationMethod
-	var sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken *shared.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken
-	if r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken.AccessToken.ValueString()
-		typeVar := shared.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests(r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken.Type.ValueString())
-		sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken = &shared.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken{
+	var sourceOutbrainAmplifyUpdateAccessToken *shared.SourceOutbrainAmplifyUpdateAccessToken
+	if r.Configuration.Credentials.AccessToken != nil {
+		accessToken := r.Configuration.Credentials.AccessToken.AccessToken.ValueString()
+		sourceOutbrainAmplifyUpdateAccessToken = &shared.SourceOutbrainAmplifyUpdateAccessToken{
 			AccessToken: accessToken,
-			Type:        typeVar,
 		}
 	}
-	if sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken != nil {
+	if sourceOutbrainAmplifyUpdateAccessToken != nil {
 		credentials = shared.SourceOutbrainAmplifyUpdateAuthenticationMethod{
-			SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken: sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken,
+			AccessToken: sourceOutbrainAmplifyUpdateAccessToken,
 		}
 	}
-	var sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword *shared.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword
-	if r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword != nil {
-		password := r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword.Password.ValueString()
-		typeVar1 := shared.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest(r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword.Type.ValueString())
-		username := r.Configuration.Credentials.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword.Username.ValueString()
-		sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword = &shared.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword{
+	var sourceOutbrainAmplifyUpdateUsernamePassword *shared.SourceOutbrainAmplifyUpdateUsernamePassword
+	if r.Configuration.Credentials.UsernamePassword != nil {
+		password := r.Configuration.Credentials.UsernamePassword.Password.ValueString()
+		username := r.Configuration.Credentials.UsernamePassword.Username.ValueString()
+		sourceOutbrainAmplifyUpdateUsernamePassword = &shared.SourceOutbrainAmplifyUpdateUsernamePassword{
 			Password: password,
-			Type:     typeVar1,
 			Username: username,
 		}
 	}
-	if sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword != nil {
+	if sourceOutbrainAmplifyUpdateUsernamePassword != nil {
 		credentials = shared.SourceOutbrainAmplifyUpdateAuthenticationMethod{
-			SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword: sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword,
+			UsernamePassword: sourceOutbrainAmplifyUpdateUsernamePassword,
 		}
 	}
 	endDate := new(string)
@@ -127,15 +117,15 @@ func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOut
 	} else {
 		endDate = nil
 	}
-	geoLocationBreakdown := new(shared.SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion)
+	geoLocationBreakdown := new(shared.GranularityForGeoLocationRegion)
 	if !r.Configuration.GeoLocationBreakdown.IsUnknown() && !r.Configuration.GeoLocationBreakdown.IsNull() {
-		*geoLocationBreakdown = shared.SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion(r.Configuration.GeoLocationBreakdown.ValueString())
+		*geoLocationBreakdown = shared.GranularityForGeoLocationRegion(r.Configuration.GeoLocationBreakdown.ValueString())
 	} else {
 		geoLocationBreakdown = nil
 	}
-	reportGranularity := new(shared.SourceOutbrainAmplifyUpdateGranularityForPeriodicReports)
+	reportGranularity := new(shared.GranularityForPeriodicReports)
 	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
-		*reportGranularity = shared.SourceOutbrainAmplifyUpdateGranularityForPeriodicReports(r.Configuration.ReportGranularity.ValueString())
+		*reportGranularity = shared.GranularityForPeriodicReports(r.Configuration.ReportGranularity.ValueString())
 	} else {
 		reportGranularity = nil
 	}

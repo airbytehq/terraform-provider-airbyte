@@ -3,134 +3,194 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle - Authentication Scenario
-type SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle string
+// SourceGoogleDirectoryUpdateSchemasCredentialsTitle - Authentication Scenario
+type SourceGoogleDirectoryUpdateSchemasCredentialsTitle string
 
 const (
-	SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitleServiceAccounts SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle = "Service accounts"
+	SourceGoogleDirectoryUpdateSchemasCredentialsTitleServiceAccounts SourceGoogleDirectoryUpdateSchemasCredentialsTitle = "Service accounts"
 )
 
-func (e SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle) ToPointer() *SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle {
+func (e SourceGoogleDirectoryUpdateSchemasCredentialsTitle) ToPointer() *SourceGoogleDirectoryUpdateSchemasCredentialsTitle {
 	return &e
 }
 
-func (e *SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleDirectoryUpdateSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service accounts":
-		*e = SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle(v)
+		*e = SourceGoogleDirectoryUpdateSchemasCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleDirectoryUpdateSchemasCredentialsTitle: %v", v)
 	}
 }
 
-// SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey - For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.
-type SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey struct {
+// ServiceAccountKey - For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.
+type ServiceAccountKey struct {
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON string `json:"credentials_json"`
 	// Authentication Scenario
-	CredentialsTitle *SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle `json:"credentials_title,omitempty"`
+	credentialsTitle *SourceGoogleDirectoryUpdateSchemasCredentialsTitle `const:"Service accounts" json:"credentials_title,omitempty"`
 	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
 }
 
-// SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle - Authentication Scenario
-type SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle string
+func (s ServiceAccountKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ServiceAccountKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ServiceAccountKey) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+func (o *ServiceAccountKey) GetCredentialsTitle() *SourceGoogleDirectoryUpdateSchemasCredentialsTitle {
+	return SourceGoogleDirectoryUpdateSchemasCredentialsTitleServiceAccounts.ToPointer()
+}
+
+func (o *ServiceAccountKey) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+// SourceGoogleDirectoryUpdateCredentialsTitle - Authentication Scenario
+type SourceGoogleDirectoryUpdateCredentialsTitle string
 
 const (
-	SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitleWebServerApp SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle = "Web server app"
+	SourceGoogleDirectoryUpdateCredentialsTitleWebServerApp SourceGoogleDirectoryUpdateCredentialsTitle = "Web server app"
 )
 
-func (e SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle) ToPointer() *SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle {
+func (e SourceGoogleDirectoryUpdateCredentialsTitle) ToPointer() *SourceGoogleDirectoryUpdateCredentialsTitle {
 	return &e
 }
 
-func (e *SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleDirectoryUpdateCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Web server app":
-		*e = SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle(v)
+		*e = SourceGoogleDirectoryUpdateCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleDirectoryUpdateCredentialsTitle: %v", v)
 	}
 }
 
-// SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth - For these scenario user only needs to give permission to read Google Directory data.
-type SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth struct {
+// SignInViaGoogleOAuth - For these scenario user only needs to give permission to read Google Directory data.
+type SignInViaGoogleOAuth struct {
 	// The Client ID of the developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of the developer application.
 	ClientSecret string `json:"client_secret"`
 	// Authentication Scenario
-	CredentialsTitle *SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle `json:"credentials_title,omitempty"`
+	credentialsTitle *SourceGoogleDirectoryUpdateCredentialsTitle `const:"Web server app" json:"credentials_title,omitempty"`
 	// The Token for obtaining a new access token.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SignInViaGoogleOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SignInViaGoogleOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SignInViaGoogleOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SignInViaGoogleOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SignInViaGoogleOAuth) GetCredentialsTitle() *SourceGoogleDirectoryUpdateCredentialsTitle {
+	return SourceGoogleDirectoryUpdateCredentialsTitleWebServerApp.ToPointer()
+}
+
+func (o *SignInViaGoogleOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourceGoogleDirectoryUpdateGoogleCredentialsType string
 
 const (
-	SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth SourceGoogleDirectoryUpdateGoogleCredentialsType = "source-google-directory-update_Google Credentials_Sign in via Google (OAuth)"
-	SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey    SourceGoogleDirectoryUpdateGoogleCredentialsType = "source-google-directory-update_Google Credentials_Service Account Key"
+	SourceGoogleDirectoryUpdateGoogleCredentialsTypeSignInViaGoogleOAuth SourceGoogleDirectoryUpdateGoogleCredentialsType = "SignInViaGoogleOAuth"
+	SourceGoogleDirectoryUpdateGoogleCredentialsTypeServiceAccountKey    SourceGoogleDirectoryUpdateGoogleCredentialsType = "ServiceAccountKey"
 )
 
 type SourceGoogleDirectoryUpdateGoogleCredentials struct {
-	SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth *SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
-	SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey    *SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey
+	SignInViaGoogleOAuth *SignInViaGoogleOAuth
+	ServiceAccountKey    *ServiceAccountKey
 
 	Type SourceGoogleDirectoryUpdateGoogleCredentialsType
 }
 
-func CreateSourceGoogleDirectoryUpdateGoogleCredentialsSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth(sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth) SourceGoogleDirectoryUpdateGoogleCredentials {
-	typ := SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
+func CreateSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth(signInViaGoogleOAuth SignInViaGoogleOAuth) SourceGoogleDirectoryUpdateGoogleCredentials {
+	typ := SourceGoogleDirectoryUpdateGoogleCredentialsTypeSignInViaGoogleOAuth
 
 	return SourceGoogleDirectoryUpdateGoogleCredentials{
-		SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth: &sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth,
-		Type: typ,
+		SignInViaGoogleOAuth: &signInViaGoogleOAuth,
+		Type:                 typ,
 	}
 }
 
-func CreateSourceGoogleDirectoryUpdateGoogleCredentialsSourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey(sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey) SourceGoogleDirectoryUpdateGoogleCredentials {
-	typ := SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey
+func CreateSourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey(serviceAccountKey ServiceAccountKey) SourceGoogleDirectoryUpdateGoogleCredentials {
+	typ := SourceGoogleDirectoryUpdateGoogleCredentialsTypeServiceAccountKey
 
 	return SourceGoogleDirectoryUpdateGoogleCredentials{
-		SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey: &sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey,
-		Type: typ,
+		ServiceAccountKey: &serviceAccountKey,
+		Type:              typ,
 	}
 }
 
 func (u *SourceGoogleDirectoryUpdateGoogleCredentials) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey := new(SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey); err == nil {
-		u.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey = sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey
-		u.Type = SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey
+	serviceAccountKey := new(ServiceAccountKey)
+	if err := utils.UnmarshalJSON(data, &serviceAccountKey, "", true, true); err == nil {
+		u.ServiceAccountKey = serviceAccountKey
+		u.Type = SourceGoogleDirectoryUpdateGoogleCredentialsTypeServiceAccountKey
 		return nil
 	}
 
-	sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth := new(SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth); err == nil {
-		u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth = sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
-		u.Type = SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
+	signInViaGoogleOAuth := new(SignInViaGoogleOAuth)
+	if err := utils.UnmarshalJSON(data, &signInViaGoogleOAuth, "", true, true); err == nil {
+		u.SignInViaGoogleOAuth = signInViaGoogleOAuth
+		u.Type = SourceGoogleDirectoryUpdateGoogleCredentialsTypeSignInViaGoogleOAuth
 		return nil
 	}
 
@@ -138,18 +198,25 @@ func (u *SourceGoogleDirectoryUpdateGoogleCredentials) UnmarshalJSON(data []byte
 }
 
 func (u SourceGoogleDirectoryUpdateGoogleCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey != nil {
-		return json.Marshal(u.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey)
+	if u.SignInViaGoogleOAuth != nil {
+		return utils.MarshalJSON(u.SignInViaGoogleOAuth, "", true)
 	}
 
-	if u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth != nil {
-		return json.Marshal(u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth)
+	if u.ServiceAccountKey != nil {
+		return utils.MarshalJSON(u.ServiceAccountKey, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceGoogleDirectoryUpdate struct {
 	// Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.
 	Credentials *SourceGoogleDirectoryUpdateGoogleCredentials `json:"credentials,omitempty"`
+}
+
+func (o *SourceGoogleDirectoryUpdate) GetCredentials() *SourceGoogleDirectoryUpdateGoogleCredentials {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }

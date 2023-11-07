@@ -3,41 +3,78 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePrestashopPrestashop string
+type Prestashop string
 
 const (
-	SourcePrestashopPrestashopPrestashop SourcePrestashopPrestashop = "prestashop"
+	PrestashopPrestashop Prestashop = "prestashop"
 )
 
-func (e SourcePrestashopPrestashop) ToPointer() *SourcePrestashopPrestashop {
+func (e Prestashop) ToPointer() *Prestashop {
 	return &e
 }
 
-func (e *SourcePrestashopPrestashop) UnmarshalJSON(data []byte) error {
+func (e *Prestashop) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "prestashop":
-		*e = SourcePrestashopPrestashop(v)
+		*e = Prestashop(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePrestashopPrestashop: %v", v)
+		return fmt.Errorf("invalid value for Prestashop: %v", v)
 	}
 }
 
 type SourcePrestashop struct {
 	// Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
-	AccessKey  string                     `json:"access_key"`
-	SourceType SourcePrestashopPrestashop `json:"sourceType"`
+	AccessKey  string     `json:"access_key"`
+	sourceType Prestashop `const:"prestashop" json:"sourceType"`
 	// The Start date in the format YYYY-MM-DD.
 	StartDate types.Date `json:"start_date"`
 	// Shop URL without trailing slash.
 	URL string `json:"url"`
+}
+
+func (s SourcePrestashop) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePrestashop) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePrestashop) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *SourcePrestashop) GetSourceType() Prestashop {
+	return PrestashopPrestashop
+}
+
+func (o *SourcePrestashop) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePrestashop) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

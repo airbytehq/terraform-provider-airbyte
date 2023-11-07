@@ -3,49 +3,114 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceBingAdsUpdateAuthMethod string
+type AuthMethod string
 
 const (
-	SourceBingAdsUpdateAuthMethodOauth20 SourceBingAdsUpdateAuthMethod = "oauth2.0"
+	AuthMethodOauth20 AuthMethod = "oauth2.0"
 )
 
-func (e SourceBingAdsUpdateAuthMethod) ToPointer() *SourceBingAdsUpdateAuthMethod {
+func (e AuthMethod) ToPointer() *AuthMethod {
 	return &e
 }
 
-func (e *SourceBingAdsUpdateAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceBingAdsUpdateAuthMethod(v)
+		*e = AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBingAdsUpdateAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for AuthMethod: %v", v)
 	}
 }
 
 type SourceBingAdsUpdate struct {
-	AuthMethod *SourceBingAdsUpdateAuthMethod `json:"auth_method,omitempty"`
+	authMethod *AuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Advertising developer application.
-	ClientSecret *string `json:"client_secret,omitempty"`
+	ClientSecret *string `default:"" json:"client_secret"`
 	// Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
 	DeveloperToken string `json:"developer_token"`
 	// Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
-	LookbackWindow *int64 `json:"lookback_window,omitempty"`
+	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
-	ReportsStartDate types.Date `json:"reports_start_date"`
+	ReportsStartDate *types.Date `default:"2020-01-01" json:"reports_start_date"`
 	// The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
-	TenantID *string `json:"tenant_id,omitempty"`
+	TenantID *string `default:"common" json:"tenant_id"`
+}
+
+func (s SourceBingAdsUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBingAdsUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBingAdsUpdate) GetAuthMethod() *AuthMethod {
+	return AuthMethodOauth20.ToPointer()
+}
+
+func (o *SourceBingAdsUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceBingAdsUpdate) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceBingAdsUpdate) GetDeveloperToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeveloperToken
+}
+
+func (o *SourceBingAdsUpdate) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
+}
+
+func (o *SourceBingAdsUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceBingAdsUpdate) GetReportsStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.ReportsStartDate
+}
+
+func (o *SourceBingAdsUpdate) GetTenantID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TenantID
 }

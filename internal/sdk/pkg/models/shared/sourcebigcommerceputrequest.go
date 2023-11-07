@@ -7,3 +7,24 @@ type SourceBigcommercePutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *SourceBigcommercePutRequest) GetConfiguration() SourceBigcommerceUpdate {
+	if o == nil {
+		return SourceBigcommerceUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBigcommercePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBigcommercePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

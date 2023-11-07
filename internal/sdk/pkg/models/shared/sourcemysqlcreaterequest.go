@@ -9,3 +9,31 @@ type SourceMysqlCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMysqlCreateRequest) GetConfiguration() SourceMysql {
+	if o == nil {
+		return SourceMysql{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMysqlCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMysqlCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMysqlCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

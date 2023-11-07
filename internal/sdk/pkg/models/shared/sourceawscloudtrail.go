@@ -3,32 +3,33 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceAwsCloudtrailAwsCloudtrail string
+type AwsCloudtrail string
 
 const (
-	SourceAwsCloudtrailAwsCloudtrailAwsCloudtrail SourceAwsCloudtrailAwsCloudtrail = "aws-cloudtrail"
+	AwsCloudtrailAwsCloudtrail AwsCloudtrail = "aws-cloudtrail"
 )
 
-func (e SourceAwsCloudtrailAwsCloudtrail) ToPointer() *SourceAwsCloudtrailAwsCloudtrail {
+func (e AwsCloudtrail) ToPointer() *AwsCloudtrail {
 	return &e
 }
 
-func (e *SourceAwsCloudtrailAwsCloudtrail) UnmarshalJSON(data []byte) error {
+func (e *AwsCloudtrail) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aws-cloudtrail":
-		*e = SourceAwsCloudtrailAwsCloudtrail(v)
+		*e = AwsCloudtrail(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAwsCloudtrailAwsCloudtrail: %v", v)
+		return fmt.Errorf("invalid value for AwsCloudtrail: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceAwsCloudtrail struct {
 	// The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
 	AwsRegionName string `json:"aws_region_name"`
 	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-	AwsSecretKey string                           `json:"aws_secret_key"`
-	SourceType   SourceAwsCloudtrailAwsCloudtrail `json:"sourceType"`
+	AwsSecretKey string        `json:"aws_secret_key"`
+	sourceType   AwsCloudtrail `const:"aws-cloudtrail" json:"sourceType"`
 	// The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
-	StartDate types.Date `json:"start_date"`
+	StartDate *types.Date `default:"1970-01-01" json:"start_date"`
+}
+
+func (s SourceAwsCloudtrail) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAwsCloudtrail) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAwsCloudtrail) GetAwsKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeyID
+}
+
+func (o *SourceAwsCloudtrail) GetAwsRegionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsRegionName
+}
+
+func (o *SourceAwsCloudtrail) GetAwsSecretKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsSecretKey
+}
+
+func (o *SourceAwsCloudtrail) GetSourceType() AwsCloudtrail {
+	return AwsCloudtrailAwsCloudtrail
+}
+
+func (o *SourceAwsCloudtrail) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

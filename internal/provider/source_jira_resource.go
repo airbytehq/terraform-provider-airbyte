@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -68,12 +68,14 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.`,
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Expand the changelog when replicating issues.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Expand the changelog when replicating issues.`,
 					},
 					"projects": schema.ListAttribute{
 						Optional:    true,
@@ -81,17 +83,9 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.`,
 					},
 					"render_fields": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Render issue fields in HTML format in addition to Jira JSON-like format.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"jira",
-							),
-						},
-						Description: `must be one of ["jira"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Render issue fields in HTML format in addition to Jira JSON-like format.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -109,6 +103,9 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -172,7 +169,7 @@ func (r *SourceJiraResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceJira(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -348,5 +345,5 @@ func (r *SourceJiraResource) Delete(ctx context.Context, req resource.DeleteRequ
 }
 
 func (r *SourceJiraResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

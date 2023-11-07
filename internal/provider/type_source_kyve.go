@@ -5,10 +5,9 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceKyve struct {
-	MaxPages   types.Int64  `tfsdk:"max_pages"`
-	PageSize   types.Int64  `tfsdk:"page_size"`
-	PoolIds    types.String `tfsdk:"pool_ids"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartIds   types.String `tfsdk:"start_ids"`
-	URLBase    types.String `tfsdk:"url_base"`
+	MaxPages types.Int64  `tfsdk:"max_pages"`
+	PageSize types.Int64  `tfsdk:"page_size"`
+	PoolIds  types.String `tfsdk:"pool_ids"`
+	StartIds types.String `tfsdk:"start_ids"`
+	URLBase  types.String `tfsdk:"url_base"`
 }

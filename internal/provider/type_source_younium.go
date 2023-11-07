@@ -8,6 +8,5 @@ type SourceYounium struct {
 	LegalEntity types.String `tfsdk:"legal_entity"`
 	Password    types.String `tfsdk:"password"`
 	Playground  types.Bool   `tfsdk:"playground"`
-	SourceType  types.String `tfsdk:"source_type"`
 	Username    types.String `tfsdk:"username"`
 }

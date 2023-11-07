@@ -3,126 +3,179 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod string
+type SourceAuth0UpdateSchemasCredentialsAuthenticationMethod string
 
 const (
-	SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethodOauth2AccessToken SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod = "oauth2_access_token"
+	SourceAuth0UpdateSchemasCredentialsAuthenticationMethodOauth2AccessToken SourceAuth0UpdateSchemasCredentialsAuthenticationMethod = "oauth2_access_token"
 )
 
-func (e SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod) ToPointer() *SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod {
+func (e SourceAuth0UpdateSchemasCredentialsAuthenticationMethod) ToPointer() *SourceAuth0UpdateSchemasCredentialsAuthenticationMethod {
 	return &e
 }
 
-func (e *SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceAuth0UpdateSchemasCredentialsAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2_access_token":
-		*e = SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod(v)
+		*e = SourceAuth0UpdateSchemasCredentialsAuthenticationMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceAuth0UpdateSchemasCredentialsAuthenticationMethod: %v", v)
 	}
 }
 
-type SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken struct {
+type OAuth2AccessToken struct {
 	// Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.
-	AccessToken string                                                                     `json:"access_token"`
-	AuthType    SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod `json:"auth_type"`
+	AccessToken string                                                  `json:"access_token"`
+	authType    SourceAuth0UpdateSchemasCredentialsAuthenticationMethod `const:"oauth2_access_token" json:"auth_type"`
 }
 
-type SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod string
+func (o OAuth2AccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *OAuth2AccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *OAuth2AccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *OAuth2AccessToken) GetAuthType() SourceAuth0UpdateSchemasCredentialsAuthenticationMethod {
+	return SourceAuth0UpdateSchemasCredentialsAuthenticationMethodOauth2AccessToken
+}
+
+type SourceAuth0UpdateSchemasAuthenticationMethod string
 
 const (
-	SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodOauth2ConfidentialApplication SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod = "oauth2_confidential_application"
+	SourceAuth0UpdateSchemasAuthenticationMethodOauth2ConfidentialApplication SourceAuth0UpdateSchemasAuthenticationMethod = "oauth2_confidential_application"
 )
 
-func (e SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod) ToPointer() *SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod {
+func (e SourceAuth0UpdateSchemasAuthenticationMethod) ToPointer() *SourceAuth0UpdateSchemasAuthenticationMethod {
 	return &e
 }
 
-func (e *SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceAuth0UpdateSchemasAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2_confidential_application":
-		*e = SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(v)
+		*e = SourceAuth0UpdateSchemasAuthenticationMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceAuth0UpdateSchemasAuthenticationMethod: %v", v)
 	}
 }
 
-type SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication struct {
+type OAuth2ConfidentialApplication struct {
 	// The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>
-	Audience string                                                                                 `json:"audience"`
-	AuthType SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod `json:"auth_type"`
+	Audience string                                       `json:"audience"`
+	authType SourceAuth0UpdateSchemasAuthenticationMethod `const:"oauth2_confidential_application" json:"auth_type"`
 	// Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientID string `json:"client_id"`
 	// Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientSecret string `json:"client_secret"`
 }
 
+func (o OAuth2ConfidentialApplication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *OAuth2ConfidentialApplication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *OAuth2ConfidentialApplication) GetAudience() string {
+	if o == nil {
+		return ""
+	}
+	return o.Audience
+}
+
+func (o *OAuth2ConfidentialApplication) GetAuthType() SourceAuth0UpdateSchemasAuthenticationMethod {
+	return SourceAuth0UpdateSchemasAuthenticationMethodOauth2ConfidentialApplication
+}
+
+func (o *OAuth2ConfidentialApplication) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *OAuth2ConfidentialApplication) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
 type SourceAuth0UpdateAuthenticationMethodType string
 
 const (
-	SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication SourceAuth0UpdateAuthenticationMethodType = "source-auth0-update_Authentication Method_OAuth2 Confidential Application"
-	SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2AccessToken             SourceAuth0UpdateAuthenticationMethodType = "source-auth0-update_Authentication Method_OAuth2 Access Token"
+	SourceAuth0UpdateAuthenticationMethodTypeOAuth2ConfidentialApplication SourceAuth0UpdateAuthenticationMethodType = "OAuth2ConfidentialApplication"
+	SourceAuth0UpdateAuthenticationMethodTypeOAuth2AccessToken             SourceAuth0UpdateAuthenticationMethodType = "OAuth2AccessToken"
 )
 
 type SourceAuth0UpdateAuthenticationMethod struct {
-	SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication *SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
-	SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken             *SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken
+	OAuth2ConfidentialApplication *OAuth2ConfidentialApplication
+	OAuth2AccessToken             *OAuth2AccessToken
 
 	Type SourceAuth0UpdateAuthenticationMethodType
 }
 
-func CreateSourceAuth0UpdateAuthenticationMethodSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication(sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication) SourceAuth0UpdateAuthenticationMethod {
-	typ := SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
+func CreateSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication(oAuth2ConfidentialApplication OAuth2ConfidentialApplication) SourceAuth0UpdateAuthenticationMethod {
+	typ := SourceAuth0UpdateAuthenticationMethodTypeOAuth2ConfidentialApplication
 
 	return SourceAuth0UpdateAuthenticationMethod{
-		SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication: &sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication,
-		Type: typ,
+		OAuth2ConfidentialApplication: &oAuth2ConfidentialApplication,
+		Type:                          typ,
 	}
 }
 
-func CreateSourceAuth0UpdateAuthenticationMethodSourceAuth0UpdateAuthenticationMethodOAuth2AccessToken(sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken) SourceAuth0UpdateAuthenticationMethod {
-	typ := SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2AccessToken
+func CreateSourceAuth0UpdateAuthenticationMethodOAuth2AccessToken(oAuth2AccessToken OAuth2AccessToken) SourceAuth0UpdateAuthenticationMethod {
+	typ := SourceAuth0UpdateAuthenticationMethodTypeOAuth2AccessToken
 
 	return SourceAuth0UpdateAuthenticationMethod{
-		SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken: &sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken,
-		Type: typ,
+		OAuth2AccessToken: &oAuth2AccessToken,
+		Type:              typ,
 	}
 }
 
 func (u *SourceAuth0UpdateAuthenticationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken := new(SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken); err == nil {
-		u.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken = sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken
-		u.Type = SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2AccessToken
+	oAuth2AccessToken := new(OAuth2AccessToken)
+	if err := utils.UnmarshalJSON(data, &oAuth2AccessToken, "", true, true); err == nil {
+		u.OAuth2AccessToken = oAuth2AccessToken
+		u.Type = SourceAuth0UpdateAuthenticationMethodTypeOAuth2AccessToken
 		return nil
 	}
 
-	sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication := new(SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication); err == nil {
-		u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication = sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
-		u.Type = SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
+	oAuth2ConfidentialApplication := new(OAuth2ConfidentialApplication)
+	if err := utils.UnmarshalJSON(data, &oAuth2ConfidentialApplication, "", true, true); err == nil {
+		u.OAuth2ConfidentialApplication = oAuth2ConfidentialApplication
+		u.Type = SourceAuth0UpdateAuthenticationMethodTypeOAuth2ConfidentialApplication
 		return nil
 	}
 
@@ -130,15 +183,15 @@ func (u *SourceAuth0UpdateAuthenticationMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceAuth0UpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
-		return json.Marshal(u.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken)
+	if u.OAuth2ConfidentialApplication != nil {
+		return utils.MarshalJSON(u.OAuth2ConfidentialApplication, "", true)
 	}
 
-	if u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
-		return json.Marshal(u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication)
+	if u.OAuth2AccessToken != nil {
+		return utils.MarshalJSON(u.OAuth2AccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAuth0Update struct {
@@ -146,5 +199,37 @@ type SourceAuth0Update struct {
 	BaseURL     string                                `json:"base_url"`
 	Credentials SourceAuth0UpdateAuthenticationMethod `json:"credentials"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate *string `json:"start_date,omitempty"`
+	StartDate *string `default:"2023-08-05T00:43:59.244Z" json:"start_date"`
+}
+
+func (s SourceAuth0Update) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAuth0Update) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAuth0Update) GetBaseURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseURL
+}
+
+func (o *SourceAuth0Update) GetCredentials() SourceAuth0UpdateAuthenticationMethod {
+	if o == nil {
+		return SourceAuth0UpdateAuthenticationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceAuth0Update) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

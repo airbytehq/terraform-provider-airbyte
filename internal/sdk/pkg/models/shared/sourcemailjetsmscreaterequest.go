@@ -9,3 +9,31 @@ type SourceMailjetSmsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceMailjetSmsCreateRequest) GetConfiguration() SourceMailjetSms {
+	if o == nil {
+		return SourceMailjetSms{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMailjetSmsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMailjetSmsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMailjetSmsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

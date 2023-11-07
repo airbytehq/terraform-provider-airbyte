@@ -3,129 +3,189 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod string
+type SourceZendeskSunshineSchemasAuthMethod string
 
 const (
-	SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodAPIToken SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod = "api_token"
+	SourceZendeskSunshineSchemasAuthMethodAPIToken SourceZendeskSunshineSchemasAuthMethod = "api_token"
 )
 
-func (e SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod) ToPointer() *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod {
+func (e SourceZendeskSunshineSchemasAuthMethod) ToPointer() *SourceZendeskSunshineSchemasAuthMethod {
 	return &e
 }
 
-func (e *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskSunshineSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod(v)
+		*e = SourceZendeskSunshineSchemasAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineSchemasAuthMethod: %v", v)
 	}
 }
 
-type SourceZendeskSunshineAuthorizationMethodAPIToken struct {
+type SourceZendeskSunshineAPIToken struct {
 	// API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-	APIToken   string                                                     `json:"api_token"`
-	AuthMethod SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod `json:"auth_method"`
+	APIToken   string                                  `json:"api_token"`
+	authMethod *SourceZendeskSunshineSchemasAuthMethod `const:"api_token" json:"auth_method"`
 	// The user email for your Zendesk account
 	Email string `json:"email"`
 }
 
-type SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod string
+func (s SourceZendeskSunshineAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskSunshineAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskSunshineAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceZendeskSunshineAPIToken) GetAuthMethod() *SourceZendeskSunshineSchemasAuthMethod {
+	return SourceZendeskSunshineSchemasAuthMethodAPIToken.ToPointer()
+}
+
+func (o *SourceZendeskSunshineAPIToken) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+type SourceZendeskSunshineAuthMethod string
 
 const (
-	SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodOauth20 SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod = "oauth2.0"
+	SourceZendeskSunshineAuthMethodOauth20 SourceZendeskSunshineAuthMethod = "oauth2.0"
 )
 
-func (e SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod) ToPointer() *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod {
+func (e SourceZendeskSunshineAuthMethod) ToPointer() *SourceZendeskSunshineAuthMethod {
 	return &e
 }
 
-func (e *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskSunshineAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod(v)
+		*e = SourceZendeskSunshineAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthMethod: %v", v)
 	}
 }
 
-type SourceZendeskSunshineAuthorizationMethodOAuth20 struct {
+type SourceZendeskSunshineOAuth20 struct {
 	// Long-term access Token for making authenticated requests.
-	AccessToken string                                                    `json:"access_token"`
-	AuthMethod  SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
+	AccessToken string                           `json:"access_token"`
+	authMethod  *SourceZendeskSunshineAuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
 }
 
+func (s SourceZendeskSunshineOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskSunshineOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskSunshineOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceZendeskSunshineOAuth20) GetAuthMethod() *SourceZendeskSunshineAuthMethod {
+	return SourceZendeskSunshineAuthMethodOauth20.ToPointer()
+}
+
+func (o *SourceZendeskSunshineOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZendeskSunshineOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
 type SourceZendeskSunshineAuthorizationMethodType string
 
 const (
-	SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodOAuth20  SourceZendeskSunshineAuthorizationMethodType = "source-zendesk-sunshine_Authorization Method_OAuth2.0"
-	SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodAPIToken SourceZendeskSunshineAuthorizationMethodType = "source-zendesk-sunshine_Authorization Method_API Token"
+	SourceZendeskSunshineAuthorizationMethodTypeOAuth20  SourceZendeskSunshineAuthorizationMethodType = "OAuth20"
+	SourceZendeskSunshineAuthorizationMethodTypeAPIToken SourceZendeskSunshineAuthorizationMethodType = "APIToken"
 )
 
 type SourceZendeskSunshineAuthorizationMethod struct {
-	SourceZendeskSunshineAuthorizationMethodOAuth20  *SourceZendeskSunshineAuthorizationMethodOAuth20
-	SourceZendeskSunshineAuthorizationMethodAPIToken *SourceZendeskSunshineAuthorizationMethodAPIToken
+	OAuth20  *SourceZendeskSunshineOAuth20
+	APIToken *SourceZendeskSunshineAPIToken
 
 	Type SourceZendeskSunshineAuthorizationMethodType
 }
 
-func CreateSourceZendeskSunshineAuthorizationMethodSourceZendeskSunshineAuthorizationMethodOAuth20(sourceZendeskSunshineAuthorizationMethodOAuth20 SourceZendeskSunshineAuthorizationMethodOAuth20) SourceZendeskSunshineAuthorizationMethod {
-	typ := SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodOAuth20
+func CreateSourceZendeskSunshineAuthorizationMethodOAuth20(oAuth20 SourceZendeskSunshineOAuth20) SourceZendeskSunshineAuthorizationMethod {
+	typ := SourceZendeskSunshineAuthorizationMethodTypeOAuth20
 
 	return SourceZendeskSunshineAuthorizationMethod{
-		SourceZendeskSunshineAuthorizationMethodOAuth20: &sourceZendeskSunshineAuthorizationMethodOAuth20,
-		Type: typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourceZendeskSunshineAuthorizationMethodSourceZendeskSunshineAuthorizationMethodAPIToken(sourceZendeskSunshineAuthorizationMethodAPIToken SourceZendeskSunshineAuthorizationMethodAPIToken) SourceZendeskSunshineAuthorizationMethod {
-	typ := SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodAPIToken
+func CreateSourceZendeskSunshineAuthorizationMethodAPIToken(apiToken SourceZendeskSunshineAPIToken) SourceZendeskSunshineAuthorizationMethod {
+	typ := SourceZendeskSunshineAuthorizationMethodTypeAPIToken
 
 	return SourceZendeskSunshineAuthorizationMethod{
-		SourceZendeskSunshineAuthorizationMethodAPIToken: &sourceZendeskSunshineAuthorizationMethodAPIToken,
-		Type: typ,
+		APIToken: &apiToken,
+		Type:     typ,
 	}
 }
 
 func (u *SourceZendeskSunshineAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceZendeskSunshineAuthorizationMethodAPIToken := new(SourceZendeskSunshineAuthorizationMethodAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSunshineAuthorizationMethodAPIToken); err == nil {
-		u.SourceZendeskSunshineAuthorizationMethodAPIToken = sourceZendeskSunshineAuthorizationMethodAPIToken
-		u.Type = SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodAPIToken
+	apiToken := new(SourceZendeskSunshineAPIToken)
+	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
+		u.APIToken = apiToken
+		u.Type = SourceZendeskSunshineAuthorizationMethodTypeAPIToken
 		return nil
 	}
 
-	sourceZendeskSunshineAuthorizationMethodOAuth20 := new(SourceZendeskSunshineAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSunshineAuthorizationMethodOAuth20); err == nil {
-		u.SourceZendeskSunshineAuthorizationMethodOAuth20 = sourceZendeskSunshineAuthorizationMethodOAuth20
-		u.Type = SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodOAuth20
+	oAuth20 := new(SourceZendeskSunshineOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceZendeskSunshineAuthorizationMethodTypeOAuth20
 		return nil
 	}
 
@@ -133,46 +193,82 @@ func (u *SourceZendeskSunshineAuthorizationMethod) UnmarshalJSON(data []byte) er
 }
 
 func (u SourceZendeskSunshineAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
-		return json.Marshal(u.SourceZendeskSunshineAuthorizationMethodAPIToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskSunshineAuthorizationMethodOAuth20)
+	if u.APIToken != nil {
+		return utils.MarshalJSON(u.APIToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceZendeskSunshineZendeskSunshine string
+type ZendeskSunshine string
 
 const (
-	SourceZendeskSunshineZendeskSunshineZendeskSunshine SourceZendeskSunshineZendeskSunshine = "zendesk-sunshine"
+	ZendeskSunshineZendeskSunshine ZendeskSunshine = "zendesk-sunshine"
 )
 
-func (e SourceZendeskSunshineZendeskSunshine) ToPointer() *SourceZendeskSunshineZendeskSunshine {
+func (e ZendeskSunshine) ToPointer() *ZendeskSunshine {
 	return &e
 }
 
-func (e *SourceZendeskSunshineZendeskSunshine) UnmarshalJSON(data []byte) error {
+func (e *ZendeskSunshine) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zendesk-sunshine":
-		*e = SourceZendeskSunshineZendeskSunshine(v)
+		*e = ZendeskSunshine(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineZendeskSunshine: %v", v)
+		return fmt.Errorf("invalid value for ZendeskSunshine: %v", v)
 	}
 }
 
 type SourceZendeskSunshine struct {
 	Credentials *SourceZendeskSunshineAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceZendeskSunshineZendeskSunshine      `json:"sourceType"`
+	sourceType  ZendeskSunshine                           `const:"zendesk-sunshine" json:"sourceType"`
 	// The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate time.Time `json:"start_date"`
 	// The subdomain for your Zendesk Account.
 	Subdomain string `json:"subdomain"`
+}
+
+func (s SourceZendeskSunshine) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskSunshine) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskSunshine) GetCredentials() *SourceZendeskSunshineAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceZendeskSunshine) GetSourceType() ZendeskSunshine {
+	return ZendeskSunshineZendeskSunshine
+}
+
+func (o *SourceZendeskSunshine) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceZendeskSunshine) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }

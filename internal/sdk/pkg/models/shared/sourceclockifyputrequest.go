@@ -7,3 +7,24 @@ type SourceClockifyPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceClockifyPutRequest) GetConfiguration() SourceClockifyUpdate {
+	if o == nil {
+		return SourceClockifyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceClockifyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceClockifyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -21,35 +22,106 @@ type SourceXeroAuthenticateViaXeroOAuth struct {
 	TokenExpiryDate string `json:"token_expiry_date"`
 }
 
-type SourceXeroXero string
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceXeroAuthenticateViaXeroOAuth) GetTokenExpiryDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenExpiryDate
+}
+
+type Xero string
 
 const (
-	SourceXeroXeroXero SourceXeroXero = "xero"
+	XeroXero Xero = "xero"
 )
 
-func (e SourceXeroXero) ToPointer() *SourceXeroXero {
+func (e Xero) ToPointer() *Xero {
 	return &e
 }
 
-func (e *SourceXeroXero) UnmarshalJSON(data []byte) error {
+func (e *Xero) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "xero":
-		*e = SourceXeroXero(v)
+		*e = Xero(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceXeroXero: %v", v)
+		return fmt.Errorf("invalid value for Xero: %v", v)
 	}
 }
 
 type SourceXero struct {
 	Authentication SourceXeroAuthenticateViaXeroOAuth `json:"authentication"`
-	SourceType     SourceXeroXero                     `json:"sourceType"`
+	sourceType     Xero                               `const:"xero" json:"sourceType"`
 	// UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
 	StartDate time.Time `json:"start_date"`
 	// Enter your Xero organization's Tenant ID
 	TenantID string `json:"tenant_id"`
+}
+
+func (s SourceXero) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceXero) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceXero) GetAuthentication() SourceXeroAuthenticateViaXeroOAuth {
+	if o == nil {
+		return SourceXeroAuthenticateViaXeroOAuth{}
+	}
+	return o.Authentication
+}
+
+func (o *SourceXero) GetSourceType() Xero {
+	return XeroXero
+}
+
+func (o *SourceXero) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceXero) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
 }

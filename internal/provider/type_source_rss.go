@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRss struct {
-	SourceType types.String `tfsdk:"source_type"`
-	URL        types.String `tfsdk:"url"`
+	URL types.String `tfsdk:"url"`
 }

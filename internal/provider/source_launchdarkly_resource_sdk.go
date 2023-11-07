@@ -3,16 +3,14 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunchdarklyCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceLaunchdarklyLaunchdarkly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLaunchdarkly{
 		AccessToken: accessToken,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

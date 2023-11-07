@@ -7,3 +7,24 @@ type DestinationAwsDatalakeCreateRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *DestinationAwsDatalakeCreateRequest) GetConfiguration() DestinationAwsDatalake {
+	if o == nil {
+		return DestinationAwsDatalake{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationAwsDatalakeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationAwsDatalakeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

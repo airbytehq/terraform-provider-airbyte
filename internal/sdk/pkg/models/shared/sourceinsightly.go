@@ -5,36 +5,66 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceInsightlyInsightly string
+type Insightly string
 
 const (
-	SourceInsightlyInsightlyInsightly SourceInsightlyInsightly = "insightly"
+	InsightlyInsightly Insightly = "insightly"
 )
 
-func (e SourceInsightlyInsightly) ToPointer() *SourceInsightlyInsightly {
+func (e Insightly) ToPointer() *Insightly {
 	return &e
 }
 
-func (e *SourceInsightlyInsightly) UnmarshalJSON(data []byte) error {
+func (e *Insightly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "insightly":
-		*e = SourceInsightlyInsightly(v)
+		*e = Insightly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceInsightlyInsightly: %v", v)
+		return fmt.Errorf("invalid value for Insightly: %v", v)
 	}
 }
 
 type SourceInsightly struct {
-	SourceType SourceInsightlyInsightly `json:"sourceType"`
+	sourceType Insightly `const:"insightly" json:"sourceType"`
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 	StartDate *string `json:"start_date"`
 	// Your Insightly API token.
 	Token *string `json:"token"`
+}
+
+func (s SourceInsightly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInsightly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInsightly) GetSourceType() Insightly {
+	return InsightlyInsightly
+}
+
+func (o *SourceInsightly) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceInsightly) GetToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Token
 }

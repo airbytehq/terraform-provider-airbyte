@@ -3,16 +3,14 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCreateRequest {
 	pokemonName := r.Configuration.PokemonName.ValueString()
-	sourceType := shared.SourcePokeapiPokeapi(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePokeapi{
 		PokemonName: pokemonName,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

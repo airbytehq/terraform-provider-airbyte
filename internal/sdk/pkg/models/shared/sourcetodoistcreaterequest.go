@@ -9,3 +9,31 @@ type SourceTodoistCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceTodoistCreateRequest) GetConfiguration() SourceTodoist {
+	if o == nil {
+		return SourceTodoist{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTodoistCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTodoistCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceTodoistCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

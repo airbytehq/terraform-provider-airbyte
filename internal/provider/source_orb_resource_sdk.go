@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -25,7 +25,6 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	} else {
 		planID = nil
 	}
-	sourceType := shared.SourceOrbOrb(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	var stringEventPropertiesKeys []string = nil
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
@@ -42,7 +41,6 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 		LookbackWindowDays:           lookbackWindowDays,
 		NumericEventPropertiesKeys:   numericEventPropertiesKeys,
 		PlanID:                       planID,
-		SourceType:                   sourceType,
 		StartDate:                    startDate,
 		StringEventPropertiesKeys:    stringEventPropertiesKeys,
 		SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,

@@ -9,3 +9,31 @@ type SourceSentryCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSentryCreateRequest) GetConfiguration() SourceSentry {
+	if o == nil {
+		return SourceSentry{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSentryCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSentryCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSentryCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -17,4 +18,50 @@ type SourceFreshcallerUpdate struct {
 	StartDate time.Time `json:"start_date"`
 	// Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 	SyncLagMinutes *int64 `json:"sync_lag_minutes,omitempty"`
+}
+
+func (s SourceFreshcallerUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshcallerUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshcallerUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshcallerUpdate) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *SourceFreshcallerUpdate) GetRequestsPerMinute() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestsPerMinute
+}
+
+func (o *SourceFreshcallerUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceFreshcallerUpdate) GetSyncLagMinutes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SyncLagMinutes
 }

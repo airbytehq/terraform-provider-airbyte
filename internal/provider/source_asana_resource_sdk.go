@@ -3,65 +3,44 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRequest {
 	var credentials *shared.SourceAsanaAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
-		var sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth *shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth
-		if r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
-			clientID := r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret.ValueString()
-			optionTitle := new(shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle)
-			if !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.IsNull() {
-				*optionTitle = shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle(r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.ValueString())
-			} else {
-				optionTitle = nil
-			}
-			refreshToken := r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.RefreshToken.ValueString()
-			sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth = &shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth{
+		var sourceAsanaAuthenticateViaAsanaOauth *shared.SourceAsanaAuthenticateViaAsanaOauth
+		if r.Configuration.Credentials.AuthenticateViaAsanaOauth != nil {
+			clientID := r.Configuration.Credentials.AuthenticateViaAsanaOauth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaAsanaOauth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaAsanaOauth.RefreshToken.ValueString()
+			sourceAsanaAuthenticateViaAsanaOauth = &shared.SourceAsanaAuthenticateViaAsanaOauth{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
+		if sourceAsanaAuthenticateViaAsanaOauth != nil {
 			credentials = &shared.SourceAsanaAuthenticationMechanism{
-				SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth: sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth,
+				AuthenticateViaAsanaOauth: sourceAsanaAuthenticateViaAsanaOauth,
 			}
 		}
-		var sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken *shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken
-		if r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-			optionTitle1 := new(shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle)
-			if !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.IsNull() {
-				*optionTitle1 = shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle(r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.ValueString())
-			} else {
-				optionTitle1 = nil
-			}
-			personalAccessToken := r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.PersonalAccessToken.ValueString()
-			sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken = &shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken{
-				OptionTitle:         optionTitle1,
+		var sourceAsanaAuthenticateWithPersonalAccessToken *shared.SourceAsanaAuthenticateWithPersonalAccessToken
+		if r.Configuration.Credentials.AuthenticateWithPersonalAccessToken != nil {
+			personalAccessToken := r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.PersonalAccessToken.ValueString()
+			sourceAsanaAuthenticateWithPersonalAccessToken = &shared.SourceAsanaAuthenticateWithPersonalAccessToken{
 				PersonalAccessToken: personalAccessToken,
 			}
 		}
-		if sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+		if sourceAsanaAuthenticateWithPersonalAccessToken != nil {
 			credentials = &shared.SourceAsanaAuthenticationMechanism{
-				SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken: sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken,
+				AuthenticateWithPersonalAccessToken: sourceAsanaAuthenticateWithPersonalAccessToken,
 			}
 		}
 	}
-	sourceType := new(shared.SourceAsanaAsana)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceAsanaAsana(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
 	configuration := shared.SourceAsana{
 		Credentials: credentials,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -86,48 +65,34 @@ func (r *SourceAsanaResourceModel) ToGetSDKType() *shared.SourceAsanaCreateReque
 }
 
 func (r *SourceAsanaResourceModel) ToUpdateSDKType() *shared.SourceAsanaPutRequest {
-	var credentials *shared.SourceAsanaUpdateAuthenticationMechanism
+	var credentials *shared.AuthenticationMechanism
 	if r.Configuration.Credentials != nil {
-		var sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth *shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth
-		if r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
-			clientID := r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret.ValueString()
-			optionTitle := new(shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle)
-			if !r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.IsNull() {
-				*optionTitle = shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle(r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.ValueString())
-			} else {
-				optionTitle = nil
-			}
-			refreshToken := r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth.RefreshToken.ValueString()
-			sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth = &shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth{
+		var authenticateViaAsanaOauth *shared.AuthenticateViaAsanaOauth
+		if r.Configuration.Credentials.AuthenticateViaAsanaOauth != nil {
+			clientID := r.Configuration.Credentials.AuthenticateViaAsanaOauth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaAsanaOauth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaAsanaOauth.RefreshToken.ValueString()
+			authenticateViaAsanaOauth = &shared.AuthenticateViaAsanaOauth{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
-			credentials = &shared.SourceAsanaUpdateAuthenticationMechanism{
-				SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth: sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth,
+		if authenticateViaAsanaOauth != nil {
+			credentials = &shared.AuthenticationMechanism{
+				AuthenticateViaAsanaOauth: authenticateViaAsanaOauth,
 			}
 		}
-		var sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken *shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken
-		if r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-			optionTitle1 := new(shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle)
-			if !r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.IsNull() {
-				*optionTitle1 = shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle(r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.ValueString())
-			} else {
-				optionTitle1 = nil
-			}
-			personalAccessToken := r.Configuration.Credentials.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.PersonalAccessToken.ValueString()
-			sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken = &shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken{
-				OptionTitle:         optionTitle1,
+		var authenticateWithPersonalAccessToken *shared.AuthenticateWithPersonalAccessToken
+		if r.Configuration.Credentials.AuthenticateWithPersonalAccessToken != nil {
+			personalAccessToken := r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.PersonalAccessToken.ValueString()
+			authenticateWithPersonalAccessToken = &shared.AuthenticateWithPersonalAccessToken{
 				PersonalAccessToken: personalAccessToken,
 			}
 		}
-		if sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-			credentials = &shared.SourceAsanaUpdateAuthenticationMechanism{
-				SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken: sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken,
+		if authenticateWithPersonalAccessToken != nil {
+			credentials = &shared.AuthenticationMechanism{
+				AuthenticateWithPersonalAccessToken: authenticateWithPersonalAccessToken,
 			}
 		}
 	}

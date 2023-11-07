@@ -7,3 +7,24 @@ type DestinationDynamodbCreateRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *DestinationDynamodbCreateRequest) GetConfiguration() DestinationDynamodb {
+	if o == nil {
+		return DestinationDynamodb{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationDynamodbCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationDynamodbCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

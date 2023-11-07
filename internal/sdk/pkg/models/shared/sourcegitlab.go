@@ -3,71 +3,93 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceGitlabAuthorizationMethodPrivateTokenAuthType string
+type SourceGitlabSchemasAuthType string
 
 const (
-	SourceGitlabAuthorizationMethodPrivateTokenAuthTypeAccessToken SourceGitlabAuthorizationMethodPrivateTokenAuthType = "access_token"
+	SourceGitlabSchemasAuthTypeAccessToken SourceGitlabSchemasAuthType = "access_token"
 )
 
-func (e SourceGitlabAuthorizationMethodPrivateTokenAuthType) ToPointer() *SourceGitlabAuthorizationMethodPrivateTokenAuthType {
+func (e SourceGitlabSchemasAuthType) ToPointer() *SourceGitlabSchemasAuthType {
 	return &e
 }
 
-func (e *SourceGitlabAuthorizationMethodPrivateTokenAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceGitlabSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceGitlabAuthorizationMethodPrivateTokenAuthType(v)
+		*e = SourceGitlabSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodPrivateTokenAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceGitlabSchemasAuthType: %v", v)
 	}
 }
 
-type SourceGitlabAuthorizationMethodPrivateToken struct {
+type SourceGitlabPrivateToken struct {
 	// Log into your Gitlab account and then generate a personal Access Token.
-	AccessToken string                                               `json:"access_token"`
-	AuthType    *SourceGitlabAuthorizationMethodPrivateTokenAuthType `json:"auth_type,omitempty"`
+	AccessToken string                       `json:"access_token"`
+	authType    *SourceGitlabSchemasAuthType `const:"access_token" json:"auth_type,omitempty"`
 }
 
-type SourceGitlabAuthorizationMethodOAuth20AuthType string
+func (s SourceGitlabPrivateToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGitlabPrivateToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGitlabPrivateToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGitlabPrivateToken) GetAuthType() *SourceGitlabSchemasAuthType {
+	return SourceGitlabSchemasAuthTypeAccessToken.ToPointer()
+}
+
+type SourceGitlabAuthType string
 
 const (
-	SourceGitlabAuthorizationMethodOAuth20AuthTypeOauth20 SourceGitlabAuthorizationMethodOAuth20AuthType = "oauth2.0"
+	SourceGitlabAuthTypeOauth20 SourceGitlabAuthType = "oauth2.0"
 )
 
-func (e SourceGitlabAuthorizationMethodOAuth20AuthType) ToPointer() *SourceGitlabAuthorizationMethodOAuth20AuthType {
+func (e SourceGitlabAuthType) ToPointer() *SourceGitlabAuthType {
 	return &e
 }
 
-func (e *SourceGitlabAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceGitlabAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceGitlabAuthorizationMethodOAuth20AuthType(v)
+		*e = SourceGitlabAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodOAuth20AuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceGitlabAuthType: %v", v)
 	}
 }
 
-type SourceGitlabAuthorizationMethodOAuth20 struct {
+type SourceGitlabOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                          `json:"access_token"`
-	AuthType    *SourceGitlabAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	AccessToken string                `json:"access_token"`
+	authType    *SourceGitlabAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The API ID of the Gitlab developer application.
 	ClientID string `json:"client_id"`
 	// The API Secret the Gitlab developer application.
@@ -78,56 +100,101 @@ type SourceGitlabAuthorizationMethodOAuth20 struct {
 	TokenExpiryDate time.Time `json:"token_expiry_date"`
 }
 
+func (s SourceGitlabOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGitlabOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGitlabOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGitlabOAuth20) GetAuthType() *SourceGitlabAuthType {
+	return SourceGitlabAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceGitlabOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceGitlabOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceGitlabOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceGitlabOAuth20) GetTokenExpiryDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.TokenExpiryDate
+}
+
 type SourceGitlabAuthorizationMethodType string
 
 const (
-	SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodOAuth20      SourceGitlabAuthorizationMethodType = "source-gitlab_Authorization Method_OAuth2.0"
-	SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodPrivateToken SourceGitlabAuthorizationMethodType = "source-gitlab_Authorization Method_Private Token"
+	SourceGitlabAuthorizationMethodTypeOAuth20      SourceGitlabAuthorizationMethodType = "OAuth20"
+	SourceGitlabAuthorizationMethodTypePrivateToken SourceGitlabAuthorizationMethodType = "PrivateToken"
 )
 
 type SourceGitlabAuthorizationMethod struct {
-	SourceGitlabAuthorizationMethodOAuth20      *SourceGitlabAuthorizationMethodOAuth20
-	SourceGitlabAuthorizationMethodPrivateToken *SourceGitlabAuthorizationMethodPrivateToken
+	OAuth20      *SourceGitlabOAuth20
+	PrivateToken *SourceGitlabPrivateToken
 
 	Type SourceGitlabAuthorizationMethodType
 }
 
-func CreateSourceGitlabAuthorizationMethodSourceGitlabAuthorizationMethodOAuth20(sourceGitlabAuthorizationMethodOAuth20 SourceGitlabAuthorizationMethodOAuth20) SourceGitlabAuthorizationMethod {
-	typ := SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodOAuth20
+func CreateSourceGitlabAuthorizationMethodOAuth20(oAuth20 SourceGitlabOAuth20) SourceGitlabAuthorizationMethod {
+	typ := SourceGitlabAuthorizationMethodTypeOAuth20
 
 	return SourceGitlabAuthorizationMethod{
-		SourceGitlabAuthorizationMethodOAuth20: &sourceGitlabAuthorizationMethodOAuth20,
-		Type:                                   typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourceGitlabAuthorizationMethodSourceGitlabAuthorizationMethodPrivateToken(sourceGitlabAuthorizationMethodPrivateToken SourceGitlabAuthorizationMethodPrivateToken) SourceGitlabAuthorizationMethod {
-	typ := SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodPrivateToken
+func CreateSourceGitlabAuthorizationMethodPrivateToken(privateToken SourceGitlabPrivateToken) SourceGitlabAuthorizationMethod {
+	typ := SourceGitlabAuthorizationMethodTypePrivateToken
 
 	return SourceGitlabAuthorizationMethod{
-		SourceGitlabAuthorizationMethodPrivateToken: &sourceGitlabAuthorizationMethodPrivateToken,
-		Type: typ,
+		PrivateToken: &privateToken,
+		Type:         typ,
 	}
 }
 
 func (u *SourceGitlabAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceGitlabAuthorizationMethodPrivateToken := new(SourceGitlabAuthorizationMethodPrivateToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGitlabAuthorizationMethodPrivateToken); err == nil {
-		u.SourceGitlabAuthorizationMethodPrivateToken = sourceGitlabAuthorizationMethodPrivateToken
-		u.Type = SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodPrivateToken
+	privateToken := new(SourceGitlabPrivateToken)
+	if err := utils.UnmarshalJSON(data, &privateToken, "", true, true); err == nil {
+		u.PrivateToken = privateToken
+		u.Type = SourceGitlabAuthorizationMethodTypePrivateToken
 		return nil
 	}
 
-	sourceGitlabAuthorizationMethodOAuth20 := new(SourceGitlabAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGitlabAuthorizationMethodOAuth20); err == nil {
-		u.SourceGitlabAuthorizationMethodOAuth20 = sourceGitlabAuthorizationMethodOAuth20
-		u.Type = SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodOAuth20
+	oAuth20 := new(SourceGitlabOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceGitlabAuthorizationMethodTypeOAuth20
 		return nil
 	}
 
@@ -135,50 +202,100 @@ func (u *SourceGitlabAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGitlabAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceGitlabAuthorizationMethodPrivateToken != nil {
-		return json.Marshal(u.SourceGitlabAuthorizationMethodPrivateToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourceGitlabAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceGitlabAuthorizationMethodOAuth20)
+	if u.PrivateToken != nil {
+		return utils.MarshalJSON(u.PrivateToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceGitlabGitlab string
+type Gitlab string
 
 const (
-	SourceGitlabGitlabGitlab SourceGitlabGitlab = "gitlab"
+	GitlabGitlab Gitlab = "gitlab"
 )
 
-func (e SourceGitlabGitlab) ToPointer() *SourceGitlabGitlab {
+func (e Gitlab) ToPointer() *Gitlab {
 	return &e
 }
 
-func (e *SourceGitlabGitlab) UnmarshalJSON(data []byte) error {
+func (e *Gitlab) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = SourceGitlabGitlab(v)
+		*e = Gitlab(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabGitlab: %v", v)
+		return fmt.Errorf("invalid value for Gitlab: %v", v)
 	}
 }
 
 type SourceGitlab struct {
 	// Please enter your basic URL from GitLab instance.
-	APIURL      *string                         `json:"api_url,omitempty"`
+	APIURL      *string                         `default:"gitlab.com" json:"api_url"`
 	Credentials SourceGitlabAuthorizationMethod `json:"credentials"`
 	// Space-delimited list of groups. e.g. airbyte.io.
 	Groups *string `json:"groups,omitempty"`
 	// Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
-	Projects   *string            `json:"projects,omitempty"`
-	SourceType SourceGitlabGitlab `json:"sourceType"`
+	Projects   *string `json:"projects,omitempty"`
+	sourceType Gitlab  `const:"gitlab" json:"sourceType"`
 	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceGitlab) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGitlab) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGitlab) GetAPIURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIURL
+}
+
+func (o *SourceGitlab) GetCredentials() SourceGitlabAuthorizationMethod {
+	if o == nil {
+		return SourceGitlabAuthorizationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceGitlab) GetGroups() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Groups
+}
+
+func (o *SourceGitlab) GetProjects() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *SourceGitlab) GetSourceType() Gitlab {
+	return GitlabGitlab
+}
+
+func (o *SourceGitlab) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

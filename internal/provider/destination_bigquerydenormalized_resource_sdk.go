@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -27,67 +27,59 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 	} else {
 		datasetLocation = nil
 	}
-	destinationType := shared.DestinationBigqueryDenormalizedBigqueryDenormalized(r.Configuration.DestinationType.ValueString())
 	var loadingMethod *shared.DestinationBigqueryDenormalizedLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
-		var destinationBigqueryDenormalizedLoadingMethodStandardInserts *shared.DestinationBigqueryDenormalizedLoadingMethodStandardInserts
-		if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodStandardInserts != nil {
-			method := shared.DestinationBigqueryDenormalizedLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodStandardInserts.Method.ValueString())
-			destinationBigqueryDenormalizedLoadingMethodStandardInserts = &shared.DestinationBigqueryDenormalizedLoadingMethodStandardInserts{
-				Method: method,
-			}
+		var destinationBigqueryDenormalizedStandardInserts *shared.DestinationBigqueryDenormalizedStandardInserts
+		if r.Configuration.LoadingMethod.StandardInserts != nil {
+			destinationBigqueryDenormalizedStandardInserts = &shared.DestinationBigqueryDenormalizedStandardInserts{}
 		}
-		if destinationBigqueryDenormalizedLoadingMethodStandardInserts != nil {
+		if destinationBigqueryDenormalizedStandardInserts != nil {
 			loadingMethod = &shared.DestinationBigqueryDenormalizedLoadingMethod{
-				DestinationBigqueryDenormalizedLoadingMethodStandardInserts: destinationBigqueryDenormalizedLoadingMethodStandardInserts,
+				StandardInserts: destinationBigqueryDenormalizedStandardInserts,
 			}
 		}
-		var destinationBigqueryDenormalizedLoadingMethodGCSStaging *shared.DestinationBigqueryDenormalizedLoadingMethodGCSStaging
-		if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging != nil {
-			var credential shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredential
-			var destinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey *shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey
-			if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey != nil {
-				credentialType := shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKeyCredentialType(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
-				hmacKeyAccessID := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID.ValueString()
-				hmacKeySecret := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret.ValueString()
-				destinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey = &shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey{
-					CredentialType:  credentialType,
+		var destinationBigqueryDenormalizedGCSStaging *shared.DestinationBigqueryDenormalizedGCSStaging
+		if r.Configuration.LoadingMethod.GCSStaging != nil {
+			var credential shared.DestinationBigqueryDenormalizedCredential
+			var destinationBigqueryDenormalizedHMACKey *shared.DestinationBigqueryDenormalizedHMACKey
+			if r.Configuration.LoadingMethod.GCSStaging.Credential.HMACKey != nil {
+				hmacKeyAccessID := r.Configuration.LoadingMethod.GCSStaging.Credential.HMACKey.HmacKeyAccessID.ValueString()
+				hmacKeySecret := r.Configuration.LoadingMethod.GCSStaging.Credential.HMACKey.HmacKeySecret.ValueString()
+				destinationBigqueryDenormalizedHMACKey = &shared.DestinationBigqueryDenormalizedHMACKey{
 					HmacKeyAccessID: hmacKeyAccessID,
 					HmacKeySecret:   hmacKeySecret,
 				}
 			}
-			if destinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey != nil {
-				credential = shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredential{
-					DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey: destinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey,
+			if destinationBigqueryDenormalizedHMACKey != nil {
+				credential = shared.DestinationBigqueryDenormalizedCredential{
+					HMACKey: destinationBigqueryDenormalizedHMACKey,
 				}
 			}
 			fileBufferCount := new(int64)
-			if !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.FileBufferCount.IsUnknown() && !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.FileBufferCount.IsNull() {
-				*fileBufferCount = r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.FileBufferCount.ValueInt64()
+			if !r.Configuration.LoadingMethod.GCSStaging.FileBufferCount.IsUnknown() && !r.Configuration.LoadingMethod.GCSStaging.FileBufferCount.IsNull() {
+				*fileBufferCount = r.Configuration.LoadingMethod.GCSStaging.FileBufferCount.ValueInt64()
 			} else {
 				fileBufferCount = nil
 			}
-			gcsBucketName := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.GcsBucketName.ValueString()
-			gcsBucketPath := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.GcsBucketPath.ValueString()
-			keepFilesInGcsBucket := new(shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing)
-			if !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsUnknown() && !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsNull() {
-				*keepFilesInGcsBucket = shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.ValueString())
+			gcsBucketName := r.Configuration.LoadingMethod.GCSStaging.GcsBucketName.ValueString()
+			gcsBucketPath := r.Configuration.LoadingMethod.GCSStaging.GcsBucketPath.ValueString()
+			keepFilesInGcsBucket := new(shared.DestinationBigqueryDenormalizedGCSTmpFilesAfterwardProcessing)
+			if !r.Configuration.LoadingMethod.GCSStaging.KeepFilesInGcsBucket.IsUnknown() && !r.Configuration.LoadingMethod.GCSStaging.KeepFilesInGcsBucket.IsNull() {
+				*keepFilesInGcsBucket = shared.DestinationBigqueryDenormalizedGCSTmpFilesAfterwardProcessing(r.Configuration.LoadingMethod.GCSStaging.KeepFilesInGcsBucket.ValueString())
 			} else {
 				keepFilesInGcsBucket = nil
 			}
-			method1 := shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Method.ValueString())
-			destinationBigqueryDenormalizedLoadingMethodGCSStaging = &shared.DestinationBigqueryDenormalizedLoadingMethodGCSStaging{
+			destinationBigqueryDenormalizedGCSStaging = &shared.DestinationBigqueryDenormalizedGCSStaging{
 				Credential:           credential,
 				FileBufferCount:      fileBufferCount,
 				GcsBucketName:        gcsBucketName,
 				GcsBucketPath:        gcsBucketPath,
 				KeepFilesInGcsBucket: keepFilesInGcsBucket,
-				Method:               method1,
 			}
 		}
-		if destinationBigqueryDenormalizedLoadingMethodGCSStaging != nil {
+		if destinationBigqueryDenormalizedGCSStaging != nil {
 			loadingMethod = &shared.DestinationBigqueryDenormalizedLoadingMethod{
-				DestinationBigqueryDenormalizedLoadingMethodGCSStaging: destinationBigqueryDenormalizedLoadingMethodGCSStaging,
+				GCSStaging: destinationBigqueryDenormalizedGCSStaging,
 			}
 		}
 	}
@@ -97,7 +89,6 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 		CredentialsJSON:            credentialsJSON,
 		DatasetID:                  datasetID,
 		DatasetLocation:            datasetLocation,
-		DestinationType:            destinationType,
 		LoadingMethod:              loadingMethod,
 		ProjectID:                  projectID,
 	}
@@ -130,72 +121,65 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToUpdateSDKType() *shared
 		credentialsJSON = nil
 	}
 	datasetID := r.Configuration.DatasetID.ValueString()
-	datasetLocation := new(shared.DestinationBigqueryDenormalizedUpdateDatasetLocation)
+	datasetLocation := new(shared.DatasetLocation)
 	if !r.Configuration.DatasetLocation.IsUnknown() && !r.Configuration.DatasetLocation.IsNull() {
-		*datasetLocation = shared.DestinationBigqueryDenormalizedUpdateDatasetLocation(r.Configuration.DatasetLocation.ValueString())
+		*datasetLocation = shared.DatasetLocation(r.Configuration.DatasetLocation.ValueString())
 	} else {
 		datasetLocation = nil
 	}
-	var loadingMethod *shared.DestinationBigqueryDenormalizedUpdateLoadingMethod
+	var loadingMethod *shared.LoadingMethod
 	if r.Configuration.LoadingMethod != nil {
-		var destinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts *shared.DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts
-		if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts != nil {
-			method := shared.DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts.Method.ValueString())
-			destinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts = &shared.DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts{
-				Method: method,
+		var standardInserts *shared.StandardInserts
+		if r.Configuration.LoadingMethod.StandardInserts != nil {
+			standardInserts = &shared.StandardInserts{}
+		}
+		if standardInserts != nil {
+			loadingMethod = &shared.LoadingMethod{
+				StandardInserts: standardInserts,
 			}
 		}
-		if destinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts != nil {
-			loadingMethod = &shared.DestinationBigqueryDenormalizedUpdateLoadingMethod{
-				DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts: destinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts,
-			}
-		}
-		var destinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging *shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging
-		if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging != nil {
-			var credential shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredential
-			var destinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey *shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey
-			if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey != nil {
-				credentialType := shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKeyCredentialType(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
-				hmacKeyAccessID := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID.ValueString()
-				hmacKeySecret := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret.ValueString()
-				destinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey = &shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey{
-					CredentialType:  credentialType,
+		var gcsStaging *shared.GCSStaging
+		if r.Configuration.LoadingMethod.GCSStaging != nil {
+			var credential shared.Credential
+			var destinationBigqueryDenormalizedUpdateHMACKey *shared.DestinationBigqueryDenormalizedUpdateHMACKey
+			if r.Configuration.LoadingMethod.GCSStaging.Credential.HMACKey != nil {
+				hmacKeyAccessID := r.Configuration.LoadingMethod.GCSStaging.Credential.HMACKey.HmacKeyAccessID.ValueString()
+				hmacKeySecret := r.Configuration.LoadingMethod.GCSStaging.Credential.HMACKey.HmacKeySecret.ValueString()
+				destinationBigqueryDenormalizedUpdateHMACKey = &shared.DestinationBigqueryDenormalizedUpdateHMACKey{
 					HmacKeyAccessID: hmacKeyAccessID,
 					HmacKeySecret:   hmacKeySecret,
 				}
 			}
-			if destinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey != nil {
-				credential = shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredential{
-					DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey: destinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingCredentialHMACKey,
+			if destinationBigqueryDenormalizedUpdateHMACKey != nil {
+				credential = shared.Credential{
+					HMACKey: destinationBigqueryDenormalizedUpdateHMACKey,
 				}
 			}
 			fileBufferCount := new(int64)
-			if !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.FileBufferCount.IsUnknown() && !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.FileBufferCount.IsNull() {
-				*fileBufferCount = r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.FileBufferCount.ValueInt64()
+			if !r.Configuration.LoadingMethod.GCSStaging.FileBufferCount.IsUnknown() && !r.Configuration.LoadingMethod.GCSStaging.FileBufferCount.IsNull() {
+				*fileBufferCount = r.Configuration.LoadingMethod.GCSStaging.FileBufferCount.ValueInt64()
 			} else {
 				fileBufferCount = nil
 			}
-			gcsBucketName := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.GcsBucketName.ValueString()
-			gcsBucketPath := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.GcsBucketPath.ValueString()
-			keepFilesInGcsBucket := new(shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing)
-			if !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsUnknown() && !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsNull() {
-				*keepFilesInGcsBucket = shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.KeepFilesInGcsBucket.ValueString())
+			gcsBucketName := r.Configuration.LoadingMethod.GCSStaging.GcsBucketName.ValueString()
+			gcsBucketPath := r.Configuration.LoadingMethod.GCSStaging.GcsBucketPath.ValueString()
+			keepFilesInGcsBucket := new(shared.GCSTmpFilesAfterwardProcessing)
+			if !r.Configuration.LoadingMethod.GCSStaging.KeepFilesInGcsBucket.IsUnknown() && !r.Configuration.LoadingMethod.GCSStaging.KeepFilesInGcsBucket.IsNull() {
+				*keepFilesInGcsBucket = shared.GCSTmpFilesAfterwardProcessing(r.Configuration.LoadingMethod.GCSStaging.KeepFilesInGcsBucket.ValueString())
 			} else {
 				keepFilesInGcsBucket = nil
 			}
-			method1 := shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging.Method.ValueString())
-			destinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging = &shared.DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging{
+			gcsStaging = &shared.GCSStaging{
 				Credential:           credential,
 				FileBufferCount:      fileBufferCount,
 				GcsBucketName:        gcsBucketName,
 				GcsBucketPath:        gcsBucketPath,
 				KeepFilesInGcsBucket: keepFilesInGcsBucket,
-				Method:               method1,
 			}
 		}
-		if destinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging != nil {
-			loadingMethod = &shared.DestinationBigqueryDenormalizedUpdateLoadingMethod{
-				DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging: destinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging,
+		if gcsStaging != nil {
+			loadingMethod = &shared.LoadingMethod{
+				GCSStaging: gcsStaging,
 			}
 		}
 	}

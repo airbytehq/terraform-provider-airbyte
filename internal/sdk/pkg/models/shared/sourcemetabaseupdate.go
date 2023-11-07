@@ -15,3 +15,31 @@ type SourceMetabaseUpdate struct {
 	SessionToken *string `json:"session_token,omitempty"`
 	Username     *string `json:"username,omitempty"`
 }
+
+func (o *SourceMetabaseUpdate) GetInstanceAPIURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.InstanceAPIURL
+}
+
+func (o *SourceMetabaseUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMetabaseUpdate) GetSessionToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SessionToken
+}
+
+func (o *SourceMetabaseUpdate) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}

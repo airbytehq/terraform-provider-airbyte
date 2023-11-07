@@ -9,3 +9,31 @@ type SourceShortioCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceShortioCreateRequest) GetConfiguration() SourceShortio {
+	if o == nil {
+		return SourceShortio{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceShortioCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceShortioCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceShortioCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

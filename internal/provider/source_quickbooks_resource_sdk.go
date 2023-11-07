@@ -3,30 +3,23 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickbooksCreateRequest {
 	var credentials shared.SourceQuickbooksAuthorizationMethod
-	var sourceQuickbooksAuthorizationMethodOAuth20 *shared.SourceQuickbooksAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceQuickbooksAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceQuickbooksAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
-		clientID := r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		realmID := r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RealmID.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
-		sourceQuickbooksAuthorizationMethodOAuth20 = &shared.SourceQuickbooksAuthorizationMethodOAuth20{
+	var sourceQuickbooksOAuth20 *shared.SourceQuickbooksOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+		realmID := r.Configuration.Credentials.OAuth20.RealmID.ValueString()
+		refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+		sourceQuickbooksOAuth20 = &shared.SourceQuickbooksOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RealmID:         realmID,
@@ -34,18 +27,21 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
-	if sourceQuickbooksAuthorizationMethodOAuth20 != nil {
+	if sourceQuickbooksOAuth20 != nil {
 		credentials = shared.SourceQuickbooksAuthorizationMethod{
-			SourceQuickbooksAuthorizationMethodOAuth20: sourceQuickbooksAuthorizationMethodOAuth20,
+			OAuth20: sourceQuickbooksOAuth20,
 		}
 	}
-	sandbox := r.Configuration.Sandbox.ValueBool()
-	sourceType := shared.SourceQuickbooksQuickbooks(r.Configuration.SourceType.ValueString())
+	sandbox := new(bool)
+	if !r.Configuration.Sandbox.IsUnknown() && !r.Configuration.Sandbox.IsNull() {
+		*sandbox = r.Configuration.Sandbox.ValueBool()
+	} else {
+		sandbox = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceQuickbooks{
 		Credentials: credentials,
 		Sandbox:     sandbox,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
@@ -72,23 +68,16 @@ func (r *SourceQuickbooksResourceModel) ToGetSDKType() *shared.SourceQuickbooksC
 
 func (r *SourceQuickbooksResourceModel) ToUpdateSDKType() *shared.SourceQuickbooksPutRequest {
 	var credentials shared.SourceQuickbooksUpdateAuthorizationMethod
-	var sourceQuickbooksUpdateAuthorizationMethodOAuth20 *shared.SourceQuickbooksUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceQuickbooksUpdateAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceQuickbooksUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType = nil
-		}
-		clientID := r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		realmID := r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.RealmID.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceQuickbooksUpdateAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
-		sourceQuickbooksUpdateAuthorizationMethodOAuth20 = &shared.SourceQuickbooksUpdateAuthorizationMethodOAuth20{
+	var sourceQuickbooksUpdateOAuth20 *shared.SourceQuickbooksUpdateOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+		realmID := r.Configuration.Credentials.OAuth20.RealmID.ValueString()
+		refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
+		sourceQuickbooksUpdateOAuth20 = &shared.SourceQuickbooksUpdateOAuth20{
 			AccessToken:     accessToken,
-			AuthType:        authType,
 			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RealmID:         realmID,
@@ -96,12 +85,17 @@ func (r *SourceQuickbooksResourceModel) ToUpdateSDKType() *shared.SourceQuickboo
 			TokenExpiryDate: tokenExpiryDate,
 		}
 	}
-	if sourceQuickbooksUpdateAuthorizationMethodOAuth20 != nil {
+	if sourceQuickbooksUpdateOAuth20 != nil {
 		credentials = shared.SourceQuickbooksUpdateAuthorizationMethod{
-			SourceQuickbooksUpdateAuthorizationMethodOAuth20: sourceQuickbooksUpdateAuthorizationMethodOAuth20,
+			OAuth20: sourceQuickbooksUpdateOAuth20,
 		}
 	}
-	sandbox := r.Configuration.Sandbox.ValueBool()
+	sandbox := new(bool)
+	if !r.Configuration.Sandbox.IsUnknown() && !r.Configuration.Sandbox.IsNull() {
+		*sandbox = r.Configuration.Sandbox.ValueBool()
+	} else {
+		sandbox = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceQuickbooksUpdate{
 		Credentials: credentials,

@@ -7,3 +7,24 @@ type SourceKyvePutRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *SourceKyvePutRequest) GetConfiguration() SourceKyveUpdate {
+	if o == nil {
+		return SourceKyveUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceKyvePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceKyvePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

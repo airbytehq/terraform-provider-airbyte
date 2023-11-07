@@ -3,71 +3,93 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod string
+type SourceAirtableUpdateAuthMethod string
 
 const (
-	SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethodAPIKey SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod = "api_key"
+	SourceAirtableUpdateAuthMethodAPIKey SourceAirtableUpdateAuthMethod = "api_key"
 )
 
-func (e SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod) ToPointer() *SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod {
+func (e SourceAirtableUpdateAuthMethod) ToPointer() *SourceAirtableUpdateAuthMethod {
 	return &e
 }
 
-func (e *SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceAirtableUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_key":
-		*e = SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod(v)
+		*e = SourceAirtableUpdateAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceAirtableUpdateAuthMethod: %v", v)
 	}
 }
 
-type SourceAirtableUpdateAuthenticationPersonalAccessToken struct {
+type PersonalAccessToken struct {
 	// The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-	APIKey     string                                                           `json:"api_key"`
-	AuthMethod *SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod `json:"auth_method,omitempty"`
+	APIKey     string                          `json:"api_key"`
+	authMethod *SourceAirtableUpdateAuthMethod `const:"api_key" json:"auth_method,omitempty"`
 }
 
-type SourceAirtableUpdateAuthenticationOAuth20AuthMethod string
+func (p PersonalAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PersonalAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *PersonalAccessToken) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *PersonalAccessToken) GetAuthMethod() *SourceAirtableUpdateAuthMethod {
+	return SourceAirtableUpdateAuthMethodAPIKey.ToPointer()
+}
+
+type SourceAirtableUpdateSchemasAuthMethod string
 
 const (
-	SourceAirtableUpdateAuthenticationOAuth20AuthMethodOauth20 SourceAirtableUpdateAuthenticationOAuth20AuthMethod = "oauth2.0"
+	SourceAirtableUpdateSchemasAuthMethodOauth20 SourceAirtableUpdateSchemasAuthMethod = "oauth2.0"
 )
 
-func (e SourceAirtableUpdateAuthenticationOAuth20AuthMethod) ToPointer() *SourceAirtableUpdateAuthenticationOAuth20AuthMethod {
+func (e SourceAirtableUpdateSchemasAuthMethod) ToPointer() *SourceAirtableUpdateSchemasAuthMethod {
 	return &e
 }
 
-func (e *SourceAirtableUpdateAuthenticationOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceAirtableUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceAirtableUpdateAuthenticationOAuth20AuthMethod(v)
+		*e = SourceAirtableUpdateSchemasAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableUpdateAuthenticationOAuth20AuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceAirtableUpdateSchemasAuthMethod: %v", v)
 	}
 }
 
-type SourceAirtableUpdateAuthenticationOAuth20 struct {
+type SourceAirtableUpdateOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                              `json:"access_token,omitempty"`
-	AuthMethod  *SourceAirtableUpdateAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
+	AccessToken *string                                `json:"access_token,omitempty"`
+	authMethod  *SourceAirtableUpdateSchemasAuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The client ID of the Airtable developer application.
 	ClientID string `json:"client_id"`
 	// The client secret the Airtable developer application.
@@ -78,56 +100,101 @@ type SourceAirtableUpdateAuthenticationOAuth20 struct {
 	TokenExpiryDate *time.Time `json:"token_expiry_date,omitempty"`
 }
 
+func (s SourceAirtableUpdateOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAirtableUpdateOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetAuthMethod() *SourceAirtableUpdateSchemasAuthMethod {
+	return SourceAirtableUpdateSchemasAuthMethodOauth20.ToPointer()
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetTokenExpiryDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.TokenExpiryDate
+}
+
 type SourceAirtableUpdateAuthenticationType string
 
 const (
-	SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationOAuth20             SourceAirtableUpdateAuthenticationType = "source-airtable-update_Authentication_OAuth2.0"
-	SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationPersonalAccessToken SourceAirtableUpdateAuthenticationType = "source-airtable-update_Authentication_Personal Access Token"
+	SourceAirtableUpdateAuthenticationTypeOAuth20             SourceAirtableUpdateAuthenticationType = "OAuth20"
+	SourceAirtableUpdateAuthenticationTypePersonalAccessToken SourceAirtableUpdateAuthenticationType = "PersonalAccessToken"
 )
 
 type SourceAirtableUpdateAuthentication struct {
-	SourceAirtableUpdateAuthenticationOAuth20             *SourceAirtableUpdateAuthenticationOAuth20
-	SourceAirtableUpdateAuthenticationPersonalAccessToken *SourceAirtableUpdateAuthenticationPersonalAccessToken
+	OAuth20             *SourceAirtableUpdateOAuth20
+	PersonalAccessToken *PersonalAccessToken
 
 	Type SourceAirtableUpdateAuthenticationType
 }
 
-func CreateSourceAirtableUpdateAuthenticationSourceAirtableUpdateAuthenticationOAuth20(sourceAirtableUpdateAuthenticationOAuth20 SourceAirtableUpdateAuthenticationOAuth20) SourceAirtableUpdateAuthentication {
-	typ := SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationOAuth20
+func CreateSourceAirtableUpdateAuthenticationOAuth20(oAuth20 SourceAirtableUpdateOAuth20) SourceAirtableUpdateAuthentication {
+	typ := SourceAirtableUpdateAuthenticationTypeOAuth20
 
 	return SourceAirtableUpdateAuthentication{
-		SourceAirtableUpdateAuthenticationOAuth20: &sourceAirtableUpdateAuthenticationOAuth20,
-		Type: typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourceAirtableUpdateAuthenticationSourceAirtableUpdateAuthenticationPersonalAccessToken(sourceAirtableUpdateAuthenticationPersonalAccessToken SourceAirtableUpdateAuthenticationPersonalAccessToken) SourceAirtableUpdateAuthentication {
-	typ := SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationPersonalAccessToken
+func CreateSourceAirtableUpdateAuthenticationPersonalAccessToken(personalAccessToken PersonalAccessToken) SourceAirtableUpdateAuthentication {
+	typ := SourceAirtableUpdateAuthenticationTypePersonalAccessToken
 
 	return SourceAirtableUpdateAuthentication{
-		SourceAirtableUpdateAuthenticationPersonalAccessToken: &sourceAirtableUpdateAuthenticationPersonalAccessToken,
-		Type: typ,
+		PersonalAccessToken: &personalAccessToken,
+		Type:                typ,
 	}
 }
 
 func (u *SourceAirtableUpdateAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceAirtableUpdateAuthenticationPersonalAccessToken := new(SourceAirtableUpdateAuthenticationPersonalAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAirtableUpdateAuthenticationPersonalAccessToken); err == nil {
-		u.SourceAirtableUpdateAuthenticationPersonalAccessToken = sourceAirtableUpdateAuthenticationPersonalAccessToken
-		u.Type = SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationPersonalAccessToken
+	personalAccessToken := new(PersonalAccessToken)
+	if err := utils.UnmarshalJSON(data, &personalAccessToken, "", true, true); err == nil {
+		u.PersonalAccessToken = personalAccessToken
+		u.Type = SourceAirtableUpdateAuthenticationTypePersonalAccessToken
 		return nil
 	}
 
-	sourceAirtableUpdateAuthenticationOAuth20 := new(SourceAirtableUpdateAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAirtableUpdateAuthenticationOAuth20); err == nil {
-		u.SourceAirtableUpdateAuthenticationOAuth20 = sourceAirtableUpdateAuthenticationOAuth20
-		u.Type = SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationOAuth20
+	oAuth20 := new(SourceAirtableUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceAirtableUpdateAuthenticationTypeOAuth20
 		return nil
 	}
 
@@ -135,17 +202,24 @@ func (u *SourceAirtableUpdateAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAirtableUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceAirtableUpdateAuthenticationPersonalAccessToken != nil {
-		return json.Marshal(u.SourceAirtableUpdateAuthenticationPersonalAccessToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourceAirtableUpdateAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceAirtableUpdateAuthenticationOAuth20)
+	if u.PersonalAccessToken != nil {
+		return utils.MarshalJSON(u.PersonalAccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAirtableUpdate struct {
 	Credentials *SourceAirtableUpdateAuthentication `json:"credentials,omitempty"`
+}
+
+func (o *SourceAirtableUpdate) GetCredentials() *SourceAirtableUpdateAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }

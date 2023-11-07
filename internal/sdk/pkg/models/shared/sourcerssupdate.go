@@ -6,3 +6,10 @@ type SourceRssUpdate struct {
 	// RSS Feed URL
 	URL string `json:"url"`
 }
+
+func (o *SourceRssUpdate) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}

@@ -3,9 +3,9 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
 	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -23,7 +23,6 @@ func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarClo
 		endDate = nil
 	}
 	organization := r.Configuration.Organization.ValueString()
-	sourceType := shared.SourceSonarCloudSonarCloud(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -35,7 +34,6 @@ func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarClo
 		ComponentKeys: componentKeys,
 		EndDate:       endDate,
 		Organization:  organization,
-		SourceType:    sourceType,
 		StartDate:     startDate,
 		UserToken:     userToken,
 	}

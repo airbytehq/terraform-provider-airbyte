@@ -3,20 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequest {
-	sourceType := new(shared.SourceXkcdXkcd)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceXkcdXkcd(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
-	configuration := shared.SourceXkcd{
-		SourceType: sourceType,
-	}
+	configuration := shared.SourceXkcd{}
 	name := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {

@@ -9,3 +9,31 @@ type SourceK6CloudCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceK6CloudCreateRequest) GetConfiguration() SourceK6Cloud {
+	if o == nil {
+		return SourceK6Cloud{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceK6CloudCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceK6CloudCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceK6CloudCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

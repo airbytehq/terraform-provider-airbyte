@@ -3,6 +3,5 @@
 package provider
 
 type DestinationS3GlueOutputFormat struct {
-	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON       *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON       `tfsdk:"destination_s3_glue_output_format_json_lines_newline_delimited_json"`
-	DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON *DestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_s3_glue_update_output_format_json_lines_newline_delimited_json"`
+	JSONLinesNewlineDelimitedJSON *DestinationS3JSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json"`
 }

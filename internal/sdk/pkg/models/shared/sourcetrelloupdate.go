@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -15,4 +16,43 @@ type SourceTrelloUpdate struct {
 	StartDate time.Time `json:"start_date"`
 	// Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 	Token string `json:"token"`
+}
+
+func (s SourceTrelloUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTrelloUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTrelloUpdate) GetBoardIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.BoardIds
+}
+
+func (o *SourceTrelloUpdate) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *SourceTrelloUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceTrelloUpdate) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

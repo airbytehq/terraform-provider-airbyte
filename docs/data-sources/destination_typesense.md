@@ -27,20 +27,10 @@ data "airbyte_destination_typesense" "my_destination_typesense" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Typesense API Key
-- `batch_size` (Number) How many documents should be imported together. Default 1000
-- `destination_type` (String) must be one of ["typesense"]
-- `host` (String) Hostname of the Typesense instance without protocol.
-- `port` (String) Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443
-- `protocol` (String) Protocol of the Typesense instance. Ex: http or https. Default is https
 
 

@@ -27,18 +27,10 @@ data "airbyte_destination_keen" "my_destination_keen" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
-- `destination_type` (String) must be one of ["keen"]
-- `infer_timestamp` (Boolean) Allow connector to guess keen.timestamp value based on the streamed data.
-- `project_id` (String) To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 
 

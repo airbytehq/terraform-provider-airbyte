@@ -6,3 +6,10 @@ package shared
 type StreamPropertiesResponse struct {
 	Streams []StreamProperties `json:"streams,omitempty"`
 }
+
+func (o *StreamPropertiesResponse) GetStreams() []StreamProperties {
+	if o == nil {
+		return nil
+	}
+	return o.Streams
+}

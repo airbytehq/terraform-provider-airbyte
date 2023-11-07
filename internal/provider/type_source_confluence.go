@@ -8,5 +8,4 @@ type SourceConfluence struct {
 	APIToken   types.String `tfsdk:"api_token"`
 	DomainName types.String `tfsdk:"domain_name"`
 	Email      types.String `tfsdk:"email"`
-	SourceType types.String `tfsdk:"source_type"`
 }

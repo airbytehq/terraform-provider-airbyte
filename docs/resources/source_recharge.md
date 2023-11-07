@@ -16,12 +16,11 @@ SourceRecharge Resource
 resource "airbyte_source_recharge" "my_source_recharge" {
   configuration = {
     access_token = "...my_access_token..."
-    source_type  = "recharge"
     start_date   = "2021-05-14T00:00:00Z"
   }
-  name         = "Angel Stokes"
+  name         = "Ms. Grant Krajcik I"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7ff4711a-a1bc-474b-86ce-cc74f77b4848"
+  workspace_id = "9037c7ee-f972-4df3-814a-349fde89ab27"
 }
 ```
 
@@ -49,7 +48,6 @@ resource "airbyte_source_recharge" "my_source_recharge" {
 Required:
 
 - `access_token` (String) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
-- `source_type` (String) must be one of ["recharge"]
 - `start_date` (String) The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 
 

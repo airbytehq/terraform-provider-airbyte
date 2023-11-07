@@ -7,3 +7,24 @@ type SourceSurveymonkeyPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *SourceSurveymonkeyPutRequest) GetConfiguration() SourceSurveymonkeyUpdate {
+	if o == nil {
+		return SourceSurveymonkeyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSurveymonkeyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSurveymonkeyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

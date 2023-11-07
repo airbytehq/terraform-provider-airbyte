@@ -9,3 +9,31 @@ type SourceGoogleSearchConsoleCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGoogleSearchConsoleCreateRequest) GetConfiguration() SourceGoogleSearchConsole {
+	if o == nil {
+		return SourceGoogleSearchConsole{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleSearchConsoleCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleSearchConsoleCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleSearchConsoleCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,31 +3,31 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceFileSecureUpdateFileFormat - The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
-type SourceFileSecureUpdateFileFormat string
+// FileFormat - The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
+type FileFormat string
 
 const (
-	SourceFileSecureUpdateFileFormatCsv         SourceFileSecureUpdateFileFormat = "csv"
-	SourceFileSecureUpdateFileFormatJSON        SourceFileSecureUpdateFileFormat = "json"
-	SourceFileSecureUpdateFileFormatJsonl       SourceFileSecureUpdateFileFormat = "jsonl"
-	SourceFileSecureUpdateFileFormatExcel       SourceFileSecureUpdateFileFormat = "excel"
-	SourceFileSecureUpdateFileFormatExcelBinary SourceFileSecureUpdateFileFormat = "excel_binary"
-	SourceFileSecureUpdateFileFormatFeather     SourceFileSecureUpdateFileFormat = "feather"
-	SourceFileSecureUpdateFileFormatParquet     SourceFileSecureUpdateFileFormat = "parquet"
-	SourceFileSecureUpdateFileFormatYaml        SourceFileSecureUpdateFileFormat = "yaml"
+	FileFormatCsv         FileFormat = "csv"
+	FileFormatJSON        FileFormat = "json"
+	FileFormatJsonl       FileFormat = "jsonl"
+	FileFormatExcel       FileFormat = "excel"
+	FileFormatExcelBinary FileFormat = "excel_binary"
+	FileFormatFeather     FileFormat = "feather"
+	FileFormatParquet     FileFormat = "parquet"
+	FileFormatYaml        FileFormat = "yaml"
 )
 
-func (e SourceFileSecureUpdateFileFormat) ToPointer() *SourceFileSecureUpdateFileFormat {
+func (e FileFormat) ToPointer() *FileFormat {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateFileFormat) UnmarshalJSON(data []byte) error {
+func (e *FileFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -48,439 +48,708 @@ func (e *SourceFileSecureUpdateFileFormat) UnmarshalJSON(data []byte) error {
 	case "parquet":
 		fallthrough
 	case "yaml":
-		*e = SourceFileSecureUpdateFileFormat(v)
+		*e = FileFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateFileFormat: %v", v)
+		return fmt.Errorf("invalid value for FileFormat: %v", v)
 	}
 }
 
-type SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage string
+type SourceFileSecureUpdateSchemasProviderStorageProvider7Storage string
 
 const (
-	SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorageSftp SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage = "SFTP"
+	SourceFileSecureUpdateSchemasProviderStorageProvider7StorageSftp SourceFileSecureUpdateSchemasProviderStorageProvider7Storage = "SFTP"
 )
 
-func (e SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage) ToPointer() *SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage {
+func (e SourceFileSecureUpdateSchemasProviderStorageProvider7Storage) ToPointer() *SourceFileSecureUpdateSchemasProviderStorageProvider7Storage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureUpdateSchemasProviderStorageProvider7Storage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SFTP":
-		*e = SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage(v)
+		*e = SourceFileSecureUpdateSchemasProviderStorageProvider7Storage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureUpdateSchemasProviderStorageProvider7Storage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol struct {
-	Host     string                                                                     `json:"host"`
-	Password *string                                                                    `json:"password,omitempty"`
-	Port     *string                                                                    `json:"port,omitempty"`
-	Storage  SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocolStorage `json:"storage"`
-	User     string                                                                     `json:"user"`
+// SFTPSecureFileTransferProtocol - The storage Provider or Location of the file(s) which should be replicated.
+type SFTPSecureFileTransferProtocol struct {
+	Host     string                                                       `json:"host"`
+	Password *string                                                      `json:"password,omitempty"`
+	Port     *string                                                      `default:"22" json:"port"`
+	storage  SourceFileSecureUpdateSchemasProviderStorageProvider7Storage `const:"SFTP" json:"storage"`
+	User     string                                                       `json:"user"`
 }
 
-type SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage string
+func (s SFTPSecureFileTransferProtocol) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SFTPSecureFileTransferProtocol) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SFTPSecureFileTransferProtocol) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SFTPSecureFileTransferProtocol) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SFTPSecureFileTransferProtocol) GetPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SFTPSecureFileTransferProtocol) GetStorage() SourceFileSecureUpdateSchemasProviderStorageProvider7Storage {
+	return SourceFileSecureUpdateSchemasProviderStorageProvider7StorageSftp
+}
+
+func (o *SFTPSecureFileTransferProtocol) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
+}
+
+type SourceFileSecureUpdateSchemasProviderStorageProvider6Storage string
 
 const (
-	SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorageScp SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage = "SCP"
+	SourceFileSecureUpdateSchemasProviderStorageProvider6StorageScp SourceFileSecureUpdateSchemasProviderStorageProvider6Storage = "SCP"
 )
 
-func (e SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage) ToPointer() *SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage {
+func (e SourceFileSecureUpdateSchemasProviderStorageProvider6Storage) ToPointer() *SourceFileSecureUpdateSchemasProviderStorageProvider6Storage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureUpdateSchemasProviderStorageProvider6Storage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SCP":
-		*e = SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage(v)
+		*e = SourceFileSecureUpdateSchemasProviderStorageProvider6Storage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureUpdateSchemasProviderStorageProvider6Storage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol struct {
-	Host     string                                                            `json:"host"`
-	Password *string                                                           `json:"password,omitempty"`
-	Port     *string                                                           `json:"port,omitempty"`
-	Storage  SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocolStorage `json:"storage"`
-	User     string                                                            `json:"user"`
+// SCPSecureCopyProtocol - The storage Provider or Location of the file(s) which should be replicated.
+type SCPSecureCopyProtocol struct {
+	Host     string                                                       `json:"host"`
+	Password *string                                                      `json:"password,omitempty"`
+	Port     *string                                                      `default:"22" json:"port"`
+	storage  SourceFileSecureUpdateSchemasProviderStorageProvider6Storage `const:"SCP" json:"storage"`
+	User     string                                                       `json:"user"`
 }
 
-type SourceFileSecureUpdateStorageProviderSSHSecureShellStorage string
+func (s SCPSecureCopyProtocol) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SCPSecureCopyProtocol) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SCPSecureCopyProtocol) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SCPSecureCopyProtocol) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SCPSecureCopyProtocol) GetPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SCPSecureCopyProtocol) GetStorage() SourceFileSecureUpdateSchemasProviderStorageProvider6Storage {
+	return SourceFileSecureUpdateSchemasProviderStorageProvider6StorageScp
+}
+
+func (o *SCPSecureCopyProtocol) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
+}
+
+type SourceFileSecureUpdateSchemasProviderStorageProviderStorage string
 
 const (
-	SourceFileSecureUpdateStorageProviderSSHSecureShellStorageSSH SourceFileSecureUpdateStorageProviderSSHSecureShellStorage = "SSH"
+	SourceFileSecureUpdateSchemasProviderStorageProviderStorageSSH SourceFileSecureUpdateSchemasProviderStorageProviderStorage = "SSH"
 )
 
-func (e SourceFileSecureUpdateStorageProviderSSHSecureShellStorage) ToPointer() *SourceFileSecureUpdateStorageProviderSSHSecureShellStorage {
+func (e SourceFileSecureUpdateSchemasProviderStorageProviderStorage) ToPointer() *SourceFileSecureUpdateSchemasProviderStorageProviderStorage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderSSHSecureShellStorage) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureUpdateSchemasProviderStorageProviderStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH":
-		*e = SourceFileSecureUpdateStorageProviderSSHSecureShellStorage(v)
+		*e = SourceFileSecureUpdateSchemasProviderStorageProviderStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderSSHSecureShellStorage: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureUpdateSchemasProviderStorageProviderStorage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderSSHSecureShell - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderSSHSecureShell struct {
-	Host     string                                                     `json:"host"`
-	Password *string                                                    `json:"password,omitempty"`
-	Port     *string                                                    `json:"port,omitempty"`
-	Storage  SourceFileSecureUpdateStorageProviderSSHSecureShellStorage `json:"storage"`
-	User     string                                                     `json:"user"`
+// SSHSecureShell - The storage Provider or Location of the file(s) which should be replicated.
+type SSHSecureShell struct {
+	Host     string                                                      `json:"host"`
+	Password *string                                                     `json:"password,omitempty"`
+	Port     *string                                                     `default:"22" json:"port"`
+	storage  SourceFileSecureUpdateSchemasProviderStorageProviderStorage `const:"SSH" json:"storage"`
+	User     string                                                      `json:"user"`
 }
 
-type SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage string
+func (s SSHSecureShell) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SSHSecureShell) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SSHSecureShell) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SSHSecureShell) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SSHSecureShell) GetPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SSHSecureShell) GetStorage() SourceFileSecureUpdateSchemasProviderStorageProviderStorage {
+	return SourceFileSecureUpdateSchemasProviderStorageProviderStorageSSH
+}
+
+func (o *SSHSecureShell) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
+}
+
+type SourceFileSecureUpdateSchemasProviderStorage string
 
 const (
-	SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorageAzBlob SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage = "AzBlob"
+	SourceFileSecureUpdateSchemasProviderStorageAzBlob SourceFileSecureUpdateSchemasProviderStorage = "AzBlob"
 )
 
-func (e SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage) ToPointer() *SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage {
+func (e SourceFileSecureUpdateSchemasProviderStorage) ToPointer() *SourceFileSecureUpdateSchemasProviderStorage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureUpdateSchemasProviderStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "AzBlob":
-		*e = SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage(v)
+		*e = SourceFileSecureUpdateSchemasProviderStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureUpdateSchemasProviderStorage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage struct {
+// AzBlobAzureBlobStorage - The storage Provider or Location of the file(s) which should be replicated.
+type AzBlobAzureBlobStorage struct {
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.
 	SasToken *string `json:"sas_token,omitempty"`
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.
-	SharedKey *string                                                            `json:"shared_key,omitempty"`
-	Storage   SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorageStorage `json:"storage"`
+	SharedKey *string                                      `json:"shared_key,omitempty"`
+	storage   SourceFileSecureUpdateSchemasProviderStorage `const:"AzBlob" json:"storage"`
 	// The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
 	StorageAccount string `json:"storage_account"`
 }
 
-type SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage string
+func (a AzBlobAzureBlobStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AzBlobAzureBlobStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AzBlobAzureBlobStorage) GetSasToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SasToken
+}
+
+func (o *AzBlobAzureBlobStorage) GetSharedKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SharedKey
+}
+
+func (o *AzBlobAzureBlobStorage) GetStorage() SourceFileSecureUpdateSchemasProviderStorage {
+	return SourceFileSecureUpdateSchemasProviderStorageAzBlob
+}
+
+func (o *AzBlobAzureBlobStorage) GetStorageAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.StorageAccount
+}
+
+type SourceFileSecureUpdateSchemasStorage string
 
 const (
-	SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorageS3 SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage = "S3"
+	SourceFileSecureUpdateSchemasStorageS3 SourceFileSecureUpdateSchemasStorage = "S3"
 )
 
-func (e SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage) ToPointer() *SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage {
+func (e SourceFileSecureUpdateSchemasStorage) ToPointer() *SourceFileSecureUpdateSchemasStorage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureUpdateSchemasStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "S3":
-		*e = SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage(v)
+		*e = SourceFileSecureUpdateSchemasStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureUpdateSchemasStorage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderS3AmazonWebServices - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderS3AmazonWebServices struct {
+// SourceFileSecureUpdateS3AmazonWebServices - The storage Provider or Location of the file(s) which should be replicated.
+type SourceFileSecureUpdateS3AmazonWebServices struct {
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-	AwsSecretAccessKey *string                                                         `json:"aws_secret_access_key,omitempty"`
-	Storage            SourceFileSecureUpdateStorageProviderS3AmazonWebServicesStorage `json:"storage"`
+	AwsSecretAccessKey *string                              `json:"aws_secret_access_key,omitempty"`
+	storage            SourceFileSecureUpdateSchemasStorage `const:"S3" json:"storage"`
 }
 
-type SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage string
+func (s SourceFileSecureUpdateS3AmazonWebServices) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFileSecureUpdateS3AmazonWebServices) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFileSecureUpdateS3AmazonWebServices) GetAwsAccessKeyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsAccessKeyID
+}
+
+func (o *SourceFileSecureUpdateS3AmazonWebServices) GetAwsSecretAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsSecretAccessKey
+}
+
+func (o *SourceFileSecureUpdateS3AmazonWebServices) GetStorage() SourceFileSecureUpdateSchemasStorage {
+	return SourceFileSecureUpdateSchemasStorageS3
+}
+
+type SourceFileSecureUpdateStorage string
 
 const (
-	SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorageGcs SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage = "GCS"
+	SourceFileSecureUpdateStorageGcs SourceFileSecureUpdateStorage = "GCS"
 )
 
-func (e SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage) ToPointer() *SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage {
+func (e SourceFileSecureUpdateStorage) ToPointer() *SourceFileSecureUpdateStorage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureUpdateStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GCS":
-		*e = SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage(v)
+		*e = SourceFileSecureUpdateStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage struct {
+// GCSGoogleCloudStorage - The storage Provider or Location of the file(s) which should be replicated.
+type GCSGoogleCloudStorage struct {
 	// In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
-	ServiceAccountJSON *string                                                           `json:"service_account_json,omitempty"`
-	Storage            SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorageStorage `json:"storage"`
+	ServiceAccountJSON *string                       `json:"service_account_json,omitempty"`
+	storage            SourceFileSecureUpdateStorage `const:"GCS" json:"storage"`
 }
 
-type SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage string
+func (g GCSGoogleCloudStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GCSGoogleCloudStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GCSGoogleCloudStorage) GetServiceAccountJSON() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ServiceAccountJSON
+}
+
+func (o *GCSGoogleCloudStorage) GetStorage() SourceFileSecureUpdateStorage {
+	return SourceFileSecureUpdateStorageGcs
+}
+
+type Storage string
 
 const (
-	SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorageHTTPS SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage = "HTTPS"
+	StorageHTTPS Storage = "HTTPS"
 )
 
-func (e SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage) ToPointer() *SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage {
+func (e Storage) ToPointer() *Storage {
 	return &e
 }
 
-func (e *SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage) UnmarshalJSON(data []byte) error {
+func (e *Storage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "HTTPS":
-		*e = SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage(v)
+		*e = Storage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage: %v", v)
+		return fmt.Errorf("invalid value for Storage: %v", v)
 	}
 }
 
-// SourceFileSecureUpdateStorageProviderHTTPSPublicWeb - The storage Provider or Location of the file(s) which should be replicated.
-type SourceFileSecureUpdateStorageProviderHTTPSPublicWeb struct {
-	Storage SourceFileSecureUpdateStorageProviderHTTPSPublicWebStorage `json:"storage"`
+// HTTPSPublicWeb - The storage Provider or Location of the file(s) which should be replicated.
+type HTTPSPublicWeb struct {
+	storage Storage `const:"HTTPS" json:"storage"`
 	// Add User-Agent to request
-	UserAgent *bool `json:"user_agent,omitempty"`
+	UserAgent *bool `default:"false" json:"user_agent"`
 }
 
-type SourceFileSecureUpdateStorageProviderType string
+func (h HTTPSPublicWeb) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(h, "", false)
+}
+
+func (h *HTTPSPublicWeb) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &h, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *HTTPSPublicWeb) GetStorage() Storage {
+	return StorageHTTPS
+}
+
+func (o *HTTPSPublicWeb) GetUserAgent() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UserAgent
+}
+
+type StorageProviderType string
 
 const (
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderHTTPSPublicWeb                 SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_HTTPS: Public Web"
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage          SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_GCS: Google Cloud Storage"
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderS3AmazonWebServices            SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_S3: Amazon Web Services"
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage         SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_AzBlob: Azure Blob Storage"
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSSHSecureShell                 SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_SSH: Secure Shell"
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol          SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_SCP: Secure copy protocol"
-	SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol SourceFileSecureUpdateStorageProviderType = "source-file-secure-update_Storage Provider_SFTP: Secure File Transfer Protocol"
+	StorageProviderTypeHTTPSPublicWeb                 StorageProviderType = "HTTPSPublicWeb"
+	StorageProviderTypeGCSGoogleCloudStorage          StorageProviderType = "GCSGoogleCloudStorage"
+	StorageProviderTypeS3AmazonWebServices            StorageProviderType = "S3AmazonWebServices"
+	StorageProviderTypeAzBlobAzureBlobStorage         StorageProviderType = "AzBlobAzureBlobStorage"
+	StorageProviderTypeSSHSecureShell                 StorageProviderType = "SSHSecureShell"
+	StorageProviderTypeSCPSecureCopyProtocol          StorageProviderType = "SCPSecureCopyProtocol"
+	StorageProviderTypeSFTPSecureFileTransferProtocol StorageProviderType = "SFTPSecureFileTransferProtocol"
 )
 
-type SourceFileSecureUpdateStorageProvider struct {
-	SourceFileSecureUpdateStorageProviderHTTPSPublicWeb                 *SourceFileSecureUpdateStorageProviderHTTPSPublicWeb
-	SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage          *SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage
-	SourceFileSecureUpdateStorageProviderS3AmazonWebServices            *SourceFileSecureUpdateStorageProviderS3AmazonWebServices
-	SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage         *SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage
-	SourceFileSecureUpdateStorageProviderSSHSecureShell                 *SourceFileSecureUpdateStorageProviderSSHSecureShell
-	SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol          *SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol
-	SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol *SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol
+type StorageProvider struct {
+	HTTPSPublicWeb                 *HTTPSPublicWeb
+	GCSGoogleCloudStorage          *GCSGoogleCloudStorage
+	S3AmazonWebServices            *SourceFileSecureUpdateS3AmazonWebServices
+	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage
+	SSHSecureShell                 *SSHSecureShell
+	SCPSecureCopyProtocol          *SCPSecureCopyProtocol
+	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol
 
-	Type SourceFileSecureUpdateStorageProviderType
+	Type StorageProviderType
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderHTTPSPublicWeb(sourceFileSecureUpdateStorageProviderHTTPSPublicWeb SourceFileSecureUpdateStorageProviderHTTPSPublicWeb) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderHTTPSPublicWeb
+func CreateStorageProviderHTTPSPublicWeb(httpsPublicWeb HTTPSPublicWeb) StorageProvider {
+	typ := StorageProviderTypeHTTPSPublicWeb
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderHTTPSPublicWeb: &sourceFileSecureUpdateStorageProviderHTTPSPublicWeb,
-		Type: typ,
+	return StorageProvider{
+		HTTPSPublicWeb: &httpsPublicWeb,
+		Type:           typ,
 	}
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage(sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage
+func CreateStorageProviderGCSGoogleCloudStorage(gcsGoogleCloudStorage GCSGoogleCloudStorage) StorageProvider {
+	typ := StorageProviderTypeGCSGoogleCloudStorage
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage: &sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage,
-		Type: typ,
+	return StorageProvider{
+		GCSGoogleCloudStorage: &gcsGoogleCloudStorage,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderS3AmazonWebServices(sourceFileSecureUpdateStorageProviderS3AmazonWebServices SourceFileSecureUpdateStorageProviderS3AmazonWebServices) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderS3AmazonWebServices
+func CreateStorageProviderS3AmazonWebServices(s3AmazonWebServices SourceFileSecureUpdateS3AmazonWebServices) StorageProvider {
+	typ := StorageProviderTypeS3AmazonWebServices
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderS3AmazonWebServices: &sourceFileSecureUpdateStorageProviderS3AmazonWebServices,
-		Type: typ,
+	return StorageProvider{
+		S3AmazonWebServices: &s3AmazonWebServices,
+		Type:                typ,
 	}
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage(sourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage
+func CreateStorageProviderAzBlobAzureBlobStorage(azBlobAzureBlobStorage AzBlobAzureBlobStorage) StorageProvider {
+	typ := StorageProviderTypeAzBlobAzureBlobStorage
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage: &sourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage,
-		Type: typ,
+	return StorageProvider{
+		AzBlobAzureBlobStorage: &azBlobAzureBlobStorage,
+		Type:                   typ,
 	}
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderSSHSecureShell(sourceFileSecureUpdateStorageProviderSSHSecureShell SourceFileSecureUpdateStorageProviderSSHSecureShell) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSSHSecureShell
+func CreateStorageProviderSSHSecureShell(sshSecureShell SSHSecureShell) StorageProvider {
+	typ := StorageProviderTypeSSHSecureShell
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderSSHSecureShell: &sourceFileSecureUpdateStorageProviderSSHSecureShell,
-		Type: typ,
+	return StorageProvider{
+		SSHSecureShell: &sshSecureShell,
+		Type:           typ,
 	}
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol(sourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol
+func CreateStorageProviderSCPSecureCopyProtocol(scpSecureCopyProtocol SCPSecureCopyProtocol) StorageProvider {
+	typ := StorageProviderTypeSCPSecureCopyProtocol
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol: &sourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol,
-		Type: typ,
+	return StorageProvider{
+		SCPSecureCopyProtocol: &scpSecureCopyProtocol,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceFileSecureUpdateStorageProviderSourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol(sourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol) SourceFileSecureUpdateStorageProvider {
-	typ := SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol
+func CreateStorageProviderSFTPSecureFileTransferProtocol(sftpSecureFileTransferProtocol SFTPSecureFileTransferProtocol) StorageProvider {
+	typ := StorageProviderTypeSFTPSecureFileTransferProtocol
 
-	return SourceFileSecureUpdateStorageProvider{
-		SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol: &sourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol,
-		Type: typ,
+	return StorageProvider{
+		SFTPSecureFileTransferProtocol: &sftpSecureFileTransferProtocol,
+		Type:                           typ,
 	}
 }
 
-func (u *SourceFileSecureUpdateStorageProvider) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 
-	sourceFileSecureUpdateStorageProviderHTTPSPublicWeb := new(SourceFileSecureUpdateStorageProviderHTTPSPublicWeb)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderHTTPSPublicWeb); err == nil {
-		u.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb = sourceFileSecureUpdateStorageProviderHTTPSPublicWeb
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderHTTPSPublicWeb
+	httpsPublicWeb := new(HTTPSPublicWeb)
+	if err := utils.UnmarshalJSON(data, &httpsPublicWeb, "", true, true); err == nil {
+		u.HTTPSPublicWeb = httpsPublicWeb
+		u.Type = StorageProviderTypeHTTPSPublicWeb
 		return nil
 	}
 
-	sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage := new(SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage); err == nil {
-		u.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage = sourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage
+	gcsGoogleCloudStorage := new(GCSGoogleCloudStorage)
+	if err := utils.UnmarshalJSON(data, &gcsGoogleCloudStorage, "", true, true); err == nil {
+		u.GCSGoogleCloudStorage = gcsGoogleCloudStorage
+		u.Type = StorageProviderTypeGCSGoogleCloudStorage
 		return nil
 	}
 
-	sourceFileSecureUpdateStorageProviderS3AmazonWebServices := new(SourceFileSecureUpdateStorageProviderS3AmazonWebServices)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderS3AmazonWebServices); err == nil {
-		u.SourceFileSecureUpdateStorageProviderS3AmazonWebServices = sourceFileSecureUpdateStorageProviderS3AmazonWebServices
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderS3AmazonWebServices
+	s3AmazonWebServices := new(SourceFileSecureUpdateS3AmazonWebServices)
+	if err := utils.UnmarshalJSON(data, &s3AmazonWebServices, "", true, true); err == nil {
+		u.S3AmazonWebServices = s3AmazonWebServices
+		u.Type = StorageProviderTypeS3AmazonWebServices
 		return nil
 	}
 
-	sourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage := new(SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage); err == nil {
-		u.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage = sourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage
+	azBlobAzureBlobStorage := new(AzBlobAzureBlobStorage)
+	if err := utils.UnmarshalJSON(data, &azBlobAzureBlobStorage, "", true, true); err == nil {
+		u.AzBlobAzureBlobStorage = azBlobAzureBlobStorage
+		u.Type = StorageProviderTypeAzBlobAzureBlobStorage
 		return nil
 	}
 
-	sourceFileSecureUpdateStorageProviderSSHSecureShell := new(SourceFileSecureUpdateStorageProviderSSHSecureShell)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderSSHSecureShell); err == nil {
-		u.SourceFileSecureUpdateStorageProviderSSHSecureShell = sourceFileSecureUpdateStorageProviderSSHSecureShell
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSSHSecureShell
+	sshSecureShell := new(SSHSecureShell)
+	if err := utils.UnmarshalJSON(data, &sshSecureShell, "", true, true); err == nil {
+		u.SSHSecureShell = sshSecureShell
+		u.Type = StorageProviderTypeSSHSecureShell
 		return nil
 	}
 
-	sourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol := new(SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol); err == nil {
-		u.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol = sourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol
+	scpSecureCopyProtocol := new(SCPSecureCopyProtocol)
+	if err := utils.UnmarshalJSON(data, &scpSecureCopyProtocol, "", true, true); err == nil {
+		u.SCPSecureCopyProtocol = scpSecureCopyProtocol
+		u.Type = StorageProviderTypeSCPSecureCopyProtocol
 		return nil
 	}
 
-	sourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol := new(SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol); err == nil {
-		u.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol = sourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol
-		u.Type = SourceFileSecureUpdateStorageProviderTypeSourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol
+	sftpSecureFileTransferProtocol := new(SFTPSecureFileTransferProtocol)
+	if err := utils.UnmarshalJSON(data, &sftpSecureFileTransferProtocol, "", true, true); err == nil {
+		u.SFTPSecureFileTransferProtocol = sftpSecureFileTransferProtocol
+		u.Type = StorageProviderTypeSFTPSecureFileTransferProtocol
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceFileSecureUpdateStorageProvider) MarshalJSON() ([]byte, error) {
-	if u.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderHTTPSPublicWeb)
+func (u StorageProvider) MarshalJSON() ([]byte, error) {
+	if u.HTTPSPublicWeb != nil {
+		return utils.MarshalJSON(u.HTTPSPublicWeb, "", true)
 	}
 
-	if u.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderGCSGoogleCloudStorage)
+	if u.GCSGoogleCloudStorage != nil {
+		return utils.MarshalJSON(u.GCSGoogleCloudStorage, "", true)
 	}
 
-	if u.SourceFileSecureUpdateStorageProviderS3AmazonWebServices != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderS3AmazonWebServices)
+	if u.S3AmazonWebServices != nil {
+		return utils.MarshalJSON(u.S3AmazonWebServices, "", true)
 	}
 
-	if u.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderAzBlobAzureBlobStorage)
+	if u.AzBlobAzureBlobStorage != nil {
+		return utils.MarshalJSON(u.AzBlobAzureBlobStorage, "", true)
 	}
 
-	if u.SourceFileSecureUpdateStorageProviderSSHSecureShell != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderSSHSecureShell)
+	if u.SSHSecureShell != nil {
+		return utils.MarshalJSON(u.SSHSecureShell, "", true)
 	}
 
-	if u.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderSCPSecureCopyProtocol)
+	if u.SCPSecureCopyProtocol != nil {
+		return utils.MarshalJSON(u.SCPSecureCopyProtocol, "", true)
 	}
 
-	if u.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol != nil {
-		return json.Marshal(u.SourceFileSecureUpdateStorageProviderSFTPSecureFileTransferProtocol)
+	if u.SFTPSecureFileTransferProtocol != nil {
+		return utils.MarshalJSON(u.SFTPSecureFileTransferProtocol, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceFileSecureUpdate struct {
 	// The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).
 	DatasetName string `json:"dataset_name"`
 	// The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
-	Format SourceFileSecureUpdateFileFormat `json:"format"`
+	Format *FileFormat `default:"csv" json:"format"`
 	// The storage Provider or Location of the file(s) which should be replicated.
-	Provider SourceFileSecureUpdateStorageProvider `json:"provider"`
+	Provider StorageProvider `json:"provider"`
 	// This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.
 	ReaderOptions *string `json:"reader_options,omitempty"`
 	// The URL path to access the file which should be replicated.
 	URL string `json:"url"`
+}
+
+func (s SourceFileSecureUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFileSecureUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFileSecureUpdate) GetDatasetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatasetName
+}
+
+func (o *SourceFileSecureUpdate) GetFormat() *FileFormat {
+	if o == nil {
+		return nil
+	}
+	return o.Format
+}
+
+func (o *SourceFileSecureUpdate) GetProvider() StorageProvider {
+	if o == nil {
+		return StorageProvider{}
+	}
+	return o.Provider
+}
+
+func (o *SourceFileSecureUpdate) GetReaderOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReaderOptions
+}
+
+func (o *SourceFileSecureUpdate) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

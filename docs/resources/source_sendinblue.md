@@ -15,12 +15,11 @@ SourceSendinblue Resource
 ```terraform
 resource "airbyte_source_sendinblue" "my_source_sendinblue" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "sendinblue"
+    api_key = "...my_api_key..."
   }
-  name         = "Terence Kassulke III"
+  name         = "Charles Koss"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6a8be344-4eac-48b3-a287-5c6c1fe606d0"
+  workspace_id = "69873338-6b53-4a47-9a08-05ff1793bf9b"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_sendinblue" "my_source_sendinblue" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
-- `source_type` (String) must be one of ["sendinblue"]
 
 

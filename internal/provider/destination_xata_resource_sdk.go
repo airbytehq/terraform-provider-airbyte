@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationXataResourceModel) ToCreateSDKType() *shared.DestinationXataCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dbURL := r.Configuration.DbURL.ValueString()
-	destinationType := shared.DestinationXataXata(r.Configuration.DestinationType.ValueString())
 	configuration := shared.DestinationXata{
-		APIKey:          apiKey,
-		DbURL:           dbURL,
-		DestinationType: destinationType,
+		APIKey: apiKey,
+		DbURL:  dbURL,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

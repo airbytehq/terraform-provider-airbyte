@@ -7,3 +7,24 @@ type DestinationFireboltCreateRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *DestinationFireboltCreateRequest) GetConfiguration() DestinationFirebolt {
+	if o == nil {
+		return DestinationFirebolt{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationFireboltCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationFireboltCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

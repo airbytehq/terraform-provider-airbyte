@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePokeapi struct {
 	PokemonName types.String `tfsdk:"pokemon_name"`
-	SourceType  types.String `tfsdk:"source_type"`
 }

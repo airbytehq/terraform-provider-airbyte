@@ -19,13 +19,12 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
     folder_id            = "...my_folder_id..."
     include_closed_tasks = true
     list_id              = "...my_list_id..."
-    source_type          = "clickup-api"
     space_id             = "...my_space_id..."
     team_id              = "...my_team_id..."
   }
-  name         = "Mr. Jack Gottlieb"
+  name         = "Karen Jacobs"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b0960a66-8151-4a47-aaf9-23c5949f83f3"
+  workspace_id = "d04e6080-39bc-47eb-8732-a47524bb490a"
 }
 ```
 
@@ -53,12 +52,12 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
 Required:
 
 - `api_token` (String) Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
-- `source_type` (String) must be one of ["clickup-api"]
 
 Optional:
 
 - `folder_id` (String) The ID of your folder in your space. Retrieve it from the `/space/{space_id}/folder` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.
-- `include_closed_tasks` (Boolean) Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.
+- `include_closed_tasks` (Boolean) Default: false
+Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.
 - `list_id` (String) The ID of your list in your folder. Retrieve it from the `/folder/{folder_id}/list` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.
 - `space_id` (String) The ID of your space in your workspace. Retrieve it from the `/team/{team_id}/space` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.
 - `team_id` (String) The ID of your team in ClickUp. Retrieve it from the `/team` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.

@@ -13,7 +13,6 @@ type SourceGnews struct {
 	Nullable          []types.String `tfsdk:"nullable"`
 	Query             types.String   `tfsdk:"query"`
 	Sortby            types.String   `tfsdk:"sortby"`
-	SourceType        types.String   `tfsdk:"source_type"`
 	StartDate         types.String   `tfsdk:"start_date"`
 	TopHeadlinesQuery types.String   `tfsdk:"top_headlines_query"`
 	TopHeadlinesTopic types.String   `tfsdk:"top_headlines_topic"`

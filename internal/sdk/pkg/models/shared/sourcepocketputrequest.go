@@ -7,3 +7,24 @@ type SourcePocketPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourcePocketPutRequest) GetConfiguration() SourcePocketUpdate {
+	if o == nil {
+		return SourcePocketUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePocketPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePocketPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

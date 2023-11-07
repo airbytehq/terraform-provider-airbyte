@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceIntercomIntercom string
+type Intercom string
 
 const (
-	SourceIntercomIntercomIntercom SourceIntercomIntercom = "intercom"
+	IntercomIntercom Intercom = "intercom"
 )
 
-func (e SourceIntercomIntercom) ToPointer() *SourceIntercomIntercom {
+func (e Intercom) ToPointer() *Intercom {
 	return &e
 }
 
-func (e *SourceIntercomIntercom) UnmarshalJSON(data []byte) error {
+func (e *Intercom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "intercom":
-		*e = SourceIntercomIntercom(v)
+		*e = Intercom(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIntercomIntercom: %v", v)
+		return fmt.Errorf("invalid value for Intercom: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceIntercom struct {
 	// Client Id for your Intercom application.
 	ClientID *string `json:"client_id,omitempty"`
 	// Client Secret for your Intercom application.
-	ClientSecret *string                `json:"client_secret,omitempty"`
-	SourceType   SourceIntercomIntercom `json:"sourceType"`
+	ClientSecret *string  `json:"client_secret,omitempty"`
+	sourceType   Intercom `const:"intercom" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceIntercom) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceIntercom) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceIntercom) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceIntercom) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceIntercom) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceIntercom) GetSourceType() Intercom {
+	return IntercomIntercom
+}
+
+func (o *SourceIntercom) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

@@ -3,45 +3,45 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory - Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
-type SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory string
+// SourceLinkedinAdsPivotCategory - Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
+type SourceLinkedinAdsPivotCategory string
 
 const (
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryCompany                     SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "COMPANY"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryAccount                     SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "ACCOUNT"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryShare                       SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "SHARE"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryCampaign                    SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CAMPAIGN"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryCreative                    SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CREATIVE"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryCampaignGroup               SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CAMPAIGN_GROUP"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryConversion                  SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CONVERSION"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryConversationNode            SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CONVERSATION_NODE"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryConversationNodeOptionIndex SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CONVERSATION_NODE_OPTION_INDEX"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryServingLocation             SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "SERVING_LOCATION"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryCardIndex                   SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "CARD_INDEX"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberCompanySize           SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_COMPANY_SIZE"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberIndustry              SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_INDUSTRY"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberSeniority             SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_SENIORITY"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberJobTitle              SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_JOB_TITLE "
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberJobFunction           SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_JOB_FUNCTION "
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberCountryV2             SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_COUNTRY_V2 "
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberRegionV2              SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_REGION_V2"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryMemberCompany               SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "MEMBER_COMPANY"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryPlacementName               SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "PLACEMENT_NAME"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategoryImpressionDeviceType        SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory = "IMPRESSION_DEVICE_TYPE"
+	SourceLinkedinAdsPivotCategoryCompany                     SourceLinkedinAdsPivotCategory = "COMPANY"
+	SourceLinkedinAdsPivotCategoryAccount                     SourceLinkedinAdsPivotCategory = "ACCOUNT"
+	SourceLinkedinAdsPivotCategoryShare                       SourceLinkedinAdsPivotCategory = "SHARE"
+	SourceLinkedinAdsPivotCategoryCampaign                    SourceLinkedinAdsPivotCategory = "CAMPAIGN"
+	SourceLinkedinAdsPivotCategoryCreative                    SourceLinkedinAdsPivotCategory = "CREATIVE"
+	SourceLinkedinAdsPivotCategoryCampaignGroup               SourceLinkedinAdsPivotCategory = "CAMPAIGN_GROUP"
+	SourceLinkedinAdsPivotCategoryConversion                  SourceLinkedinAdsPivotCategory = "CONVERSION"
+	SourceLinkedinAdsPivotCategoryConversationNode            SourceLinkedinAdsPivotCategory = "CONVERSATION_NODE"
+	SourceLinkedinAdsPivotCategoryConversationNodeOptionIndex SourceLinkedinAdsPivotCategory = "CONVERSATION_NODE_OPTION_INDEX"
+	SourceLinkedinAdsPivotCategoryServingLocation             SourceLinkedinAdsPivotCategory = "SERVING_LOCATION"
+	SourceLinkedinAdsPivotCategoryCardIndex                   SourceLinkedinAdsPivotCategory = "CARD_INDEX"
+	SourceLinkedinAdsPivotCategoryMemberCompanySize           SourceLinkedinAdsPivotCategory = "MEMBER_COMPANY_SIZE"
+	SourceLinkedinAdsPivotCategoryMemberIndustry              SourceLinkedinAdsPivotCategory = "MEMBER_INDUSTRY"
+	SourceLinkedinAdsPivotCategoryMemberSeniority             SourceLinkedinAdsPivotCategory = "MEMBER_SENIORITY"
+	SourceLinkedinAdsPivotCategoryMemberJobTitle              SourceLinkedinAdsPivotCategory = "MEMBER_JOB_TITLE "
+	SourceLinkedinAdsPivotCategoryMemberJobFunction           SourceLinkedinAdsPivotCategory = "MEMBER_JOB_FUNCTION "
+	SourceLinkedinAdsPivotCategoryMemberCountryV2             SourceLinkedinAdsPivotCategory = "MEMBER_COUNTRY_V2 "
+	SourceLinkedinAdsPivotCategoryMemberRegionV2              SourceLinkedinAdsPivotCategory = "MEMBER_REGION_V2"
+	SourceLinkedinAdsPivotCategoryMemberCompany               SourceLinkedinAdsPivotCategory = "MEMBER_COMPANY"
+	SourceLinkedinAdsPivotCategoryPlacementName               SourceLinkedinAdsPivotCategory = "PLACEMENT_NAME"
+	SourceLinkedinAdsPivotCategoryImpressionDeviceType        SourceLinkedinAdsPivotCategory = "IMPRESSION_DEVICE_TYPE"
 )
 
-func (e SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory) ToPointer() *SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory {
+func (e SourceLinkedinAdsPivotCategory) ToPointer() *SourceLinkedinAdsPivotCategory {
 	return &e
 }
 
-func (e *SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsPivotCategory) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -88,28 +88,28 @@ func (e *SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory) Unmarshal
 	case "PLACEMENT_NAME":
 		fallthrough
 	case "IMPRESSION_DEVICE_TYPE":
-		*e = SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory(v)
+		*e = SourceLinkedinAdsPivotCategory(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsPivotCategory: %v", v)
 	}
 }
 
-// SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity - Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
-type SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity string
+// SourceLinkedinAdsTimeGranularity - Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
+type SourceLinkedinAdsTimeGranularity string
 
 const (
-	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityAll     SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "ALL"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityDaily   SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "DAILY"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityMonthly SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "MONTHLY"
-	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityYearly  SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "YEARLY"
+	SourceLinkedinAdsTimeGranularityAll     SourceLinkedinAdsTimeGranularity = "ALL"
+	SourceLinkedinAdsTimeGranularityDaily   SourceLinkedinAdsTimeGranularity = "DAILY"
+	SourceLinkedinAdsTimeGranularityMonthly SourceLinkedinAdsTimeGranularity = "MONTHLY"
+	SourceLinkedinAdsTimeGranularityYearly  SourceLinkedinAdsTimeGranularity = "YEARLY"
 )
 
-func (e SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity) ToPointer() *SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity {
+func (e SourceLinkedinAdsTimeGranularity) ToPointer() *SourceLinkedinAdsTimeGranularity {
 	return &e
 }
 
-func (e *SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsTimeGranularity) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -122,10 +122,10 @@ func (e *SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity) Unmarsh
 	case "MONTHLY":
 		fallthrough
 	case "YEARLY":
-		*e = SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity(v)
+		*e = SourceLinkedinAdsTimeGranularity(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsTimeGranularity: %v", v)
 	}
 }
 
@@ -134,67 +134,110 @@ type SourceLinkedinAdsAdAnalyticsReportConfiguration struct {
 	// The name for the custom report.
 	Name string `json:"name"`
 	// Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
-	PivotBy SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory `json:"pivot_by"`
+	PivotBy SourceLinkedinAdsPivotCategory `json:"pivot_by"`
 	// Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
-	TimeGranularity SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity `json:"time_granularity"`
+	TimeGranularity SourceLinkedinAdsTimeGranularity `json:"time_granularity"`
 }
 
-type SourceLinkedinAdsAuthenticationAccessTokenAuthMethod string
+func (o *SourceLinkedinAdsAdAnalyticsReportConfiguration) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLinkedinAdsAdAnalyticsReportConfiguration) GetPivotBy() SourceLinkedinAdsPivotCategory {
+	if o == nil {
+		return SourceLinkedinAdsPivotCategory("")
+	}
+	return o.PivotBy
+}
+
+func (o *SourceLinkedinAdsAdAnalyticsReportConfiguration) GetTimeGranularity() SourceLinkedinAdsTimeGranularity {
+	if o == nil {
+		return SourceLinkedinAdsTimeGranularity("")
+	}
+	return o.TimeGranularity
+}
+
+type SourceLinkedinAdsSchemasAuthMethod string
 
 const (
-	SourceLinkedinAdsAuthenticationAccessTokenAuthMethodAccessToken SourceLinkedinAdsAuthenticationAccessTokenAuthMethod = "access_token"
+	SourceLinkedinAdsSchemasAuthMethodAccessToken SourceLinkedinAdsSchemasAuthMethod = "access_token"
 )
 
-func (e SourceLinkedinAdsAuthenticationAccessTokenAuthMethod) ToPointer() *SourceLinkedinAdsAuthenticationAccessTokenAuthMethod {
+func (e SourceLinkedinAdsSchemasAuthMethod) ToPointer() *SourceLinkedinAdsSchemasAuthMethod {
 	return &e
 }
 
-func (e *SourceLinkedinAdsAuthenticationAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceLinkedinAdsAuthenticationAccessTokenAuthMethod(v)
+		*e = SourceLinkedinAdsSchemasAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationAccessTokenAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsSchemasAuthMethod: %v", v)
 	}
 }
 
-type SourceLinkedinAdsAuthenticationAccessToken struct {
+type SourceLinkedinAdsAccessToken struct {
 	// The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
-	AccessToken string                                                `json:"access_token"`
-	AuthMethod  *SourceLinkedinAdsAuthenticationAccessTokenAuthMethod `json:"auth_method,omitempty"`
+	AccessToken string                              `json:"access_token"`
+	authMethod  *SourceLinkedinAdsSchemasAuthMethod `const:"access_token" json:"auth_method,omitempty"`
 }
 
-type SourceLinkedinAdsAuthenticationOAuth20AuthMethod string
+func (s SourceLinkedinAdsAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLinkedinAdsAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLinkedinAdsAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceLinkedinAdsAccessToken) GetAuthMethod() *SourceLinkedinAdsSchemasAuthMethod {
+	return SourceLinkedinAdsSchemasAuthMethodAccessToken.ToPointer()
+}
+
+type SourceLinkedinAdsAuthMethod string
 
 const (
-	SourceLinkedinAdsAuthenticationOAuth20AuthMethodOAuth20 SourceLinkedinAdsAuthenticationOAuth20AuthMethod = "oAuth2.0"
+	SourceLinkedinAdsAuthMethodOAuth20 SourceLinkedinAdsAuthMethod = "oAuth2.0"
 )
 
-func (e SourceLinkedinAdsAuthenticationOAuth20AuthMethod) ToPointer() *SourceLinkedinAdsAuthenticationOAuth20AuthMethod {
+func (e SourceLinkedinAdsAuthMethod) ToPointer() *SourceLinkedinAdsAuthMethod {
 	return &e
 }
 
-func (e *SourceLinkedinAdsAuthenticationOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oAuth2.0":
-		*e = SourceLinkedinAdsAuthenticationOAuth20AuthMethod(v)
+		*e = SourceLinkedinAdsAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationOAuth20AuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthMethod: %v", v)
 	}
 }
 
-type SourceLinkedinAdsAuthenticationOAuth20 struct {
-	AuthMethod *SourceLinkedinAdsAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
+type SourceLinkedinAdsOAuth20 struct {
+	authMethod *SourceLinkedinAdsAuthMethod `const:"oAuth2.0" json:"auth_method,omitempty"`
 	// The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	ClientID string `json:"client_id"`
 	// The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
@@ -203,56 +246,87 @@ type SourceLinkedinAdsAuthenticationOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+func (s SourceLinkedinAdsOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLinkedinAdsOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLinkedinAdsOAuth20) GetAuthMethod() *SourceLinkedinAdsAuthMethod {
+	return SourceLinkedinAdsAuthMethodOAuth20.ToPointer()
+}
+
+func (o *SourceLinkedinAdsOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceLinkedinAdsOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceLinkedinAdsOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 type SourceLinkedinAdsAuthenticationType string
 
 const (
-	SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAuthenticationOAuth20     SourceLinkedinAdsAuthenticationType = "source-linkedin-ads_Authentication_OAuth2.0"
-	SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAuthenticationAccessToken SourceLinkedinAdsAuthenticationType = "source-linkedin-ads_Authentication_Access Token"
+	SourceLinkedinAdsAuthenticationTypeOAuth20     SourceLinkedinAdsAuthenticationType = "OAuth20"
+	SourceLinkedinAdsAuthenticationTypeAccessToken SourceLinkedinAdsAuthenticationType = "AccessToken"
 )
 
 type SourceLinkedinAdsAuthentication struct {
-	SourceLinkedinAdsAuthenticationOAuth20     *SourceLinkedinAdsAuthenticationOAuth20
-	SourceLinkedinAdsAuthenticationAccessToken *SourceLinkedinAdsAuthenticationAccessToken
+	OAuth20     *SourceLinkedinAdsOAuth20
+	AccessToken *SourceLinkedinAdsAccessToken
 
 	Type SourceLinkedinAdsAuthenticationType
 }
 
-func CreateSourceLinkedinAdsAuthenticationSourceLinkedinAdsAuthenticationOAuth20(sourceLinkedinAdsAuthenticationOAuth20 SourceLinkedinAdsAuthenticationOAuth20) SourceLinkedinAdsAuthentication {
-	typ := SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAuthenticationOAuth20
+func CreateSourceLinkedinAdsAuthenticationOAuth20(oAuth20 SourceLinkedinAdsOAuth20) SourceLinkedinAdsAuthentication {
+	typ := SourceLinkedinAdsAuthenticationTypeOAuth20
 
 	return SourceLinkedinAdsAuthentication{
-		SourceLinkedinAdsAuthenticationOAuth20: &sourceLinkedinAdsAuthenticationOAuth20,
-		Type:                                   typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourceLinkedinAdsAuthenticationSourceLinkedinAdsAuthenticationAccessToken(sourceLinkedinAdsAuthenticationAccessToken SourceLinkedinAdsAuthenticationAccessToken) SourceLinkedinAdsAuthentication {
-	typ := SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAuthenticationAccessToken
+func CreateSourceLinkedinAdsAuthenticationAccessToken(accessToken SourceLinkedinAdsAccessToken) SourceLinkedinAdsAuthentication {
+	typ := SourceLinkedinAdsAuthenticationTypeAccessToken
 
 	return SourceLinkedinAdsAuthentication{
-		SourceLinkedinAdsAuthenticationAccessToken: &sourceLinkedinAdsAuthenticationAccessToken,
-		Type: typ,
+		AccessToken: &accessToken,
+		Type:        typ,
 	}
 }
 
 func (u *SourceLinkedinAdsAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceLinkedinAdsAuthenticationAccessToken := new(SourceLinkedinAdsAuthenticationAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLinkedinAdsAuthenticationAccessToken); err == nil {
-		u.SourceLinkedinAdsAuthenticationAccessToken = sourceLinkedinAdsAuthenticationAccessToken
-		u.Type = SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAuthenticationAccessToken
+	accessToken := new(SourceLinkedinAdsAccessToken)
+	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
+		u.AccessToken = accessToken
+		u.Type = SourceLinkedinAdsAuthenticationTypeAccessToken
 		return nil
 	}
 
-	sourceLinkedinAdsAuthenticationOAuth20 := new(SourceLinkedinAdsAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLinkedinAdsAuthenticationOAuth20); err == nil {
-		u.SourceLinkedinAdsAuthenticationOAuth20 = sourceLinkedinAdsAuthenticationOAuth20
-		u.Type = SourceLinkedinAdsAuthenticationTypeSourceLinkedinAdsAuthenticationOAuth20
+	oAuth20 := new(SourceLinkedinAdsOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceLinkedinAdsAuthenticationTypeOAuth20
 		return nil
 	}
 
@@ -260,38 +334,38 @@ func (u *SourceLinkedinAdsAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceLinkedinAdsAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceLinkedinAdsAuthenticationAccessToken != nil {
-		return json.Marshal(u.SourceLinkedinAdsAuthenticationAccessToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourceLinkedinAdsAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceLinkedinAdsAuthenticationOAuth20)
+	if u.AccessToken != nil {
+		return utils.MarshalJSON(u.AccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceLinkedinAdsLinkedinAds string
+type LinkedinAds string
 
 const (
-	SourceLinkedinAdsLinkedinAdsLinkedinAds SourceLinkedinAdsLinkedinAds = "linkedin-ads"
+	LinkedinAdsLinkedinAds LinkedinAds = "linkedin-ads"
 )
 
-func (e SourceLinkedinAdsLinkedinAds) ToPointer() *SourceLinkedinAdsLinkedinAds {
+func (e LinkedinAds) ToPointer() *LinkedinAds {
 	return &e
 }
 
-func (e *SourceLinkedinAdsLinkedinAds) UnmarshalJSON(data []byte) error {
+func (e *LinkedinAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "linkedin-ads":
-		*e = SourceLinkedinAdsLinkedinAds(v)
+		*e = LinkedinAds(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsLinkedinAds: %v", v)
+		return fmt.Errorf("invalid value for LinkedinAds: %v", v)
 	}
 }
 
@@ -300,7 +374,50 @@ type SourceLinkedinAds struct {
 	AccountIds         []int64                                           `json:"account_ids,omitempty"`
 	AdAnalyticsReports []SourceLinkedinAdsAdAnalyticsReportConfiguration `json:"ad_analytics_reports,omitempty"`
 	Credentials        *SourceLinkedinAdsAuthentication                  `json:"credentials,omitempty"`
-	SourceType         SourceLinkedinAdsLinkedinAds                      `json:"sourceType"`
+	sourceType         LinkedinAds                                       `const:"linkedin-ads" json:"sourceType"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceLinkedinAds) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLinkedinAds) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLinkedinAds) GetAccountIds() []int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AccountIds
+}
+
+func (o *SourceLinkedinAds) GetAdAnalyticsReports() []SourceLinkedinAdsAdAnalyticsReportConfiguration {
+	if o == nil {
+		return nil
+	}
+	return o.AdAnalyticsReports
+}
+
+func (o *SourceLinkedinAds) GetCredentials() *SourceLinkedinAdsAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceLinkedinAds) GetSourceType() LinkedinAds {
+	return LinkedinAdsLinkedinAds
+}
+
+func (o *SourceLinkedinAds) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

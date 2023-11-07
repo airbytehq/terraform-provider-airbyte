@@ -9,3 +9,31 @@ type SourceSlackCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceSlackCreateRequest) GetConfiguration() SourceSlack {
+	if o == nil {
+		return SourceSlack{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSlackCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSlackCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSlackCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

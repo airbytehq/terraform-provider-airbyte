@@ -15,24 +15,22 @@ SourceTiktokMarketing Resource
 ```terraform
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 5
+    attribution_window = 9
     credentials = {
-      source_tiktok_marketing_authentication_method_o_auth2_0 = {
+      source_tiktok_marketing_o_auth2_0 = {
         access_token  = "...my_access_token..."
         advertiser_id = "...my_advertiser_id..."
         app_id        = "...my_app_id..."
-        auth_type     = "oauth2.0"
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2021-10-08"
+    end_date        = "2022-08-29"
     include_deleted = false
-    source_type     = "tiktok-marketing"
-    start_date      = "2022-12-21"
+    start_date      = "2022-12-05"
   }
-  name         = "Mrs. Joey Mueller"
+  name         = "Ms. Eloise Anderson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4d93a74c-0252-4fe3-b4b4-db8b778ebb6e"
+  workspace_id = "7793827c-06dd-486b-8fbd-e6ae53955108"
 }
 ```
 
@@ -59,25 +57,25 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
 
 Optional:
 
-- `attribution_window` (Number) The attribution window in days.
+- `attribution_window` (Number) Default: 3
+The attribution window in days.
 - `credentials` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-- `include_deleted` (Boolean) Set to active if you want to include deleted data in reports.
-- `source_type` (String) must be one of ["tiktok-marketing"]
-- `start_date` (String) The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
+- `include_deleted` (Boolean) Default: false
+Set to active if you want to include deleted data in reports.
+- `start_date` (String) Default: "2016-09-01"
+The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_tiktok_marketing_authentication_method_o_auth2_0` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_authentication_method_o_auth2_0))
-- `source_tiktok_marketing_authentication_method_sandbox_access_token` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_authentication_method_sandbox_access_token))
-- `source_tiktok_marketing_update_authentication_method_o_auth2_0` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_o_auth2_0))
-- `source_tiktok_marketing_update_authentication_method_sandbox_access_token` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_sandbox_access_token))
+- `o_auth20` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `sandbox_access_token` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--sandbox_access_token))
 
-<a id="nestedatt--configuration--credentials--source_tiktok_marketing_authentication_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_tiktok_marketing_authentication_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
@@ -88,47 +86,14 @@ Required:
 Optional:
 
 - `advertiser_id` (String) The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
-- `auth_type` (String) must be one of ["oauth2.0"]
 
 
-<a id="nestedatt--configuration--credentials--source_tiktok_marketing_authentication_method_sandbox_access_token"></a>
-### Nested Schema for `configuration.credentials.source_tiktok_marketing_authentication_method_sandbox_access_token`
-
-Required:
-
-- `access_token` (String) The long-term authorized access token.
-- `advertiser_id` (String) The Advertiser ID which generated for the developer's Sandbox application.
-
-Optional:
-
-- `auth_type` (String) must be one of ["sandbox_access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_tiktok_marketing_update_authentication_method_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Long-term Authorized Access Token.
-- `app_id` (String) The Developer Application App ID.
-- `secret` (String) The Developer Application Secret.
-
-Optional:
-
-- `advertiser_id` (String) The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
-- `auth_type` (String) must be one of ["oauth2.0"]
-
-
-<a id="nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_sandbox_access_token"></a>
-### Nested Schema for `configuration.credentials.source_tiktok_marketing_update_authentication_method_sandbox_access_token`
+<a id="nestedatt--configuration--credentials--sandbox_access_token"></a>
+### Nested Schema for `configuration.credentials.sandbox_access_token`
 
 Required:
 
 - `access_token` (String) The long-term authorized access token.
 - `advertiser_id` (String) The Advertiser ID which generated for the developer's Sandbox application.
-
-Optional:
-
-- `auth_type` (String) must be one of ["sandbox_access_token"]
 
 

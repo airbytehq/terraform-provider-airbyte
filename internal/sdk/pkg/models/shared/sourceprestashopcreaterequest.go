@@ -9,3 +9,31 @@ type SourcePrestashopCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePrestashopCreateRequest) GetConfiguration() SourcePrestashop {
+	if o == nil {
+		return SourcePrestashop{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePrestashopCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePrestashopCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePrestashopCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

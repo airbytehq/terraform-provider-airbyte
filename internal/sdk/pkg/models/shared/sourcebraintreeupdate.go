@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -53,4 +54,50 @@ type SourceBraintreeUpdate struct {
 	PublicKey string `json:"public_key"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceBraintreeUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBraintreeUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBraintreeUpdate) GetEnvironment() SourceBraintreeUpdateEnvironment {
+	if o == nil {
+		return SourceBraintreeUpdateEnvironment("")
+	}
+	return o.Environment
+}
+
+func (o *SourceBraintreeUpdate) GetMerchantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.MerchantID
+}
+
+func (o *SourceBraintreeUpdate) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
+}
+
+func (o *SourceBraintreeUpdate) GetPublicKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PublicKey
+}
+
+func (o *SourceBraintreeUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

@@ -3,129 +3,182 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle string
+type SourceSlackUpdateSchemasOptionTitle string
 
 const (
-	SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitleAPITokenCredentials SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle = "API Token Credentials"
+	SourceSlackUpdateSchemasOptionTitleAPITokenCredentials SourceSlackUpdateSchemasOptionTitle = "API Token Credentials"
 )
 
-func (e SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle) ToPointer() *SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle {
+func (e SourceSlackUpdateSchemasOptionTitle) ToPointer() *SourceSlackUpdateSchemasOptionTitle {
 	return &e
 }
 
-func (e *SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle) UnmarshalJSON(data []byte) error {
+func (e *SourceSlackUpdateSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "API Token Credentials":
-		*e = SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle(v)
+		*e = SourceSlackUpdateSchemasOptionTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle: %v", v)
+		return fmt.Errorf("invalid value for SourceSlackUpdateSchemasOptionTitle: %v", v)
 	}
 }
 
-// SourceSlackUpdateAuthenticationMechanismAPIToken - Choose how to authenticate into Slack
-type SourceSlackUpdateAuthenticationMechanismAPIToken struct {
+// SourceSlackUpdateAPIToken - Choose how to authenticate into Slack
+type SourceSlackUpdateAPIToken struct {
 	// A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
-	APIToken    string                                                      `json:"api_token"`
-	OptionTitle SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle `json:"option_title"`
+	APIToken    string                              `json:"api_token"`
+	optionTitle SourceSlackUpdateSchemasOptionTitle `const:"API Token Credentials" json:"option_title"`
 }
 
-type SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle string
+func (s SourceSlackUpdateAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSlackUpdateAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSlackUpdateAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceSlackUpdateAPIToken) GetOptionTitle() SourceSlackUpdateSchemasOptionTitle {
+	return SourceSlackUpdateSchemasOptionTitleAPITokenCredentials
+}
+
+type SourceSlackUpdateOptionTitle string
 
 const (
-	SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitleDefaultOAuth20Authorization SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle = "Default OAuth2.0 authorization"
+	SourceSlackUpdateOptionTitleDefaultOAuth20Authorization SourceSlackUpdateOptionTitle = "Default OAuth2.0 authorization"
 )
 
-func (e SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle) ToPointer() *SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle {
+func (e SourceSlackUpdateOptionTitle) ToPointer() *SourceSlackUpdateOptionTitle {
 	return &e
 }
 
-func (e *SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle) UnmarshalJSON(data []byte) error {
+func (e *SourceSlackUpdateOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Default OAuth2.0 authorization":
-		*e = SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle(v)
+		*e = SourceSlackUpdateOptionTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle: %v", v)
+		return fmt.Errorf("invalid value for SourceSlackUpdateOptionTitle: %v", v)
 	}
 }
 
-// SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth - Choose how to authenticate into Slack
-type SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth struct {
+// SignInViaSlackOAuth - Choose how to authenticate into Slack
+type SignInViaSlackOAuth struct {
 	// Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
 	AccessToken string `json:"access_token"`
 	// Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.
 	ClientID string `json:"client_id"`
 	// Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
-	ClientSecret string                                                                 `json:"client_secret"`
-	OptionTitle  SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle `json:"option_title"`
+	ClientSecret string                       `json:"client_secret"`
+	optionTitle  SourceSlackUpdateOptionTitle `const:"Default OAuth2.0 authorization" json:"option_title"`
+}
+
+func (s SignInViaSlackOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SignInViaSlackOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SignInViaSlackOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SignInViaSlackOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SignInViaSlackOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SignInViaSlackOAuth) GetOptionTitle() SourceSlackUpdateOptionTitle {
+	return SourceSlackUpdateOptionTitleDefaultOAuth20Authorization
 }
 
 type SourceSlackUpdateAuthenticationMechanismType string
 
 const (
-	SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth SourceSlackUpdateAuthenticationMechanismType = "source-slack-update_Authentication mechanism_Sign in via Slack (OAuth)"
-	SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismAPIToken            SourceSlackUpdateAuthenticationMechanismType = "source-slack-update_Authentication mechanism_API Token"
+	SourceSlackUpdateAuthenticationMechanismTypeSignInViaSlackOAuth SourceSlackUpdateAuthenticationMechanismType = "SignInViaSlackOAuth"
+	SourceSlackUpdateAuthenticationMechanismTypeAPIToken            SourceSlackUpdateAuthenticationMechanismType = "APIToken"
 )
 
 type SourceSlackUpdateAuthenticationMechanism struct {
-	SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth *SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
-	SourceSlackUpdateAuthenticationMechanismAPIToken            *SourceSlackUpdateAuthenticationMechanismAPIToken
+	SignInViaSlackOAuth *SignInViaSlackOAuth
+	APIToken            *SourceSlackUpdateAPIToken
 
 	Type SourceSlackUpdateAuthenticationMechanismType
 }
 
-func CreateSourceSlackUpdateAuthenticationMechanismSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth(sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth) SourceSlackUpdateAuthenticationMechanism {
-	typ := SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
+func CreateSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth(signInViaSlackOAuth SignInViaSlackOAuth) SourceSlackUpdateAuthenticationMechanism {
+	typ := SourceSlackUpdateAuthenticationMechanismTypeSignInViaSlackOAuth
 
 	return SourceSlackUpdateAuthenticationMechanism{
-		SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth: &sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth,
-		Type: typ,
+		SignInViaSlackOAuth: &signInViaSlackOAuth,
+		Type:                typ,
 	}
 }
 
-func CreateSourceSlackUpdateAuthenticationMechanismSourceSlackUpdateAuthenticationMechanismAPIToken(sourceSlackUpdateAuthenticationMechanismAPIToken SourceSlackUpdateAuthenticationMechanismAPIToken) SourceSlackUpdateAuthenticationMechanism {
-	typ := SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismAPIToken
+func CreateSourceSlackUpdateAuthenticationMechanismAPIToken(apiToken SourceSlackUpdateAPIToken) SourceSlackUpdateAuthenticationMechanism {
+	typ := SourceSlackUpdateAuthenticationMechanismTypeAPIToken
 
 	return SourceSlackUpdateAuthenticationMechanism{
-		SourceSlackUpdateAuthenticationMechanismAPIToken: &sourceSlackUpdateAuthenticationMechanismAPIToken,
-		Type: typ,
+		APIToken: &apiToken,
+		Type:     typ,
 	}
 }
 
 func (u *SourceSlackUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceSlackUpdateAuthenticationMechanismAPIToken := new(SourceSlackUpdateAuthenticationMechanismAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSlackUpdateAuthenticationMechanismAPIToken); err == nil {
-		u.SourceSlackUpdateAuthenticationMechanismAPIToken = sourceSlackUpdateAuthenticationMechanismAPIToken
-		u.Type = SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismAPIToken
+	apiToken := new(SourceSlackUpdateAPIToken)
+	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
+		u.APIToken = apiToken
+		u.Type = SourceSlackUpdateAuthenticationMechanismTypeAPIToken
 		return nil
 	}
 
-	sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth := new(SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth); err == nil {
-		u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth = sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
-		u.Type = SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
+	signInViaSlackOAuth := new(SignInViaSlackOAuth)
+	if err := utils.UnmarshalJSON(data, &signInViaSlackOAuth, "", true, true); err == nil {
+		u.SignInViaSlackOAuth = signInViaSlackOAuth
+		u.Type = SourceSlackUpdateAuthenticationMechanismTypeSignInViaSlackOAuth
 		return nil
 	}
 
@@ -133,15 +186,15 @@ func (u *SourceSlackUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) er
 }
 
 func (u SourceSlackUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceSlackUpdateAuthenticationMechanismAPIToken != nil {
-		return json.Marshal(u.SourceSlackUpdateAuthenticationMechanismAPIToken)
+	if u.SignInViaSlackOAuth != nil {
+		return utils.MarshalJSON(u.SignInViaSlackOAuth, "", true)
 	}
 
-	if u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth != nil {
-		return json.Marshal(u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth)
+	if u.APIToken != nil {
+		return utils.MarshalJSON(u.APIToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceSlackUpdate struct {
@@ -150,9 +203,55 @@ type SourceSlackUpdate struct {
 	// Choose how to authenticate into Slack
 	Credentials *SourceSlackUpdateAuthenticationMechanism `json:"credentials,omitempty"`
 	// Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages.
-	JoinChannels bool `json:"join_channels"`
+	JoinChannels *bool `default:"true" json:"join_channels"`
 	// How far into the past to look for messages in threads, default is 0 days
-	LookbackWindow int64 `json:"lookback_window"`
+	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceSlackUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSlackUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSlackUpdate) GetChannelFilter() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ChannelFilter
+}
+
+func (o *SourceSlackUpdate) GetCredentials() *SourceSlackUpdateAuthenticationMechanism {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceSlackUpdate) GetJoinChannels() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.JoinChannels
+}
+
+func (o *SourceSlackUpdate) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
+}
+
+func (o *SourceSlackUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

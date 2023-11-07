@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGainsightPxGainsightPx string
+type GainsightPx string
 
 const (
-	SourceGainsightPxGainsightPxGainsightPx SourceGainsightPxGainsightPx = "gainsight-px"
+	GainsightPxGainsightPx GainsightPx = "gainsight-px"
 )
 
-func (e SourceGainsightPxGainsightPx) ToPointer() *SourceGainsightPxGainsightPx {
+func (e GainsightPx) ToPointer() *GainsightPx {
 	return &e
 }
 
-func (e *SourceGainsightPxGainsightPx) UnmarshalJSON(data []byte) error {
+func (e *GainsightPx) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gainsight-px":
-		*e = SourceGainsightPxGainsightPx(v)
+		*e = GainsightPx(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGainsightPxGainsightPx: %v", v)
+		return fmt.Errorf("invalid value for GainsightPx: %v", v)
 	}
 }
 
 type SourceGainsightPx struct {
 	// The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
-	APIKey     string                       `json:"api_key"`
-	SourceType SourceGainsightPxGainsightPx `json:"sourceType"`
+	APIKey     string      `json:"api_key"`
+	sourceType GainsightPx `const:"gainsight-px" json:"sourceType"`
+}
+
+func (s SourceGainsightPx) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGainsightPx) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGainsightPx) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGainsightPx) GetSourceType() GainsightPx {
+	return GainsightPxGainsightPx
 }

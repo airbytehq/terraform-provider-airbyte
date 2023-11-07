@@ -3,17 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -58,28 +59,19 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Optional:    true,
 						Description: `Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.`,
 					},
-					"auth_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
 					"aws_access_key": schema.StringAttribute{
 						Optional:    true,
 						Description: `Specifies the AWS access key used as part of the credentials to authenticate the user.`,
 					},
 					"aws_environment": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"PRODUCTION",
 								"SANDBOX",
 							),
 						},
-						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]` + "\n" +
+						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"` + "\n" +
 							`Select the AWS Environment.`,
 					},
 					"aws_secret_key": schema.StringAttribute{
@@ -95,19 +87,21 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Description: `Your Login with Amazon Client Secret.`,
 					},
 					"max_wait_seconds": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.`,
+						Optional: true,
+						MarkdownDescription: `Default: 500` + "\n" +
+							`Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.`,
 					},
 					"period_in_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
+						Optional: true,
+						MarkdownDescription: `Default: 90` + "\n" +
+							`Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
 						Description: `The Refresh Token obtained via OAuth flow authorization.`,
 					},
 					"region": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"AE",
@@ -134,7 +128,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 								"US",
 							),
 						},
-						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]` + "\n" +
+						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"` + "\n" +
 							`Select the AWS Region.`,
 					},
 					"replication_end_date": schema.StringAttribute{
@@ -153,15 +147,6 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Optional:    true,
 						Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-seller-partner",
-							),
-						},
-						Description: `must be one of ["amazon-seller-partner"]`,
-					},
 				},
 			},
 			"name": schema.StringAttribute{
@@ -171,6 +156,9 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -234,7 +222,7 @@ func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req reso
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAmazonSellerPartner(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -410,5 +398,5 @@ func (r *SourceAmazonSellerPartnerResource) Delete(ctx context.Context, req reso
 }
 
 func (r *SourceAmazonSellerPartnerResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

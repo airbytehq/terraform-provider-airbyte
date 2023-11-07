@@ -8,6 +8,5 @@ type SourceYotpo struct {
 	AccessToken types.String `tfsdk:"access_token"`
 	AppKey      types.String `tfsdk:"app_key"`
 	Email       types.String `tfsdk:"email"`
-	SourceType  types.String `tfsdk:"source_type"`
 	StartDate   types.String `tfsdk:"start_date"`
 }

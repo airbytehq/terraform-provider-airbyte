@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -22,14 +22,12 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 		requestTimeRange = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceAmplitudeAmplitude(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceAmplitude{
 		APIKey:           apiKey,
 		DataRegion:       dataRegion,
 		RequestTimeRange: requestTimeRange,
 		SecretKey:        secretKey,
-		SourceType:       sourceType,
 		StartDate:        startDate,
 	}
 	name := r.Name.ValueString()
@@ -56,9 +54,9 @@ func (r *SourceAmplitudeResourceModel) ToGetSDKType() *shared.SourceAmplitudeCre
 
 func (r *SourceAmplitudeResourceModel) ToUpdateSDKType() *shared.SourceAmplitudePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	dataRegion := new(shared.SourceAmplitudeUpdateDataRegion)
+	dataRegion := new(shared.DataRegion)
 	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
-		*dataRegion = shared.SourceAmplitudeUpdateDataRegion(r.Configuration.DataRegion.ValueString())
+		*dataRegion = shared.DataRegion(r.Configuration.DataRegion.ValueString())
 	} else {
 		dataRegion = nil
 	}

@@ -1,9 +1,8 @@
 resource "airbyte_source_coda" "my_source_coda" {
   configuration = {
-    auth_token  = "...my_auth_token..."
-    source_type = "coda"
+    auth_token = "...my_auth_token..."
   }
-  name         = "Lila Harris II"
+  name         = "Miss Forrest Heaney"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5756f5d5-6d0b-4d0a-b2df-e13db4f62cba"
+  workspace_id = "caa62e55-7cba-40d3-b800-2a5767fcf379"
 }

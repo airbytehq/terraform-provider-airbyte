@@ -14,3 +14,38 @@ type DestinationTypesenseUpdate struct {
 	// Protocol of the Typesense instance. Ex: http or https. Default is https
 	Protocol *string `json:"protocol,omitempty"`
 }
+
+func (o *DestinationTypesenseUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationTypesenseUpdate) GetBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BatchSize
+}
+
+func (o *DestinationTypesenseUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationTypesenseUpdate) GetPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationTypesenseUpdate) GetProtocol() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Protocol
+}

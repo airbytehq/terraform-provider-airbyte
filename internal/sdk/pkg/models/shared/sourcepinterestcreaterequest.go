@@ -9,3 +9,31 @@ type SourcePinterestCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePinterestCreateRequest) GetConfiguration() SourcePinterest {
+	if o == nil {
+		return SourcePinterest{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePinterestCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePinterestCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePinterestCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

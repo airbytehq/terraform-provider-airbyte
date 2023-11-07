@@ -9,3 +9,31 @@ type SourceYotpoCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceYotpoCreateRequest) GetConfiguration() SourceYotpo {
+	if o == nil {
+		return SourceYotpo{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceYotpoCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceYotpoCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceYotpoCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

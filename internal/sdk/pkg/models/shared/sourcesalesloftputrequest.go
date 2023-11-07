@@ -7,3 +7,24 @@ type SourceSalesloftPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceSalesloftPutRequest) GetConfiguration() SourceSalesloftUpdate {
+	if o == nil {
+		return SourceSalesloftUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSalesloftPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSalesloftPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

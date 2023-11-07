@@ -7,3 +7,24 @@ type DestinationsResponse struct {
 	Next     *string               `json:"next,omitempty"`
 	Previous *string               `json:"previous,omitempty"`
 }
+
+func (o *DestinationsResponse) GetData() []DestinationResponse {
+	if o == nil {
+		return []DestinationResponse{}
+	}
+	return o.Data
+}
+
+func (o *DestinationsResponse) GetNext() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}
+
+func (o *DestinationsResponse) GetPrevious() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Previous
+}

@@ -2,9 +2,6 @@
 
 package provider
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
-
 type SourceYoutubeAnalytics struct {
-	Credentials SourceYoutubeAnalyticsAuthenticateViaOAuth20 `tfsdk:"credentials"`
-	SourceType  types.String                                 `tfsdk:"source_type"`
+	Credentials AuthenticateViaHarvestOAuth `tfsdk:"credentials"`
 }

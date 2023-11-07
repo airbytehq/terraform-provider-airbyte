@@ -3,228 +3,207 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceZendeskTalkUpdateAuthenticationOAuth20AuthType string
+type SourceZendeskTalkUpdateSchemasAuthType string
 
 const (
-	SourceZendeskTalkUpdateAuthenticationOAuth20AuthTypeOauth20 SourceZendeskTalkUpdateAuthenticationOAuth20AuthType = "oauth2.0"
+	SourceZendeskTalkUpdateSchemasAuthTypeOauth20 SourceZendeskTalkUpdateSchemasAuthType = "oauth2.0"
 )
 
-func (e SourceZendeskTalkUpdateAuthenticationOAuth20AuthType) ToPointer() *SourceZendeskTalkUpdateAuthenticationOAuth20AuthType {
+func (e SourceZendeskTalkUpdateSchemasAuthType) ToPointer() *SourceZendeskTalkUpdateSchemasAuthType {
 	return &e
 }
 
-func (e *SourceZendeskTalkUpdateAuthenticationOAuth20AuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskTalkUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskTalkUpdateAuthenticationOAuth20AuthType(v)
+		*e = SourceZendeskTalkUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkUpdateAuthenticationOAuth20AuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskTalkUpdateSchemasAuthType: %v", v)
 	}
 }
 
-// SourceZendeskTalkUpdateAuthenticationOAuth20 - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
-type SourceZendeskTalkUpdateAuthenticationOAuth20 struct {
+// SourceZendeskTalkUpdateOAuth20 - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
+type SourceZendeskTalkUpdateOAuth20 struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	AccessToken string                                                `json:"access_token"`
-	AuthType    *SourceZendeskTalkUpdateAuthenticationOAuth20AuthType `json:"auth_type,omitempty"`
+	AccessToken string                                  `json:"access_token"`
+	authType    *SourceZendeskTalkUpdateSchemasAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Client ID
 	ClientID *string `json:"client_id,omitempty"`
 	// Client Secret
 	ClientSecret *string `json:"client_secret,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourceZendeskTalkUpdateAuthenticationOAuth20 SourceZendeskTalkUpdateAuthenticationOAuth20
 
-func (c *SourceZendeskTalkUpdateAuthenticationOAuth20) UnmarshalJSON(bs []byte) error {
-	data := _SourceZendeskTalkUpdateAuthenticationOAuth20{}
+func (s SourceZendeskTalkUpdateOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceZendeskTalkUpdateOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceZendeskTalkUpdateAuthenticationOAuth20(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "access_token")
-	delete(additionalFields, "auth_type")
-	delete(additionalFields, "client_id")
-	delete(additionalFields, "client_secret")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceZendeskTalkUpdateAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceZendeskTalkUpdateAuthenticationOAuth20(c))
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskTalkUpdateOAuth20) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourceZendeskTalkUpdateAuthenticationAPITokenAuthType string
+func (o *SourceZendeskTalkUpdateOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceZendeskTalkUpdateOAuth20) GetAuthType() *SourceZendeskTalkUpdateSchemasAuthType {
+	return SourceZendeskTalkUpdateSchemasAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceZendeskTalkUpdateOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceZendeskTalkUpdateOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+type SourceZendeskTalkUpdateAuthType string
 
 const (
-	SourceZendeskTalkUpdateAuthenticationAPITokenAuthTypeAPIToken SourceZendeskTalkUpdateAuthenticationAPITokenAuthType = "api_token"
+	SourceZendeskTalkUpdateAuthTypeAPIToken SourceZendeskTalkUpdateAuthType = "api_token"
 )
 
-func (e SourceZendeskTalkUpdateAuthenticationAPITokenAuthType) ToPointer() *SourceZendeskTalkUpdateAuthenticationAPITokenAuthType {
+func (e SourceZendeskTalkUpdateAuthType) ToPointer() *SourceZendeskTalkUpdateAuthType {
 	return &e
 }
 
-func (e *SourceZendeskTalkUpdateAuthenticationAPITokenAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskTalkUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceZendeskTalkUpdateAuthenticationAPITokenAuthType(v)
+		*e = SourceZendeskTalkUpdateAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkUpdateAuthenticationAPITokenAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskTalkUpdateAuthType: %v", v)
 	}
 }
 
-// SourceZendeskTalkUpdateAuthenticationAPIToken - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
-type SourceZendeskTalkUpdateAuthenticationAPIToken struct {
+// SourceZendeskTalkUpdateAPIToken - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
+type SourceZendeskTalkUpdateAPIToken struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	APIToken string                                                 `json:"api_token"`
-	AuthType *SourceZendeskTalkUpdateAuthenticationAPITokenAuthType `json:"auth_type,omitempty"`
+	APIToken string                           `json:"api_token"`
+	authType *SourceZendeskTalkUpdateAuthType `const:"api_token" json:"auth_type,omitempty"`
 	// The user email for your Zendesk account.
 	Email string `json:"email"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourceZendeskTalkUpdateAuthenticationAPIToken SourceZendeskTalkUpdateAuthenticationAPIToken
 
-func (c *SourceZendeskTalkUpdateAuthenticationAPIToken) UnmarshalJSON(bs []byte) error {
-	data := _SourceZendeskTalkUpdateAuthenticationAPIToken{}
+func (s SourceZendeskTalkUpdateAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceZendeskTalkUpdateAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceZendeskTalkUpdateAuthenticationAPIToken(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "api_token")
-	delete(additionalFields, "auth_type")
-	delete(additionalFields, "email")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceZendeskTalkUpdateAuthenticationAPIToken) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceZendeskTalkUpdateAuthenticationAPIToken(c))
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskTalkUpdateAPIToken) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *SourceZendeskTalkUpdateAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
 	}
+	return o.APIToken
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *SourceZendeskTalkUpdateAPIToken) GetAuthType() *SourceZendeskTalkUpdateAuthType {
+	return SourceZendeskTalkUpdateAuthTypeAPIToken.ToPointer()
+}
+
+func (o *SourceZendeskTalkUpdateAPIToken) GetEmail() string {
+	if o == nil {
+		return ""
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.Email
 }
 
 type SourceZendeskTalkUpdateAuthenticationType string
 
 const (
-	SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAuthenticationAPIToken SourceZendeskTalkUpdateAuthenticationType = "source-zendesk-talk-update_Authentication_API Token"
-	SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAuthenticationOAuth20  SourceZendeskTalkUpdateAuthenticationType = "source-zendesk-talk-update_Authentication_OAuth2.0"
+	SourceZendeskTalkUpdateAuthenticationTypeAPIToken SourceZendeskTalkUpdateAuthenticationType = "APIToken"
+	SourceZendeskTalkUpdateAuthenticationTypeOAuth20  SourceZendeskTalkUpdateAuthenticationType = "OAuth20"
 )
 
 type SourceZendeskTalkUpdateAuthentication struct {
-	SourceZendeskTalkUpdateAuthenticationAPIToken *SourceZendeskTalkUpdateAuthenticationAPIToken
-	SourceZendeskTalkUpdateAuthenticationOAuth20  *SourceZendeskTalkUpdateAuthenticationOAuth20
+	APIToken *SourceZendeskTalkUpdateAPIToken
+	OAuth20  *SourceZendeskTalkUpdateOAuth20
 
 	Type SourceZendeskTalkUpdateAuthenticationType
 }
 
-func CreateSourceZendeskTalkUpdateAuthenticationSourceZendeskTalkUpdateAuthenticationAPIToken(sourceZendeskTalkUpdateAuthenticationAPIToken SourceZendeskTalkUpdateAuthenticationAPIToken) SourceZendeskTalkUpdateAuthentication {
-	typ := SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAuthenticationAPIToken
+func CreateSourceZendeskTalkUpdateAuthenticationAPIToken(apiToken SourceZendeskTalkUpdateAPIToken) SourceZendeskTalkUpdateAuthentication {
+	typ := SourceZendeskTalkUpdateAuthenticationTypeAPIToken
 
 	return SourceZendeskTalkUpdateAuthentication{
-		SourceZendeskTalkUpdateAuthenticationAPIToken: &sourceZendeskTalkUpdateAuthenticationAPIToken,
-		Type: typ,
+		APIToken: &apiToken,
+		Type:     typ,
 	}
 }
 
-func CreateSourceZendeskTalkUpdateAuthenticationSourceZendeskTalkUpdateAuthenticationOAuth20(sourceZendeskTalkUpdateAuthenticationOAuth20 SourceZendeskTalkUpdateAuthenticationOAuth20) SourceZendeskTalkUpdateAuthentication {
-	typ := SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAuthenticationOAuth20
+func CreateSourceZendeskTalkUpdateAuthenticationOAuth20(oAuth20 SourceZendeskTalkUpdateOAuth20) SourceZendeskTalkUpdateAuthentication {
+	typ := SourceZendeskTalkUpdateAuthenticationTypeOAuth20
 
 	return SourceZendeskTalkUpdateAuthentication{
-		SourceZendeskTalkUpdateAuthenticationOAuth20: &sourceZendeskTalkUpdateAuthenticationOAuth20,
-		Type: typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
 func (u *SourceZendeskTalkUpdateAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceZendeskTalkUpdateAuthenticationAPIToken := new(SourceZendeskTalkUpdateAuthenticationAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskTalkUpdateAuthenticationAPIToken); err == nil {
-		u.SourceZendeskTalkUpdateAuthenticationAPIToken = sourceZendeskTalkUpdateAuthenticationAPIToken
-		u.Type = SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAuthenticationAPIToken
+	apiToken := new(SourceZendeskTalkUpdateAPIToken)
+	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
+		u.APIToken = apiToken
+		u.Type = SourceZendeskTalkUpdateAuthenticationTypeAPIToken
 		return nil
 	}
 
-	sourceZendeskTalkUpdateAuthenticationOAuth20 := new(SourceZendeskTalkUpdateAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskTalkUpdateAuthenticationOAuth20); err == nil {
-		u.SourceZendeskTalkUpdateAuthenticationOAuth20 = sourceZendeskTalkUpdateAuthenticationOAuth20
-		u.Type = SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAuthenticationOAuth20
+	oAuth20 := new(SourceZendeskTalkUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceZendeskTalkUpdateAuthenticationTypeOAuth20
 		return nil
 	}
 
@@ -232,15 +211,15 @@ func (u *SourceZendeskTalkUpdateAuthentication) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceZendeskTalkUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskTalkUpdateAuthenticationAPIToken != nil {
-		return json.Marshal(u.SourceZendeskTalkUpdateAuthenticationAPIToken)
+	if u.APIToken != nil {
+		return utils.MarshalJSON(u.APIToken, "", true)
 	}
 
-	if u.SourceZendeskTalkUpdateAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskTalkUpdateAuthenticationOAuth20)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceZendeskTalkUpdate struct {
@@ -250,4 +229,36 @@ type SourceZendeskTalkUpdate struct {
 	StartDate time.Time `json:"start_date"`
 	// This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
 	Subdomain string `json:"subdomain"`
+}
+
+func (s SourceZendeskTalkUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZendeskTalkUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZendeskTalkUpdate) GetCredentials() *SourceZendeskTalkUpdateAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceZendeskTalkUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceZendeskTalkUpdate) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }

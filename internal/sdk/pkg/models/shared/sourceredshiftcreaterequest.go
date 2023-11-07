@@ -9,3 +9,31 @@ type SourceRedshiftCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceRedshiftCreateRequest) GetConfiguration() SourceRedshift {
+	if o == nil {
+		return SourceRedshift{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRedshiftCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRedshiftCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceRedshiftCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

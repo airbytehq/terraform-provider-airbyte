@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGetlagoGetlago string
+type Getlago string
 
 const (
-	SourceGetlagoGetlagoGetlago SourceGetlagoGetlago = "getlago"
+	GetlagoGetlago Getlago = "getlago"
 )
 
-func (e SourceGetlagoGetlago) ToPointer() *SourceGetlagoGetlago {
+func (e Getlago) ToPointer() *Getlago {
 	return &e
 }
 
-func (e *SourceGetlagoGetlago) UnmarshalJSON(data []byte) error {
+func (e *Getlago) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "getlago":
-		*e = SourceGetlagoGetlago(v)
+		*e = Getlago(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGetlagoGetlago: %v", v)
+		return fmt.Errorf("invalid value for Getlago: %v", v)
 	}
 }
 
 type SourceGetlago struct {
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
-	APIKey     string               `json:"api_key"`
-	SourceType SourceGetlagoGetlago `json:"sourceType"`
+	APIKey     string  `json:"api_key"`
+	sourceType Getlago `const:"getlago" json:"sourceType"`
+}
+
+func (s SourceGetlago) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGetlago) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGetlago) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGetlago) GetSourceType() Getlago {
+	return GetlagoGetlago
 }

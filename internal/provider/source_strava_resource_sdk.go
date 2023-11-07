@@ -3,31 +3,22 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreateRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
-	authType := new(shared.SourceStravaAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceStravaAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceStravaStrava(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStrava{
 		AthleteID:    athleteID,
-		AuthType:     authType,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()
@@ -54,19 +45,12 @@ func (r *SourceStravaResourceModel) ToGetSDKType() *shared.SourceStravaCreateReq
 
 func (r *SourceStravaResourceModel) ToUpdateSDKType() *shared.SourceStravaPutRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
-	authType := new(shared.SourceStravaUpdateAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceStravaUpdateAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStravaUpdate{
 		AthleteID:    athleteID,
-		AuthType:     authType,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,

@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,10 +31,10 @@ type SourceZuoraDataSource struct {
 
 // SourceZuoraDataSourceModel describes the data model.
 type SourceZuoraDataSourceModel struct {
-	Configuration SourceZuora  `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -49,74 +49,22 @@ func (r *SourceZuoraDataSource) Schema(ctx context.Context, req datasource.Schem
 		MarkdownDescription: "SourceZuora DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"client_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your OAuth user Client ID`,
-					},
-					"client_secret": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your OAuth user Client Secret`,
-					},
-					"data_query": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Live",
-								"Unlimited",
-							),
-						},
-						MarkdownDescription: `must be one of ["Live", "Unlimited"]` + "\n" +
-							`Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zuora",
-							),
-						},
-						Description: `must be one of ["zuora"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `Start Date in format: YYYY-MM-DD`,
-					},
-					"tenant_endpoint": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"US Production",
-								"US Cloud Production",
-								"US API Sandbox",
-								"US Cloud API Sandbox",
-								"US Central Sandbox",
-								"US Performance Test",
-								"EU Production",
-								"EU API Sandbox",
-								"EU Central Sandbox",
-							),
-						},
-						MarkdownDescription: `must be one of ["US Production", "US Cloud Production", "US API Sandbox", "US Cloud API Sandbox", "US Central Sandbox", "US Performance Test", "EU Production", "EU API Sandbox", "EU Central Sandbox"]` + "\n" +
-							`Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
-					},
-					"window_in_days": schema.StringAttribute{
-						Computed:    true,
-						Description: `The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

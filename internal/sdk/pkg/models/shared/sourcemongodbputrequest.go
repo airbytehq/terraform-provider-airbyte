@@ -7,3 +7,24 @@ type SourceMongodbPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceMongodbPutRequest) GetConfiguration() SourceMongodbUpdate {
+	if o == nil {
+		return SourceMongodbUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMongodbPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMongodbPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

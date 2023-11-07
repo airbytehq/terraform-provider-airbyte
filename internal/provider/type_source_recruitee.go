@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRecruitee struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	CompanyID  types.Int64  `tfsdk:"company_id"`
-	SourceType types.String `tfsdk:"source_type"`
+	APIKey    types.String `tfsdk:"api_key"`
+	CompanyID types.Int64  `tfsdk:"company_id"`
 }

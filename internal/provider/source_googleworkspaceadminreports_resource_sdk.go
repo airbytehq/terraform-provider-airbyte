@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -16,12 +16,10 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shar
 	} else {
 		lookback = nil
 	}
-	sourceType := shared.SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleWorkspaceAdminReports{
 		CredentialsJSON: credentialsJSON,
 		Email:           email,
 		Lookback:        lookback,
-		SourceType:      sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

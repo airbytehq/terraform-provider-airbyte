@@ -3,128 +3,188 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceMondayAuthorizationMethodAPITokenAuthType string
+type SourceMondaySchemasAuthType string
 
 const (
-	SourceMondayAuthorizationMethodAPITokenAuthTypeAPIToken SourceMondayAuthorizationMethodAPITokenAuthType = "api_token"
+	SourceMondaySchemasAuthTypeAPIToken SourceMondaySchemasAuthType = "api_token"
 )
 
-func (e SourceMondayAuthorizationMethodAPITokenAuthType) ToPointer() *SourceMondayAuthorizationMethodAPITokenAuthType {
+func (e SourceMondaySchemasAuthType) ToPointer() *SourceMondaySchemasAuthType {
 	return &e
 }
 
-func (e *SourceMondayAuthorizationMethodAPITokenAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceMondaySchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceMondayAuthorizationMethodAPITokenAuthType(v)
+		*e = SourceMondaySchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodAPITokenAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceMondaySchemasAuthType: %v", v)
 	}
 }
 
-type SourceMondayAuthorizationMethodAPIToken struct {
+type SourceMondayAPIToken struct {
 	// API Token for making authenticated requests.
-	APIToken string                                          `json:"api_token"`
-	AuthType SourceMondayAuthorizationMethodAPITokenAuthType `json:"auth_type"`
+	APIToken string                      `json:"api_token"`
+	authType SourceMondaySchemasAuthType `const:"api_token" json:"auth_type"`
 }
 
-type SourceMondayAuthorizationMethodOAuth20AuthType string
+func (s SourceMondayAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMondayAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMondayAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceMondayAPIToken) GetAuthType() SourceMondaySchemasAuthType {
+	return SourceMondaySchemasAuthTypeAPIToken
+}
+
+type SourceMondayAuthType string
 
 const (
-	SourceMondayAuthorizationMethodOAuth20AuthTypeOauth20 SourceMondayAuthorizationMethodOAuth20AuthType = "oauth2.0"
+	SourceMondayAuthTypeOauth20 SourceMondayAuthType = "oauth2.0"
 )
 
-func (e SourceMondayAuthorizationMethodOAuth20AuthType) ToPointer() *SourceMondayAuthorizationMethodOAuth20AuthType {
+func (e SourceMondayAuthType) ToPointer() *SourceMondayAuthType {
 	return &e
 }
 
-func (e *SourceMondayAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceMondayAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceMondayAuthorizationMethodOAuth20AuthType(v)
+		*e = SourceMondayAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodOAuth20AuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceMondayAuthType: %v", v)
 	}
 }
 
-type SourceMondayAuthorizationMethodOAuth20 struct {
+type SourceMondayOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                         `json:"access_token"`
-	AuthType    SourceMondayAuthorizationMethodOAuth20AuthType `json:"auth_type"`
+	AccessToken string               `json:"access_token"`
+	authType    SourceMondayAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
 	// Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
-	Subdomain *string `json:"subdomain,omitempty"`
+	Subdomain *string `default:"" json:"subdomain"`
+}
+
+func (s SourceMondayOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMondayOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMondayOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceMondayOAuth20) GetAuthType() SourceMondayAuthType {
+	return SourceMondayAuthTypeOauth20
+}
+
+func (o *SourceMondayOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceMondayOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceMondayOAuth20) GetSubdomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Subdomain
 }
 
 type SourceMondayAuthorizationMethodType string
 
 const (
-	SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodOAuth20  SourceMondayAuthorizationMethodType = "source-monday_Authorization Method_OAuth2.0"
-	SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodAPIToken SourceMondayAuthorizationMethodType = "source-monday_Authorization Method_API Token"
+	SourceMondayAuthorizationMethodTypeOAuth20  SourceMondayAuthorizationMethodType = "OAuth20"
+	SourceMondayAuthorizationMethodTypeAPIToken SourceMondayAuthorizationMethodType = "APIToken"
 )
 
 type SourceMondayAuthorizationMethod struct {
-	SourceMondayAuthorizationMethodOAuth20  *SourceMondayAuthorizationMethodOAuth20
-	SourceMondayAuthorizationMethodAPIToken *SourceMondayAuthorizationMethodAPIToken
+	OAuth20  *SourceMondayOAuth20
+	APIToken *SourceMondayAPIToken
 
 	Type SourceMondayAuthorizationMethodType
 }
 
-func CreateSourceMondayAuthorizationMethodSourceMondayAuthorizationMethodOAuth20(sourceMondayAuthorizationMethodOAuth20 SourceMondayAuthorizationMethodOAuth20) SourceMondayAuthorizationMethod {
-	typ := SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodOAuth20
+func CreateSourceMondayAuthorizationMethodOAuth20(oAuth20 SourceMondayOAuth20) SourceMondayAuthorizationMethod {
+	typ := SourceMondayAuthorizationMethodTypeOAuth20
 
 	return SourceMondayAuthorizationMethod{
-		SourceMondayAuthorizationMethodOAuth20: &sourceMondayAuthorizationMethodOAuth20,
-		Type:                                   typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourceMondayAuthorizationMethodSourceMondayAuthorizationMethodAPIToken(sourceMondayAuthorizationMethodAPIToken SourceMondayAuthorizationMethodAPIToken) SourceMondayAuthorizationMethod {
-	typ := SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodAPIToken
+func CreateSourceMondayAuthorizationMethodAPIToken(apiToken SourceMondayAPIToken) SourceMondayAuthorizationMethod {
+	typ := SourceMondayAuthorizationMethodTypeAPIToken
 
 	return SourceMondayAuthorizationMethod{
-		SourceMondayAuthorizationMethodAPIToken: &sourceMondayAuthorizationMethodAPIToken,
-		Type:                                    typ,
+		APIToken: &apiToken,
+		Type:     typ,
 	}
 }
 
 func (u *SourceMondayAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceMondayAuthorizationMethodAPIToken := new(SourceMondayAuthorizationMethodAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMondayAuthorizationMethodAPIToken); err == nil {
-		u.SourceMondayAuthorizationMethodAPIToken = sourceMondayAuthorizationMethodAPIToken
-		u.Type = SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodAPIToken
+	apiToken := new(SourceMondayAPIToken)
+	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
+		u.APIToken = apiToken
+		u.Type = SourceMondayAuthorizationMethodTypeAPIToken
 		return nil
 	}
 
-	sourceMondayAuthorizationMethodOAuth20 := new(SourceMondayAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMondayAuthorizationMethodOAuth20); err == nil {
-		u.SourceMondayAuthorizationMethodOAuth20 = sourceMondayAuthorizationMethodOAuth20
-		u.Type = SourceMondayAuthorizationMethodTypeSourceMondayAuthorizationMethodOAuth20
+	oAuth20 := new(SourceMondayOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceMondayAuthorizationMethodTypeOAuth20
 		return nil
 	}
 
@@ -132,42 +192,64 @@ func (u *SourceMondayAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMondayAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMondayAuthorizationMethodAPIToken != nil {
-		return json.Marshal(u.SourceMondayAuthorizationMethodAPIToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourceMondayAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceMondayAuthorizationMethodOAuth20)
+	if u.APIToken != nil {
+		return utils.MarshalJSON(u.APIToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceMondayMonday string
+type Monday string
 
 const (
-	SourceMondayMondayMonday SourceMondayMonday = "monday"
+	MondayMonday Monday = "monday"
 )
 
-func (e SourceMondayMonday) ToPointer() *SourceMondayMonday {
+func (e Monday) ToPointer() *Monday {
 	return &e
 }
 
-func (e *SourceMondayMonday) UnmarshalJSON(data []byte) error {
+func (e *Monday) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "monday":
-		*e = SourceMondayMonday(v)
+		*e = Monday(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayMonday: %v", v)
+		return fmt.Errorf("invalid value for Monday: %v", v)
 	}
 }
 
 type SourceMonday struct {
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceMondayMonday               `json:"sourceType"`
+	sourceType  Monday                           `const:"monday" json:"sourceType"`
+}
+
+func (s SourceMonday) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMonday) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMonday) GetCredentials() *SourceMondayAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceMonday) GetSourceType() Monday {
+	return MondayMonday
 }

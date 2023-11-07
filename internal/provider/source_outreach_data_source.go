@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,11 +31,11 @@ type SourceOutreachDataSource struct {
 
 // SourceOutreachDataSourceModel describes the data model.
 type SourceOutreachDataSourceModel struct {
-	Configuration SourceOutreach `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,49 +49,22 @@ func (r *SourceOutreachDataSource) Schema(ctx context.Context, req datasource.Sc
 		MarkdownDescription: "SourceOutreach DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"client_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Client ID of your Outreach developer application.`,
-					},
-					"client_secret": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Client Secret of your Outreach developer application.`,
-					},
-					"redirect_uri": schema.StringAttribute{
-						Computed:    true,
-						Description: `A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.`,
-					},
-					"refresh_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `The token for obtaining the new access token.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"outreach",
-							),
-						},
-						Description: `must be one of ["outreach"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

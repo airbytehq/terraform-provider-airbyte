@@ -14,3 +14,38 @@ type SourceOutreachUpdate struct {
 	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate string `json:"start_date"`
 }
+
+func (o *SourceOutreachUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceOutreachUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceOutreachUpdate) GetRedirectURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.RedirectURI
+}
+
+func (o *SourceOutreachUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceOutreachUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}

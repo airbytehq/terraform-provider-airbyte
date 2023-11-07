@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceMicrosoftTeams struct {
 	Credentials *SourceMicrosoftTeamsAuthenticationMechanism `tfsdk:"credentials"`
 	Period      types.String                                 `tfsdk:"period"`
-	SourceType  types.String                                 `tfsdk:"source_type"`
 }

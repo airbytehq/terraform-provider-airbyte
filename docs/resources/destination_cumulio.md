@@ -15,13 +15,12 @@ DestinationCumulio Resource
 ```terraform
 resource "airbyte_destination_cumulio" "my_destination_cumulio" {
   configuration = {
-    api_host         = "...my_api_host..."
-    api_key          = "...my_api_key..."
-    api_token        = "...my_api_token..."
-    destination_type = "cumulio"
+    api_host  = "...my_api_host..."
+    api_key   = "...my_api_key..."
+    api_token = "...my_api_token..."
   }
-  name         = "Ebony Predovic"
-  workspace_id = "6b0d5f0d-30c5-4fbb-a587-053202c73d5f"
+  name         = "Pat Fadel"
+  workspace_id = "fa18b5ab-2eb4-4f41-a22e-39b661a09af7"
 }
 ```
 
@@ -44,9 +43,12 @@ resource "airbyte_destination_cumulio" "my_destination_cumulio" {
 
 Required:
 
-- `api_host` (String) URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
 - `api_key` (String) An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
 - `api_token` (String) The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
-- `destination_type` (String) must be one of ["cumulio"]
+
+Optional:
+
+- `api_host` (String) Default: "https://api.cumul.io"
+URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
 
 

@@ -8,3 +8,17 @@ type SourceConfigcatUpdate struct {
 	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Username string `json:"username"`
 }
+
+func (o *SourceConfigcatUpdate) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceConfigcatUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}

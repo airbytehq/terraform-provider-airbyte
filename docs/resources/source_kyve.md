@@ -15,16 +15,15 @@ SourceKyve Resource
 ```terraform
 resource "airbyte_source_kyve" "my_source_kyve" {
   configuration = {
-    max_pages   = 6
-    page_size   = 2
-    pool_ids    = "0,1"
-    source_type = "kyve"
-    start_ids   = "0"
-    url_base    = "https://api.korellia.kyve.network/"
+    max_pages = 6
+    page_size = 10
+    pool_ids  = "0"
+    start_ids = "0,0"
+    url_base  = "https://api.beta.kyve.network/"
   }
-  name         = "Gail Homenick"
+  name         = "Lisa Barrows"
   secret_id    = "...my_secret_id..."
-  workspace_id = "94874c2d-5cc4-4972-a33e-66bd8fe5d00b"
+  workspace_id = "3cc123e8-783d-450d-8d2b-80c50dc344f6"
 }
 ```
 
@@ -52,13 +51,14 @@ resource "airbyte_source_kyve" "my_source_kyve" {
 Required:
 
 - `pool_ids` (String) The IDs of the KYVE storage pool you want to archive. (Comma separated)
-- `source_type` (String) must be one of ["kyve"]
 - `start_ids` (String) The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)
 
 Optional:
 
 - `max_pages` (Number) The maximum amount of pages to go trough. Set to 'null' for all pages.
-- `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests.
-- `url_base` (String) URL to the KYVE Chain API.
+- `page_size` (Number) Default: 100
+The pagesize for pagination, smaller numbers are used in integration tests.
+- `url_base` (String) Default: "https://api.korellia.kyve.network"
+URL to the KYVE Chain API.
 
 

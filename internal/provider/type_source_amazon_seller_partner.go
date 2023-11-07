@@ -6,7 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAmazonSellerPartner struct {
 	AdvancedStreamOptions types.String `tfsdk:"advanced_stream_options"`
-	AuthType              types.String `tfsdk:"auth_type"`
 	AwsAccessKey          types.String `tfsdk:"aws_access_key"`
 	AwsEnvironment        types.String `tfsdk:"aws_environment"`
 	AwsSecretKey          types.String `tfsdk:"aws_secret_key"`
@@ -20,5 +19,4 @@ type SourceAmazonSellerPartner struct {
 	ReplicationStartDate  types.String `tfsdk:"replication_start_date"`
 	ReportOptions         types.String `tfsdk:"report_options"`
 	RoleArn               types.String `tfsdk:"role_arn"`
-	SourceType            types.String `tfsdk:"source_type"`
 }

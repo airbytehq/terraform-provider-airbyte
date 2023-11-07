@@ -1,9 +1,8 @@
 resource "airbyte_source_greenhouse" "my_source_greenhouse" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "greenhouse"
+    api_key = "...my_api_key..."
   }
-  name         = "Patricia Pouros"
+  name         = "Faith Boyer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5722dd89-5b8b-4cf2-8db9-59693352f745"
+  workspace_id = "7e8fd2f1-93d4-4f9a-b29a-2f8317dec4e3"
 }

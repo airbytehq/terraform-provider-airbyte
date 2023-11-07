@@ -9,3 +9,31 @@ type SourceLinkedinAdsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceLinkedinAdsCreateRequest) GetConfiguration() SourceLinkedinAds {
+	if o == nil {
+		return SourceLinkedinAds{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLinkedinAdsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLinkedinAdsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceLinkedinAdsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

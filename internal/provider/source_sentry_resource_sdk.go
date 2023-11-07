@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -24,14 +24,12 @@ func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreate
 	}
 	organization := r.Configuration.Organization.ValueString()
 	project := r.Configuration.Project.ValueString()
-	sourceType := shared.SourceSentrySentry(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSentry{
 		AuthToken:      authToken,
 		DiscoverFields: discoverFields,
 		Hostname:       hostname,
 		Organization:   organization,
 		Project:        project,
-		SourceType:     sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

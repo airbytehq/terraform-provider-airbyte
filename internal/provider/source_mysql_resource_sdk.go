@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -22,196 +22,188 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	var replicationMethod shared.SourceMysqlUpdateMethod
-	var sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC *shared.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
-	if r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+	var sourceMysqlReadChangesUsingBinaryLogCDC *shared.SourceMysqlReadChangesUsingBinaryLogCDC
+	if r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC != nil {
 		initialWaitingSeconds := new(int64)
-		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
-			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
+			*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
 		} else {
 			initialWaitingSeconds = nil
 		}
-		method := shared.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.Method.ValueString())
 		serverTimeZone := new(string)
-		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
-			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
+			*serverTimeZone = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
 		} else {
 			serverTimeZone = nil
 		}
-		sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC = &shared.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC{
+		sourceMysqlReadChangesUsingBinaryLogCDC = &shared.SourceMysqlReadChangesUsingBinaryLogCDC{
 			InitialWaitingSeconds: initialWaitingSeconds,
-			Method:                method,
 			ServerTimeZone:        serverTimeZone,
 		}
 	}
-	if sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+	if sourceMysqlReadChangesUsingBinaryLogCDC != nil {
 		replicationMethod = shared.SourceMysqlUpdateMethod{
-			SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC: sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC,
+			ReadChangesUsingBinaryLogCDC: sourceMysqlReadChangesUsingBinaryLogCDC,
 		}
 	}
-	var sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor
-	if r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
-		method1 := shared.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
-		sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor{
-			Method: method1,
-		}
+	var sourceMysqlScanChangesWithUserDefinedCursor *shared.SourceMysqlScanChangesWithUserDefinedCursor
+	if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
+		sourceMysqlScanChangesWithUserDefinedCursor = &shared.SourceMysqlScanChangesWithUserDefinedCursor{}
 	}
-	if sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+	if sourceMysqlScanChangesWithUserDefinedCursor != nil {
 		replicationMethod = shared.SourceMysqlUpdateMethod{
-			SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor: sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor,
+			ScanChangesWithUserDefinedCursor: sourceMysqlScanChangesWithUserDefinedCursor,
 		}
 	}
-	sourceType := shared.SourceMysqlMysql(r.Configuration.SourceType.ValueString())
 	var sslMode *shared.SourceMysqlSSLModes
 	if r.Configuration.SslMode != nil {
-		var sourceMysqlSSLModesPreferred *shared.SourceMysqlSSLModesPreferred
-		if r.Configuration.SslMode.SourceMysqlSSLModesPreferred != nil {
-			mode := shared.SourceMysqlSSLModesPreferredMode(r.Configuration.SslMode.SourceMysqlSSLModesPreferred.Mode.ValueString())
-			sourceMysqlSSLModesPreferred = &shared.SourceMysqlSSLModesPreferred{
-				Mode: mode,
-			}
+		var sourceMysqlPreferred *shared.SourceMysqlPreferred
+		if r.Configuration.SslMode.Preferred != nil {
+			sourceMysqlPreferred = &shared.SourceMysqlPreferred{}
 		}
-		if sourceMysqlSSLModesPreferred != nil {
+		if sourceMysqlPreferred != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				SourceMysqlSSLModesPreferred: sourceMysqlSSLModesPreferred,
+				Preferred: sourceMysqlPreferred,
 			}
 		}
-		var sourceMysqlSSLModesRequired *shared.SourceMysqlSSLModesRequired
-		if r.Configuration.SslMode.SourceMysqlSSLModesRequired != nil {
-			mode1 := shared.SourceMysqlSSLModesRequiredMode(r.Configuration.SslMode.SourceMysqlSSLModesRequired.Mode.ValueString())
-			sourceMysqlSSLModesRequired = &shared.SourceMysqlSSLModesRequired{
-				Mode: mode1,
-			}
+		var sourceMysqlRequired *shared.SourceMysqlRequired
+		if r.Configuration.SslMode.Required != nil {
+			sourceMysqlRequired = &shared.SourceMysqlRequired{}
 		}
-		if sourceMysqlSSLModesRequired != nil {
+		if sourceMysqlRequired != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				SourceMysqlSSLModesRequired: sourceMysqlSSLModesRequired,
+				Required: sourceMysqlRequired,
 			}
 		}
-		var sourceMysqlSSLModesVerifyCA *shared.SourceMysqlSSLModesVerifyCA
-		if r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA != nil {
-			caCertificate := r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.CaCertificate.ValueString()
+		var sourceMysqlVerifyCA *shared.SourceMysqlVerifyCA
+		if r.Configuration.SslMode.VerifyCA != nil {
+			caCertificate := r.Configuration.SslMode.VerifyCA.CaCertificate.ValueString()
 			clientCertificate := new(string)
-			if !r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate.IsNull() {
-				*clientCertificate = r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyCA.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyCA.ClientCertificate.IsNull() {
+				*clientCertificate = r.Configuration.SslMode.VerifyCA.ClientCertificate.ValueString()
 			} else {
 				clientCertificate = nil
 			}
 			clientKey := new(string)
-			if !r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey.IsNull() {
-				*clientKey = r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyCA.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyCA.ClientKey.IsNull() {
+				*clientKey = r.Configuration.SslMode.VerifyCA.ClientKey.ValueString()
 			} else {
 				clientKey = nil
 			}
 			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyCA.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyCA.ClientKeyPassword.IsNull() {
+				*clientKeyPassword = r.Configuration.SslMode.VerifyCA.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword = nil
 			}
-			mode2 := shared.SourceMysqlSSLModesVerifyCAMode(r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.Mode.ValueString())
-			sourceMysqlSSLModesVerifyCA = &shared.SourceMysqlSSLModesVerifyCA{
+			sourceMysqlVerifyCA = &shared.SourceMysqlVerifyCA{
 				CaCertificate:     caCertificate,
 				ClientCertificate: clientCertificate,
 				ClientKey:         clientKey,
 				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode2,
 			}
 		}
-		if sourceMysqlSSLModesVerifyCA != nil {
+		if sourceMysqlVerifyCA != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				SourceMysqlSSLModesVerifyCA: sourceMysqlSSLModesVerifyCA,
+				VerifyCA: sourceMysqlVerifyCA,
 			}
 		}
-		var sourceMysqlSSLModesVerifyIdentity *shared.SourceMysqlSSLModesVerifyIdentity
-		if r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity != nil {
-			caCertificate1 := r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.CaCertificate.ValueString()
+		var sourceMysqlVerifyIdentity *shared.SourceMysqlVerifyIdentity
+		if r.Configuration.SslMode.VerifyIdentity != nil {
+			caCertificate1 := r.Configuration.SslMode.VerifyIdentity.CaCertificate.ValueString()
 			clientCertificate1 := new(string)
-			if !r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate.IsNull() {
-				*clientCertificate1 = r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyIdentity.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.ClientCertificate.IsNull() {
+				*clientCertificate1 = r.Configuration.SslMode.VerifyIdentity.ClientCertificate.ValueString()
 			} else {
 				clientCertificate1 = nil
 			}
 			clientKey1 := new(string)
-			if !r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey.IsNull() {
-				*clientKey1 = r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyIdentity.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.ClientKey.IsNull() {
+				*clientKey1 = r.Configuration.SslMode.VerifyIdentity.ClientKey.ValueString()
 			} else {
 				clientKey1 = nil
 			}
 			clientKeyPassword1 := new(string)
-			if !r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword.IsNull() {
-				*clientKeyPassword1 = r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyIdentity.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.ClientKeyPassword.IsNull() {
+				*clientKeyPassword1 = r.Configuration.SslMode.VerifyIdentity.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode3 := shared.SourceMysqlSSLModesVerifyIdentityMode(r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode.ValueString())
-			sourceMysqlSSLModesVerifyIdentity = &shared.SourceMysqlSSLModesVerifyIdentity{
+			sourceMysqlVerifyIdentity = &shared.SourceMysqlVerifyIdentity{
 				CaCertificate:     caCertificate1,
 				ClientCertificate: clientCertificate1,
 				ClientKey:         clientKey1,
 				ClientKeyPassword: clientKeyPassword1,
-				Mode:              mode3,
 			}
 		}
-		if sourceMysqlSSLModesVerifyIdentity != nil {
+		if sourceMysqlVerifyIdentity != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				SourceMysqlSSLModesVerifyIdentity: sourceMysqlSSLModesVerifyIdentity,
+				VerifyIdentity: sourceMysqlVerifyIdentity,
 			}
 		}
 	}
 	var tunnelMethod *shared.SourceMysqlSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var sourceMysqlSSHTunnelMethodNoTunnel *shared.SourceMysqlSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			sourceMysqlSSHTunnelMethodNoTunnel = &shared.SourceMysqlSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var sourceMysqlNoTunnel *shared.SourceMysqlNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			sourceMysqlNoTunnel = &shared.SourceMysqlNoTunnel{}
 		}
-		if sourceMysqlSSHTunnelMethodNoTunnel != nil {
+		if sourceMysqlNoTunnel != nil {
 			tunnelMethod = &shared.SourceMysqlSSHTunnelMethod{
-				SourceMysqlSSHTunnelMethodNoTunnel: sourceMysqlSSHTunnelMethodNoTunnel,
+				NoTunnel: sourceMysqlNoTunnel,
 			}
 		}
-		var sourceMysqlSSHTunnelMethodSSHKeyAuthentication *shared.SourceMysqlSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			sourceMysqlSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMysqlSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var sourceMysqlSSHKeyAuthentication *shared.SourceMysqlSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			sourceMysqlSSHKeyAuthentication = &shared.SourceMysqlSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if sourceMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
+		if sourceMysqlSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlSSHTunnelMethod{
-				SourceMysqlSSHTunnelMethodSSHKeyAuthentication: sourceMysqlSSHTunnelMethodSSHKeyAuthentication,
+				SSHKeyAuthentication: sourceMysqlSSHKeyAuthentication,
 			}
 		}
-		var sourceMysqlSSHTunnelMethodPasswordAuthentication *shared.SourceMysqlSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			sourceMysqlSSHTunnelMethodPasswordAuthentication = &shared.SourceMysqlSSHTunnelMethodPasswordAuthentication{
+		var sourceMysqlPasswordAuthentication *shared.SourceMysqlPasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			sourceMysqlPasswordAuthentication = &shared.SourceMysqlPasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if sourceMysqlSSHTunnelMethodPasswordAuthentication != nil {
+		if sourceMysqlPasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlSSHTunnelMethod{
-				SourceMysqlSSHTunnelMethodPasswordAuthentication: sourceMysqlSSHTunnelMethodPasswordAuthentication,
+				PasswordAuthentication: sourceMysqlPasswordAuthentication,
 			}
 		}
 	}
@@ -223,7 +215,6 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		Password:          password,
 		Port:              port,
 		ReplicationMethod: replicationMethod,
-		SourceType:        sourceType,
 		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,
@@ -265,195 +256,188 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	var replicationMethod shared.SourceMysqlUpdateUpdateMethod
-	var sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC *shared.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
-	if r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+	var readChangesUsingBinaryLogCDC *shared.ReadChangesUsingBinaryLogCDC
+	if r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC != nil {
 		initialWaitingSeconds := new(int64)
-		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
-			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
+			*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
 		} else {
 			initialWaitingSeconds = nil
 		}
-		method := shared.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.Method.ValueString())
 		serverTimeZone := new(string)
-		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
-			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
+			*serverTimeZone = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
 		} else {
 			serverTimeZone = nil
 		}
-		sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = &shared.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC{
+		readChangesUsingBinaryLogCDC = &shared.ReadChangesUsingBinaryLogCDC{
 			InitialWaitingSeconds: initialWaitingSeconds,
-			Method:                method,
 			ServerTimeZone:        serverTimeZone,
 		}
 	}
-	if sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+	if readChangesUsingBinaryLogCDC != nil {
 		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
-			SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC: sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC,
+			ReadChangesUsingBinaryLogCDC: readChangesUsingBinaryLogCDC,
 		}
 	}
-	var sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
-	if r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
-		method1 := shared.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
-		sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor{
-			Method: method1,
-		}
+	var sourceMysqlUpdateScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateScanChangesWithUserDefinedCursor
+	if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
+		sourceMysqlUpdateScanChangesWithUserDefinedCursor = &shared.SourceMysqlUpdateScanChangesWithUserDefinedCursor{}
 	}
-	if sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+	if sourceMysqlUpdateScanChangesWithUserDefinedCursor != nil {
 		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
-			SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor: sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor,
+			ScanChangesWithUserDefinedCursor: sourceMysqlUpdateScanChangesWithUserDefinedCursor,
 		}
 	}
 	var sslMode *shared.SourceMysqlUpdateSSLModes
 	if r.Configuration.SslMode != nil {
-		var sourceMysqlUpdateSSLModesPreferred *shared.SourceMysqlUpdateSSLModesPreferred
-		if r.Configuration.SslMode.SourceMysqlUpdateSSLModesPreferred != nil {
-			mode := shared.SourceMysqlUpdateSSLModesPreferredMode(r.Configuration.SslMode.SourceMysqlUpdateSSLModesPreferred.Mode.ValueString())
-			sourceMysqlUpdateSSLModesPreferred = &shared.SourceMysqlUpdateSSLModesPreferred{
-				Mode: mode,
-			}
+		var preferred *shared.Preferred
+		if r.Configuration.SslMode.Preferred != nil {
+			preferred = &shared.Preferred{}
 		}
-		if sourceMysqlUpdateSSLModesPreferred != nil {
+		if preferred != nil {
 			sslMode = &shared.SourceMysqlUpdateSSLModes{
-				SourceMysqlUpdateSSLModesPreferred: sourceMysqlUpdateSSLModesPreferred,
+				Preferred: preferred,
 			}
 		}
-		var sourceMysqlUpdateSSLModesRequired *shared.SourceMysqlUpdateSSLModesRequired
-		if r.Configuration.SslMode.SourceMysqlUpdateSSLModesRequired != nil {
-			mode1 := shared.SourceMysqlUpdateSSLModesRequiredMode(r.Configuration.SslMode.SourceMysqlUpdateSSLModesRequired.Mode.ValueString())
-			sourceMysqlUpdateSSLModesRequired = &shared.SourceMysqlUpdateSSLModesRequired{
-				Mode: mode1,
-			}
+		var required *shared.Required
+		if r.Configuration.SslMode.Required != nil {
+			required = &shared.Required{}
 		}
-		if sourceMysqlUpdateSSLModesRequired != nil {
+		if required != nil {
 			sslMode = &shared.SourceMysqlUpdateSSLModes{
-				SourceMysqlUpdateSSLModesRequired: sourceMysqlUpdateSSLModesRequired,
+				Required: required,
 			}
 		}
-		var sourceMysqlUpdateSSLModesVerifyCA *shared.SourceMysqlUpdateSSLModesVerifyCA
-		if r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA != nil {
-			caCertificate := r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.CaCertificate.ValueString()
+		var sourceMysqlUpdateVerifyCA *shared.SourceMysqlUpdateVerifyCA
+		if r.Configuration.SslMode.VerifyCA != nil {
+			caCertificate := r.Configuration.SslMode.VerifyCA.CaCertificate.ValueString()
 			clientCertificate := new(string)
-			if !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientCertificate.IsNull() {
-				*clientCertificate = r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyCA.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyCA.ClientCertificate.IsNull() {
+				*clientCertificate = r.Configuration.SslMode.VerifyCA.ClientCertificate.ValueString()
 			} else {
 				clientCertificate = nil
 			}
 			clientKey := new(string)
-			if !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientKey.IsNull() {
-				*clientKey = r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyCA.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyCA.ClientKey.IsNull() {
+				*clientKey = r.Configuration.SslMode.VerifyCA.ClientKey.ValueString()
 			} else {
 				clientKey = nil
 			}
 			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyCA.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyCA.ClientKeyPassword.IsNull() {
+				*clientKeyPassword = r.Configuration.SslMode.VerifyCA.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword = nil
 			}
-			mode2 := shared.SourceMysqlUpdateSSLModesVerifyCAMode(r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyCA.Mode.ValueString())
-			sourceMysqlUpdateSSLModesVerifyCA = &shared.SourceMysqlUpdateSSLModesVerifyCA{
+			sourceMysqlUpdateVerifyCA = &shared.SourceMysqlUpdateVerifyCA{
 				CaCertificate:     caCertificate,
 				ClientCertificate: clientCertificate,
 				ClientKey:         clientKey,
 				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode2,
 			}
 		}
-		if sourceMysqlUpdateSSLModesVerifyCA != nil {
+		if sourceMysqlUpdateVerifyCA != nil {
 			sslMode = &shared.SourceMysqlUpdateSSLModes{
-				SourceMysqlUpdateSSLModesVerifyCA: sourceMysqlUpdateSSLModesVerifyCA,
+				VerifyCA: sourceMysqlUpdateVerifyCA,
 			}
 		}
-		var sourceMysqlUpdateSSLModesVerifyIdentity *shared.SourceMysqlUpdateSSLModesVerifyIdentity
-		if r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity != nil {
-			caCertificate1 := r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.CaCertificate.ValueString()
+		var verifyIdentity *shared.VerifyIdentity
+		if r.Configuration.SslMode.VerifyIdentity != nil {
+			caCertificate1 := r.Configuration.SslMode.VerifyIdentity.CaCertificate.ValueString()
 			clientCertificate1 := new(string)
-			if !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientCertificate.IsNull() {
-				*clientCertificate1 = r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyIdentity.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.ClientCertificate.IsNull() {
+				*clientCertificate1 = r.Configuration.SslMode.VerifyIdentity.ClientCertificate.ValueString()
 			} else {
 				clientCertificate1 = nil
 			}
 			clientKey1 := new(string)
-			if !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientKey.IsNull() {
-				*clientKey1 = r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyIdentity.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.ClientKey.IsNull() {
+				*clientKey1 = r.Configuration.SslMode.VerifyIdentity.ClientKey.ValueString()
 			} else {
 				clientKey1 = nil
 			}
 			clientKeyPassword1 := new(string)
-			if !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientKeyPassword.IsNull() {
-				*clientKeyPassword1 = r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyIdentity.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyIdentity.ClientKeyPassword.IsNull() {
+				*clientKeyPassword1 = r.Configuration.SslMode.VerifyIdentity.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode3 := shared.SourceMysqlUpdateSSLModesVerifyIdentityMode(r.Configuration.SslMode.SourceMysqlUpdateSSLModesVerifyIdentity.Mode.ValueString())
-			sourceMysqlUpdateSSLModesVerifyIdentity = &shared.SourceMysqlUpdateSSLModesVerifyIdentity{
+			verifyIdentity = &shared.VerifyIdentity{
 				CaCertificate:     caCertificate1,
 				ClientCertificate: clientCertificate1,
 				ClientKey:         clientKey1,
 				ClientKeyPassword: clientKeyPassword1,
-				Mode:              mode3,
 			}
 		}
-		if sourceMysqlUpdateSSLModesVerifyIdentity != nil {
+		if verifyIdentity != nil {
 			sslMode = &shared.SourceMysqlUpdateSSLModes{
-				SourceMysqlUpdateSSLModesVerifyIdentity: sourceMysqlUpdateSSLModesVerifyIdentity,
+				VerifyIdentity: verifyIdentity,
 			}
 		}
 	}
 	var tunnelMethod *shared.SourceMysqlUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var sourceMysqlUpdateSSHTunnelMethodNoTunnel *shared.SourceMysqlUpdateSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.SourceMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			sourceMysqlUpdateSSHTunnelMethodNoTunnel = &shared.SourceMysqlUpdateSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var sourceMysqlUpdateNoTunnel *shared.SourceMysqlUpdateNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			sourceMysqlUpdateNoTunnel = &shared.SourceMysqlUpdateNoTunnel{}
 		}
-		if sourceMysqlUpdateSSHTunnelMethodNoTunnel != nil {
+		if sourceMysqlUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceMysqlUpdateSSHTunnelMethod{
-				SourceMysqlUpdateSSHTunnelMethodNoTunnel: sourceMysqlUpdateSSHTunnelMethodNoTunnel,
+				NoTunnel: sourceMysqlUpdateNoTunnel,
 			}
 		}
-		var sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication *shared.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var sourceMysqlUpdateSSHKeyAuthentication *shared.SourceMysqlUpdateSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			sourceMysqlUpdateSSHKeyAuthentication = &shared.SourceMysqlUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		if sourceMysqlUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlUpdateSSHTunnelMethod{
-				SourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication: sourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication,
+				SSHKeyAuthentication: sourceMysqlUpdateSSHKeyAuthentication,
 			}
 		}
-		var sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication *shared.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.SourceMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication = &shared.SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication{
+		var sourceMysqlUpdatePasswordAuthentication *shared.SourceMysqlUpdatePasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			sourceMysqlUpdatePasswordAuthentication = &shared.SourceMysqlUpdatePasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		if sourceMysqlUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlUpdateSSHTunnelMethod{
-				SourceMysqlUpdateSSHTunnelMethodPasswordAuthentication: sourceMysqlUpdateSSHTunnelMethodPasswordAuthentication,
+				PasswordAuthentication: sourceMysqlUpdatePasswordAuthentication,
 			}
 		}
 	}

@@ -9,3 +9,31 @@ type SourceGithubCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGithubCreateRequest) GetConfiguration() SourceGithub {
+	if o == nil {
+		return SourceGithub{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGithubCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGithubCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGithubCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

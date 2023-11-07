@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceConfluenceConfluence string
+type Confluence string
 
 const (
-	SourceConfluenceConfluenceConfluence SourceConfluenceConfluence = "confluence"
+	ConfluenceConfluence Confluence = "confluence"
 )
 
-func (e SourceConfluenceConfluence) ToPointer() *SourceConfluenceConfluence {
+func (e Confluence) ToPointer() *Confluence {
 	return &e
 }
 
-func (e *SourceConfluenceConfluence) UnmarshalJSON(data []byte) error {
+func (e *Confluence) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "confluence":
-		*e = SourceConfluenceConfluence(v)
+		*e = Confluence(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceConfluenceConfluence: %v", v)
+		return fmt.Errorf("invalid value for Confluence: %v", v)
 	}
 }
 
@@ -37,6 +38,42 @@ type SourceConfluence struct {
 	// Your Confluence domain name
 	DomainName string `json:"domain_name"`
 	// Your Confluence login email
-	Email      string                     `json:"email"`
-	SourceType SourceConfluenceConfluence `json:"sourceType"`
+	Email      string     `json:"email"`
+	sourceType Confluence `const:"confluence" json:"sourceType"`
+}
+
+func (s SourceConfluence) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceConfluence) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceConfluence) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceConfluence) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
+}
+
+func (o *SourceConfluence) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *SourceConfluence) GetSourceType() Confluence {
+	return ConfluenceConfluence
 }

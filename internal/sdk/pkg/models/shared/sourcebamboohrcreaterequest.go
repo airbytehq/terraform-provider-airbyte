@@ -9,3 +9,31 @@ type SourceBambooHrCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceBambooHrCreateRequest) GetConfiguration() SourceBambooHr {
+	if o == nil {
+		return SourceBambooHr{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBambooHrCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBambooHrCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceBambooHrCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

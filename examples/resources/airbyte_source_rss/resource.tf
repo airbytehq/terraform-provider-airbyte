@@ -1,9 +1,8 @@
 resource "airbyte_source_rss" "my_source_rss" {
   configuration = {
-    source_type = "rss"
-    url         = "...my_url..."
+    url = "...my_url..."
   }
-  name         = "Gustavo Donnelly"
+  name         = "Colleen Frami"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ba9216bc-b415-4835-8736-41723133edc0"
+  workspace_id = "9a8d0acc-9948-4b00-a105-9fac1d6c9b0f"
 }

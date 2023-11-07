@@ -7,3 +7,24 @@ type SourceMyHoursPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceMyHoursPutRequest) GetConfiguration() SourceMyHoursUpdate {
+	if o == nil {
+		return SourceMyHoursUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMyHoursPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMyHoursPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

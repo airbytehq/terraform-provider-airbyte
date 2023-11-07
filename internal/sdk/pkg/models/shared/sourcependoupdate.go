@@ -5,3 +5,10 @@ package shared
 type SourcePendoUpdate struct {
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourcePendoUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

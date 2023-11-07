@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -21,7 +21,6 @@ func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCr
 	} else {
 		sessionToken = nil
 	}
-	sourceType := shared.SourceMetabaseMetabase(r.Configuration.SourceType.ValueString())
 	username := new(string)
 	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
 		*username = r.Configuration.Username.ValueString()
@@ -32,7 +31,6 @@ func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCr
 		InstanceAPIURL: instanceAPIURL,
 		Password:       password,
 		SessionToken:   sessionToken,
-		SourceType:     sourceType,
 		Username:       username,
 	}
 	name := r.Name.ValueString()

@@ -7,3 +7,24 @@ type SourceGoogleWebfontsPutRequest struct {
 	Name          string                     `json:"name"`
 	WorkspaceID   string                     `json:"workspaceId"`
 }
+
+func (o *SourceGoogleWebfontsPutRequest) GetConfiguration() SourceGoogleWebfontsUpdate {
+	if o == nil {
+		return SourceGoogleWebfontsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleWebfontsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleWebfontsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -7,3 +7,24 @@ type SourceOktaPutRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *SourceOktaPutRequest) GetConfiguration() SourceOktaUpdate {
+	if o == nil {
+		return SourceOktaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOktaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOktaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

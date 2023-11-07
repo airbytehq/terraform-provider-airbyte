@@ -18,12 +18,11 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     access_token  = "...my_access_token..."
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    source_type   = "instagram"
     start_date    = "2017-01-25T00:00:00Z"
   }
-  name         = "Mae Hoppe"
+  name         = "Bobbie Dickinson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f1ad837a-e80c-41c1-9c95-ba998678fa3f"
+  workspace_id = "74a681ee-a74b-487a-9fb1-87d33223d80b"
 }
 ```
 
@@ -51,7 +50,6 @@ resource "airbyte_source_instagram" "my_source_instagram" {
 Required:
 
 - `access_token` (String) The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
-- `source_type` (String) must be one of ["instagram"]
 - `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 Optional:

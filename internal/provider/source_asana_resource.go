@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -58,7 +58,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_asana_authentication_mechanism_authenticate_via_asana_oauth": schema.SingleNestedAttribute{
+							"authenticate_via_asana_oauth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -67,80 +67,15 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"client_secret": schema.StringAttribute{
 										Required: true,
 									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`OAuth Credentials`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Github`,
 							},
-							"source_asana_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
+							"authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
-											`PAT Credentials`,
-									},
-									"personal_access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
-									},
-								},
-								Description: `Choose how to authenticate to Github`,
-							},
-							"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
-											`OAuth Credentials`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Choose how to authenticate to Github`,
-							},
-							"source_asana_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
-											`PAT Credentials`,
-									},
 									"personal_access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
@@ -154,15 +89,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 						Description: `Choose how to authenticate to Github`,
 					},
-					"source_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"asana",
-							),
-						},
-						Description: `must be one of ["asana"]`,
-					},
 				},
 			},
 			"name": schema.StringAttribute{
@@ -172,6 +98,9 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -235,7 +164,7 @@ func (r *SourceAsanaResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAsana(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -411,5 +340,5 @@ func (r *SourceAsanaResource) Delete(ctx context.Context, req resource.DeleteReq
 }
 
 func (r *SourceAsanaResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

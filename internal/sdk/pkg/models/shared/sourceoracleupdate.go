@@ -3,185 +3,246 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceOracleUpdateConnectBySystemIDSIDConnectionType string
+type SourceOracleUpdateConnectionType string
 
 const (
-	SourceOracleUpdateConnectBySystemIDSIDConnectionTypeSid SourceOracleUpdateConnectBySystemIDSIDConnectionType = "sid"
+	SourceOracleUpdateConnectionTypeSid SourceOracleUpdateConnectionType = "sid"
 )
 
-func (e SourceOracleUpdateConnectBySystemIDSIDConnectionType) ToPointer() *SourceOracleUpdateConnectBySystemIDSIDConnectionType {
+func (e SourceOracleUpdateConnectionType) ToPointer() *SourceOracleUpdateConnectionType {
 	return &e
 }
 
-func (e *SourceOracleUpdateConnectBySystemIDSIDConnectionType) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleUpdateConnectionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sid":
-		*e = SourceOracleUpdateConnectBySystemIDSIDConnectionType(v)
+		*e = SourceOracleUpdateConnectionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateConnectBySystemIDSIDConnectionType: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleUpdateConnectionType: %v", v)
 	}
 }
 
-// SourceOracleUpdateConnectBySystemIDSID - Use SID (Oracle System Identifier)
-type SourceOracleUpdateConnectBySystemIDSID struct {
-	ConnectionType *SourceOracleUpdateConnectBySystemIDSIDConnectionType `json:"connection_type,omitempty"`
-	Sid            string                                                `json:"sid"`
+// SystemIDSID - Use SID (Oracle System Identifier)
+type SystemIDSID struct {
+	connectionType *SourceOracleUpdateConnectionType `const:"sid" json:"connection_type"`
+	Sid            string                            `json:"sid"`
 }
 
-type SourceOracleUpdateConnectByServiceNameConnectionType string
+func (s SystemIDSID) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SystemIDSID) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SystemIDSID) GetConnectionType() *SourceOracleUpdateConnectionType {
+	return SourceOracleUpdateConnectionTypeSid.ToPointer()
+}
+
+func (o *SystemIDSID) GetSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sid
+}
+
+type ConnectionType string
 
 const (
-	SourceOracleUpdateConnectByServiceNameConnectionTypeServiceName SourceOracleUpdateConnectByServiceNameConnectionType = "service_name"
+	ConnectionTypeServiceName ConnectionType = "service_name"
 )
 
-func (e SourceOracleUpdateConnectByServiceNameConnectionType) ToPointer() *SourceOracleUpdateConnectByServiceNameConnectionType {
+func (e ConnectionType) ToPointer() *ConnectionType {
 	return &e
 }
 
-func (e *SourceOracleUpdateConnectByServiceNameConnectionType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "service_name":
-		*e = SourceOracleUpdateConnectByServiceNameConnectionType(v)
+		*e = ConnectionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateConnectByServiceNameConnectionType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionType: %v", v)
 	}
 }
 
-// SourceOracleUpdateConnectByServiceName - Use service name
-type SourceOracleUpdateConnectByServiceName struct {
-	ConnectionType *SourceOracleUpdateConnectByServiceNameConnectionType `json:"connection_type,omitempty"`
-	ServiceName    string                                                `json:"service_name"`
+// ServiceName - Use service name
+type ServiceName struct {
+	connectionType *ConnectionType `const:"service_name" json:"connection_type"`
+	ServiceName    string          `json:"service_name"`
 }
 
-type SourceOracleUpdateConnectByType string
+func (s ServiceName) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ServiceName) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ServiceName) GetConnectionType() *ConnectionType {
+	return ConnectionTypeServiceName.ToPointer()
+}
+
+func (o *ServiceName) GetServiceName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceName
+}
+
+type ConnectByType string
 
 const (
-	SourceOracleUpdateConnectByTypeSourceOracleUpdateConnectByServiceName SourceOracleUpdateConnectByType = "source-oracle-update_Connect by_Service name"
-	SourceOracleUpdateConnectByTypeSourceOracleUpdateConnectBySystemIDSID SourceOracleUpdateConnectByType = "source-oracle-update_Connect by_System ID (SID)"
+	ConnectByTypeServiceName ConnectByType = "ServiceName"
+	ConnectByTypeSystemIDSID ConnectByType = "SystemIDSID"
 )
 
-type SourceOracleUpdateConnectBy struct {
-	SourceOracleUpdateConnectByServiceName *SourceOracleUpdateConnectByServiceName
-	SourceOracleUpdateConnectBySystemIDSID *SourceOracleUpdateConnectBySystemIDSID
+type ConnectBy struct {
+	ServiceName *ServiceName
+	SystemIDSID *SystemIDSID
 
-	Type SourceOracleUpdateConnectByType
+	Type ConnectByType
 }
 
-func CreateSourceOracleUpdateConnectBySourceOracleUpdateConnectByServiceName(sourceOracleUpdateConnectByServiceName SourceOracleUpdateConnectByServiceName) SourceOracleUpdateConnectBy {
-	typ := SourceOracleUpdateConnectByTypeSourceOracleUpdateConnectByServiceName
+func CreateConnectByServiceName(serviceName ServiceName) ConnectBy {
+	typ := ConnectByTypeServiceName
 
-	return SourceOracleUpdateConnectBy{
-		SourceOracleUpdateConnectByServiceName: &sourceOracleUpdateConnectByServiceName,
-		Type:                                   typ,
+	return ConnectBy{
+		ServiceName: &serviceName,
+		Type:        typ,
 	}
 }
 
-func CreateSourceOracleUpdateConnectBySourceOracleUpdateConnectBySystemIDSID(sourceOracleUpdateConnectBySystemIDSID SourceOracleUpdateConnectBySystemIDSID) SourceOracleUpdateConnectBy {
-	typ := SourceOracleUpdateConnectByTypeSourceOracleUpdateConnectBySystemIDSID
+func CreateConnectBySystemIDSID(systemIDSID SystemIDSID) ConnectBy {
+	typ := ConnectByTypeSystemIDSID
 
-	return SourceOracleUpdateConnectBy{
-		SourceOracleUpdateConnectBySystemIDSID: &sourceOracleUpdateConnectBySystemIDSID,
-		Type:                                   typ,
+	return ConnectBy{
+		SystemIDSID: &systemIDSID,
+		Type:        typ,
 	}
 }
 
-func (u *SourceOracleUpdateConnectBy) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *ConnectBy) UnmarshalJSON(data []byte) error {
 
-	sourceOracleUpdateConnectByServiceName := new(SourceOracleUpdateConnectByServiceName)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateConnectByServiceName); err == nil {
-		u.SourceOracleUpdateConnectByServiceName = sourceOracleUpdateConnectByServiceName
-		u.Type = SourceOracleUpdateConnectByTypeSourceOracleUpdateConnectByServiceName
+	serviceName := new(ServiceName)
+	if err := utils.UnmarshalJSON(data, &serviceName, "", true, true); err == nil {
+		u.ServiceName = serviceName
+		u.Type = ConnectByTypeServiceName
 		return nil
 	}
 
-	sourceOracleUpdateConnectBySystemIDSID := new(SourceOracleUpdateConnectBySystemIDSID)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateConnectBySystemIDSID); err == nil {
-		u.SourceOracleUpdateConnectBySystemIDSID = sourceOracleUpdateConnectBySystemIDSID
-		u.Type = SourceOracleUpdateConnectByTypeSourceOracleUpdateConnectBySystemIDSID
+	systemIDSID := new(SystemIDSID)
+	if err := utils.UnmarshalJSON(data, &systemIDSID, "", true, true); err == nil {
+		u.SystemIDSID = systemIDSID
+		u.Type = ConnectByTypeSystemIDSID
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceOracleUpdateConnectBy) MarshalJSON() ([]byte, error) {
-	if u.SourceOracleUpdateConnectByServiceName != nil {
-		return json.Marshal(u.SourceOracleUpdateConnectByServiceName)
+func (u ConnectBy) MarshalJSON() ([]byte, error) {
+	if u.ServiceName != nil {
+		return utils.MarshalJSON(u.ServiceName, "", true)
 	}
 
-	if u.SourceOracleUpdateConnectBySystemIDSID != nil {
-		return json.Marshal(u.SourceOracleUpdateConnectBySystemIDSID)
+	if u.SystemIDSID != nil {
+		return utils.MarshalJSON(u.SystemIDSID, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod string
+type SourceOracleUpdateEncryptionMethod string
 
 const (
-	SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethodEncryptedVerifyCertificate SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod = "encrypted_verify_certificate"
+	SourceOracleUpdateEncryptionMethodEncryptedVerifyCertificate SourceOracleUpdateEncryptionMethod = "encrypted_verify_certificate"
 )
 
-func (e SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod) ToPointer() *SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod {
+func (e SourceOracleUpdateEncryptionMethod) ToPointer() *SourceOracleUpdateEncryptionMethod {
 	return &e
 }
 
-func (e *SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleUpdateEncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "encrypted_verify_certificate":
-		*e = SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod(v)
+		*e = SourceOracleUpdateEncryptionMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleUpdateEncryptionMethod: %v", v)
 	}
 }
 
-// SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
-type SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate struct {
-	EncryptionMethod SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificateEncryptionMethod `json:"encryption_method"`
+// TLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
+type TLSEncryptedVerifyCertificate struct {
+	encryptionMethod *SourceOracleUpdateEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
 }
 
-// SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm - This parameter defines what encryption algorithm is used.
-type SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm string
+func (t TLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TLSEncryptedVerifyCertificate) GetEncryptionMethod() *SourceOracleUpdateEncryptionMethod {
+	return SourceOracleUpdateEncryptionMethodEncryptedVerifyCertificate.ToPointer()
+}
+
+func (o *TLSEncryptedVerifyCertificate) GetSslCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.SslCertificate
+}
+
+// EncryptionAlgorithm - This parameter defines what encryption algorithm is used.
+type EncryptionAlgorithm string
 
 const (
-	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithmAes256      SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm = "AES256"
-	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithmRc456       SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm = "RC4_56"
-	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithmThreeDes168 SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm = "3DES168"
+	EncryptionAlgorithmAes256      EncryptionAlgorithm = "AES256"
+	EncryptionAlgorithmRc456       EncryptionAlgorithm = "RC4_56"
+	EncryptionAlgorithmThreeDes168 EncryptionAlgorithm = "3DES168"
 )
 
-func (e SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm) ToPointer() *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm {
+func (e EncryptionAlgorithm) ToPointer() *EncryptionAlgorithm {
 	return &e
 }
 
-func (e *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm) UnmarshalJSON(data []byte) error {
+func (e *EncryptionAlgorithm) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -192,291 +253,402 @@ func (e *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorit
 	case "RC4_56":
 		fallthrough
 	case "3DES168":
-		*e = SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm(v)
+		*e = EncryptionAlgorithm(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm: %v", v)
+		return fmt.Errorf("invalid value for EncryptionAlgorithm: %v", v)
 	}
 }
 
-type SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod string
+type EncryptionMethod string
 
 const (
-	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethodClientNne SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod = "client_nne"
+	EncryptionMethodClientNne EncryptionMethod = "client_nne"
 )
 
-func (e SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod) ToPointer() *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod {
+func (e EncryptionMethod) ToPointer() *EncryptionMethod {
 	return &e
 }
 
-func (e *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod) UnmarshalJSON(data []byte) error {
+func (e *EncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "client_nne":
-		*e = SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod(v)
+		*e = EncryptionMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod: %v", v)
+		return fmt.Errorf("invalid value for EncryptionMethod: %v", v)
 	}
 }
 
-// SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
-type SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE struct {
+// NativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
+type NativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
-	EncryptionAlgorithm *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm `json:"encryption_algorithm,omitempty"`
-	EncryptionMethod    SourceOracleUpdateEncryptionNativeNetworkEncryptionNNEEncryptionMethod     `json:"encryption_method"`
+	EncryptionAlgorithm *EncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
+	encryptionMethod    *EncryptionMethod    `const:"client_nne" json:"encryption_method"`
 }
 
-type SourceOracleUpdateEncryptionType string
+func (n NativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(n, "", false)
+}
+
+func (n *NativeNetworkEncryptionNNE) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *NativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *EncryptionAlgorithm {
+	if o == nil {
+		return nil
+	}
+	return o.EncryptionAlgorithm
+}
+
+func (o *NativeNetworkEncryptionNNE) GetEncryptionMethod() *EncryptionMethod {
+	return EncryptionMethodClientNne.ToPointer()
+}
+
+type EncryptionUnionType string
 
 const (
-	SourceOracleUpdateEncryptionTypeSourceOracleUpdateEncryptionNativeNetworkEncryptionNNE    SourceOracleUpdateEncryptionType = "source-oracle-update_Encryption_Native Network Encryption (NNE)"
-	SourceOracleUpdateEncryptionTypeSourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate SourceOracleUpdateEncryptionType = "source-oracle-update_Encryption_TLS Encrypted (verify certificate)"
+	EncryptionUnionTypeNativeNetworkEncryptionNNE    EncryptionUnionType = "NativeNetworkEncryptionNNE"
+	EncryptionUnionTypeTLSEncryptedVerifyCertificate EncryptionUnionType = "TLSEncryptedVerifyCertificate"
 )
 
-type SourceOracleUpdateEncryption struct {
-	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE    *SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE
-	SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate *SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate
+type Encryption struct {
+	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE
+	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate
 
-	Type SourceOracleUpdateEncryptionType
+	Type EncryptionUnionType
 }
 
-func CreateSourceOracleUpdateEncryptionSourceOracleUpdateEncryptionNativeNetworkEncryptionNNE(sourceOracleUpdateEncryptionNativeNetworkEncryptionNNE SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE) SourceOracleUpdateEncryption {
-	typ := SourceOracleUpdateEncryptionTypeSourceOracleUpdateEncryptionNativeNetworkEncryptionNNE
+func CreateEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE) Encryption {
+	typ := EncryptionUnionTypeNativeNetworkEncryptionNNE
 
-	return SourceOracleUpdateEncryption{
-		SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE: &sourceOracleUpdateEncryptionNativeNetworkEncryptionNNE,
-		Type: typ,
+	return Encryption{
+		NativeNetworkEncryptionNNE: &nativeNetworkEncryptionNNE,
+		Type:                       typ,
 	}
 }
 
-func CreateSourceOracleUpdateEncryptionSourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate(sourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate) SourceOracleUpdateEncryption {
-	typ := SourceOracleUpdateEncryptionTypeSourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate
+func CreateEncryptionTLSEncryptedVerifyCertificate(tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate) Encryption {
+	typ := EncryptionUnionTypeTLSEncryptedVerifyCertificate
 
-	return SourceOracleUpdateEncryption{
-		SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate: &sourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate,
-		Type: typ,
+	return Encryption{
+		TLSEncryptedVerifyCertificate: &tlsEncryptedVerifyCertificate,
+		Type:                          typ,
 	}
 }
 
-func (u *SourceOracleUpdateEncryption) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *Encryption) UnmarshalJSON(data []byte) error {
 
-	sourceOracleUpdateEncryptionNativeNetworkEncryptionNNE := new(SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateEncryptionNativeNetworkEncryptionNNE); err == nil {
-		u.SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE = sourceOracleUpdateEncryptionNativeNetworkEncryptionNNE
-		u.Type = SourceOracleUpdateEncryptionTypeSourceOracleUpdateEncryptionNativeNetworkEncryptionNNE
+	nativeNetworkEncryptionNNE := new(NativeNetworkEncryptionNNE)
+	if err := utils.UnmarshalJSON(data, &nativeNetworkEncryptionNNE, "", true, true); err == nil {
+		u.NativeNetworkEncryptionNNE = nativeNetworkEncryptionNNE
+		u.Type = EncryptionUnionTypeNativeNetworkEncryptionNNE
 		return nil
 	}
 
-	sourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate := new(SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate); err == nil {
-		u.SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate = sourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate
-		u.Type = SourceOracleUpdateEncryptionTypeSourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate
+	tlsEncryptedVerifyCertificate := new(TLSEncryptedVerifyCertificate)
+	if err := utils.UnmarshalJSON(data, &tlsEncryptedVerifyCertificate, "", true, true); err == nil {
+		u.TLSEncryptedVerifyCertificate = tlsEncryptedVerifyCertificate
+		u.Type = EncryptionUnionTypeTLSEncryptedVerifyCertificate
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceOracleUpdateEncryption) MarshalJSON() ([]byte, error) {
-	if u.SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE != nil {
-		return json.Marshal(u.SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE)
+func (u Encryption) MarshalJSON() ([]byte, error) {
+	if u.NativeNetworkEncryptionNNE != nil {
+		return utils.MarshalJSON(u.NativeNetworkEncryptionNNE, "", true)
 	}
 
-	if u.SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate != nil {
-		return json.Marshal(u.SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate)
+	if u.TLSEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.TLSEncryptedVerifyCertificate, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// SourceOracleUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceOracleUpdateSchemasTunnelMethodTunnelMethod string
 
 const (
-	SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	SourceOracleUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth SourceOracleUpdateSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e SourceOracleUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *SourceOracleUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = SourceOracleUpdateSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleUpdateSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// SourceOracleUpdateSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceOracleUpdateSSHTunnelMethodPasswordAuthentication struct {
+// SourceOracleUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceOracleUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceOracleUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (s SourceOracleUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelMethod() SourceOracleUpdateSchemasTunnelMethodTunnelMethod {
+	return SourceOracleUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// SourceOracleUpdateSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceOracleUpdateSchemasTunnelMethod string
 
 const (
-	SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	SourceOracleUpdateSchemasTunnelMethodSSHKeyAuth SourceOracleUpdateSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e SourceOracleUpdateSchemasTunnelMethod) ToPointer() *SourceOracleUpdateSchemasTunnelMethod {
 	return &e
 }
 
-func (e *SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = SourceOracleUpdateSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleUpdateSchemasTunnelMethod: %v", v)
 	}
 }
 
-// SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication struct {
+// SourceOracleUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceOracleUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceOracleUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod string
+func (s SourceOracleUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelMethod() SourceOracleUpdateSchemasTunnelMethod {
+	return SourceOracleUpdateSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// SourceOracleUpdateTunnelMethod - No ssh tunnel needed to connect to database
+type SourceOracleUpdateTunnelMethod string
 
 const (
-	SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	SourceOracleUpdateTunnelMethodNoTunnel SourceOracleUpdateTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+func (e SourceOracleUpdateTunnelMethod) ToPointer() *SourceOracleUpdateTunnelMethod {
 	return &e
 }
 
-func (e *SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = SourceOracleUpdateTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleUpdateTunnelMethod: %v", v)
 	}
 }
 
-// SourceOracleUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceOracleUpdateSSHTunnelMethodNoTunnel struct {
+// SourceOracleUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceOracleUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceOracleUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceOracleUpdateNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleUpdateNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleUpdateNoTunnel) GetTunnelMethod() SourceOracleUpdateTunnelMethod {
+	return SourceOracleUpdateTunnelMethodNoTunnel
 }
 
 type SourceOracleUpdateSSHTunnelMethodType string
 
 const (
-	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodNoTunnel               SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_SSH Tunnel Method_No Tunnel"
-	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication   SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_SSH Tunnel Method_SSH Key Authentication"
-	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodPasswordAuthentication SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_SSH Tunnel Method_Password Authentication"
+	SourceOracleUpdateSSHTunnelMethodTypeNoTunnel               SourceOracleUpdateSSHTunnelMethodType = "NoTunnel"
+	SourceOracleUpdateSSHTunnelMethodTypeSSHKeyAuthentication   SourceOracleUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
+	SourceOracleUpdateSSHTunnelMethodTypePasswordAuthentication SourceOracleUpdateSSHTunnelMethodType = "PasswordAuthentication"
 )
 
 type SourceOracleUpdateSSHTunnelMethod struct {
-	SourceOracleUpdateSSHTunnelMethodNoTunnel               *SourceOracleUpdateSSHTunnelMethodNoTunnel
-	SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication   *SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication
-	SourceOracleUpdateSSHTunnelMethodPasswordAuthentication *SourceOracleUpdateSSHTunnelMethodPasswordAuthentication
+	NoTunnel               *SourceOracleUpdateNoTunnel
+	SSHKeyAuthentication   *SourceOracleUpdateSSHKeyAuthentication
+	PasswordAuthentication *SourceOracleUpdatePasswordAuthentication
 
 	Type SourceOracleUpdateSSHTunnelMethodType
 }
 
-func CreateSourceOracleUpdateSSHTunnelMethodSourceOracleUpdateSSHTunnelMethodNoTunnel(sourceOracleUpdateSSHTunnelMethodNoTunnel SourceOracleUpdateSSHTunnelMethodNoTunnel) SourceOracleUpdateSSHTunnelMethod {
-	typ := SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodNoTunnel
+func CreateSourceOracleUpdateSSHTunnelMethodNoTunnel(noTunnel SourceOracleUpdateNoTunnel) SourceOracleUpdateSSHTunnelMethod {
+	typ := SourceOracleUpdateSSHTunnelMethodTypeNoTunnel
 
 	return SourceOracleUpdateSSHTunnelMethod{
-		SourceOracleUpdateSSHTunnelMethodNoTunnel: &sourceOracleUpdateSSHTunnelMethodNoTunnel,
-		Type: typ,
+		NoTunnel: &noTunnel,
+		Type:     typ,
 	}
 }
 
-func CreateSourceOracleUpdateSSHTunnelMethodSourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication(sourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication) SourceOracleUpdateSSHTunnelMethod {
-	typ := SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication
+func CreateSourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceOracleUpdateSSHKeyAuthentication) SourceOracleUpdateSSHTunnelMethod {
+	typ := SourceOracleUpdateSSHTunnelMethodTypeSSHKeyAuthentication
 
 	return SourceOracleUpdateSSHTunnelMethod{
-		SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication: &sourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		SSHKeyAuthentication: &sshKeyAuthentication,
+		Type:                 typ,
 	}
 }
 
-func CreateSourceOracleUpdateSSHTunnelMethodSourceOracleUpdateSSHTunnelMethodPasswordAuthentication(sourceOracleUpdateSSHTunnelMethodPasswordAuthentication SourceOracleUpdateSSHTunnelMethodPasswordAuthentication) SourceOracleUpdateSSHTunnelMethod {
-	typ := SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodPasswordAuthentication
+func CreateSourceOracleUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceOracleUpdatePasswordAuthentication) SourceOracleUpdateSSHTunnelMethod {
+	typ := SourceOracleUpdateSSHTunnelMethodTypePasswordAuthentication
 
 	return SourceOracleUpdateSSHTunnelMethod{
-		SourceOracleUpdateSSHTunnelMethodPasswordAuthentication: &sourceOracleUpdateSSHTunnelMethodPasswordAuthentication,
-		Type: typ,
+		PasswordAuthentication: &passwordAuthentication,
+		Type:                   typ,
 	}
 }
 
 func (u *SourceOracleUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceOracleUpdateSSHTunnelMethodNoTunnel := new(SourceOracleUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateSSHTunnelMethodNoTunnel); err == nil {
-		u.SourceOracleUpdateSSHTunnelMethodNoTunnel = sourceOracleUpdateSSHTunnelMethodNoTunnel
-		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodNoTunnel
+	noTunnel := new(SourceOracleUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
+		u.NoTunnel = noTunnel
+		u.Type = SourceOracleUpdateSSHTunnelMethodTypeNoTunnel
 		return nil
 	}
 
-	sourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication := new(SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication = sourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication
-		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication
+	sshKeyAuthentication := new(SourceOracleUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
+		u.SSHKeyAuthentication = sshKeyAuthentication
+		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSSHKeyAuthentication
 		return nil
 	}
 
-	sourceOracleUpdateSSHTunnelMethodPasswordAuthentication := new(SourceOracleUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOracleUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.SourceOracleUpdateSSHTunnelMethodPasswordAuthentication = sourceOracleUpdateSSHTunnelMethodPasswordAuthentication
-		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHTunnelMethodPasswordAuthentication
+	passwordAuthentication := new(SourceOracleUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
+		u.PasswordAuthentication = passwordAuthentication
+		u.Type = SourceOracleUpdateSSHTunnelMethodTypePasswordAuthentication
 		return nil
 	}
 
@@ -484,26 +656,26 @@ func (u *SourceOracleUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceOracleUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceOracleUpdateSSHTunnelMethodNoTunnel)
+	if u.NoTunnel != nil {
+		return utils.MarshalJSON(u.NoTunnel, "", true)
 	}
 
-	if u.SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication)
+	if u.SSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
 	}
 
-	if u.SourceOracleUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceOracleUpdateSSHTunnelMethodPasswordAuthentication)
+	if u.PasswordAuthentication != nil {
+		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceOracleUpdate struct {
 	// Connect data that will be used for DB connection
-	ConnectionData *SourceOracleUpdateConnectBy `json:"connection_data,omitempty"`
+	ConnectionData *ConnectBy `json:"connection_data,omitempty"`
 	// The encryption method with is used when communicating with the database.
-	Encryption SourceOracleUpdateEncryption `json:"encryption"`
+	Encryption Encryption `json:"encryption"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -514,11 +686,85 @@ type SourceOracleUpdate struct {
 	// Oracle Corporations recommends the following port numbers:
 	// 1521 - Default listening port for client connections to the listener.
 	// 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
-	Port int64 `json:"port"`
+	Port *int64 `default:"1521" json:"port"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
 	Schemas []string `json:"schemas,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceOracleUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceOracleUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleUpdate) GetConnectionData() *ConnectBy {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectionData
+}
+
+func (o *SourceOracleUpdate) GetEncryption() Encryption {
+	if o == nil {
+		return Encryption{}
+	}
+	return o.Encryption
+}
+
+func (o *SourceOracleUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceOracleUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceOracleUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceOracleUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceOracleUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceOracleUpdate) GetTunnelMethod() *SourceOracleUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceOracleUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

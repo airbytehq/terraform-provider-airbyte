@@ -17,21 +17,19 @@ resource "airbyte_source_github" "my_source_github" {
   configuration = {
     branch = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     credentials = {
-      source_github_authentication_o_auth = {
+      o_auth = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
-        option_title  = "OAuth Credentials"
       }
     }
-    repository        = "airbytehq/airbyte"
-    requests_per_hour = 10
-    source_type       = "github"
+    repository        = "airbytehq/*"
+    requests_per_hour = 9
     start_date        = "2021-03-01T00:00:00Z"
   }
-  name         = "Van Kuhlman IV"
+  name         = "Gustavo Mertz"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9af4d357-24cd-4b0f-8d28-1187d56844ed"
+  workspace_id = "e7b2f5ca-6ecd-4faf-ab05-210208e036b2"
 }
 ```
 
@@ -59,7 +57,6 @@ resource "airbyte_source_github" "my_source_github" {
 Required:
 
 - `repository` (String) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
-- `source_type` (String) must be one of ["github"]
 - `start_date` (String) The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 
 Optional:
@@ -73,13 +70,11 @@ Optional:
 
 Optional:
 
-- `source_github_authentication_o_auth` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_authentication_o_auth))
-- `source_github_authentication_personal_access_token` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_authentication_personal_access_token))
-- `source_github_update_authentication_o_auth` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_update_authentication_o_auth))
-- `source_github_update_authentication_personal_access_token` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_update_authentication_personal_access_token))
+- `o_auth` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--o_auth))
+- `personal_access_token` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--personal_access_token))
 
-<a id="nestedatt--configuration--credentials--source_github_authentication_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_github_authentication_o_auth`
+<a id="nestedatt--configuration--credentials--o_auth"></a>
+### Nested Schema for `configuration.credentials.o_auth`
 
 Required:
 
@@ -89,44 +84,13 @@ Optional:
 
 - `client_id` (String) OAuth Client Id
 - `client_secret` (String) OAuth Client secret
-- `option_title` (String) must be one of ["OAuth Credentials"]
 
 
-<a id="nestedatt--configuration--credentials--source_github_authentication_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_github_authentication_personal_access_token`
-
-Required:
-
-- `personal_access_token` (String) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
-
-Optional:
-
-- `option_title` (String) must be one of ["PAT Credentials"]
-
-
-<a id="nestedatt--configuration--credentials--source_github_update_authentication_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_github_update_authentication_o_auth`
-
-Required:
-
-- `access_token` (String) OAuth access token
-
-Optional:
-
-- `client_id` (String) OAuth Client Id
-- `client_secret` (String) OAuth Client secret
-- `option_title` (String) must be one of ["OAuth Credentials"]
-
-
-<a id="nestedatt--configuration--credentials--source_github_update_authentication_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_github_update_authentication_personal_access_token`
+<a id="nestedatt--configuration--credentials--personal_access_token"></a>
+### Nested Schema for `configuration.credentials.personal_access_token`
 
 Required:
 
 - `personal_access_token` (String) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
-
-Optional:
-
-- `option_title` (String) must be one of ["PAT Credentials"]
 
 

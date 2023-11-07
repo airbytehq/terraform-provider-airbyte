@@ -18,12 +18,11 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    source_type      = "metabase"
-    username         = "Peyton.Green"
+    username         = "Tyrell_Jacobson73"
   }
-  name         = "Tammy Sporer"
+  name         = "Malcolm Lindgren"
   secret_id    = "...my_secret_id..."
-  workspace_id = "71e7fd07-4009-4ef8-929d-e1dd7097b5da"
+  workspace_id = "f6afbf36-5d68-47e0-87e3-905b6a417fae"
 }
 ```
 
@@ -51,7 +50,6 @@ resource "airbyte_source_metabase" "my_source_metabase" {
 Required:
 
 - `instance_api_url` (String) URL to your metabase instance API
-- `source_type` (String) must be one of ["metabase"]
 
 Optional:
 

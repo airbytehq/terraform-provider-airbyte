@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceTwilioTaskrouter struct {
 	AccountSid types.String `tfsdk:"account_sid"`
 	AuthToken  types.String `tfsdk:"auth_token"`
-	SourceType types.String `tfsdk:"source_type"`
 }

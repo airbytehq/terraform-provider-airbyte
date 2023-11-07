@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -116,27 +117,27 @@ func (e *SourceZohoCrmEnvironment) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceZohoCrmZohoCrm string
+type ZohoCrm string
 
 const (
-	SourceZohoCrmZohoCrmZohoCrm SourceZohoCrmZohoCrm = "zoho-crm"
+	ZohoCrmZohoCrm ZohoCrm = "zoho-crm"
 )
 
-func (e SourceZohoCrmZohoCrm) ToPointer() *SourceZohoCrmZohoCrm {
+func (e ZohoCrm) ToPointer() *ZohoCrm {
 	return &e
 }
 
-func (e *SourceZohoCrmZohoCrm) UnmarshalJSON(data []byte) error {
+func (e *ZohoCrm) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zoho-crm":
-		*e = SourceZohoCrmZohoCrm(v)
+		*e = ZohoCrm(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmZohoCrm: %v", v)
+		return fmt.Errorf("invalid value for ZohoCrm: %v", v)
 	}
 }
 
@@ -148,12 +149,76 @@ type SourceZohoCrm struct {
 	// Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
 	DcRegion SourceZohoCrmDataCenterLocation `json:"dc_region"`
 	// Choose your Edition of Zoho CRM to determine API Concurrency Limits
-	Edition SourceZohoCRMZohoCRMEdition `json:"edition"`
+	Edition *SourceZohoCRMZohoCRMEdition `default:"Free" json:"edition"`
 	// Please choose the environment
 	Environment SourceZohoCrmEnvironment `json:"environment"`
 	// OAuth2.0 Refresh Token
-	RefreshToken string               `json:"refresh_token"`
-	SourceType   SourceZohoCrmZohoCrm `json:"sourceType"`
+	RefreshToken string  `json:"refresh_token"`
+	sourceType   ZohoCrm `const:"zoho-crm" json:"sourceType"`
 	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 	StartDatetime *time.Time `json:"start_datetime,omitempty"`
+}
+
+func (s SourceZohoCrm) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZohoCrm) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZohoCrm) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZohoCrm) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZohoCrm) GetDcRegion() SourceZohoCrmDataCenterLocation {
+	if o == nil {
+		return SourceZohoCrmDataCenterLocation("")
+	}
+	return o.DcRegion
+}
+
+func (o *SourceZohoCrm) GetEdition() *SourceZohoCRMZohoCRMEdition {
+	if o == nil {
+		return nil
+	}
+	return o.Edition
+}
+
+func (o *SourceZohoCrm) GetEnvironment() SourceZohoCrmEnvironment {
+	if o == nil {
+		return SourceZohoCrmEnvironment("")
+	}
+	return o.Environment
+}
+
+func (o *SourceZohoCrm) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceZohoCrm) GetSourceType() ZohoCrm {
+	return ZohoCrmZohoCrm
+}
+
+func (o *SourceZohoCrm) GetStartDatetime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDatetime
 }

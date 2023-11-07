@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceNetsuiteNetsuite string
+type Netsuite string
 
 const (
-	SourceNetsuiteNetsuiteNetsuite SourceNetsuiteNetsuite = "netsuite"
+	NetsuiteNetsuite Netsuite = "netsuite"
 )
 
-func (e SourceNetsuiteNetsuite) ToPointer() *SourceNetsuiteNetsuite {
+func (e Netsuite) ToPointer() *Netsuite {
 	return &e
 }
 
-func (e *SourceNetsuiteNetsuite) UnmarshalJSON(data []byte) error {
+func (e *Netsuite) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "netsuite":
-		*e = SourceNetsuiteNetsuite(v)
+		*e = Netsuite(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNetsuiteNetsuite: %v", v)
+		return fmt.Errorf("invalid value for Netsuite: %v", v)
 	}
 }
 
@@ -39,8 +40,8 @@ type SourceNetsuite struct {
 	// The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
 	ObjectTypes []string `json:"object_types,omitempty"`
 	// Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
-	Realm      string                 `json:"realm"`
-	SourceType SourceNetsuiteNetsuite `json:"sourceType"`
+	Realm      string   `json:"realm"`
+	sourceType Netsuite `const:"netsuite" json:"sourceType"`
 	// Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
 	StartDatetime string `json:"start_datetime"`
 	// Access token key
@@ -48,5 +49,76 @@ type SourceNetsuite struct {
 	// Access token secret
 	TokenSecret string `json:"token_secret"`
 	// The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
-	WindowInDays *int64 `json:"window_in_days,omitempty"`
+	WindowInDays *int64 `default:"30" json:"window_in_days"`
+}
+
+func (s SourceNetsuite) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNetsuite) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNetsuite) GetConsumerKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerKey
+}
+
+func (o *SourceNetsuite) GetConsumerSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerSecret
+}
+
+func (o *SourceNetsuite) GetObjectTypes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ObjectTypes
+}
+
+func (o *SourceNetsuite) GetRealm() string {
+	if o == nil {
+		return ""
+	}
+	return o.Realm
+}
+
+func (o *SourceNetsuite) GetSourceType() Netsuite {
+	return NetsuiteNetsuite
+}
+
+func (o *SourceNetsuite) GetStartDatetime() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDatetime
+}
+
+func (o *SourceNetsuite) GetTokenKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenKey
+}
+
+func (o *SourceNetsuite) GetTokenSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenSecret
+}
+
+func (o *SourceNetsuite) GetWindowInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

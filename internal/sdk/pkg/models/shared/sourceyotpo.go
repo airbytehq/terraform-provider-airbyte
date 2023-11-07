@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceYotpoYotpo string
+type Yotpo string
 
 const (
-	SourceYotpoYotpoYotpo SourceYotpoYotpo = "yotpo"
+	YotpoYotpo Yotpo = "yotpo"
 )
 
-func (e SourceYotpoYotpo) ToPointer() *SourceYotpoYotpo {
+func (e Yotpo) ToPointer() *Yotpo {
 	return &e
 }
 
-func (e *SourceYotpoYotpo) UnmarshalJSON(data []byte) error {
+func (e *Yotpo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "yotpo":
-		*e = SourceYotpoYotpo(v)
+		*e = Yotpo(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYotpoYotpo: %v", v)
+		return fmt.Errorf("invalid value for Yotpo: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceYotpo struct {
 	// App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
 	AppKey string `json:"app_key"`
 	// Email address registered with yotpo.
-	Email      string           `json:"email"`
-	SourceType SourceYotpoYotpo `json:"sourceType"`
+	Email      *string `default:"example@gmail.com" json:"email"`
+	sourceType Yotpo   `const:"yotpo" json:"sourceType"`
 	// Date time filter for incremental filter, Specify which date to extract from.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceYotpo) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceYotpo) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceYotpo) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceYotpo) GetAppKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppKey
+}
+
+func (o *SourceYotpo) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *SourceYotpo) GetSourceType() Yotpo {
+	return YotpoYotpo
+}
+
+func (o *SourceYotpo) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

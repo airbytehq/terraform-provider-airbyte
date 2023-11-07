@@ -9,3 +9,31 @@ type SourceE2eTestCloudCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceE2eTestCloudCreateRequest) GetConfiguration() SourceE2eTestCloud {
+	if o == nil {
+		return SourceE2eTestCloud{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceE2eTestCloudCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceE2eTestCloudCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceE2eTestCloudCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

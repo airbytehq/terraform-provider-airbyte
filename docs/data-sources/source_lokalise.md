@@ -14,7 +14,6 @@ SourceLokalise DataSource
 
 ```terraform
 data "airbyte_source_lokalise" "my_source_lokalise" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,23 +25,12 @@ data "airbyte_source_lokalise" "my_source_lokalise" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
-- `project_id` (String) Lokalise project ID. Available at Project Settings > General.
-- `source_type` (String) must be one of ["lokalise"]
 
 

@@ -1,9 +1,8 @@
 resource "airbyte_source_appfollow" "my_source_appfollow" {
   configuration = {
-    api_secret  = "...my_api_secret..."
-    source_type = "appfollow"
+    api_secret = "...my_api_secret..."
   }
-  name         = "Regina Huel"
+  name         = "Ruby Becker"
   secret_id    = "...my_secret_id..."
-  workspace_id = "db35ff2e-4b27-4537-a8cd-9e7319c177d5"
+  workspace_id = "3801c367-8d42-4b62-94a3-1a29aaf3c680"
 }

@@ -7,3 +7,24 @@ type SourcePrestashopPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourcePrestashopPutRequest) GetConfiguration() SourcePrestashopUpdate {
+	if o == nil {
+		return SourcePrestashopUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePrestashopPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePrestashopPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

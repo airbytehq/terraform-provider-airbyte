@@ -3,16 +3,14 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRssResourceModel) ToCreateSDKType() *shared.SourceRssCreateRequest {
-	sourceType := shared.SourceRssRss(r.Configuration.SourceType.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourceRss{
-		SourceType: sourceType,
-		URL:        url,
+		URL: url,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

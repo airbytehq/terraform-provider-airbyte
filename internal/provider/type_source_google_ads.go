@@ -7,10 +7,9 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceGoogleAds struct {
 	ConversionWindowDays types.Int64                      `tfsdk:"conversion_window_days"`
 	Credentials          SourceGoogleAdsGoogleCredentials `tfsdk:"credentials"`
-	CustomQueries        []SourceGoogleAdsCustomQueries   `tfsdk:"custom_queries"`
+	CustomQueries        []CustomQueries                  `tfsdk:"custom_queries"`
 	CustomerID           types.String                     `tfsdk:"customer_id"`
 	EndDate              types.String                     `tfsdk:"end_date"`
 	LoginCustomerID      types.String                     `tfsdk:"login_customer_id"`
-	SourceType           types.String                     `tfsdk:"source_type"`
 	StartDate            types.String                     `tfsdk:"start_date"`
 }

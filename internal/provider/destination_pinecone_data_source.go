@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,10 +31,11 @@ type DestinationPineconeDataSource struct {
 
 // DestinationPineconeDataSourceModel describes the data model.
 type DestinationPineconeDataSourceModel struct {
-	Configuration DestinationPinecone `tfsdk:"configuration"`
-	DestinationID types.String        `tfsdk:"destination_id"`
-	Name          types.String        `tfsdk:"name"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,173 +49,19 @@ func (r *DestinationPineconeDataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "DestinationPinecone DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pinecone",
-							),
-						},
-						Description: `must be one of ["pinecone"]`,
-					},
-					"embedding": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_pinecone_embedding_cohere": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"cohere_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
-								},
-								Description: `Use the Cohere API to embed text.`,
-							},
-							"destination_pinecone_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
-								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
-							},
-							"destination_pinecone_embedding_open_ai": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
-									"openai_key": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
-							},
-							"destination_pinecone_update_embedding_cohere": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"cohere_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
-									},
-								},
-								Description: `Use the Cohere API to embed text.`,
-							},
-							"destination_pinecone_update_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
-								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
-							},
-							"destination_pinecone_update_embedding_open_ai": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
-									"openai_key": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Embedding configuration`,
-					},
-					"indexing": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"index": schema.StringAttribute{
-								Computed:    true,
-								Description: `Pinecone index to use`,
-							},
-							"pinecone_environment": schema.StringAttribute{
-								Computed:    true,
-								Description: `Pinecone environment to use`,
-							},
-							"pinecone_key": schema.StringAttribute{
-								Computed: true,
-							},
-						},
-						Description: `Pinecone is a popular vector store that can be used to store and retrieve embeddings.`,
-					},
-					"processing": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"chunk_overlap": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
-							},
-							"chunk_size": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)`,
-							},
-							"metadata_fields": schema.ListAttribute{
-								Computed:    true,
-								ElementType: types.StringType,
-								Description: `List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.`,
-							},
-							"text_fields": schema.ListAttribute{
-								Computed:    true,
-								ElementType: types.StringType,
-								Description: `List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array.`,
-							},
-						},
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

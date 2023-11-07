@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,11 +31,11 @@ type SourceSftpBulkDataSource struct {
 
 // SourceSftpBulkDataSourceModel describes the data model.
 type SourceSftpBulkDataSourceModel struct {
-	Configuration SourceSftpBulk `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,87 +49,22 @@ func (r *SourceSftpBulkDataSource) Schema(ctx context.Context, req datasource.Sc
 		MarkdownDescription: "SourceSftpBulk DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"file_most_recent": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Sync only the most recent file for the configured folder path and file pattern`,
-					},
-					"file_pattern": schema.StringAttribute{
-						Computed:    true,
-						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
-					},
-					"file_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"csv",
-								"json",
-							),
-						},
-						MarkdownDescription: `must be one of ["csv", "json"]` + "\n" +
-							`The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
-					},
-					"folder_path": schema.StringAttribute{
-						Computed:    true,
-						Description: `The directory to search files for sync`,
-					},
-					"host": schema.StringAttribute{
-						Computed:    true,
-						Description: `The server host address`,
-					},
-					"password": schema.StringAttribute{
-						Computed:    true,
-						Description: `OS-level password for logging into the jump server host`,
-					},
-					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The server port`,
-					},
-					"private_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The private key`,
-					},
-					"separator": schema.StringAttribute{
-						Computed:    true,
-						Description: `The separator used in the CSV files. Define None if you want to use the Sniffer functionality`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp-bulk",
-							),
-						},
-						Description: `must be one of ["sftp-bulk"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
-					},
-					"stream_name": schema.StringAttribute{
-						Computed:    true,
-						Description: `The name of the stream or table you want to create`,
-					},
-					"username": schema.StringAttribute{
-						Computed:    true,
-						Description: `The server user`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

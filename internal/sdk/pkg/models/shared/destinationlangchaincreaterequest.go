@@ -7,3 +7,24 @@ type DestinationLangchainCreateRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *DestinationLangchainCreateRequest) GetConfiguration() DestinationLangchain {
+	if o == nil {
+		return DestinationLangchain{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationLangchainCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationLangchainCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

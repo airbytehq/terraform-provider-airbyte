@@ -3,8 +3,6 @@
 package provider
 
 type SourceMailchimpAuthentication struct {
-	SourceMailchimpAuthenticationAPIKey        *SourceMailchimpAuthenticationAPIKey  `tfsdk:"source_mailchimp_authentication_api_key"`
-	SourceMailchimpAuthenticationOAuth20       *SourceMailchimpAuthenticationOAuth20 `tfsdk:"source_mailchimp_authentication_o_auth2_0"`
-	SourceMailchimpUpdateAuthenticationAPIKey  *SourceMailchimpAuthenticationAPIKey  `tfsdk:"source_mailchimp_update_authentication_api_key"`
-	SourceMailchimpUpdateAuthenticationOAuth20 *SourceMailchimpAuthenticationOAuth20 `tfsdk:"source_mailchimp_update_authentication_o_auth2_0"`
+	APIKey  *APIKey `tfsdk:"api_key"`
+	OAuth20 *OAuth  `tfsdk:"o_auth20"`
 }

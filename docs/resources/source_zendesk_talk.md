@@ -16,19 +16,18 @@ SourceZendeskTalk Resource
 resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
   configuration = {
     credentials = {
-      source_zendesk_talk_authentication_api_token = {
-        api_token = "...my_api_token..."
-        auth_type = "api_token"
-        email     = "Kacie27@hotmail.com"
+      source_zendesk_talk_api_token = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_token             = "...my_api_token..."
+        email                 = "Gabriella.Mills28@gmail.com"
       }
     }
-    source_type = "zendesk-talk"
-    start_date  = "2020-10-15T00:00:00Z"
-    subdomain   = "...my_subdomain..."
+    start_date = "2020-10-15T00:00:00Z"
+    subdomain  = "...my_subdomain..."
   }
-  name         = "Jackie Welch"
+  name         = "Shawna Davis"
   secret_id    = "...my_secret_id..."
-  workspace_id = "bb0c69e3-72db-4134-8ba9-f78a5c0ed7aa"
+  workspace_id = "1a4e4668-49f7-4bbe-aaef-524043cb4c47"
 }
 ```
 
@@ -55,7 +54,6 @@ resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
 
 Required:
 
-- `source_type` (String) must be one of ["zendesk-talk"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Talk API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `subdomain` (String) This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
 
@@ -68,13 +66,11 @@ Optional:
 
 Optional:
 
-- `source_zendesk_talk_authentication_api_token` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_talk_authentication_api_token))
-- `source_zendesk_talk_authentication_o_auth2_0` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_talk_authentication_o_auth2_0))
-- `source_zendesk_talk_update_authentication_api_token` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_api_token))
-- `source_zendesk_talk_update_authentication_o_auth2_0` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_o_auth2_0))
+- `api_token` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `o_auth20` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_zendesk_talk_authentication_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_talk_authentication_api_token`
+<a id="nestedatt--configuration--credentials--api_token"></a>
+### Nested Schema for `configuration.credentials.api_token`
 
 Required:
 
@@ -84,40 +80,10 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["api_token"]
 
 
-<a id="nestedatt--configuration--credentials--source_zendesk_talk_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_talk_authentication_o_auth2_0`
-
-Required:
-
-- `access_token` (String) The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["oauth2.0"]
-- `client_id` (String) Client ID
-- `client_secret` (String) Client Secret
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_talk_update_authentication_api_token`
-
-Required:
-
-- `api_token` (String) The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-- `email` (String) The user email for your Zendesk account.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["api_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_talk_update_authentication_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
@@ -126,7 +92,6 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) Client ID
 - `client_secret` (String) Client Secret
 

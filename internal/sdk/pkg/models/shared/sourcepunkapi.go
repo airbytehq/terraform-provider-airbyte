@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePunkAPIPunkAPI string
+type PunkAPI string
 
 const (
-	SourcePunkAPIPunkAPIPunkAPI SourcePunkAPIPunkAPI = "punk-api"
+	PunkAPIPunkAPI PunkAPI = "punk-api"
 )
 
-func (e SourcePunkAPIPunkAPI) ToPointer() *SourcePunkAPIPunkAPI {
+func (e PunkAPI) ToPointer() *PunkAPI {
 	return &e
 }
 
-func (e *SourcePunkAPIPunkAPI) UnmarshalJSON(data []byte) error {
+func (e *PunkAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "punk-api":
-		*e = SourcePunkAPIPunkAPI(v)
+		*e = PunkAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePunkAPIPunkAPI: %v", v)
+		return fmt.Errorf("invalid value for PunkAPI: %v", v)
 	}
 }
 
@@ -37,6 +38,42 @@ type SourcePunkAPI struct {
 	// To extract specific data with Unique ID
 	BrewedBefore string `json:"brewed_before"`
 	// To extract specific data with Unique ID
-	ID         *string              `json:"id,omitempty"`
-	SourceType SourcePunkAPIPunkAPI `json:"sourceType"`
+	ID         *string `json:"id,omitempty"`
+	sourceType PunkAPI `const:"punk-api" json:"sourceType"`
+}
+
+func (s SourcePunkAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePunkAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePunkAPI) GetBrewedAfter() string {
+	if o == nil {
+		return ""
+	}
+	return o.BrewedAfter
+}
+
+func (o *SourcePunkAPI) GetBrewedBefore() string {
+	if o == nil {
+		return ""
+	}
+	return o.BrewedBefore
+}
+
+func (o *SourcePunkAPI) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *SourcePunkAPI) GetSourceType() PunkAPI {
+	return PunkAPIPunkAPI
 }

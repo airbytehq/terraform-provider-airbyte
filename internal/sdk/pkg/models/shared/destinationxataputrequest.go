@@ -7,3 +7,24 @@ type DestinationXataPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *DestinationXataPutRequest) GetConfiguration() DestinationXataUpdate {
+	if o == nil {
+		return DestinationXataUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationXataPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationXataPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

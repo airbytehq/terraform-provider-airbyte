@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -16,12 +16,10 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 		queryParams = nil
 	}
 	queryPath := r.Configuration.QueryPath.ValueString()
-	sourceType := shared.SourceUsCensusUsCensus(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceUsCensus{
 		APIKey:      apiKey,
 		QueryParams: queryParams,
 		QueryPath:   queryPath,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

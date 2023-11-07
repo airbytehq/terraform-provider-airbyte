@@ -7,3 +7,24 @@ type SourceDelightedPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceDelightedPutRequest) GetConfiguration() SourceDelightedUpdate {
+	if o == nil {
+		return SourceDelightedUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDelightedPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDelightedPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

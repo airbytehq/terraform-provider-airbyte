@@ -3,129 +3,182 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceNotionAuthenticateUsingAccessTokenAuthType string
+type SourceNotionSchemasAuthType string
 
 const (
-	SourceNotionAuthenticateUsingAccessTokenAuthTypeToken SourceNotionAuthenticateUsingAccessTokenAuthType = "token"
+	SourceNotionSchemasAuthTypeToken SourceNotionSchemasAuthType = "token"
 )
 
-func (e SourceNotionAuthenticateUsingAccessTokenAuthType) ToPointer() *SourceNotionAuthenticateUsingAccessTokenAuthType {
+func (e SourceNotionSchemasAuthType) ToPointer() *SourceNotionSchemasAuthType {
 	return &e
 }
 
-func (e *SourceNotionAuthenticateUsingAccessTokenAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceNotionSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "token":
-		*e = SourceNotionAuthenticateUsingAccessTokenAuthType(v)
+		*e = SourceNotionSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingAccessTokenAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceNotionSchemasAuthType: %v", v)
 	}
 }
 
-// SourceNotionAuthenticateUsingAccessToken - Pick an authentication method.
-type SourceNotionAuthenticateUsingAccessToken struct {
-	AuthType SourceNotionAuthenticateUsingAccessTokenAuthType `json:"auth_type"`
+// SourceNotionAccessToken - Pick an authentication method.
+type SourceNotionAccessToken struct {
+	authType SourceNotionSchemasAuthType `const:"token" json:"auth_type"`
 	// Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 	Token string `json:"token"`
 }
 
-type SourceNotionAuthenticateUsingOAuth20AuthType string
+func (s SourceNotionAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNotionAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNotionAccessToken) GetAuthType() SourceNotionSchemasAuthType {
+	return SourceNotionSchemasAuthTypeToken
+}
+
+func (o *SourceNotionAccessToken) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}
+
+type SourceNotionAuthType string
 
 const (
-	SourceNotionAuthenticateUsingOAuth20AuthTypeOAuth20 SourceNotionAuthenticateUsingOAuth20AuthType = "OAuth2.0"
+	SourceNotionAuthTypeOAuth20 SourceNotionAuthType = "OAuth2.0"
 )
 
-func (e SourceNotionAuthenticateUsingOAuth20AuthType) ToPointer() *SourceNotionAuthenticateUsingOAuth20AuthType {
+func (e SourceNotionAuthType) ToPointer() *SourceNotionAuthType {
 	return &e
 }
 
-func (e *SourceNotionAuthenticateUsingOAuth20AuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceNotionAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth2.0":
-		*e = SourceNotionAuthenticateUsingOAuth20AuthType(v)
+		*e = SourceNotionAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingOAuth20AuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceNotionAuthType: %v", v)
 	}
 }
 
-// SourceNotionAuthenticateUsingOAuth20 - Pick an authentication method.
-type SourceNotionAuthenticateUsingOAuth20 struct {
+// SourceNotionOAuth20 - Pick an authentication method.
+type SourceNotionOAuth20 struct {
 	// Access Token is a token you received by complete the OauthWebFlow of Notion.
-	AccessToken string                                       `json:"access_token"`
-	AuthType    SourceNotionAuthenticateUsingOAuth20AuthType `json:"auth_type"`
+	AccessToken string               `json:"access_token"`
+	authType    SourceNotionAuthType `const:"OAuth2.0" json:"auth_type"`
 	// The ClientID of your Notion integration.
 	ClientID string `json:"client_id"`
 	// The ClientSecret of your Notion integration.
 	ClientSecret string `json:"client_secret"`
 }
 
+func (s SourceNotionOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNotionOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNotionOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceNotionOAuth20) GetAuthType() SourceNotionAuthType {
+	return SourceNotionAuthTypeOAuth20
+}
+
+func (o *SourceNotionOAuth20) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceNotionOAuth20) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
 type SourceNotionAuthenticateUsingType string
 
 const (
-	SourceNotionAuthenticateUsingTypeSourceNotionAuthenticateUsingOAuth20     SourceNotionAuthenticateUsingType = "source-notion_Authenticate using_OAuth2.0"
-	SourceNotionAuthenticateUsingTypeSourceNotionAuthenticateUsingAccessToken SourceNotionAuthenticateUsingType = "source-notion_Authenticate using_Access Token"
+	SourceNotionAuthenticateUsingTypeOAuth20     SourceNotionAuthenticateUsingType = "OAuth20"
+	SourceNotionAuthenticateUsingTypeAccessToken SourceNotionAuthenticateUsingType = "AccessToken"
 )
 
 type SourceNotionAuthenticateUsing struct {
-	SourceNotionAuthenticateUsingOAuth20     *SourceNotionAuthenticateUsingOAuth20
-	SourceNotionAuthenticateUsingAccessToken *SourceNotionAuthenticateUsingAccessToken
+	OAuth20     *SourceNotionOAuth20
+	AccessToken *SourceNotionAccessToken
 
 	Type SourceNotionAuthenticateUsingType
 }
 
-func CreateSourceNotionAuthenticateUsingSourceNotionAuthenticateUsingOAuth20(sourceNotionAuthenticateUsingOAuth20 SourceNotionAuthenticateUsingOAuth20) SourceNotionAuthenticateUsing {
-	typ := SourceNotionAuthenticateUsingTypeSourceNotionAuthenticateUsingOAuth20
+func CreateSourceNotionAuthenticateUsingOAuth20(oAuth20 SourceNotionOAuth20) SourceNotionAuthenticateUsing {
+	typ := SourceNotionAuthenticateUsingTypeOAuth20
 
 	return SourceNotionAuthenticateUsing{
-		SourceNotionAuthenticateUsingOAuth20: &sourceNotionAuthenticateUsingOAuth20,
-		Type:                                 typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourceNotionAuthenticateUsingSourceNotionAuthenticateUsingAccessToken(sourceNotionAuthenticateUsingAccessToken SourceNotionAuthenticateUsingAccessToken) SourceNotionAuthenticateUsing {
-	typ := SourceNotionAuthenticateUsingTypeSourceNotionAuthenticateUsingAccessToken
+func CreateSourceNotionAuthenticateUsingAccessToken(accessToken SourceNotionAccessToken) SourceNotionAuthenticateUsing {
+	typ := SourceNotionAuthenticateUsingTypeAccessToken
 
 	return SourceNotionAuthenticateUsing{
-		SourceNotionAuthenticateUsingAccessToken: &sourceNotionAuthenticateUsingAccessToken,
-		Type:                                     typ,
+		AccessToken: &accessToken,
+		Type:        typ,
 	}
 }
 
 func (u *SourceNotionAuthenticateUsing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceNotionAuthenticateUsingAccessToken := new(SourceNotionAuthenticateUsingAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceNotionAuthenticateUsingAccessToken); err == nil {
-		u.SourceNotionAuthenticateUsingAccessToken = sourceNotionAuthenticateUsingAccessToken
-		u.Type = SourceNotionAuthenticateUsingTypeSourceNotionAuthenticateUsingAccessToken
+	accessToken := new(SourceNotionAccessToken)
+	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
+		u.AccessToken = accessToken
+		u.Type = SourceNotionAuthenticateUsingTypeAccessToken
 		return nil
 	}
 
-	sourceNotionAuthenticateUsingOAuth20 := new(SourceNotionAuthenticateUsingOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceNotionAuthenticateUsingOAuth20); err == nil {
-		u.SourceNotionAuthenticateUsingOAuth20 = sourceNotionAuthenticateUsingOAuth20
-		u.Type = SourceNotionAuthenticateUsingTypeSourceNotionAuthenticateUsingOAuth20
+	oAuth20 := new(SourceNotionOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourceNotionAuthenticateUsingTypeOAuth20
 		return nil
 	}
 
@@ -133,45 +186,74 @@ func (u *SourceNotionAuthenticateUsing) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceNotionAuthenticateUsing) MarshalJSON() ([]byte, error) {
-	if u.SourceNotionAuthenticateUsingAccessToken != nil {
-		return json.Marshal(u.SourceNotionAuthenticateUsingAccessToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourceNotionAuthenticateUsingOAuth20 != nil {
-		return json.Marshal(u.SourceNotionAuthenticateUsingOAuth20)
+	if u.AccessToken != nil {
+		return utils.MarshalJSON(u.AccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceNotionNotion string
+type Notion string
 
 const (
-	SourceNotionNotionNotion SourceNotionNotion = "notion"
+	NotionNotion Notion = "notion"
 )
 
-func (e SourceNotionNotion) ToPointer() *SourceNotionNotion {
+func (e Notion) ToPointer() *Notion {
 	return &e
 }
 
-func (e *SourceNotionNotion) UnmarshalJSON(data []byte) error {
+func (e *Notion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "notion":
-		*e = SourceNotionNotion(v)
+		*e = Notion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionNotion: %v", v)
+		return fmt.Errorf("invalid value for Notion: %v", v)
 	}
 }
 
 type SourceNotion struct {
 	// Pick an authentication method.
 	Credentials *SourceNotionAuthenticateUsing `json:"credentials,omitempty"`
-	SourceType  SourceNotionNotion             `json:"sourceType"`
+	sourceType  Notion                         `const:"notion" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceNotion) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNotion) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNotion) GetCredentials() *SourceNotionAuthenticateUsing {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceNotion) GetSourceType() Notion {
+	return NotionNotion
+}
+
+func (o *SourceNotion) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

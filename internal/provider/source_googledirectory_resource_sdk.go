@@ -3,62 +3,46 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoogleDirectoryCreateRequest {
 	var credentials *shared.SourceGoogleDirectoryGoogleCredentials
 	if r.Configuration.Credentials != nil {
-		var sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth *shared.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth
-		if r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth != nil {
-			clientID := r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.ClientSecret.ValueString()
-			credentialsTitle := new(shared.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle)
-			if !r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle.IsUnknown() && !r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle.IsNull() {
-				*credentialsTitle = shared.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle(r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle.ValueString())
-			} else {
-				credentialsTitle = nil
-			}
-			refreshToken := r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth.RefreshToken.ValueString()
-			sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth = &shared.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth{
-				ClientID:         clientID,
-				ClientSecret:     clientSecret,
-				CredentialsTitle: credentialsTitle,
-				RefreshToken:     refreshToken,
+		var sourceGoogleDirectorySignInViaGoogleOAuth *shared.SourceGoogleDirectorySignInViaGoogleOAuth
+		if r.Configuration.Credentials.SignInViaGoogleOAuth != nil {
+			clientID := r.Configuration.Credentials.SignInViaGoogleOAuth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SignInViaGoogleOAuth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.SignInViaGoogleOAuth.RefreshToken.ValueString()
+			sourceGoogleDirectorySignInViaGoogleOAuth = &shared.SourceGoogleDirectorySignInViaGoogleOAuth{
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
 			}
 		}
-		if sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth != nil {
+		if sourceGoogleDirectorySignInViaGoogleOAuth != nil {
 			credentials = &shared.SourceGoogleDirectoryGoogleCredentials{
-				SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth: sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth,
+				SignInViaGoogleOAuth: sourceGoogleDirectorySignInViaGoogleOAuth,
 			}
 		}
-		var sourceGoogleDirectoryGoogleCredentialsServiceAccountKey *shared.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey
-		if r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey != nil {
-			credentialsJSON := r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsJSON.ValueString()
-			credentialsTitle1 := new(shared.SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle)
-			if !r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle.IsUnknown() && !r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle.IsNull() {
-				*credentialsTitle1 = shared.SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle(r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.CredentialsTitle.ValueString())
-			} else {
-				credentialsTitle1 = nil
-			}
-			email := r.Configuration.Credentials.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey.Email.ValueString()
-			sourceGoogleDirectoryGoogleCredentialsServiceAccountKey = &shared.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey{
-				CredentialsJSON:  credentialsJSON,
-				CredentialsTitle: credentialsTitle1,
-				Email:            email,
+		var sourceGoogleDirectoryServiceAccountKey *shared.SourceGoogleDirectoryServiceAccountKey
+		if r.Configuration.Credentials.ServiceAccountKey != nil {
+			credentialsJSON := r.Configuration.Credentials.ServiceAccountKey.CredentialsJSON.ValueString()
+			email := r.Configuration.Credentials.ServiceAccountKey.Email.ValueString()
+			sourceGoogleDirectoryServiceAccountKey = &shared.SourceGoogleDirectoryServiceAccountKey{
+				CredentialsJSON: credentialsJSON,
+				Email:           email,
 			}
 		}
-		if sourceGoogleDirectoryGoogleCredentialsServiceAccountKey != nil {
+		if sourceGoogleDirectoryServiceAccountKey != nil {
 			credentials = &shared.SourceGoogleDirectoryGoogleCredentials{
-				SourceGoogleDirectoryGoogleCredentialsServiceAccountKey: sourceGoogleDirectoryGoogleCredentialsServiceAccountKey,
+				ServiceAccountKey: sourceGoogleDirectoryServiceAccountKey,
 			}
 		}
 	}
-	sourceType := shared.SourceGoogleDirectoryGoogleDirectory(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleDirectory{
 		Credentials: credentials,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -85,48 +69,34 @@ func (r *SourceGoogleDirectoryResourceModel) ToGetSDKType() *shared.SourceGoogle
 func (r *SourceGoogleDirectoryResourceModel) ToUpdateSDKType() *shared.SourceGoogleDirectoryPutRequest {
 	var credentials *shared.SourceGoogleDirectoryUpdateGoogleCredentials
 	if r.Configuration.Credentials != nil {
-		var sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth *shared.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
-		if r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth != nil {
-			clientID := r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth.ClientSecret.ValueString()
-			credentialsTitle := new(shared.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle)
-			if !r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle.IsUnknown() && !r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle.IsNull() {
-				*credentialsTitle = shared.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle(r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth.CredentialsTitle.ValueString())
-			} else {
-				credentialsTitle = nil
-			}
-			refreshToken := r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth.RefreshToken.ValueString()
-			sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth = &shared.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth{
-				ClientID:         clientID,
-				ClientSecret:     clientSecret,
-				CredentialsTitle: credentialsTitle,
-				RefreshToken:     refreshToken,
+		var signInViaGoogleOAuth *shared.SignInViaGoogleOAuth
+		if r.Configuration.Credentials.SignInViaGoogleOAuth != nil {
+			clientID := r.Configuration.Credentials.SignInViaGoogleOAuth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SignInViaGoogleOAuth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.SignInViaGoogleOAuth.RefreshToken.ValueString()
+			signInViaGoogleOAuth = &shared.SignInViaGoogleOAuth{
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
 			}
 		}
-		if sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth != nil {
+		if signInViaGoogleOAuth != nil {
 			credentials = &shared.SourceGoogleDirectoryUpdateGoogleCredentials{
-				SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth: sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth,
+				SignInViaGoogleOAuth: signInViaGoogleOAuth,
 			}
 		}
-		var sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey *shared.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey
-		if r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey != nil {
-			credentialsJSON := r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey.CredentialsJSON.ValueString()
-			credentialsTitle1 := new(shared.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle)
-			if !r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey.CredentialsTitle.IsUnknown() && !r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey.CredentialsTitle.IsNull() {
-				*credentialsTitle1 = shared.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKeyCredentialsTitle(r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey.CredentialsTitle.ValueString())
-			} else {
-				credentialsTitle1 = nil
-			}
-			email := r.Configuration.Credentials.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey.Email.ValueString()
-			sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey = &shared.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey{
-				CredentialsJSON:  credentialsJSON,
-				CredentialsTitle: credentialsTitle1,
-				Email:            email,
+		var serviceAccountKey *shared.ServiceAccountKey
+		if r.Configuration.Credentials.ServiceAccountKey != nil {
+			credentialsJSON := r.Configuration.Credentials.ServiceAccountKey.CredentialsJSON.ValueString()
+			email := r.Configuration.Credentials.ServiceAccountKey.Email.ValueString()
+			serviceAccountKey = &shared.ServiceAccountKey{
+				CredentialsJSON: credentialsJSON,
+				Email:           email,
 			}
 		}
-		if sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey != nil {
+		if serviceAccountKey != nil {
 			credentials = &shared.SourceGoogleDirectoryUpdateGoogleCredentials{
-				SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey: sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey,
+				ServiceAccountKey: serviceAccountKey,
 			}
 		}
 	}

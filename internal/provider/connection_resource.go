@@ -3,19 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -142,10 +143,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"eu",
 					),
 				},
-				Description: `must be one of ["auto", "us", "eu"]`,
+				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
 			},
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Required: true,
@@ -171,7 +173,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"custom_format",
 					),
 				},
-				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]` + "\n" +
+				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]; Default: "destination"` + "\n" +
 					`Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
@@ -179,8 +181,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Optional:    true,
-				Description: `Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
+				Optional: true,
+				MarkdownDescription: `Default: null` + "\n" +
+					`Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
@@ -196,7 +199,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"propagate_fully",
 					),
 				},
-				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]` + "\n" +
+				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"` + "\n" +
 					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
@@ -245,6 +248,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"source_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Required: true,
@@ -468,5 +472,5 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 }
 
 func (r *ConnectionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("connection_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("connection_id"), req.ID)...)
 }

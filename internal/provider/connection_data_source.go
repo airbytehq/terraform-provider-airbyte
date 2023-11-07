@@ -3,10 +3,10 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -31,19 +31,19 @@ type ConnectionDataSource struct {
 
 // ConnectionDataSourceModel describes the data model.
 type ConnectionDataSourceModel struct {
-	Configurations                   *StreamConfigurations `tfsdk:"configurations"`
-	ConnectionID                     types.String          `tfsdk:"connection_id"`
-	DataResidency                    types.String          `tfsdk:"data_residency"`
-	DestinationID                    types.String          `tfsdk:"destination_id"`
-	Name                             types.String          `tfsdk:"name"`
-	NamespaceDefinition              types.String          `tfsdk:"namespace_definition"`
-	NamespaceFormat                  types.String          `tfsdk:"namespace_format"`
-	NonBreakingSchemaUpdatesBehavior types.String          `tfsdk:"non_breaking_schema_updates_behavior"`
-	Prefix                           types.String          `tfsdk:"prefix"`
-	Schedule                         *ConnectionSchedule   `tfsdk:"schedule"`
-	SourceID                         types.String          `tfsdk:"source_id"`
-	Status                           types.String          `tfsdk:"status"`
-	WorkspaceID                      types.String          `tfsdk:"workspace_id"`
+	Configurations                   StreamConfigurations       `tfsdk:"configurations"`
+	ConnectionID                     types.String               `tfsdk:"connection_id"`
+	DataResidency                    types.String               `tfsdk:"data_residency"`
+	DestinationID                    types.String               `tfsdk:"destination_id"`
+	Name                             types.String               `tfsdk:"name"`
+	NamespaceDefinition              types.String               `tfsdk:"namespace_definition"`
+	NamespaceFormat                  types.String               `tfsdk:"namespace_format"`
+	NonBreakingSchemaUpdatesBehavior types.String               `tfsdk:"non_breaking_schema_updates_behavior"`
+	Prefix                           types.String               `tfsdk:"prefix"`
+	Schedule                         ConnectionScheduleResponse `tfsdk:"schedule"`
+	SourceID                         types.String               `tfsdk:"source_id"`
+	Status                           types.String               `tfsdk:"status"`
+	WorkspaceID                      types.String               `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -109,14 +109,13 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 						"eu",
 					),
 				},
-				Description: `must be one of ["auto", "us", "eu"]`,
+				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				Computed:    true,
-				Description: `Optional name of the connection`,
+				Computed: true,
 			},
 			"namespace_definition": schema.StringAttribute{
 				Computed: true,
@@ -127,12 +126,11 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 						"custom_format",
 					),
 				},
-				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]` + "\n" +
+				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]; Default: "destination"` + "\n" +
 					`Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
-				Computed:    true,
-				Description: `Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
+				Computed: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
@@ -144,12 +142,11 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 						"propagate_fully",
 					),
 				},
-				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]` + "\n" +
+				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"` + "\n" +
 					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
-				Computed:    true,
-				Description: `Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).`,
+				Computed: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
@@ -166,9 +163,10 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 							stringvalidator.OneOf(
 								"manual",
 								"cron",
+								"basic",
 							),
 						},
-						Description: `must be one of ["manual", "cron"]`,
+						Description: `must be one of ["manual", "cron", "basic"]`,
 					},
 				},
 				Description: `schedule for when the the connection should run, per the schedule type`,

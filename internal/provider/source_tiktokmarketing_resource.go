@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -56,13 +56,14 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Optional:    true,
-						Description: `The attribution window in days.`,
+						Optional: true,
+						MarkdownDescription: `Default: 3` + "\n" +
+							`The attribution window in days.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_tiktok_marketing_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
+							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -77,15 +78,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The Developer Application App ID.`,
 									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"secret": schema.StringAttribute{
 										Required:    true,
 										Description: `The Developer Application Secret.`,
@@ -93,7 +85,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								},
 								Description: `Authentication method`,
 							},
-							"source_tiktok_marketing_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
+							"sandbox_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -103,69 +95,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									"advertiser_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-										Description: `must be one of ["sandbox_access_token"]`,
-									},
-								},
-								Description: `Authentication method`,
-							},
-							"source_tiktok_marketing_update_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Long-term Authorized Access Token.`,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Advertiser ID to filter reports and streams. Let this empty to retrieve all.`,
-									},
-									"app_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Developer Application App ID.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"secret": schema.StringAttribute{
-										Required:    true,
-										Description: `The Developer Application Secret.`,
-									},
-								},
-								Description: `Authentication method`,
-							},
-							"source_tiktok_marketing_update_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The long-term authorized access token.`,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-										Description: `must be one of ["sandbox_access_token"]`,
 									},
 								},
 								Description: `Authentication method`,
@@ -184,24 +113,17 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.`,
 					},
 					"include_deleted": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Set to active if you want to include deleted data in reports.`,
-					},
-					"source_type": schema.StringAttribute{
 						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"tiktok-marketing",
-							),
-						},
-						Description: `must be one of ["tiktok-marketing"]`,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Set to active if you want to include deleted data in reports.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.`,
+						MarkdownDescription: `Default: "2016-09-01"` + "\n" +
+							`The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.`,
 					},
 				},
 			},
@@ -212,6 +134,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -275,7 +200,7 @@ func (r *SourceTiktokMarketingResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceTiktokMarketing(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -451,5 +376,5 @@ func (r *SourceTiktokMarketingResource) Delete(ctx context.Context, req resource
 }
 
 func (r *SourceTiktokMarketingResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

@@ -3,21 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBrazeResourceModel) ToCreateSDKType() *shared.SourceBrazeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceBrazeBraze(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourceBraze{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
-		URL:        url,
+		APIKey:    apiKey,
+		StartDate: startDate,
+		URL:       url,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

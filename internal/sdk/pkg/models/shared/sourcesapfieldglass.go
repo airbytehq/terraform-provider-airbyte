@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceSapFieldglassSapFieldglass string
+type SapFieldglass string
 
 const (
-	SourceSapFieldglassSapFieldglassSapFieldglass SourceSapFieldglassSapFieldglass = "sap-fieldglass"
+	SapFieldglassSapFieldglass SapFieldglass = "sap-fieldglass"
 )
 
-func (e SourceSapFieldglassSapFieldglass) ToPointer() *SourceSapFieldglassSapFieldglass {
+func (e SapFieldglass) ToPointer() *SapFieldglass {
 	return &e
 }
 
-func (e *SourceSapFieldglassSapFieldglass) UnmarshalJSON(data []byte) error {
+func (e *SapFieldglass) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sap-fieldglass":
-		*e = SourceSapFieldglassSapFieldglass(v)
+		*e = SapFieldglass(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSapFieldglassSapFieldglass: %v", v)
+		return fmt.Errorf("invalid value for SapFieldglass: %v", v)
 	}
 }
 
 type SourceSapFieldglass struct {
 	// API Key
-	APIKey     string                           `json:"api_key"`
-	SourceType SourceSapFieldglassSapFieldglass `json:"sourceType"`
+	APIKey     string        `json:"api_key"`
+	sourceType SapFieldglass `const:"sap-fieldglass" json:"sourceType"`
+}
+
+func (s SourceSapFieldglass) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSapFieldglass) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSapFieldglass) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSapFieldglass) GetSourceType() SapFieldglass {
+	return SapFieldglassSapFieldglass
 }

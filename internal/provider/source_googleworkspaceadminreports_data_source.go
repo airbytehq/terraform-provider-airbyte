@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,11 +31,11 @@ type SourceGoogleWorkspaceAdminReportsDataSource struct {
 
 // SourceGoogleWorkspaceAdminReportsDataSourceModel describes the data model.
 type SourceGoogleWorkspaceAdminReportsDataSourceModel struct {
-	Configuration SourceGoogleWorkspaceAdminReports `tfsdk:"configuration"`
-	Name          types.String                      `tfsdk:"name"`
-	SecretID      types.String                      `tfsdk:"secret_id"`
-	SourceID      types.String                      `tfsdk:"source_id"`
-	WorkspaceID   types.String                      `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,41 +49,22 @@ func (r *SourceGoogleWorkspaceAdminReportsDataSource) Schema(ctx context.Context
 		MarkdownDescription: "SourceGoogleWorkspaceAdminReports DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials_json": schema.StringAttribute{
-						Computed:    true,
-						Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
-					},
-					"email": schema.StringAttribute{
-						Computed:    true,
-						Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
-					},
-					"lookback": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Sets the range of time shown in the report. Reports API allows from up to 180 days ago. `,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-workspace-admin-reports",
-							),
-						},
-						Description: `must be one of ["google-workspace-admin-reports"]`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

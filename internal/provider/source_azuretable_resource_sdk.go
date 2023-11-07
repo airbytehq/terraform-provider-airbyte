@@ -3,12 +3,11 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAzureTableResourceModel) ToCreateSDKType() *shared.SourceAzureTableCreateRequest {
-	sourceType := shared.SourceAzureTableAzureTable(r.Configuration.SourceType.ValueString())
 	storageAccessKey := r.Configuration.StorageAccessKey.ValueString()
 	storageAccountName := r.Configuration.StorageAccountName.ValueString()
 	storageEndpointSuffix := new(string)
@@ -18,7 +17,6 @@ func (r *SourceAzureTableResourceModel) ToCreateSDKType() *shared.SourceAzureTab
 		storageEndpointSuffix = nil
 	}
 	configuration := shared.SourceAzureTable{
-		SourceType:            sourceType,
 		StorageAccessKey:      storageAccessKey,
 		StorageAccountName:    storageAccountName,
 		StorageEndpointSuffix: storageEndpointSuffix,

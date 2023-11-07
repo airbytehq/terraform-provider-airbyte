@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -72,8 +72,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Description: `The name of the Azure blob storage container.`,
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
-						Optional:    true,
-						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
+						Optional: true,
+						MarkdownDescription: `Default: "blob.core.windows.net"` + "\n" +
+							`This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
 						Optional:    true,
@@ -82,34 +83,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
-								Description: `Input data format`,
-							},
-							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
+							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Input data format`,
 							},
 						},
@@ -117,15 +93,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 							validators.ExactlyOneChild(),
 						},
 						Description: `Input data format`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-blob-storage",
-							),
-						},
-						Description: `must be one of ["azure-blob-storage"]`,
 					},
 				},
 			},
@@ -136,6 +103,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -199,7 +169,7 @@ func (r *SourceAzureBlobStorageResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -375,5 +345,5 @@ func (r *SourceAzureBlobStorageResource) Delete(ctx context.Context, req resourc
 }
 
 func (r *SourceAzureBlobStorageResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

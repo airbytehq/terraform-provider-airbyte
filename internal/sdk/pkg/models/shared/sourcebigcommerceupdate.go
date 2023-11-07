@@ -10,3 +10,24 @@ type SourceBigcommerceUpdate struct {
 	// The hash code of the store. For https://api.bigcommerce.com/stores/HASH_CODE/v3/, The store's hash code is 'HASH_CODE'.
 	StoreHash string `json:"store_hash"`
 }
+
+func (o *SourceBigcommerceUpdate) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceBigcommerceUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceBigcommerceUpdate) GetStoreHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreHash
+}

@@ -3,148 +3,208 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle - PAT Credentials
-type SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle string
+// SourceAsanaUpdateSchemasCredentialsTitle - PAT Credentials
+type SourceAsanaUpdateSchemasCredentialsTitle string
 
 const (
-	SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitlePatCredentials SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle = "PAT Credentials"
+	SourceAsanaUpdateSchemasCredentialsTitlePatCredentials SourceAsanaUpdateSchemasCredentialsTitle = "PAT Credentials"
 )
 
-func (e SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle) ToPointer() *SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle {
+func (e SourceAsanaUpdateSchemasCredentialsTitle) ToPointer() *SourceAsanaUpdateSchemasCredentialsTitle {
 	return &e
 }
 
-func (e *SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle) UnmarshalJSON(data []byte) error {
+func (e *SourceAsanaUpdateSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "PAT Credentials":
-		*e = SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle(v)
+		*e = SourceAsanaUpdateSchemasCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle: %v", v)
+		return fmt.Errorf("invalid value for SourceAsanaUpdateSchemasCredentialsTitle: %v", v)
 	}
 }
 
-// SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken - Choose how to authenticate to Github
-type SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken struct {
+// AuthenticateWithPersonalAccessToken - Choose how to authenticate to Github
+type AuthenticateWithPersonalAccessToken struct {
 	// PAT Credentials
-	OptionTitle *SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle `json:"option_title,omitempty"`
+	optionTitle *SourceAsanaUpdateSchemasCredentialsTitle `const:"PAT Credentials" json:"option_title,omitempty"`
 	// Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 	PersonalAccessToken string `json:"personal_access_token"`
 }
 
-// SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle - OAuth Credentials
-type SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle string
+func (a AuthenticateWithPersonalAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateWithPersonalAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateWithPersonalAccessToken) GetOptionTitle() *SourceAsanaUpdateSchemasCredentialsTitle {
+	return SourceAsanaUpdateSchemasCredentialsTitlePatCredentials.ToPointer()
+}
+
+func (o *AuthenticateWithPersonalAccessToken) GetPersonalAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.PersonalAccessToken
+}
+
+// SourceAsanaUpdateCredentialsTitle - OAuth Credentials
+type SourceAsanaUpdateCredentialsTitle string
 
 const (
-	SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleOAuthCredentials SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle = "OAuth Credentials"
+	SourceAsanaUpdateCredentialsTitleOAuthCredentials SourceAsanaUpdateCredentialsTitle = "OAuth Credentials"
 )
 
-func (e SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle) ToPointer() *SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle {
+func (e SourceAsanaUpdateCredentialsTitle) ToPointer() *SourceAsanaUpdateCredentialsTitle {
 	return &e
 }
 
-func (e *SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle) UnmarshalJSON(data []byte) error {
+func (e *SourceAsanaUpdateCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth Credentials":
-		*e = SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle(v)
+		*e = SourceAsanaUpdateCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle: %v", v)
+		return fmt.Errorf("invalid value for SourceAsanaUpdateCredentialsTitle: %v", v)
 	}
 }
 
-// SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth - Choose how to authenticate to Github
-type SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth struct {
+// AuthenticateViaAsanaOauth - Choose how to authenticate to Github
+type AuthenticateViaAsanaOauth struct {
 	ClientID     string `json:"client_id"`
 	ClientSecret string `json:"client_secret"`
 	// OAuth Credentials
-	OptionTitle  *SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle `json:"option_title,omitempty"`
-	RefreshToken string                                                                             `json:"refresh_token"`
+	optionTitle  *SourceAsanaUpdateCredentialsTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
+	RefreshToken string                             `json:"refresh_token"`
 }
 
-type SourceAsanaUpdateAuthenticationMechanismType string
+func (a AuthenticateViaAsanaOauth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaAsanaOauth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaAsanaOauth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *AuthenticateViaAsanaOauth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *AuthenticateViaAsanaOauth) GetOptionTitle() *SourceAsanaUpdateCredentialsTitle {
+	return SourceAsanaUpdateCredentialsTitleOAuthCredentials.ToPointer()
+}
+
+func (o *AuthenticateViaAsanaOauth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+type AuthenticationMechanismType string
 
 const (
-	SourceAsanaUpdateAuthenticationMechanismTypeSourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth           SourceAsanaUpdateAuthenticationMechanismType = "source-asana-update_Authentication mechanism_Authenticate via Asana (Oauth)"
-	SourceAsanaUpdateAuthenticationMechanismTypeSourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken SourceAsanaUpdateAuthenticationMechanismType = "source-asana-update_Authentication mechanism_Authenticate with Personal Access Token"
+	AuthenticationMechanismTypeAuthenticateViaAsanaOauth           AuthenticationMechanismType = "AuthenticateViaAsanaOauth"
+	AuthenticationMechanismTypeAuthenticateWithPersonalAccessToken AuthenticationMechanismType = "AuthenticateWithPersonalAccessToken"
 )
 
-type SourceAsanaUpdateAuthenticationMechanism struct {
-	SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth           *SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth
-	SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken *SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken
+type AuthenticationMechanism struct {
+	AuthenticateViaAsanaOauth           *AuthenticateViaAsanaOauth
+	AuthenticateWithPersonalAccessToken *AuthenticateWithPersonalAccessToken
 
-	Type SourceAsanaUpdateAuthenticationMechanismType
+	Type AuthenticationMechanismType
 }
 
-func CreateSourceAsanaUpdateAuthenticationMechanismSourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth(sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth) SourceAsanaUpdateAuthenticationMechanism {
-	typ := SourceAsanaUpdateAuthenticationMechanismTypeSourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth
+func CreateAuthenticationMechanismAuthenticateViaAsanaOauth(authenticateViaAsanaOauth AuthenticateViaAsanaOauth) AuthenticationMechanism {
+	typ := AuthenticationMechanismTypeAuthenticateViaAsanaOauth
 
-	return SourceAsanaUpdateAuthenticationMechanism{
-		SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth: &sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth,
-		Type: typ,
+	return AuthenticationMechanism{
+		AuthenticateViaAsanaOauth: &authenticateViaAsanaOauth,
+		Type:                      typ,
 	}
 }
 
-func CreateSourceAsanaUpdateAuthenticationMechanismSourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken(sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken) SourceAsanaUpdateAuthenticationMechanism {
-	typ := SourceAsanaUpdateAuthenticationMechanismTypeSourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken
+func CreateAuthenticationMechanismAuthenticateWithPersonalAccessToken(authenticateWithPersonalAccessToken AuthenticateWithPersonalAccessToken) AuthenticationMechanism {
+	typ := AuthenticationMechanismTypeAuthenticateWithPersonalAccessToken
 
-	return SourceAsanaUpdateAuthenticationMechanism{
-		SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken: &sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken,
-		Type: typ,
+	return AuthenticationMechanism{
+		AuthenticateWithPersonalAccessToken: &authenticateWithPersonalAccessToken,
+		Type:                                typ,
 	}
 }
 
-func (u *SourceAsanaUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *AuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken := new(SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken); err == nil {
-		u.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken = sourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken
-		u.Type = SourceAsanaUpdateAuthenticationMechanismTypeSourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken
+	authenticateWithPersonalAccessToken := new(AuthenticateWithPersonalAccessToken)
+	if err := utils.UnmarshalJSON(data, &authenticateWithPersonalAccessToken, "", true, true); err == nil {
+		u.AuthenticateWithPersonalAccessToken = authenticateWithPersonalAccessToken
+		u.Type = AuthenticationMechanismTypeAuthenticateWithPersonalAccessToken
 		return nil
 	}
 
-	sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth := new(SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth); err == nil {
-		u.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth = sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth
-		u.Type = SourceAsanaUpdateAuthenticationMechanismTypeSourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth
+	authenticateViaAsanaOauth := new(AuthenticateViaAsanaOauth)
+	if err := utils.UnmarshalJSON(data, &authenticateViaAsanaOauth, "", true, true); err == nil {
+		u.AuthenticateViaAsanaOauth = authenticateViaAsanaOauth
+		u.Type = AuthenticationMechanismTypeAuthenticateViaAsanaOauth
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceAsanaUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-		return json.Marshal(u.SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken)
+func (u AuthenticationMechanism) MarshalJSON() ([]byte, error) {
+	if u.AuthenticateViaAsanaOauth != nil {
+		return utils.MarshalJSON(u.AuthenticateViaAsanaOauth, "", true)
 	}
 
-	if u.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
-		return json.Marshal(u.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth)
+	if u.AuthenticateWithPersonalAccessToken != nil {
+		return utils.MarshalJSON(u.AuthenticateWithPersonalAccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceAsanaUpdate struct {
 	// Choose how to authenticate to Github
-	Credentials *SourceAsanaUpdateAuthenticationMechanism `json:"credentials,omitempty"`
+	Credentials *AuthenticationMechanism `json:"credentials,omitempty"`
+}
+
+func (o *SourceAsanaUpdate) GetCredentials() *AuthenticationMechanism {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }

@@ -5,66 +5,118 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourcePipedriveAPIKeyAuthenticationAuthType string
+type SourcePipedriveAuthType string
 
 const (
-	SourcePipedriveAPIKeyAuthenticationAuthTypeToken SourcePipedriveAPIKeyAuthenticationAuthType = "Token"
+	SourcePipedriveAuthTypeToken SourcePipedriveAuthType = "Token"
 )
 
-func (e SourcePipedriveAPIKeyAuthenticationAuthType) ToPointer() *SourcePipedriveAPIKeyAuthenticationAuthType {
+func (e SourcePipedriveAuthType) ToPointer() *SourcePipedriveAuthType {
 	return &e
 }
 
-func (e *SourcePipedriveAPIKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourcePipedriveAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Token":
-		*e = SourcePipedriveAPIKeyAuthenticationAuthType(v)
+		*e = SourcePipedriveAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedriveAPIKeyAuthenticationAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourcePipedriveAuthType: %v", v)
 	}
 }
 
 type SourcePipedriveAPIKeyAuthentication struct {
 	// The Pipedrive API Token.
-	APIToken string                                      `json:"api_token"`
-	AuthType SourcePipedriveAPIKeyAuthenticationAuthType `json:"auth_type"`
+	APIToken string                  `json:"api_token"`
+	authType SourcePipedriveAuthType `const:"Token" json:"auth_type"`
 }
 
-type SourcePipedrivePipedrive string
+func (s SourcePipedriveAPIKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedriveAPIKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedriveAPIKeyAuthentication) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourcePipedriveAPIKeyAuthentication) GetAuthType() SourcePipedriveAuthType {
+	return SourcePipedriveAuthTypeToken
+}
+
+type Pipedrive string
 
 const (
-	SourcePipedrivePipedrivePipedrive SourcePipedrivePipedrive = "pipedrive"
+	PipedrivePipedrive Pipedrive = "pipedrive"
 )
 
-func (e SourcePipedrivePipedrive) ToPointer() *SourcePipedrivePipedrive {
+func (e Pipedrive) ToPointer() *Pipedrive {
 	return &e
 }
 
-func (e *SourcePipedrivePipedrive) UnmarshalJSON(data []byte) error {
+func (e *Pipedrive) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pipedrive":
-		*e = SourcePipedrivePipedrive(v)
+		*e = Pipedrive(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedrivePipedrive: %v", v)
+		return fmt.Errorf("invalid value for Pipedrive: %v", v)
 	}
 }
 
 type SourcePipedrive struct {
 	Authorization *SourcePipedriveAPIKeyAuthentication `json:"authorization,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-	ReplicationStartDate time.Time                `json:"replication_start_date"`
-	SourceType           SourcePipedrivePipedrive `json:"sourceType"`
+	ReplicationStartDate time.Time `json:"replication_start_date"`
+	sourceType           Pipedrive `const:"pipedrive" json:"sourceType"`
+}
+
+func (s SourcePipedrive) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedrive) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedrive) GetAuthorization() *SourcePipedriveAPIKeyAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Authorization
+}
+
+func (o *SourcePipedrive) GetReplicationStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ReplicationStartDate
+}
+
+func (o *SourcePipedrive) GetSourceType() Pipedrive {
+	return PipedrivePipedrive
 }

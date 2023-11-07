@@ -7,3 +7,24 @@ type DestinationPineconeCreateRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *DestinationPineconeCreateRequest) GetConfiguration() DestinationPinecone {
+	if o == nil {
+		return DestinationPinecone{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationPineconeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationPineconeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -26,13 +26,11 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 		})
 	}
 	outcomeNames := r.Configuration.OutcomeNames.ValueString()
-	sourceType := shared.SourceOnesignalOnesignal(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	userAuthKey := r.Configuration.UserAuthKey.ValueString()
 	configuration := shared.SourceOnesignal{
 		Applications: applications,
 		OutcomeNames: outcomeNames,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 		UserAuthKey:  userAuthKey,
 	}
@@ -59,7 +57,7 @@ func (r *SourceOnesignalResourceModel) ToGetSDKType() *shared.SourceOnesignalCre
 }
 
 func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignalPutRequest {
-	var applications []shared.SourceOnesignalUpdateApplications = nil
+	var applications []shared.Applications = nil
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
 		appID := applicationsItem.AppID.ValueString()
@@ -69,7 +67,7 @@ func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignal
 		} else {
 			appName = nil
 		}
-		applications = append(applications, shared.SourceOnesignalUpdateApplications{
+		applications = append(applications, shared.Applications{
 			AppAPIKey: appAPIKey,
 			AppID:     appID,
 			AppName:   appName,

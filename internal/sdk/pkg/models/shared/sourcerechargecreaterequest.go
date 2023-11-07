@@ -9,3 +9,31 @@ type SourceRechargeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceRechargeCreateRequest) GetConfiguration() SourceRecharge {
+	if o == nil {
+		return SourceRecharge{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRechargeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRechargeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceRechargeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

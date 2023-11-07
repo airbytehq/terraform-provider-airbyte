@@ -7,3 +7,24 @@ type DestinationRedshiftCreateRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *DestinationRedshiftCreateRequest) GetConfiguration() DestinationRedshift {
+	if o == nil {
+		return DestinationRedshift{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationRedshiftCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationRedshiftCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

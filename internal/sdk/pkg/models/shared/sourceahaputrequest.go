@@ -7,3 +7,24 @@ type SourceAhaPutRequest struct {
 	Name          string          `json:"name"`
 	WorkspaceID   string          `json:"workspaceId"`
 }
+
+func (o *SourceAhaPutRequest) GetConfiguration() SourceAhaUpdate {
+	if o == nil {
+		return SourceAhaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAhaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAhaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

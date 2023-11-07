@@ -17,12 +17,11 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
   configuration = {
     domain_region = "...my_domain_region..."
     private_key   = "...my_private_key..."
-    source_type   = "mailgun"
     start_date    = "2023-08-01T00:00:00Z"
   }
-  name         = "Sheri Mayert"
+  name         = "Whitney Streich"
   secret_id    = "...my_secret_id..."
-  workspace_id = "8f7502bf-dc34-4508-81f1-764456379f3f"
+  workspace_id = "57a40e88-51a3-4541-ba6f-5d90d5a8a349"
 }
 ```
 
@@ -50,11 +49,11 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
 Required:
 
 - `private_key` (String) Primary account API key to access your Mailgun data.
-- `source_type` (String) must be one of ["mailgun"]
 
 Optional:
 
-- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+- `domain_region` (String) Default: "US"
+Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
 - `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 

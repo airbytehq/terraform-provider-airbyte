@@ -1,10 +1,9 @@
 resource "airbyte_source_aha" "my_source_aha" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "aha"
-    url         = "...my_url..."
+    api_key = "...my_api_key..."
+    url     = "...my_url..."
   }
-  name         = "Van Bergnaum"
+  name         = "Melvin Marks"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a3383c2b-eb47-4737-bc8d-72f64d1db1f2"
+  workspace_id = "39ea0e10-1659-40e1-a2bc-7de0ff637374"
 }

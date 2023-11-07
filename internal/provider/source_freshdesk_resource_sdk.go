@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -17,7 +17,6 @@ func (r *SourceFreshdeskResourceModel) ToCreateSDKType() *shared.SourceFreshdesk
 	} else {
 		requestsPerMinute = nil
 	}
-	sourceType := shared.SourceFreshdeskFreshdesk(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -28,7 +27,6 @@ func (r *SourceFreshdeskResourceModel) ToCreateSDKType() *shared.SourceFreshdesk
 		APIKey:            apiKey,
 		Domain:            domain,
 		RequestsPerMinute: requestsPerMinute,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 	}
 	name := r.Name.ValueString()

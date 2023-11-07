@@ -3,61 +3,47 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
 	var credentials *shared.SourceGoogleAnalyticsDataAPICredentials
 	if r.Configuration.Credentials != nil {
-		var sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
+		var sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth
+		if r.Configuration.Credentials.AuthenticateViaGoogleOauth != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken.ValueString()
+			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authType := new(shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.IsNull() {
-				*authType = shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.RefreshToken.ValueString()
-			sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth{
+			clientID := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaGoogleOauth.RefreshToken.ValueString()
+			sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
+		if sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPICredentials{
-				SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth,
+				AuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth,
 			}
 		}
-		var sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
-			authType1 := new(shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.IsNull() {
-				*authType1 = shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
-			credentialsJSON := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
-			sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication{
-				AuthType:        authType1,
+		var sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication
+		if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
+			credentialsJSON := r.Configuration.Credentials.ServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
+			sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication{
 				CredentialsJSON: credentialsJSON,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
+		if sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPICredentials{
-				SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication,
+				ServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication,
 			}
 		}
 	}
@@ -69,7 +55,6 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	}
 	dateRangesStartDate := customTypes.MustDateFromString(r.Configuration.DateRangesStartDate.ValueString())
 	propertyID := r.Configuration.PropertyID.ValueString()
-	sourceType := shared.SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI(r.Configuration.SourceType.ValueString())
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
 		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
@@ -81,7 +66,6 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		CustomReports:       customReports,
 		DateRangesStartDate: dateRangesStartDate,
 		PropertyID:          propertyID,
-		SourceType:          sourceType,
 		WindowInDays:        windowInDays,
 	}
 	name := r.Name.ValueString()
@@ -107,55 +91,41 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToGetSDKType() *shared.Sourc
 }
 
 func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.SourceGoogleAnalyticsDataAPIPutRequest {
-	var credentials *shared.SourceGoogleAnalyticsDataAPIUpdateCredentials
+	var credentials *shared.Credentials
 	if r.Configuration.Credentials != nil {
-		var sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth != nil {
+		var authenticateViaGoogleOauth *shared.AuthenticateViaGoogleOauth
+		if r.Configuration.Credentials.AuthenticateViaGoogleOauth != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AccessToken.ValueString()
+			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authType := new(shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AuthType.IsNull() {
-				*authType = shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.RefreshToken.ValueString()
-			sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth{
+			clientID := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaGoogleOauth.RefreshToken.ValueString()
+			authenticateViaGoogleOauth = &shared.AuthenticateViaGoogleOauth{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth != nil {
-			credentials = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentials{
-				SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth,
+		if authenticateViaGoogleOauth != nil {
+			credentials = &shared.Credentials{
+				AuthenticateViaGoogleOauth: authenticateViaGoogleOauth,
 			}
 		}
-		var sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication != nil {
-			authType1 := new(shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.AuthType.IsNull() {
-				*authType1 = shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
-			credentialsJSON := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
-			sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication{
-				AuthType:        authType1,
+		var serviceAccountKeyAuthentication *shared.ServiceAccountKeyAuthentication
+		if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
+			credentialsJSON := r.Configuration.Credentials.ServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
+			serviceAccountKeyAuthentication = &shared.ServiceAccountKeyAuthentication{
 				CredentialsJSON: credentialsJSON,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication != nil {
-			credentials = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentials{
-				SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication,
+		if serviceAccountKeyAuthentication != nil {
+			credentials = &shared.Credentials{
+				ServiceAccountKeyAuthentication: serviceAccountKeyAuthentication,
 			}
 		}
 	}

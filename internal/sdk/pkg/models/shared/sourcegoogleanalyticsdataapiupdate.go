@@ -3,73 +3,95 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType string
+type SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType string
 
 const (
-	SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthTypeService SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType = "Service"
+	SourceGoogleAnalyticsDataAPIUpdateSchemasAuthTypeService SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType = "Service"
 )
 
-func (e SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType {
+func (e SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service":
-		*e = SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType(v)
+		*e = SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType: %v", v)
 	}
 }
 
-// SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication - Credentials for the service
-type SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication struct {
-	AuthType *SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType `json:"auth_type,omitempty"`
+// ServiceAccountKeyAuthentication - Credentials for the service
+type ServiceAccountKeyAuthentication struct {
+	authType *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType `const:"Service" json:"auth_type,omitempty"`
 	// The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 	CredentialsJSON string `json:"credentials_json"`
 }
 
-type SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType string
+func (s ServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ServiceAccountKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ServiceAccountKeyAuthentication) GetAuthType() *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType {
+	return SourceGoogleAnalyticsDataAPIUpdateSchemasAuthTypeService.ToPointer()
+}
+
+func (o *ServiceAccountKeyAuthentication) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+type SourceGoogleAnalyticsDataAPIUpdateAuthType string
 
 const (
-	SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthTypeClient SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType = "Client"
+	SourceGoogleAnalyticsDataAPIUpdateAuthTypeClient SourceGoogleAnalyticsDataAPIUpdateAuthType = "Client"
 )
 
-func (e SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType {
+func (e SourceGoogleAnalyticsDataAPIUpdateAuthType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsDataAPIUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType(v)
+		*e = SourceGoogleAnalyticsDataAPIUpdateAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateAuthType: %v", v)
 	}
 }
 
-// SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth - Credentials for the service
-type SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth struct {
+// AuthenticateViaGoogleOauth - Credentials for the service
+type AuthenticateViaGoogleOauth struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                                                          `json:"access_token,omitempty"`
-	AuthType    *SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType `json:"auth_type,omitempty"`
+	AccessToken *string                                     `json:"access_token,omitempty"`
+	authType    *SourceGoogleAnalyticsDataAPIUpdateAuthType `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Google Analytics developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Google Analytics developer application.
@@ -78,77 +100,115 @@ type SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth str
 	RefreshToken string `json:"refresh_token"`
 }
 
-type SourceGoogleAnalyticsDataAPIUpdateCredentialsType string
+func (a AuthenticateViaGoogleOauth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaGoogleOauth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaGoogleOauth) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *AuthenticateViaGoogleOauth) GetAuthType() *SourceGoogleAnalyticsDataAPIUpdateAuthType {
+	return SourceGoogleAnalyticsDataAPIUpdateAuthTypeClient.ToPointer()
+}
+
+func (o *AuthenticateViaGoogleOauth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *AuthenticateViaGoogleOauth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *AuthenticateViaGoogleOauth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+type CredentialsType string
 
 const (
-	SourceGoogleAnalyticsDataAPIUpdateCredentialsTypeSourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth      SourceGoogleAnalyticsDataAPIUpdateCredentialsType = "source-google-analytics-data-api-update_Credentials_Authenticate via Google (Oauth)"
-	SourceGoogleAnalyticsDataAPIUpdateCredentialsTypeSourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication SourceGoogleAnalyticsDataAPIUpdateCredentialsType = "source-google-analytics-data-api-update_Credentials_Service Account Key Authentication"
+	CredentialsTypeAuthenticateViaGoogleOauth      CredentialsType = "AuthenticateViaGoogleOauth"
+	CredentialsTypeServiceAccountKeyAuthentication CredentialsType = "ServiceAccountKeyAuthentication"
 )
 
-type SourceGoogleAnalyticsDataAPIUpdateCredentials struct {
-	SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth      *SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth
-	SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication *SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication
+type Credentials struct {
+	AuthenticateViaGoogleOauth      *AuthenticateViaGoogleOauth
+	ServiceAccountKeyAuthentication *ServiceAccountKeyAuthentication
 
-	Type SourceGoogleAnalyticsDataAPIUpdateCredentialsType
+	Type CredentialsType
 }
 
-func CreateSourceGoogleAnalyticsDataAPIUpdateCredentialsSourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth(sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth) SourceGoogleAnalyticsDataAPIUpdateCredentials {
-	typ := SourceGoogleAnalyticsDataAPIUpdateCredentialsTypeSourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth
+func CreateCredentialsAuthenticateViaGoogleOauth(authenticateViaGoogleOauth AuthenticateViaGoogleOauth) Credentials {
+	typ := CredentialsTypeAuthenticateViaGoogleOauth
 
-	return SourceGoogleAnalyticsDataAPIUpdateCredentials{
-		SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth: &sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth,
-		Type: typ,
+	return Credentials{
+		AuthenticateViaGoogleOauth: &authenticateViaGoogleOauth,
+		Type:                       typ,
 	}
 }
 
-func CreateSourceGoogleAnalyticsDataAPIUpdateCredentialsSourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication(sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication) SourceGoogleAnalyticsDataAPIUpdateCredentials {
-	typ := SourceGoogleAnalyticsDataAPIUpdateCredentialsTypeSourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication
+func CreateCredentialsServiceAccountKeyAuthentication(serviceAccountKeyAuthentication ServiceAccountKeyAuthentication) Credentials {
+	typ := CredentialsTypeServiceAccountKeyAuthentication
 
-	return SourceGoogleAnalyticsDataAPIUpdateCredentials{
-		SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication: &sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication,
-		Type: typ,
+	return Credentials{
+		ServiceAccountKeyAuthentication: &serviceAccountKeyAuthentication,
+		Type:                            typ,
 	}
 }
 
-func (u *SourceGoogleAnalyticsDataAPIUpdateCredentials) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *Credentials) UnmarshalJSON(data []byte) error {
 
-	sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication := new(SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication); err == nil {
-		u.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication = sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication
-		u.Type = SourceGoogleAnalyticsDataAPIUpdateCredentialsTypeSourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication
+	serviceAccountKeyAuthentication := new(ServiceAccountKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &serviceAccountKeyAuthentication, "", true, true); err == nil {
+		u.ServiceAccountKeyAuthentication = serviceAccountKeyAuthentication
+		u.Type = CredentialsTypeServiceAccountKeyAuthentication
 		return nil
 	}
 
-	sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth); err == nil {
-		u.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth
-		u.Type = SourceGoogleAnalyticsDataAPIUpdateCredentialsTypeSourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth
+	authenticateViaGoogleOauth := new(AuthenticateViaGoogleOauth)
+	if err := utils.UnmarshalJSON(data, &authenticateViaGoogleOauth, "", true, true); err == nil {
+		u.AuthenticateViaGoogleOauth = authenticateViaGoogleOauth
+		u.Type = CredentialsTypeAuthenticateViaGoogleOauth
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceGoogleAnalyticsDataAPIUpdateCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication)
+func (u Credentials) MarshalJSON() ([]byte, error) {
+	if u.AuthenticateViaGoogleOauth != nil {
+		return utils.MarshalJSON(u.AuthenticateViaGoogleOauth, "", true)
 	}
 
-	if u.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth)
+	if u.ServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.ServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPIUpdate struct {
 	// Credentials for the service
-	Credentials *SourceGoogleAnalyticsDataAPIUpdateCredentials `json:"credentials,omitempty"`
+	Credentials *Credentials `json:"credentials,omitempty"`
 	// A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#custom-reports">the documentation</a> for more information about the exact format you can use to fill out this field.
 	CustomReports *string `json:"custom_reports,omitempty"`
 	// The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
@@ -156,5 +216,51 @@ type SourceGoogleAnalyticsDataAPIUpdate struct {
 	// The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 	PropertyID string `json:"property_id"`
 	// The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
-	WindowInDays *int64 `json:"window_in_days,omitempty"`
+	WindowInDays *int64 `default:"1" json:"window_in_days"`
+}
+
+func (s SourceGoogleAnalyticsDataAPIUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAnalyticsDataAPIUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetCredentials() *Credentials {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetCustomReports() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomReports
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetDateRangesStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.DateRangesStartDate
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetPropertyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PropertyID
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetWindowInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

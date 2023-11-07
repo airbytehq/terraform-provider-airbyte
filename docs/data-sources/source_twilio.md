@@ -14,7 +14,6 @@ SourceTwilio DataSource
 
 ```terraform
 data "airbyte_source_twilio" "my_source_twilio" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_twilio" "my_source_twilio" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `account_sid` (String) Twilio account SID
-- `auth_token` (String) Twilio Auth Token.
-- `lookback_window` (Number) How far into the past to look for records. (in minutes)
-- `source_type` (String) must be one of ["twilio"]
-- `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -15,15 +15,14 @@ SourceKlarna Resource
 ```terraform
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
-    password    = "...my_password..."
-    playground  = true
-    region      = "us"
-    source_type = "klarna"
-    username    = "Chase50"
+    password   = "...my_password..."
+    playground = false
+    region     = "eu"
+    username   = "Elwyn21"
   }
-  name         = "Caleb Rau"
+  name         = "Edward Boyer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "873f5033-f19d-4bf1-a5ce-4152eab9cd7e"
+  workspace_id = "f446900c-8feb-4a7b-85cf-ea08abdda328"
 }
 ```
 
@@ -51,10 +50,13 @@ resource "airbyte_source_klarna" "my_source_klarna" {
 Required:
 
 - `password` (String) A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
-- `playground` (Boolean) Propertie defining if connector is used against playground or production environment
 - `region` (String) must be one of ["eu", "us", "oc"]
 Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
-- `source_type` (String) must be one of ["klarna"]
 - `username` (String) Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
+
+Optional:
+
+- `playground` (Boolean) Default: false
+Propertie defining if connector is used against playground or production environment
 
 

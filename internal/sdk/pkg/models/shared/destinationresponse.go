@@ -11,3 +11,38 @@ type DestinationResponse struct {
 	Name            string      `json:"name"`
 	WorkspaceID     string      `json:"workspaceId"`
 }
+
+func (o *DestinationResponse) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *DestinationResponse) GetDestinationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationID
+}
+
+func (o *DestinationResponse) GetDestinationType() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationType
+}
+
+func (o *DestinationResponse) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationResponse) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -9,3 +9,31 @@ type SourceZohoCrmCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceZohoCrmCreateRequest) GetConfiguration() SourceZohoCrm {
+	if o == nil {
+		return SourceZohoCrm{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZohoCrmCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZohoCrmCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceZohoCrmCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

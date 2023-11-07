@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,10 +31,11 @@ type DestinationDatabricksDataSource struct {
 
 // DestinationDatabricksDataSourceModel describes the data model.
 type DestinationDatabricksDataSourceModel struct {
-	Configuration DestinationDatabricks1 `tfsdk:"configuration"`
-	DestinationID types.String           `tfsdk:"destination_id"`
-	Name          types.String           `tfsdk:"name"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,299 +49,19 @@ func (r *DestinationDatabricksDataSource) Schema(ctx context.Context, req dataso
 		MarkdownDescription: "DestinationDatabricks DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"accept_terms": schema.BoolAttribute{
-						Computed:    true,
-						Description: `You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.`,
-					},
-					"data_source": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"MANAGED_TABLES_STORAGE",
-											),
-										},
-										Description: `must be one of ["MANAGED_TABLES_STORAGE"]`,
-									},
-								},
-								Description: `Storage on which the delta lake is built.`,
-							},
-							"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3_STORAGE",
-											),
-										},
-										Description: `must be one of ["S3_STORAGE"]`,
-									},
-									"file_name_pattern": schema.StringAttribute{
-										Computed:    true,
-										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
-									},
-									"s3_access_key_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.`,
-									},
-									"s3_bucket_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `The name of the S3 bucket to use for intermittent staging of the data.`,
-									},
-									"s3_bucket_path": schema.StringAttribute{
-										Computed:    true,
-										Description: `The directory under the S3 bucket where data will be written.`,
-									},
-									"s3_bucket_region": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
-												"af-south-1",
-												"ap-east-1",
-												"ap-south-1",
-												"ap-northeast-1",
-												"ap-northeast-2",
-												"ap-northeast-3",
-												"ap-southeast-1",
-												"ap-southeast-2",
-												"ca-central-1",
-												"cn-north-1",
-												"cn-northwest-1",
-												"eu-central-1",
-												"eu-north-1",
-												"eu-south-1",
-												"eu-west-1",
-												"eu-west-2",
-												"eu-west-3",
-												"sa-east-1",
-												"me-south-1",
-												"us-gov-east-1",
-												"us-gov-west-1",
-											),
-										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
-									},
-									"s3_secret_access_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `The corresponding secret to the above access key id.`,
-									},
-								},
-								Description: `Storage on which the delta lake is built.`,
-							},
-							"destination_databricks_data_source_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"azure_blob_storage_account_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `The account's name of the Azure Blob Storage.`,
-									},
-									"azure_blob_storage_container_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `The name of the Azure blob storage container.`,
-									},
-									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
-									},
-									"azure_blob_storage_sas_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
-									},
-									"data_source_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AZURE_BLOB_STORAGE",
-											),
-										},
-										Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
-									},
-								},
-								Description: `Storage on which the delta lake is built.`,
-							},
-							"destination_databricks_update_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"MANAGED_TABLES_STORAGE",
-											),
-										},
-										Description: `must be one of ["MANAGED_TABLES_STORAGE"]`,
-									},
-								},
-								Description: `Storage on which the delta lake is built.`,
-							},
-							"destination_databricks_update_data_source_amazon_s3": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"data_source_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3_STORAGE",
-											),
-										},
-										Description: `must be one of ["S3_STORAGE"]`,
-									},
-									"file_name_pattern": schema.StringAttribute{
-										Computed:    true,
-										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
-									},
-									"s3_access_key_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.`,
-									},
-									"s3_bucket_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `The name of the S3 bucket to use for intermittent staging of the data.`,
-									},
-									"s3_bucket_path": schema.StringAttribute{
-										Computed:    true,
-										Description: `The directory under the S3 bucket where data will be written.`,
-									},
-									"s3_bucket_region": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
-												"af-south-1",
-												"ap-east-1",
-												"ap-south-1",
-												"ap-northeast-1",
-												"ap-northeast-2",
-												"ap-northeast-3",
-												"ap-southeast-1",
-												"ap-southeast-2",
-												"ca-central-1",
-												"cn-north-1",
-												"cn-northwest-1",
-												"eu-central-1",
-												"eu-north-1",
-												"eu-south-1",
-												"eu-west-1",
-												"eu-west-2",
-												"eu-west-3",
-												"sa-east-1",
-												"me-south-1",
-												"us-gov-east-1",
-												"us-gov-west-1",
-											),
-										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
-									},
-									"s3_secret_access_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `The corresponding secret to the above access key id.`,
-									},
-								},
-								Description: `Storage on which the delta lake is built.`,
-							},
-							"destination_databricks_update_data_source_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"azure_blob_storage_account_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `The account's name of the Azure Blob Storage.`,
-									},
-									"azure_blob_storage_container_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `The name of the Azure blob storage container.`,
-									},
-									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
-									},
-									"azure_blob_storage_sas_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
-									},
-									"data_source_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AZURE_BLOB_STORAGE",
-											),
-										},
-										Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
-									},
-								},
-								Description: `Storage on which the delta lake is built.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Storage on which the delta lake is built.`,
-					},
-					"database": schema.StringAttribute{
-						Computed:    true,
-						Description: `The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.`,
-					},
-					"databricks_http_path": schema.StringAttribute{
-						Computed:    true,
-						Description: `Databricks Cluster HTTP Path.`,
-					},
-					"databricks_personal_access_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `Databricks Personal Access Token for making authenticated requests.`,
-					},
-					"databricks_port": schema.StringAttribute{
-						Computed:    true,
-						Description: `Databricks Cluster Port.`,
-					},
-					"databricks_server_hostname": schema.StringAttribute{
-						Computed:    true,
-						Description: `Databricks Cluster Server Hostname.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"databricks",
-							),
-						},
-						Description: `must be one of ["databricks"]`,
-					},
-					"enable_schema_evolution": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.`,
-					},
-					"purge_staging_data": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Default to 'true'. Switch it to 'false' for debugging purpose.`,
-					},
-					"schema": schema.StringAttribute{
-						Computed:    true,
-						Description: `The default schema tables are written. If not specified otherwise, the "default" will be used.`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

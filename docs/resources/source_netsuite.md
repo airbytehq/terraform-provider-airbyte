@@ -21,15 +21,14 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
       "...",
     ]
     realm          = "...my_realm..."
-    source_type    = "netsuite"
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 7
+    window_in_days = 4
   }
-  name         = "Miss Meredith Hand"
+  name         = "Sylvia Bernhard"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4bf01bad-8706-4d46-882b-fbdc41ff5d4e"
+  workspace_id = "ace02f96-b833-4556-b7e4-181b36cf1afc"
 }
 ```
 
@@ -59,7 +58,6 @@ Required:
 - `consumer_key` (String) Consumer key associated with your integration
 - `consumer_secret` (String) Consumer secret associated with your integration
 - `realm` (String) Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
-- `source_type` (String) must be one of ["netsuite"]
 - `start_datetime` (String) Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
 - `token_key` (String) Access token key
 - `token_secret` (String) Access token secret
@@ -67,6 +65,7 @@ Required:
 Optional:
 
 - `object_types` (List of String) The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
-- `window_in_days` (Number) The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
+- `window_in_days` (Number) Default: 30
+The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
 
 

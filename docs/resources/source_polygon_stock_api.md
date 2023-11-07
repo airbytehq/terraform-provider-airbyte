@@ -15,20 +15,19 @@ SourcePolygonStockAPI Resource
 ```terraform
 resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
   configuration = {
-    adjusted      = "false"
+    adjusted      = "true"
     api_key       = "...my_api_key..."
     end_date      = "2020-10-14"
-    limit         = 100
+    limit         = 120
     multiplier    = 1
     sort          = "asc"
-    source_type   = "polygon-stock-api"
     start_date    = "2020-10-14"
     stocks_ticker = "IBM"
     timespan      = "day"
   }
-  name         = "Mary Fisher"
+  name         = "Shari Jerde"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fb5971e9-8190-4557-b89c-edbac7fda395"
+  workspace_id = "c5cd0a4f-da52-4f69-943b-8620d9bb5048"
 }
 ```
 
@@ -58,7 +57,6 @@ Required:
 - `api_key` (String) Your API ACCESS Key
 - `end_date` (String) The target date for the aggregate window.
 - `multiplier` (Number) The size of the timespan multiplier.
-- `source_type` (String) must be one of ["polygon-stock-api"]
 - `start_date` (String) The beginning date for the aggregate window.
 - `stocks_ticker` (String) The exchange symbol that this item is traded under.
 - `timespan` (String) The size of the time window.

@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 type SourceAmazonSellerPartnerUpdateAuthType string
@@ -31,19 +32,19 @@ func (e *SourceAmazonSellerPartnerUpdateAuthType) UnmarshalJSON(data []byte) err
 	}
 }
 
-// SourceAmazonSellerPartnerUpdateAWSEnvironment - Select the AWS Environment.
-type SourceAmazonSellerPartnerUpdateAWSEnvironment string
+// AWSEnvironment - Select the AWS Environment.
+type AWSEnvironment string
 
 const (
-	SourceAmazonSellerPartnerUpdateAWSEnvironmentProduction SourceAmazonSellerPartnerUpdateAWSEnvironment = "PRODUCTION"
-	SourceAmazonSellerPartnerUpdateAWSEnvironmentSandbox    SourceAmazonSellerPartnerUpdateAWSEnvironment = "SANDBOX"
+	AWSEnvironmentProduction AWSEnvironment = "PRODUCTION"
+	AWSEnvironmentSandbox    AWSEnvironment = "SANDBOX"
 )
 
-func (e SourceAmazonSellerPartnerUpdateAWSEnvironment) ToPointer() *SourceAmazonSellerPartnerUpdateAWSEnvironment {
+func (e AWSEnvironment) ToPointer() *AWSEnvironment {
 	return &e
 }
 
-func (e *SourceAmazonSellerPartnerUpdateAWSEnvironment) UnmarshalJSON(data []byte) error {
+func (e *AWSEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -52,46 +53,46 @@ func (e *SourceAmazonSellerPartnerUpdateAWSEnvironment) UnmarshalJSON(data []byt
 	case "PRODUCTION":
 		fallthrough
 	case "SANDBOX":
-		*e = SourceAmazonSellerPartnerUpdateAWSEnvironment(v)
+		*e = AWSEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerUpdateAWSEnvironment: %v", v)
+		return fmt.Errorf("invalid value for AWSEnvironment: %v", v)
 	}
 }
 
-// SourceAmazonSellerPartnerUpdateAWSRegion - Select the AWS Region.
-type SourceAmazonSellerPartnerUpdateAWSRegion string
+// AWSRegion - Select the AWS Region.
+type AWSRegion string
 
 const (
-	SourceAmazonSellerPartnerUpdateAWSRegionAe SourceAmazonSellerPartnerUpdateAWSRegion = "AE"
-	SourceAmazonSellerPartnerUpdateAWSRegionAu SourceAmazonSellerPartnerUpdateAWSRegion = "AU"
-	SourceAmazonSellerPartnerUpdateAWSRegionBe SourceAmazonSellerPartnerUpdateAWSRegion = "BE"
-	SourceAmazonSellerPartnerUpdateAWSRegionBr SourceAmazonSellerPartnerUpdateAWSRegion = "BR"
-	SourceAmazonSellerPartnerUpdateAWSRegionCa SourceAmazonSellerPartnerUpdateAWSRegion = "CA"
-	SourceAmazonSellerPartnerUpdateAWSRegionDe SourceAmazonSellerPartnerUpdateAWSRegion = "DE"
-	SourceAmazonSellerPartnerUpdateAWSRegionEg SourceAmazonSellerPartnerUpdateAWSRegion = "EG"
-	SourceAmazonSellerPartnerUpdateAWSRegionEs SourceAmazonSellerPartnerUpdateAWSRegion = "ES"
-	SourceAmazonSellerPartnerUpdateAWSRegionFr SourceAmazonSellerPartnerUpdateAWSRegion = "FR"
-	SourceAmazonSellerPartnerUpdateAWSRegionGb SourceAmazonSellerPartnerUpdateAWSRegion = "GB"
-	SourceAmazonSellerPartnerUpdateAWSRegionIn SourceAmazonSellerPartnerUpdateAWSRegion = "IN"
-	SourceAmazonSellerPartnerUpdateAWSRegionIt SourceAmazonSellerPartnerUpdateAWSRegion = "IT"
-	SourceAmazonSellerPartnerUpdateAWSRegionJp SourceAmazonSellerPartnerUpdateAWSRegion = "JP"
-	SourceAmazonSellerPartnerUpdateAWSRegionMx SourceAmazonSellerPartnerUpdateAWSRegion = "MX"
-	SourceAmazonSellerPartnerUpdateAWSRegionNl SourceAmazonSellerPartnerUpdateAWSRegion = "NL"
-	SourceAmazonSellerPartnerUpdateAWSRegionPl SourceAmazonSellerPartnerUpdateAWSRegion = "PL"
-	SourceAmazonSellerPartnerUpdateAWSRegionSa SourceAmazonSellerPartnerUpdateAWSRegion = "SA"
-	SourceAmazonSellerPartnerUpdateAWSRegionSe SourceAmazonSellerPartnerUpdateAWSRegion = "SE"
-	SourceAmazonSellerPartnerUpdateAWSRegionSg SourceAmazonSellerPartnerUpdateAWSRegion = "SG"
-	SourceAmazonSellerPartnerUpdateAWSRegionTr SourceAmazonSellerPartnerUpdateAWSRegion = "TR"
-	SourceAmazonSellerPartnerUpdateAWSRegionUk SourceAmazonSellerPartnerUpdateAWSRegion = "UK"
-	SourceAmazonSellerPartnerUpdateAWSRegionUs SourceAmazonSellerPartnerUpdateAWSRegion = "US"
+	AWSRegionAe AWSRegion = "AE"
+	AWSRegionAu AWSRegion = "AU"
+	AWSRegionBe AWSRegion = "BE"
+	AWSRegionBr AWSRegion = "BR"
+	AWSRegionCa AWSRegion = "CA"
+	AWSRegionDe AWSRegion = "DE"
+	AWSRegionEg AWSRegion = "EG"
+	AWSRegionEs AWSRegion = "ES"
+	AWSRegionFr AWSRegion = "FR"
+	AWSRegionGb AWSRegion = "GB"
+	AWSRegionIn AWSRegion = "IN"
+	AWSRegionIt AWSRegion = "IT"
+	AWSRegionJp AWSRegion = "JP"
+	AWSRegionMx AWSRegion = "MX"
+	AWSRegionNl AWSRegion = "NL"
+	AWSRegionPl AWSRegion = "PL"
+	AWSRegionSa AWSRegion = "SA"
+	AWSRegionSe AWSRegion = "SE"
+	AWSRegionSg AWSRegion = "SG"
+	AWSRegionTr AWSRegion = "TR"
+	AWSRegionUk AWSRegion = "UK"
+	AWSRegionUs AWSRegion = "US"
 )
 
-func (e SourceAmazonSellerPartnerUpdateAWSRegion) ToPointer() *SourceAmazonSellerPartnerUpdateAWSRegion {
+func (e AWSRegion) ToPointer() *AWSRegion {
 	return &e
 }
 
-func (e *SourceAmazonSellerPartnerUpdateAWSRegion) UnmarshalJSON(data []byte) error {
+func (e *AWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -140,21 +141,21 @@ func (e *SourceAmazonSellerPartnerUpdateAWSRegion) UnmarshalJSON(data []byte) er
 	case "UK":
 		fallthrough
 	case "US":
-		*e = SourceAmazonSellerPartnerUpdateAWSRegion(v)
+		*e = AWSRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerUpdateAWSRegion: %v", v)
+		return fmt.Errorf("invalid value for AWSRegion: %v", v)
 	}
 }
 
 type SourceAmazonSellerPartnerUpdate struct {
 	// Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.
 	AdvancedStreamOptions *string                                  `json:"advanced_stream_options,omitempty"`
-	AuthType              *SourceAmazonSellerPartnerUpdateAuthType `json:"auth_type,omitempty"`
+	authType              *SourceAmazonSellerPartnerUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Specifies the AWS access key used as part of the credentials to authenticate the user.
 	AwsAccessKey *string `json:"aws_access_key,omitempty"`
 	// Select the AWS Environment.
-	AwsEnvironment SourceAmazonSellerPartnerUpdateAWSEnvironment `json:"aws_environment"`
+	AwsEnvironment *AWSEnvironment `default:"PRODUCTION" json:"aws_environment"`
 	// Specifies the AWS secret key used as part of the credentials to authenticate the user.
 	AwsSecretKey *string `json:"aws_secret_key,omitempty"`
 	// Your Login with Amazon Client ID.
@@ -162,13 +163,13 @@ type SourceAmazonSellerPartnerUpdate struct {
 	// Your Login with Amazon Client Secret.
 	LwaClientSecret string `json:"lwa_client_secret"`
 	// Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.
-	MaxWaitSeconds *int64 `json:"max_wait_seconds,omitempty"`
+	MaxWaitSeconds *int64 `default:"500" json:"max_wait_seconds"`
 	// Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
-	PeriodInDays *int64 `json:"period_in_days,omitempty"`
+	PeriodInDays *int64 `default:"90" json:"period_in_days"`
 	// The Refresh Token obtained via OAuth flow authorization.
 	RefreshToken string `json:"refresh_token"`
 	// Select the AWS Region.
-	Region SourceAmazonSellerPartnerUpdateAWSRegion `json:"region"`
+	Region *AWSRegion `default:"US" json:"region"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 	ReplicationEndDate *string `json:"replication_end_date,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
@@ -177,4 +178,117 @@ type SourceAmazonSellerPartnerUpdate struct {
 	ReportOptions *string `json:"report_options,omitempty"`
 	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).
 	RoleArn *string `json:"role_arn,omitempty"`
+}
+
+func (s SourceAmazonSellerPartnerUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmazonSellerPartnerUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetAdvancedStreamOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AdvancedStreamOptions
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetAuthType() *SourceAmazonSellerPartnerUpdateAuthType {
+	return SourceAmazonSellerPartnerUpdateAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetAwsAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsAccessKey
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetAwsEnvironment() *AWSEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.AwsEnvironment
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetAwsSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsSecretKey
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetLwaAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.LwaAppID
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetLwaClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.LwaClientSecret
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetMaxWaitSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxWaitSeconds
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetPeriodInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PeriodInDays
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetRegion() *AWSRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetReplicationEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicationEndDate
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetReplicationStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.ReplicationStartDate
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetReportOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReportOptions
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
 }

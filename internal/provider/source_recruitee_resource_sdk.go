@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRecruiteeResourceModel) ToCreateSDKType() *shared.SourceRecruiteeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	companyID := r.Configuration.CompanyID.ValueInt64()
-	sourceType := shared.SourceRecruiteeRecruitee(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecruitee{
-		APIKey:     apiKey,
-		CompanyID:  companyID,
-		SourceType: sourceType,
+		APIKey:    apiKey,
+		CompanyID: companyID,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

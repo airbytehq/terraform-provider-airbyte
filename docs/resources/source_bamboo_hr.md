@@ -18,12 +18,11 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     api_key                               = "...my_api_key..."
     custom_reports_fields                 = "...my_custom_reports_fields..."
     custom_reports_include_default_fields = true
-    source_type                           = "bamboo-hr"
     subdomain                             = "...my_subdomain..."
   }
-  name         = "Ralph Rau"
+  name         = "Olga Crooks"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1b36a080-88d1-400e-bada-200ef0422eb2"
+  workspace_id = "6ed560cd-3f9e-41f9-aaf9-a8e2157a8560"
 }
 ```
 
@@ -51,12 +50,13 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 Required:
 
 - `api_key` (String) Api key of bamboo hr
-- `source_type` (String) must be one of ["bamboo-hr"]
 - `subdomain` (String) Sub Domain of bamboo hr
 
 Optional:
 
-- `custom_reports_fields` (String) Comma-separated list of fields to include in custom reports.
-- `custom_reports_include_default_fields` (Boolean) If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
+- `custom_reports_fields` (String) Default: ""
+Comma-separated list of fields to include in custom reports.
+- `custom_reports_include_default_fields` (Boolean) Default: true
+If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
 
 

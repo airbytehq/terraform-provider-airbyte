@@ -3,73 +3,95 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType string
+type SourceGoogleAnalyticsV4SchemasAuthType string
 
 const (
-	SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeService SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType = "Service"
+	SourceGoogleAnalyticsV4SchemasAuthTypeService SourceGoogleAnalyticsV4SchemasAuthType = "Service"
 )
 
-func (e SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType) ToPointer() *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType {
+func (e SourceGoogleAnalyticsV4SchemasAuthType) ToPointer() *SourceGoogleAnalyticsV4SchemasAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsV4SchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service":
-		*e = SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType(v)
+		*e = SourceGoogleAnalyticsV4SchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4SchemasAuthType: %v", v)
 	}
 }
 
-// SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication - Credentials for the service
-type SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication struct {
-	AuthType *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType `json:"auth_type,omitempty"`
+// SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication - Credentials for the service
+type SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication struct {
+	authType *SourceGoogleAnalyticsV4SchemasAuthType `const:"Service" json:"auth_type,omitempty"`
 	// The JSON key of the service account to use for authorization
 	CredentialsJSON string `json:"credentials_json"`
 }
 
-type SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType string
+func (s SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication) GetAuthType() *SourceGoogleAnalyticsV4SchemasAuthType {
+	return SourceGoogleAnalyticsV4SchemasAuthTypeService.ToPointer()
+}
+
+func (o *SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+type SourceGoogleAnalyticsV4AuthType string
 
 const (
-	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeClient SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType = "Client"
+	SourceGoogleAnalyticsV4AuthTypeClient SourceGoogleAnalyticsV4AuthType = "Client"
 )
 
-func (e SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType) ToPointer() *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType {
+func (e SourceGoogleAnalyticsV4AuthType) ToPointer() *SourceGoogleAnalyticsV4AuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsV4AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType(v)
+		*e = SourceGoogleAnalyticsV4AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4AuthType: %v", v)
 	}
 }
 
-// SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth - Credentials for the service
-type SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth struct {
+// SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth - Credentials for the service
+type SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                                               `json:"access_token,omitempty"`
-	AuthType    *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType `json:"auth_type,omitempty"`
+	AccessToken *string                          `json:"access_token,omitempty"`
+	authType    *SourceGoogleAnalyticsV4AuthType `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Google Analytics developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Google Analytics developer application.
@@ -78,56 +100,94 @@ type SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+func (s SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) GetAuthType() *SourceGoogleAnalyticsV4AuthType {
+	return SourceGoogleAnalyticsV4AuthTypeClient.ToPointer()
+}
+
+func (o *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 type SourceGoogleAnalyticsV4CredentialsType string
 
 const (
-	SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth      SourceGoogleAnalyticsV4CredentialsType = "source-google-analytics-v4_Credentials_Authenticate via Google (Oauth)"
-	SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication SourceGoogleAnalyticsV4CredentialsType = "source-google-analytics-v4_Credentials_Service Account Key Authentication"
+	SourceGoogleAnalyticsV4CredentialsTypeAuthenticateViaGoogleOauth      SourceGoogleAnalyticsV4CredentialsType = "AuthenticateViaGoogleOauth"
+	SourceGoogleAnalyticsV4CredentialsTypeServiceAccountKeyAuthentication SourceGoogleAnalyticsV4CredentialsType = "ServiceAccountKeyAuthentication"
 )
 
 type SourceGoogleAnalyticsV4Credentials struct {
-	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth      *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
-	SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication
+	AuthenticateViaGoogleOauth      *SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth
+	ServiceAccountKeyAuthentication *SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication
 
 	Type SourceGoogleAnalyticsV4CredentialsType
 }
 
-func CreateSourceGoogleAnalyticsV4CredentialsSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth(sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth) SourceGoogleAnalyticsV4Credentials {
-	typ := SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
+func CreateSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth(authenticateViaGoogleOauth SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth) SourceGoogleAnalyticsV4Credentials {
+	typ := SourceGoogleAnalyticsV4CredentialsTypeAuthenticateViaGoogleOauth
 
 	return SourceGoogleAnalyticsV4Credentials{
-		SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth: &sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth,
-		Type: typ,
+		AuthenticateViaGoogleOauth: &authenticateViaGoogleOauth,
+		Type:                       typ,
 	}
 }
 
-func CreateSourceGoogleAnalyticsV4CredentialsSourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication(sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication) SourceGoogleAnalyticsV4Credentials {
-	typ := SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication
+func CreateSourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication(serviceAccountKeyAuthentication SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication) SourceGoogleAnalyticsV4Credentials {
+	typ := SourceGoogleAnalyticsV4CredentialsTypeServiceAccountKeyAuthentication
 
 	return SourceGoogleAnalyticsV4Credentials{
-		SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication: &sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication,
-		Type: typ,
+		ServiceAccountKeyAuthentication: &serviceAccountKeyAuthentication,
+		Type:                            typ,
 	}
 }
 
 func (u *SourceGoogleAnalyticsV4Credentials) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication := new(SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication); err == nil {
-		u.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication = sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication
-		u.Type = SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication
+	serviceAccountKeyAuthentication := new(SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &serviceAccountKeyAuthentication, "", true, true); err == nil {
+		u.ServiceAccountKeyAuthentication = serviceAccountKeyAuthentication
+		u.Type = SourceGoogleAnalyticsV4CredentialsTypeServiceAccountKeyAuthentication
 		return nil
 	}
 
-	sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth); err == nil {
-		u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
-		u.Type = SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
+	authenticateViaGoogleOauth := new(SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth)
+	if err := utils.UnmarshalJSON(data, &authenticateViaGoogleOauth, "", true, true); err == nil {
+		u.AuthenticateViaGoogleOauth = authenticateViaGoogleOauth
+		u.Type = SourceGoogleAnalyticsV4CredentialsTypeAuthenticateViaGoogleOauth
 		return nil
 	}
 
@@ -135,38 +195,38 @@ func (u *SourceGoogleAnalyticsV4Credentials) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGoogleAnalyticsV4Credentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication)
+	if u.AuthenticateViaGoogleOauth != nil {
+		return utils.MarshalJSON(u.AuthenticateViaGoogleOauth, "", true)
 	}
 
-	if u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth)
+	if u.ServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.ServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceGoogleAnalyticsV4GoogleAnalyticsV4 string
+type GoogleAnalyticsV4 string
 
 const (
-	SourceGoogleAnalyticsV4GoogleAnalyticsV4GoogleAnalyticsV4 SourceGoogleAnalyticsV4GoogleAnalyticsV4 = "google-analytics-v4"
+	GoogleAnalyticsV4GoogleAnalyticsV4 GoogleAnalyticsV4 = "google-analytics-v4"
 )
 
-func (e SourceGoogleAnalyticsV4GoogleAnalyticsV4) ToPointer() *SourceGoogleAnalyticsV4GoogleAnalyticsV4 {
+func (e GoogleAnalyticsV4) ToPointer() *GoogleAnalyticsV4 {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsV4GoogleAnalyticsV4) UnmarshalJSON(data []byte) error {
+func (e *GoogleAnalyticsV4) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-analytics-v4":
-		*e = SourceGoogleAnalyticsV4GoogleAnalyticsV4(v)
+		*e = GoogleAnalyticsV4(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4GoogleAnalyticsV4: %v", v)
+		return fmt.Errorf("invalid value for GoogleAnalyticsV4: %v", v)
 	}
 }
 
@@ -174,12 +234,62 @@ type SourceGoogleAnalyticsV4 struct {
 	// Credentials for the service
 	Credentials *SourceGoogleAnalyticsV4Credentials `json:"credentials,omitempty"`
 	// A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4#data-processing-latency">the docs</a> for more information about the exact format you can use to fill out this field.
-	CustomReports *string                                  `json:"custom_reports,omitempty"`
-	SourceType    SourceGoogleAnalyticsV4GoogleAnalyticsV4 `json:"sourceType"`
+	CustomReports *string           `json:"custom_reports,omitempty"`
+	sourceType    GoogleAnalyticsV4 `const:"google-analytics-v4" json:"sourceType"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 	// The ID for the Google Analytics View you want to fetch data from. This can be found from the <a href="https://ga-dev-tools.appspot.com/account-explorer/">Google Analytics Account Explorer</a>.
 	ViewID string `json:"view_id"`
 	// The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364.
-	WindowInDays *int64 `json:"window_in_days,omitempty"`
+	WindowInDays *int64 `default:"1" json:"window_in_days"`
+}
+
+func (s SourceGoogleAnalyticsV4) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAnalyticsV4) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAnalyticsV4) GetCredentials() *SourceGoogleAnalyticsV4Credentials {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceGoogleAnalyticsV4) GetCustomReports() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomReports
+}
+
+func (o *SourceGoogleAnalyticsV4) GetSourceType() GoogleAnalyticsV4 {
+	return GoogleAnalyticsV4GoogleAnalyticsV4
+}
+
+func (o *SourceGoogleAnalyticsV4) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceGoogleAnalyticsV4) GetViewID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ViewID
+}
+
+func (o *SourceGoogleAnalyticsV4) GetWindowInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

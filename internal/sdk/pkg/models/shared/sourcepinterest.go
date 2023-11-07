@@ -3,69 +3,91 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePinterestAuthorizationMethodAccessTokenAuthMethod string
+type SourcePinterestSchemasAuthMethod string
 
 const (
-	SourcePinterestAuthorizationMethodAccessTokenAuthMethodAccessToken SourcePinterestAuthorizationMethodAccessTokenAuthMethod = "access_token"
+	SourcePinterestSchemasAuthMethodAccessToken SourcePinterestSchemasAuthMethod = "access_token"
 )
 
-func (e SourcePinterestAuthorizationMethodAccessTokenAuthMethod) ToPointer() *SourcePinterestAuthorizationMethodAccessTokenAuthMethod {
+func (e SourcePinterestSchemasAuthMethod) ToPointer() *SourcePinterestSchemasAuthMethod {
 	return &e
 }
 
-func (e *SourcePinterestAuthorizationMethodAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePinterestSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourcePinterestAuthorizationMethodAccessTokenAuthMethod(v)
+		*e = SourcePinterestSchemasAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodAccessTokenAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestSchemasAuthMethod: %v", v)
 	}
 }
 
-type SourcePinterestAuthorizationMethodAccessToken struct {
+type SourcePinterestAccessToken struct {
 	// The Access Token to make authenticated requests.
-	AccessToken string                                                  `json:"access_token"`
-	AuthMethod  SourcePinterestAuthorizationMethodAccessTokenAuthMethod `json:"auth_method"`
+	AccessToken string                           `json:"access_token"`
+	authMethod  SourcePinterestSchemasAuthMethod `const:"access_token" json:"auth_method"`
 }
 
-type SourcePinterestAuthorizationMethodOAuth20AuthMethod string
+func (s SourcePinterestAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePinterestAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePinterestAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourcePinterestAccessToken) GetAuthMethod() SourcePinterestSchemasAuthMethod {
+	return SourcePinterestSchemasAuthMethodAccessToken
+}
+
+type SourcePinterestAuthMethod string
 
 const (
-	SourcePinterestAuthorizationMethodOAuth20AuthMethodOauth20 SourcePinterestAuthorizationMethodOAuth20AuthMethod = "oauth2.0"
+	SourcePinterestAuthMethodOauth20 SourcePinterestAuthMethod = "oauth2.0"
 )
 
-func (e SourcePinterestAuthorizationMethodOAuth20AuthMethod) ToPointer() *SourcePinterestAuthorizationMethodOAuth20AuthMethod {
+func (e SourcePinterestAuthMethod) ToPointer() *SourcePinterestAuthMethod {
 	return &e
 }
 
-func (e *SourcePinterestAuthorizationMethodOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePinterestAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourcePinterestAuthorizationMethodOAuth20AuthMethod(v)
+		*e = SourcePinterestAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodOAuth20AuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestAuthMethod: %v", v)
 	}
 }
 
-type SourcePinterestAuthorizationMethodOAuth20 struct {
-	AuthMethod SourcePinterestAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
+type SourcePinterestOAuth20 struct {
+	authMethod SourcePinterestAuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of your OAuth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
@@ -74,56 +96,87 @@ type SourcePinterestAuthorizationMethodOAuth20 struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+func (s SourcePinterestOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePinterestOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePinterestOAuth20) GetAuthMethod() SourcePinterestAuthMethod {
+	return SourcePinterestAuthMethodOauth20
+}
+
+func (o *SourcePinterestOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourcePinterestOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourcePinterestOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 type SourcePinterestAuthorizationMethodType string
 
 const (
-	SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodOAuth20     SourcePinterestAuthorizationMethodType = "source-pinterest_Authorization Method_OAuth2.0"
-	SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodAccessToken SourcePinterestAuthorizationMethodType = "source-pinterest_Authorization Method_Access Token"
+	SourcePinterestAuthorizationMethodTypeOAuth20     SourcePinterestAuthorizationMethodType = "OAuth20"
+	SourcePinterestAuthorizationMethodTypeAccessToken SourcePinterestAuthorizationMethodType = "AccessToken"
 )
 
 type SourcePinterestAuthorizationMethod struct {
-	SourcePinterestAuthorizationMethodOAuth20     *SourcePinterestAuthorizationMethodOAuth20
-	SourcePinterestAuthorizationMethodAccessToken *SourcePinterestAuthorizationMethodAccessToken
+	OAuth20     *SourcePinterestOAuth20
+	AccessToken *SourcePinterestAccessToken
 
 	Type SourcePinterestAuthorizationMethodType
 }
 
-func CreateSourcePinterestAuthorizationMethodSourcePinterestAuthorizationMethodOAuth20(sourcePinterestAuthorizationMethodOAuth20 SourcePinterestAuthorizationMethodOAuth20) SourcePinterestAuthorizationMethod {
-	typ := SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodOAuth20
+func CreateSourcePinterestAuthorizationMethodOAuth20(oAuth20 SourcePinterestOAuth20) SourcePinterestAuthorizationMethod {
+	typ := SourcePinterestAuthorizationMethodTypeOAuth20
 
 	return SourcePinterestAuthorizationMethod{
-		SourcePinterestAuthorizationMethodOAuth20: &sourcePinterestAuthorizationMethodOAuth20,
-		Type: typ,
+		OAuth20: &oAuth20,
+		Type:    typ,
 	}
 }
 
-func CreateSourcePinterestAuthorizationMethodSourcePinterestAuthorizationMethodAccessToken(sourcePinterestAuthorizationMethodAccessToken SourcePinterestAuthorizationMethodAccessToken) SourcePinterestAuthorizationMethod {
-	typ := SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodAccessToken
+func CreateSourcePinterestAuthorizationMethodAccessToken(accessToken SourcePinterestAccessToken) SourcePinterestAuthorizationMethod {
+	typ := SourcePinterestAuthorizationMethodTypeAccessToken
 
 	return SourcePinterestAuthorizationMethod{
-		SourcePinterestAuthorizationMethodAccessToken: &sourcePinterestAuthorizationMethodAccessToken,
-		Type: typ,
+		AccessToken: &accessToken,
+		Type:        typ,
 	}
 }
 
 func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourcePinterestAuthorizationMethodAccessToken := new(SourcePinterestAuthorizationMethodAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePinterestAuthorizationMethodAccessToken); err == nil {
-		u.SourcePinterestAuthorizationMethodAccessToken = sourcePinterestAuthorizationMethodAccessToken
-		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodAccessToken
+	accessToken := new(SourcePinterestAccessToken)
+	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
+		u.AccessToken = accessToken
+		u.Type = SourcePinterestAuthorizationMethodTypeAccessToken
 		return nil
 	}
 
-	sourcePinterestAuthorizationMethodOAuth20 := new(SourcePinterestAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePinterestAuthorizationMethodOAuth20); err == nil {
-		u.SourcePinterestAuthorizationMethodOAuth20 = sourcePinterestAuthorizationMethodOAuth20
-		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodOAuth20
+	oAuth20 := new(SourcePinterestOAuth20)
+	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
+		u.OAuth20 = oAuth20
+		u.Type = SourcePinterestAuthorizationMethodTypeOAuth20
 		return nil
 	}
 
@@ -131,38 +184,38 @@ func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePinterestAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePinterestAuthorizationMethodAccessToken != nil {
-		return json.Marshal(u.SourcePinterestAuthorizationMethodAccessToken)
+	if u.OAuth20 != nil {
+		return utils.MarshalJSON(u.OAuth20, "", true)
 	}
 
-	if u.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourcePinterestAuthorizationMethodOAuth20)
+	if u.AccessToken != nil {
+		return utils.MarshalJSON(u.AccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourcePinterestPinterest string
+type Pinterest string
 
 const (
-	SourcePinterestPinterestPinterest SourcePinterestPinterest = "pinterest"
+	PinterestPinterest Pinterest = "pinterest"
 )
 
-func (e SourcePinterestPinterest) ToPointer() *SourcePinterestPinterest {
+func (e Pinterest) ToPointer() *Pinterest {
 	return &e
 }
 
-func (e *SourcePinterestPinterest) UnmarshalJSON(data []byte) error {
+func (e *Pinterest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pinterest":
-		*e = SourcePinterestPinterest(v)
+		*e = Pinterest(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestPinterest: %v", v)
+		return fmt.Errorf("invalid value for Pinterest: %v", v)
 	}
 }
 
@@ -198,9 +251,45 @@ func (e *SourcePinterestStatus) UnmarshalJSON(data []byte) error {
 
 type SourcePinterest struct {
 	Credentials *SourcePinterestAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourcePinterestPinterest            `json:"sourceType"`
+	sourceType  Pinterest                           `const:"pinterest" json:"sourceType"`
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 	StartDate types.Date `json:"start_date"`
 	// Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
 	Status []SourcePinterestStatus `json:"status,omitempty"`
+}
+
+func (s SourcePinterest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePinterest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePinterest) GetCredentials() *SourcePinterestAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourcePinterest) GetSourceType() Pinterest {
+	return PinterestPinterest
+}
+
+func (o *SourcePinterest) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePinterest) GetStatus() []SourcePinterestStatus {
+	if o == nil {
+		return nil
+	}
+	return o.Status
 }

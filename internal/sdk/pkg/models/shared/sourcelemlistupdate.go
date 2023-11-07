@@ -6,3 +6,10 @@ type SourceLemlistUpdate struct {
 	// Lemlist API key,
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourceLemlistUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

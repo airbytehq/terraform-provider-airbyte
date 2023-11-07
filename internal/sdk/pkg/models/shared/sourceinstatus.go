@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceInstatusInstatus string
+type Instatus string
 
 const (
-	SourceInstatusInstatusInstatus SourceInstatusInstatus = "instatus"
+	InstatusInstatus Instatus = "instatus"
 )
 
-func (e SourceInstatusInstatus) ToPointer() *SourceInstatusInstatus {
+func (e Instatus) ToPointer() *Instatus {
 	return &e
 }
 
-func (e *SourceInstatusInstatus) UnmarshalJSON(data []byte) error {
+func (e *Instatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "instatus":
-		*e = SourceInstatusInstatus(v)
+		*e = Instatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceInstatusInstatus: %v", v)
+		return fmt.Errorf("invalid value for Instatus: %v", v)
 	}
 }
 
 type SourceInstatus struct {
 	// Instatus REST API key
-	APIKey     string                 `json:"api_key"`
-	SourceType SourceInstatusInstatus `json:"sourceType"`
+	APIKey     string   `json:"api_key"`
+	sourceType Instatus `const:"instatus" json:"sourceType"`
+}
+
+func (s SourceInstatus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInstatus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInstatus) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceInstatus) GetSourceType() Instatus {
+	return InstatusInstatus
 }

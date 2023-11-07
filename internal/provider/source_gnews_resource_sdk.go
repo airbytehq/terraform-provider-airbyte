@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -42,7 +42,6 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	} else {
 		sortby = nil
 	}
-	sourceType := shared.SourceGnewsGnews(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -70,7 +69,6 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 		Nullable:          nullable,
 		Query:             query,
 		Sortby:            sortby,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 		TopHeadlinesQuery: topHeadlinesQuery,
 		TopHeadlinesTopic: topHeadlinesTopic,
@@ -99,9 +97,9 @@ func (r *SourceGnewsResourceModel) ToGetSDKType() *shared.SourceGnewsCreateReque
 
 func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	country := new(shared.SourceGnewsUpdateCountry)
+	country := new(shared.Country)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
-		*country = shared.SourceGnewsUpdateCountry(r.Configuration.Country.ValueString())
+		*country = shared.Country(r.Configuration.Country.ValueString())
 	} else {
 		country = nil
 	}
@@ -111,24 +109,24 @@ func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutReque
 	} else {
 		endDate = nil
 	}
-	var in []shared.SourceGnewsUpdateIn = nil
+	var in []shared.In = nil
 	for _, inItem := range r.Configuration.In {
-		in = append(in, shared.SourceGnewsUpdateIn(inItem.ValueString()))
+		in = append(in, shared.In(inItem.ValueString()))
 	}
-	language := new(shared.SourceGnewsUpdateLanguage)
+	language := new(shared.Language)
 	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.SourceGnewsUpdateLanguage(r.Configuration.Language.ValueString())
+		*language = shared.Language(r.Configuration.Language.ValueString())
 	} else {
 		language = nil
 	}
-	var nullable []shared.SourceGnewsUpdateNullable = nil
+	var nullable []shared.Nullable = nil
 	for _, nullableItem := range r.Configuration.Nullable {
-		nullable = append(nullable, shared.SourceGnewsUpdateNullable(nullableItem.ValueString()))
+		nullable = append(nullable, shared.Nullable(nullableItem.ValueString()))
 	}
 	query := r.Configuration.Query.ValueString()
-	sortby := new(shared.SourceGnewsUpdateSortBy)
+	sortby := new(shared.SortBy)
 	if !r.Configuration.Sortby.IsUnknown() && !r.Configuration.Sortby.IsNull() {
-		*sortby = shared.SourceGnewsUpdateSortBy(r.Configuration.Sortby.ValueString())
+		*sortby = shared.SortBy(r.Configuration.Sortby.ValueString())
 	} else {
 		sortby = nil
 	}
@@ -144,9 +142,9 @@ func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutReque
 	} else {
 		topHeadlinesQuery = nil
 	}
-	topHeadlinesTopic := new(shared.SourceGnewsUpdateTopHeadlinesTopic)
+	topHeadlinesTopic := new(shared.TopHeadlinesTopic)
 	if !r.Configuration.TopHeadlinesTopic.IsUnknown() && !r.Configuration.TopHeadlinesTopic.IsNull() {
-		*topHeadlinesTopic = shared.SourceGnewsUpdateTopHeadlinesTopic(r.Configuration.TopHeadlinesTopic.ValueString())
+		*topHeadlinesTopic = shared.TopHeadlinesTopic(r.Configuration.TopHeadlinesTopic.ValueString())
 	} else {
 		topHeadlinesTopic = nil
 	}

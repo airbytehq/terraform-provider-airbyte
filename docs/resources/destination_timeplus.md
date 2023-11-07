@@ -15,12 +15,11 @@ DestinationTimeplus Resource
 ```terraform
 resource "airbyte_destination_timeplus" "my_destination_timeplus" {
   configuration = {
-    apikey           = "...my_apikey..."
-    destination_type = "timeplus"
-    endpoint         = "https://us.timeplus.cloud/workspace_id"
+    apikey   = "...my_apikey..."
+    endpoint = "https://us.timeplus.cloud/workspace_id"
   }
-  name         = "Ruben Williamson"
-  workspace_id = "5f350d8c-db5a-4341-8143-010421813d52"
+  name         = "Johanna Kemmer"
+  workspace_id = "7afdacad-2c14-4cf1-ba66-83bb76cbdd42"
 }
 ```
 
@@ -44,7 +43,10 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
 Required:
 
 - `apikey` (String) Personal API key
-- `destination_type` (String) must be one of ["timeplus"]
-- `endpoint` (String) Timeplus workspace endpoint
+
+Optional:
+
+- `endpoint` (String) Default: "https://us.timeplus.cloud/<workspace_id>"
+Timeplus workspace endpoint
 
 

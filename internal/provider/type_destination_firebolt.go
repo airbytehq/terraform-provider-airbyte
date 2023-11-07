@@ -5,12 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationFirebolt struct {
-	Account         types.String                      `tfsdk:"account"`
-	Database        types.String                      `tfsdk:"database"`
-	DestinationType types.String                      `tfsdk:"destination_type"`
-	Engine          types.String                      `tfsdk:"engine"`
-	Host            types.String                      `tfsdk:"host"`
-	LoadingMethod   *DestinationFireboltLoadingMethod `tfsdk:"loading_method"`
-	Password        types.String                      `tfsdk:"password"`
-	Username        types.String                      `tfsdk:"username"`
+	Account       types.String                      `tfsdk:"account"`
+	Database      types.String                      `tfsdk:"database"`
+	Engine        types.String                      `tfsdk:"engine"`
+	Host          types.String                      `tfsdk:"host"`
+	LoadingMethod *DestinationFireboltLoadingMethod `tfsdk:"loading_method"`
+	Password      types.String                      `tfsdk:"password"`
+	Username      types.String                      `tfsdk:"username"`
 }

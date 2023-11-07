@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceKustomerSingerResourceModel) ToCreateSDKType() *shared.SourceKustomerSingerCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceKustomerSingerKustomerSinger(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceKustomerSinger{
-		APIToken:   apiToken,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIToken:  apiToken,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

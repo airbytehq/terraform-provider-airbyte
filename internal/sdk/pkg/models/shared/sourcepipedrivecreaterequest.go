@@ -9,3 +9,31 @@ type SourcePipedriveCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePipedriveCreateRequest) GetConfiguration() SourcePipedrive {
+	if o == nil {
+		return SourcePipedrive{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePipedriveCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePipedriveCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePipedriveCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

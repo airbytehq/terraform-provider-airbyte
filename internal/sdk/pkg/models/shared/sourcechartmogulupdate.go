@@ -5,24 +5,25 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-// SourceChartmogulUpdateInterval - Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-type SourceChartmogulUpdateInterval string
+// Interval - Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
+type Interval string
 
 const (
-	SourceChartmogulUpdateIntervalDay     SourceChartmogulUpdateInterval = "day"
-	SourceChartmogulUpdateIntervalWeek    SourceChartmogulUpdateInterval = "week"
-	SourceChartmogulUpdateIntervalMonth   SourceChartmogulUpdateInterval = "month"
-	SourceChartmogulUpdateIntervalQuarter SourceChartmogulUpdateInterval = "quarter"
+	IntervalDay     Interval = "day"
+	IntervalWeek    Interval = "week"
+	IntervalMonth   Interval = "month"
+	IntervalQuarter Interval = "quarter"
 )
 
-func (e SourceChartmogulUpdateInterval) ToPointer() *SourceChartmogulUpdateInterval {
+func (e Interval) ToPointer() *Interval {
 	return &e
 }
 
-func (e *SourceChartmogulUpdateInterval) UnmarshalJSON(data []byte) error {
+func (e *Interval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -35,10 +36,10 @@ func (e *SourceChartmogulUpdateInterval) UnmarshalJSON(data []byte) error {
 	case "month":
 		fallthrough
 	case "quarter":
-		*e = SourceChartmogulUpdateInterval(v)
+		*e = Interval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChartmogulUpdateInterval: %v", v)
+		return fmt.Errorf("invalid value for Interval: %v", v)
 	}
 }
 
@@ -46,7 +47,39 @@ type SourceChartmogulUpdate struct {
 	// Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
 	APIKey string `json:"api_key"`
 	// Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-	Interval SourceChartmogulUpdateInterval `json:"interval"`
+	Interval *Interval `default:"month" json:"interval"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceChartmogulUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceChartmogulUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceChartmogulUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceChartmogulUpdate) GetInterval() *Interval {
+	if o == nil {
+		return nil
+	}
+	return o.Interval
+}
+
+func (o *SourceChartmogulUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

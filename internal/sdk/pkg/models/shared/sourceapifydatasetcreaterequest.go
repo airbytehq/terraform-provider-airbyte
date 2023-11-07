@@ -9,3 +9,31 @@ type SourceApifyDatasetCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceApifyDatasetCreateRequest) GetConfiguration() SourceApifyDataset {
+	if o == nil {
+		return SourceApifyDataset{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceApifyDatasetCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceApifyDatasetCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceApifyDatasetCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

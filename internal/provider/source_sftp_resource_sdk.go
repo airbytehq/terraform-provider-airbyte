@@ -3,39 +3,35 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequest {
 	var credentials *shared.SourceSftpAuthenticationWildcard
 	if r.Configuration.Credentials != nil {
-		var sourceSftpAuthenticationWildcardPasswordAuthentication *shared.SourceSftpAuthenticationWildcardPasswordAuthentication
-		if r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
-			authMethod := shared.SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
-			authUserPassword := r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword.ValueString()
-			sourceSftpAuthenticationWildcardPasswordAuthentication = &shared.SourceSftpAuthenticationWildcardPasswordAuthentication{
-				AuthMethod:       authMethod,
+		var sourceSftpPasswordAuthentication *shared.SourceSftpPasswordAuthentication
+		if r.Configuration.Credentials.PasswordAuthentication != nil {
+			authUserPassword := r.Configuration.Credentials.PasswordAuthentication.AuthUserPassword.ValueString()
+			sourceSftpPasswordAuthentication = &shared.SourceSftpPasswordAuthentication{
 				AuthUserPassword: authUserPassword,
 			}
 		}
-		if sourceSftpAuthenticationWildcardPasswordAuthentication != nil {
+		if sourceSftpPasswordAuthentication != nil {
 			credentials = &shared.SourceSftpAuthenticationWildcard{
-				SourceSftpAuthenticationWildcardPasswordAuthentication: sourceSftpAuthenticationWildcardPasswordAuthentication,
+				PasswordAuthentication: sourceSftpPasswordAuthentication,
 			}
 		}
-		var sourceSftpAuthenticationWildcardSSHKeyAuthentication *shared.SourceSftpAuthenticationWildcardSSHKeyAuthentication
-		if r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
-			authMethod1 := shared.SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod.ValueString())
-			authSSHKey := r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey.ValueString()
-			sourceSftpAuthenticationWildcardSSHKeyAuthentication = &shared.SourceSftpAuthenticationWildcardSSHKeyAuthentication{
-				AuthMethod: authMethod1,
+		var sourceSftpSSHKeyAuthentication *shared.SourceSftpSSHKeyAuthentication
+		if r.Configuration.Credentials.SSHKeyAuthentication != nil {
+			authSSHKey := r.Configuration.Credentials.SSHKeyAuthentication.AuthSSHKey.ValueString()
+			sourceSftpSSHKeyAuthentication = &shared.SourceSftpSSHKeyAuthentication{
 				AuthSSHKey: authSSHKey,
 			}
 		}
-		if sourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
+		if sourceSftpSSHKeyAuthentication != nil {
 			credentials = &shared.SourceSftpAuthenticationWildcard{
-				SourceSftpAuthenticationWildcardSSHKeyAuthentication: sourceSftpAuthenticationWildcardSSHKeyAuthentication,
+				SSHKeyAuthentication: sourceSftpSSHKeyAuthentication,
 			}
 		}
 	}
@@ -58,8 +54,12 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 		folderPath = nil
 	}
 	host := r.Configuration.Host.ValueString()
-	port := r.Configuration.Port.ValueInt64()
-	sourceType := shared.SourceSftpSftp(r.Configuration.SourceType.ValueString())
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	user := r.Configuration.User.ValueString()
 	configuration := shared.SourceSftp{
 		Credentials: credentials,
@@ -68,7 +68,6 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 		FolderPath:  folderPath,
 		Host:        host,
 		Port:        port,
-		SourceType:  sourceType,
 		User:        user,
 	}
 	name := r.Name.ValueString()
@@ -96,32 +95,28 @@ func (r *SourceSftpResourceModel) ToGetSDKType() *shared.SourceSftpCreateRequest
 func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest {
 	var credentials *shared.SourceSftpUpdateAuthenticationWildcard
 	if r.Configuration.Credentials != nil {
-		var sourceSftpUpdateAuthenticationWildcardPasswordAuthentication *shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication
-		if r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
-			authMethod := shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
-			authUserPassword := r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication.AuthUserPassword.ValueString()
-			sourceSftpUpdateAuthenticationWildcardPasswordAuthentication = &shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication{
-				AuthMethod:       authMethod,
+		var sourceSftpUpdatePasswordAuthentication *shared.SourceSftpUpdatePasswordAuthentication
+		if r.Configuration.Credentials.PasswordAuthentication != nil {
+			authUserPassword := r.Configuration.Credentials.PasswordAuthentication.AuthUserPassword.ValueString()
+			sourceSftpUpdatePasswordAuthentication = &shared.SourceSftpUpdatePasswordAuthentication{
 				AuthUserPassword: authUserPassword,
 			}
 		}
-		if sourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
+		if sourceSftpUpdatePasswordAuthentication != nil {
 			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
-				SourceSftpUpdateAuthenticationWildcardPasswordAuthentication: sourceSftpUpdateAuthenticationWildcardPasswordAuthentication,
+				PasswordAuthentication: sourceSftpUpdatePasswordAuthentication,
 			}
 		}
-		var sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication *shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
-		if r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
-			authMethod1 := shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication.AuthMethod.ValueString())
-			authSSHKey := r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey.ValueString()
-			sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication = &shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication{
-				AuthMethod: authMethod1,
+		var sourceSftpUpdateSSHKeyAuthentication *shared.SourceSftpUpdateSSHKeyAuthentication
+		if r.Configuration.Credentials.SSHKeyAuthentication != nil {
+			authSSHKey := r.Configuration.Credentials.SSHKeyAuthentication.AuthSSHKey.ValueString()
+			sourceSftpUpdateSSHKeyAuthentication = &shared.SourceSftpUpdateSSHKeyAuthentication{
 				AuthSSHKey: authSSHKey,
 			}
 		}
-		if sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
+		if sourceSftpUpdateSSHKeyAuthentication != nil {
 			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
-				SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication: sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication,
+				SSHKeyAuthentication: sourceSftpUpdateSSHKeyAuthentication,
 			}
 		}
 	}
@@ -144,7 +139,12 @@ func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest
 		folderPath = nil
 	}
 	host := r.Configuration.Host.ValueString()
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	user := r.Configuration.User.ValueString()
 	configuration := shared.SourceSftpUpdate{
 		Credentials: credentials,

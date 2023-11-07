@@ -6,3 +6,10 @@ type SourceK6CloudUpdate struct {
 	// Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
 	APIToken string `json:"api_token"`
 }
+
+func (o *SourceK6CloudUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}

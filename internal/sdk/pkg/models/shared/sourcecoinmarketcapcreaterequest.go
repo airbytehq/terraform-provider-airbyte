@@ -9,3 +9,31 @@ type SourceCoinmarketcapCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceCoinmarketcapCreateRequest) GetConfiguration() SourceCoinmarketcap {
+	if o == nil {
+		return SourceCoinmarketcap{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceCoinmarketcapCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceCoinmarketcapCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceCoinmarketcapCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

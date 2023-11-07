@@ -9,3 +9,31 @@ type SourceDatascopeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceDatascopeCreateRequest) GetConfiguration() SourceDatascope {
+	if o == nil {
+		return SourceDatascope{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDatascopeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDatascopeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceDatascopeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

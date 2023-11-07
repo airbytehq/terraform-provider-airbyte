@@ -9,3 +9,31 @@ type SourceUsCensusCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceUsCensusCreateRequest) GetConfiguration() SourceUsCensus {
+	if o == nil {
+		return SourceUsCensus{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceUsCensusCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceUsCensusCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceUsCensusCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

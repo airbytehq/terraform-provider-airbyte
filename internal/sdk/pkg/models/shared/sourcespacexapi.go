@@ -5,34 +5,64 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceSpacexAPISpacexAPI string
+type SpacexAPI string
 
 const (
-	SourceSpacexAPISpacexAPISpacexAPI SourceSpacexAPISpacexAPI = "spacex-api"
+	SpacexAPISpacexAPI SpacexAPI = "spacex-api"
 )
 
-func (e SourceSpacexAPISpacexAPI) ToPointer() *SourceSpacexAPISpacexAPI {
+func (e SpacexAPI) ToPointer() *SpacexAPI {
 	return &e
 }
 
-func (e *SourceSpacexAPISpacexAPI) UnmarshalJSON(data []byte) error {
+func (e *SpacexAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "spacex-api":
-		*e = SourceSpacexAPISpacexAPI(v)
+		*e = SpacexAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSpacexAPISpacexAPI: %v", v)
+		return fmt.Errorf("invalid value for SpacexAPI: %v", v)
 	}
 }
 
 type SourceSpacexAPI struct {
-	ID         *string                   `json:"id,omitempty"`
-	Options    *string                   `json:"options,omitempty"`
-	SourceType *SourceSpacexAPISpacexAPI `json:"sourceType,omitempty"`
+	ID         *string    `json:"id,omitempty"`
+	Options    *string    `json:"options,omitempty"`
+	sourceType *SpacexAPI `const:"spacex-api" json:"sourceType,omitempty"`
+}
+
+func (s SourceSpacexAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSpacexAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSpacexAPI) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *SourceSpacexAPI) GetOptions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Options
+}
+
+func (o *SourceSpacexAPI) GetSourceType() *SpacexAPI {
+	return SpacexAPISpacexAPI.ToPointer()
 }

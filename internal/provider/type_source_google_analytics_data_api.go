@@ -9,6 +9,5 @@ type SourceGoogleAnalyticsDataAPI struct {
 	CustomReports       types.String                             `tfsdk:"custom_reports"`
 	DateRangesStartDate types.String                             `tfsdk:"date_ranges_start_date"`
 	PropertyID          types.String                             `tfsdk:"property_id"`
-	SourceType          types.String                             `tfsdk:"source_type"`
 	WindowInDays        types.Int64                              `tfsdk:"window_in_days"`
 }

@@ -16,3 +16,66 @@ type JobResponse struct {
 	StartTime     string        `json:"startTime"`
 	Status        JobStatusEnum `json:"status"`
 }
+
+func (o *JobResponse) GetBytesSynced() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BytesSynced
+}
+
+func (o *JobResponse) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
+}
+
+func (o *JobResponse) GetDuration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Duration
+}
+
+func (o *JobResponse) GetJobID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.JobID
+}
+
+func (o *JobResponse) GetJobType() JobTypeEnum {
+	if o == nil {
+		return JobTypeEnum("")
+	}
+	return o.JobType
+}
+
+func (o *JobResponse) GetLastUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LastUpdatedAt
+}
+
+func (o *JobResponse) GetRowsSynced() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RowsSynced
+}
+
+func (o *JobResponse) GetStartTime() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartTime
+}
+
+func (o *JobResponse) GetStatus() JobStatusEnum {
+	if o == nil {
+		return JobStatusEnum("")
+	}
+	return o.Status
+}

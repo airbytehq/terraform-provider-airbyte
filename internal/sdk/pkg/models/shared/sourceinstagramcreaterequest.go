@@ -9,3 +9,31 @@ type SourceInstagramCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceInstagramCreateRequest) GetConfiguration() SourceInstagram {
+	if o == nil {
+		return SourceInstagram{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceInstagramCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceInstagramCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceInstagramCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

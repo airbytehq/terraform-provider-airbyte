@@ -10,3 +10,24 @@ type SourceMailjetSmsUpdate struct {
 	// Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
 	Token string `json:"token"`
 }
+
+func (o *SourceMailjetSmsUpdate) GetEndDate() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceMailjetSmsUpdate) GetStartDate() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceMailjetSmsUpdate) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}

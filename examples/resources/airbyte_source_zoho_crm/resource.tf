@@ -2,14 +2,13 @@ resource "airbyte_source_zoho_crm" "my_source_zohocrm" {
   configuration = {
     client_id      = "...my_client_id..."
     client_secret  = "...my_client_secret..."
-    dc_region      = "US"
+    dc_region      = "JP"
     edition        = "Enterprise"
-    environment    = "Developer"
+    environment    = "Production"
     refresh_token  = "...my_refresh_token..."
-    source_type    = "zoho-crm"
-    start_datetime = "2000-01-01T13:00+00:00"
+    start_datetime = "2000-01-01"
   }
-  name         = "Kenneth Fisher"
+  name         = "Miss Gene Schinner"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b1710688-deeb-4ef8-97f3-dd0ccd33f11b"
+  workspace_id = "93e76e9f-def5-441f-86ca-13b1e89c1488"
 }

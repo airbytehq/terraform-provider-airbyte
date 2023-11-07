@@ -14,7 +14,6 @@ SourceYoutubeAnalytics DataSource
 
 ```terraform
 data "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,35 +25,12 @@ data "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["youtube-analytics"]
-
-<a id="nestedatt--configuration--credentials"></a>
-### Nested Schema for `configuration.credentials`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `client_id` (String) The Client ID of your developer application
-- `client_secret` (String) The client secret of your developer application
-- `refresh_token` (String) A refresh token generated using the above client ID and secret
 
 

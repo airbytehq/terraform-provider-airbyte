@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFacebookPagesResourceModel) ToCreateSDKType() *shared.SourceFacebookPagesCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	pageID := r.Configuration.PageID.ValueString()
-	sourceType := shared.SourceFacebookPagesFacebookPages(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFacebookPages{
 		AccessToken: accessToken,
 		PageID:      pageID,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

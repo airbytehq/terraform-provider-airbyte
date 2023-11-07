@@ -16,17 +16,15 @@ SourceNotion Resource
 resource "airbyte_source_notion" "my_source_notion" {
   configuration = {
     credentials = {
-      source_notion_authenticate_using_access_token = {
-        auth_type = "token"
-        token     = "...my_token..."
+      source_notion_access_token = {
+        token = "...my_token..."
       }
     }
-    source_type = "notion"
-    start_date  = "2020-11-16T00:00:00.000Z"
+    start_date = "2020-11-16T00:00:00.000Z"
   }
-  name         = "Francisco Yost"
+  name         = "Alyssa Douglas"
   secret_id    = "...my_secret_id..."
-  workspace_id = "cb35d176-38f1-4edb-b835-9ecc5cb860f8"
+  workspace_id = "9cbeca1c-7573-4a5b-bba8-2d4c0a2cef78"
 }
 ```
 
@@ -53,7 +51,6 @@ resource "airbyte_source_notion" "my_source_notion" {
 
 Required:
 
-- `source_type` (String) must be one of ["notion"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 
 Optional:
@@ -65,47 +62,23 @@ Optional:
 
 Optional:
 
-- `source_notion_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_access_token))
-- `source_notion_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0))
-- `source_notion_update_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token))
-- `source_notion_update_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0))
+- `access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
+- `o_auth20` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_notion_authenticate_using_access_token"></a>
-### Nested Schema for `configuration.credentials.source_notion_authenticate_using_access_token`
+<a id="nestedatt--configuration--credentials--access_token"></a>
+### Nested Schema for `configuration.credentials.access_token`
 
 Required:
 
-- `auth_type` (String) must be one of ["token"]
 - `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
-<a id="nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_notion_authenticate_using_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
 - `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
-- `client_id` (String) The ClientID of your Notion integration.
-- `client_secret` (String) The ClientSecret of your Notion integration.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token"></a>
-### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_access_token`
-
-Required:
-
-- `auth_type` (String) must be one of ["token"]
-- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) The ClientID of your Notion integration.
 - `client_secret` (String) The ClientSecret of your Notion integration.
 

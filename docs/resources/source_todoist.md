@@ -15,12 +15,11 @@ SourceTodoist Resource
 ```terraform
 resource "airbyte_source_todoist" "my_source_todoist" {
   configuration = {
-    source_type = "todoist"
-    token       = "...my_token..."
+    token = "...my_token..."
   }
-  name         = "Hope Collins"
+  name         = "Sammy Lemke"
   secret_id    = "...my_secret_id..."
-  workspace_id = "502bafb2-cbc4-4635-95e6-5da028c3e951"
+  workspace_id = "8fddacae-8261-4af8-b9bb-4850d654be1e"
 }
 ```
 
@@ -47,7 +46,6 @@ resource "airbyte_source_todoist" "my_source_todoist" {
 
 Required:
 
-- `source_type` (String) must be one of ["todoist"]
 - `token` (String) Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 
 

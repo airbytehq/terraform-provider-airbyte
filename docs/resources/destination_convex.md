@@ -15,12 +15,11 @@ DestinationConvex Resource
 ```terraform
 resource "airbyte_destination_convex" "my_destination_convex" {
   configuration = {
-    access_key       = "...my_access_key..."
-    deployment_url   = "https://murky-swan-635.convex.cloud"
-    destination_type = "convex"
+    access_key     = "...my_access_key..."
+    deployment_url = "https://cluttered-owl-337.convex.cloud"
   }
-  name         = "Joyce Kertzmann"
-  workspace_id = "4c8b711e-5b7f-4d2e-9028-921cddc69260"
+  name         = "Alton Bernier"
+  workspace_id = "5e15759d-85e2-4c27-a398-b4688adb4265"
 }
 ```
 
@@ -45,6 +44,5 @@ Required:
 
 - `access_key` (String) API access key used to send data to a Convex deployment.
 - `deployment_url` (String) URL of the Convex deployment that is the destination
-- `destination_type` (String) must be one of ["convex"]
 
 

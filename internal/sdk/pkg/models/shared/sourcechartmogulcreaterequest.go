@@ -9,3 +9,31 @@ type SourceChartmogulCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceChartmogulCreateRequest) GetConfiguration() SourceChartmogul {
+	if o == nil {
+		return SourceChartmogul{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceChartmogulCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceChartmogulCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceChartmogulCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

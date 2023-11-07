@@ -3,126 +3,172 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest string
+type BothUsernameAndPasswordIsRequiredForAuthenticationRequest string
 
 const (
-	SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequestUsernamePassword SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest = "username_password"
+	BothUsernameAndPasswordIsRequiredForAuthenticationRequestUsernamePassword BothUsernameAndPasswordIsRequiredForAuthenticationRequest = "username_password"
 )
 
-func (e SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest) ToPointer() *SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest {
+func (e BothUsernameAndPasswordIsRequiredForAuthenticationRequest) ToPointer() *BothUsernameAndPasswordIsRequiredForAuthenticationRequest {
 	return &e
 }
 
-func (e *SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest) UnmarshalJSON(data []byte) error {
+func (e *BothUsernameAndPasswordIsRequiredForAuthenticationRequest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "username_password":
-		*e = SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest(v)
+		*e = BothUsernameAndPasswordIsRequiredForAuthenticationRequest(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest: %v", v)
+		return fmt.Errorf("invalid value for BothUsernameAndPasswordIsRequiredForAuthenticationRequest: %v", v)
 	}
 }
 
-// SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword - Credentials for making authenticated requests requires either username/password or access_token.
-type SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword struct {
+// SourceOutbrainAmplifyUpdateUsernamePassword - Credentials for making authenticated requests requires either username/password or access_token.
+type SourceOutbrainAmplifyUpdateUsernamePassword struct {
 	// Add Password for authentication.
-	Password string                                                                                                                   `json:"password"`
-	Type     SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePasswordBothUsernameAndPasswordIsRequiredForAuthenticationRequest `json:"type"`
+	Password string                                                    `json:"password"`
+	type_    BothUsernameAndPasswordIsRequiredForAuthenticationRequest `const:"username_password" json:"type"`
 	// Add Username for authentication.
 	Username string `json:"username"`
 }
 
-type SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests string
+func (s SourceOutbrainAmplifyUpdateUsernamePassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOutbrainAmplifyUpdateUsernamePassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetType() BothUsernameAndPasswordIsRequiredForAuthenticationRequest {
+	return BothUsernameAndPasswordIsRequiredForAuthenticationRequestUsernamePassword
+}
+
+func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+type AccessTokenIsRequiredForAuthenticationRequests string
 
 const (
-	SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequestsAccessToken SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests = "access_token"
+	AccessTokenIsRequiredForAuthenticationRequestsAccessToken AccessTokenIsRequiredForAuthenticationRequests = "access_token"
 )
 
-func (e SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests) ToPointer() *SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests {
+func (e AccessTokenIsRequiredForAuthenticationRequests) ToPointer() *AccessTokenIsRequiredForAuthenticationRequests {
 	return &e
 }
 
-func (e *SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests) UnmarshalJSON(data []byte) error {
+func (e *AccessTokenIsRequiredForAuthenticationRequests) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests(v)
+		*e = AccessTokenIsRequiredForAuthenticationRequests(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests: %v", v)
+		return fmt.Errorf("invalid value for AccessTokenIsRequiredForAuthenticationRequests: %v", v)
 	}
 }
 
-// SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken - Credentials for making authenticated requests requires either username/password or access_token.
-type SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken struct {
+// SourceOutbrainAmplifyUpdateAccessToken - Credentials for making authenticated requests requires either username/password or access_token.
+type SourceOutbrainAmplifyUpdateAccessToken struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                                                                                   `json:"access_token"`
-	Type        SourceOutbrainAmplifyUpdateAuthenticationMethodAccessTokenAccessTokenIsRequiredForAuthenticationRequests `json:"type"`
+	AccessToken string                                         `json:"access_token"`
+	type_       AccessTokenIsRequiredForAuthenticationRequests `const:"access_token" json:"type"`
+}
+
+func (s SourceOutbrainAmplifyUpdateAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOutbrainAmplifyUpdateAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOutbrainAmplifyUpdateAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceOutbrainAmplifyUpdateAccessToken) GetType() AccessTokenIsRequiredForAuthenticationRequests {
+	return AccessTokenIsRequiredForAuthenticationRequestsAccessToken
 }
 
 type SourceOutbrainAmplifyUpdateAuthenticationMethodType string
 
 const (
-	SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken      SourceOutbrainAmplifyUpdateAuthenticationMethodType = "source-outbrain-amplify-update_Authentication Method_Access token"
-	SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword SourceOutbrainAmplifyUpdateAuthenticationMethodType = "source-outbrain-amplify-update_Authentication Method_Username Password"
+	SourceOutbrainAmplifyUpdateAuthenticationMethodTypeAccessToken      SourceOutbrainAmplifyUpdateAuthenticationMethodType = "AccessToken"
+	SourceOutbrainAmplifyUpdateAuthenticationMethodTypeUsernamePassword SourceOutbrainAmplifyUpdateAuthenticationMethodType = "UsernamePassword"
 )
 
 type SourceOutbrainAmplifyUpdateAuthenticationMethod struct {
-	SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken      *SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken
-	SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword *SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword
+	AccessToken      *SourceOutbrainAmplifyUpdateAccessToken
+	UsernamePassword *SourceOutbrainAmplifyUpdateUsernamePassword
 
 	Type SourceOutbrainAmplifyUpdateAuthenticationMethodType
 }
 
-func CreateSourceOutbrainAmplifyUpdateAuthenticationMethodSourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken(sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken) SourceOutbrainAmplifyUpdateAuthenticationMethod {
-	typ := SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken
+func CreateSourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken(accessToken SourceOutbrainAmplifyUpdateAccessToken) SourceOutbrainAmplifyUpdateAuthenticationMethod {
+	typ := SourceOutbrainAmplifyUpdateAuthenticationMethodTypeAccessToken
 
 	return SourceOutbrainAmplifyUpdateAuthenticationMethod{
-		SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken: &sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken,
-		Type: typ,
+		AccessToken: &accessToken,
+		Type:        typ,
 	}
 }
 
-func CreateSourceOutbrainAmplifyUpdateAuthenticationMethodSourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword(sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword) SourceOutbrainAmplifyUpdateAuthenticationMethod {
-	typ := SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword
+func CreateSourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword(usernamePassword SourceOutbrainAmplifyUpdateUsernamePassword) SourceOutbrainAmplifyUpdateAuthenticationMethod {
+	typ := SourceOutbrainAmplifyUpdateAuthenticationMethodTypeUsernamePassword
 
 	return SourceOutbrainAmplifyUpdateAuthenticationMethod{
-		SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword: &sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword,
-		Type: typ,
+		UsernamePassword: &usernamePassword,
+		Type:             typ,
 	}
 }
 
 func (u *SourceOutbrainAmplifyUpdateAuthenticationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken := new(SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken); err == nil {
-		u.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken = sourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken
-		u.Type = SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken
+	accessToken := new(SourceOutbrainAmplifyUpdateAccessToken)
+	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
+		u.AccessToken = accessToken
+		u.Type = SourceOutbrainAmplifyUpdateAuthenticationMethodTypeAccessToken
 		return nil
 	}
 
-	sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword := new(SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword); err == nil {
-		u.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword = sourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword
-		u.Type = SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword
+	usernamePassword := new(SourceOutbrainAmplifyUpdateUsernamePassword)
+	if err := utils.UnmarshalJSON(data, &usernamePassword, "", true, true); err == nil {
+		u.UsernamePassword = usernamePassword
+		u.Type = SourceOutbrainAmplifyUpdateAuthenticationMethodTypeUsernamePassword
 		return nil
 	}
 
@@ -130,31 +176,31 @@ func (u *SourceOutbrainAmplifyUpdateAuthenticationMethod) UnmarshalJSON(data []b
 }
 
 func (u SourceOutbrainAmplifyUpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken != nil {
-		return json.Marshal(u.SourceOutbrainAmplifyUpdateAuthenticationMethodAccessToken)
+	if u.AccessToken != nil {
+		return utils.MarshalJSON(u.AccessToken, "", true)
 	}
 
-	if u.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword != nil {
-		return json.Marshal(u.SourceOutbrainAmplifyUpdateAuthenticationMethodUsernamePassword)
+	if u.UsernamePassword != nil {
+		return utils.MarshalJSON(u.UsernamePassword, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion - The granularity used for geo location data in reports.
-type SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion string
+// GranularityForGeoLocationRegion - The granularity used for geo location data in reports.
+type GranularityForGeoLocationRegion string
 
 const (
-	SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegionCountry   SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion = "country"
-	SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegionRegion    SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion = "region"
-	SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegionSubregion SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion = "subregion"
+	GranularityForGeoLocationRegionCountry   GranularityForGeoLocationRegion = "country"
+	GranularityForGeoLocationRegionRegion    GranularityForGeoLocationRegion = "region"
+	GranularityForGeoLocationRegionSubregion GranularityForGeoLocationRegion = "subregion"
 )
 
-func (e SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion) ToPointer() *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion {
+func (e GranularityForGeoLocationRegion) ToPointer() *GranularityForGeoLocationRegion {
 	return &e
 }
 
-func (e *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion) UnmarshalJSON(data []byte) error {
+func (e *GranularityForGeoLocationRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -165,27 +211,27 @@ func (e *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion) UnmarshalJS
 	case "region":
 		fallthrough
 	case "subregion":
-		*e = SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion(v)
+		*e = GranularityForGeoLocationRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion: %v", v)
+		return fmt.Errorf("invalid value for GranularityForGeoLocationRegion: %v", v)
 	}
 }
 
-// SourceOutbrainAmplifyUpdateGranularityForPeriodicReports - The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-type SourceOutbrainAmplifyUpdateGranularityForPeriodicReports string
+// GranularityForPeriodicReports - The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type GranularityForPeriodicReports string
 
 const (
-	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsDaily   SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "daily"
-	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsWeekly  SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "weekly"
-	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsMonthly SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "monthly"
+	GranularityForPeriodicReportsDaily   GranularityForPeriodicReports = "daily"
+	GranularityForPeriodicReportsWeekly  GranularityForPeriodicReports = "weekly"
+	GranularityForPeriodicReportsMonthly GranularityForPeriodicReports = "monthly"
 )
 
-func (e SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) ToPointer() *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports {
+func (e GranularityForPeriodicReports) ToPointer() *GranularityForPeriodicReports {
 	return &e
 }
 
-func (e *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
+func (e *GranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -196,10 +242,10 @@ func (e *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) UnmarshalJSON
 	case "weekly":
 		fallthrough
 	case "monthly":
-		*e = SourceOutbrainAmplifyUpdateGranularityForPeriodicReports(v)
+		*e = GranularityForPeriodicReports(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateGranularityForPeriodicReports: %v", v)
+		return fmt.Errorf("invalid value for GranularityForPeriodicReports: %v", v)
 	}
 }
 
@@ -209,9 +255,44 @@ type SourceOutbrainAmplifyUpdate struct {
 	// Date in the format YYYY-MM-DD.
 	EndDate *string `json:"end_date,omitempty"`
 	// The granularity used for geo location data in reports.
-	GeoLocationBreakdown *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion `json:"geo_location_breakdown,omitempty"`
+	GeoLocationBreakdown *GranularityForGeoLocationRegion `json:"geo_location_breakdown,omitempty"`
 	// The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-	ReportGranularity *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports `json:"report_granularity,omitempty"`
+	ReportGranularity *GranularityForPeriodicReports `json:"report_granularity,omitempty"`
 	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetCredentials() SourceOutbrainAmplifyUpdateAuthenticationMethod {
+	if o == nil {
+		return SourceOutbrainAmplifyUpdateAuthenticationMethod{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetGeoLocationBreakdown() *GranularityForGeoLocationRegion {
+	if o == nil {
+		return nil
+	}
+	return o.GeoLocationBreakdown
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetReportGranularity() *GranularityForPeriodicReports {
+	if o == nil {
+		return nil
+	}
+	return o.ReportGranularity
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

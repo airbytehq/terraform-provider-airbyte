@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -11,72 +11,51 @@ import (
 func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCreateRequest {
 	var credentials *shared.SourceAirtableAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceAirtableAuthenticationOAuth20 *shared.SourceAirtableAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20 != nil {
+		var sourceAirtableOAuth20 *shared.SourceAirtableOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authMethod := new(shared.SourceAirtableAuthenticationOAuth20AuthMethod)
-			if !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.IsNull() {
-				*authMethod = shared.SourceAirtableAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.ValueString())
-			} else {
-				authMethod = nil
-			}
-			clientID := r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.RefreshToken.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 			tokenExpiryDate := new(time.Time)
-			if !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate.IsNull() {
-				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate.ValueString())
+			if !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsNull() {
+				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 			} else {
 				tokenExpiryDate = nil
 			}
-			sourceAirtableAuthenticationOAuth20 = &shared.SourceAirtableAuthenticationOAuth20{
+			sourceAirtableOAuth20 = &shared.SourceAirtableOAuth20{
 				AccessToken:     accessToken,
-				AuthMethod:      authMethod,
 				ClientID:        clientID,
 				ClientSecret:    clientSecret,
 				RefreshToken:    refreshToken,
 				TokenExpiryDate: tokenExpiryDate,
 			}
 		}
-		if sourceAirtableAuthenticationOAuth20 != nil {
+		if sourceAirtableOAuth20 != nil {
 			credentials = &shared.SourceAirtableAuthentication{
-				SourceAirtableAuthenticationOAuth20: sourceAirtableAuthenticationOAuth20,
+				OAuth20: sourceAirtableOAuth20,
 			}
 		}
-		var sourceAirtableAuthenticationPersonalAccessToken *shared.SourceAirtableAuthenticationPersonalAccessToken
-		if r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken != nil {
-			apiKey := r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.APIKey.ValueString()
-			authMethod1 := new(shared.SourceAirtableAuthenticationPersonalAccessTokenAuthMethod)
-			if !r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.IsNull() {
-				*authMethod1 = shared.SourceAirtableAuthenticationPersonalAccessTokenAuthMethod(r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.ValueString())
-			} else {
-				authMethod1 = nil
-			}
-			sourceAirtableAuthenticationPersonalAccessToken = &shared.SourceAirtableAuthenticationPersonalAccessToken{
-				APIKey:     apiKey,
-				AuthMethod: authMethod1,
+		var sourceAirtablePersonalAccessToken *shared.SourceAirtablePersonalAccessToken
+		if r.Configuration.Credentials.PersonalAccessToken != nil {
+			apiKey := r.Configuration.Credentials.PersonalAccessToken.APIKey.ValueString()
+			sourceAirtablePersonalAccessToken = &shared.SourceAirtablePersonalAccessToken{
+				APIKey: apiKey,
 			}
 		}
-		if sourceAirtableAuthenticationPersonalAccessToken != nil {
+		if sourceAirtablePersonalAccessToken != nil {
 			credentials = &shared.SourceAirtableAuthentication{
-				SourceAirtableAuthenticationPersonalAccessToken: sourceAirtableAuthenticationPersonalAccessToken,
+				PersonalAccessToken: sourceAirtablePersonalAccessToken,
 			}
 		}
-	}
-	sourceType := new(shared.SourceAirtableAirtable)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceAirtableAirtable(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
 	}
 	configuration := shared.SourceAirtable{
 		Credentials: credentials,
-		SourceType:  sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -103,60 +82,46 @@ func (r *SourceAirtableResourceModel) ToGetSDKType() *shared.SourceAirtableCreat
 func (r *SourceAirtableResourceModel) ToUpdateSDKType() *shared.SourceAirtablePutRequest {
 	var credentials *shared.SourceAirtableUpdateAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceAirtableUpdateAuthenticationOAuth20 *shared.SourceAirtableUpdateAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20 != nil {
+		var sourceAirtableUpdateOAuth20 *shared.SourceAirtableUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.AccessToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authMethod := new(shared.SourceAirtableUpdateAuthenticationOAuth20AuthMethod)
-			if !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.AuthMethod.IsNull() {
-				*authMethod = shared.SourceAirtableUpdateAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.AuthMethod.ValueString())
-			} else {
-				authMethod = nil
-			}
-			clientID := r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.RefreshToken.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 			tokenExpiryDate := new(time.Time)
-			if !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.TokenExpiryDate.IsNull() {
-				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceAirtableUpdateAuthenticationOAuth20.TokenExpiryDate.ValueString())
+			if !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsUnknown() && !r.Configuration.Credentials.OAuth20.TokenExpiryDate.IsNull() {
+				*tokenExpiryDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.TokenExpiryDate.ValueString())
 			} else {
 				tokenExpiryDate = nil
 			}
-			sourceAirtableUpdateAuthenticationOAuth20 = &shared.SourceAirtableUpdateAuthenticationOAuth20{
+			sourceAirtableUpdateOAuth20 = &shared.SourceAirtableUpdateOAuth20{
 				AccessToken:     accessToken,
-				AuthMethod:      authMethod,
 				ClientID:        clientID,
 				ClientSecret:    clientSecret,
 				RefreshToken:    refreshToken,
 				TokenExpiryDate: tokenExpiryDate,
 			}
 		}
-		if sourceAirtableUpdateAuthenticationOAuth20 != nil {
+		if sourceAirtableUpdateOAuth20 != nil {
 			credentials = &shared.SourceAirtableUpdateAuthentication{
-				SourceAirtableUpdateAuthenticationOAuth20: sourceAirtableUpdateAuthenticationOAuth20,
+				OAuth20: sourceAirtableUpdateOAuth20,
 			}
 		}
-		var sourceAirtableUpdateAuthenticationPersonalAccessToken *shared.SourceAirtableUpdateAuthenticationPersonalAccessToken
-		if r.Configuration.Credentials.SourceAirtableUpdateAuthenticationPersonalAccessToken != nil {
-			apiKey := r.Configuration.Credentials.SourceAirtableUpdateAuthenticationPersonalAccessToken.APIKey.ValueString()
-			authMethod1 := new(shared.SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod)
-			if !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationPersonalAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceAirtableUpdateAuthenticationPersonalAccessToken.AuthMethod.IsNull() {
-				*authMethod1 = shared.SourceAirtableUpdateAuthenticationPersonalAccessTokenAuthMethod(r.Configuration.Credentials.SourceAirtableUpdateAuthenticationPersonalAccessToken.AuthMethod.ValueString())
-			} else {
-				authMethod1 = nil
-			}
-			sourceAirtableUpdateAuthenticationPersonalAccessToken = &shared.SourceAirtableUpdateAuthenticationPersonalAccessToken{
-				APIKey:     apiKey,
-				AuthMethod: authMethod1,
+		var personalAccessToken *shared.PersonalAccessToken
+		if r.Configuration.Credentials.PersonalAccessToken != nil {
+			apiKey := r.Configuration.Credentials.PersonalAccessToken.APIKey.ValueString()
+			personalAccessToken = &shared.PersonalAccessToken{
+				APIKey: apiKey,
 			}
 		}
-		if sourceAirtableUpdateAuthenticationPersonalAccessToken != nil {
+		if personalAccessToken != nil {
 			credentials = &shared.SourceAirtableUpdateAuthentication{
-				SourceAirtableUpdateAuthenticationPersonalAccessToken: sourceAirtableUpdateAuthenticationPersonalAccessToken,
+				PersonalAccessToken: personalAccessToken,
 			}
 		}
 	}

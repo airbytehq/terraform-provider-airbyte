@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -16,8 +16,8 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	var adAnalyticsReports []shared.SourceLinkedinAdsAdAnalyticsReportConfiguration = nil
 	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
 		name := adAnalyticsReportsItem.Name.ValueString()
-		pivotBy := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
-		timeGranularity := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
+		pivotBy := shared.SourceLinkedinAdsPivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
+		timeGranularity := shared.SourceLinkedinAdsTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
 		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsAdAnalyticsReportConfiguration{
 			Name:            name,
 			PivotBy:         pivotBy,
@@ -26,56 +26,40 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	}
 	var credentials *shared.SourceLinkedinAdsAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceLinkedinAdsAuthenticationOAuth20 *shared.SourceLinkedinAdsAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20 != nil {
-			authMethod := new(shared.SourceLinkedinAdsAuthenticationOAuth20AuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod.IsNull() {
-				*authMethod = shared.SourceLinkedinAdsAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod.ValueString())
-			} else {
-				authMethod = nil
-			}
-			clientID := r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceLinkedinAdsAuthenticationOAuth20.RefreshToken.ValueString()
-			sourceLinkedinAdsAuthenticationOAuth20 = &shared.SourceLinkedinAdsAuthenticationOAuth20{
-				AuthMethod:   authMethod,
+		var sourceLinkedinAdsOAuth20 *shared.SourceLinkedinAdsOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			sourceLinkedinAdsOAuth20 = &shared.SourceLinkedinAdsOAuth20{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceLinkedinAdsAuthenticationOAuth20 != nil {
+		if sourceLinkedinAdsOAuth20 != nil {
 			credentials = &shared.SourceLinkedinAdsAuthentication{
-				SourceLinkedinAdsAuthenticationOAuth20: sourceLinkedinAdsAuthenticationOAuth20,
+				OAuth20: sourceLinkedinAdsOAuth20,
 			}
 		}
-		var sourceLinkedinAdsAuthenticationAccessToken *shared.SourceLinkedinAdsAuthenticationAccessToken
-		if r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken != nil {
-			accessToken := r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AccessToken.ValueString()
-			authMethod1 := new(shared.SourceLinkedinAdsAuthenticationAccessTokenAuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod.IsNull() {
-				*authMethod1 = shared.SourceLinkedinAdsAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod.ValueString())
-			} else {
-				authMethod1 = nil
-			}
-			sourceLinkedinAdsAuthenticationAccessToken = &shared.SourceLinkedinAdsAuthenticationAccessToken{
+		var sourceLinkedinAdsAccessToken *shared.SourceLinkedinAdsAccessToken
+		if r.Configuration.Credentials.AccessToken != nil {
+			accessToken := r.Configuration.Credentials.AccessToken.AccessToken.ValueString()
+			sourceLinkedinAdsAccessToken = &shared.SourceLinkedinAdsAccessToken{
 				AccessToken: accessToken,
-				AuthMethod:  authMethod1,
 			}
 		}
-		if sourceLinkedinAdsAuthenticationAccessToken != nil {
+		if sourceLinkedinAdsAccessToken != nil {
 			credentials = &shared.SourceLinkedinAdsAuthentication{
-				SourceLinkedinAdsAuthenticationAccessToken: sourceLinkedinAdsAuthenticationAccessToken,
+				AccessToken: sourceLinkedinAdsAccessToken,
 			}
 		}
 	}
-	sourceType := shared.SourceLinkedinAdsLinkedinAds(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAds{
 		AccountIds:         accountIds,
 		AdAnalyticsReports: adAnalyticsReports,
 		Credentials:        credentials,
-		SourceType:         sourceType,
 		StartDate:          startDate,
 	}
 	name1 := r.Name.ValueString()
@@ -105,12 +89,12 @@ func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedi
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
 	}
-	var adAnalyticsReports []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration = nil
+	var adAnalyticsReports []shared.AdAnalyticsReportConfiguration = nil
 	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
 		name := adAnalyticsReportsItem.Name.ValueString()
-		pivotBy := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
-		timeGranularity := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
-		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{
+		pivotBy := shared.PivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
+		timeGranularity := shared.TimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
+		adAnalyticsReports = append(adAnalyticsReports, shared.AdAnalyticsReportConfiguration{
 			Name:            name,
 			PivotBy:         pivotBy,
 			TimeGranularity: timeGranularity,
@@ -118,46 +102,32 @@ func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedi
 	}
 	var credentials *shared.SourceLinkedinAdsUpdateAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceLinkedinAdsUpdateAuthenticationOAuth20 *shared.SourceLinkedinAdsUpdateAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20 != nil {
-			authMethod := new(shared.SourceLinkedinAdsUpdateAuthenticationOAuth20AuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20.AuthMethod.IsNull() {
-				*authMethod = shared.SourceLinkedinAdsUpdateAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20.AuthMethod.ValueString())
-			} else {
-				authMethod = nil
-			}
-			clientID := r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationOAuth20.RefreshToken.ValueString()
-			sourceLinkedinAdsUpdateAuthenticationOAuth20 = &shared.SourceLinkedinAdsUpdateAuthenticationOAuth20{
-				AuthMethod:   authMethod,
+		var sourceLinkedinAdsUpdateOAuth20 *shared.SourceLinkedinAdsUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			sourceLinkedinAdsUpdateOAuth20 = &shared.SourceLinkedinAdsUpdateOAuth20{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceLinkedinAdsUpdateAuthenticationOAuth20 != nil {
+		if sourceLinkedinAdsUpdateOAuth20 != nil {
 			credentials = &shared.SourceLinkedinAdsUpdateAuthentication{
-				SourceLinkedinAdsUpdateAuthenticationOAuth20: sourceLinkedinAdsUpdateAuthenticationOAuth20,
+				OAuth20: sourceLinkedinAdsUpdateOAuth20,
 			}
 		}
-		var sourceLinkedinAdsUpdateAuthenticationAccessToken *shared.SourceLinkedinAdsUpdateAuthenticationAccessToken
-		if r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken != nil {
-			accessToken := r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken.AccessToken.ValueString()
-			authMethod1 := new(shared.SourceLinkedinAdsUpdateAuthenticationAccessTokenAuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken.AuthMethod.IsNull() {
-				*authMethod1 = shared.SourceLinkedinAdsUpdateAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinAdsUpdateAuthenticationAccessToken.AuthMethod.ValueString())
-			} else {
-				authMethod1 = nil
+		var accessToken *shared.AccessToken
+		if r.Configuration.Credentials.AccessToken != nil {
+			accessToken1 := r.Configuration.Credentials.AccessToken.AccessToken.ValueString()
+			accessToken = &shared.AccessToken{
+				AccessToken: accessToken1,
 			}
-			sourceLinkedinAdsUpdateAuthenticationAccessToken = &shared.SourceLinkedinAdsUpdateAuthenticationAccessToken{
+		}
+		if accessToken != nil {
+			credentials = &shared.SourceLinkedinAdsUpdateAuthentication{
 				AccessToken: accessToken,
-				AuthMethod:  authMethod1,
-			}
-		}
-		if sourceLinkedinAdsUpdateAuthenticationAccessToken != nil {
-			credentials = &shared.SourceLinkedinAdsUpdateAuthentication{
-				SourceLinkedinAdsUpdateAuthenticationAccessToken: sourceLinkedinAdsUpdateAuthenticationAccessToken,
 			}
 		}
 	}

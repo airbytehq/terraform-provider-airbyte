@@ -7,3 +7,24 @@ type SourceFakerPutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceFakerPutRequest) GetConfiguration() SourceFakerUpdate {
+	if o == nil {
+		return SourceFakerUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFakerPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFakerPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

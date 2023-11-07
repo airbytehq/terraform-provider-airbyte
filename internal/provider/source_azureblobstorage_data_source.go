@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,11 +31,11 @@ type SourceAzureBlobStorageDataSource struct {
 
 // SourceAzureBlobStorageDataSourceModel describes the data model.
 type SourceAzureBlobStorageDataSourceModel struct {
-	Configuration SourceAzureBlobStorage `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,92 +49,22 @@ func (r *SourceAzureBlobStorageDataSource) Schema(ctx context.Context, req datas
 		MarkdownDescription: "SourceAzureBlobStorage DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"azure_blob_storage_account_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Azure blob storage account key.`,
-					},
-					"azure_blob_storage_account_name": schema.StringAttribute{
-						Computed:    true,
-						Description: `The account's name of the Azure Blob Storage.`,
-					},
-					"azure_blob_storage_blobs_prefix": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Azure blob storage prefix to be applied`,
-					},
-					"azure_blob_storage_container_name": schema.StringAttribute{
-						Computed:    true,
-						Description: `The name of the Azure blob storage container.`,
-					},
-					"azure_blob_storage_endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
-					},
-					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure`,
-					},
-					"format": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
-								Description: `Input data format`,
-							},
-							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
-								Description: `Input data format`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Input data format`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-blob-storage",
-							),
-						},
-						Description: `must be one of ["azure-blob-storage"]`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

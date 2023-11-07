@@ -1,13 +1,12 @@
 resource "airbyte_destination_databend" "my_destination_databend" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "databend"
-    host             = "...my_host..."
-    password         = "...my_password..."
-    port             = 443
-    table            = "default"
-    username         = "Leo.Purdy"
+    database = "...my_database..."
+    host     = "...my_host..."
+    password = "...my_password..."
+    port     = 443
+    table    = "default"
+    username = "Casimir70"
   }
-  name         = "Bobby Kutch V"
-  workspace_id = "b3fe49a8-d9cb-4f48-a333-23f9b77f3a41"
+  name         = "Sheri Howell"
+  workspace_id = "5d335e03-abeb-4b71-b58e-872ec68b6d2a"
 }

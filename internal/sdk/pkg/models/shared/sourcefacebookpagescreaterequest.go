@@ -9,3 +9,31 @@ type SourceFacebookPagesCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceFacebookPagesCreateRequest) GetConfiguration() SourceFacebookPages {
+	if o == nil {
+		return SourceFacebookPages{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

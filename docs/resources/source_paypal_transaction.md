@@ -17,14 +17,13 @@ resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
   configuration = {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    is_sandbox    = false
+    is_sandbox    = true
     refresh_token = "...my_refresh_token..."
-    source_type   = "paypal-transaction"
     start_date    = "2021-06-11T23:59:59+00:00"
   }
-  name         = "Ernestine Little"
+  name         = "Daniel Graham"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da013191-1296-4466-85c1-d81f29042f56"
+  workspace_id = "6c5d5cf5-0fbf-4713-864e-d5bf6d67306c"
 }
 ```
 
@@ -53,12 +52,12 @@ Required:
 
 - `client_id` (String) The Client ID of your Paypal developer application.
 - `client_secret` (String) The Client Secret of your Paypal developer application.
-- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `source_type` (String) must be one of ["paypal-transaction"]
 - `start_date` (String) Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 
 Optional:
 
+- `is_sandbox` (Boolean) Default: false
+Determines whether to use the sandbox or production environment.
 - `refresh_token` (String) The key to refresh the expired access token.
 
 

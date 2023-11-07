@@ -7,3 +7,24 @@ type DestinationGoogleSheetsCreateRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *DestinationGoogleSheetsCreateRequest) GetConfiguration() DestinationGoogleSheets {
+	if o == nil {
+		return DestinationGoogleSheets{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationGoogleSheetsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationGoogleSheetsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

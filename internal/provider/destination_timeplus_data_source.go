@@ -3,12 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -31,10 +31,11 @@ type DestinationTimeplusDataSource struct {
 
 // DestinationTimeplusDataSourceModel describes the data model.
 type DestinationTimeplusDataSourceModel struct {
-	Configuration DestinationTimeplus `tfsdk:"configuration"`
-	DestinationID types.String        `tfsdk:"destination_id"`
-	Name          types.String        `tfsdk:"name"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,30 +49,19 @@ func (r *DestinationTimeplusDataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "DestinationTimeplus DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"apikey": schema.StringAttribute{
-						Computed:    true,
-						Description: `Personal API key`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"timeplus",
-							),
-						},
-						Description: `must be one of ["timeplus"]`,
-					},
-					"endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `Timeplus workspace endpoint`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -13,7 +13,6 @@ func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintree
 	merchantID := r.Configuration.MerchantID.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
 	publicKey := r.Configuration.PublicKey.ValueString()
-	sourceType := shared.SourceBraintreeBraintree(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -25,7 +24,6 @@ func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintree
 		MerchantID:  merchantID,
 		PrivateKey:  privateKey,
 		PublicKey:   publicKey,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()

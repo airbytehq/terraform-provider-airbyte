@@ -6,6 +6,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRecharge struct {
 	AccessToken types.String `tfsdk:"access_token"`
-	SourceType  types.String `tfsdk:"source_type"`
 	StartDate   types.String `tfsdk:"start_date"`
 }

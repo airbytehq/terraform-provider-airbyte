@@ -3,21 +3,24 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreateRequest {
 	password := r.Configuration.Password.ValueString()
-	playground := r.Configuration.Playground.ValueBool()
+	playground := new(bool)
+	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
+		*playground = r.Configuration.Playground.ValueBool()
+	} else {
+		playground = nil
+	}
 	region := shared.SourceKlarnaRegion(r.Configuration.Region.ValueString())
-	sourceType := shared.SourceKlarnaKlarna(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceKlarna{
 		Password:   password,
 		Playground: playground,
 		Region:     region,
-		SourceType: sourceType,
 		Username:   username,
 	}
 	name := r.Name.ValueString()
@@ -44,7 +47,12 @@ func (r *SourceKlarnaResourceModel) ToGetSDKType() *shared.SourceKlarnaCreateReq
 
 func (r *SourceKlarnaResourceModel) ToUpdateSDKType() *shared.SourceKlarnaPutRequest {
 	password := r.Configuration.Password.ValueString()
-	playground := r.Configuration.Playground.ValueBool()
+	playground := new(bool)
+	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
+		*playground = r.Configuration.Playground.ValueBool()
+	} else {
+		playground = nil
+	}
 	region := shared.SourceKlarnaUpdateRegion(r.Configuration.Region.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceKlarnaUpdate{

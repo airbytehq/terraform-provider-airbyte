@@ -14,7 +14,6 @@ SourceBigquery DataSource
 
 ```terraform
 data "airbyte_source_bigquery" "my_source_bigquery" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,24 +25,12 @@ data "airbyte_source_bigquery" "my_source_bigquery" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials_json` (String) The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
-- `dataset_id` (String) The dataset ID to search for tables and views. If you are only loading data from one dataset, setting this option could result in much faster schema discovery.
-- `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
-- `source_type` (String) must be one of ["bigquery"]
 
 

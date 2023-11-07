@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationKeen struct {
-	APIKey          types.String `tfsdk:"api_key"`
-	DestinationType types.String `tfsdk:"destination_type"`
-	InferTimestamp  types.Bool   `tfsdk:"infer_timestamp"`
-	ProjectID       types.String `tfsdk:"project_id"`
+	APIKey         types.String `tfsdk:"api_key"`
+	InferTimestamp types.Bool   `tfsdk:"infer_timestamp"`
+	ProjectID      types.String `tfsdk:"project_id"`
 }

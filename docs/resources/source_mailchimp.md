@@ -17,16 +17,14 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
   configuration = {
     campaign_id = "...my_campaign_id..."
     credentials = {
-      source_mailchimp_authentication_api_key = {
-        apikey    = "...my_apikey..."
-        auth_type = "apikey"
+      api_key = {
+        apikey = "...my_apikey..."
       }
     }
-    source_type = "mailchimp"
   }
-  name         = "Benny Williamson"
+  name         = "Dr. Everett Keebler"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da18a782-2bf9-4589-8e68-61adb55f9e5d"
+  workspace_id = "e85198c1-16e7-4265-81ee-6770fa8ec1ba"
 }
 ```
 
@@ -51,10 +49,6 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["mailchimp"]
-
 Optional:
 
 - `campaign_id` (String)
@@ -65,50 +59,23 @@ Optional:
 
 Optional:
 
-- `source_mailchimp_authentication_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_authentication_api_key))
-- `source_mailchimp_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0))
-- `source_mailchimp_update_authentication_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_update_authentication_api_key))
-- `source_mailchimp_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0))
+- `api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_key))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_mailchimp_authentication_api_key"></a>
-### Nested Schema for `configuration.credentials.source_mailchimp_authentication_api_key`
+<a id="nestedatt--configuration--credentials--api_key"></a>
+### Nested Schema for `configuration.credentials.api_key`
 
 Required:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of ["apikey"]
 
 
-<a id="nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_mailchimp_authentication_o_auth2_0`
-
-Required:
-
-- `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of ["oauth2.0"]
-
-Optional:
-
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
-
-
-<a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_api_key"></a>
-### Nested Schema for `configuration.credentials.source_mailchimp_update_authentication_api_key`
-
-Required:
-
-- `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of ["apikey"]
-
-
-<a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_mailchimp_update_authentication_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of ["oauth2.0"]
 
 Optional:
 

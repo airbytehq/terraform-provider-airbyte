@@ -5,41 +5,89 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourcePipedriveUpdateAPIKeyAuthenticationAuthType string
+type SourcePipedriveUpdateAuthType string
 
 const (
-	SourcePipedriveUpdateAPIKeyAuthenticationAuthTypeToken SourcePipedriveUpdateAPIKeyAuthenticationAuthType = "Token"
+	SourcePipedriveUpdateAuthTypeToken SourcePipedriveUpdateAuthType = "Token"
 )
 
-func (e SourcePipedriveUpdateAPIKeyAuthenticationAuthType) ToPointer() *SourcePipedriveUpdateAPIKeyAuthenticationAuthType {
+func (e SourcePipedriveUpdateAuthType) ToPointer() *SourcePipedriveUpdateAuthType {
 	return &e
 }
 
-func (e *SourcePipedriveUpdateAPIKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourcePipedriveUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Token":
-		*e = SourcePipedriveUpdateAPIKeyAuthenticationAuthType(v)
+		*e = SourcePipedriveUpdateAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedriveUpdateAPIKeyAuthenticationAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourcePipedriveUpdateAuthType: %v", v)
 	}
 }
 
-type SourcePipedriveUpdateAPIKeyAuthentication struct {
+type APIKeyAuthentication struct {
 	// The Pipedrive API Token.
-	APIToken string                                            `json:"api_token"`
-	AuthType SourcePipedriveUpdateAPIKeyAuthenticationAuthType `json:"auth_type"`
+	APIToken string                        `json:"api_token"`
+	authType SourcePipedriveUpdateAuthType `const:"Token" json:"auth_type"`
+}
+
+func (a APIKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *APIKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *APIKeyAuthentication) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *APIKeyAuthentication) GetAuthType() SourcePipedriveUpdateAuthType {
+	return SourcePipedriveUpdateAuthTypeToken
 }
 
 type SourcePipedriveUpdate struct {
-	Authorization *SourcePipedriveUpdateAPIKeyAuthentication `json:"authorization,omitempty"`
+	Authorization *APIKeyAuthentication `json:"authorization,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
 	ReplicationStartDate time.Time `json:"replication_start_date"`
+}
+
+func (s SourcePipedriveUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePipedriveUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePipedriveUpdate) GetAuthorization() *APIKeyAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Authorization
+}
+
+func (o *SourcePipedriveUpdate) GetReplicationStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ReplicationStartDate
 }

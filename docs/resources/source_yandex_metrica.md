@@ -15,15 +15,14 @@ SourceYandexMetrica Resource
 ```terraform
 resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
   configuration = {
-    auth_token  = "...my_auth_token..."
-    counter_id  = "...my_counter_id..."
-    end_date    = "2022-01-01"
-    source_type = "yandex-metrica"
-    start_date  = "2022-01-01"
+    auth_token = "...my_auth_token..."
+    counter_id = "...my_counter_id..."
+    end_date   = "2022-01-01"
+    start_date = "2022-01-01"
   }
-  name         = "Dominic Marvin"
+  name         = "Emanuel Bernier"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e102da2d-e35f-48e0-9bf3-3eaab45402ac"
+  workspace_id = "50e4c312-0d77-4a56-aac7-96fdac1f48b8"
 }
 ```
 
@@ -52,7 +51,6 @@ Required:
 
 - `auth_token` (String) Your Yandex Metrica API access token
 - `counter_id` (String) Counter ID
-- `source_type` (String) must be one of ["yandex-metrica"]
 - `start_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD".
 
 Optional:

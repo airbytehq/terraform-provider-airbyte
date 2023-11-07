@@ -18,13 +18,11 @@ resource "airbyte_destination_bigquery_denormalized" "my_destination_bigqueryden
     big_query_client_buffer_size_mb = 15
     credentials_json                = "...my_credentials_json..."
     dataset_id                      = "...my_dataset_id..."
-    dataset_location                = "europe-west7"
-    destination_type                = "bigquery-denormalized"
+    dataset_location                = "europe-west9"
     loading_method = {
-      destination_bigquery_denormalized_loading_method_gcs_staging = {
+      gcs_staging = {
         credential = {
-          destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key = {
-            credential_type    = "HMAC_KEY"
+          destination_bigquery_denormalized_hmac_key = {
             hmac_key_access_id = "1234567890abcdefghij1234"
             hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
           }
@@ -33,13 +31,12 @@ resource "airbyte_destination_bigquery_denormalized" "my_destination_bigqueryden
         gcs_bucket_name          = "airbyte_sync"
         gcs_bucket_path          = "data_sync/test"
         keep_files_in_gcs_bucket = "Keep all tmp files in GCS"
-        method                   = "GCS Staging"
       }
     }
     project_id = "...my_project_id..."
   }
-  name         = "Francisco Windler"
-  workspace_id = "c969e9a3-efa7-47df-b14c-d66ae395efb9"
+  name         = "Frankie Runolfsson"
+  workspace_id = "cb44c87d-9163-4ca2-a92d-142842c5e975"
 }
 ```
 
@@ -63,14 +60,14 @@ resource "airbyte_destination_bigquery_denormalized" "my_destination_bigqueryden
 Required:
 
 - `dataset_id` (String) The default BigQuery Dataset ID that tables are replicated to if the source does not specify a namespace. Read more <a href="https://cloud.google.com/bigquery/docs/datasets#create-dataset">here</a>.
-- `destination_type` (String) must be one of ["bigquery-denormalized"]
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
 
 Optional:
 
-- `big_query_client_buffer_size_mb` (Number) Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.
+- `big_query_client_buffer_size_mb` (Number) Default: 15
+Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.
 - `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
-- `dataset_location` (String) must be one of ["US", "EU", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "europe-central1", "europe-central2", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "europe-west7", "europe-west8", "europe-west9", "me-west1", "northamerica-northeast1", "northamerica-northeast2", "southamerica-east1", "southamerica-west1", "us-central1", "us-east1", "us-east2", "us-east3", "us-east4", "us-east5", "us-west1", "us-west2", "us-west3", "us-west4"]
+- `dataset_location` (String) must be one of ["US", "EU", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "europe-central1", "europe-central2", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "europe-west7", "europe-west8", "europe-west9", "me-west1", "northamerica-northeast1", "northamerica-northeast2", "southamerica-east1", "southamerica-west1", "us-central1", "us-east1", "us-east2", "us-east3", "us-east4", "us-east5", "us-west1", "us-west2", "us-west3", "us-west4"]; Default: "US"
 The location of the dataset. Warning: Changes made after creation will not be applied. The default "US" value is used if not set explicitly. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
 - `loading_method` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method))
 
@@ -79,94 +76,44 @@ The location of the dataset. Warning: Changes made after creation will not be ap
 
 Optional:
 
-- `destination_bigquery_denormalized_loading_method_gcs_staging` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_gcs_staging))
-- `destination_bigquery_denormalized_loading_method_standard_inserts` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_standard_inserts))
-- `destination_bigquery_denormalized_update_loading_method_gcs_staging` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_gcs_staging))
-- `destination_bigquery_denormalized_update_loading_method_standard_inserts` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_standard_inserts))
+- `gcs_staging` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging))
+- `standard_inserts` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--standard_inserts))
 
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_gcs_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_loading_method_gcs_staging`
+<a id="nestedatt--configuration--loading_method--gcs_staging"></a>
+### Nested Schema for `configuration.loading_method.gcs_staging`
 
 Required:
 
-- `credential` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_gcs_staging--credential))
+- `credential` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging--credential))
 - `gcs_bucket_name` (String) The name of the GCS bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
 - `gcs_bucket_path` (String) Directory under the GCS bucket where data will be written. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-- `method` (String) must be one of ["GCS Staging"]
 
 Optional:
 
-- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
-- `keep_files_in_gcs_bucket` (String) must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]
+- `file_buffer_count` (Number) Default: 10
+Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
+- `keep_files_in_gcs_bucket` (String) must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]; Default: "Delete all tmp files from GCS"
 This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
 
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_gcs_staging--credential"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_loading_method_gcs_staging.keep_files_in_gcs_bucket`
+<a id="nestedatt--configuration--loading_method--gcs_staging--credential"></a>
+### Nested Schema for `configuration.loading_method.gcs_staging.keep_files_in_gcs_bucket`
 
 Optional:
 
-- `destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_gcs_staging--keep_files_in_gcs_bucket--destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key))
+- `hmac_key` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging--keep_files_in_gcs_bucket--hmac_key))
 
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_gcs_staging--keep_files_in_gcs_bucket--destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_loading_method_gcs_staging.keep_files_in_gcs_bucket.destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key`
+<a id="nestedatt--configuration--loading_method--gcs_staging--keep_files_in_gcs_bucket--hmac_key"></a>
+### Nested Schema for `configuration.loading_method.gcs_staging.keep_files_in_gcs_bucket.hmac_key`
 
 Required:
 
-- `credential_type` (String) must be one of ["HMAC_KEY"]
 - `hmac_key_access_id` (String) HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
 - `hmac_key_secret` (String) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
 
 
 
 
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_loading_method_standard_inserts"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_loading_method_standard_inserts`
-
-Required:
-
-- `method` (String) must be one of ["Standard"]
-
-
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_gcs_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_update_loading_method_gcs_staging`
-
-Required:
-
-- `credential` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_gcs_staging--credential))
-- `gcs_bucket_name` (String) The name of the GCS bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
-- `gcs_bucket_path` (String) Directory under the GCS bucket where data will be written. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-- `method` (String) must be one of ["GCS Staging"]
-
-Optional:
-
-- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
-- `keep_files_in_gcs_bucket` (String) must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]
-This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
-
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_gcs_staging--credential"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_update_loading_method_gcs_staging.keep_files_in_gcs_bucket`
-
-Optional:
-
-- `destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_gcs_staging--keep_files_in_gcs_bucket--destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key))
-
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_gcs_staging--keep_files_in_gcs_bucket--destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_update_loading_method_gcs_staging.keep_files_in_gcs_bucket.destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key`
-
-Required:
-
-- `credential_type` (String) must be one of ["HMAC_KEY"]
-- `hmac_key_access_id` (String) HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
-- `hmac_key_secret` (String) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
-
-
-
-
-<a id="nestedatt--configuration--loading_method--destination_bigquery_denormalized_update_loading_method_standard_inserts"></a>
-### Nested Schema for `configuration.loading_method.destination_bigquery_denormalized_update_loading_method_standard_inserts`
-
-Required:
-
-- `method` (String) must be one of ["Standard"]
+<a id="nestedatt--configuration--loading_method--standard_inserts"></a>
+### Nested Schema for `configuration.loading_method.standard_inserts`
 
 

@@ -7,3 +7,24 @@ type SourceGoogleWorkspaceAdminReportsPutRequest struct {
 	Name          string                                  `json:"name"`
 	WorkspaceID   string                                  `json:"workspaceId"`
 }
+
+func (o *SourceGoogleWorkspaceAdminReportsPutRequest) GetConfiguration() SourceGoogleWorkspaceAdminReportsUpdate {
+	if o == nil {
+		return SourceGoogleWorkspaceAdminReportsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

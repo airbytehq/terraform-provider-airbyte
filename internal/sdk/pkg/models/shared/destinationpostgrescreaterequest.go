@@ -7,3 +7,24 @@ type DestinationPostgresCreateRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *DestinationPostgresCreateRequest) GetConfiguration() DestinationPostgres {
+	if o == nil {
+		return DestinationPostgres{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationPostgresCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationPostgresCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

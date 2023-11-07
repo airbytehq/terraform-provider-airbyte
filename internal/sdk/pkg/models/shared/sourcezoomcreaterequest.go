@@ -9,3 +9,31 @@ type SourceZoomCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceZoomCreateRequest) GetConfiguration() SourceZoom {
+	if o == nil {
+		return SourceZoom{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZoomCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZoomCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceZoomCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

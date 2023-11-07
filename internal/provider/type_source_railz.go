@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRailz struct {
-	ClientID   types.String `tfsdk:"client_id"`
-	SecretKey  types.String `tfsdk:"secret_key"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
+	ClientID  types.String `tfsdk:"client_id"`
+	SecretKey types.String `tfsdk:"secret_key"`
+	StartDate types.String `tfsdk:"start_date"`
 }

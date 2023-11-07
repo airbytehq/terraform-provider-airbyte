@@ -9,3 +9,31 @@ type SourceYoutubeAnalyticsCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceYoutubeAnalyticsCreateRequest) GetConfiguration() SourceYoutubeAnalytics {
+	if o == nil {
+		return SourceYoutubeAnalytics{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceYoutubeAnalyticsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceYoutubeAnalyticsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceYoutubeAnalyticsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

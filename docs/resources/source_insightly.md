@@ -15,13 +15,12 @@ SourceInsightly Resource
 ```terraform
 resource "airbyte_source_insightly" "my_source_insightly" {
   configuration = {
-    source_type = "insightly"
-    start_date  = "2021-03-01T00:00:00Z"
-    token       = "...my_token..."
+    start_date = "2021-03-01T00:00:00Z"
+    token      = "...my_token..."
   }
-  name         = "Dana Lindgren"
+  name         = "Allan Feeney"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0a9eba47-f7d3-4ef0-8964-0d6a1831c87a"
+  workspace_id = "69be0c12-ece5-49b9-bbae-f8e47490588d"
 }
 ```
 
@@ -48,7 +47,6 @@ resource "airbyte_source_insightly" "my_source_insightly" {
 
 Required:
 
-- `source_type` (String) must be one of ["insightly"]
 - `start_date` (String) The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 - `token` (String) Your Insightly API token.
 

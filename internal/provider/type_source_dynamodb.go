@@ -10,5 +10,4 @@ type SourceDynamodb struct {
 	Region                 types.String `tfsdk:"region"`
 	ReservedAttributeNames types.String `tfsdk:"reserved_attribute_names"`
 	SecretAccessKey        types.String `tfsdk:"secret_access_key"`
-	SourceType             types.String `tfsdk:"source_type"`
 }

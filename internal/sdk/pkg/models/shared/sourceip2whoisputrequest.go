@@ -7,3 +7,24 @@ type SourceIp2whoisPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceIp2whoisPutRequest) GetConfiguration() SourceIp2whoisUpdate {
+	if o == nil {
+		return SourceIp2whoisUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceIp2whoisPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceIp2whoisPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

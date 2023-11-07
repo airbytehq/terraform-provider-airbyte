@@ -3,8 +3,6 @@
 package provider
 
 type SourceZendeskSupportAuthentication struct {
-	SourceZendeskSupportAuthenticationAPIToken       *SourceZendeskSupportAuthenticationAPIToken       `tfsdk:"source_zendesk_support_authentication_api_token"`
-	SourceZendeskSupportAuthenticationOAuth20        *SourceZendeskSupportAuthenticationOAuth20        `tfsdk:"source_zendesk_support_authentication_o_auth2_0"`
-	SourceZendeskSupportUpdateAuthenticationAPIToken *SourceZendeskSupportUpdateAuthenticationAPIToken `tfsdk:"source_zendesk_support_update_authentication_api_token"`
-	SourceZendeskSupportUpdateAuthenticationOAuth20  *SourceZendeskSupportUpdateAuthenticationOAuth20  `tfsdk:"source_zendesk_support_update_authentication_o_auth2_0"`
+	APIToken *SourceZendeskSupportAPIToken `tfsdk:"api_token"`
+	OAuth20  *SourceZendeskSupportOAuth20  `tfsdk:"o_auth20"`
 }

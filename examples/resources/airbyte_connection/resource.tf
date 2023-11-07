@@ -5,7 +5,7 @@ resource "airbyte_connection" "my_connection" {
         cursor_field = [
           "...",
         ]
-        name = "Terrence Rau"
+        name = "Cecil Johnson"
         primary_key = [
           [
             "...",
@@ -15,18 +15,18 @@ resource "airbyte_connection" "my_connection" {
       },
     ]
   }
-  data_residency                       = "us"
-  destination_id                       = "d69a674e-0f46-47cc-8796-ed151a05dfc2"
-  name                                 = "Wilfred Wolff"
-  namespace_definition                 = "custom_format"
+  data_residency                       = "auto"
+  destination_id                       = "e362083e-afc8-4559-94e0-a570f6dd427d"
+  name                                 = "Melvin O'Connell"
+  namespace_definition                 = "source"
   namespace_format                     = SOURCE_NAMESPACE
-  non_breaking_schema_updates_behavior = "disable_connection"
+  non_breaking_schema_updates_behavior = "propagate_columns"
   prefix                               = "...my_prefix..."
   schedule = {
     basic_timing    = "...my_basic_timing..."
     cron_expression = "...my_cron_expression..."
-    schedule_type   = "cron"
+    schedule_type   = "manual"
   }
-  source_id = "ca1ba928-fc81-4674-acb7-39205929396f"
+  source_id = "78358423-25b6-4c7b-bfd2-fd307d60cb97"
   status    = "deprecated"
 }

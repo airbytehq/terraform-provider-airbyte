@@ -7,3 +7,24 @@ type SourceMetabasePutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceMetabasePutRequest) GetConfiguration() SourceMetabaseUpdate {
+	if o == nil {
+		return SourceMetabaseUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMetabasePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMetabasePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

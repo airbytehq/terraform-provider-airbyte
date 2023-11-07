@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,10 +12,14 @@ func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCrea
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	dcRegion := shared.SourceZohoCrmDataCenterLocation(r.Configuration.DcRegion.ValueString())
-	edition := shared.SourceZohoCRMZohoCRMEdition(r.Configuration.Edition.ValueString())
+	edition := new(shared.SourceZohoCRMZohoCRMEdition)
+	if !r.Configuration.Edition.IsUnknown() && !r.Configuration.Edition.IsNull() {
+		*edition = shared.SourceZohoCRMZohoCRMEdition(r.Configuration.Edition.ValueString())
+	} else {
+		edition = nil
+	}
 	environment := shared.SourceZohoCrmEnvironment(r.Configuration.Environment.ValueString())
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceZohoCrmZohoCrm(r.Configuration.SourceType.ValueString())
 	startDatetime := new(time.Time)
 	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
 		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
@@ -29,7 +33,6 @@ func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCrea
 		Edition:       edition,
 		Environment:   environment,
 		RefreshToken:  refreshToken,
-		SourceType:    sourceType,
 		StartDatetime: startDatetime,
 	}
 	name := r.Name.ValueString()
@@ -57,8 +60,13 @@ func (r *SourceZohoCrmResourceModel) ToGetSDKType() *shared.SourceZohoCrmCreateR
 func (r *SourceZohoCrmResourceModel) ToUpdateSDKType() *shared.SourceZohoCrmPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dcRegion := shared.SourceZohoCrmUpdateDataCenterLocation(r.Configuration.DcRegion.ValueString())
-	edition := shared.SourceZohoCRMUpdateZohoCRMEdition(r.Configuration.Edition.ValueString())
+	dcRegion := shared.DataCenterLocation(r.Configuration.DcRegion.ValueString())
+	edition := new(shared.ZohoCRMEdition)
+	if !r.Configuration.Edition.IsUnknown() && !r.Configuration.Edition.IsNull() {
+		*edition = shared.ZohoCRMEdition(r.Configuration.Edition.ValueString())
+	} else {
+		edition = nil
+	}
 	environment := shared.SourceZohoCrmUpdateEnvironment(r.Configuration.Environment.ValueString())
 	refreshToken := r.Configuration.RefreshToken.ValueString()
 	startDatetime := new(time.Time)

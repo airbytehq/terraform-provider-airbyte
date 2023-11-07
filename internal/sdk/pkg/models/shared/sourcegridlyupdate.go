@@ -7,3 +7,17 @@ type SourceGridlyUpdate struct {
 	// ID of a grid, or can be ID of a branch
 	GridID string `json:"grid_id"`
 }
+
+func (o *SourceGridlyUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGridlyUpdate) GetGridID() string {
+	if o == nil {
+		return ""
+	}
+	return o.GridID
+}

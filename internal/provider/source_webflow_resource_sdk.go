@@ -3,18 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceWebflowResourceModel) ToCreateSDKType() *shared.SourceWebflowCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	siteID := r.Configuration.SiteID.ValueString()
-	sourceType := shared.SourceWebflowWebflow(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceWebflow{
-		APIKey:     apiKey,
-		SiteID:     siteID,
-		SourceType: sourceType,
+		APIKey: apiKey,
+		SiteID: siteID,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

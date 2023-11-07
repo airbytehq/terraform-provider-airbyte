@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePexelsAPIPexelsAPI string
+type PexelsAPI string
 
 const (
-	SourcePexelsAPIPexelsAPIPexelsAPI SourcePexelsAPIPexelsAPI = "pexels-api"
+	PexelsAPIPexelsAPI PexelsAPI = "pexels-api"
 )
 
-func (e SourcePexelsAPIPexelsAPI) ToPointer() *SourcePexelsAPIPexelsAPI {
+func (e PexelsAPI) ToPointer() *PexelsAPI {
 	return &e
 }
 
-func (e *SourcePexelsAPIPexelsAPI) UnmarshalJSON(data []byte) error {
+func (e *PexelsAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pexels-api":
-		*e = SourcePexelsAPIPexelsAPI(v)
+		*e = PexelsAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePexelsAPIPexelsAPI: %v", v)
+		return fmt.Errorf("invalid value for PexelsAPI: %v", v)
 	}
 }
 
@@ -43,6 +44,63 @@ type SourcePexelsAPI struct {
 	// Optional, the search query, Example Ocean, Tigers, Pears, etc.
 	Query string `json:"query"`
 	// Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
-	Size       *string                  `json:"size,omitempty"`
-	SourceType SourcePexelsAPIPexelsAPI `json:"sourceType"`
+	Size       *string   `json:"size,omitempty"`
+	sourceType PexelsAPI `const:"pexels-api" json:"sourceType"`
+}
+
+func (s SourcePexelsAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePexelsAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePexelsAPI) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePexelsAPI) GetColor() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Color
+}
+
+func (o *SourcePexelsAPI) GetLocale() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *SourcePexelsAPI) GetOrientation() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Orientation
+}
+
+func (o *SourcePexelsAPI) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourcePexelsAPI) GetSize() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Size
+}
+
+func (o *SourcePexelsAPI) GetSourceType() PexelsAPI {
+	return PexelsAPIPexelsAPI
 }

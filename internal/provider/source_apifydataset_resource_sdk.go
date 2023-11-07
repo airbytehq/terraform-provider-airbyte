@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,13 +20,11 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 	} else {
 		datasetID = nil
 	}
-	sourceType := shared.SourceApifyDatasetApifyDataset(r.Configuration.SourceType.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDataset{
-		Clean:      clean,
-		DatasetID:  datasetID,
-		SourceType: sourceType,
-		Token:      token,
+		Clean:     clean,
+		DatasetID: datasetID,
+		Token:     token,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

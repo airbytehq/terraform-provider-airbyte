@@ -9,6 +9,5 @@ type SourceFileSecure struct {
 	Format        types.String                    `tfsdk:"format"`
 	Provider      SourceFileSecureStorageProvider `tfsdk:"provider"`
 	ReaderOptions types.String                    `tfsdk:"reader_options"`
-	SourceType    types.String                    `tfsdk:"source_type"`
 	URL           types.String                    `tfsdk:"url"`
 }

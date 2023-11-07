@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -52,7 +52,6 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourcePocketPocket(r.Configuration.SourceType.ValueString())
 	state := new(shared.SourcePocketState)
 	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
 		*state = shared.SourcePocketState(r.Configuration.State.ValueString())
@@ -75,7 +74,6 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 		Search:      search,
 		Since:       since,
 		Sort:        sort,
-		SourceType:  sourceType,
 		State:       state,
 		Tag:         tag,
 	}
@@ -104,15 +102,15 @@ func (r *SourcePocketResourceModel) ToGetSDKType() *shared.SourcePocketCreateReq
 func (r *SourcePocketResourceModel) ToUpdateSDKType() *shared.SourcePocketPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
-	contentType := new(shared.SourcePocketUpdateContentType)
+	contentType := new(shared.ContentType)
 	if !r.Configuration.ContentType.IsUnknown() && !r.Configuration.ContentType.IsNull() {
-		*contentType = shared.SourcePocketUpdateContentType(r.Configuration.ContentType.ValueString())
+		*contentType = shared.ContentType(r.Configuration.ContentType.ValueString())
 	} else {
 		contentType = nil
 	}
-	detailType := new(shared.SourcePocketUpdateDetailType)
+	detailType := new(shared.DetailType)
 	if !r.Configuration.DetailType.IsUnknown() && !r.Configuration.DetailType.IsNull() {
-		*detailType = shared.SourcePocketUpdateDetailType(r.Configuration.DetailType.ValueString())
+		*detailType = shared.DetailType(r.Configuration.DetailType.ValueString())
 	} else {
 		detailType = nil
 	}
@@ -146,9 +144,9 @@ func (r *SourcePocketResourceModel) ToUpdateSDKType() *shared.SourcePocketPutReq
 	} else {
 		sort = nil
 	}
-	state := new(shared.SourcePocketUpdateState)
+	state := new(shared.State)
 	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
-		*state = shared.SourcePocketUpdateState(r.Configuration.State.ValueString())
+		*state = shared.State(r.Configuration.State.ValueString())
 	} else {
 		state = nil
 	}

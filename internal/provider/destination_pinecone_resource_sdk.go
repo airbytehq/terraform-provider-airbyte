@@ -3,66 +3,43 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.DestinationPineconeCreateRequest {
-	destinationType := shared.DestinationPineconePinecone(r.Configuration.DestinationType.ValueString())
 	var embedding shared.DestinationPineconeEmbedding
-	var destinationPineconeEmbeddingOpenAI *shared.DestinationPineconeEmbeddingOpenAI
-	if r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationPineconeEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationPineconeEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
-		openaiKey := r.Configuration.Embedding.DestinationPineconeEmbeddingOpenAI.OpenaiKey.ValueString()
-		destinationPineconeEmbeddingOpenAI = &shared.DestinationPineconeEmbeddingOpenAI{
-			Mode:      mode,
+	var destinationPineconeOpenAI *shared.DestinationPineconeOpenAI
+	if r.Configuration.Embedding.OpenAI != nil {
+		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
+		destinationPineconeOpenAI = &shared.DestinationPineconeOpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if destinationPineconeEmbeddingOpenAI != nil {
+	if destinationPineconeOpenAI != nil {
 		embedding = shared.DestinationPineconeEmbedding{
-			DestinationPineconeEmbeddingOpenAI: destinationPineconeEmbeddingOpenAI,
+			OpenAI: destinationPineconeOpenAI,
 		}
 	}
-	var destinationPineconeEmbeddingCohere *shared.DestinationPineconeEmbeddingCohere
-	if r.Configuration.Embedding.DestinationPineconeEmbeddingCohere != nil {
-		cohereKey := r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.CohereKey.ValueString()
-		mode1 := new(shared.DestinationPineconeEmbeddingCohereMode)
-		if !r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode.IsNull() {
-			*mode1 = shared.DestinationPineconeEmbeddingCohereMode(r.Configuration.Embedding.DestinationPineconeEmbeddingCohere.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
-		destinationPineconeEmbeddingCohere = &shared.DestinationPineconeEmbeddingCohere{
+	var destinationPineconeCohere *shared.DestinationPineconeCohere
+	if r.Configuration.Embedding.Cohere != nil {
+		cohereKey := r.Configuration.Embedding.Cohere.CohereKey.ValueString()
+		destinationPineconeCohere = &shared.DestinationPineconeCohere{
 			CohereKey: cohereKey,
-			Mode:      mode1,
 		}
 	}
-	if destinationPineconeEmbeddingCohere != nil {
+	if destinationPineconeCohere != nil {
 		embedding = shared.DestinationPineconeEmbedding{
-			DestinationPineconeEmbeddingCohere: destinationPineconeEmbeddingCohere,
+			Cohere: destinationPineconeCohere,
 		}
 	}
-	var destinationPineconeEmbeddingFake *shared.DestinationPineconeEmbeddingFake
-	if r.Configuration.Embedding.DestinationPineconeEmbeddingFake != nil {
-		mode2 := new(shared.DestinationPineconeEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode.IsNull() {
-			*mode2 = shared.DestinationPineconeEmbeddingFakeMode(r.Configuration.Embedding.DestinationPineconeEmbeddingFake.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		destinationPineconeEmbeddingFake = &shared.DestinationPineconeEmbeddingFake{
-			Mode: mode2,
-		}
+	var destinationPineconeFake *shared.DestinationPineconeFake
+	if r.Configuration.Embedding.Fake != nil {
+		destinationPineconeFake = &shared.DestinationPineconeFake{}
 	}
-	if destinationPineconeEmbeddingFake != nil {
+	if destinationPineconeFake != nil {
 		embedding = shared.DestinationPineconeEmbedding{
-			DestinationPineconeEmbeddingFake: destinationPineconeEmbeddingFake,
+			Fake: destinationPineconeFake,
 		}
 	}
 	index := r.Configuration.Indexing.Index.ValueString()
@@ -95,10 +72,9 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 		TextFields:     textFields,
 	}
 	configuration := shared.DestinationPinecone{
-		DestinationType: destinationType,
-		Embedding:       embedding,
-		Indexing:        indexing,
-		Processing:      processing,
+		Embedding:  embedding,
+		Indexing:   indexing,
+		Processing: processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -117,59 +93,37 @@ func (r *DestinationPineconeResourceModel) ToGetSDKType() *shared.DestinationPin
 
 func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.DestinationPineconePutRequest {
 	var embedding shared.DestinationPineconeUpdateEmbedding
-	var destinationPineconeUpdateEmbeddingOpenAI *shared.DestinationPineconeUpdateEmbeddingOpenAI
-	if r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationPineconeUpdateEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationPineconeUpdateEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
-		openaiKey := r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingOpenAI.OpenaiKey.ValueString()
-		destinationPineconeUpdateEmbeddingOpenAI = &shared.DestinationPineconeUpdateEmbeddingOpenAI{
-			Mode:      mode,
+	var destinationPineconeUpdateOpenAI *shared.DestinationPineconeUpdateOpenAI
+	if r.Configuration.Embedding.OpenAI != nil {
+		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
+		destinationPineconeUpdateOpenAI = &shared.DestinationPineconeUpdateOpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if destinationPineconeUpdateEmbeddingOpenAI != nil {
+	if destinationPineconeUpdateOpenAI != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{
-			DestinationPineconeUpdateEmbeddingOpenAI: destinationPineconeUpdateEmbeddingOpenAI,
+			OpenAI: destinationPineconeUpdateOpenAI,
 		}
 	}
-	var destinationPineconeUpdateEmbeddingCohere *shared.DestinationPineconeUpdateEmbeddingCohere
-	if r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere != nil {
-		cohereKey := r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.CohereKey.ValueString()
-		mode1 := new(shared.DestinationPineconeUpdateEmbeddingCohereMode)
-		if !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.Mode.IsNull() {
-			*mode1 = shared.DestinationPineconeUpdateEmbeddingCohereMode(r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingCohere.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
-		destinationPineconeUpdateEmbeddingCohere = &shared.DestinationPineconeUpdateEmbeddingCohere{
+	var destinationPineconeUpdateCohere *shared.DestinationPineconeUpdateCohere
+	if r.Configuration.Embedding.Cohere != nil {
+		cohereKey := r.Configuration.Embedding.Cohere.CohereKey.ValueString()
+		destinationPineconeUpdateCohere = &shared.DestinationPineconeUpdateCohere{
 			CohereKey: cohereKey,
-			Mode:      mode1,
 		}
 	}
-	if destinationPineconeUpdateEmbeddingCohere != nil {
+	if destinationPineconeUpdateCohere != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{
-			DestinationPineconeUpdateEmbeddingCohere: destinationPineconeUpdateEmbeddingCohere,
+			Cohere: destinationPineconeUpdateCohere,
 		}
 	}
-	var destinationPineconeUpdateEmbeddingFake *shared.DestinationPineconeUpdateEmbeddingFake
-	if r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake != nil {
-		mode2 := new(shared.DestinationPineconeUpdateEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake.Mode.IsNull() {
-			*mode2 = shared.DestinationPineconeUpdateEmbeddingFakeMode(r.Configuration.Embedding.DestinationPineconeUpdateEmbeddingFake.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		destinationPineconeUpdateEmbeddingFake = &shared.DestinationPineconeUpdateEmbeddingFake{
-			Mode: mode2,
-		}
+	var destinationPineconeUpdateFake *shared.DestinationPineconeUpdateFake
+	if r.Configuration.Embedding.Fake != nil {
+		destinationPineconeUpdateFake = &shared.DestinationPineconeUpdateFake{}
 	}
-	if destinationPineconeUpdateEmbeddingFake != nil {
+	if destinationPineconeUpdateFake != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{
-			DestinationPineconeUpdateEmbeddingFake: destinationPineconeUpdateEmbeddingFake,
+			Fake: destinationPineconeUpdateFake,
 		}
 	}
 	index := r.Configuration.Indexing.Index.ValueString()

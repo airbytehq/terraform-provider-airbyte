@@ -17,13 +17,12 @@ resource "airbyte_source_linnworks" "my_source_linnworks" {
   configuration = {
     application_id     = "...my_application_id..."
     application_secret = "...my_application_secret..."
-    source_type        = "linnworks"
-    start_date         = "2022-05-04T07:21:12.859Z"
+    start_date         = "2022-05-21T06:55:58.730Z"
     token              = "...my_token..."
   }
-  name         = "Antonia Muller"
+  name         = "Roosevelt Dibbert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "cbaaf445-2c48-442c-9b2a-d32dafe81a88"
+  workspace_id = "2cb41644-2d85-4f5b-a382-e70e18a8172f"
 }
 ```
 
@@ -52,7 +51,6 @@ Required:
 
 - `application_id` (String) Linnworks Application ID
 - `application_secret` (String) Linnworks Application Secret
-- `source_type` (String) must be one of ["linnworks"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `token` (String)
 

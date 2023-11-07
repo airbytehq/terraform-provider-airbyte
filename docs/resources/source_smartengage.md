@@ -15,12 +15,11 @@ SourceSmartengage Resource
 ```terraform
 resource "airbyte_source_smartengage" "my_source_smartengage" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "smartengage"
+    api_key = "...my_api_key..."
   }
-  name         = "Carmen Crist"
+  name         = "Marguerite Reichel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fbaf9476-a2ae-48dc-850c-8a3512c73784"
+  workspace_id = "61ce1bb1-cada-4a0e-b28a-3bd5563e04de"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
 Required:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["smartengage"]
 
 

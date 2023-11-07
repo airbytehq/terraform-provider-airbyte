@@ -5,14 +5,13 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationSnowflake struct {
-	Credentials     *DestinationSnowflakeAuthorizationMethod `tfsdk:"credentials"`
-	Database        types.String                             `tfsdk:"database"`
-	DestinationType types.String                             `tfsdk:"destination_type"`
-	Host            types.String                             `tfsdk:"host"`
-	JdbcURLParams   types.String                             `tfsdk:"jdbc_url_params"`
-	RawDataSchema   types.String                             `tfsdk:"raw_data_schema"`
-	Role            types.String                             `tfsdk:"role"`
-	Schema          types.String                             `tfsdk:"schema"`
-	Username        types.String                             `tfsdk:"username"`
-	Warehouse       types.String                             `tfsdk:"warehouse"`
+	Credentials   *DestinationSnowflakeAuthorizationMethod `tfsdk:"credentials"`
+	Database      types.String                             `tfsdk:"database"`
+	Host          types.String                             `tfsdk:"host"`
+	JdbcURLParams types.String                             `tfsdk:"jdbc_url_params"`
+	RawDataSchema types.String                             `tfsdk:"raw_data_schema"`
+	Role          types.String                             `tfsdk:"role"`
+	Schema        types.String                             `tfsdk:"schema"`
+	Username      types.String                             `tfsdk:"username"`
+	Warehouse     types.String                             `tfsdk:"warehouse"`
 }

@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceWebflowWebflow string
+type Webflow string
 
 const (
-	SourceWebflowWebflowWebflow SourceWebflowWebflow = "webflow"
+	WebflowWebflow Webflow = "webflow"
 )
 
-func (e SourceWebflowWebflow) ToPointer() *SourceWebflowWebflow {
+func (e Webflow) ToPointer() *Webflow {
 	return &e
 }
 
-func (e *SourceWebflowWebflow) UnmarshalJSON(data []byte) error {
+func (e *Webflow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "webflow":
-		*e = SourceWebflowWebflow(v)
+		*e = Webflow(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWebflowWebflow: %v", v)
+		return fmt.Errorf("invalid value for Webflow: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourceWebflow struct {
 	// The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 	APIKey string `json:"api_key"`
 	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-	SiteID     string               `json:"site_id"`
-	SourceType SourceWebflowWebflow `json:"sourceType"`
+	SiteID     string  `json:"site_id"`
+	sourceType Webflow `const:"webflow" json:"sourceType"`
+}
+
+func (s SourceWebflow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWebflow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceWebflow) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceWebflow) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
+}
+
+func (o *SourceWebflow) GetSourceType() Webflow {
+	return WebflowWebflow
 }

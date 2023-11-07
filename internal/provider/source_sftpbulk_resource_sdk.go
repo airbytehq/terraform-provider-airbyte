@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -27,7 +27,12 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	} else {
 		fileType = nil
 	}
-	folderPath := r.Configuration.FolderPath.ValueString()
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -35,7 +40,12 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	privateKey := new(string)
 	if !r.Configuration.PrivateKey.IsUnknown() && !r.Configuration.PrivateKey.IsNull() {
 		*privateKey = r.Configuration.PrivateKey.ValueString()
@@ -48,7 +58,6 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	} else {
 		separator = nil
 	}
-	sourceType := shared.SourceSftpBulkSftpBulk(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	streamName := r.Configuration.StreamName.ValueString()
 	username := r.Configuration.Username.ValueString()
@@ -62,7 +71,6 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 		Port:           port,
 		PrivateKey:     privateKey,
 		Separator:      separator,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 		StreamName:     streamName,
 		Username:       username,
@@ -102,13 +110,18 @@ func (r *SourceSftpBulkResourceModel) ToUpdateSDKType() *shared.SourceSftpBulkPu
 	} else {
 		filePattern = nil
 	}
-	fileType := new(shared.SourceSftpBulkUpdateFileType)
+	fileType := new(shared.FileType)
 	if !r.Configuration.FileType.IsUnknown() && !r.Configuration.FileType.IsNull() {
-		*fileType = shared.SourceSftpBulkUpdateFileType(r.Configuration.FileType.ValueString())
+		*fileType = shared.FileType(r.Configuration.FileType.ValueString())
 	} else {
 		fileType = nil
 	}
-	folderPath := r.Configuration.FolderPath.ValueString()
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -116,7 +129,12 @@ func (r *SourceSftpBulkResourceModel) ToUpdateSDKType() *shared.SourceSftpBulkPu
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	privateKey := new(string)
 	if !r.Configuration.PrivateKey.IsUnknown() && !r.Configuration.PrivateKey.IsNull() {
 		*privateKey = r.Configuration.PrivateKey.ValueString()

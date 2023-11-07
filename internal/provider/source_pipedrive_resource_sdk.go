@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,18 +12,14 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	var authorization *shared.SourcePipedriveAPIKeyAuthentication
 	if r.Configuration.Authorization != nil {
 		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
 		authorization = &shared.SourcePipedriveAPIKeyAuthentication{
 			APIToken: apiToken,
-			AuthType: authType,
 		}
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	sourceType := shared.SourcePipedrivePipedrive(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePipedrive{
 		Authorization:        authorization,
 		ReplicationStartDate: replicationStartDate,
-		SourceType:           sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -48,13 +44,11 @@ func (r *SourcePipedriveResourceModel) ToGetSDKType() *shared.SourcePipedriveCre
 }
 
 func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrivePutRequest {
-	var authorization *shared.SourcePipedriveUpdateAPIKeyAuthentication
+	var authorization *shared.APIKeyAuthentication
 	if r.Configuration.Authorization != nil {
 		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveUpdateAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
-		authorization = &shared.SourcePipedriveUpdateAPIKeyAuthentication{
+		authorization = &shared.APIKeyAuthentication{
 			APIToken: apiToken,
-			AuthType: authType,
 		}
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())

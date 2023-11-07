@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -17,13 +17,11 @@ func (r *SourceTwilioResourceModel) ToCreateSDKType() *shared.SourceTwilioCreate
 	} else {
 		lookbackWindow = nil
 	}
-	sourceType := shared.SourceTwilioTwilio(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceTwilio{
 		AccountSid:     accountSid,
 		AuthToken:      authToken,
 		LookbackWindow: lookbackWindow,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()

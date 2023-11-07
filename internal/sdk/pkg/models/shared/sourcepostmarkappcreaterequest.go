@@ -9,3 +9,31 @@ type SourcePostmarkappCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePostmarkappCreateRequest) GetConfiguration() SourcePostmarkapp {
+	if o == nil {
+		return SourcePostmarkapp{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePostmarkappCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePostmarkappCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePostmarkappCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

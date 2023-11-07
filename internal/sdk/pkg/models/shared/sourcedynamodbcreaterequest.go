@@ -9,3 +9,31 @@ type SourceDynamodbCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceDynamodbCreateRequest) GetConfiguration() SourceDynamodb {
+	if o == nil {
+		return SourceDynamodb{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDynamodbCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDynamodbCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceDynamodbCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

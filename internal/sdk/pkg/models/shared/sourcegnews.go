@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 // SourceGnewsCountry - This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
@@ -296,27 +297,27 @@ func (e *SourceGnewsSortBy) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceGnewsGnews string
+type Gnews string
 
 const (
-	SourceGnewsGnewsGnews SourceGnewsGnews = "gnews"
+	GnewsGnews Gnews = "gnews"
 )
 
-func (e SourceGnewsGnews) ToPointer() *SourceGnewsGnews {
+func (e Gnews) ToPointer() *Gnews {
 	return &e
 }
 
-func (e *SourceGnewsGnews) UnmarshalJSON(data []byte) error {
+func (e *Gnews) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gnews":
-		*e = SourceGnewsGnews(v)
+		*e = Gnews(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsGnews: %v", v)
+		return fmt.Errorf("invalid value for Gnews: %v", v)
 	}
 }
 
@@ -400,7 +401,7 @@ type SourceGnews struct {
 	//   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
 	//   - relevance = sort by best match to keywords, the articles with the best match are returned first
 	Sortby     *SourceGnewsSortBy `json:"sortby,omitempty"`
-	SourceType SourceGnewsGnews   `json:"sourceType"`
+	sourceType Gnews              `const:"gnews" json:"sourceType"`
 	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	StartDate *string `json:"start_date,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
@@ -420,4 +421,96 @@ type SourceGnews struct {
 	TopHeadlinesQuery *string `json:"top_headlines_query,omitempty"`
 	// This parameter allows you to change the category for the request.
 	TopHeadlinesTopic *SourceGnewsTopHeadlinesTopic `json:"top_headlines_topic,omitempty"`
+}
+
+func (s SourceGnews) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGnews) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGnews) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGnews) GetCountry() *SourceGnewsCountry {
+	if o == nil {
+		return nil
+	}
+	return o.Country
+}
+
+func (o *SourceGnews) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceGnews) GetIn() []SourceGnewsIn {
+	if o == nil {
+		return nil
+	}
+	return o.In
+}
+
+func (o *SourceGnews) GetLanguage() *SourceGnewsLanguage {
+	if o == nil {
+		return nil
+	}
+	return o.Language
+}
+
+func (o *SourceGnews) GetNullable() []SourceGnewsNullable {
+	if o == nil {
+		return nil
+	}
+	return o.Nullable
+}
+
+func (o *SourceGnews) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceGnews) GetSortby() *SourceGnewsSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.Sortby
+}
+
+func (o *SourceGnews) GetSourceType() Gnews {
+	return GnewsGnews
+}
+
+func (o *SourceGnews) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceGnews) GetTopHeadlinesQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TopHeadlinesQuery
+}
+
+func (o *SourceGnews) GetTopHeadlinesTopic() *SourceGnewsTopHeadlinesTopic {
+	if o == nil {
+		return nil
+	}
+	return o.TopHeadlinesTopic
 }

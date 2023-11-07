@@ -17,14 +17,13 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
     access_key_id            = "A012345678910EXAMPLE"
     endpoint                 = "https://{aws_dynamo_db_url}.com"
-    region                   = "us-gov-west-1"
+    region                   = "eu-west-1"
     reserved_attribute_names = "name, field_name, field-name"
     secret_access_key        = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
-    source_type              = "dynamodb"
   }
-  name         = "Sandra Rowe Sr."
+  name         = "Daryl Bartoletti"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f023b75d-2367-4fe1-a0cc-8df79f0a396d"
+  workspace_id = "3fe4ad28-2938-4c45-a756-44517930ed8d"
 }
 ```
 
@@ -53,12 +52,12 @@ Required:
 
 - `access_key_id` (String) The access key id to access Dynamodb. Airbyte requires read permissions to the database
 - `secret_access_key` (String) The corresponding secret to the access key id.
-- `source_type` (String) must be one of ["dynamodb"]
 
 Optional:
 
-- `endpoint` (String) the URL of the Dynamodb database
-- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
+- `endpoint` (String) Default: ""
+the URL of the Dynamodb database
+- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
 The region of the Dynamodb database
 - `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
 

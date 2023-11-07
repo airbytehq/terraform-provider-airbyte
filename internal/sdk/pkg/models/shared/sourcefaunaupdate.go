@@ -3,168 +3,271 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode string
+type SourceFaunaUpdateSchemasDeletionMode string
 
 const (
-	SourceFaunaUpdateCollectionDeletionModeEnabledDeletionModeDeletedField SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode = "deleted_field"
+	SourceFaunaUpdateSchemasDeletionModeDeletedField SourceFaunaUpdateSchemasDeletionMode = "deleted_field"
 )
 
-func (e SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode) ToPointer() *SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode {
+func (e SourceFaunaUpdateSchemasDeletionMode) ToPointer() *SourceFaunaUpdateSchemasDeletionMode {
 	return &e
 }
 
-func (e *SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode) UnmarshalJSON(data []byte) error {
+func (e *SourceFaunaUpdateSchemasDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "deleted_field":
-		*e = SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode(v)
+		*e = SourceFaunaUpdateSchemasDeletionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode: %v", v)
+		return fmt.Errorf("invalid value for SourceFaunaUpdateSchemasDeletionMode: %v", v)
 	}
 }
 
-// SourceFaunaUpdateCollectionDeletionModeEnabled - <b>This only applies to incremental syncs.</b> <br>
+// Enabled - <b>This only applies to incremental syncs.</b> <br>
 // Enabling deletion mode informs your destination of deleted documents.<br>
 // Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 // Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
-type SourceFaunaUpdateCollectionDeletionModeEnabled struct {
+type Enabled struct {
 	// Name of the "deleted at" column.
-	Column       string                                                     `json:"column"`
-	DeletionMode SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode `json:"deletion_mode"`
+	Column       *string                              `default:"deleted_at" json:"column"`
+	deletionMode SourceFaunaUpdateSchemasDeletionMode `const:"deleted_field" json:"deletion_mode"`
 }
 
-type SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode string
+func (e Enabled) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *Enabled) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Enabled) GetColumn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Column
+}
+
+func (o *Enabled) GetDeletionMode() SourceFaunaUpdateSchemasDeletionMode {
+	return SourceFaunaUpdateSchemasDeletionModeDeletedField
+}
+
+type SourceFaunaUpdateDeletionMode string
 
 const (
-	SourceFaunaUpdateCollectionDeletionModeDisabledDeletionModeIgnore SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode = "ignore"
+	SourceFaunaUpdateDeletionModeIgnore SourceFaunaUpdateDeletionMode = "ignore"
 )
 
-func (e SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode) ToPointer() *SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode {
+func (e SourceFaunaUpdateDeletionMode) ToPointer() *SourceFaunaUpdateDeletionMode {
 	return &e
 }
 
-func (e *SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode) UnmarshalJSON(data []byte) error {
+func (e *SourceFaunaUpdateDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ignore":
-		*e = SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode(v)
+		*e = SourceFaunaUpdateDeletionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode: %v", v)
+		return fmt.Errorf("invalid value for SourceFaunaUpdateDeletionMode: %v", v)
 	}
 }
 
-// SourceFaunaUpdateCollectionDeletionModeDisabled - <b>This only applies to incremental syncs.</b> <br>
+// Disabled - <b>This only applies to incremental syncs.</b> <br>
 // Enabling deletion mode informs your destination of deleted documents.<br>
 // Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 // Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
-type SourceFaunaUpdateCollectionDeletionModeDisabled struct {
-	DeletionMode SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode `json:"deletion_mode"`
+type Disabled struct {
+	deletionMode SourceFaunaUpdateDeletionMode `const:"ignore" json:"deletion_mode"`
 }
 
-type SourceFaunaUpdateCollectionDeletionModeType string
+func (d Disabled) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *Disabled) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Disabled) GetDeletionMode() SourceFaunaUpdateDeletionMode {
+	return SourceFaunaUpdateDeletionModeIgnore
+}
+
+type DeletionModeType string
 
 const (
-	SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeDisabled SourceFaunaUpdateCollectionDeletionModeType = "source-fauna-update_Collection_Deletion Mode_Disabled"
-	SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeEnabled  SourceFaunaUpdateCollectionDeletionModeType = "source-fauna-update_Collection_Deletion Mode_Enabled"
+	DeletionModeTypeDisabled DeletionModeType = "Disabled"
+	DeletionModeTypeEnabled  DeletionModeType = "Enabled"
 )
 
-type SourceFaunaUpdateCollectionDeletionMode struct {
-	SourceFaunaUpdateCollectionDeletionModeDisabled *SourceFaunaUpdateCollectionDeletionModeDisabled
-	SourceFaunaUpdateCollectionDeletionModeEnabled  *SourceFaunaUpdateCollectionDeletionModeEnabled
+type DeletionMode struct {
+	Disabled *Disabled
+	Enabled  *Enabled
 
-	Type SourceFaunaUpdateCollectionDeletionModeType
+	Type DeletionModeType
 }
 
-func CreateSourceFaunaUpdateCollectionDeletionModeSourceFaunaUpdateCollectionDeletionModeDisabled(sourceFaunaUpdateCollectionDeletionModeDisabled SourceFaunaUpdateCollectionDeletionModeDisabled) SourceFaunaUpdateCollectionDeletionMode {
-	typ := SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeDisabled
+func CreateDeletionModeDisabled(disabled Disabled) DeletionMode {
+	typ := DeletionModeTypeDisabled
 
-	return SourceFaunaUpdateCollectionDeletionMode{
-		SourceFaunaUpdateCollectionDeletionModeDisabled: &sourceFaunaUpdateCollectionDeletionModeDisabled,
-		Type: typ,
+	return DeletionMode{
+		Disabled: &disabled,
+		Type:     typ,
 	}
 }
 
-func CreateSourceFaunaUpdateCollectionDeletionModeSourceFaunaUpdateCollectionDeletionModeEnabled(sourceFaunaUpdateCollectionDeletionModeEnabled SourceFaunaUpdateCollectionDeletionModeEnabled) SourceFaunaUpdateCollectionDeletionMode {
-	typ := SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeEnabled
+func CreateDeletionModeEnabled(enabled Enabled) DeletionMode {
+	typ := DeletionModeTypeEnabled
 
-	return SourceFaunaUpdateCollectionDeletionMode{
-		SourceFaunaUpdateCollectionDeletionModeEnabled: &sourceFaunaUpdateCollectionDeletionModeEnabled,
-		Type: typ,
+	return DeletionMode{
+		Enabled: &enabled,
+		Type:    typ,
 	}
 }
 
-func (u *SourceFaunaUpdateCollectionDeletionMode) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *DeletionMode) UnmarshalJSON(data []byte) error {
 
-	sourceFaunaUpdateCollectionDeletionModeDisabled := new(SourceFaunaUpdateCollectionDeletionModeDisabled)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFaunaUpdateCollectionDeletionModeDisabled); err == nil {
-		u.SourceFaunaUpdateCollectionDeletionModeDisabled = sourceFaunaUpdateCollectionDeletionModeDisabled
-		u.Type = SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeDisabled
+	disabled := new(Disabled)
+	if err := utils.UnmarshalJSON(data, &disabled, "", true, true); err == nil {
+		u.Disabled = disabled
+		u.Type = DeletionModeTypeDisabled
 		return nil
 	}
 
-	sourceFaunaUpdateCollectionDeletionModeEnabled := new(SourceFaunaUpdateCollectionDeletionModeEnabled)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceFaunaUpdateCollectionDeletionModeEnabled); err == nil {
-		u.SourceFaunaUpdateCollectionDeletionModeEnabled = sourceFaunaUpdateCollectionDeletionModeEnabled
-		u.Type = SourceFaunaUpdateCollectionDeletionModeTypeSourceFaunaUpdateCollectionDeletionModeEnabled
+	enabled := new(Enabled)
+	if err := utils.UnmarshalJSON(data, &enabled, "", true, true); err == nil {
+		u.Enabled = enabled
+		u.Type = DeletionModeTypeEnabled
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceFaunaUpdateCollectionDeletionMode) MarshalJSON() ([]byte, error) {
-	if u.SourceFaunaUpdateCollectionDeletionModeDisabled != nil {
-		return json.Marshal(u.SourceFaunaUpdateCollectionDeletionModeDisabled)
+func (u DeletionMode) MarshalJSON() ([]byte, error) {
+	if u.Disabled != nil {
+		return utils.MarshalJSON(u.Disabled, "", true)
 	}
 
-	if u.SourceFaunaUpdateCollectionDeletionModeEnabled != nil {
-		return json.Marshal(u.SourceFaunaUpdateCollectionDeletionModeEnabled)
+	if u.Enabled != nil {
+		return utils.MarshalJSON(u.Enabled, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// SourceFaunaUpdateCollection - Settings for the Fauna Collection.
-type SourceFaunaUpdateCollection struct {
+// Collection - Settings for the Fauna Collection.
+type Collection struct {
 	// <b>This only applies to incremental syncs.</b> <br>
 	// Enabling deletion mode informs your destination of deleted documents.<br>
 	// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 	// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
-	Deletions SourceFaunaUpdateCollectionDeletionMode `json:"deletions"`
+	Deletions DeletionMode `json:"deletions"`
 	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
 	// Choose your page size based on how large the documents are. <br>
 	// See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
-	PageSize int64 `json:"page_size"`
+	PageSize *int64 `default:"64" json:"page_size"`
+}
+
+func (c Collection) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *Collection) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Collection) GetDeletions() DeletionMode {
+	if o == nil {
+		return DeletionMode{}
+	}
+	return o.Deletions
+}
+
+func (o *Collection) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
 }
 
 type SourceFaunaUpdate struct {
 	// Settings for the Fauna Collection.
-	Collection *SourceFaunaUpdateCollection `json:"collection,omitempty"`
+	Collection *Collection `json:"collection,omitempty"`
 	// Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
-	Domain string `json:"domain"`
+	Domain *string `default:"db.fauna.com" json:"domain"`
 	// Endpoint port.
-	Port int64 `json:"port"`
+	Port *int64 `default:"443" json:"port"`
 	// URL scheme.
-	Scheme string `json:"scheme"`
+	Scheme *string `default:"https" json:"scheme"`
 	// Fauna secret, used when authenticating with the database.
 	Secret string `json:"secret"`
+}
+
+func (s SourceFaunaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFaunaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFaunaUpdate) GetCollection() *Collection {
+	if o == nil {
+		return nil
+	}
+	return o.Collection
+}
+
+func (o *SourceFaunaUpdate) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourceFaunaUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceFaunaUpdate) GetScheme() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Scheme
+}
+
+func (o *SourceFaunaUpdate) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
 }

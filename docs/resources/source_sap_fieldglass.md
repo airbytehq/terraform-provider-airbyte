@@ -15,12 +15,11 @@ SourceSapFieldglass Resource
 ```terraform
 resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "sap-fieldglass"
+    api_key = "...my_api_key..."
   }
-  name         = "Juana Williamson"
+  name         = "Raymond D'Amore"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2bf7d67c-a84a-4d99-b41d-61243531870c"
+  workspace_id = "e06a57c7-c577-4af1-a5ba-ddd2747bbc7f"
 }
 ```
 
@@ -48,6 +47,5 @@ resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
 Required:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of ["sap-fieldglass"]
 
 

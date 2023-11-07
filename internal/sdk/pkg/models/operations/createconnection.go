@@ -3,14 +3,45 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
 type CreateConnectionResponse struct {
 	// Successful operation
 	ConnectionResponse *shared.ConnectionResponse
-	ContentType        string
-	StatusCode         int
-	RawResponse        *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *CreateConnectionResponse) GetConnectionResponse() *shared.ConnectionResponse {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectionResponse
+}
+
+func (o *CreateConnectionResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateConnectionResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateConnectionResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

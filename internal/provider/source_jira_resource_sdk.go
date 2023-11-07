@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -34,7 +34,6 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	} else {
 		renderFields = nil
 	}
-	sourceType := shared.SourceJiraJira(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -49,7 +48,6 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 		ExpandIssueChangelog:      expandIssueChangelog,
 		Projects:                  projects,
 		RenderFields:              renderFields,
-		SourceType:                sourceType,
 		StartDate:                 startDate,
 	}
 	name := r.Name.ValueString()

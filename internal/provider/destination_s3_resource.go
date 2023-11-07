@@ -3,13 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -58,15 +58,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 						Optional:    true,
 						Description: `The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"s3",
-							),
-						},
-						Description: `must be one of ["s3"]`,
-					},
 					"file_name_pattern": schema.StringAttribute{
 						Optional:    true,
 						Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
@@ -74,114 +65,118 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_s3_output_format_avro_apache_avro": schema.SingleNestedAttribute{
+							"avro_apache_avro": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.SingleNestedAttribute{
 										Required: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
+											"bzip2": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														Required: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"bzip2",
 															),
 														},
-														Description: `must be one of ["bzip2"]`,
+														Description: `must be one of ["bzip2"]; Default: "bzip2"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
+											"deflate": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														Required: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"Deflate",
 															),
 														},
-														Description: `must be one of ["Deflate"]`,
+														Description: `must be one of ["Deflate"]; Default: "Deflate"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Required:    true,
-														Description: `0: no compression & fastest, 9: best compression & slowest.`,
+														Optional: true,
+														MarkdownDescription: `Default: 0` + "\n" +
+															`0: no compression & fastest, 9: best compression & slowest.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
+											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														Required: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"no compression",
 															),
 														},
-														Description: `must be one of ["no compression"]`,
+														Description: `must be one of ["no compression"]; Default: "no compression"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
+											"snappy": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														Required: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"snappy",
 															),
 														},
-														Description: `must be one of ["snappy"]`,
+														Description: `must be one of ["snappy"]; Default: "snappy"`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
+											"xz": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														Required: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"xz",
 															),
 														},
-														Description: `must be one of ["xz"]`,
+														Description: `must be one of ["xz"]; Default: "xz"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Required:    true,
-														Description: `See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
+														Optional: true,
+														MarkdownDescription: `Default: 6` + "\n" +
+															`See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
-											"destination_s3_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
+											"zstandard": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														Required: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"zstandard",
 															),
 														},
-														Description: `must be one of ["zstandard"]`,
+														Description: `must be one of ["zstandard"]; Default: "zstandard"`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Required:    true,
-														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
+														Optional: true,
+														MarkdownDescription: `Default: 3` + "\n" +
+															`Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Optional:    true,
-														Description: `If true, include a checksum with each data block.`,
+														Optional: true,
+														MarkdownDescription: `Default: false` + "\n" +
+															`If true, include a checksum with each data block.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -193,24 +188,24 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										Description: `The compression algorithm used to compress data. Default to no compression.`,
 									},
 									"format_type": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Avro",
 											),
 										},
-										Description: `must be one of ["Avro"]`,
+										Description: `must be one of ["Avro"]; Default: "Avro"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
-							"destination_s3_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
+							"csv_comma_separated_values": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
+											"gzip": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
@@ -220,12 +215,12 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
-											"destination_s3_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
+											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
@@ -235,7 +230,7 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -247,35 +242,35 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 									},
 									"flattening": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"CSV",
 											),
 										},
-										Description: `must be one of ["CSV"]`,
+										Description: `must be one of ["CSV"]; Default: "CSV"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
-							"destination_s3_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+											"gzip": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
@@ -285,12 +280,12 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 																"GZIP",
 															),
 														},
-														Description: `must be one of ["GZIP"]`,
+														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
-											"destination_s3_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
@@ -300,7 +295,7 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 																"No Compression",
 															),
 														},
-														Description: `must be one of ["No Compression"]`,
+														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -319,27 +314,28 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
 											),
 										},
-										Description: `must be one of ["JSONL"]`,
+										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
-							"destination_s3_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
+							"parquet_columnar_storage": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
+										Optional: true,
+										MarkdownDescription: `Default: 128` + "\n" +
+											`This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
 									},
 									"compression_codec": schema.StringAttribute{
 										Optional: true,
@@ -354,344 +350,37 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												"ZSTD",
 											),
 										},
-										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"` + "\n" +
 											`The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Default: true.`,
+										Optional: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Default: true.`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
+										Optional: true,
+										MarkdownDescription: `Default: 1024` + "\n" +
+											`There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
 									},
 									"format_type": schema.StringAttribute{
-										Required: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Parquet",
 											),
 										},
-										Description: `must be one of ["Parquet"]`,
+										Description: `must be one of ["Parquet"]; Default: "Parquet"`,
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
+										Optional: true,
+										MarkdownDescription: `Default: 8` + "\n" +
+											`Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
-									},
-								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
-							},
-							"destination_s3_update_output_format_avro_apache_avro": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"compression_codec": schema.SingleNestedAttribute{
-										Required: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_s3_update_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"no compression",
-															),
-														},
-														Description: `must be one of ["no compression"]`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
-											"destination_s3_update_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"Deflate",
-															),
-														},
-														Description: `must be one of ["Deflate"]`,
-													},
-													"compression_level": schema.Int64Attribute{
-														Required:    true,
-														Description: `0: no compression & fastest, 9: best compression & slowest.`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
-											"destination_s3_update_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"bzip2",
-															),
-														},
-														Description: `must be one of ["bzip2"]`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
-											"destination_s3_update_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"xz",
-															),
-														},
-														Description: `must be one of ["xz"]`,
-													},
-													"compression_level": schema.Int64Attribute{
-														Required:    true,
-														Description: `See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
-											"destination_s3_update_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"zstandard",
-															),
-														},
-														Description: `must be one of ["zstandard"]`,
-													},
-													"compression_level": schema.Int64Attribute{
-														Required:    true,
-														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
-													},
-													"include_checksum": schema.BoolAttribute{
-														Optional:    true,
-														Description: `If true, include a checksum with each data block.`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
-											"destination_s3_update_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"codec": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"snappy",
-															),
-														},
-														Description: `must be one of ["snappy"]`,
-													},
-												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `The compression algorithm used to compress data. Default to no compression.`,
-									},
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Avro",
-											),
-										},
-										Description: `must be one of ["Avro"]`,
-									},
-								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
-							},
-							"destination_s3_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"compression": schema.SingleNestedAttribute{
 										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Optional: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-														Description: `must be one of ["No Compression"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
-											},
-											"destination_s3_update_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Optional: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"GZIP",
-															),
-														},
-														Description: `must be one of ["GZIP"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
-									},
-									"flattening": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"No flattening",
-												"Root level flattening",
-											),
-										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
-											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CSV",
-											),
-										},
-										Description: `must be one of ["CSV"]`,
-									},
-								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
-							},
-							"destination_s3_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"compression": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Optional: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-														Description: `must be one of ["No Compression"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
-											"destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Optional: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"GZIP",
-															),
-														},
-														Description: `must be one of ["GZIP"]`,
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-									},
-									"flattening": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"No flattening",
-												"Root level flattening",
-											),
-										},
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
-											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-										Description: `must be one of ["JSONL"]`,
-									},
-								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
-							},
-							"destination_s3_update_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"block_size_mb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
-									},
-									"compression_codec": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"UNCOMPRESSED",
-												"SNAPPY",
-												"GZIP",
-												"LZO",
-												"BROTLI",
-												"LZ4",
-												"ZSTD",
-											),
-										},
-										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]` + "\n" +
-											`The compression algorithm used to compress data pages.`,
-									},
-									"dictionary_encoding": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Default: true.`,
-									},
-									"dictionary_page_size_kb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
-									},
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Parquet",
-											),
-										},
-										Description: `must be one of ["Parquet"]`,
-									},
-									"max_padding_size_mb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
-									},
-									"page_size_kb": schema.Int64Attribute{
-										Optional:    true,
-										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
+										MarkdownDescription: `Default: 1024` + "\n" +
+											`The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
 									},
 								},
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -711,7 +400,7 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>`,
 					},
 					"s3_bucket_region": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"",
@@ -742,12 +431,13 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 								"us-gov-west-1",
 							),
 						},
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
+						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
 							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 					"s3_endpoint": schema.StringAttribute{
-						Optional:    true,
-						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
 					},
 					"s3_path_format": schema.StringAttribute{
 						Optional:    true,
@@ -825,7 +515,7 @@ func (r *DestinationS3Resource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationS3(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -1001,5 +691,5 @@ func (r *DestinationS3Resource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *DestinationS3Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

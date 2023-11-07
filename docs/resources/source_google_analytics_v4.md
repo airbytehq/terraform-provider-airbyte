@@ -16,23 +16,21 @@ SourceGoogleAnalyticsV4 Resource
 resource "airbyte_source_google_analytics_v4" "my_source_googleanalyticsv4" {
   configuration = {
     credentials = {
-      source_google_analytics_v4_credentials_authenticate_via_google_oauth_ = {
+      source_google_analytics_v4_authenticate_via_google_oauth = {
         access_token  = "...my_access_token..."
-        auth_type     = "Client"
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
     }
     custom_reports = "...my_custom_reports..."
-    source_type    = "google-analytics-v4"
     start_date     = "2020-06-01"
     view_id        = "...my_view_id..."
-    window_in_days = 120
+    window_in_days = 30
   }
-  name         = "Dr. Doug Dibbert"
+  name         = "Christopher Kulas"
   secret_id    = "...my_secret_id..."
-  workspace_id = "af725b29-1220-430d-83f5-aeb7799d22e8"
+  workspace_id = "6bd0cbf5-314e-4ea0-ba21-aa37367271c7"
 }
 ```
 
@@ -59,7 +57,6 @@ resource "airbyte_source_google_analytics_v4" "my_source_googleanalyticsv4" {
 
 Required:
 
-- `source_type` (String) must be one of ["google-analytics-v4"]
 - `start_date` (String) The date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 - `view_id` (String) The ID for the Google Analytics View you want to fetch data from. This can be found from the <a href="https://ga-dev-tools.appspot.com/account-explorer/">Google Analytics Account Explorer</a>.
 
@@ -67,20 +64,19 @@ Optional:
 
 - `credentials` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials))
 - `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4#data-processing-latency">the docs</a> for more information about the exact format you can use to fill out this field.
-- `window_in_days` (Number) The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364.
+- `window_in_days` (Number) Default: 1
+The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_google_analytics_v4_credentials_authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_credentials_authenticate_via_google_oauth))
-- `source_google_analytics_v4_credentials_service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_credentials_service_account_key_authentication))
-- `source_google_analytics_v4_update_credentials_authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth))
-- `source_google_analytics_v4_update_credentials_service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_service_account_key_authentication))
+- `authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_oauth))
+- `service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_v4_credentials_authenticate_via_google_oauth"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_v4_credentials_authenticate_via_google_oauth`
+<a id="nestedatt--configuration--credentials--authenticate_via_google_oauth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_google_oauth`
 
 Required:
 
@@ -91,45 +87,13 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["Client"]
 
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_v4_credentials_service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_v4_credentials_service_account_key_authentication`
-
-Required:
-
-- `credentials_json` (String) The JSON key of the service account to use for authorization
-
-Optional:
-
-- `auth_type` (String) must be one of ["Service"]
-
-
-<a id="nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_v4_update_credentials_authenticate_via_google_oauth`
-
-Required:
-
-- `client_id` (String) The Client ID of your Google Analytics developer application.
-- `client_secret` (String) The Client Secret of your Google Analytics developer application.
-- `refresh_token` (String) The token for obtaining a new access token.
-
-Optional:
-
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["Client"]
-
-
-<a id="nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_v4_update_credentials_service_account_key_authentication`
+<a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
+### Nested Schema for `configuration.credentials.service_account_key_authentication`
 
 Required:
 
 - `credentials_json` (String) The JSON key of the service account to use for authorization
-
-Optional:
-
-- `auth_type` (String) must be one of ["Service"]
 
 

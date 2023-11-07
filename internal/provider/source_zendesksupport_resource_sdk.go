@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,68 +12,54 @@ import (
 func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZendeskSupportCreateRequest {
 	var credentials *shared.SourceZendeskSupportAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceZendeskSupportAuthenticationOAuth20 *shared.SourceZendeskSupportAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20 != nil {
-			accessToken := r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken.ValueString()
+		var sourceZendeskSupportOAuth20 *shared.SourceZendeskSupportOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			var additionalProperties interface{}
+			if !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20.AdditionalProperties.ValueString()), &additionalProperties)
+			}
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			clientID := new(string)
-			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 			} else {
 				clientID = nil
 			}
 			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			} else {
 				clientSecret = nil
 			}
-			credentials1 := new(shared.SourceZendeskSupportAuthenticationOAuth20Credentials)
-			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsNull() {
-				*credentials1 = shared.SourceZendeskSupportAuthenticationOAuth20Credentials(r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.ValueString())
-			} else {
-				credentials1 = nil
-			}
-			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties)
-			}
-			sourceZendeskSupportAuthenticationOAuth20 = &shared.SourceZendeskSupportAuthenticationOAuth20{
+			sourceZendeskSupportOAuth20 = &shared.SourceZendeskSupportOAuth20{
+				AdditionalProperties: additionalProperties,
 				AccessToken:          accessToken,
 				ClientID:             clientID,
 				ClientSecret:         clientSecret,
-				Credentials:          credentials1,
-				AdditionalProperties: additionalProperties,
 			}
 		}
-		if sourceZendeskSupportAuthenticationOAuth20 != nil {
+		if sourceZendeskSupportOAuth20 != nil {
 			credentials = &shared.SourceZendeskSupportAuthentication{
-				SourceZendeskSupportAuthenticationOAuth20: sourceZendeskSupportAuthenticationOAuth20,
+				OAuth20: sourceZendeskSupportOAuth20,
 			}
 		}
-		var sourceZendeskSupportAuthenticationAPIToken *shared.SourceZendeskSupportAuthenticationAPIToken
-		if r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken != nil {
-			apiToken := r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken.ValueString()
-			credentials2 := new(shared.SourceZendeskSupportAuthenticationAPITokenCredentials)
-			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.IsNull() {
-				*credentials2 = shared.SourceZendeskSupportAuthenticationAPITokenCredentials(r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.ValueString())
-			} else {
-				credentials2 = nil
-			}
-			email := r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email.ValueString()
+		var sourceZendeskSupportAPIToken *shared.SourceZendeskSupportAPIToken
+		if r.Configuration.Credentials.APIToken != nil {
 			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
+			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
-			sourceZendeskSupportAuthenticationAPIToken = &shared.SourceZendeskSupportAuthenticationAPIToken{
-				APIToken:             apiToken,
-				Credentials:          credentials2,
-				Email:                email,
+			apiToken := r.Configuration.Credentials.APIToken.APIToken.ValueString()
+			email := r.Configuration.Credentials.APIToken.Email.ValueString()
+			sourceZendeskSupportAPIToken = &shared.SourceZendeskSupportAPIToken{
 				AdditionalProperties: additionalProperties1,
+				APIToken:             apiToken,
+				Email:                email,
 			}
 		}
-		if sourceZendeskSupportAuthenticationAPIToken != nil {
+		if sourceZendeskSupportAPIToken != nil {
 			credentials = &shared.SourceZendeskSupportAuthentication{
-				SourceZendeskSupportAuthenticationAPIToken: sourceZendeskSupportAuthenticationAPIToken,
+				APIToken: sourceZendeskSupportAPIToken,
 			}
 		}
 	}
@@ -83,7 +69,6 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 	} else {
 		ignorePagination = nil
 	}
-	sourceType := shared.SourceZendeskSupportZendeskSupport(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -94,7 +79,6 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 	configuration := shared.SourceZendeskSupport{
 		Credentials:      credentials,
 		IgnorePagination: ignorePagination,
-		SourceType:       sourceType,
 		StartDate:        startDate,
 		Subdomain:        subdomain,
 	}
@@ -123,68 +107,54 @@ func (r *SourceZendeskSupportResourceModel) ToGetSDKType() *shared.SourceZendesk
 func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZendeskSupportPutRequest {
 	var credentials *shared.SourceZendeskSupportUpdateAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceZendeskSupportUpdateAuthenticationOAuth20 *shared.SourceZendeskSupportUpdateAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20 != nil {
-			accessToken := r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.AccessToken.ValueString()
+		var sourceZendeskSupportUpdateOAuth20 *shared.SourceZendeskSupportUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			var additionalProperties interface{}
+			if !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.OAuth20.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.OAuth20.AdditionalProperties.ValueString()), &additionalProperties)
+			}
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			clientID := new(string)
-			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientID.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 			} else {
 				clientID = nil
 			}
 			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientSecret.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			} else {
 				clientSecret = nil
 			}
-			credentials1 := new(shared.SourceZendeskSupportUpdateAuthenticationOAuth20Credentials)
-			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.Credentials.IsNull() {
-				*credentials1 = shared.SourceZendeskSupportUpdateAuthenticationOAuth20Credentials(r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.Credentials.ValueString())
-			} else {
-				credentials1 = nil
-			}
-			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties)
-			}
-			sourceZendeskSupportUpdateAuthenticationOAuth20 = &shared.SourceZendeskSupportUpdateAuthenticationOAuth20{
+			sourceZendeskSupportUpdateOAuth20 = &shared.SourceZendeskSupportUpdateOAuth20{
+				AdditionalProperties: additionalProperties,
 				AccessToken:          accessToken,
 				ClientID:             clientID,
 				ClientSecret:         clientSecret,
-				Credentials:          credentials1,
-				AdditionalProperties: additionalProperties,
 			}
 		}
-		if sourceZendeskSupportUpdateAuthenticationOAuth20 != nil {
+		if sourceZendeskSupportUpdateOAuth20 != nil {
 			credentials = &shared.SourceZendeskSupportUpdateAuthentication{
-				SourceZendeskSupportUpdateAuthenticationOAuth20: sourceZendeskSupportUpdateAuthenticationOAuth20,
+				OAuth20: sourceZendeskSupportUpdateOAuth20,
 			}
 		}
-		var sourceZendeskSupportUpdateAuthenticationAPIToken *shared.SourceZendeskSupportUpdateAuthenticationAPIToken
-		if r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken != nil {
-			apiToken := r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.APIToken.ValueString()
-			credentials2 := new(shared.SourceZendeskSupportUpdateAuthenticationAPITokenCredentials)
-			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.Credentials.IsNull() {
-				*credentials2 = shared.SourceZendeskSupportUpdateAuthenticationAPITokenCredentials(r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.Credentials.ValueString())
-			} else {
-				credentials2 = nil
-			}
-			email := r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.Email.ValueString()
+		var sourceZendeskSupportUpdateAPIToken *shared.SourceZendeskSupportUpdateAPIToken
+		if r.Configuration.Credentials.APIToken != nil {
 			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
+			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
-			sourceZendeskSupportUpdateAuthenticationAPIToken = &shared.SourceZendeskSupportUpdateAuthenticationAPIToken{
-				APIToken:             apiToken,
-				Credentials:          credentials2,
-				Email:                email,
+			apiToken := r.Configuration.Credentials.APIToken.APIToken.ValueString()
+			email := r.Configuration.Credentials.APIToken.Email.ValueString()
+			sourceZendeskSupportUpdateAPIToken = &shared.SourceZendeskSupportUpdateAPIToken{
 				AdditionalProperties: additionalProperties1,
+				APIToken:             apiToken,
+				Email:                email,
 			}
 		}
-		if sourceZendeskSupportUpdateAuthenticationAPIToken != nil {
+		if sourceZendeskSupportUpdateAPIToken != nil {
 			credentials = &shared.SourceZendeskSupportUpdateAuthentication{
-				SourceZendeskSupportUpdateAuthenticationAPIToken: sourceZendeskSupportUpdateAuthenticationAPIToken,
+				APIToken: sourceZendeskSupportUpdateAPIToken,
 			}
 		}
 	}

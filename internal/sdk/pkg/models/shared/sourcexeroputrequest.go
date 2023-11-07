@@ -7,3 +7,24 @@ type SourceXeroPutRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *SourceXeroPutRequest) GetConfiguration() SourceXeroUpdate {
+	if o == nil {
+		return SourceXeroUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceXeroPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceXeroPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

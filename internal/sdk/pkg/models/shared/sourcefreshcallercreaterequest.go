@@ -9,3 +9,31 @@ type SourceFreshcallerCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceFreshcallerCreateRequest) GetConfiguration() SourceFreshcaller {
+	if o == nil {
+		return SourceFreshcaller{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFreshcallerCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFreshcallerCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceFreshcallerCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

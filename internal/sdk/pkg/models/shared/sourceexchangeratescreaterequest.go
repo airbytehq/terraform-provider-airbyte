@@ -9,3 +9,31 @@ type SourceExchangeRatesCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceExchangeRatesCreateRequest) GetConfiguration() SourceExchangeRates {
+	if o == nil {
+		return SourceExchangeRates{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceExchangeRatesCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceExchangeRatesCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceExchangeRatesCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

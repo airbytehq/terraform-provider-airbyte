@@ -1,9 +1,8 @@
 resource "airbyte_source_glassfrog" "my_source_glassfrog" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "glassfrog"
+    api_key = "...my_api_key..."
   }
-  name         = "Carl Davis"
+  name         = "Julie Quitzon"
   secret_id    = "...my_secret_id..."
-  workspace_id = "891f82ce-1157-4172-b053-77dcfa89df97"
+  workspace_id = "0f5d38a1-edcb-436c-9a3d-51cbc15623ec"
 }

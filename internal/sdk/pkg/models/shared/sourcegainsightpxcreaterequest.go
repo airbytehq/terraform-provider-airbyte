@@ -9,3 +9,31 @@ type SourceGainsightPxCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceGainsightPxCreateRequest) GetConfiguration() SourceGainsightPx {
+	if o == nil {
+		return SourceGainsightPx{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGainsightPxCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGainsightPxCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGainsightPxCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

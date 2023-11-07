@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceFacebookPagesFacebookPages string
+type FacebookPages string
 
 const (
-	SourceFacebookPagesFacebookPagesFacebookPages SourceFacebookPagesFacebookPages = "facebook-pages"
+	FacebookPagesFacebookPages FacebookPages = "facebook-pages"
 )
 
-func (e SourceFacebookPagesFacebookPages) ToPointer() *SourceFacebookPagesFacebookPages {
+func (e FacebookPages) ToPointer() *FacebookPages {
 	return &e
 }
 
-func (e *SourceFacebookPagesFacebookPages) UnmarshalJSON(data []byte) error {
+func (e *FacebookPages) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "facebook-pages":
-		*e = SourceFacebookPagesFacebookPages(v)
+		*e = FacebookPages(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookPagesFacebookPages: %v", v)
+		return fmt.Errorf("invalid value for FacebookPages: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourceFacebookPages struct {
 	// Facebook Page Access Token
 	AccessToken string `json:"access_token"`
 	// Page ID
-	PageID     string                           `json:"page_id"`
-	SourceType SourceFacebookPagesFacebookPages `json:"sourceType"`
+	PageID     string        `json:"page_id"`
+	sourceType FacebookPages `const:"facebook-pages" json:"sourceType"`
+}
+
+func (s SourceFacebookPages) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFacebookPages) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFacebookPages) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceFacebookPages) GetPageID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PageID
+}
+
+func (o *SourceFacebookPages) GetSourceType() FacebookPages {
+	return FacebookPagesFacebookPages
 }

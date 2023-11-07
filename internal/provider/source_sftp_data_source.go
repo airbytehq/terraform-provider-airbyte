@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,10 +31,10 @@ type SourceSftpDataSource struct {
 
 // SourceSftpDataSourceModel describes the data model.
 type SourceSftpDataSourceModel struct {
-	Configuration SourceSftp   `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -50,142 +49,22 @@ func (r *SourceSftpDataSource) Schema(ctx context.Context, req datasource.Schema
 		MarkdownDescription: "SourceSftp DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_sftp_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through password authentication`,
-									},
-									"auth_user_password": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Description: `The server authentication method`,
-							},
-							"source_sftp_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through ssh key`,
-									},
-									"auth_ssh_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-								},
-								Description: `The server authentication method`,
-							},
-							"source_sftp_update_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through password authentication`,
-									},
-									"auth_user_password": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Description: `The server authentication method`,
-							},
-							"source_sftp_update_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through ssh key`,
-									},
-									"auth_ssh_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-								},
-								Description: `The server authentication method`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `The server authentication method`,
-					},
-					"file_pattern": schema.StringAttribute{
-						Computed:    true,
-						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
-					},
-					"file_types": schema.StringAttribute{
-						Computed:    true,
-						Description: `Coma separated file types. Currently only 'csv' and 'json' types are supported.`,
-					},
-					"folder_path": schema.StringAttribute{
-						Computed:    true,
-						Description: `The directory to search files for sync`,
-					},
-					"host": schema.StringAttribute{
-						Computed:    true,
-						Description: `The server host address`,
-					},
-					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The server port`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp",
-							),
-						},
-						Description: `must be one of ["sftp"]`,
-					},
-					"user": schema.StringAttribute{
-						Computed:    true,
-						Description: `The server user`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

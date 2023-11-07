@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 type SourceAmazonAdsUpdateAuthType string
@@ -31,20 +32,20 @@ func (e *SourceAmazonAdsUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAmazonAdsUpdateRegion - Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
-type SourceAmazonAdsUpdateRegion string
+// Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
+type Region string
 
 const (
-	SourceAmazonAdsUpdateRegionNa SourceAmazonAdsUpdateRegion = "NA"
-	SourceAmazonAdsUpdateRegionEu SourceAmazonAdsUpdateRegion = "EU"
-	SourceAmazonAdsUpdateRegionFe SourceAmazonAdsUpdateRegion = "FE"
+	RegionNa Region = "NA"
+	RegionEu Region = "EU"
+	RegionFe Region = "FE"
 )
 
-func (e SourceAmazonAdsUpdateRegion) ToPointer() *SourceAmazonAdsUpdateRegion {
+func (e Region) ToPointer() *Region {
 	return &e
 }
 
-func (e *SourceAmazonAdsUpdateRegion) UnmarshalJSON(data []byte) error {
+func (e *Region) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -55,31 +56,31 @@ func (e *SourceAmazonAdsUpdateRegion) UnmarshalJSON(data []byte) error {
 	case "EU":
 		fallthrough
 	case "FE":
-		*e = SourceAmazonAdsUpdateRegion(v)
+		*e = Region(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsUpdateRegion: %v", v)
+		return fmt.Errorf("invalid value for Region: %v", v)
 	}
 }
 
-type SourceAmazonAdsUpdateReportRecordTypes string
+type ReportRecordTypes string
 
 const (
-	SourceAmazonAdsUpdateReportRecordTypesAdGroups      SourceAmazonAdsUpdateReportRecordTypes = "adGroups"
-	SourceAmazonAdsUpdateReportRecordTypesAsins         SourceAmazonAdsUpdateReportRecordTypes = "asins"
-	SourceAmazonAdsUpdateReportRecordTypesAsinsKeywords SourceAmazonAdsUpdateReportRecordTypes = "asins_keywords"
-	SourceAmazonAdsUpdateReportRecordTypesAsinsTargets  SourceAmazonAdsUpdateReportRecordTypes = "asins_targets"
-	SourceAmazonAdsUpdateReportRecordTypesCampaigns     SourceAmazonAdsUpdateReportRecordTypes = "campaigns"
-	SourceAmazonAdsUpdateReportRecordTypesKeywords      SourceAmazonAdsUpdateReportRecordTypes = "keywords"
-	SourceAmazonAdsUpdateReportRecordTypesProductAds    SourceAmazonAdsUpdateReportRecordTypes = "productAds"
-	SourceAmazonAdsUpdateReportRecordTypesTargets       SourceAmazonAdsUpdateReportRecordTypes = "targets"
+	ReportRecordTypesAdGroups      ReportRecordTypes = "adGroups"
+	ReportRecordTypesAsins         ReportRecordTypes = "asins"
+	ReportRecordTypesAsinsKeywords ReportRecordTypes = "asins_keywords"
+	ReportRecordTypesAsinsTargets  ReportRecordTypes = "asins_targets"
+	ReportRecordTypesCampaigns     ReportRecordTypes = "campaigns"
+	ReportRecordTypesKeywords      ReportRecordTypes = "keywords"
+	ReportRecordTypesProductAds    ReportRecordTypes = "productAds"
+	ReportRecordTypesTargets       ReportRecordTypes = "targets"
 )
 
-func (e SourceAmazonAdsUpdateReportRecordTypes) ToPointer() *SourceAmazonAdsUpdateReportRecordTypes {
+func (e ReportRecordTypes) ToPointer() *ReportRecordTypes {
 	return &e
 }
 
-func (e *SourceAmazonAdsUpdateReportRecordTypes) UnmarshalJSON(data []byte) error {
+func (e *ReportRecordTypes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -100,26 +101,26 @@ func (e *SourceAmazonAdsUpdateReportRecordTypes) UnmarshalJSON(data []byte) erro
 	case "productAds":
 		fallthrough
 	case "targets":
-		*e = SourceAmazonAdsUpdateReportRecordTypes(v)
+		*e = ReportRecordTypes(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsUpdateReportRecordTypes: %v", v)
+		return fmt.Errorf("invalid value for ReportRecordTypes: %v", v)
 	}
 }
 
-type SourceAmazonAdsUpdateStateFilter string
+type StateFilter string
 
 const (
-	SourceAmazonAdsUpdateStateFilterEnabled  SourceAmazonAdsUpdateStateFilter = "enabled"
-	SourceAmazonAdsUpdateStateFilterPaused   SourceAmazonAdsUpdateStateFilter = "paused"
-	SourceAmazonAdsUpdateStateFilterArchived SourceAmazonAdsUpdateStateFilter = "archived"
+	StateFilterEnabled  StateFilter = "enabled"
+	StateFilterPaused   StateFilter = "paused"
+	StateFilterArchived StateFilter = "archived"
 )
 
-func (e SourceAmazonAdsUpdateStateFilter) ToPointer() *SourceAmazonAdsUpdateStateFilter {
+func (e StateFilter) ToPointer() *StateFilter {
 	return &e
 }
 
-func (e *SourceAmazonAdsUpdateStateFilter) UnmarshalJSON(data []byte) error {
+func (e *StateFilter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -130,21 +131,21 @@ func (e *SourceAmazonAdsUpdateStateFilter) UnmarshalJSON(data []byte) error {
 	case "paused":
 		fallthrough
 	case "archived":
-		*e = SourceAmazonAdsUpdateStateFilter(v)
+		*e = StateFilter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsUpdateStateFilter: %v", v)
+		return fmt.Errorf("invalid value for StateFilter: %v", v)
 	}
 }
 
 type SourceAmazonAdsUpdate struct {
-	AuthType *SourceAmazonAdsUpdateAuthType `json:"auth_type,omitempty"`
+	authType *SourceAmazonAdsUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientID string `json:"client_id"`
 	// The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientSecret string `json:"client_secret"`
 	// The amount of days to go back in time to get the updated data from Amazon Ads
-	LookBackWindow *int64 `json:"look_back_window,omitempty"`
+	LookBackWindow *int64 `default:"3" json:"look_back_window"`
 	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
 	// Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
@@ -152,11 +153,96 @@ type SourceAmazonAdsUpdate struct {
 	// Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 	RefreshToken string `json:"refresh_token"`
 	// Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
-	Region *SourceAmazonAdsUpdateRegion `json:"region,omitempty"`
+	Region *Region `default:"NA" json:"region"`
 	// Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
-	ReportRecordTypes []SourceAmazonAdsUpdateReportRecordTypes `json:"report_record_types,omitempty"`
+	ReportRecordTypes []ReportRecordTypes `json:"report_record_types,omitempty"`
 	// The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
 	StartDate *string `json:"start_date,omitempty"`
 	// Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.
-	StateFilter []SourceAmazonAdsUpdateStateFilter `json:"state_filter,omitempty"`
+	StateFilter []StateFilter `json:"state_filter,omitempty"`
+}
+
+func (s SourceAmazonAdsUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmazonAdsUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmazonAdsUpdate) GetAuthType() *SourceAmazonAdsUpdateAuthType {
+	return SourceAmazonAdsUpdateAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceAmazonAdsUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceAmazonAdsUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceAmazonAdsUpdate) GetLookBackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookBackWindow
+}
+
+func (o *SourceAmazonAdsUpdate) GetMarketplaceIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MarketplaceIds
+}
+
+func (o *SourceAmazonAdsUpdate) GetProfiles() []int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Profiles
+}
+
+func (o *SourceAmazonAdsUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceAmazonAdsUpdate) GetRegion() *Region {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceAmazonAdsUpdate) GetReportRecordTypes() []ReportRecordTypes {
+	if o == nil {
+		return nil
+	}
+	return o.ReportRecordTypes
+}
+
+func (o *SourceAmazonAdsUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceAmazonAdsUpdate) GetStateFilter() []StateFilter {
+	if o == nil {
+		return nil
+	}
+	return o.StateFilter
 }

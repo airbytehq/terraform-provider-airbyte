@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationConvexConvex string
+type Convex string
 
 const (
-	DestinationConvexConvexConvex DestinationConvexConvex = "convex"
+	ConvexConvex Convex = "convex"
 )
 
-func (e DestinationConvexConvex) ToPointer() *DestinationConvexConvex {
+func (e Convex) ToPointer() *Convex {
 	return &e
 }
 
-func (e *DestinationConvexConvex) UnmarshalJSON(data []byte) error {
+func (e *Convex) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "convex":
-		*e = DestinationConvexConvex(v)
+		*e = Convex(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationConvexConvex: %v", v)
+		return fmt.Errorf("invalid value for Convex: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type DestinationConvex struct {
 	// API access key used to send data to a Convex deployment.
 	AccessKey string `json:"access_key"`
 	// URL of the Convex deployment that is the destination
-	DeploymentURL   string                  `json:"deployment_url"`
-	DestinationType DestinationConvexConvex `json:"destinationType"`
+	DeploymentURL   string `json:"deployment_url"`
+	destinationType Convex `const:"convex" json:"destinationType"`
+}
+
+func (d DestinationConvex) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationConvex) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationConvex) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *DestinationConvex) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
+}
+
+func (o *DestinationConvex) GetDestinationType() Convex {
+	return ConvexConvex
 }

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,13 +12,11 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	productCatalog := shared.SourceChargebeeProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
-	sourceType := shared.SourceChargebeeChargebee(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChargebee{
 		ProductCatalog: productCatalog,
 		Site:           site,
 		SiteAPIKey:     siteAPIKey,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()
@@ -44,7 +42,7 @@ func (r *SourceChargebeeResourceModel) ToGetSDKType() *shared.SourceChargebeeCre
 }
 
 func (r *SourceChargebeeResourceModel) ToUpdateSDKType() *shared.SourceChargebeePutRequest {
-	productCatalog := shared.SourceChargebeeUpdateProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	productCatalog := shared.ProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())

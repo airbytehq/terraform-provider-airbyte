@@ -9,3 +9,31 @@ type SourceZuoraCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceZuoraCreateRequest) GetConfiguration() SourceZuora {
+	if o == nil {
+		return SourceZuora{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZuoraCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZuoraCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceZuoraCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

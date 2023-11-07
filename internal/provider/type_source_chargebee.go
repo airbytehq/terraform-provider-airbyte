@@ -8,6 +8,5 @@ type SourceChargebee struct {
 	ProductCatalog types.String `tfsdk:"product_catalog"`
 	Site           types.String `tfsdk:"site"`
 	SiteAPIKey     types.String `tfsdk:"site_api_key"`
-	SourceType     types.String `tfsdk:"source_type"`
 	StartDate      types.String `tfsdk:"start_date"`
 }

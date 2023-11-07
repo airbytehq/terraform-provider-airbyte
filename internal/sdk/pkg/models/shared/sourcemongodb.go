@@ -3,226 +3,260 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance string
+type SourceMongodbSchemasInstanceTypeInstance string
 
 const (
-	SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceAtlas SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance = "atlas"
+	SourceMongodbSchemasInstanceTypeInstanceAtlas SourceMongodbSchemasInstanceTypeInstance = "atlas"
 )
 
-func (e SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance) ToPointer() *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance {
+func (e SourceMongodbSchemasInstanceTypeInstance) ToPointer() *SourceMongodbSchemasInstanceTypeInstance {
 	return &e
 }
 
-func (e *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbSchemasInstanceTypeInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "atlas":
-		*e = SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance(v)
+		*e = SourceMongodbSchemasInstanceTypeInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbSchemasInstanceTypeInstance: %v", v)
 	}
 }
 
-// SourceMongodbMongoDBInstanceTypeMongoDBAtlas - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type SourceMongodbMongoDBInstanceTypeMongoDBAtlas struct {
+// SourceMongodbMongoDBAtlas - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type SourceMongodbMongoDBAtlas struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The URL of a cluster to connect to.
-	ClusterURL string                                               `json:"cluster_url"`
-	Instance   SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance `json:"instance"`
-
-	AdditionalProperties interface{} `json:"-"`
+	ClusterURL string                                   `json:"cluster_url"`
+	instance   SourceMongodbSchemasInstanceTypeInstance `const:"atlas" json:"instance"`
 }
-type _SourceMongodbMongoDBInstanceTypeMongoDBAtlas SourceMongodbMongoDBInstanceTypeMongoDBAtlas
 
-func (c *SourceMongodbMongoDBInstanceTypeMongoDBAtlas) UnmarshalJSON(bs []byte) error {
-	data := _SourceMongodbMongoDBInstanceTypeMongoDBAtlas{}
+func (s SourceMongodbMongoDBAtlas) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourceMongodbMongoDBAtlas) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceMongodbMongoDBInstanceTypeMongoDBAtlas(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "cluster_url")
-	delete(additionalFields, "instance")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceMongodbMongoDBInstanceTypeMongoDBAtlas) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceMongodbMongoDBInstanceTypeMongoDBAtlas(c))
-	if err != nil {
-		return nil, err
+func (o *SourceMongodbMongoDBAtlas) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourceMongodbMongoDbInstanceTypeReplicaSetInstance string
+func (o *SourceMongodbMongoDBAtlas) GetClusterURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClusterURL
+}
+
+func (o *SourceMongodbMongoDBAtlas) GetInstance() SourceMongodbSchemasInstanceTypeInstance {
+	return SourceMongodbSchemasInstanceTypeInstanceAtlas
+}
+
+type SourceMongodbSchemasInstance string
 
 const (
-	SourceMongodbMongoDbInstanceTypeReplicaSetInstanceReplica SourceMongodbMongoDbInstanceTypeReplicaSetInstance = "replica"
+	SourceMongodbSchemasInstanceReplica SourceMongodbSchemasInstance = "replica"
 )
 
-func (e SourceMongodbMongoDbInstanceTypeReplicaSetInstance) ToPointer() *SourceMongodbMongoDbInstanceTypeReplicaSetInstance {
+func (e SourceMongodbSchemasInstance) ToPointer() *SourceMongodbSchemasInstance {
 	return &e
 }
 
-func (e *SourceMongodbMongoDbInstanceTypeReplicaSetInstance) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbSchemasInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "replica":
-		*e = SourceMongodbMongoDbInstanceTypeReplicaSetInstance(v)
+		*e = SourceMongodbSchemasInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeReplicaSetInstance: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbSchemasInstance: %v", v)
 	}
 }
 
-// SourceMongodbMongoDbInstanceTypeReplicaSet - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type SourceMongodbMongoDbInstanceTypeReplicaSet struct {
-	Instance SourceMongodbMongoDbInstanceTypeReplicaSetInstance `json:"instance"`
+// SourceMongodbReplicaSet - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type SourceMongodbReplicaSet struct {
+	instance SourceMongodbSchemasInstance `const:"replica" json:"instance"`
 	// A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 	ReplicaSet *string `json:"replica_set,omitempty"`
 	// The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 	ServerAddresses string `json:"server_addresses"`
 }
 
-type SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance string
+func (s SourceMongodbReplicaSet) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbReplicaSet) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbReplicaSet) GetInstance() SourceMongodbSchemasInstance {
+	return SourceMongodbSchemasInstanceReplica
+}
+
+func (o *SourceMongodbReplicaSet) GetReplicaSet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicaSet
+}
+
+func (o *SourceMongodbReplicaSet) GetServerAddresses() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerAddresses
+}
+
+type SourceMongodbInstance string
 
 const (
-	SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceStandalone SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance = "standalone"
+	SourceMongodbInstanceStandalone SourceMongodbInstance = "standalone"
 )
 
-func (e SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance) ToPointer() *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance {
+func (e SourceMongodbInstance) ToPointer() *SourceMongodbInstance {
 	return &e
 }
 
-func (e *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "standalone":
-		*e = SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(v)
+		*e = SourceMongodbInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbInstance: %v", v)
 	}
 }
 
-// SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance struct {
+// SourceMongodbStandaloneMongoDbInstance - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type SourceMongodbStandaloneMongoDbInstance struct {
 	// The host name of the Mongo database.
-	Host     string                                                            `json:"host"`
-	Instance SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance `json:"instance"`
+	Host     string                `json:"host"`
+	instance SourceMongodbInstance `const:"standalone" json:"instance"`
 	// The port of the Mongo database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"27017" json:"port"`
+}
+
+func (s SourceMongodbStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbStandaloneMongoDbInstance) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbStandaloneMongoDbInstance) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceMongodbStandaloneMongoDbInstance) GetInstance() SourceMongodbInstance {
+	return SourceMongodbInstanceStandalone
+}
+
+func (o *SourceMongodbStandaloneMongoDbInstance) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 type SourceMongodbMongoDbInstanceTypeType string
 
 const (
-	SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance SourceMongodbMongoDbInstanceTypeType = "source-mongodb_MongoDb Instance Type_Standalone MongoDb Instance"
-	SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDbInstanceTypeReplicaSet                SourceMongodbMongoDbInstanceTypeType = "source-mongodb_MongoDb Instance Type_Replica Set"
-	SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBInstanceTypeMongoDBAtlas              SourceMongodbMongoDbInstanceTypeType = "source-mongodb_MongoDb Instance Type_MongoDB Atlas"
+	SourceMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance SourceMongodbMongoDbInstanceTypeType = "StandaloneMongoDbInstance"
+	SourceMongodbMongoDbInstanceTypeTypeReplicaSet                SourceMongodbMongoDbInstanceTypeType = "ReplicaSet"
+	SourceMongodbMongoDbInstanceTypeTypeMongoDBAtlas              SourceMongodbMongoDbInstanceTypeType = "MongoDBAtlas"
 )
 
 type SourceMongodbMongoDbInstanceType struct {
-	SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
-	SourceMongodbMongoDbInstanceTypeReplicaSet                *SourceMongodbMongoDbInstanceTypeReplicaSet
-	SourceMongodbMongoDBInstanceTypeMongoDBAtlas              *SourceMongodbMongoDBInstanceTypeMongoDBAtlas
+	StandaloneMongoDbInstance *SourceMongodbStandaloneMongoDbInstance
+	ReplicaSet                *SourceMongodbReplicaSet
+	MongoDBAtlas              *SourceMongodbMongoDBAtlas
 
 	Type SourceMongodbMongoDbInstanceTypeType
 }
 
-func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance(sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance) SourceMongodbMongoDbInstanceType {
-	typ := SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
+func CreateSourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance(standaloneMongoDbInstance SourceMongodbStandaloneMongoDbInstance) SourceMongodbMongoDbInstanceType {
+	typ := SourceMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance
 
 	return SourceMongodbMongoDbInstanceType{
-		SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance: &sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance,
-		Type: typ,
+		StandaloneMongoDbInstance: &standaloneMongoDbInstance,
+		Type:                      typ,
 	}
 }
 
-func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbMongoDbInstanceTypeReplicaSet(sourceMongodbMongoDbInstanceTypeReplicaSet SourceMongodbMongoDbInstanceTypeReplicaSet) SourceMongodbMongoDbInstanceType {
-	typ := SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDbInstanceTypeReplicaSet
+func CreateSourceMongodbMongoDbInstanceTypeReplicaSet(replicaSet SourceMongodbReplicaSet) SourceMongodbMongoDbInstanceType {
+	typ := SourceMongodbMongoDbInstanceTypeTypeReplicaSet
 
 	return SourceMongodbMongoDbInstanceType{
-		SourceMongodbMongoDbInstanceTypeReplicaSet: &sourceMongodbMongoDbInstanceTypeReplicaSet,
-		Type: typ,
+		ReplicaSet: &replicaSet,
+		Type:       typ,
 	}
 }
 
-func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbMongoDBInstanceTypeMongoDBAtlas(sourceMongodbMongoDBInstanceTypeMongoDBAtlas SourceMongodbMongoDBInstanceTypeMongoDBAtlas) SourceMongodbMongoDbInstanceType {
-	typ := SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBInstanceTypeMongoDBAtlas
+func CreateSourceMongodbMongoDbInstanceTypeMongoDBAtlas(mongoDBAtlas SourceMongodbMongoDBAtlas) SourceMongodbMongoDbInstanceType {
+	typ := SourceMongodbMongoDbInstanceTypeTypeMongoDBAtlas
 
 	return SourceMongodbMongoDbInstanceType{
-		SourceMongodbMongoDBInstanceTypeMongoDBAtlas: &sourceMongodbMongoDBInstanceTypeMongoDBAtlas,
-		Type: typ,
+		MongoDBAtlas: &mongoDBAtlas,
+		Type:         typ,
 	}
 }
 
 func (u *SourceMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceMongodbMongoDBInstanceTypeMongoDBAtlas := new(SourceMongodbMongoDBInstanceTypeMongoDBAtlas)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbMongoDBInstanceTypeMongoDBAtlas); err == nil {
-		u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas = sourceMongodbMongoDBInstanceTypeMongoDBAtlas
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBInstanceTypeMongoDBAtlas
+	standaloneMongoDbInstance := new(SourceMongodbStandaloneMongoDbInstance)
+	if err := utils.UnmarshalJSON(data, &standaloneMongoDbInstance, "", true, true); err == nil {
+		u.StandaloneMongoDbInstance = standaloneMongoDbInstance
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance
 		return nil
 	}
 
-	sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance := new(SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance); err == nil {
-		u.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
+	replicaSet := new(SourceMongodbReplicaSet)
+	if err := utils.UnmarshalJSON(data, &replicaSet, "", true, true); err == nil {
+		u.ReplicaSet = replicaSet
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeReplicaSet
 		return nil
 	}
 
-	sourceMongodbMongoDbInstanceTypeReplicaSet := new(SourceMongodbMongoDbInstanceTypeReplicaSet)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbMongoDbInstanceTypeReplicaSet); err == nil {
-		u.SourceMongodbMongoDbInstanceTypeReplicaSet = sourceMongodbMongoDbInstanceTypeReplicaSet
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDbInstanceTypeReplicaSet
+	mongoDBAtlas := new(SourceMongodbMongoDBAtlas)
+	if err := utils.UnmarshalJSON(data, &mongoDBAtlas, "", true, true); err == nil {
+		u.MongoDBAtlas = mongoDBAtlas
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeMongoDBAtlas
 		return nil
 	}
 
@@ -230,19 +264,19 @@ func (u *SourceMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-		return json.Marshal(u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas)
+	if u.StandaloneMongoDbInstance != nil {
+		return utils.MarshalJSON(u.StandaloneMongoDbInstance, "", true)
 	}
 
-	if u.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
-		return json.Marshal(u.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
+	if u.ReplicaSet != nil {
+		return utils.MarshalJSON(u.ReplicaSet, "", true)
 	}
 
-	if u.SourceMongodbMongoDbInstanceTypeReplicaSet != nil {
-		return json.Marshal(u.SourceMongodbMongoDbInstanceTypeReplicaSet)
+	if u.MongoDBAtlas != nil {
+		return utils.MarshalJSON(u.MongoDBAtlas, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMongodbMongodb string
@@ -271,14 +305,64 @@ func (e *SourceMongodbMongodb) UnmarshalJSON(data []byte) error {
 
 type SourceMongodb struct {
 	// The authentication source where the user information is stored.
-	AuthSource *string `json:"auth_source,omitempty"`
+	AuthSource *string `default:"admin" json:"auth_source"`
 	// The database you want to replicate.
 	Database string `json:"database"`
 	// The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 	InstanceType *SourceMongodbMongoDbInstanceType `json:"instance_type,omitempty"`
 	// The password associated with this username.
 	Password   *string              `json:"password,omitempty"`
-	SourceType SourceMongodbMongodb `json:"sourceType"`
+	sourceType SourceMongodbMongodb `const:"mongodb" json:"sourceType"`
 	// The username which is used to access the database.
 	User *string `json:"user,omitempty"`
+}
+
+func (s SourceMongodb) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodb) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodb) GetAuthSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthSource
+}
+
+func (o *SourceMongodb) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceMongodb) GetInstanceType() *SourceMongodbMongoDbInstanceType {
+	if o == nil {
+		return nil
+	}
+	return o.InstanceType
+}
+
+func (o *SourceMongodb) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMongodb) GetSourceType() SourceMongodbMongodb {
+	return SourceMongodbMongodbMongodb
+}
+
+func (o *SourceMongodb) GetUser() *string {
+	if o == nil {
+		return nil
+	}
+	return o.User
 }

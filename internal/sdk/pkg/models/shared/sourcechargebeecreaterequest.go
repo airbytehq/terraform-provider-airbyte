@@ -9,3 +9,31 @@ type SourceChargebeeCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceChargebeeCreateRequest) GetConfiguration() SourceChargebee {
+	if o == nil {
+		return SourceChargebee{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceChargebeeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceChargebeeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceChargebeeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceCodaCoda string
+type Coda string
 
 const (
-	SourceCodaCodaCoda SourceCodaCoda = "coda"
+	CodaCoda Coda = "coda"
 )
 
-func (e SourceCodaCoda) ToPointer() *SourceCodaCoda {
+func (e Coda) ToPointer() *Coda {
 	return &e
 }
 
-func (e *SourceCodaCoda) UnmarshalJSON(data []byte) error {
+func (e *Coda) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "coda":
-		*e = SourceCodaCoda(v)
+		*e = Coda(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCodaCoda: %v", v)
+		return fmt.Errorf("invalid value for Coda: %v", v)
 	}
 }
 
 type SourceCoda struct {
 	// Bearer token
-	AuthToken  string         `json:"auth_token"`
-	SourceType SourceCodaCoda `json:"sourceType"`
+	AuthToken  string `json:"auth_token"`
+	sourceType Coda   `const:"coda" json:"sourceType"`
+}
+
+func (s SourceCoda) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceCoda) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceCoda) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceCoda) GetSourceType() Coda {
+	return CodaCoda
 }

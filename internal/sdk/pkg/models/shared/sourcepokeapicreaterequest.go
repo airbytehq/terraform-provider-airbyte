@@ -9,3 +9,31 @@ type SourcePokeapiCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourcePokeapiCreateRequest) GetConfiguration() SourcePokeapi {
+	if o == nil {
+		return SourcePokeapi{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePokeapiCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePokeapiCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePokeapiCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

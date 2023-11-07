@@ -9,6 +9,5 @@ type SourceMongodb struct {
 	Database     types.String                      `tfsdk:"database"`
 	InstanceType *SourceMongodbMongoDbInstanceType `tfsdk:"instance_type"`
 	Password     types.String                      `tfsdk:"password"`
-	SourceType   types.String                      `tfsdk:"source_type"`
 	User         types.String                      `tfsdk:"user"`
 }

@@ -3,128 +3,181 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceE2eTestCloudMockCatalogMultiSchemaType string
+type SourceE2eTestCloudSchemasType string
 
 const (
-	SourceE2eTestCloudMockCatalogMultiSchemaTypeMultiStream SourceE2eTestCloudMockCatalogMultiSchemaType = "MULTI_STREAM"
+	SourceE2eTestCloudSchemasTypeMultiStream SourceE2eTestCloudSchemasType = "MULTI_STREAM"
 )
 
-func (e SourceE2eTestCloudMockCatalogMultiSchemaType) ToPointer() *SourceE2eTestCloudMockCatalogMultiSchemaType {
+func (e SourceE2eTestCloudSchemasType) ToPointer() *SourceE2eTestCloudSchemasType {
 	return &e
 }
 
-func (e *SourceE2eTestCloudMockCatalogMultiSchemaType) UnmarshalJSON(data []byte) error {
+func (e *SourceE2eTestCloudSchemasType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "MULTI_STREAM":
-		*e = SourceE2eTestCloudMockCatalogMultiSchemaType(v)
+		*e = SourceE2eTestCloudSchemasType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudMockCatalogMultiSchemaType: %v", v)
+		return fmt.Errorf("invalid value for SourceE2eTestCloudSchemasType: %v", v)
 	}
 }
 
-// SourceE2eTestCloudMockCatalogMultiSchema - A catalog with multiple data streams, each with a different schema.
-type SourceE2eTestCloudMockCatalogMultiSchema struct {
+// SourceE2eTestCloudMultiSchema - A catalog with multiple data streams, each with a different schema.
+type SourceE2eTestCloudMultiSchema struct {
 	// A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-	StreamSchemas string                                       `json:"stream_schemas"`
-	Type          SourceE2eTestCloudMockCatalogMultiSchemaType `json:"type"`
+	StreamSchemas *string                        `default:"{ "stream1": { "type": "object", "properties": { "field1": { "type": "string" } } }, "stream2": { "type": "object", "properties": { "field1": { "type": "boolean" } } } }" json:"stream_schemas"`
+	type_         *SourceE2eTestCloudSchemasType `const:"MULTI_STREAM" json:"type"`
 }
 
-type SourceE2eTestCloudMockCatalogSingleSchemaType string
+func (s SourceE2eTestCloudMultiSchema) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceE2eTestCloudMultiSchema) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceE2eTestCloudMultiSchema) GetStreamSchemas() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StreamSchemas
+}
+
+func (o *SourceE2eTestCloudMultiSchema) GetType() *SourceE2eTestCloudSchemasType {
+	return SourceE2eTestCloudSchemasTypeMultiStream.ToPointer()
+}
+
+type SourceE2eTestCloudSchemasMockCatalogType string
 
 const (
-	SourceE2eTestCloudMockCatalogSingleSchemaTypeSingleStream SourceE2eTestCloudMockCatalogSingleSchemaType = "SINGLE_STREAM"
+	SourceE2eTestCloudSchemasMockCatalogTypeSingleStream SourceE2eTestCloudSchemasMockCatalogType = "SINGLE_STREAM"
 )
 
-func (e SourceE2eTestCloudMockCatalogSingleSchemaType) ToPointer() *SourceE2eTestCloudMockCatalogSingleSchemaType {
+func (e SourceE2eTestCloudSchemasMockCatalogType) ToPointer() *SourceE2eTestCloudSchemasMockCatalogType {
 	return &e
 }
 
-func (e *SourceE2eTestCloudMockCatalogSingleSchemaType) UnmarshalJSON(data []byte) error {
+func (e *SourceE2eTestCloudSchemasMockCatalogType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SINGLE_STREAM":
-		*e = SourceE2eTestCloudMockCatalogSingleSchemaType(v)
+		*e = SourceE2eTestCloudSchemasMockCatalogType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudMockCatalogSingleSchemaType: %v", v)
+		return fmt.Errorf("invalid value for SourceE2eTestCloudSchemasMockCatalogType: %v", v)
 	}
 }
 
-// SourceE2eTestCloudMockCatalogSingleSchema - A catalog with one or multiple streams that share the same schema.
-type SourceE2eTestCloudMockCatalogSingleSchema struct {
+// SourceE2eTestCloudSingleSchema - A catalog with one or multiple streams that share the same schema.
+type SourceE2eTestCloudSingleSchema struct {
 	// Duplicate the stream for easy load testing. Each stream name will have a number suffix. For example, if the stream name is "ds", the duplicated streams will be "ds_0", "ds_1", etc.
-	StreamDuplication *int64 `json:"stream_duplication,omitempty"`
+	StreamDuplication *int64 `default:"1" json:"stream_duplication"`
 	// Name of the data stream.
-	StreamName string `json:"stream_name"`
+	StreamName *string `default:"data_stream" json:"stream_name"`
 	// A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-	StreamSchema string                                        `json:"stream_schema"`
-	Type         SourceE2eTestCloudMockCatalogSingleSchemaType `json:"type"`
+	StreamSchema *string                                   `default:"{ "type": "object", "properties": { "column1": { "type": "string" } } }" json:"stream_schema"`
+	type_        *SourceE2eTestCloudSchemasMockCatalogType `const:"SINGLE_STREAM" json:"type"`
+}
+
+func (s SourceE2eTestCloudSingleSchema) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceE2eTestCloudSingleSchema) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceE2eTestCloudSingleSchema) GetStreamDuplication() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StreamDuplication
+}
+
+func (o *SourceE2eTestCloudSingleSchema) GetStreamName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StreamName
+}
+
+func (o *SourceE2eTestCloudSingleSchema) GetStreamSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StreamSchema
+}
+
+func (o *SourceE2eTestCloudSingleSchema) GetType() *SourceE2eTestCloudSchemasMockCatalogType {
+	return SourceE2eTestCloudSchemasMockCatalogTypeSingleStream.ToPointer()
 }
 
 type SourceE2eTestCloudMockCatalogType string
 
 const (
-	SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogSingleSchema SourceE2eTestCloudMockCatalogType = "source-e2e-test-cloud_Mock Catalog_Single Schema"
-	SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogMultiSchema  SourceE2eTestCloudMockCatalogType = "source-e2e-test-cloud_Mock Catalog_Multi Schema"
+	SourceE2eTestCloudMockCatalogTypeSingleSchema SourceE2eTestCloudMockCatalogType = "SingleSchema"
+	SourceE2eTestCloudMockCatalogTypeMultiSchema  SourceE2eTestCloudMockCatalogType = "MultiSchema"
 )
 
 type SourceE2eTestCloudMockCatalog struct {
-	SourceE2eTestCloudMockCatalogSingleSchema *SourceE2eTestCloudMockCatalogSingleSchema
-	SourceE2eTestCloudMockCatalogMultiSchema  *SourceE2eTestCloudMockCatalogMultiSchema
+	SingleSchema *SourceE2eTestCloudSingleSchema
+	MultiSchema  *SourceE2eTestCloudMultiSchema
 
 	Type SourceE2eTestCloudMockCatalogType
 }
 
-func CreateSourceE2eTestCloudMockCatalogSourceE2eTestCloudMockCatalogSingleSchema(sourceE2eTestCloudMockCatalogSingleSchema SourceE2eTestCloudMockCatalogSingleSchema) SourceE2eTestCloudMockCatalog {
-	typ := SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogSingleSchema
+func CreateSourceE2eTestCloudMockCatalogSingleSchema(singleSchema SourceE2eTestCloudSingleSchema) SourceE2eTestCloudMockCatalog {
+	typ := SourceE2eTestCloudMockCatalogTypeSingleSchema
 
 	return SourceE2eTestCloudMockCatalog{
-		SourceE2eTestCloudMockCatalogSingleSchema: &sourceE2eTestCloudMockCatalogSingleSchema,
-		Type: typ,
+		SingleSchema: &singleSchema,
+		Type:         typ,
 	}
 }
 
-func CreateSourceE2eTestCloudMockCatalogSourceE2eTestCloudMockCatalogMultiSchema(sourceE2eTestCloudMockCatalogMultiSchema SourceE2eTestCloudMockCatalogMultiSchema) SourceE2eTestCloudMockCatalog {
-	typ := SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogMultiSchema
+func CreateSourceE2eTestCloudMockCatalogMultiSchema(multiSchema SourceE2eTestCloudMultiSchema) SourceE2eTestCloudMockCatalog {
+	typ := SourceE2eTestCloudMockCatalogTypeMultiSchema
 
 	return SourceE2eTestCloudMockCatalog{
-		SourceE2eTestCloudMockCatalogMultiSchema: &sourceE2eTestCloudMockCatalogMultiSchema,
-		Type:                                     typ,
+		MultiSchema: &multiSchema,
+		Type:        typ,
 	}
 }
 
 func (u *SourceE2eTestCloudMockCatalog) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceE2eTestCloudMockCatalogMultiSchema := new(SourceE2eTestCloudMockCatalogMultiSchema)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceE2eTestCloudMockCatalogMultiSchema); err == nil {
-		u.SourceE2eTestCloudMockCatalogMultiSchema = sourceE2eTestCloudMockCatalogMultiSchema
-		u.Type = SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogMultiSchema
+	multiSchema := new(SourceE2eTestCloudMultiSchema)
+	if err := utils.UnmarshalJSON(data, &multiSchema, "", true, true); err == nil {
+		u.MultiSchema = multiSchema
+		u.Type = SourceE2eTestCloudMockCatalogTypeMultiSchema
 		return nil
 	}
 
-	sourceE2eTestCloudMockCatalogSingleSchema := new(SourceE2eTestCloudMockCatalogSingleSchema)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceE2eTestCloudMockCatalogSingleSchema); err == nil {
-		u.SourceE2eTestCloudMockCatalogSingleSchema = sourceE2eTestCloudMockCatalogSingleSchema
-		u.Type = SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogSingleSchema
+	singleSchema := new(SourceE2eTestCloudSingleSchema)
+	if err := utils.UnmarshalJSON(data, &singleSchema, "", true, true); err == nil {
+		u.SingleSchema = singleSchema
+		u.Type = SourceE2eTestCloudMockCatalogTypeSingleSchema
 		return nil
 	}
 
@@ -132,38 +185,38 @@ func (u *SourceE2eTestCloudMockCatalog) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceE2eTestCloudMockCatalog) MarshalJSON() ([]byte, error) {
-	if u.SourceE2eTestCloudMockCatalogMultiSchema != nil {
-		return json.Marshal(u.SourceE2eTestCloudMockCatalogMultiSchema)
+	if u.SingleSchema != nil {
+		return utils.MarshalJSON(u.SingleSchema, "", true)
 	}
 
-	if u.SourceE2eTestCloudMockCatalogSingleSchema != nil {
-		return json.Marshal(u.SourceE2eTestCloudMockCatalogSingleSchema)
+	if u.MultiSchema != nil {
+		return utils.MarshalJSON(u.MultiSchema, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceE2eTestCloudE2eTestCloud string
+type E2eTestCloud string
 
 const (
-	SourceE2eTestCloudE2eTestCloudE2eTestCloud SourceE2eTestCloudE2eTestCloud = "e2e-test-cloud"
+	E2eTestCloudE2eTestCloud E2eTestCloud = "e2e-test-cloud"
 )
 
-func (e SourceE2eTestCloudE2eTestCloud) ToPointer() *SourceE2eTestCloudE2eTestCloud {
+func (e E2eTestCloud) ToPointer() *E2eTestCloud {
 	return &e
 }
 
-func (e *SourceE2eTestCloudE2eTestCloud) UnmarshalJSON(data []byte) error {
+func (e *E2eTestCloud) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "e2e-test-cloud":
-		*e = SourceE2eTestCloudE2eTestCloud(v)
+		*e = E2eTestCloud(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudE2eTestCloud: %v", v)
+		return fmt.Errorf("invalid value for E2eTestCloud: %v", v)
 	}
 }
 
@@ -193,12 +246,59 @@ func (e *SourceE2eTestCloudType) UnmarshalJSON(data []byte) error {
 
 type SourceE2eTestCloud struct {
 	// Number of records to emit per stream. Min 1. Max 100 billion.
-	MaxMessages int64 `json:"max_messages"`
+	MaxMessages *int64 `default:"100" json:"max_messages"`
 	// Interval between messages in ms. Min 0 ms. Max 60000 ms (1 minute).
-	MessageIntervalMs *int64                        `json:"message_interval_ms,omitempty"`
+	MessageIntervalMs *int64                        `default:"0" json:"message_interval_ms"`
 	MockCatalog       SourceE2eTestCloudMockCatalog `json:"mock_catalog"`
 	// When the seed is unspecified, the current time millis will be used as the seed. Range: [0, 1000000].
-	Seed       *int64                         `json:"seed,omitempty"`
-	SourceType SourceE2eTestCloudE2eTestCloud `json:"sourceType"`
-	Type       *SourceE2eTestCloudType        `json:"type,omitempty"`
+	Seed       *int64                  `default:"0" json:"seed"`
+	sourceType E2eTestCloud            `const:"e2e-test-cloud" json:"sourceType"`
+	type_      *SourceE2eTestCloudType `const:"CONTINUOUS_FEED" json:"type"`
+}
+
+func (s SourceE2eTestCloud) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceE2eTestCloud) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceE2eTestCloud) GetMaxMessages() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxMessages
+}
+
+func (o *SourceE2eTestCloud) GetMessageIntervalMs() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MessageIntervalMs
+}
+
+func (o *SourceE2eTestCloud) GetMockCatalog() SourceE2eTestCloudMockCatalog {
+	if o == nil {
+		return SourceE2eTestCloudMockCatalog{}
+	}
+	return o.MockCatalog
+}
+
+func (o *SourceE2eTestCloud) GetSeed() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Seed
+}
+
+func (o *SourceE2eTestCloud) GetSourceType() E2eTestCloud {
+	return E2eTestCloudE2eTestCloud
+}
+
+func (o *SourceE2eTestCloud) GetType() *SourceE2eTestCloudType {
+	return SourceE2eTestCloudTypeContinuousFeed.ToPointer()
 }

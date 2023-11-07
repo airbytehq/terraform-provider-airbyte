@@ -7,3 +7,24 @@ type DestinationClickhouseCreateRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *DestinationClickhouseCreateRequest) GetConfiguration() DestinationClickhouse {
+	if o == nil {
+		return DestinationClickhouse{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationClickhouseCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationClickhouseCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

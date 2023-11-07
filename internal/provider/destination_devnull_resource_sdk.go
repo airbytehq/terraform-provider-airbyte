@@ -3,27 +3,22 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationDevNullCreateRequest {
-	destinationType := shared.DestinationDevNullDevNull(r.Configuration.DestinationType.ValueString())
 	var testDestination shared.DestinationDevNullTestDestination
-	var destinationDevNullTestDestinationSilent *shared.DestinationDevNullTestDestinationSilent
-	if r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent != nil {
-		testDestinationType := shared.DestinationDevNullTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType.ValueString())
-		destinationDevNullTestDestinationSilent = &shared.DestinationDevNullTestDestinationSilent{
-			TestDestinationType: testDestinationType,
-		}
+	var destinationDevNullSilent *shared.DestinationDevNullSilent
+	if r.Configuration.TestDestination.Silent != nil {
+		destinationDevNullSilent = &shared.DestinationDevNullSilent{}
 	}
-	if destinationDevNullTestDestinationSilent != nil {
+	if destinationDevNullSilent != nil {
 		testDestination = shared.DestinationDevNullTestDestination{
-			DestinationDevNullTestDestinationSilent: destinationDevNullTestDestinationSilent,
+			Silent: destinationDevNullSilent,
 		}
 	}
 	configuration := shared.DestinationDevNull{
-		DestinationType: destinationType,
 		TestDestination: testDestination,
 	}
 	name := r.Name.ValueString()
@@ -42,17 +37,14 @@ func (r *DestinationDevNullResourceModel) ToGetSDKType() *shared.DestinationDevN
 }
 
 func (r *DestinationDevNullResourceModel) ToUpdateSDKType() *shared.DestinationDevNullPutRequest {
-	var testDestination shared.DestinationDevNullUpdateTestDestination
-	var destinationDevNullUpdateTestDestinationSilent *shared.DestinationDevNullUpdateTestDestinationSilent
-	if r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent != nil {
-		testDestinationType := shared.DestinationDevNullUpdateTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent.TestDestinationType.ValueString())
-		destinationDevNullUpdateTestDestinationSilent = &shared.DestinationDevNullUpdateTestDestinationSilent{
-			TestDestinationType: testDestinationType,
-		}
+	var testDestination shared.TestDestination
+	var silent *shared.Silent
+	if r.Configuration.TestDestination.Silent != nil {
+		silent = &shared.Silent{}
 	}
-	if destinationDevNullUpdateTestDestinationSilent != nil {
-		testDestination = shared.DestinationDevNullUpdateTestDestination{
-			DestinationDevNullUpdateTestDestinationSilent: destinationDevNullUpdateTestDestinationSilent,
+	if silent != nil {
+		testDestination = shared.TestDestination{
+			Silent: silent,
 		}
 	}
 	configuration := shared.DestinationDevNullUpdate{

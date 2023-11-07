@@ -9,3 +9,31 @@ type SourceWebflowCreateRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
 }
+
+func (o *SourceWebflowCreateRequest) GetConfiguration() SourceWebflow {
+	if o == nil {
+		return SourceWebflow{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceWebflowCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceWebflowCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceWebflowCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

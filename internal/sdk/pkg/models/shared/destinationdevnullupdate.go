@@ -3,86 +3,105 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationDevNullUpdateTestDestinationSilentTestDestinationType string
+type TestDestinationType string
 
 const (
-	DestinationDevNullUpdateTestDestinationSilentTestDestinationTypeSilent DestinationDevNullUpdateTestDestinationSilentTestDestinationType = "SILENT"
+	TestDestinationTypeSilent TestDestinationType = "SILENT"
 )
 
-func (e DestinationDevNullUpdateTestDestinationSilentTestDestinationType) ToPointer() *DestinationDevNullUpdateTestDestinationSilentTestDestinationType {
+func (e TestDestinationType) ToPointer() *TestDestinationType {
 	return &e
 }
 
-func (e *DestinationDevNullUpdateTestDestinationSilentTestDestinationType) UnmarshalJSON(data []byte) error {
+func (e *TestDestinationType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SILENT":
-		*e = DestinationDevNullUpdateTestDestinationSilentTestDestinationType(v)
+		*e = TestDestinationType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDevNullUpdateTestDestinationSilentTestDestinationType: %v", v)
+		return fmt.Errorf("invalid value for TestDestinationType: %v", v)
 	}
 }
 
-// DestinationDevNullUpdateTestDestinationSilent - The type of destination to be used
-type DestinationDevNullUpdateTestDestinationSilent struct {
-	TestDestinationType DestinationDevNullUpdateTestDestinationSilentTestDestinationType `json:"test_destination_type"`
+// Silent - The type of destination to be used
+type Silent struct {
+	testDestinationType *TestDestinationType `const:"SILENT" json:"test_destination_type"`
 }
 
-type DestinationDevNullUpdateTestDestinationType string
+func (s Silent) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *Silent) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Silent) GetTestDestinationType() *TestDestinationType {
+	return TestDestinationTypeSilent.ToPointer()
+}
+
+type TestDestinationUnionType string
 
 const (
-	DestinationDevNullUpdateTestDestinationTypeDestinationDevNullUpdateTestDestinationSilent DestinationDevNullUpdateTestDestinationType = "destination-dev-null-update_Test Destination_Silent"
+	TestDestinationUnionTypeSilent TestDestinationUnionType = "Silent"
 )
 
-type DestinationDevNullUpdateTestDestination struct {
-	DestinationDevNullUpdateTestDestinationSilent *DestinationDevNullUpdateTestDestinationSilent
+type TestDestination struct {
+	Silent *Silent
 
-	Type DestinationDevNullUpdateTestDestinationType
+	Type TestDestinationUnionType
 }
 
-func CreateDestinationDevNullUpdateTestDestinationDestinationDevNullUpdateTestDestinationSilent(destinationDevNullUpdateTestDestinationSilent DestinationDevNullUpdateTestDestinationSilent) DestinationDevNullUpdateTestDestination {
-	typ := DestinationDevNullUpdateTestDestinationTypeDestinationDevNullUpdateTestDestinationSilent
+func CreateTestDestinationSilent(silent Silent) TestDestination {
+	typ := TestDestinationUnionTypeSilent
 
-	return DestinationDevNullUpdateTestDestination{
-		DestinationDevNullUpdateTestDestinationSilent: &destinationDevNullUpdateTestDestinationSilent,
-		Type: typ,
+	return TestDestination{
+		Silent: &silent,
+		Type:   typ,
 	}
 }
 
-func (u *DestinationDevNullUpdateTestDestination) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *TestDestination) UnmarshalJSON(data []byte) error {
 
-	destinationDevNullUpdateTestDestinationSilent := new(DestinationDevNullUpdateTestDestinationSilent)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDevNullUpdateTestDestinationSilent); err == nil {
-		u.DestinationDevNullUpdateTestDestinationSilent = destinationDevNullUpdateTestDestinationSilent
-		u.Type = DestinationDevNullUpdateTestDestinationTypeDestinationDevNullUpdateTestDestinationSilent
+	silent := new(Silent)
+	if err := utils.UnmarshalJSON(data, &silent, "", true, true); err == nil {
+		u.Silent = silent
+		u.Type = TestDestinationUnionTypeSilent
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationDevNullUpdateTestDestination) MarshalJSON() ([]byte, error) {
-	if u.DestinationDevNullUpdateTestDestinationSilent != nil {
-		return json.Marshal(u.DestinationDevNullUpdateTestDestinationSilent)
+func (u TestDestination) MarshalJSON() ([]byte, error) {
+	if u.Silent != nil {
+		return utils.MarshalJSON(u.Silent, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationDevNullUpdate struct {
 	// The type of destination to be used
-	TestDestination DestinationDevNullUpdateTestDestination `json:"test_destination"`
+	TestDestination TestDestination `json:"test_destination"`
+}
+
+func (o *DestinationDevNullUpdate) GetTestDestination() TestDestination {
+	if o == nil {
+		return TestDestination{}
+	}
+	return o.TestDestination
 }

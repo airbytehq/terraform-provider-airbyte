@@ -27,21 +27,10 @@ data "airbyte_destination_databend" "my_destination_databend" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `database` (String) Name of the database.
-- `destination_type` (String) must be one of ["databend"]
-- `host` (String) Hostname of the database.
-- `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
-- `table` (String) The default  table was written to.
-- `username` (String) Username to use to access the database.
 
 

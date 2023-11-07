@@ -7,3 +7,24 @@ type SourceFreshsalesPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceFreshsalesPutRequest) GetConfiguration() SourceFreshsalesUpdate {
+	if o == nil {
+		return SourceFreshsalesUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFreshsalesPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFreshsalesPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

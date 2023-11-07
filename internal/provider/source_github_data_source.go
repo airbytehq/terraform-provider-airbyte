@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -32,10 +31,10 @@ type SourceGithubDataSource struct {
 
 // SourceGithubDataSourceModel describes the data model.
 type SourceGithubDataSourceModel struct {
-	Configuration SourceGithub `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -50,149 +49,22 @@ func (r *SourceGithubDataSource) Schema(ctx context.Context, req datasource.Sche
 		MarkdownDescription: "SourceGithub DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"branch": schema.StringAttribute{
-						Computed:    true,
-						Description: `Space-delimited list of GitHub repository branches to pull commits for, e.g. ` + "`" + `airbytehq/airbyte/master` + "`" + `. If no branches are specified for a repository, the default branch will be pulled.`,
-					},
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_github_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `OAuth access token`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `OAuth Client Id`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `OAuth Client secret`,
-									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `must be one of ["OAuth Credentials"]`,
-									},
-								},
-								Description: `Choose how to authenticate to GitHub`,
-							},
-							"source_github_authentication_personal_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `must be one of ["PAT Credentials"]`,
-									},
-									"personal_access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
-									},
-								},
-								Description: `Choose how to authenticate to GitHub`,
-							},
-							"source_github_update_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `OAuth access token`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `OAuth Client Id`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `OAuth Client secret`,
-									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `must be one of ["OAuth Credentials"]`,
-									},
-								},
-								Description: `Choose how to authenticate to GitHub`,
-							},
-							"source_github_update_authentication_personal_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `must be one of ["PAT Credentials"]`,
-									},
-									"personal_access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
-									},
-								},
-								Description: `Choose how to authenticate to GitHub`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Choose how to authenticate to GitHub`,
-					},
-					"repository": schema.StringAttribute{
-						Computed:    true,
-						Description: `Space-delimited list of GitHub organizations/repositories, e.g. ` + "`" + `airbytehq/airbyte` + "`" + ` for single repository, ` + "`" + `airbytehq/*` + "`" + ` for get all repositories from organization and ` + "`" + `airbytehq/airbyte airbytehq/another-repo` + "`" + ` for multiple repositories.`,
-					},
-					"requests_per_hour": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"github",
-							),
-						},
-						Description: `must be one of ["github"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info`,
-					},
+				Validators: []validator.String{
+					validators.IsValidJSON(),
 				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

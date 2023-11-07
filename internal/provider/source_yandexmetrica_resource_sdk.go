@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -17,14 +17,12 @@ func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYande
 	} else {
 		endDate = nil
 	}
-	sourceType := shared.SourceYandexMetricaYandexMetrica(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYandexMetrica{
-		AuthToken:  authToken,
-		CounterID:  counterID,
-		EndDate:    endDate,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		AuthToken: authToken,
+		CounterID: counterID,
+		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

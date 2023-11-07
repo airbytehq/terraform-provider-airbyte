@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -21,12 +21,10 @@ func (r *SourceRecurlyResourceModel) ToCreateSDKType() *shared.SourceRecurlyCrea
 	} else {
 		endTime = nil
 	}
-	sourceType := shared.SourceRecurlyRecurly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecurly{
-		APIKey:     apiKey,
-		BeginTime:  beginTime,
-		EndTime:    endTime,
-		SourceType: sourceType,
+		APIKey:    apiKey,
+		BeginTime: beginTime,
+		EndTime:   endTime,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

@@ -4,12 +4,11 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "muted-ingredient.biz"
+    hostname     = "pushy-know-how.info"
     organization = "...my_organization..."
     project      = "...my_project..."
-    source_type  = "sentry"
   }
-  name         = "Krystal Quitzon"
+  name         = "Essie Schneider V"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4c59f0a5-6ceb-4cad-a29c-a79181c95671"
+  workspace_id = "4306e082-909d-497b-babb-ad3671a9ca1d"
 }

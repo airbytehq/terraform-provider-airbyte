@@ -3,18 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -59,29 +58,22 @@ func (r *SourceKyveResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `The maximum amount of pages to go trough. Set to 'null' for all pages.`,
 					},
 					"page_size": schema.Int64Attribute{
-						Optional:    true,
-						Description: `The pagesize for pagination, smaller numbers are used in integration tests.`,
+						Optional: true,
+						MarkdownDescription: `Default: 100` + "\n" +
+							`The pagesize for pagination, smaller numbers are used in integration tests.`,
 					},
 					"pool_ids": schema.StringAttribute{
 						Required:    true,
 						Description: `The IDs of the KYVE storage pool you want to archive. (Comma separated)`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kyve",
-							),
-						},
-						Description: `must be one of ["kyve"]`,
 					},
 					"start_ids": schema.StringAttribute{
 						Required:    true,
 						Description: `The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)`,
 					},
 					"url_base": schema.StringAttribute{
-						Optional:    true,
-						Description: `URL to the KYVE Chain API.`,
+						Optional: true,
+						MarkdownDescription: `Default: "https://api.korellia.kyve.network"` + "\n" +
+							`URL to the KYVE Chain API.`,
 					},
 				},
 			},
@@ -92,6 +84,9 @@ func (r *SourceKyveResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -155,7 +150,7 @@ func (r *SourceKyveResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceKyve(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -331,5 +326,5 @@ func (r *SourceKyveResource) Delete(ctx context.Context, req resource.DeleteRequ
 }
 
 func (r *SourceKyveResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

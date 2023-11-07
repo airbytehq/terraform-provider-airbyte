@@ -1,12 +1,11 @@
 resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
   configuration = {
-    domestic_schedule_country_code = "US"
+    domestic_schedule_country_code = "GB"
     end_date                       = "...my_end_date..."
-    source_type                    = "tvmaze-schedule"
     start_date                     = "...my_start_date..."
-    web_schedule_country_code      = "global"
+    web_schedule_country_code      = "US"
   }
-  name         = "Gretchen Waters"
+  name         = "Willard Hand"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e78bf606-8258-494e-a763-d5c72795b785"
+  workspace_id = "cc9acc6e-7e95-4c9a-bc9f-197511d62479"
 }

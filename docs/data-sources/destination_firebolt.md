@@ -27,71 +27,10 @@ data "airbyte_destination_firebolt" "my_destination_firebolt" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `account` (String) Firebolt account to login.
-- `database` (String) The database to connect to.
-- `destination_type` (String) must be one of ["firebolt"]
-- `engine` (String) Engine name or url to connect to.
-- `host` (String) The host name of your Firebolt database.
-- `loading_method` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method))
-- `password` (String) Firebolt password.
-- `username` (String) Firebolt email address you use to login.
-
-<a id="nestedatt--configuration--loading_method"></a>
-### Nested Schema for `configuration.loading_method`
-
-Read-Only:
-
-- `destination_firebolt_loading_method_external_table_via_s3` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_loading_method_external_table_via_s3))
-- `destination_firebolt_loading_method_sql_inserts` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_loading_method_sql_inserts))
-- `destination_firebolt_update_loading_method_external_table_via_s3` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_external_table_via_s3))
-- `destination_firebolt_update_loading_method_sql_inserts` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_sql_inserts))
-
-<a id="nestedatt--configuration--loading_method--destination_firebolt_loading_method_external_table_via_s3"></a>
-### Nested Schema for `configuration.loading_method.destination_firebolt_loading_method_external_table_via_s3`
-
-Read-Only:
-
-- `aws_key_id` (String) AWS access key granting read and write access to S3.
-- `aws_key_secret` (String) Corresponding secret part of the AWS Key
-- `method` (String) must be one of ["S3"]
-- `s3_bucket` (String) The name of the S3 bucket.
-- `s3_region` (String) Region name of the S3 bucket.
-
-
-<a id="nestedatt--configuration--loading_method--destination_firebolt_loading_method_sql_inserts"></a>
-### Nested Schema for `configuration.loading_method.destination_firebolt_loading_method_sql_inserts`
-
-Read-Only:
-
-- `method` (String) must be one of ["SQL"]
-
-
-<a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_external_table_via_s3"></a>
-### Nested Schema for `configuration.loading_method.destination_firebolt_update_loading_method_external_table_via_s3`
-
-Read-Only:
-
-- `aws_key_id` (String) AWS access key granting read and write access to S3.
-- `aws_key_secret` (String) Corresponding secret part of the AWS Key
-- `method` (String) must be one of ["S3"]
-- `s3_bucket` (String) The name of the S3 bucket.
-- `s3_region` (String) Region name of the S3 bucket.
-
-
-<a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_sql_inserts"></a>
-### Nested Schema for `configuration.loading_method.destination_firebolt_update_loading_method_sql_inserts`
-
-Read-Only:
-
-- `method` (String) must be one of ["SQL"]
 
 

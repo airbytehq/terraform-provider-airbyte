@@ -3,54 +3,54 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationS3S3 string
+type S3 string
 
 const (
-	DestinationS3S3S3 DestinationS3S3 = "s3"
+	S3S3 S3 = "s3"
 )
 
-func (e DestinationS3S3) ToPointer() *DestinationS3S3 {
+func (e S3) ToPointer() *S3 {
 	return &e
 }
 
-func (e *DestinationS3S3) UnmarshalJSON(data []byte) error {
+func (e *S3) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "s3":
-		*e = DestinationS3S3(v)
+		*e = S3(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3S3: %v", v)
+		return fmt.Errorf("invalid value for S3: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatParquetColumnarStorageCompressionCodec - The compression algorithm used to compress data pages.
-type DestinationS3OutputFormatParquetColumnarStorageCompressionCodec string
+// DestinationS3SchemasCompressionCodec - The compression algorithm used to compress data pages.
+type DestinationS3SchemasCompressionCodec string
 
 const (
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecUncompressed DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "UNCOMPRESSED"
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecSnappy       DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "SNAPPY"
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecGzip         DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "GZIP"
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecLzo          DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "LZO"
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecBrotli       DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "BROTLI"
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecLz4          DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "LZ4"
-	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecZstd         DestinationS3OutputFormatParquetColumnarStorageCompressionCodec = "ZSTD"
+	DestinationS3SchemasCompressionCodecUncompressed DestinationS3SchemasCompressionCodec = "UNCOMPRESSED"
+	DestinationS3SchemasCompressionCodecSnappy       DestinationS3SchemasCompressionCodec = "SNAPPY"
+	DestinationS3SchemasCompressionCodecGzip         DestinationS3SchemasCompressionCodec = "GZIP"
+	DestinationS3SchemasCompressionCodecLzo          DestinationS3SchemasCompressionCodec = "LZO"
+	DestinationS3SchemasCompressionCodecBrotli       DestinationS3SchemasCompressionCodec = "BROTLI"
+	DestinationS3SchemasCompressionCodecLz4          DestinationS3SchemasCompressionCodec = "LZ4"
+	DestinationS3SchemasCompressionCodecZstd         DestinationS3SchemasCompressionCodec = "ZSTD"
 )
 
-func (e DestinationS3OutputFormatParquetColumnarStorageCompressionCodec) ToPointer() *DestinationS3OutputFormatParquetColumnarStorageCompressionCodec {
+func (e DestinationS3SchemasCompressionCodec) ToPointer() *DestinationS3SchemasCompressionCodec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatParquetColumnarStorageCompressionCodec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasCompressionCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -69,193 +69,284 @@ func (e *DestinationS3OutputFormatParquetColumnarStorageCompressionCodec) Unmars
 	case "LZ4":
 		fallthrough
 	case "ZSTD":
-		*e = DestinationS3OutputFormatParquetColumnarStorageCompressionCodec(v)
+		*e = DestinationS3SchemasCompressionCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatParquetColumnarStorageCompressionCodec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasCompressionCodec: %v", v)
 	}
 }
 
-type DestinationS3OutputFormatParquetColumnarStorageFormatType string
+type DestinationS3SchemasFormatOutputFormatFormatType string
 
 const (
-	DestinationS3OutputFormatParquetColumnarStorageFormatTypeParquet DestinationS3OutputFormatParquetColumnarStorageFormatType = "Parquet"
+	DestinationS3SchemasFormatOutputFormatFormatTypeParquet DestinationS3SchemasFormatOutputFormatFormatType = "Parquet"
 )
 
-func (e DestinationS3OutputFormatParquetColumnarStorageFormatType) ToPointer() *DestinationS3OutputFormatParquetColumnarStorageFormatType {
+func (e DestinationS3SchemasFormatOutputFormatFormatType) ToPointer() *DestinationS3SchemasFormatOutputFormatFormatType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatParquetColumnarStorageFormatType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Parquet":
-		*e = DestinationS3OutputFormatParquetColumnarStorageFormatType(v)
+		*e = DestinationS3SchemasFormatOutputFormatFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatParquetColumnarStorageFormatType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormatFormatType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatParquetColumnarStorage - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
-type DestinationS3OutputFormatParquetColumnarStorage struct {
+// DestinationS3ParquetColumnarStorage - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
+type DestinationS3ParquetColumnarStorage struct {
 	// This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
-	BlockSizeMb *int64 `json:"block_size_mb,omitempty"`
+	BlockSizeMb *int64 `default:"128" json:"block_size_mb"`
 	// The compression algorithm used to compress data pages.
-	CompressionCodec *DestinationS3OutputFormatParquetColumnarStorageCompressionCodec `json:"compression_codec,omitempty"`
+	CompressionCodec *DestinationS3SchemasCompressionCodec `default:"UNCOMPRESSED" json:"compression_codec"`
 	// Default: true.
-	DictionaryEncoding *bool `json:"dictionary_encoding,omitempty"`
+	DictionaryEncoding *bool `default:"true" json:"dictionary_encoding"`
 	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-	DictionaryPageSizeKb *int64                                                    `json:"dictionary_page_size_kb,omitempty"`
-	FormatType           DestinationS3OutputFormatParquetColumnarStorageFormatType `json:"format_type"`
+	DictionaryPageSizeKb *int64                                            `default:"1024" json:"dictionary_page_size_kb"`
+	FormatType           *DestinationS3SchemasFormatOutputFormatFormatType `default:"Parquet" json:"format_type"`
 	// Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
-	MaxPaddingSizeMb *int64 `json:"max_padding_size_mb,omitempty"`
+	MaxPaddingSizeMb *int64 `default:"8" json:"max_padding_size_mb"`
 	// The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
-	PageSizeKb *int64 `json:"page_size_kb,omitempty"`
+	PageSizeKb *int64 `default:"1024" json:"page_size_kb"`
 }
 
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType string
+func (d DestinationS3ParquetColumnarStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3ParquetColumnarStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetBlockSizeMb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BlockSizeMb
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetCompressionCodec() *DestinationS3SchemasCompressionCodec {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionCodec
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetDictionaryEncoding() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DictionaryEncoding
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetDictionaryPageSizeKb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DictionaryPageSizeKb
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetFormatType() *DestinationS3SchemasFormatOutputFormatFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetMaxPaddingSizeMb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxPaddingSizeMb
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetPageSizeKb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSizeKb
+}
+
+type DestinationS3SchemasFormatOutputFormatCompressionType string
 
 const (
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeGzip DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType = "GZIP"
+	DestinationS3SchemasFormatOutputFormatCompressionTypeGzip DestinationS3SchemasFormatOutputFormatCompressionType = "GZIP"
 )
 
-func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType {
+func (e DestinationS3SchemasFormatOutputFormatCompressionType) ToPointer() *DestinationS3SchemasFormatOutputFormatCompressionType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatOutputFormatCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GZIP":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(v)
+		*e = DestinationS3SchemasFormatOutputFormatCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormatCompressionType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP struct {
-	CompressionType *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `json:"compression_type,omitempty"`
+// DestinationS3SchemasGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
+type DestinationS3SchemasGZIP struct {
+	CompressionType *DestinationS3SchemasFormatOutputFormatCompressionType `default:"GZIP" json:"compression_type"`
 }
 
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType string
+func (d DestinationS3SchemasGZIP) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3SchemasGZIP) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3SchemasGZIP) GetCompressionType() *DestinationS3SchemasFormatOutputFormatCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
+}
+
+type DestinationS3SchemasFormatCompressionType string
 
 const (
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeNoCompression DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType = "No Compression"
+	DestinationS3SchemasFormatCompressionTypeNoCompression DestinationS3SchemasFormatCompressionType = "No Compression"
 )
 
-func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType {
+func (e DestinationS3SchemasFormatCompressionType) ToPointer() *DestinationS3SchemasFormatCompressionType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(v)
+		*e = DestinationS3SchemasFormatCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatCompressionType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression struct {
-	CompressionType *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
+// DestinationS3SchemasFormatNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
+type DestinationS3SchemasFormatNoCompression struct {
+	CompressionType *DestinationS3SchemasFormatCompressionType `default:"No Compression" json:"compression_type"`
 }
 
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionType string
+func (d DestinationS3SchemasFormatNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3SchemasFormatNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3SchemasFormatNoCompression) GetCompressionType() *DestinationS3SchemasFormatCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
+}
+
+type DestinationS3SchemasCompressionUnionType string
 
 const (
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionType = "destination-s3_Output Format_JSON Lines: Newline-delimited JSON_Compression_No Compression"
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP          DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionType = "destination-s3_Output Format_JSON Lines: Newline-delimited JSON_Compression_GZIP"
+	DestinationS3SchemasCompressionUnionTypeNoCompression DestinationS3SchemasCompressionUnionType = "NoCompression"
+	DestinationS3SchemasCompressionUnionTypeGzip          DestinationS3SchemasCompressionUnionType = "Gzip"
 )
 
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression struct {
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP          *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+type DestinationS3SchemasCompression struct {
+	NoCompression *DestinationS3SchemasFormatNoCompression
+	Gzip          *DestinationS3SchemasGZIP
 
-	Type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionType
+	Type DestinationS3SchemasCompressionUnionType
 }
 
-func CreateDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression(destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression) DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression {
-	typ := DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+func CreateDestinationS3SchemasCompressionNoCompression(noCompression DestinationS3SchemasFormatNoCompression) DestinationS3SchemasCompression {
+	typ := DestinationS3SchemasCompressionUnionTypeNoCompression
 
-	return DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression{
-		DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: &destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+	return DestinationS3SchemasCompression{
+		NoCompression: &noCompression,
+		Type:          typ,
+	}
+}
+
+func CreateDestinationS3SchemasCompressionGzip(gzip DestinationS3SchemasGZIP) DestinationS3SchemasCompression {
+	typ := DestinationS3SchemasCompressionUnionTypeGzip
+
+	return DestinationS3SchemasCompression{
+		Gzip: &gzip,
 		Type: typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP(destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP) DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression {
-	typ := DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+func (u *DestinationS3SchemasCompression) UnmarshalJSON(data []byte) error {
 
-	return DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression{
-		DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: &destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
-		Type: typ,
-	}
-}
-
-func (u *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression := new(DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression); err == nil {
-		u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-		u.Type = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+	noCompression := new(DestinationS3SchemasFormatNoCompression)
+	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
+		u.NoCompression = noCompression
+		u.Type = DestinationS3SchemasCompressionUnionTypeNoCompression
 		return nil
 	}
 
-	destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP := new(DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP); err == nil {
-		u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
-		u.Type = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+	gzip := new(DestinationS3SchemasGZIP)
+	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
+		u.Gzip = gzip
+		u.Type = DestinationS3SchemasCompressionUnionTypeGzip
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-		return json.Marshal(u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression)
+func (u DestinationS3SchemasCompression) MarshalJSON() ([]byte, error) {
+	if u.NoCompression != nil {
+		return utils.MarshalJSON(u.NoCompression, "", true)
 	}
 
-	if u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-		return json.Marshal(u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP)
+	if u.Gzip != nil {
+		return utils.MarshalJSON(u.Gzip, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening string
+// DestinationS3SchemasFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
+type DestinationS3SchemasFlattening string
 
 const (
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningNoFlattening        DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening = "No flattening"
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningRootLevelFlattening DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening = "Root level flattening"
+	DestinationS3SchemasFlatteningNoFlattening        DestinationS3SchemasFlattening = "No flattening"
+	DestinationS3SchemasFlatteningRootLevelFlattening DestinationS3SchemasFlattening = "Root level flattening"
 )
 
-func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening {
+func (e DestinationS3SchemasFlattening) ToPointer() *DestinationS3SchemasFlattening {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFlattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -264,185 +355,248 @@ func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening) Unmar
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening(v)
+		*e = DestinationS3SchemasFlattening(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFlattening: %v", v)
 	}
 }
 
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType string
+type DestinationS3SchemasFormatFormatType string
 
 const (
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType = "JSONL"
+	DestinationS3SchemasFormatFormatTypeJsonl DestinationS3SchemasFormatFormatType = "JSONL"
 )
 
-func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType {
+func (e DestinationS3SchemasFormatFormatType) ToPointer() *DestinationS3SchemasFormatFormatType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "JSONL":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType(v)
+		*e = DestinationS3SchemasFormatFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatFormatType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
-type DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON struct {
+// DestinationS3JSONLinesNewlineDelimitedJSON - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
+type DestinationS3JSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-	Compression *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
+	Compression *DestinationS3SchemasCompression `json:"compression,omitempty"`
 	// Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-	Flattening *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening `json:"flattening,omitempty"`
-	FormatType DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatType  `json:"format_type"`
+	Flattening *DestinationS3SchemasFlattening       `default:"No flattening" json:"flattening"`
+	FormatType *DestinationS3SchemasFormatFormatType `default:"JSONL" json:"format_type"`
 }
 
-type DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType string
+func (d DestinationS3JSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3JSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetCompression() *DestinationS3SchemasCompression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFlattening() *DestinationS3SchemasFlattening {
+	if o == nil {
+		return nil
+	}
+	return o.Flattening
+}
+
+func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationS3SchemasFormatFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+type DestinationS3SchemasCompressionType string
 
 const (
-	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeGzip DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType = "GZIP"
+	DestinationS3SchemasCompressionTypeGzip DestinationS3SchemasCompressionType = "GZIP"
 )
 
-func (e DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType {
+func (e DestinationS3SchemasCompressionType) ToPointer() *DestinationS3SchemasCompressionType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GZIP":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(v)
+		*e = DestinationS3SchemasCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasCompressionType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
-type DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP struct {
-	CompressionType *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType `json:"compression_type,omitempty"`
+// DestinationS3GZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
+type DestinationS3GZIP struct {
+	CompressionType *DestinationS3SchemasCompressionType `default:"GZIP" json:"compression_type"`
 }
 
-type DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType string
+func (d DestinationS3GZIP) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3GZIP) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3GZIP) GetCompressionType() *DestinationS3SchemasCompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
+}
+
+type DestinationS3CompressionType string
 
 const (
-	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeNoCompression DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType = "No Compression"
+	DestinationS3CompressionTypeNoCompression DestinationS3CompressionType = "No Compression"
 )
 
-func (e DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType {
+func (e DestinationS3CompressionType) ToPointer() *DestinationS3CompressionType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3CompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(v)
+		*e = DestinationS3CompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3CompressionType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
-type DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression struct {
-	CompressionType *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
+// DestinationS3SchemasNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
+type DestinationS3SchemasNoCompression struct {
+	CompressionType *DestinationS3CompressionType `default:"No Compression" json:"compression_type"`
 }
 
-type DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionType string
+func (d DestinationS3SchemasNoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3SchemasNoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3SchemasNoCompression) GetCompressionType() *DestinationS3CompressionType {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionType
+}
+
+type DestinationS3CompressionUnionType string
 
 const (
-	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionType = "destination-s3_Output Format_CSV: Comma-Separated Values_Compression_No Compression"
-	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP          DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionType = "destination-s3_Output Format_CSV: Comma-Separated Values_Compression_GZIP"
+	DestinationS3CompressionUnionTypeNoCompression DestinationS3CompressionUnionType = "NoCompression"
+	DestinationS3CompressionUnionTypeGzip          DestinationS3CompressionUnionType = "Gzip"
 )
 
-type DestinationS3OutputFormatCSVCommaSeparatedValuesCompression struct {
-	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression
-	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP          *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP
+type DestinationS3Compression struct {
+	NoCompression *DestinationS3SchemasNoCompression
+	Gzip          *DestinationS3GZIP
 
-	Type DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionType
+	Type DestinationS3CompressionUnionType
 }
 
-func CreateDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression(destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression) DestinationS3OutputFormatCSVCommaSeparatedValuesCompression {
-	typ := DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression
+func CreateDestinationS3CompressionNoCompression(noCompression DestinationS3SchemasNoCompression) DestinationS3Compression {
+	typ := DestinationS3CompressionUnionTypeNoCompression
 
-	return DestinationS3OutputFormatCSVCommaSeparatedValuesCompression{
-		DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression: &destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+	return DestinationS3Compression{
+		NoCompression: &noCompression,
+		Type:          typ,
+	}
+}
+
+func CreateDestinationS3CompressionGzip(gzip DestinationS3GZIP) DestinationS3Compression {
+	typ := DestinationS3CompressionUnionTypeGzip
+
+	return DestinationS3Compression{
+		Gzip: &gzip,
 		Type: typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP(destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP) DestinationS3OutputFormatCSVCommaSeparatedValuesCompression {
-	typ := DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP
+func (u *DestinationS3Compression) UnmarshalJSON(data []byte) error {
 
-	return DestinationS3OutputFormatCSVCommaSeparatedValuesCompression{
-		DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP: &destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP,
-		Type: typ,
-	}
-}
-
-func (u *DestinationS3OutputFormatCSVCommaSeparatedValuesCompression) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression := new(DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression); err == nil {
-		u.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression = destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression
-		u.Type = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression
+	noCompression := new(DestinationS3SchemasNoCompression)
+	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
+		u.NoCompression = noCompression
+		u.Type = DestinationS3CompressionUnionTypeNoCompression
 		return nil
 	}
 
-	destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP := new(DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP); err == nil {
-		u.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP = destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP
-		u.Type = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionTypeDestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP
+	gzip := new(DestinationS3GZIP)
+	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
+		u.Gzip = gzip
+		u.Type = DestinationS3CompressionUnionTypeGzip
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationS3OutputFormatCSVCommaSeparatedValuesCompression) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-		return json.Marshal(u.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression)
+func (u DestinationS3Compression) MarshalJSON() ([]byte, error) {
+	if u.NoCompression != nil {
+		return utils.MarshalJSON(u.NoCompression, "", true)
 	}
 
-	if u.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-		return json.Marshal(u.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP)
+	if u.Gzip != nil {
+		return utils.MarshalJSON(u.Gzip, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening - Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-type DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening string
+// DestinationS3Flattening - Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
+type DestinationS3Flattening string
 
 const (
-	DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningNoFlattening        DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening = "No flattening"
-	DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningRootLevelFlattening DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening = "Root level flattening"
+	DestinationS3FlatteningNoFlattening        DestinationS3Flattening = "No flattening"
+	DestinationS3FlatteningRootLevelFlattening DestinationS3Flattening = "Root level flattening"
 )
 
-func (e DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening {
+func (e DestinationS3Flattening) ToPointer() *DestinationS3Flattening {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -451,513 +605,684 @@ func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening) UnmarshalJS
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening(v)
+		*e = DestinationS3Flattening(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3Flattening: %v", v)
 	}
 }
 
-type DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType string
+type DestinationS3SchemasFormatType string
 
 const (
-	DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeCsv DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType = "CSV"
+	DestinationS3SchemasFormatTypeCsv DestinationS3SchemasFormatType = "CSV"
 )
 
-func (e DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType {
+func (e DestinationS3SchemasFormatType) ToPointer() *DestinationS3SchemasFormatType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CSV":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType(v)
+		*e = DestinationS3SchemasFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatCSVCommaSeparatedValues - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
-type DestinationS3OutputFormatCSVCommaSeparatedValues struct {
+// DestinationS3CSVCommaSeparatedValues - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
+type DestinationS3CSVCommaSeparatedValues struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
-	Compression *DestinationS3OutputFormatCSVCommaSeparatedValuesCompression `json:"compression,omitempty"`
+	Compression *DestinationS3Compression `json:"compression,omitempty"`
 	// Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-	Flattening DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening `json:"flattening"`
-	FormatType DestinationS3OutputFormatCSVCommaSeparatedValuesFormatType `json:"format_type"`
+	Flattening *DestinationS3Flattening        `default:"No flattening" json:"flattening"`
+	FormatType *DestinationS3SchemasFormatType `default:"CSV" json:"format_type"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec string
+func (d DestinationS3CSVCommaSeparatedValues) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3CSVCommaSeparatedValues) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3CSVCommaSeparatedValues) GetCompression() *DestinationS3Compression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *DestinationS3CSVCommaSeparatedValues) GetFlattening() *DestinationS3Flattening {
+	if o == nil {
+		return nil
+	}
+	return o.Flattening
+}
+
+func (o *DestinationS3CSVCommaSeparatedValues) GetFormatType() *DestinationS3SchemasFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+type DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecSnappy DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec = "snappy"
+	DestinationS3SchemasFormatOutputFormat1CompressionCodecCodecSnappy DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec = "snappy"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec {
+func (e DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec) ToPointer() *DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "snappy":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec(v)
+		*e = DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy - The compression algorithm used to compress data. Default to no compression.
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy struct {
-	Codec DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodec `json:"codec"`
+// DestinationS3Snappy - The compression algorithm used to compress data. Default to no compression.
+type DestinationS3Snappy struct {
+	Codec *DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec `default:"snappy" json:"codec"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec string
+func (d DestinationS3Snappy) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3Snappy) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3Snappy) GetCodec() *DestinationS3SchemasFormatOutputFormat1CompressionCodecCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+type DestinationS3SchemasFormatOutputFormat1Codec string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecZstandard DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec = "zstandard"
+	DestinationS3SchemasFormatOutputFormat1CodecZstandard DestinationS3SchemasFormatOutputFormat1Codec = "zstandard"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec {
+func (e DestinationS3SchemasFormatOutputFormat1Codec) ToPointer() *DestinationS3SchemasFormatOutputFormat1Codec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatOutputFormat1Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zstandard":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec(v)
+		*e = DestinationS3SchemasFormatOutputFormat1Codec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormat1Codec: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard - The compression algorithm used to compress data. Default to no compression.
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard struct {
-	Codec DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodec `json:"codec"`
+// DestinationS3Zstandard - The compression algorithm used to compress data. Default to no compression.
+type DestinationS3Zstandard struct {
+	Codec *DestinationS3SchemasFormatOutputFormat1Codec `default:"zstandard" json:"codec"`
 	// Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
-	CompressionLevel int64 `json:"compression_level"`
+	CompressionLevel *int64 `default:"3" json:"compression_level"`
 	// If true, include a checksum with each data block.
-	IncludeChecksum *bool `json:"include_checksum,omitempty"`
+	IncludeChecksum *bool `default:"false" json:"include_checksum"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec string
+func (d DestinationS3Zstandard) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3Zstandard) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3Zstandard) GetCodec() *DestinationS3SchemasFormatOutputFormat1Codec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+func (o *DestinationS3Zstandard) GetCompressionLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionLevel
+}
+
+func (o *DestinationS3Zstandard) GetIncludeChecksum() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeChecksum
+}
+
+type DestinationS3SchemasFormatOutputFormatCodec string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecXz DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec = "xz"
+	DestinationS3SchemasFormatOutputFormatCodecXz DestinationS3SchemasFormatOutputFormatCodec = "xz"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec {
+func (e DestinationS3SchemasFormatOutputFormatCodec) ToPointer() *DestinationS3SchemasFormatOutputFormatCodec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatOutputFormatCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "xz":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec(v)
+		*e = DestinationS3SchemasFormatOutputFormatCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormatCodec: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz - The compression algorithm used to compress data. Default to no compression.
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz struct {
-	Codec DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodec `json:"codec"`
+// DestinationS3Xz - The compression algorithm used to compress data. Default to no compression.
+type DestinationS3Xz struct {
+	Codec *DestinationS3SchemasFormatOutputFormatCodec `default:"xz" json:"codec"`
 	// See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
-	CompressionLevel int64 `json:"compression_level"`
+	CompressionLevel *int64 `default:"6" json:"compression_level"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec string
+func (d DestinationS3Xz) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3Xz) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3Xz) GetCodec() *DestinationS3SchemasFormatOutputFormatCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+func (o *DestinationS3Xz) GetCompressionLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionLevel
+}
+
+type DestinationS3SchemasFormatCodec string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecBzip2 DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec = "bzip2"
+	DestinationS3SchemasFormatCodecBzip2 DestinationS3SchemasFormatCodec = "bzip2"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec {
+func (e DestinationS3SchemasFormatCodec) ToPointer() *DestinationS3SchemasFormatCodec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFormatCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bzip2":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec(v)
+		*e = DestinationS3SchemasFormatCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatCodec: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 - The compression algorithm used to compress data. Default to no compression.
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 struct {
-	Codec DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2Codec `json:"codec"`
+// DestinationS3Bzip2 - The compression algorithm used to compress data. Default to no compression.
+type DestinationS3Bzip2 struct {
+	Codec *DestinationS3SchemasFormatCodec `default:"bzip2" json:"codec"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec string
+func (d DestinationS3Bzip2) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3Bzip2) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3Bzip2) GetCodec() *DestinationS3SchemasFormatCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+type DestinationS3SchemasCodec string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecDeflate DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec = "Deflate"
+	DestinationS3SchemasCodecDeflate DestinationS3SchemasCodec = "Deflate"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec {
+func (e DestinationS3SchemasCodec) ToPointer() *DestinationS3SchemasCodec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Deflate":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec(v)
+		*e = DestinationS3SchemasCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasCodec: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate - The compression algorithm used to compress data. Default to no compression.
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate struct {
-	Codec DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodec `json:"codec"`
+// DestinationS3Deflate - The compression algorithm used to compress data. Default to no compression.
+type DestinationS3Deflate struct {
+	Codec *DestinationS3SchemasCodec `default:"Deflate" json:"codec"`
 	// 0: no compression & fastest, 9: best compression & slowest.
-	CompressionLevel int64 `json:"compression_level"`
+	CompressionLevel *int64 `default:"0" json:"compression_level"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec string
+func (d DestinationS3Deflate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3Deflate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3Deflate) GetCodec() *DestinationS3SchemasCodec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+func (o *DestinationS3Deflate) GetCompressionLevel() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionLevel
+}
+
+type DestinationS3Codec string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecNoCompression DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec = "no compression"
+	DestinationS3CodecNoCompression DestinationS3Codec = "no compression"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec {
+func (e DestinationS3Codec) ToPointer() *DestinationS3Codec {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "no compression":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(v)
+		*e = DestinationS3Codec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3Codec: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression - The compression algorithm used to compress data. Default to no compression.
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression struct {
-	Codec DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec `json:"codec"`
+// DestinationS3NoCompression - The compression algorithm used to compress data. Default to no compression.
+type DestinationS3NoCompression struct {
+	Codec *DestinationS3Codec `default:"no compression" json:"codec"`
 }
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodecType string
+func (d DestinationS3NoCompression) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3NoCompression) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3NoCompression) GetCodec() *DestinationS3Codec {
+	if o == nil {
+		return nil
+	}
+	return o.Codec
+}
+
+type DestinationS3CompressionCodecType string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression DestinationS3OutputFormatAvroApacheAvroCompressionCodecType = "destination-s3_Output Format_Avro: Apache Avro_Compression Codec_No Compression"
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate       DestinationS3OutputFormatAvroApacheAvroCompressionCodecType = "destination-s3_Output Format_Avro: Apache Avro_Compression Codec_Deflate"
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2         DestinationS3OutputFormatAvroApacheAvroCompressionCodecType = "destination-s3_Output Format_Avro: Apache Avro_Compression Codec_bzip2"
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecXz            DestinationS3OutputFormatAvroApacheAvroCompressionCodecType = "destination-s3_Output Format_Avro: Apache Avro_Compression Codec_xz"
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard     DestinationS3OutputFormatAvroApacheAvroCompressionCodecType = "destination-s3_Output Format_Avro: Apache Avro_Compression Codec_zstandard"
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy        DestinationS3OutputFormatAvroApacheAvroCompressionCodecType = "destination-s3_Output Format_Avro: Apache Avro_Compression Codec_snappy"
+	DestinationS3CompressionCodecTypeNoCompression DestinationS3CompressionCodecType = "NoCompression"
+	DestinationS3CompressionCodecTypeDeflate       DestinationS3CompressionCodecType = "Deflate"
+	DestinationS3CompressionCodecTypeBzip2         DestinationS3CompressionCodecType = "Bzip2"
+	DestinationS3CompressionCodecTypeXz            DestinationS3CompressionCodecType = "Xz"
+	DestinationS3CompressionCodecTypeZstandard     DestinationS3CompressionCodecType = "Zstandard"
+	DestinationS3CompressionCodecTypeSnappy        DestinationS3CompressionCodecType = "Snappy"
 )
 
-type DestinationS3OutputFormatAvroApacheAvroCompressionCodec struct {
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression *DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate       *DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2         *DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz            *DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard     *DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard
-	DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy        *DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
+type DestinationS3CompressionCodec struct {
+	NoCompression *DestinationS3NoCompression
+	Deflate       *DestinationS3Deflate
+	Bzip2         *DestinationS3Bzip2
+	Xz            *DestinationS3Xz
+	Zstandard     *DestinationS3Zstandard
+	Snappy        *DestinationS3Snappy
 
-	Type DestinationS3OutputFormatAvroApacheAvroCompressionCodecType
+	Type DestinationS3CompressionCodecType
 }
 
-func CreateDestinationS3OutputFormatAvroApacheAvroCompressionCodecDestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression(destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression) DestinationS3OutputFormatAvroApacheAvroCompressionCodec {
-	typ := DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression
+func CreateDestinationS3CompressionCodecNoCompression(noCompression DestinationS3NoCompression) DestinationS3CompressionCodec {
+	typ := DestinationS3CompressionCodecTypeNoCompression
 
-	return DestinationS3OutputFormatAvroApacheAvroCompressionCodec{
-		DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression: &destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression,
+	return DestinationS3CompressionCodec{
+		NoCompression: &noCompression,
+		Type:          typ,
+	}
+}
+
+func CreateDestinationS3CompressionCodecDeflate(deflate DestinationS3Deflate) DestinationS3CompressionCodec {
+	typ := DestinationS3CompressionCodecTypeDeflate
+
+	return DestinationS3CompressionCodec{
+		Deflate: &deflate,
+		Type:    typ,
+	}
+}
+
+func CreateDestinationS3CompressionCodecBzip2(bzip2 DestinationS3Bzip2) DestinationS3CompressionCodec {
+	typ := DestinationS3CompressionCodecTypeBzip2
+
+	return DestinationS3CompressionCodec{
+		Bzip2: &bzip2,
+		Type:  typ,
+	}
+}
+
+func CreateDestinationS3CompressionCodecXz(xz DestinationS3Xz) DestinationS3CompressionCodec {
+	typ := DestinationS3CompressionCodecTypeXz
+
+	return DestinationS3CompressionCodec{
+		Xz:   &xz,
 		Type: typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatAvroApacheAvroCompressionCodecDestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate(destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate) DestinationS3OutputFormatAvroApacheAvroCompressionCodec {
-	typ := DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
+func CreateDestinationS3CompressionCodecZstandard(zstandard DestinationS3Zstandard) DestinationS3CompressionCodec {
+	typ := DestinationS3CompressionCodecTypeZstandard
 
-	return DestinationS3OutputFormatAvroApacheAvroCompressionCodec{
-		DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate: &destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate,
-		Type: typ,
+	return DestinationS3CompressionCodec{
+		Zstandard: &zstandard,
+		Type:      typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatAvroApacheAvroCompressionCodecDestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2(destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2) DestinationS3OutputFormatAvroApacheAvroCompressionCodec {
-	typ := DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
+func CreateDestinationS3CompressionCodecSnappy(snappy DestinationS3Snappy) DestinationS3CompressionCodec {
+	typ := DestinationS3CompressionCodecTypeSnappy
 
-	return DestinationS3OutputFormatAvroApacheAvroCompressionCodec{
-		DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2: &destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2,
-		Type: typ,
+	return DestinationS3CompressionCodec{
+		Snappy: &snappy,
+		Type:   typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatAvroApacheAvroCompressionCodecDestinationS3OutputFormatAvroApacheAvroCompressionCodecXz(destinationS3OutputFormatAvroApacheAvroCompressionCodecXz DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz) DestinationS3OutputFormatAvroApacheAvroCompressionCodec {
-	typ := DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecXz
+func (u *DestinationS3CompressionCodec) UnmarshalJSON(data []byte) error {
 
-	return DestinationS3OutputFormatAvroApacheAvroCompressionCodec{
-		DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz: &destinationS3OutputFormatAvroApacheAvroCompressionCodecXz,
-		Type: typ,
-	}
-}
-
-func CreateDestinationS3OutputFormatAvroApacheAvroCompressionCodecDestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard(destinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard) DestinationS3OutputFormatAvroApacheAvroCompressionCodec {
-	typ := DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard
-
-	return DestinationS3OutputFormatAvroApacheAvroCompressionCodec{
-		DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard: &destinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard,
-		Type: typ,
-	}
-}
-
-func CreateDestinationS3OutputFormatAvroApacheAvroCompressionCodecDestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy(destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy) DestinationS3OutputFormatAvroApacheAvroCompressionCodec {
-	typ := DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
-
-	return DestinationS3OutputFormatAvroApacheAvroCompressionCodec{
-		DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy: &destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy,
-		Type: typ,
-	}
-}
-
-func (u *DestinationS3OutputFormatAvroApacheAvroCompressionCodec) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression = destinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression
+	noCompression := new(DestinationS3NoCompression)
+	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
+		u.NoCompression = noCompression
+		u.Type = DestinationS3CompressionCodecTypeNoCompression
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 = destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
+	bzip2 := new(DestinationS3Bzip2)
+	if err := utils.UnmarshalJSON(data, &bzip2, "", true, true); err == nil {
+		u.Bzip2 = bzip2
+		u.Type = DestinationS3CompressionCodecTypeBzip2
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy = destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
+	snappy := new(DestinationS3Snappy)
+	if err := utils.UnmarshalJSON(data, &snappy, "", true, true); err == nil {
+		u.Snappy = snappy
+		u.Type = DestinationS3CompressionCodecTypeSnappy
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate = destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
+	deflate := new(DestinationS3Deflate)
+	if err := utils.UnmarshalJSON(data, &deflate, "", true, true); err == nil {
+		u.Deflate = deflate
+		u.Type = DestinationS3CompressionCodecTypeDeflate
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecXz := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecXz); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz = destinationS3OutputFormatAvroApacheAvroCompressionCodecXz
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecXz
+	xz := new(DestinationS3Xz)
+	if err := utils.UnmarshalJSON(data, &xz, "", true, true); err == nil {
+		u.Xz = xz
+		u.Type = DestinationS3CompressionCodecTypeXz
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard = destinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard
+	zstandard := new(DestinationS3Zstandard)
+	if err := utils.UnmarshalJSON(data, &zstandard, "", true, true); err == nil {
+		u.Zstandard = zstandard
+		u.Type = DestinationS3CompressionCodecTypeZstandard
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationS3OutputFormatAvroApacheAvroCompressionCodec) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression)
+func (u DestinationS3CompressionCodec) MarshalJSON() ([]byte, error) {
+	if u.NoCompression != nil {
+		return utils.MarshalJSON(u.NoCompression, "", true)
 	}
 
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2)
+	if u.Deflate != nil {
+		return utils.MarshalJSON(u.Deflate, "", true)
 	}
 
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy)
+	if u.Bzip2 != nil {
+		return utils.MarshalJSON(u.Bzip2, "", true)
 	}
 
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate)
+	if u.Xz != nil {
+		return utils.MarshalJSON(u.Xz, "", true)
 	}
 
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz)
+	if u.Zstandard != nil {
+		return utils.MarshalJSON(u.Zstandard, "", true)
 	}
 
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard)
+	if u.Snappy != nil {
+		return utils.MarshalJSON(u.Snappy, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationS3OutputFormatAvroApacheAvroFormatType string
+type DestinationS3FormatType string
 
 const (
-	DestinationS3OutputFormatAvroApacheAvroFormatTypeAvro DestinationS3OutputFormatAvroApacheAvroFormatType = "Avro"
+	DestinationS3FormatTypeAvro DestinationS3FormatType = "Avro"
 )
 
-func (e DestinationS3OutputFormatAvroApacheAvroFormatType) ToPointer() *DestinationS3OutputFormatAvroApacheAvroFormatType {
+func (e DestinationS3FormatType) ToPointer() *DestinationS3FormatType {
 	return &e
 }
 
-func (e *DestinationS3OutputFormatAvroApacheAvroFormatType) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3FormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Avro":
-		*e = DestinationS3OutputFormatAvroApacheAvroFormatType(v)
+		*e = DestinationS3FormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroFormatType: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3FormatType: %v", v)
 	}
 }
 
-// DestinationS3OutputFormatAvroApacheAvro - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
-type DestinationS3OutputFormatAvroApacheAvro struct {
+// DestinationS3AvroApacheAvro - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
+type DestinationS3AvroApacheAvro struct {
 	// The compression algorithm used to compress data. Default to no compression.
-	CompressionCodec DestinationS3OutputFormatAvroApacheAvroCompressionCodec `json:"compression_codec"`
-	FormatType       DestinationS3OutputFormatAvroApacheAvroFormatType       `json:"format_type"`
+	CompressionCodec DestinationS3CompressionCodec `json:"compression_codec"`
+	FormatType       *DestinationS3FormatType      `default:"Avro" json:"format_type"`
+}
+
+func (d DestinationS3AvroApacheAvro) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3AvroApacheAvro) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3AvroApacheAvro) GetCompressionCodec() DestinationS3CompressionCodec {
+	if o == nil {
+		return DestinationS3CompressionCodec{}
+	}
+	return o.CompressionCodec
+}
+
+func (o *DestinationS3AvroApacheAvro) GetFormatType() *DestinationS3FormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationS3OutputFormatType string
 
 const (
-	DestinationS3OutputFormatTypeDestinationS3OutputFormatAvroApacheAvro                DestinationS3OutputFormatType = "destination-s3_Output Format_Avro: Apache Avro"
-	DestinationS3OutputFormatTypeDestinationS3OutputFormatCSVCommaSeparatedValues       DestinationS3OutputFormatType = "destination-s3_Output Format_CSV: Comma-Separated Values"
-	DestinationS3OutputFormatTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSON DestinationS3OutputFormatType = "destination-s3_Output Format_JSON Lines: Newline-delimited JSON"
-	DestinationS3OutputFormatTypeDestinationS3OutputFormatParquetColumnarStorage        DestinationS3OutputFormatType = "destination-s3_Output Format_Parquet: Columnar Storage"
+	DestinationS3OutputFormatTypeAvroApacheAvro                DestinationS3OutputFormatType = "AvroApacheAvro"
+	DestinationS3OutputFormatTypeCSVCommaSeparatedValues       DestinationS3OutputFormatType = "CSVCommaSeparatedValues"
+	DestinationS3OutputFormatTypeJSONLinesNewlineDelimitedJSON DestinationS3OutputFormatType = "JSONLinesNewlineDelimitedJSON"
+	DestinationS3OutputFormatTypeParquetColumnarStorage        DestinationS3OutputFormatType = "ParquetColumnarStorage"
 )
 
 type DestinationS3OutputFormat struct {
-	DestinationS3OutputFormatAvroApacheAvro                *DestinationS3OutputFormatAvroApacheAvro
-	DestinationS3OutputFormatCSVCommaSeparatedValues       *DestinationS3OutputFormatCSVCommaSeparatedValues
-	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON
-	DestinationS3OutputFormatParquetColumnarStorage        *DestinationS3OutputFormatParquetColumnarStorage
+	AvroApacheAvro                *DestinationS3AvroApacheAvro
+	CSVCommaSeparatedValues       *DestinationS3CSVCommaSeparatedValues
+	JSONLinesNewlineDelimitedJSON *DestinationS3JSONLinesNewlineDelimitedJSON
+	ParquetColumnarStorage        *DestinationS3ParquetColumnarStorage
 
 	Type DestinationS3OutputFormatType
 }
 
-func CreateDestinationS3OutputFormatDestinationS3OutputFormatAvroApacheAvro(destinationS3OutputFormatAvroApacheAvro DestinationS3OutputFormatAvroApacheAvro) DestinationS3OutputFormat {
-	typ := DestinationS3OutputFormatTypeDestinationS3OutputFormatAvroApacheAvro
+func CreateDestinationS3OutputFormatAvroApacheAvro(avroApacheAvro DestinationS3AvroApacheAvro) DestinationS3OutputFormat {
+	typ := DestinationS3OutputFormatTypeAvroApacheAvro
 
 	return DestinationS3OutputFormat{
-		DestinationS3OutputFormatAvroApacheAvro: &destinationS3OutputFormatAvroApacheAvro,
-		Type:                                    typ,
+		AvroApacheAvro: &avroApacheAvro,
+		Type:           typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatDestinationS3OutputFormatCSVCommaSeparatedValues(destinationS3OutputFormatCSVCommaSeparatedValues DestinationS3OutputFormatCSVCommaSeparatedValues) DestinationS3OutputFormat {
-	typ := DestinationS3OutputFormatTypeDestinationS3OutputFormatCSVCommaSeparatedValues
+func CreateDestinationS3OutputFormatCSVCommaSeparatedValues(csvCommaSeparatedValues DestinationS3CSVCommaSeparatedValues) DestinationS3OutputFormat {
+	typ := DestinationS3OutputFormatTypeCSVCommaSeparatedValues
 
 	return DestinationS3OutputFormat{
-		DestinationS3OutputFormatCSVCommaSeparatedValues: &destinationS3OutputFormatCSVCommaSeparatedValues,
-		Type: typ,
+		CSVCommaSeparatedValues: &csvCommaSeparatedValues,
+		Type:                    typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatDestinationS3OutputFormatJSONLinesNewlineDelimitedJSON(destinationS3OutputFormatJSONLinesNewlineDelimitedJSON DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON) DestinationS3OutputFormat {
-	typ := DestinationS3OutputFormatTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSON
+func CreateDestinationS3OutputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationS3JSONLinesNewlineDelimitedJSON) DestinationS3OutputFormat {
+	typ := DestinationS3OutputFormatTypeJSONLinesNewlineDelimitedJSON
 
 	return DestinationS3OutputFormat{
-		DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON: &destinationS3OutputFormatJSONLinesNewlineDelimitedJSON,
-		Type: typ,
+		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
+		Type:                          typ,
 	}
 }
 
-func CreateDestinationS3OutputFormatDestinationS3OutputFormatParquetColumnarStorage(destinationS3OutputFormatParquetColumnarStorage DestinationS3OutputFormatParquetColumnarStorage) DestinationS3OutputFormat {
-	typ := DestinationS3OutputFormatTypeDestinationS3OutputFormatParquetColumnarStorage
+func CreateDestinationS3OutputFormatParquetColumnarStorage(parquetColumnarStorage DestinationS3ParquetColumnarStorage) DestinationS3OutputFormat {
+	typ := DestinationS3OutputFormatTypeParquetColumnarStorage
 
 	return DestinationS3OutputFormat{
-		DestinationS3OutputFormatParquetColumnarStorage: &destinationS3OutputFormatParquetColumnarStorage,
-		Type: typ,
+		ParquetColumnarStorage: &parquetColumnarStorage,
+		Type:                   typ,
 	}
 }
 
 func (u *DestinationS3OutputFormat) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationS3OutputFormatAvroApacheAvro := new(DestinationS3OutputFormatAvroApacheAvro)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvro); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvro = destinationS3OutputFormatAvroApacheAvro
-		u.Type = DestinationS3OutputFormatTypeDestinationS3OutputFormatAvroApacheAvro
+	avroApacheAvro := new(DestinationS3AvroApacheAvro)
+	if err := utils.UnmarshalJSON(data, &avroApacheAvro, "", true, true); err == nil {
+		u.AvroApacheAvro = avroApacheAvro
+		u.Type = DestinationS3OutputFormatTypeAvroApacheAvro
 		return nil
 	}
 
-	destinationS3OutputFormatCSVCommaSeparatedValues := new(DestinationS3OutputFormatCSVCommaSeparatedValues)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatCSVCommaSeparatedValues); err == nil {
-		u.DestinationS3OutputFormatCSVCommaSeparatedValues = destinationS3OutputFormatCSVCommaSeparatedValues
-		u.Type = DestinationS3OutputFormatTypeDestinationS3OutputFormatCSVCommaSeparatedValues
+	csvCommaSeparatedValues := new(DestinationS3CSVCommaSeparatedValues)
+	if err := utils.UnmarshalJSON(data, &csvCommaSeparatedValues, "", true, true); err == nil {
+		u.CSVCommaSeparatedValues = csvCommaSeparatedValues
+		u.Type = DestinationS3OutputFormatTypeCSVCommaSeparatedValues
 		return nil
 	}
 
-	destinationS3OutputFormatJSONLinesNewlineDelimitedJSON := new(DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatJSONLinesNewlineDelimitedJSON); err == nil {
-		u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON = destinationS3OutputFormatJSONLinesNewlineDelimitedJSON
-		u.Type = DestinationS3OutputFormatTypeDestinationS3OutputFormatJSONLinesNewlineDelimitedJSON
+	jsonLinesNewlineDelimitedJSON := new(DestinationS3JSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
+		u.Type = DestinationS3OutputFormatTypeJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
-	destinationS3OutputFormatParquetColumnarStorage := new(DestinationS3OutputFormatParquetColumnarStorage)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatParquetColumnarStorage); err == nil {
-		u.DestinationS3OutputFormatParquetColumnarStorage = destinationS3OutputFormatParquetColumnarStorage
-		u.Type = DestinationS3OutputFormatTypeDestinationS3OutputFormatParquetColumnarStorage
+	parquetColumnarStorage := new(DestinationS3ParquetColumnarStorage)
+	if err := utils.UnmarshalJSON(data, &parquetColumnarStorage, "", true, true); err == nil {
+		u.ParquetColumnarStorage = parquetColumnarStorage
+		u.Type = DestinationS3OutputFormatTypeParquetColumnarStorage
 		return nil
 	}
 
@@ -965,23 +1290,23 @@ func (u *DestinationS3OutputFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3OutputFormat) MarshalJSON() ([]byte, error) {
-	if u.DestinationS3OutputFormatAvroApacheAvro != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvro)
+	if u.AvroApacheAvro != nil {
+		return utils.MarshalJSON(u.AvroApacheAvro, "", true)
 	}
 
-	if u.DestinationS3OutputFormatCSVCommaSeparatedValues != nil {
-		return json.Marshal(u.DestinationS3OutputFormatCSVCommaSeparatedValues)
+	if u.CSVCommaSeparatedValues != nil {
+		return utils.MarshalJSON(u.CSVCommaSeparatedValues, "", true)
 	}
 
-	if u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON)
+	if u.JSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	if u.DestinationS3OutputFormatParquetColumnarStorage != nil {
-		return json.Marshal(u.DestinationS3OutputFormatParquetColumnarStorage)
+	if u.ParquetColumnarStorage != nil {
+		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationS3S3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
@@ -1086,8 +1411,8 @@ func (e *DestinationS3S3BucketRegion) UnmarshalJSON(data []byte) error {
 
 type DestinationS3 struct {
 	// The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.
-	AccessKeyID     *string         `json:"access_key_id,omitempty"`
-	DestinationType DestinationS3S3 `json:"destinationType"`
+	AccessKeyID     *string `json:"access_key_id,omitempty"`
+	destinationType S3      `const:"s3" json:"destinationType"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
 	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
@@ -1097,11 +1422,89 @@ type DestinationS3 struct {
 	// Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>
 	S3BucketPath string `json:"s3_bucket_path"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	S3BucketRegion DestinationS3S3BucketRegion `json:"s3_bucket_region"`
+	S3BucketRegion *DestinationS3S3BucketRegion `default:"" json:"s3_bucket_region"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
-	S3Endpoint *string `json:"s3_endpoint,omitempty"`
+	S3Endpoint *string `default:"" json:"s3_endpoint"`
 	// Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 	S3PathFormat *string `json:"s3_path_format,omitempty"`
 	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
 	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+}
+
+func (d DestinationS3) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationS3) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationS3) GetAccessKeyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationS3) GetDestinationType() S3 {
+	return S3S3
+}
+
+func (o *DestinationS3) GetFileNamePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNamePattern
+}
+
+func (o *DestinationS3) GetFormat() DestinationS3OutputFormat {
+	if o == nil {
+		return DestinationS3OutputFormat{}
+	}
+	return o.Format
+}
+
+func (o *DestinationS3) GetS3BucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketName
+}
+
+func (o *DestinationS3) GetS3BucketPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketPath
+}
+
+func (o *DestinationS3) GetS3BucketRegion() *DestinationS3S3BucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.S3BucketRegion
+}
+
+func (o *DestinationS3) GetS3Endpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3Endpoint
+}
+
+func (o *DestinationS3) GetS3PathFormat() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3PathFormat
+}
+
+func (o *DestinationS3) GetSecretAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretAccessKey
 }

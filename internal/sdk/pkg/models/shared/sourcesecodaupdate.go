@@ -6,3 +6,10 @@ type SourceSecodaUpdate struct {
 	// Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourceSecodaUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

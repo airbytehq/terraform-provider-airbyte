@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceDockerhubDockerhub string
+type Dockerhub string
 
 const (
-	SourceDockerhubDockerhubDockerhub SourceDockerhubDockerhub = "dockerhub"
+	DockerhubDockerhub Dockerhub = "dockerhub"
 )
 
-func (e SourceDockerhubDockerhub) ToPointer() *SourceDockerhubDockerhub {
+func (e Dockerhub) ToPointer() *Dockerhub {
 	return &e
 }
 
-func (e *SourceDockerhubDockerhub) UnmarshalJSON(data []byte) error {
+func (e *Dockerhub) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dockerhub":
-		*e = SourceDockerhubDockerhub(v)
+		*e = Dockerhub(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDockerhubDockerhub: %v", v)
+		return fmt.Errorf("invalid value for Dockerhub: %v", v)
 	}
 }
 
 type SourceDockerhub struct {
 	// Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
-	DockerUsername string                   `json:"docker_username"`
-	SourceType     SourceDockerhubDockerhub `json:"sourceType"`
+	DockerUsername string    `json:"docker_username"`
+	sourceType     Dockerhub `const:"dockerhub" json:"sourceType"`
+}
+
+func (s SourceDockerhub) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDockerhub) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDockerhub) GetDockerUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.DockerUsername
+}
+
+func (o *SourceDockerhub) GetSourceType() Dockerhub {
+	return DockerhubDockerhub
 }

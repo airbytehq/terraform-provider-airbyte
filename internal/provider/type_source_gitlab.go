@@ -9,6 +9,5 @@ type SourceGitlab struct {
 	Credentials SourceGitlabAuthorizationMethod `tfsdk:"credentials"`
 	Groups      types.String                    `tfsdk:"groups"`
 	Projects    types.String                    `tfsdk:"projects"`
-	SourceType  types.String                    `tfsdk:"source_type"`
 	StartDate   types.String                    `tfsdk:"start_date"`
 }

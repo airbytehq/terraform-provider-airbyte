@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePokeapiPokeapi string
+type Pokeapi string
 
 const (
-	SourcePokeapiPokeapiPokeapi SourcePokeapiPokeapi = "pokeapi"
+	PokeapiPokeapi Pokeapi = "pokeapi"
 )
 
-func (e SourcePokeapiPokeapi) ToPointer() *SourcePokeapiPokeapi {
+func (e Pokeapi) ToPointer() *Pokeapi {
 	return &e
 }
 
-func (e *SourcePokeapiPokeapi) UnmarshalJSON(data []byte) error {
+func (e *Pokeapi) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pokeapi":
-		*e = SourcePokeapiPokeapi(v)
+		*e = Pokeapi(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePokeapiPokeapi: %v", v)
+		return fmt.Errorf("invalid value for Pokeapi: %v", v)
 	}
 }
 
 type SourcePokeapi struct {
 	// Pokemon requested from the API.
-	PokemonName string               `json:"pokemon_name"`
-	SourceType  SourcePokeapiPokeapi `json:"sourceType"`
+	PokemonName string  `json:"pokemon_name"`
+	sourceType  Pokeapi `const:"pokeapi" json:"sourceType"`
+}
+
+func (s SourcePokeapi) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePokeapi) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePokeapi) GetPokemonName() string {
+	if o == nil {
+		return ""
+	}
+	return o.PokemonName
+}
+
+func (o *SourcePokeapi) GetSourceType() Pokeapi {
+	return PokeapiPokeapi
 }

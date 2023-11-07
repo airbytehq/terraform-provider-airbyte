@@ -4,15 +4,15 @@ package validators
 
 import (
 	"context"
+	"time"
+
 	"github.com/hashicorp/terraform-plugin-framework-validators/helpers/validatordiag"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"time"
 )
 
 var _ validator.String = RFC3339TimeValidator{}
 
-type RFC3339TimeValidator struct {
-}
+type RFC3339TimeValidator struct{}
 
 func (validator RFC3339TimeValidator) Description(ctx context.Context) string {
 	return "value must be a string in RFC3339 format"
@@ -28,7 +28,7 @@ func (validator RFC3339TimeValidator) ValidateString(ctx context.Context, req va
 		return
 	}
 
-	if _, err := time.Parse(time.RFC3339, req.ConfigValue.ValueString()); err != nil {
+	if _, err := time.Parse(time.RFC3339Nano, req.ConfigValue.ValueString()); err != nil {
 		resp.Diagnostics.Append(validatordiag.InvalidAttributeTypeDiagnostic(
 			req.Path,
 			validator.MarkdownDescription(ctx),
@@ -42,7 +42,7 @@ func (validator RFC3339TimeValidator) ValidateString(ctx context.Context, req va
 // attribute value:
 //
 //   - Is a String.
-//   - Is in RFC3339 Format.
+//   - Is in RFC3339Nano Format.
 //
 // Null (unconfigured) and unknown (known after apply) values are skipped.
 func IsRFC3339() validator.String {

@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -12,14 +12,12 @@ func (r *SourceWoocommerceResourceModel) ToCreateSDKType() *shared.SourceWoocomm
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiSecret := r.Configuration.APISecret.ValueString()
 	shop := r.Configuration.Shop.ValueString()
-	sourceType := shared.SourceWoocommerceWoocommerce(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceWoocommerce{
-		APIKey:     apiKey,
-		APISecret:  apiSecret,
-		Shop:       shop,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		APISecret: apiSecret,
+		Shop:      shop,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)

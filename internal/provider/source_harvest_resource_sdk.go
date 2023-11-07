@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -13,56 +13,42 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 	accountID := r.Configuration.AccountID.ValueString()
 	var credentials *shared.SourceHarvestAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
-		var sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth *shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth
-		if r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
-			authType := new(shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthType)
-			if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.IsNull() {
-				*authType = shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthType(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken.ValueString()
+		var sourceHarvestAuthenticateViaHarvestOAuth *shared.SourceHarvestAuthenticateViaHarvestOAuth
+		if r.Configuration.Credentials.AuthenticateViaHarvestOAuth != nil {
 			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.ValueString()), &additionalProperties)
+			if !r.Configuration.Credentials.AuthenticateViaHarvestOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaHarvestOAuth.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.AuthenticateViaHarvestOAuth.AdditionalProperties.ValueString()), &additionalProperties)
 			}
-			sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth = &shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth{
-				AuthType:             authType,
+			clientID := r.Configuration.Credentials.AuthenticateViaHarvestOAuth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaHarvestOAuth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaHarvestOAuth.RefreshToken.ValueString()
+			sourceHarvestAuthenticateViaHarvestOAuth = &shared.SourceHarvestAuthenticateViaHarvestOAuth{
+				AdditionalProperties: additionalProperties,
 				ClientID:             clientID,
 				ClientSecret:         clientSecret,
 				RefreshToken:         refreshToken,
-				AdditionalProperties: additionalProperties,
 			}
 		}
-		if sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
+		if sourceHarvestAuthenticateViaHarvestOAuth != nil {
 			credentials = &shared.SourceHarvestAuthenticationMechanism{
-				SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth: sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth,
+				AuthenticateViaHarvestOAuth: sourceHarvestAuthenticateViaHarvestOAuth,
 			}
 		}
-		var sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken *shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken
-		if r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-			apiToken := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken.ValueString()
-			authType1 := new(shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthType)
-			if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.IsNull() {
-				*authType1 = shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthType(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
+		var sourceHarvestAuthenticateWithPersonalAccessToken *shared.SourceHarvestAuthenticateWithPersonalAccessToken
+		if r.Configuration.Credentials.AuthenticateWithPersonalAccessToken != nil {
 			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.ValueString()), &additionalProperties1)
+			if !r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
-			sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken = &shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken{
-				APIToken:             apiToken,
-				AuthType:             authType1,
+			apiToken := r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.APIToken.ValueString()
+			sourceHarvestAuthenticateWithPersonalAccessToken = &shared.SourceHarvestAuthenticateWithPersonalAccessToken{
 				AdditionalProperties: additionalProperties1,
+				APIToken:             apiToken,
 			}
 		}
-		if sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+		if sourceHarvestAuthenticateWithPersonalAccessToken != nil {
 			credentials = &shared.SourceHarvestAuthenticationMechanism{
-				SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken: sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken,
+				AuthenticateWithPersonalAccessToken: sourceHarvestAuthenticateWithPersonalAccessToken,
 			}
 		}
 	}
@@ -73,13 +59,11 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 		replicationEndDate = nil
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	sourceType := shared.SourceHarvestHarvest(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceHarvest{
 		AccountID:            accountID,
 		Credentials:          credentials,
 		ReplicationEndDate:   replicationEndDate,
 		ReplicationStartDate: replicationStartDate,
-		SourceType:           sourceType,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -107,56 +91,42 @@ func (r *SourceHarvestResourceModel) ToUpdateSDKType() *shared.SourceHarvestPutR
 	accountID := r.Configuration.AccountID.ValueString()
 	var credentials *shared.SourceHarvestUpdateAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
-		var sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth *shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth
-		if r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
-			authType := new(shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuthAuthType)
-			if !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.IsNull() {
-				*authType = shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuthAuthType(r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken.ValueString()
+		var authenticateViaHarvestOAuth *shared.AuthenticateViaHarvestOAuth
+		if r.Configuration.Credentials.AuthenticateViaHarvestOAuth != nil {
 			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.ValueString()), &additionalProperties)
+			if !r.Configuration.Credentials.AuthenticateViaHarvestOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaHarvestOAuth.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.AuthenticateViaHarvestOAuth.AdditionalProperties.ValueString()), &additionalProperties)
 			}
-			sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth = &shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth{
-				AuthType:             authType,
+			clientID := r.Configuration.Credentials.AuthenticateViaHarvestOAuth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaHarvestOAuth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaHarvestOAuth.RefreshToken.ValueString()
+			authenticateViaHarvestOAuth = &shared.AuthenticateViaHarvestOAuth{
+				AdditionalProperties: additionalProperties,
 				ClientID:             clientID,
 				ClientSecret:         clientSecret,
 				RefreshToken:         refreshToken,
-				AdditionalProperties: additionalProperties,
 			}
 		}
-		if sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
+		if authenticateViaHarvestOAuth != nil {
 			credentials = &shared.SourceHarvestUpdateAuthenticationMechanism{
-				SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth: sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth,
+				AuthenticateViaHarvestOAuth: authenticateViaHarvestOAuth,
 			}
 		}
-		var sourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken *shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken
-		if r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-			apiToken := r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken.ValueString()
-			authType1 := new(shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthType)
-			if !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.IsNull() {
-				*authType1 = shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthType(r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
+		var sourceHarvestUpdateAuthenticateWithPersonalAccessToken *shared.SourceHarvestUpdateAuthenticateWithPersonalAccessToken
+		if r.Configuration.Credentials.AuthenticateWithPersonalAccessToken != nil {
 			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.ValueString()), &additionalProperties1)
+			if !r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
-			sourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken = &shared.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken{
-				APIToken:             apiToken,
-				AuthType:             authType1,
+			apiToken := r.Configuration.Credentials.AuthenticateWithPersonalAccessToken.APIToken.ValueString()
+			sourceHarvestUpdateAuthenticateWithPersonalAccessToken = &shared.SourceHarvestUpdateAuthenticateWithPersonalAccessToken{
 				AdditionalProperties: additionalProperties1,
+				APIToken:             apiToken,
 			}
 		}
-		if sourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
+		if sourceHarvestUpdateAuthenticateWithPersonalAccessToken != nil {
 			credentials = &shared.SourceHarvestUpdateAuthenticationMechanism{
-				SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken: sourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken,
+				AuthenticateWithPersonalAccessToken: sourceHarvestUpdateAuthenticateWithPersonalAccessToken,
 			}
 		}
 	}
