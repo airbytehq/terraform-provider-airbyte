@@ -35,7 +35,7 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationFireboltSQLInserts != nil {
 			loadingMethod = &shared.DestinationFireboltLoadingMethod{
-				SQLInserts: destinationFireboltSQLInserts,
+				DestinationFireboltSQLInserts: destinationFireboltSQLInserts,
 			}
 		}
 		var destinationFireboltExternalTableViaS3 *shared.DestinationFireboltExternalTableViaS3
@@ -53,7 +53,7 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationFireboltExternalTableViaS3 != nil {
 			loadingMethod = &shared.DestinationFireboltLoadingMethod{
-				ExternalTableViaS3: destinationFireboltExternalTableViaS3,
+				DestinationFireboltExternalTableViaS3: destinationFireboltExternalTableViaS3,
 			}
 		}
 	}

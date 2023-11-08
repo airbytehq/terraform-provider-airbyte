@@ -152,8 +152,8 @@ func (o *AuthenticateViaRetentlyOAuth) GetRefreshToken() string {
 type SourceRetentlyUpdateAuthenticationMechanismType string
 
 const (
-	SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth SourceRetentlyUpdateAuthenticationMechanismType = "AuthenticateViaRetentlyOAuth"
-	SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateWithAPIToken     SourceRetentlyUpdateAuthenticationMechanismType = "AuthenticateWithAPIToken"
+	SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth SourceRetentlyUpdateAuthenticationMechanismType = "Authenticate via Retently (OAuth)"
+	SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateWithAPIToken     SourceRetentlyUpdateAuthenticationMechanismType = "Authenticate with API Token"
 )
 
 type SourceRetentlyUpdateAuthenticationMechanism struct {

@@ -116,8 +116,8 @@ func (o *ServiceName) GetServiceName() string {
 type ConnectByType string
 
 const (
-	ConnectByTypeServiceName ConnectByType = "ServiceName"
-	ConnectByTypeSystemIDSID ConnectByType = "SystemIDSID"
+	ConnectByTypeServiceName ConnectByType = "Service name"
+	ConnectByTypeSystemIDSID ConnectByType = "System ID (SID)"
 )
 
 type ConnectBy struct {
@@ -316,8 +316,8 @@ func (o *NativeNetworkEncryptionNNE) GetEncryptionMethod() *EncryptionMethod {
 type EncryptionUnionType string
 
 const (
-	EncryptionUnionTypeNativeNetworkEncryptionNNE    EncryptionUnionType = "NativeNetworkEncryptionNNE"
-	EncryptionUnionTypeTLSEncryptedVerifyCertificate EncryptionUnionType = "TLSEncryptedVerifyCertificate"
+	EncryptionUnionTypeNativeNetworkEncryptionNNE    EncryptionUnionType = "Native Network Encryption (NNE)"
+	EncryptionUnionTypeTLSEncryptedVerifyCertificate EncryptionUnionType = "TLS Encrypted (verify certificate)"
 )
 
 type Encryption struct {
@@ -589,66 +589,66 @@ func (o *SourceOracleUpdateNoTunnel) GetTunnelMethod() SourceOracleUpdateTunnelM
 type SourceOracleUpdateSSHTunnelMethodType string
 
 const (
-	SourceOracleUpdateSSHTunnelMethodTypeNoTunnel               SourceOracleUpdateSSHTunnelMethodType = "NoTunnel"
-	SourceOracleUpdateSSHTunnelMethodTypeSSHKeyAuthentication   SourceOracleUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourceOracleUpdateSSHTunnelMethodTypePasswordAuthentication SourceOracleUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateNoTunnel               SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_No Tunnel"
+	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHKeyAuthentication   SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_SSH Key Authentication"
+	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdatePasswordAuthentication SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_Password Authentication"
 )
 
 type SourceOracleUpdateSSHTunnelMethod struct {
-	NoTunnel               *SourceOracleUpdateNoTunnel
-	SSHKeyAuthentication   *SourceOracleUpdateSSHKeyAuthentication
-	PasswordAuthentication *SourceOracleUpdatePasswordAuthentication
+	SourceOracleUpdateNoTunnel               *SourceOracleUpdateNoTunnel
+	SourceOracleUpdateSSHKeyAuthentication   *SourceOracleUpdateSSHKeyAuthentication
+	SourceOracleUpdatePasswordAuthentication *SourceOracleUpdatePasswordAuthentication
 
 	Type SourceOracleUpdateSSHTunnelMethodType
 }
 
-func CreateSourceOracleUpdateSSHTunnelMethodNoTunnel(noTunnel SourceOracleUpdateNoTunnel) SourceOracleUpdateSSHTunnelMethod {
-	typ := SourceOracleUpdateSSHTunnelMethodTypeNoTunnel
+func CreateSourceOracleUpdateSSHTunnelMethodSourceOracleUpdateNoTunnel(sourceOracleUpdateNoTunnel SourceOracleUpdateNoTunnel) SourceOracleUpdateSSHTunnelMethod {
+	typ := SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateNoTunnel
 
 	return SourceOracleUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		SourceOracleUpdateNoTunnel: &sourceOracleUpdateNoTunnel,
+		Type:                       typ,
 	}
 }
 
-func CreateSourceOracleUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceOracleUpdateSSHKeyAuthentication) SourceOracleUpdateSSHTunnelMethod {
-	typ := SourceOracleUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateSourceOracleUpdateSSHTunnelMethodSourceOracleUpdateSSHKeyAuthentication(sourceOracleUpdateSSHKeyAuthentication SourceOracleUpdateSSHKeyAuthentication) SourceOracleUpdateSSHTunnelMethod {
+	typ := SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHKeyAuthentication
 
 	return SourceOracleUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		SourceOracleUpdateSSHKeyAuthentication: &sourceOracleUpdateSSHKeyAuthentication,
+		Type:                                   typ,
 	}
 }
 
-func CreateSourceOracleUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceOracleUpdatePasswordAuthentication) SourceOracleUpdateSSHTunnelMethod {
-	typ := SourceOracleUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateSourceOracleUpdateSSHTunnelMethodSourceOracleUpdatePasswordAuthentication(sourceOracleUpdatePasswordAuthentication SourceOracleUpdatePasswordAuthentication) SourceOracleUpdateSSHTunnelMethod {
+	typ := SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdatePasswordAuthentication
 
 	return SourceOracleUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceOracleUpdatePasswordAuthentication: &sourceOracleUpdatePasswordAuthentication,
+		Type:                                     typ,
 	}
 }
 
 func (u *SourceOracleUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourceOracleUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourceOracleUpdateSSHTunnelMethodTypeNoTunnel
+	sourceOracleUpdateNoTunnel := new(SourceOracleUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceOracleUpdateNoTunnel, "", true, true); err == nil {
+		u.SourceOracleUpdateNoTunnel = sourceOracleUpdateNoTunnel
+		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceOracleUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	sourceOracleUpdateSSHKeyAuthentication := new(SourceOracleUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceOracleUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceOracleUpdateSSHKeyAuthentication = sourceOracleUpdateSSHKeyAuthentication
+		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourceOracleUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceOracleUpdateSSHTunnelMethodTypePasswordAuthentication
+	sourceOracleUpdatePasswordAuthentication := new(SourceOracleUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceOracleUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.SourceOracleUpdatePasswordAuthentication = sourceOracleUpdatePasswordAuthentication
+		u.Type = SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -656,16 +656,16 @@ func (u *SourceOracleUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourceOracleUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceOracleUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceOracleUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceOracleUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceOracleUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceOracleUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

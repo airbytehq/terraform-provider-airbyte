@@ -6,7 +6,7 @@ features:
   terraform:
     additionalProperties: 0.1.1
     constsAndDefaults: 0.1.1
-    core: 3.2.1
+    core: 3.3.0
     globalSecurity: 2.81.1
     globalServerURLs: 2.82.0
     unions: 2.81.5

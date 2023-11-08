@@ -153,8 +153,8 @@ func (o *AuthenticateViaOAuth) GetTokenExpiryDate() time.Time {
 type SourceSalesloftUpdateCredentialsType string
 
 const (
-	SourceSalesloftUpdateCredentialsTypeAuthenticateViaOAuth  SourceSalesloftUpdateCredentialsType = "AuthenticateViaOAuth"
-	SourceSalesloftUpdateCredentialsTypeAuthenticateViaAPIKey SourceSalesloftUpdateCredentialsType = "AuthenticateViaAPIKey"
+	SourceSalesloftUpdateCredentialsTypeAuthenticateViaOAuth  SourceSalesloftUpdateCredentialsType = "Authenticate via OAuth"
+	SourceSalesloftUpdateCredentialsTypeAuthenticateViaAPIKey SourceSalesloftUpdateCredentialsType = "Authenticate via API Key"
 )
 
 type SourceSalesloftUpdateCredentials struct {

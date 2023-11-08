@@ -31,7 +31,7 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 		}
 		if sourceHarvestAuthenticateViaHarvestOAuth != nil {
 			credentials = &shared.SourceHarvestAuthenticationMechanism{
-				AuthenticateViaHarvestOAuth: sourceHarvestAuthenticateViaHarvestOAuth,
+				SourceHarvestAuthenticateViaHarvestOAuth: sourceHarvestAuthenticateViaHarvestOAuth,
 			}
 		}
 		var sourceHarvestAuthenticateWithPersonalAccessToken *shared.SourceHarvestAuthenticateWithPersonalAccessToken
@@ -48,7 +48,7 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 		}
 		if sourceHarvestAuthenticateWithPersonalAccessToken != nil {
 			credentials = &shared.SourceHarvestAuthenticationMechanism{
-				AuthenticateWithPersonalAccessToken: sourceHarvestAuthenticateWithPersonalAccessToken,
+				SourceHarvestAuthenticateWithPersonalAccessToken: sourceHarvestAuthenticateWithPersonalAccessToken,
 			}
 		}
 	}
@@ -126,7 +126,7 @@ func (r *SourceHarvestResourceModel) ToUpdateSDKType() *shared.SourceHarvestPutR
 		}
 		if sourceHarvestUpdateAuthenticateWithPersonalAccessToken != nil {
 			credentials = &shared.SourceHarvestUpdateAuthenticationMechanism{
-				AuthenticateWithPersonalAccessToken: sourceHarvestUpdateAuthenticateWithPersonalAccessToken,
+				SourceHarvestUpdateAuthenticateWithPersonalAccessToken: sourceHarvestUpdateAuthenticateWithPersonalAccessToken,
 			}
 		}
 	}

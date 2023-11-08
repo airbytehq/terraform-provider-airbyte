@@ -15,7 +15,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	}
 	if destinationMongodbNone != nil {
 		authType = shared.DestinationMongodbAuthorizationType{
-			None: destinationMongodbNone,
+			DestinationMongodbNone: destinationMongodbNone,
 		}
 	}
 	var destinationMongodbLoginPassword *shared.DestinationMongodbLoginPassword
@@ -29,7 +29,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	}
 	if destinationMongodbLoginPassword != nil {
 		authType = shared.DestinationMongodbAuthorizationType{
-			LoginPassword: destinationMongodbLoginPassword,
+			DestinationMongodbLoginPassword: destinationMongodbLoginPassword,
 		}
 	}
 	database := r.Configuration.Database.ValueString()
@@ -58,7 +58,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbStandaloneMongoDbInstance != nil {
 			instanceType = &shared.DestinationMongodbMongoDbInstanceType{
-				StandaloneMongoDbInstance: destinationMongodbStandaloneMongoDbInstance,
+				DestinationMongodbStandaloneMongoDbInstance: destinationMongodbStandaloneMongoDbInstance,
 			}
 		}
 		var destinationMongodbReplicaSet *shared.DestinationMongodbReplicaSet
@@ -84,7 +84,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbReplicaSet != nil {
 			instanceType = &shared.DestinationMongodbMongoDbInstanceType{
-				ReplicaSet: destinationMongodbReplicaSet,
+				DestinationMongodbReplicaSet: destinationMongodbReplicaSet,
 			}
 		}
 		var destinationMongodbMongoDBAtlas *shared.DestinationMongodbMongoDBAtlas
@@ -103,7 +103,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbMongoDBAtlas != nil {
 			instanceType = &shared.DestinationMongodbMongoDbInstanceType{
-				MongoDBAtlas: destinationMongodbMongoDBAtlas,
+				DestinationMongodbMongoDBAtlas: destinationMongodbMongoDBAtlas,
 			}
 		}
 	}
@@ -115,7 +115,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbNoTunnel != nil {
 			tunnelMethod = &shared.DestinationMongodbSSHTunnelMethod{
-				NoTunnel: destinationMongodbNoTunnel,
+				DestinationMongodbNoTunnel: destinationMongodbNoTunnel,
 			}
 		}
 		var destinationMongodbSSHKeyAuthentication *shared.DestinationMongodbSSHKeyAuthentication
@@ -138,7 +138,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationMongodbSSHTunnelMethod{
-				SSHKeyAuthentication: destinationMongodbSSHKeyAuthentication,
+				DestinationMongodbSSHKeyAuthentication: destinationMongodbSSHKeyAuthentication,
 			}
 		}
 		var destinationMongodbPasswordAuthentication *shared.DestinationMongodbPasswordAuthentication
@@ -161,7 +161,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationMongodbSSHTunnelMethod{
-				PasswordAuthentication: destinationMongodbPasswordAuthentication,
+				DestinationMongodbPasswordAuthentication: destinationMongodbPasswordAuthentication,
 			}
 		}
 	}
@@ -294,7 +294,7 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationMongodbUpdateSSHTunnelMethod{
-				NoTunnel: destinationMongodbUpdateNoTunnel,
+				DestinationMongodbUpdateNoTunnel: destinationMongodbUpdateNoTunnel,
 			}
 		}
 		var destinationMongodbUpdateSSHKeyAuthentication *shared.DestinationMongodbUpdateSSHKeyAuthentication
@@ -317,7 +317,7 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationMongodbUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationMongodbUpdateSSHKeyAuthentication,
+				DestinationMongodbUpdateSSHKeyAuthentication: destinationMongodbUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationMongodbUpdatePasswordAuthentication *shared.DestinationMongodbUpdatePasswordAuthentication
@@ -340,7 +340,7 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 		if destinationMongodbUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationMongodbUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationMongodbUpdatePasswordAuthentication,
+				DestinationMongodbUpdatePasswordAuthentication: destinationMongodbUpdatePasswordAuthentication,
 			}
 		}
 	}

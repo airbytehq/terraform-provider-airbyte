@@ -49,7 +49,7 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 	}
 	if destinationAzureBlobStorageCSVCommaSeparatedValues != nil {
 		format = shared.DestinationAzureBlobStorageOutputFormat{
-			CSVCommaSeparatedValues: destinationAzureBlobStorageCSVCommaSeparatedValues,
+			DestinationAzureBlobStorageCSVCommaSeparatedValues: destinationAzureBlobStorageCSVCommaSeparatedValues,
 		}
 	}
 	var destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON
@@ -58,7 +58,7 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 	}
 	if destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationAzureBlobStorageOutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON,
+			DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.DestinationAzureBlobStorage{
@@ -136,7 +136,7 @@ func (r *DestinationAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.Des
 	}
 	if destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.OutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
+			DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.DestinationAzureBlobStorageUpdate{

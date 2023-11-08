@@ -334,15 +334,15 @@ func (o *RecommendedManagedTables) GetDataSourceType() DataSourceType {
 type DataSourceUnionType string
 
 const (
-	DataSourceUnionTypeRecommendedManagedTables DataSourceUnionType = "RecommendedManagedTables"
-	DataSourceUnionTypeAmazonS3                 DataSourceUnionType = "AmazonS3"
-	DataSourceUnionTypeAzureBlobStorage         DataSourceUnionType = "AzureBlobStorage"
+	DataSourceUnionTypeRecommendedManagedTables                    DataSourceUnionType = "[Recommended] Managed tables"
+	DataSourceUnionTypeAmazonS3                                    DataSourceUnionType = "Amazon S3"
+	DataSourceUnionTypeDestinationDatabricksUpdateAzureBlobStorage DataSourceUnionType = "destination-databricks-update_Azure Blob Storage"
 )
 
 type DataSource struct {
-	RecommendedManagedTables *RecommendedManagedTables
-	AmazonS3                 *AmazonS3
-	AzureBlobStorage         *DestinationDatabricksUpdateAzureBlobStorage
+	RecommendedManagedTables                    *RecommendedManagedTables
+	AmazonS3                                    *AmazonS3
+	DestinationDatabricksUpdateAzureBlobStorage *DestinationDatabricksUpdateAzureBlobStorage
 
 	Type DataSourceUnionType
 }
@@ -365,12 +365,12 @@ func CreateDataSourceAmazonS3(amazonS3 AmazonS3) DataSource {
 	}
 }
 
-func CreateDataSourceAzureBlobStorage(azureBlobStorage DestinationDatabricksUpdateAzureBlobStorage) DataSource {
-	typ := DataSourceUnionTypeAzureBlobStorage
+func CreateDataSourceDestinationDatabricksUpdateAzureBlobStorage(destinationDatabricksUpdateAzureBlobStorage DestinationDatabricksUpdateAzureBlobStorage) DataSource {
+	typ := DataSourceUnionTypeDestinationDatabricksUpdateAzureBlobStorage
 
 	return DataSource{
-		AzureBlobStorage: &azureBlobStorage,
-		Type:             typ,
+		DestinationDatabricksUpdateAzureBlobStorage: &destinationDatabricksUpdateAzureBlobStorage,
+		Type: typ,
 	}
 }
 
@@ -383,10 +383,10 @@ func (u *DataSource) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	azureBlobStorage := new(DestinationDatabricksUpdateAzureBlobStorage)
-	if err := utils.UnmarshalJSON(data, &azureBlobStorage, "", true, true); err == nil {
-		u.AzureBlobStorage = azureBlobStorage
-		u.Type = DataSourceUnionTypeAzureBlobStorage
+	destinationDatabricksUpdateAzureBlobStorage := new(DestinationDatabricksUpdateAzureBlobStorage)
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksUpdateAzureBlobStorage, "", true, true); err == nil {
+		u.DestinationDatabricksUpdateAzureBlobStorage = destinationDatabricksUpdateAzureBlobStorage
+		u.Type = DataSourceUnionTypeDestinationDatabricksUpdateAzureBlobStorage
 		return nil
 	}
 
@@ -409,8 +409,8 @@ func (u DataSource) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.AmazonS3, "", true)
 	}
 
-	if u.AzureBlobStorage != nil {
-		return utils.MarshalJSON(u.AzureBlobStorage, "", true)
+	if u.DestinationDatabricksUpdateAzureBlobStorage != nil {
+		return utils.MarshalJSON(u.DestinationDatabricksUpdateAzureBlobStorage, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

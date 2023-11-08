@@ -154,48 +154,48 @@ func (o *SourceTrustpilotOAuth20) GetTokenExpiryDate() time.Time {
 type SourceTrustpilotAuthorizationMethodType string
 
 const (
-	SourceTrustpilotAuthorizationMethodTypeOAuth20 SourceTrustpilotAuthorizationMethodType = "OAuth20"
-	SourceTrustpilotAuthorizationMethodTypeAPIKey  SourceTrustpilotAuthorizationMethodType = "APIKey"
+	SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotOAuth20 SourceTrustpilotAuthorizationMethodType = "source-trustpilot_OAuth 2.0"
+	SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotAPIKey  SourceTrustpilotAuthorizationMethodType = "source-trustpilot_API Key"
 )
 
 type SourceTrustpilotAuthorizationMethod struct {
-	OAuth20 *SourceTrustpilotOAuth20
-	APIKey  *SourceTrustpilotAPIKey
+	SourceTrustpilotOAuth20 *SourceTrustpilotOAuth20
+	SourceTrustpilotAPIKey  *SourceTrustpilotAPIKey
 
 	Type SourceTrustpilotAuthorizationMethodType
 }
 
-func CreateSourceTrustpilotAuthorizationMethodOAuth20(oAuth20 SourceTrustpilotOAuth20) SourceTrustpilotAuthorizationMethod {
-	typ := SourceTrustpilotAuthorizationMethodTypeOAuth20
+func CreateSourceTrustpilotAuthorizationMethodSourceTrustpilotOAuth20(sourceTrustpilotOAuth20 SourceTrustpilotOAuth20) SourceTrustpilotAuthorizationMethod {
+	typ := SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotOAuth20
 
 	return SourceTrustpilotAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceTrustpilotOAuth20: &sourceTrustpilotOAuth20,
+		Type:                    typ,
 	}
 }
 
-func CreateSourceTrustpilotAuthorizationMethodAPIKey(apiKey SourceTrustpilotAPIKey) SourceTrustpilotAuthorizationMethod {
-	typ := SourceTrustpilotAuthorizationMethodTypeAPIKey
+func CreateSourceTrustpilotAuthorizationMethodSourceTrustpilotAPIKey(sourceTrustpilotAPIKey SourceTrustpilotAPIKey) SourceTrustpilotAuthorizationMethod {
+	typ := SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotAPIKey
 
 	return SourceTrustpilotAuthorizationMethod{
-		APIKey: &apiKey,
-		Type:   typ,
+		SourceTrustpilotAPIKey: &sourceTrustpilotAPIKey,
+		Type:                   typ,
 	}
 }
 
 func (u *SourceTrustpilotAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	apiKey := new(SourceTrustpilotAPIKey)
-	if err := utils.UnmarshalJSON(data, &apiKey, "", true, true); err == nil {
-		u.APIKey = apiKey
-		u.Type = SourceTrustpilotAuthorizationMethodTypeAPIKey
+	sourceTrustpilotAPIKey := new(SourceTrustpilotAPIKey)
+	if err := utils.UnmarshalJSON(data, &sourceTrustpilotAPIKey, "", true, true); err == nil {
+		u.SourceTrustpilotAPIKey = sourceTrustpilotAPIKey
+		u.Type = SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotAPIKey
 		return nil
 	}
 
-	oAuth20 := new(SourceTrustpilotOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceTrustpilotAuthorizationMethodTypeOAuth20
+	sourceTrustpilotOAuth20 := new(SourceTrustpilotOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceTrustpilotOAuth20, "", true, true); err == nil {
+		u.SourceTrustpilotOAuth20 = sourceTrustpilotOAuth20
+		u.Type = SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotOAuth20
 		return nil
 	}
 
@@ -203,12 +203,12 @@ func (u *SourceTrustpilotAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceTrustpilotAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceTrustpilotOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceTrustpilotOAuth20, "", true)
 	}
 
-	if u.APIKey != nil {
-		return utils.MarshalJSON(u.APIKey, "", true)
+	if u.SourceTrustpilotAPIKey != nil {
+		return utils.MarshalJSON(u.SourceTrustpilotAPIKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

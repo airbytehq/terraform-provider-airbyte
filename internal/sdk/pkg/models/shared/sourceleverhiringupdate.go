@@ -136,8 +136,8 @@ func (o *AuthenticateViaLeverOAuth) GetRefreshToken() string {
 type SourceLeverHiringUpdateAuthenticationMechanismType string
 
 const (
-	SourceLeverHiringUpdateAuthenticationMechanismTypeAuthenticateViaLeverOAuth  SourceLeverHiringUpdateAuthenticationMechanismType = "AuthenticateViaLeverOAuth"
-	SourceLeverHiringUpdateAuthenticationMechanismTypeAuthenticateViaLeverAPIKey SourceLeverHiringUpdateAuthenticationMechanismType = "AuthenticateViaLeverAPIKey"
+	SourceLeverHiringUpdateAuthenticationMechanismTypeAuthenticateViaLeverOAuth  SourceLeverHiringUpdateAuthenticationMechanismType = "Authenticate via Lever (OAuth)"
+	SourceLeverHiringUpdateAuthenticationMechanismTypeAuthenticateViaLeverAPIKey SourceLeverHiringUpdateAuthenticationMechanismType = "Authenticate via Lever (Api Key)"
 )
 
 type SourceLeverHiringUpdateAuthenticationMechanism struct {

@@ -160,66 +160,66 @@ func (o *DestinationPineconeUpdateOpenAI) GetOpenaiKey() string {
 type DestinationPineconeUpdateEmbeddingType string
 
 const (
-	DestinationPineconeUpdateEmbeddingTypeOpenAI DestinationPineconeUpdateEmbeddingType = "OpenAI"
-	DestinationPineconeUpdateEmbeddingTypeCohere DestinationPineconeUpdateEmbeddingType = "Cohere"
-	DestinationPineconeUpdateEmbeddingTypeFake   DestinationPineconeUpdateEmbeddingType = "Fake"
+	DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateOpenAI DestinationPineconeUpdateEmbeddingType = "destination-pinecone-update_OpenAI"
+	DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateCohere DestinationPineconeUpdateEmbeddingType = "destination-pinecone-update_Cohere"
+	DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateFake   DestinationPineconeUpdateEmbeddingType = "destination-pinecone-update_Fake"
 )
 
 type DestinationPineconeUpdateEmbedding struct {
-	OpenAI *DestinationPineconeUpdateOpenAI
-	Cohere *DestinationPineconeUpdateCohere
-	Fake   *DestinationPineconeUpdateFake
+	DestinationPineconeUpdateOpenAI *DestinationPineconeUpdateOpenAI
+	DestinationPineconeUpdateCohere *DestinationPineconeUpdateCohere
+	DestinationPineconeUpdateFake   *DestinationPineconeUpdateFake
 
 	Type DestinationPineconeUpdateEmbeddingType
 }
 
-func CreateDestinationPineconeUpdateEmbeddingOpenAI(openAI DestinationPineconeUpdateOpenAI) DestinationPineconeUpdateEmbedding {
-	typ := DestinationPineconeUpdateEmbeddingTypeOpenAI
+func CreateDestinationPineconeUpdateEmbeddingDestinationPineconeUpdateOpenAI(destinationPineconeUpdateOpenAI DestinationPineconeUpdateOpenAI) DestinationPineconeUpdateEmbedding {
+	typ := DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateOpenAI
 
 	return DestinationPineconeUpdateEmbedding{
-		OpenAI: &openAI,
-		Type:   typ,
+		DestinationPineconeUpdateOpenAI: &destinationPineconeUpdateOpenAI,
+		Type:                            typ,
 	}
 }
 
-func CreateDestinationPineconeUpdateEmbeddingCohere(cohere DestinationPineconeUpdateCohere) DestinationPineconeUpdateEmbedding {
-	typ := DestinationPineconeUpdateEmbeddingTypeCohere
+func CreateDestinationPineconeUpdateEmbeddingDestinationPineconeUpdateCohere(destinationPineconeUpdateCohere DestinationPineconeUpdateCohere) DestinationPineconeUpdateEmbedding {
+	typ := DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateCohere
 
 	return DestinationPineconeUpdateEmbedding{
-		Cohere: &cohere,
-		Type:   typ,
+		DestinationPineconeUpdateCohere: &destinationPineconeUpdateCohere,
+		Type:                            typ,
 	}
 }
 
-func CreateDestinationPineconeUpdateEmbeddingFake(fake DestinationPineconeUpdateFake) DestinationPineconeUpdateEmbedding {
-	typ := DestinationPineconeUpdateEmbeddingTypeFake
+func CreateDestinationPineconeUpdateEmbeddingDestinationPineconeUpdateFake(destinationPineconeUpdateFake DestinationPineconeUpdateFake) DestinationPineconeUpdateEmbedding {
+	typ := DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateFake
 
 	return DestinationPineconeUpdateEmbedding{
-		Fake: &fake,
-		Type: typ,
+		DestinationPineconeUpdateFake: &destinationPineconeUpdateFake,
+		Type:                          typ,
 	}
 }
 
 func (u *DestinationPineconeUpdateEmbedding) UnmarshalJSON(data []byte) error {
 
-	fake := new(DestinationPineconeUpdateFake)
-	if err := utils.UnmarshalJSON(data, &fake, "", true, true); err == nil {
-		u.Fake = fake
-		u.Type = DestinationPineconeUpdateEmbeddingTypeFake
+	destinationPineconeUpdateFake := new(DestinationPineconeUpdateFake)
+	if err := utils.UnmarshalJSON(data, &destinationPineconeUpdateFake, "", true, true); err == nil {
+		u.DestinationPineconeUpdateFake = destinationPineconeUpdateFake
+		u.Type = DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateFake
 		return nil
 	}
 
-	openAI := new(DestinationPineconeUpdateOpenAI)
-	if err := utils.UnmarshalJSON(data, &openAI, "", true, true); err == nil {
-		u.OpenAI = openAI
-		u.Type = DestinationPineconeUpdateEmbeddingTypeOpenAI
+	destinationPineconeUpdateOpenAI := new(DestinationPineconeUpdateOpenAI)
+	if err := utils.UnmarshalJSON(data, &destinationPineconeUpdateOpenAI, "", true, true); err == nil {
+		u.DestinationPineconeUpdateOpenAI = destinationPineconeUpdateOpenAI
+		u.Type = DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateOpenAI
 		return nil
 	}
 
-	cohere := new(DestinationPineconeUpdateCohere)
-	if err := utils.UnmarshalJSON(data, &cohere, "", true, true); err == nil {
-		u.Cohere = cohere
-		u.Type = DestinationPineconeUpdateEmbeddingTypeCohere
+	destinationPineconeUpdateCohere := new(DestinationPineconeUpdateCohere)
+	if err := utils.UnmarshalJSON(data, &destinationPineconeUpdateCohere, "", true, true); err == nil {
+		u.DestinationPineconeUpdateCohere = destinationPineconeUpdateCohere
+		u.Type = DestinationPineconeUpdateEmbeddingTypeDestinationPineconeUpdateCohere
 		return nil
 	}
 
@@ -227,16 +227,16 @@ func (u *DestinationPineconeUpdateEmbedding) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationPineconeUpdateEmbedding) MarshalJSON() ([]byte, error) {
-	if u.OpenAI != nil {
-		return utils.MarshalJSON(u.OpenAI, "", true)
+	if u.DestinationPineconeUpdateOpenAI != nil {
+		return utils.MarshalJSON(u.DestinationPineconeUpdateOpenAI, "", true)
 	}
 
-	if u.Cohere != nil {
-		return utils.MarshalJSON(u.Cohere, "", true)
+	if u.DestinationPineconeUpdateCohere != nil {
+		return utils.MarshalJSON(u.DestinationPineconeUpdateCohere, "", true)
 	}
 
-	if u.Fake != nil {
-		return utils.MarshalJSON(u.Fake, "", true)
+	if u.DestinationPineconeUpdateFake != nil {
+		return utils.MarshalJSON(u.DestinationPineconeUpdateFake, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

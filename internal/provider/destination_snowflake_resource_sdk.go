@@ -35,7 +35,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 		if destinationSnowflakeOAuth20 != nil {
 			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-				OAuth20: destinationSnowflakeOAuth20,
+				DestinationSnowflakeOAuth20: destinationSnowflakeOAuth20,
 			}
 		}
 		var destinationSnowflakeKeyPairAuthentication *shared.DestinationSnowflakeKeyPairAuthentication
@@ -54,7 +54,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 		if destinationSnowflakeKeyPairAuthentication != nil {
 			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-				KeyPairAuthentication: destinationSnowflakeKeyPairAuthentication,
+				DestinationSnowflakeKeyPairAuthentication: destinationSnowflakeKeyPairAuthentication,
 			}
 		}
 		var destinationSnowflakeUsernameAndPassword *shared.DestinationSnowflakeUsernameAndPassword
@@ -66,7 +66,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 		if destinationSnowflakeUsernameAndPassword != nil {
 			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-				UsernameAndPassword: destinationSnowflakeUsernameAndPassword,
+				DestinationSnowflakeUsernameAndPassword: destinationSnowflakeUsernameAndPassword,
 			}
 		}
 	}

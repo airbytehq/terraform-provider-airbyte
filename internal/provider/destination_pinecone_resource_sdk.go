@@ -18,7 +18,7 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	if destinationPineconeOpenAI != nil {
 		embedding = shared.DestinationPineconeEmbedding{
-			OpenAI: destinationPineconeOpenAI,
+			DestinationPineconeOpenAI: destinationPineconeOpenAI,
 		}
 	}
 	var destinationPineconeCohere *shared.DestinationPineconeCohere
@@ -30,7 +30,7 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	if destinationPineconeCohere != nil {
 		embedding = shared.DestinationPineconeEmbedding{
-			Cohere: destinationPineconeCohere,
+			DestinationPineconeCohere: destinationPineconeCohere,
 		}
 	}
 	var destinationPineconeFake *shared.DestinationPineconeFake
@@ -39,7 +39,7 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	if destinationPineconeFake != nil {
 		embedding = shared.DestinationPineconeEmbedding{
-			Fake: destinationPineconeFake,
+			DestinationPineconeFake: destinationPineconeFake,
 		}
 	}
 	index := r.Configuration.Indexing.Index.ValueString()
@@ -102,7 +102,7 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	if destinationPineconeUpdateOpenAI != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{
-			OpenAI: destinationPineconeUpdateOpenAI,
+			DestinationPineconeUpdateOpenAI: destinationPineconeUpdateOpenAI,
 		}
 	}
 	var destinationPineconeUpdateCohere *shared.DestinationPineconeUpdateCohere
@@ -114,7 +114,7 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	if destinationPineconeUpdateCohere != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{
-			Cohere: destinationPineconeUpdateCohere,
+			DestinationPineconeUpdateCohere: destinationPineconeUpdateCohere,
 		}
 	}
 	var destinationPineconeUpdateFake *shared.DestinationPineconeUpdateFake
@@ -123,7 +123,7 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	if destinationPineconeUpdateFake != nil {
 		embedding = shared.DestinationPineconeUpdateEmbedding{
-			Fake: destinationPineconeUpdateFake,
+			DestinationPineconeUpdateFake: destinationPineconeUpdateFake,
 		}
 	}
 	index := r.Configuration.Indexing.Index.ValueString()

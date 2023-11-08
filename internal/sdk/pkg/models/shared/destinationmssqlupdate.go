@@ -109,8 +109,8 @@ func (o *EncryptedTrustServerCertificate) GetSslMethod() *DestinationMssqlUpdate
 type SSLMethodType string
 
 const (
-	SSLMethodTypeEncryptedTrustServerCertificate SSLMethodType = "EncryptedTrustServerCertificate"
-	SSLMethodTypeEncryptedVerifyCertificate      SSLMethodType = "EncryptedVerifyCertificate"
+	SSLMethodTypeEncryptedTrustServerCertificate SSLMethodType = "Encrypted (trust server certificate)"
+	SSLMethodTypeEncryptedVerifyCertificate      SSLMethodType = "Encrypted (verify certificate)"
 )
 
 type SSLMethod struct {
@@ -382,66 +382,66 @@ func (o *DestinationMssqlUpdateNoTunnel) GetTunnelMethod() DestinationMssqlUpdat
 type DestinationMssqlUpdateSSHTunnelMethodType string
 
 const (
-	DestinationMssqlUpdateSSHTunnelMethodTypeNoTunnel               DestinationMssqlUpdateSSHTunnelMethodType = "NoTunnel"
-	DestinationMssqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationMssqlUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationMssqlUpdateSSHTunnelMethodTypePasswordAuthentication DestinationMssqlUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdateNoTunnel               DestinationMssqlUpdateSSHTunnelMethodType = "destination-mssql-update_No Tunnel"
+	DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdateSSHKeyAuthentication   DestinationMssqlUpdateSSHTunnelMethodType = "destination-mssql-update_SSH Key Authentication"
+	DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdatePasswordAuthentication DestinationMssqlUpdateSSHTunnelMethodType = "destination-mssql-update_Password Authentication"
 )
 
 type DestinationMssqlUpdateSSHTunnelMethod struct {
-	NoTunnel               *DestinationMssqlUpdateNoTunnel
-	SSHKeyAuthentication   *DestinationMssqlUpdateSSHKeyAuthentication
-	PasswordAuthentication *DestinationMssqlUpdatePasswordAuthentication
+	DestinationMssqlUpdateNoTunnel               *DestinationMssqlUpdateNoTunnel
+	DestinationMssqlUpdateSSHKeyAuthentication   *DestinationMssqlUpdateSSHKeyAuthentication
+	DestinationMssqlUpdatePasswordAuthentication *DestinationMssqlUpdatePasswordAuthentication
 
 	Type DestinationMssqlUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationMssqlUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationMssqlUpdateNoTunnel) DestinationMssqlUpdateSSHTunnelMethod {
-	typ := DestinationMssqlUpdateSSHTunnelMethodTypeNoTunnel
+func CreateDestinationMssqlUpdateSSHTunnelMethodDestinationMssqlUpdateNoTunnel(destinationMssqlUpdateNoTunnel DestinationMssqlUpdateNoTunnel) DestinationMssqlUpdateSSHTunnelMethod {
+	typ := DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdateNoTunnel
 
 	return DestinationMssqlUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationMssqlUpdateNoTunnel: &destinationMssqlUpdateNoTunnel,
+		Type:                           typ,
 	}
 }
 
-func CreateDestinationMssqlUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationMssqlUpdateSSHKeyAuthentication) DestinationMssqlUpdateSSHTunnelMethod {
-	typ := DestinationMssqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationMssqlUpdateSSHTunnelMethodDestinationMssqlUpdateSSHKeyAuthentication(destinationMssqlUpdateSSHKeyAuthentication DestinationMssqlUpdateSSHKeyAuthentication) DestinationMssqlUpdateSSHTunnelMethod {
+	typ := DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdateSSHKeyAuthentication
 
 	return DestinationMssqlUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationMssqlUpdateSSHKeyAuthentication: &destinationMssqlUpdateSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationMssqlUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationMssqlUpdatePasswordAuthentication) DestinationMssqlUpdateSSHTunnelMethod {
-	typ := DestinationMssqlUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationMssqlUpdateSSHTunnelMethodDestinationMssqlUpdatePasswordAuthentication(destinationMssqlUpdatePasswordAuthentication DestinationMssqlUpdatePasswordAuthentication) DestinationMssqlUpdateSSHTunnelMethod {
+	typ := DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdatePasswordAuthentication
 
 	return DestinationMssqlUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationMssqlUpdatePasswordAuthentication: &destinationMssqlUpdatePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationMssqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationMssqlUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationMssqlUpdateSSHTunnelMethodTypeNoTunnel
+	destinationMssqlUpdateNoTunnel := new(DestinationMssqlUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationMssqlUpdateNoTunnel = destinationMssqlUpdateNoTunnel
+		u.Type = DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationMssqlUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationMssqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationMssqlUpdateSSHKeyAuthentication := new(DestinationMssqlUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMssqlUpdateSSHKeyAuthentication = destinationMssqlUpdateSSHKeyAuthentication
+		u.Type = DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationMssqlUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationMssqlUpdateSSHTunnelMethodTypePasswordAuthentication
+	destinationMssqlUpdatePasswordAuthentication := new(DestinationMssqlUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMssqlUpdatePasswordAuthentication = destinationMssqlUpdatePasswordAuthentication
+		u.Type = DestinationMssqlUpdateSSHTunnelMethodTypeDestinationMssqlUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -449,16 +449,16 @@ func (u *DestinationMssqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u DestinationMssqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationMssqlUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMssqlUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationMssqlUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMssqlUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationMssqlUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMssqlUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

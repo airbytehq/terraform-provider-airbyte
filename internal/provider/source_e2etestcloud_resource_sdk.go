@@ -49,7 +49,7 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 	}
 	if sourceE2eTestCloudSingleSchema != nil {
 		mockCatalog = shared.SourceE2eTestCloudMockCatalog{
-			SingleSchema: sourceE2eTestCloudSingleSchema,
+			SourceE2eTestCloudSingleSchema: sourceE2eTestCloudSingleSchema,
 		}
 	}
 	var sourceE2eTestCloudMultiSchema *shared.SourceE2eTestCloudMultiSchema
@@ -66,7 +66,7 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 	}
 	if sourceE2eTestCloudMultiSchema != nil {
 		mockCatalog = shared.SourceE2eTestCloudMockCatalog{
-			MultiSchema: sourceE2eTestCloudMultiSchema,
+			SourceE2eTestCloudMultiSchema: sourceE2eTestCloudMultiSchema,
 		}
 	}
 	seed := new(int64)

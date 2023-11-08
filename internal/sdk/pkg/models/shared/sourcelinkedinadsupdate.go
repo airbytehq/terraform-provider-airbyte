@@ -285,23 +285,23 @@ func (o *SourceLinkedinAdsUpdateOAuth20) GetRefreshToken() string {
 type SourceLinkedinAdsUpdateAuthenticationType string
 
 const (
-	SourceLinkedinAdsUpdateAuthenticationTypeOAuth20     SourceLinkedinAdsUpdateAuthenticationType = "OAuth20"
-	SourceLinkedinAdsUpdateAuthenticationTypeAccessToken SourceLinkedinAdsUpdateAuthenticationType = "AccessToken"
+	SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateOAuth20 SourceLinkedinAdsUpdateAuthenticationType = "source-linkedin-ads-update_OAuth2.0"
+	SourceLinkedinAdsUpdateAuthenticationTypeAccessToken                    SourceLinkedinAdsUpdateAuthenticationType = "Access Token"
 )
 
 type SourceLinkedinAdsUpdateAuthentication struct {
-	OAuth20     *SourceLinkedinAdsUpdateOAuth20
-	AccessToken *AccessToken
+	SourceLinkedinAdsUpdateOAuth20 *SourceLinkedinAdsUpdateOAuth20
+	AccessToken                    *AccessToken
 
 	Type SourceLinkedinAdsUpdateAuthenticationType
 }
 
-func CreateSourceLinkedinAdsUpdateAuthenticationOAuth20(oAuth20 SourceLinkedinAdsUpdateOAuth20) SourceLinkedinAdsUpdateAuthentication {
-	typ := SourceLinkedinAdsUpdateAuthenticationTypeOAuth20
+func CreateSourceLinkedinAdsUpdateAuthenticationSourceLinkedinAdsUpdateOAuth20(sourceLinkedinAdsUpdateOAuth20 SourceLinkedinAdsUpdateOAuth20) SourceLinkedinAdsUpdateAuthentication {
+	typ := SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateOAuth20
 
 	return SourceLinkedinAdsUpdateAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceLinkedinAdsUpdateOAuth20: &sourceLinkedinAdsUpdateOAuth20,
+		Type:                           typ,
 	}
 }
 
@@ -323,10 +323,10 @@ func (u *SourceLinkedinAdsUpdateAuthentication) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	oAuth20 := new(SourceLinkedinAdsUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceLinkedinAdsUpdateAuthenticationTypeOAuth20
+	sourceLinkedinAdsUpdateOAuth20 := new(SourceLinkedinAdsUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceLinkedinAdsUpdateOAuth20, "", true, true); err == nil {
+		u.SourceLinkedinAdsUpdateOAuth20 = sourceLinkedinAdsUpdateOAuth20
+		u.Type = SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateOAuth20
 		return nil
 	}
 
@@ -334,8 +334,8 @@ func (u *SourceLinkedinAdsUpdateAuthentication) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceLinkedinAdsUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceLinkedinAdsUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceLinkedinAdsUpdateOAuth20, "", true)
 	}
 
 	if u.AccessToken != nil {

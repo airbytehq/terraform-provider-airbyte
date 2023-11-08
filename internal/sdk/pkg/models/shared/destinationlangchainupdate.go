@@ -356,25 +356,25 @@ func (o *DestinationLangchainUpdatePinecone) GetPineconeKey() string {
 type IndexingType string
 
 const (
-	IndexingTypePinecone               IndexingType = "Pinecone"
-	IndexingTypeDocArrayHnswSearch     IndexingType = "DocArrayHnswSearch"
-	IndexingTypeChromaLocalPersistance IndexingType = "ChromaLocalPersistance"
+	IndexingTypeDestinationLangchainUpdatePinecone IndexingType = "destination-langchain-update_Pinecone"
+	IndexingTypeDocArrayHnswSearch                 IndexingType = "DocArrayHnswSearch"
+	IndexingTypeChromaLocalPersistance             IndexingType = "Chroma (local persistance)"
 )
 
 type Indexing struct {
-	Pinecone               *DestinationLangchainUpdatePinecone
-	DocArrayHnswSearch     *DocArrayHnswSearch
-	ChromaLocalPersistance *ChromaLocalPersistance
+	DestinationLangchainUpdatePinecone *DestinationLangchainUpdatePinecone
+	DocArrayHnswSearch                 *DocArrayHnswSearch
+	ChromaLocalPersistance             *ChromaLocalPersistance
 
 	Type IndexingType
 }
 
-func CreateIndexingPinecone(pinecone DestinationLangchainUpdatePinecone) Indexing {
-	typ := IndexingTypePinecone
+func CreateIndexingDestinationLangchainUpdatePinecone(destinationLangchainUpdatePinecone DestinationLangchainUpdatePinecone) Indexing {
+	typ := IndexingTypeDestinationLangchainUpdatePinecone
 
 	return Indexing{
-		Pinecone: &pinecone,
-		Type:     typ,
+		DestinationLangchainUpdatePinecone: &destinationLangchainUpdatePinecone,
+		Type:                               typ,
 	}
 }
 
@@ -412,10 +412,10 @@ func (u *Indexing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	pinecone := new(DestinationLangchainUpdatePinecone)
-	if err := utils.UnmarshalJSON(data, &pinecone, "", true, true); err == nil {
-		u.Pinecone = pinecone
-		u.Type = IndexingTypePinecone
+	destinationLangchainUpdatePinecone := new(DestinationLangchainUpdatePinecone)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainUpdatePinecone, "", true, true); err == nil {
+		u.DestinationLangchainUpdatePinecone = destinationLangchainUpdatePinecone
+		u.Type = IndexingTypeDestinationLangchainUpdatePinecone
 		return nil
 	}
 
@@ -423,8 +423,8 @@ func (u *Indexing) UnmarshalJSON(data []byte) error {
 }
 
 func (u Indexing) MarshalJSON() ([]byte, error) {
-	if u.Pinecone != nil {
-		return utils.MarshalJSON(u.Pinecone, "", true)
+	if u.DestinationLangchainUpdatePinecone != nil {
+		return utils.MarshalJSON(u.DestinationLangchainUpdatePinecone, "", true)
 	}
 
 	if u.DocArrayHnswSearch != nil {

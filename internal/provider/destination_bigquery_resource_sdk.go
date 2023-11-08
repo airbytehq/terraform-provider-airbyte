@@ -30,7 +30,7 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationBigqueryStandardInserts != nil {
 			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
-				StandardInserts: destinationBigqueryStandardInserts,
+				DestinationBigqueryStandardInserts: destinationBigqueryStandardInserts,
 			}
 		}
 		var destinationBigqueryGCSStaging *shared.DestinationBigqueryGCSStaging
@@ -47,7 +47,7 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 			}
 			if destinationBigqueryHMACKey != nil {
 				credential = shared.DestinationBigqueryCredential{
-					HMACKey: destinationBigqueryHMACKey,
+					DestinationBigqueryHMACKey: destinationBigqueryHMACKey,
 				}
 			}
 			fileBufferCount := new(int64)
@@ -74,7 +74,7 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationBigqueryGCSStaging != nil {
 			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
-				GCSStaging: destinationBigqueryGCSStaging,
+				DestinationBigqueryGCSStaging: destinationBigqueryGCSStaging,
 			}
 		}
 	}
@@ -139,7 +139,7 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationBigqueryUpdateStandardInserts != nil {
 			loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
-				StandardInserts: destinationBigqueryUpdateStandardInserts,
+				DestinationBigqueryUpdateStandardInserts: destinationBigqueryUpdateStandardInserts,
 			}
 		}
 		var destinationBigqueryUpdateGCSStaging *shared.DestinationBigqueryUpdateGCSStaging
@@ -156,7 +156,7 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 			}
 			if destinationBigqueryUpdateHMACKey != nil {
 				credential = shared.DestinationBigqueryUpdateCredential{
-					HMACKey: destinationBigqueryUpdateHMACKey,
+					DestinationBigqueryUpdateHMACKey: destinationBigqueryUpdateHMACKey,
 				}
 			}
 			fileBufferCount := new(int64)
@@ -183,7 +183,7 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationBigqueryUpdateGCSStaging != nil {
 			loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
-				GCSStaging: destinationBigqueryUpdateGCSStaging,
+				DestinationBigqueryUpdateGCSStaging: destinationBigqueryUpdateGCSStaging,
 			}
 		}
 	}

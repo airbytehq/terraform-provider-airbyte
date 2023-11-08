@@ -137,13 +137,13 @@ func (o *OauthAuthentication) GetRefreshToken() string {
 type SourceSquareUpdateAuthenticationType string
 
 const (
-	SourceSquareUpdateAuthenticationTypeOauthAuthentication SourceSquareUpdateAuthenticationType = "OauthAuthentication"
-	SourceSquareUpdateAuthenticationTypeAPIKey              SourceSquareUpdateAuthenticationType = "APIKey"
+	SourceSquareUpdateAuthenticationTypeOauthAuthentication      SourceSquareUpdateAuthenticationType = "Oauth authentication"
+	SourceSquareUpdateAuthenticationTypeSourceSquareUpdateAPIKey SourceSquareUpdateAuthenticationType = "source-square-update_API key"
 )
 
 type SourceSquareUpdateAuthentication struct {
-	OauthAuthentication *OauthAuthentication
-	APIKey              *SourceSquareUpdateAPIKey
+	OauthAuthentication      *OauthAuthentication
+	SourceSquareUpdateAPIKey *SourceSquareUpdateAPIKey
 
 	Type SourceSquareUpdateAuthenticationType
 }
@@ -157,21 +157,21 @@ func CreateSourceSquareUpdateAuthenticationOauthAuthentication(oauthAuthenticati
 	}
 }
 
-func CreateSourceSquareUpdateAuthenticationAPIKey(apiKey SourceSquareUpdateAPIKey) SourceSquareUpdateAuthentication {
-	typ := SourceSquareUpdateAuthenticationTypeAPIKey
+func CreateSourceSquareUpdateAuthenticationSourceSquareUpdateAPIKey(sourceSquareUpdateAPIKey SourceSquareUpdateAPIKey) SourceSquareUpdateAuthentication {
+	typ := SourceSquareUpdateAuthenticationTypeSourceSquareUpdateAPIKey
 
 	return SourceSquareUpdateAuthentication{
-		APIKey: &apiKey,
-		Type:   typ,
+		SourceSquareUpdateAPIKey: &sourceSquareUpdateAPIKey,
+		Type:                     typ,
 	}
 }
 
 func (u *SourceSquareUpdateAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiKey := new(SourceSquareUpdateAPIKey)
-	if err := utils.UnmarshalJSON(data, &apiKey, "", true, true); err == nil {
-		u.APIKey = apiKey
-		u.Type = SourceSquareUpdateAuthenticationTypeAPIKey
+	sourceSquareUpdateAPIKey := new(SourceSquareUpdateAPIKey)
+	if err := utils.UnmarshalJSON(data, &sourceSquareUpdateAPIKey, "", true, true); err == nil {
+		u.SourceSquareUpdateAPIKey = sourceSquareUpdateAPIKey
+		u.Type = SourceSquareUpdateAuthenticationTypeSourceSquareUpdateAPIKey
 		return nil
 	}
 
@@ -190,8 +190,8 @@ func (u SourceSquareUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.OauthAuthentication, "", true)
 	}
 
-	if u.APIKey != nil {
-		return utils.MarshalJSON(u.APIKey, "", true)
+	if u.SourceSquareUpdateAPIKey != nil {
+		return utils.MarshalJSON(u.SourceSquareUpdateAPIKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -116,48 +116,48 @@ func (o *SourceOracleServiceName) GetServiceName() string {
 type SourceOracleConnectByType string
 
 const (
-	SourceOracleConnectByTypeServiceName SourceOracleConnectByType = "ServiceName"
-	SourceOracleConnectByTypeSystemIDSID SourceOracleConnectByType = "SystemIDSID"
+	SourceOracleConnectByTypeSourceOracleServiceName SourceOracleConnectByType = "source-oracle_Service name"
+	SourceOracleConnectByTypeSourceOracleSystemIDSID SourceOracleConnectByType = "source-oracle_System ID (SID)"
 )
 
 type SourceOracleConnectBy struct {
-	ServiceName *SourceOracleServiceName
-	SystemIDSID *SourceOracleSystemIDSID
+	SourceOracleServiceName *SourceOracleServiceName
+	SourceOracleSystemIDSID *SourceOracleSystemIDSID
 
 	Type SourceOracleConnectByType
 }
 
-func CreateSourceOracleConnectByServiceName(serviceName SourceOracleServiceName) SourceOracleConnectBy {
-	typ := SourceOracleConnectByTypeServiceName
+func CreateSourceOracleConnectBySourceOracleServiceName(sourceOracleServiceName SourceOracleServiceName) SourceOracleConnectBy {
+	typ := SourceOracleConnectByTypeSourceOracleServiceName
 
 	return SourceOracleConnectBy{
-		ServiceName: &serviceName,
-		Type:        typ,
+		SourceOracleServiceName: &sourceOracleServiceName,
+		Type:                    typ,
 	}
 }
 
-func CreateSourceOracleConnectBySystemIDSID(systemIDSID SourceOracleSystemIDSID) SourceOracleConnectBy {
-	typ := SourceOracleConnectByTypeSystemIDSID
+func CreateSourceOracleConnectBySourceOracleSystemIDSID(sourceOracleSystemIDSID SourceOracleSystemIDSID) SourceOracleConnectBy {
+	typ := SourceOracleConnectByTypeSourceOracleSystemIDSID
 
 	return SourceOracleConnectBy{
-		SystemIDSID: &systemIDSID,
-		Type:        typ,
+		SourceOracleSystemIDSID: &sourceOracleSystemIDSID,
+		Type:                    typ,
 	}
 }
 
 func (u *SourceOracleConnectBy) UnmarshalJSON(data []byte) error {
 
-	serviceName := new(SourceOracleServiceName)
-	if err := utils.UnmarshalJSON(data, &serviceName, "", true, true); err == nil {
-		u.ServiceName = serviceName
-		u.Type = SourceOracleConnectByTypeServiceName
+	sourceOracleServiceName := new(SourceOracleServiceName)
+	if err := utils.UnmarshalJSON(data, &sourceOracleServiceName, "", true, true); err == nil {
+		u.SourceOracleServiceName = sourceOracleServiceName
+		u.Type = SourceOracleConnectByTypeSourceOracleServiceName
 		return nil
 	}
 
-	systemIDSID := new(SourceOracleSystemIDSID)
-	if err := utils.UnmarshalJSON(data, &systemIDSID, "", true, true); err == nil {
-		u.SystemIDSID = systemIDSID
-		u.Type = SourceOracleConnectByTypeSystemIDSID
+	sourceOracleSystemIDSID := new(SourceOracleSystemIDSID)
+	if err := utils.UnmarshalJSON(data, &sourceOracleSystemIDSID, "", true, true); err == nil {
+		u.SourceOracleSystemIDSID = sourceOracleSystemIDSID
+		u.Type = SourceOracleConnectByTypeSourceOracleSystemIDSID
 		return nil
 	}
 
@@ -165,12 +165,12 @@ func (u *SourceOracleConnectBy) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleConnectBy) MarshalJSON() ([]byte, error) {
-	if u.ServiceName != nil {
-		return utils.MarshalJSON(u.ServiceName, "", true)
+	if u.SourceOracleServiceName != nil {
+		return utils.MarshalJSON(u.SourceOracleServiceName, "", true)
 	}
 
-	if u.SystemIDSID != nil {
-		return utils.MarshalJSON(u.SystemIDSID, "", true)
+	if u.SourceOracleSystemIDSID != nil {
+		return utils.MarshalJSON(u.SourceOracleSystemIDSID, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -316,48 +316,48 @@ func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceOr
 type SourceOracleEncryptionType string
 
 const (
-	SourceOracleEncryptionTypeNativeNetworkEncryptionNNE    SourceOracleEncryptionType = "NativeNetworkEncryptionNNE"
-	SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "TLSEncryptedVerifyCertificate"
+	SourceOracleEncryptionTypeSourceOracleNativeNetworkEncryptionNNE    SourceOracleEncryptionType = "source-oracle_Native Network Encryption (NNE)"
+	SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "source-oracle_TLS Encrypted (verify certificate)"
 )
 
 type SourceOracleEncryption struct {
-	NativeNetworkEncryptionNNE    *SourceOracleNativeNetworkEncryptionNNE
-	TLSEncryptedVerifyCertificate *SourceOracleTLSEncryptedVerifyCertificate
+	SourceOracleNativeNetworkEncryptionNNE    *SourceOracleNativeNetworkEncryptionNNE
+	SourceOracleTLSEncryptedVerifyCertificate *SourceOracleTLSEncryptedVerifyCertificate
 
 	Type SourceOracleEncryptionType
 }
 
-func CreateSourceOracleEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncryptionNNE SourceOracleNativeNetworkEncryptionNNE) SourceOracleEncryption {
-	typ := SourceOracleEncryptionTypeNativeNetworkEncryptionNNE
+func CreateSourceOracleEncryptionSourceOracleNativeNetworkEncryptionNNE(sourceOracleNativeNetworkEncryptionNNE SourceOracleNativeNetworkEncryptionNNE) SourceOracleEncryption {
+	typ := SourceOracleEncryptionTypeSourceOracleNativeNetworkEncryptionNNE
 
 	return SourceOracleEncryption{
-		NativeNetworkEncryptionNNE: &nativeNetworkEncryptionNNE,
-		Type:                       typ,
+		SourceOracleNativeNetworkEncryptionNNE: &sourceOracleNativeNetworkEncryptionNNE,
+		Type:                                   typ,
 	}
 }
 
-func CreateSourceOracleEncryptionTLSEncryptedVerifyCertificate(tlsEncryptedVerifyCertificate SourceOracleTLSEncryptedVerifyCertificate) SourceOracleEncryption {
-	typ := SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate
+func CreateSourceOracleEncryptionSourceOracleTLSEncryptedVerifyCertificate(sourceOracleTLSEncryptedVerifyCertificate SourceOracleTLSEncryptedVerifyCertificate) SourceOracleEncryption {
+	typ := SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate
 
 	return SourceOracleEncryption{
-		TLSEncryptedVerifyCertificate: &tlsEncryptedVerifyCertificate,
-		Type:                          typ,
+		SourceOracleTLSEncryptedVerifyCertificate: &sourceOracleTLSEncryptedVerifyCertificate,
+		Type: typ,
 	}
 }
 
 func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 
-	nativeNetworkEncryptionNNE := new(SourceOracleNativeNetworkEncryptionNNE)
-	if err := utils.UnmarshalJSON(data, &nativeNetworkEncryptionNNE, "", true, true); err == nil {
-		u.NativeNetworkEncryptionNNE = nativeNetworkEncryptionNNE
-		u.Type = SourceOracleEncryptionTypeNativeNetworkEncryptionNNE
+	sourceOracleNativeNetworkEncryptionNNE := new(SourceOracleNativeNetworkEncryptionNNE)
+	if err := utils.UnmarshalJSON(data, &sourceOracleNativeNetworkEncryptionNNE, "", true, true); err == nil {
+		u.SourceOracleNativeNetworkEncryptionNNE = sourceOracleNativeNetworkEncryptionNNE
+		u.Type = SourceOracleEncryptionTypeSourceOracleNativeNetworkEncryptionNNE
 		return nil
 	}
 
-	tlsEncryptedVerifyCertificate := new(SourceOracleTLSEncryptedVerifyCertificate)
-	if err := utils.UnmarshalJSON(data, &tlsEncryptedVerifyCertificate, "", true, true); err == nil {
-		u.TLSEncryptedVerifyCertificate = tlsEncryptedVerifyCertificate
-		u.Type = SourceOracleEncryptionTypeTLSEncryptedVerifyCertificate
+	sourceOracleTLSEncryptedVerifyCertificate := new(SourceOracleTLSEncryptedVerifyCertificate)
+	if err := utils.UnmarshalJSON(data, &sourceOracleTLSEncryptedVerifyCertificate, "", true, true); err == nil {
+		u.SourceOracleTLSEncryptedVerifyCertificate = sourceOracleTLSEncryptedVerifyCertificate
+		u.Type = SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate
 		return nil
 	}
 
@@ -365,12 +365,12 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleEncryption) MarshalJSON() ([]byte, error) {
-	if u.NativeNetworkEncryptionNNE != nil {
-		return utils.MarshalJSON(u.NativeNetworkEncryptionNNE, "", true)
+	if u.SourceOracleNativeNetworkEncryptionNNE != nil {
+		return utils.MarshalJSON(u.SourceOracleNativeNetworkEncryptionNNE, "", true)
 	}
 
-	if u.TLSEncryptedVerifyCertificate != nil {
-		return utils.MarshalJSON(u.TLSEncryptedVerifyCertificate, "", true)
+	if u.SourceOracleTLSEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.SourceOracleTLSEncryptedVerifyCertificate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -613,66 +613,66 @@ func (o *SourceOracleNoTunnel) GetTunnelMethod() SourceOracleTunnelMethod {
 type SourceOracleSSHTunnelMethodType string
 
 const (
-	SourceOracleSSHTunnelMethodTypeNoTunnel               SourceOracleSSHTunnelMethodType = "NoTunnel"
-	SourceOracleSSHTunnelMethodTypeSSHKeyAuthentication   SourceOracleSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourceOracleSSHTunnelMethodTypePasswordAuthentication SourceOracleSSHTunnelMethodType = "PasswordAuthentication"
+	SourceOracleSSHTunnelMethodTypeSourceOracleNoTunnel               SourceOracleSSHTunnelMethodType = "source-oracle_No Tunnel"
+	SourceOracleSSHTunnelMethodTypeSourceOracleSSHKeyAuthentication   SourceOracleSSHTunnelMethodType = "source-oracle_SSH Key Authentication"
+	SourceOracleSSHTunnelMethodTypeSourceOraclePasswordAuthentication SourceOracleSSHTunnelMethodType = "source-oracle_Password Authentication"
 )
 
 type SourceOracleSSHTunnelMethod struct {
-	NoTunnel               *SourceOracleNoTunnel
-	SSHKeyAuthentication   *SourceOracleSSHKeyAuthentication
-	PasswordAuthentication *SourceOraclePasswordAuthentication
+	SourceOracleNoTunnel               *SourceOracleNoTunnel
+	SourceOracleSSHKeyAuthentication   *SourceOracleSSHKeyAuthentication
+	SourceOraclePasswordAuthentication *SourceOraclePasswordAuthentication
 
 	Type SourceOracleSSHTunnelMethodType
 }
 
-func CreateSourceOracleSSHTunnelMethodNoTunnel(noTunnel SourceOracleNoTunnel) SourceOracleSSHTunnelMethod {
-	typ := SourceOracleSSHTunnelMethodTypeNoTunnel
+func CreateSourceOracleSSHTunnelMethodSourceOracleNoTunnel(sourceOracleNoTunnel SourceOracleNoTunnel) SourceOracleSSHTunnelMethod {
+	typ := SourceOracleSSHTunnelMethodTypeSourceOracleNoTunnel
 
 	return SourceOracleSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
-	}
-}
-
-func CreateSourceOracleSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceOracleSSHKeyAuthentication) SourceOracleSSHTunnelMethod {
-	typ := SourceOracleSSHTunnelMethodTypeSSHKeyAuthentication
-
-	return SourceOracleSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
+		SourceOracleNoTunnel: &sourceOracleNoTunnel,
 		Type:                 typ,
 	}
 }
 
-func CreateSourceOracleSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceOraclePasswordAuthentication) SourceOracleSSHTunnelMethod {
-	typ := SourceOracleSSHTunnelMethodTypePasswordAuthentication
+func CreateSourceOracleSSHTunnelMethodSourceOracleSSHKeyAuthentication(sourceOracleSSHKeyAuthentication SourceOracleSSHKeyAuthentication) SourceOracleSSHTunnelMethod {
+	typ := SourceOracleSSHTunnelMethodTypeSourceOracleSSHKeyAuthentication
 
 	return SourceOracleSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceOracleSSHKeyAuthentication: &sourceOracleSSHKeyAuthentication,
+		Type:                             typ,
+	}
+}
+
+func CreateSourceOracleSSHTunnelMethodSourceOraclePasswordAuthentication(sourceOraclePasswordAuthentication SourceOraclePasswordAuthentication) SourceOracleSSHTunnelMethod {
+	typ := SourceOracleSSHTunnelMethodTypeSourceOraclePasswordAuthentication
+
+	return SourceOracleSSHTunnelMethod{
+		SourceOraclePasswordAuthentication: &sourceOraclePasswordAuthentication,
+		Type:                               typ,
 	}
 }
 
 func (u *SourceOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourceOracleNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourceOracleSSHTunnelMethodTypeNoTunnel
+	sourceOracleNoTunnel := new(SourceOracleNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceOracleNoTunnel, "", true, true); err == nil {
+		u.SourceOracleNoTunnel = sourceOracleNoTunnel
+		u.Type = SourceOracleSSHTunnelMethodTypeSourceOracleNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceOracleSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceOracleSSHTunnelMethodTypeSSHKeyAuthentication
+	sourceOracleSSHKeyAuthentication := new(SourceOracleSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceOracleSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceOracleSSHKeyAuthentication = sourceOracleSSHKeyAuthentication
+		u.Type = SourceOracleSSHTunnelMethodTypeSourceOracleSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourceOraclePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceOracleSSHTunnelMethodTypePasswordAuthentication
+	sourceOraclePasswordAuthentication := new(SourceOraclePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceOraclePasswordAuthentication, "", true, true); err == nil {
+		u.SourceOraclePasswordAuthentication = sourceOraclePasswordAuthentication
+		u.Type = SourceOracleSSHTunnelMethodTypeSourceOraclePasswordAuthentication
 		return nil
 	}
 
@@ -680,16 +680,16 @@ func (u *SourceOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourceOracleNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceOracleNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceOracleSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceOracleSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceOraclePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceOraclePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

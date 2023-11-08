@@ -250,48 +250,48 @@ func (o *DestinationS3UpdateSchemasFormatNoCompression) GetCompressionType() *De
 type DestinationS3UpdateSchemasCompressionUnionType string
 
 const (
-	DestinationS3UpdateSchemasCompressionUnionTypeNoCompression DestinationS3UpdateSchemasCompressionUnionType = "NoCompression"
-	DestinationS3UpdateSchemasCompressionUnionTypeGzip          DestinationS3UpdateSchemasCompressionUnionType = "Gzip"
+	DestinationS3UpdateSchemasCompressionUnionTypeDestinationS3UpdateSchemasFormatNoCompression DestinationS3UpdateSchemasCompressionUnionType = "destination-s3-update_Schemas_format_No Compression"
+	DestinationS3UpdateSchemasCompressionUnionTypeDestinationS3UpdateSchemasGZIP                DestinationS3UpdateSchemasCompressionUnionType = "destination-s3-update_Schemas_GZIP"
 )
 
 type DestinationS3UpdateSchemasCompression struct {
-	NoCompression *DestinationS3UpdateSchemasFormatNoCompression
-	Gzip          *DestinationS3UpdateSchemasGZIP
+	DestinationS3UpdateSchemasFormatNoCompression *DestinationS3UpdateSchemasFormatNoCompression
+	DestinationS3UpdateSchemasGZIP                *DestinationS3UpdateSchemasGZIP
 
 	Type DestinationS3UpdateSchemasCompressionUnionType
 }
 
-func CreateDestinationS3UpdateSchemasCompressionNoCompression(noCompression DestinationS3UpdateSchemasFormatNoCompression) DestinationS3UpdateSchemasCompression {
-	typ := DestinationS3UpdateSchemasCompressionUnionTypeNoCompression
+func CreateDestinationS3UpdateSchemasCompressionDestinationS3UpdateSchemasFormatNoCompression(destinationS3UpdateSchemasFormatNoCompression DestinationS3UpdateSchemasFormatNoCompression) DestinationS3UpdateSchemasCompression {
+	typ := DestinationS3UpdateSchemasCompressionUnionTypeDestinationS3UpdateSchemasFormatNoCompression
 
 	return DestinationS3UpdateSchemasCompression{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationS3UpdateSchemasFormatNoCompression: &destinationS3UpdateSchemasFormatNoCompression,
+		Type: typ,
 	}
 }
 
-func CreateDestinationS3UpdateSchemasCompressionGzip(gzip DestinationS3UpdateSchemasGZIP) DestinationS3UpdateSchemasCompression {
-	typ := DestinationS3UpdateSchemasCompressionUnionTypeGzip
+func CreateDestinationS3UpdateSchemasCompressionDestinationS3UpdateSchemasGZIP(destinationS3UpdateSchemasGZIP DestinationS3UpdateSchemasGZIP) DestinationS3UpdateSchemasCompression {
+	typ := DestinationS3UpdateSchemasCompressionUnionTypeDestinationS3UpdateSchemasGZIP
 
 	return DestinationS3UpdateSchemasCompression{
-		Gzip: &gzip,
-		Type: typ,
+		DestinationS3UpdateSchemasGZIP: &destinationS3UpdateSchemasGZIP,
+		Type:                           typ,
 	}
 }
 
 func (u *DestinationS3UpdateSchemasCompression) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationS3UpdateSchemasFormatNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationS3UpdateSchemasCompressionUnionTypeNoCompression
+	destinationS3UpdateSchemasFormatNoCompression := new(DestinationS3UpdateSchemasFormatNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateSchemasFormatNoCompression, "", true, true); err == nil {
+		u.DestinationS3UpdateSchemasFormatNoCompression = destinationS3UpdateSchemasFormatNoCompression
+		u.Type = DestinationS3UpdateSchemasCompressionUnionTypeDestinationS3UpdateSchemasFormatNoCompression
 		return nil
 	}
 
-	gzip := new(DestinationS3UpdateSchemasGZIP)
-	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
-		u.Gzip = gzip
-		u.Type = DestinationS3UpdateSchemasCompressionUnionTypeGzip
+	destinationS3UpdateSchemasGZIP := new(DestinationS3UpdateSchemasGZIP)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateSchemasGZIP, "", true, true); err == nil {
+		u.DestinationS3UpdateSchemasGZIP = destinationS3UpdateSchemasGZIP
+		u.Type = DestinationS3UpdateSchemasCompressionUnionTypeDestinationS3UpdateSchemasGZIP
 		return nil
 	}
 
@@ -299,12 +299,12 @@ func (u *DestinationS3UpdateSchemasCompression) UnmarshalJSON(data []byte) error
 }
 
 func (u DestinationS3UpdateSchemasCompression) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationS3UpdateSchemasFormatNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateSchemasFormatNoCompression, "", true)
 	}
 
-	if u.Gzip != nil {
-		return utils.MarshalJSON(u.Gzip, "", true)
+	if u.DestinationS3UpdateSchemasGZIP != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateSchemasGZIP, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -500,48 +500,48 @@ func (o *DestinationS3UpdateSchemasNoCompression) GetCompressionType() *Destinat
 type DestinationS3UpdateCompressionUnionType string
 
 const (
-	DestinationS3UpdateCompressionUnionTypeNoCompression DestinationS3UpdateCompressionUnionType = "NoCompression"
-	DestinationS3UpdateCompressionUnionTypeGzip          DestinationS3UpdateCompressionUnionType = "Gzip"
+	DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateSchemasNoCompression DestinationS3UpdateCompressionUnionType = "destination-s3-update_Schemas_No Compression"
+	DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateGZIP                 DestinationS3UpdateCompressionUnionType = "destination-s3-update_GZIP"
 )
 
 type DestinationS3UpdateCompression struct {
-	NoCompression *DestinationS3UpdateSchemasNoCompression
-	Gzip          *DestinationS3UpdateGZIP
+	DestinationS3UpdateSchemasNoCompression *DestinationS3UpdateSchemasNoCompression
+	DestinationS3UpdateGZIP                 *DestinationS3UpdateGZIP
 
 	Type DestinationS3UpdateCompressionUnionType
 }
 
-func CreateDestinationS3UpdateCompressionNoCompression(noCompression DestinationS3UpdateSchemasNoCompression) DestinationS3UpdateCompression {
-	typ := DestinationS3UpdateCompressionUnionTypeNoCompression
+func CreateDestinationS3UpdateCompressionDestinationS3UpdateSchemasNoCompression(destinationS3UpdateSchemasNoCompression DestinationS3UpdateSchemasNoCompression) DestinationS3UpdateCompression {
+	typ := DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateSchemasNoCompression
 
 	return DestinationS3UpdateCompression{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationS3UpdateSchemasNoCompression: &destinationS3UpdateSchemasNoCompression,
+		Type:                                    typ,
 	}
 }
 
-func CreateDestinationS3UpdateCompressionGzip(gzip DestinationS3UpdateGZIP) DestinationS3UpdateCompression {
-	typ := DestinationS3UpdateCompressionUnionTypeGzip
+func CreateDestinationS3UpdateCompressionDestinationS3UpdateGZIP(destinationS3UpdateGZIP DestinationS3UpdateGZIP) DestinationS3UpdateCompression {
+	typ := DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateGZIP
 
 	return DestinationS3UpdateCompression{
-		Gzip: &gzip,
-		Type: typ,
+		DestinationS3UpdateGZIP: &destinationS3UpdateGZIP,
+		Type:                    typ,
 	}
 }
 
 func (u *DestinationS3UpdateCompression) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationS3UpdateSchemasNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationS3UpdateCompressionUnionTypeNoCompression
+	destinationS3UpdateSchemasNoCompression := new(DestinationS3UpdateSchemasNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateSchemasNoCompression, "", true, true); err == nil {
+		u.DestinationS3UpdateSchemasNoCompression = destinationS3UpdateSchemasNoCompression
+		u.Type = DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateSchemasNoCompression
 		return nil
 	}
 
-	gzip := new(DestinationS3UpdateGZIP)
-	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
-		u.Gzip = gzip
-		u.Type = DestinationS3UpdateCompressionUnionTypeGzip
+	destinationS3UpdateGZIP := new(DestinationS3UpdateGZIP)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateGZIP, "", true, true); err == nil {
+		u.DestinationS3UpdateGZIP = destinationS3UpdateGZIP
+		u.Type = DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateGZIP
 		return nil
 	}
 
@@ -549,12 +549,12 @@ func (u *DestinationS3UpdateCompression) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3UpdateCompression) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationS3UpdateSchemasNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateSchemasNoCompression, "", true)
 	}
 
-	if u.Gzip != nil {
-		return utils.MarshalJSON(u.Gzip, "", true)
+	if u.DestinationS3UpdateGZIP != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateGZIP, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -974,120 +974,120 @@ func (o *DestinationS3UpdateNoCompression) GetCodec() *DestinationS3UpdateCodec 
 type DestinationS3UpdateCompressionCodecType string
 
 const (
-	DestinationS3UpdateCompressionCodecTypeNoCompression DestinationS3UpdateCompressionCodecType = "NoCompression"
-	DestinationS3UpdateCompressionCodecTypeDeflate       DestinationS3UpdateCompressionCodecType = "Deflate"
-	DestinationS3UpdateCompressionCodecTypeBzip2         DestinationS3UpdateCompressionCodecType = "Bzip2"
-	DestinationS3UpdateCompressionCodecTypeXz            DestinationS3UpdateCompressionCodecType = "Xz"
-	DestinationS3UpdateCompressionCodecTypeZstandard     DestinationS3UpdateCompressionCodecType = "Zstandard"
-	DestinationS3UpdateCompressionCodecTypeSnappy        DestinationS3UpdateCompressionCodecType = "Snappy"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateNoCompression DestinationS3UpdateCompressionCodecType = "destination-s3-update_No Compression"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateDeflate       DestinationS3UpdateCompressionCodecType = "destination-s3-update_Deflate"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateBzip2         DestinationS3UpdateCompressionCodecType = "destination-s3-update_bzip2"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateXz            DestinationS3UpdateCompressionCodecType = "destination-s3-update_xz"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateZstandard     DestinationS3UpdateCompressionCodecType = "destination-s3-update_zstandard"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateSnappy        DestinationS3UpdateCompressionCodecType = "destination-s3-update_snappy"
 )
 
 type DestinationS3UpdateCompressionCodec struct {
-	NoCompression *DestinationS3UpdateNoCompression
-	Deflate       *DestinationS3UpdateDeflate
-	Bzip2         *DestinationS3UpdateBzip2
-	Xz            *DestinationS3UpdateXz
-	Zstandard     *DestinationS3UpdateZstandard
-	Snappy        *DestinationS3UpdateSnappy
+	DestinationS3UpdateNoCompression *DestinationS3UpdateNoCompression
+	DestinationS3UpdateDeflate       *DestinationS3UpdateDeflate
+	DestinationS3UpdateBzip2         *DestinationS3UpdateBzip2
+	DestinationS3UpdateXz            *DestinationS3UpdateXz
+	DestinationS3UpdateZstandard     *DestinationS3UpdateZstandard
+	DestinationS3UpdateSnappy        *DestinationS3UpdateSnappy
 
 	Type DestinationS3UpdateCompressionCodecType
 }
 
-func CreateDestinationS3UpdateCompressionCodecNoCompression(noCompression DestinationS3UpdateNoCompression) DestinationS3UpdateCompressionCodec {
-	typ := DestinationS3UpdateCompressionCodecTypeNoCompression
+func CreateDestinationS3UpdateCompressionCodecDestinationS3UpdateNoCompression(destinationS3UpdateNoCompression DestinationS3UpdateNoCompression) DestinationS3UpdateCompressionCodec {
+	typ := DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateNoCompression
 
 	return DestinationS3UpdateCompressionCodec{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationS3UpdateNoCompression: &destinationS3UpdateNoCompression,
+		Type:                             typ,
 	}
 }
 
-func CreateDestinationS3UpdateCompressionCodecDeflate(deflate DestinationS3UpdateDeflate) DestinationS3UpdateCompressionCodec {
-	typ := DestinationS3UpdateCompressionCodecTypeDeflate
+func CreateDestinationS3UpdateCompressionCodecDestinationS3UpdateDeflate(destinationS3UpdateDeflate DestinationS3UpdateDeflate) DestinationS3UpdateCompressionCodec {
+	typ := DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateDeflate
 
 	return DestinationS3UpdateCompressionCodec{
-		Deflate: &deflate,
-		Type:    typ,
+		DestinationS3UpdateDeflate: &destinationS3UpdateDeflate,
+		Type:                       typ,
 	}
 }
 
-func CreateDestinationS3UpdateCompressionCodecBzip2(bzip2 DestinationS3UpdateBzip2) DestinationS3UpdateCompressionCodec {
-	typ := DestinationS3UpdateCompressionCodecTypeBzip2
+func CreateDestinationS3UpdateCompressionCodecDestinationS3UpdateBzip2(destinationS3UpdateBzip2 DestinationS3UpdateBzip2) DestinationS3UpdateCompressionCodec {
+	typ := DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateBzip2
 
 	return DestinationS3UpdateCompressionCodec{
-		Bzip2: &bzip2,
-		Type:  typ,
+		DestinationS3UpdateBzip2: &destinationS3UpdateBzip2,
+		Type:                     typ,
 	}
 }
 
-func CreateDestinationS3UpdateCompressionCodecXz(xz DestinationS3UpdateXz) DestinationS3UpdateCompressionCodec {
-	typ := DestinationS3UpdateCompressionCodecTypeXz
+func CreateDestinationS3UpdateCompressionCodecDestinationS3UpdateXz(destinationS3UpdateXz DestinationS3UpdateXz) DestinationS3UpdateCompressionCodec {
+	typ := DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateXz
 
 	return DestinationS3UpdateCompressionCodec{
-		Xz:   &xz,
-		Type: typ,
+		DestinationS3UpdateXz: &destinationS3UpdateXz,
+		Type:                  typ,
 	}
 }
 
-func CreateDestinationS3UpdateCompressionCodecZstandard(zstandard DestinationS3UpdateZstandard) DestinationS3UpdateCompressionCodec {
-	typ := DestinationS3UpdateCompressionCodecTypeZstandard
+func CreateDestinationS3UpdateCompressionCodecDestinationS3UpdateZstandard(destinationS3UpdateZstandard DestinationS3UpdateZstandard) DestinationS3UpdateCompressionCodec {
+	typ := DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateZstandard
 
 	return DestinationS3UpdateCompressionCodec{
-		Zstandard: &zstandard,
-		Type:      typ,
+		DestinationS3UpdateZstandard: &destinationS3UpdateZstandard,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationS3UpdateCompressionCodecSnappy(snappy DestinationS3UpdateSnappy) DestinationS3UpdateCompressionCodec {
-	typ := DestinationS3UpdateCompressionCodecTypeSnappy
+func CreateDestinationS3UpdateCompressionCodecDestinationS3UpdateSnappy(destinationS3UpdateSnappy DestinationS3UpdateSnappy) DestinationS3UpdateCompressionCodec {
+	typ := DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateSnappy
 
 	return DestinationS3UpdateCompressionCodec{
-		Snappy: &snappy,
-		Type:   typ,
+		DestinationS3UpdateSnappy: &destinationS3UpdateSnappy,
+		Type:                      typ,
 	}
 }
 
 func (u *DestinationS3UpdateCompressionCodec) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationS3UpdateNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationS3UpdateCompressionCodecTypeNoCompression
+	destinationS3UpdateNoCompression := new(DestinationS3UpdateNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateNoCompression, "", true, true); err == nil {
+		u.DestinationS3UpdateNoCompression = destinationS3UpdateNoCompression
+		u.Type = DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateNoCompression
 		return nil
 	}
 
-	bzip2 := new(DestinationS3UpdateBzip2)
-	if err := utils.UnmarshalJSON(data, &bzip2, "", true, true); err == nil {
-		u.Bzip2 = bzip2
-		u.Type = DestinationS3UpdateCompressionCodecTypeBzip2
+	destinationS3UpdateBzip2 := new(DestinationS3UpdateBzip2)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateBzip2, "", true, true); err == nil {
+		u.DestinationS3UpdateBzip2 = destinationS3UpdateBzip2
+		u.Type = DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateBzip2
 		return nil
 	}
 
-	snappy := new(DestinationS3UpdateSnappy)
-	if err := utils.UnmarshalJSON(data, &snappy, "", true, true); err == nil {
-		u.Snappy = snappy
-		u.Type = DestinationS3UpdateCompressionCodecTypeSnappy
+	destinationS3UpdateSnappy := new(DestinationS3UpdateSnappy)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateSnappy, "", true, true); err == nil {
+		u.DestinationS3UpdateSnappy = destinationS3UpdateSnappy
+		u.Type = DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateSnappy
 		return nil
 	}
 
-	deflate := new(DestinationS3UpdateDeflate)
-	if err := utils.UnmarshalJSON(data, &deflate, "", true, true); err == nil {
-		u.Deflate = deflate
-		u.Type = DestinationS3UpdateCompressionCodecTypeDeflate
+	destinationS3UpdateDeflate := new(DestinationS3UpdateDeflate)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateDeflate, "", true, true); err == nil {
+		u.DestinationS3UpdateDeflate = destinationS3UpdateDeflate
+		u.Type = DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateDeflate
 		return nil
 	}
 
-	xz := new(DestinationS3UpdateXz)
-	if err := utils.UnmarshalJSON(data, &xz, "", true, true); err == nil {
-		u.Xz = xz
-		u.Type = DestinationS3UpdateCompressionCodecTypeXz
+	destinationS3UpdateXz := new(DestinationS3UpdateXz)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateXz, "", true, true); err == nil {
+		u.DestinationS3UpdateXz = destinationS3UpdateXz
+		u.Type = DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateXz
 		return nil
 	}
 
-	zstandard := new(DestinationS3UpdateZstandard)
-	if err := utils.UnmarshalJSON(data, &zstandard, "", true, true); err == nil {
-		u.Zstandard = zstandard
-		u.Type = DestinationS3UpdateCompressionCodecTypeZstandard
+	destinationS3UpdateZstandard := new(DestinationS3UpdateZstandard)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateZstandard, "", true, true); err == nil {
+		u.DestinationS3UpdateZstandard = destinationS3UpdateZstandard
+		u.Type = DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateZstandard
 		return nil
 	}
 
@@ -1095,28 +1095,28 @@ func (u *DestinationS3UpdateCompressionCodec) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3UpdateCompressionCodec) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationS3UpdateNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateNoCompression, "", true)
 	}
 
-	if u.Deflate != nil {
-		return utils.MarshalJSON(u.Deflate, "", true)
+	if u.DestinationS3UpdateDeflate != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateDeflate, "", true)
 	}
 
-	if u.Bzip2 != nil {
-		return utils.MarshalJSON(u.Bzip2, "", true)
+	if u.DestinationS3UpdateBzip2 != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateBzip2, "", true)
 	}
 
-	if u.Xz != nil {
-		return utils.MarshalJSON(u.Xz, "", true)
+	if u.DestinationS3UpdateXz != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateXz, "", true)
 	}
 
-	if u.Zstandard != nil {
-		return utils.MarshalJSON(u.Zstandard, "", true)
+	if u.DestinationS3UpdateZstandard != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateZstandard, "", true)
 	}
 
-	if u.Snappy != nil {
-		return utils.MarshalJSON(u.Snappy, "", true)
+	if u.DestinationS3UpdateSnappy != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateSnappy, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1181,84 +1181,84 @@ func (o *DestinationS3UpdateAvroApacheAvro) GetFormatType() *DestinationS3Update
 type DestinationS3UpdateOutputFormatType string
 
 const (
-	DestinationS3UpdateOutputFormatTypeAvroApacheAvro                DestinationS3UpdateOutputFormatType = "AvroApacheAvro"
-	DestinationS3UpdateOutputFormatTypeCSVCommaSeparatedValues       DestinationS3UpdateOutputFormatType = "CSVCommaSeparatedValues"
-	DestinationS3UpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON DestinationS3UpdateOutputFormatType = "JSONLinesNewlineDelimitedJSON"
-	DestinationS3UpdateOutputFormatTypeParquetColumnarStorage        DestinationS3UpdateOutputFormatType = "ParquetColumnarStorage"
+	DestinationS3UpdateOutputFormatTypeDestinationS3UpdateAvroApacheAvro                DestinationS3UpdateOutputFormatType = "destination-s3-update_Avro: Apache Avro"
+	DestinationS3UpdateOutputFormatTypeDestinationS3UpdateCSVCommaSeparatedValues       DestinationS3UpdateOutputFormatType = "destination-s3-update_CSV: Comma-Separated Values"
+	DestinationS3UpdateOutputFormatTypeDestinationS3UpdateJSONLinesNewlineDelimitedJSON DestinationS3UpdateOutputFormatType = "destination-s3-update_JSON Lines: Newline-delimited JSON"
+	DestinationS3UpdateOutputFormatTypeDestinationS3UpdateParquetColumnarStorage        DestinationS3UpdateOutputFormatType = "destination-s3-update_Parquet: Columnar Storage"
 )
 
 type DestinationS3UpdateOutputFormat struct {
-	AvroApacheAvro                *DestinationS3UpdateAvroApacheAvro
-	CSVCommaSeparatedValues       *DestinationS3UpdateCSVCommaSeparatedValues
-	JSONLinesNewlineDelimitedJSON *DestinationS3UpdateJSONLinesNewlineDelimitedJSON
-	ParquetColumnarStorage        *DestinationS3UpdateParquetColumnarStorage
+	DestinationS3UpdateAvroApacheAvro                *DestinationS3UpdateAvroApacheAvro
+	DestinationS3UpdateCSVCommaSeparatedValues       *DestinationS3UpdateCSVCommaSeparatedValues
+	DestinationS3UpdateJSONLinesNewlineDelimitedJSON *DestinationS3UpdateJSONLinesNewlineDelimitedJSON
+	DestinationS3UpdateParquetColumnarStorage        *DestinationS3UpdateParquetColumnarStorage
 
 	Type DestinationS3UpdateOutputFormatType
 }
 
-func CreateDestinationS3UpdateOutputFormatAvroApacheAvro(avroApacheAvro DestinationS3UpdateAvroApacheAvro) DestinationS3UpdateOutputFormat {
-	typ := DestinationS3UpdateOutputFormatTypeAvroApacheAvro
+func CreateDestinationS3UpdateOutputFormatDestinationS3UpdateAvroApacheAvro(destinationS3UpdateAvroApacheAvro DestinationS3UpdateAvroApacheAvro) DestinationS3UpdateOutputFormat {
+	typ := DestinationS3UpdateOutputFormatTypeDestinationS3UpdateAvroApacheAvro
 
 	return DestinationS3UpdateOutputFormat{
-		AvroApacheAvro: &avroApacheAvro,
-		Type:           typ,
+		DestinationS3UpdateAvroApacheAvro: &destinationS3UpdateAvroApacheAvro,
+		Type:                              typ,
 	}
 }
 
-func CreateDestinationS3UpdateOutputFormatCSVCommaSeparatedValues(csvCommaSeparatedValues DestinationS3UpdateCSVCommaSeparatedValues) DestinationS3UpdateOutputFormat {
-	typ := DestinationS3UpdateOutputFormatTypeCSVCommaSeparatedValues
+func CreateDestinationS3UpdateOutputFormatDestinationS3UpdateCSVCommaSeparatedValues(destinationS3UpdateCSVCommaSeparatedValues DestinationS3UpdateCSVCommaSeparatedValues) DestinationS3UpdateOutputFormat {
+	typ := DestinationS3UpdateOutputFormatTypeDestinationS3UpdateCSVCommaSeparatedValues
 
 	return DestinationS3UpdateOutputFormat{
-		CSVCommaSeparatedValues: &csvCommaSeparatedValues,
-		Type:                    typ,
+		DestinationS3UpdateCSVCommaSeparatedValues: &destinationS3UpdateCSVCommaSeparatedValues,
+		Type: typ,
 	}
 }
 
-func CreateDestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationS3UpdateJSONLinesNewlineDelimitedJSON) DestinationS3UpdateOutputFormat {
-	typ := DestinationS3UpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON
+func CreateDestinationS3UpdateOutputFormatDestinationS3UpdateJSONLinesNewlineDelimitedJSON(destinationS3UpdateJSONLinesNewlineDelimitedJSON DestinationS3UpdateJSONLinesNewlineDelimitedJSON) DestinationS3UpdateOutputFormat {
+	typ := DestinationS3UpdateOutputFormatTypeDestinationS3UpdateJSONLinesNewlineDelimitedJSON
 
 	return DestinationS3UpdateOutputFormat{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
+		DestinationS3UpdateJSONLinesNewlineDelimitedJSON: &destinationS3UpdateJSONLinesNewlineDelimitedJSON,
+		Type: typ,
 	}
 }
 
-func CreateDestinationS3UpdateOutputFormatParquetColumnarStorage(parquetColumnarStorage DestinationS3UpdateParquetColumnarStorage) DestinationS3UpdateOutputFormat {
-	typ := DestinationS3UpdateOutputFormatTypeParquetColumnarStorage
+func CreateDestinationS3UpdateOutputFormatDestinationS3UpdateParquetColumnarStorage(destinationS3UpdateParquetColumnarStorage DestinationS3UpdateParquetColumnarStorage) DestinationS3UpdateOutputFormat {
+	typ := DestinationS3UpdateOutputFormatTypeDestinationS3UpdateParquetColumnarStorage
 
 	return DestinationS3UpdateOutputFormat{
-		ParquetColumnarStorage: &parquetColumnarStorage,
-		Type:                   typ,
+		DestinationS3UpdateParquetColumnarStorage: &destinationS3UpdateParquetColumnarStorage,
+		Type: typ,
 	}
 }
 
 func (u *DestinationS3UpdateOutputFormat) UnmarshalJSON(data []byte) error {
 
-	avroApacheAvro := new(DestinationS3UpdateAvroApacheAvro)
-	if err := utils.UnmarshalJSON(data, &avroApacheAvro, "", true, true); err == nil {
-		u.AvroApacheAvro = avroApacheAvro
-		u.Type = DestinationS3UpdateOutputFormatTypeAvroApacheAvro
+	destinationS3UpdateAvroApacheAvro := new(DestinationS3UpdateAvroApacheAvro)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateAvroApacheAvro, "", true, true); err == nil {
+		u.DestinationS3UpdateAvroApacheAvro = destinationS3UpdateAvroApacheAvro
+		u.Type = DestinationS3UpdateOutputFormatTypeDestinationS3UpdateAvroApacheAvro
 		return nil
 	}
 
-	csvCommaSeparatedValues := new(DestinationS3UpdateCSVCommaSeparatedValues)
-	if err := utils.UnmarshalJSON(data, &csvCommaSeparatedValues, "", true, true); err == nil {
-		u.CSVCommaSeparatedValues = csvCommaSeparatedValues
-		u.Type = DestinationS3UpdateOutputFormatTypeCSVCommaSeparatedValues
+	destinationS3UpdateCSVCommaSeparatedValues := new(DestinationS3UpdateCSVCommaSeparatedValues)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateCSVCommaSeparatedValues, "", true, true); err == nil {
+		u.DestinationS3UpdateCSVCommaSeparatedValues = destinationS3UpdateCSVCommaSeparatedValues
+		u.Type = DestinationS3UpdateOutputFormatTypeDestinationS3UpdateCSVCommaSeparatedValues
 		return nil
 	}
 
-	jsonLinesNewlineDelimitedJSON := new(DestinationS3UpdateJSONLinesNewlineDelimitedJSON)
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
-		u.Type = DestinationS3UpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON
+	destinationS3UpdateJSONLinesNewlineDelimitedJSON := new(DestinationS3UpdateJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.DestinationS3UpdateJSONLinesNewlineDelimitedJSON = destinationS3UpdateJSONLinesNewlineDelimitedJSON
+		u.Type = DestinationS3UpdateOutputFormatTypeDestinationS3UpdateJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
-	parquetColumnarStorage := new(DestinationS3UpdateParquetColumnarStorage)
-	if err := utils.UnmarshalJSON(data, &parquetColumnarStorage, "", true, true); err == nil {
-		u.ParquetColumnarStorage = parquetColumnarStorage
-		u.Type = DestinationS3UpdateOutputFormatTypeParquetColumnarStorage
+	destinationS3UpdateParquetColumnarStorage := new(DestinationS3UpdateParquetColumnarStorage)
+	if err := utils.UnmarshalJSON(data, &destinationS3UpdateParquetColumnarStorage, "", true, true); err == nil {
+		u.DestinationS3UpdateParquetColumnarStorage = destinationS3UpdateParquetColumnarStorage
+		u.Type = DestinationS3UpdateOutputFormatTypeDestinationS3UpdateParquetColumnarStorage
 		return nil
 	}
 
@@ -1266,20 +1266,20 @@ func (u *DestinationS3UpdateOutputFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3UpdateOutputFormat) MarshalJSON() ([]byte, error) {
-	if u.AvroApacheAvro != nil {
-		return utils.MarshalJSON(u.AvroApacheAvro, "", true)
+	if u.DestinationS3UpdateAvroApacheAvro != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateAvroApacheAvro, "", true)
 	}
 
-	if u.CSVCommaSeparatedValues != nil {
-		return utils.MarshalJSON(u.CSVCommaSeparatedValues, "", true)
+	if u.DestinationS3UpdateCSVCommaSeparatedValues != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateCSVCommaSeparatedValues, "", true)
 	}
 
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	if u.DestinationS3UpdateJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	if u.ParquetColumnarStorage != nil {
-		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
+	if u.DestinationS3UpdateParquetColumnarStorage != nil {
+		return utils.MarshalJSON(u.DestinationS3UpdateParquetColumnarStorage, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

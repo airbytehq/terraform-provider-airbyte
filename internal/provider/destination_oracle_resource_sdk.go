@@ -42,7 +42,7 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 		}
 		if destinationOracleNoTunnel != nil {
 			tunnelMethod = &shared.DestinationOracleSSHTunnelMethod{
-				NoTunnel: destinationOracleNoTunnel,
+				DestinationOracleNoTunnel: destinationOracleNoTunnel,
 			}
 		}
 		var destinationOracleSSHKeyAuthentication *shared.DestinationOracleSSHKeyAuthentication
@@ -65,7 +65,7 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 		}
 		if destinationOracleSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationOracleSSHTunnelMethod{
-				SSHKeyAuthentication: destinationOracleSSHKeyAuthentication,
+				DestinationOracleSSHKeyAuthentication: destinationOracleSSHKeyAuthentication,
 			}
 		}
 		var destinationOraclePasswordAuthentication *shared.DestinationOraclePasswordAuthentication
@@ -88,7 +88,7 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 		}
 		if destinationOraclePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationOracleSSHTunnelMethod{
-				PasswordAuthentication: destinationOraclePasswordAuthentication,
+				DestinationOraclePasswordAuthentication: destinationOraclePasswordAuthentication,
 			}
 		}
 	}
@@ -153,7 +153,7 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 		}
 		if destinationOracleUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationOracleUpdateSSHTunnelMethod{
-				NoTunnel: destinationOracleUpdateNoTunnel,
+				DestinationOracleUpdateNoTunnel: destinationOracleUpdateNoTunnel,
 			}
 		}
 		var destinationOracleUpdateSSHKeyAuthentication *shared.DestinationOracleUpdateSSHKeyAuthentication
@@ -176,7 +176,7 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 		}
 		if destinationOracleUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationOracleUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationOracleUpdateSSHKeyAuthentication,
+				DestinationOracleUpdateSSHKeyAuthentication: destinationOracleUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationOracleUpdatePasswordAuthentication *shared.DestinationOracleUpdatePasswordAuthentication
@@ -199,7 +199,7 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 		}
 		if destinationOracleUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationOracleUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationOracleUpdatePasswordAuthentication,
+				DestinationOracleUpdatePasswordAuthentication: destinationOracleUpdatePasswordAuthentication,
 			}
 		}
 	}

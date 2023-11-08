@@ -197,66 +197,66 @@ func (o *SourceMongodbStandaloneMongoDbInstance) GetPort() *int64 {
 type SourceMongodbMongoDbInstanceTypeType string
 
 const (
-	SourceMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance SourceMongodbMongoDbInstanceTypeType = "StandaloneMongoDbInstance"
-	SourceMongodbMongoDbInstanceTypeTypeReplicaSet                SourceMongodbMongoDbInstanceTypeType = "ReplicaSet"
-	SourceMongodbMongoDbInstanceTypeTypeMongoDBAtlas              SourceMongodbMongoDbInstanceTypeType = "MongoDBAtlas"
+	SourceMongodbMongoDbInstanceTypeTypeSourceMongodbStandaloneMongoDbInstance SourceMongodbMongoDbInstanceTypeType = "source-mongodb_Standalone MongoDb Instance"
+	SourceMongodbMongoDbInstanceTypeTypeSourceMongodbReplicaSet                SourceMongodbMongoDbInstanceTypeType = "source-mongodb_Replica Set"
+	SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBAtlas              SourceMongodbMongoDbInstanceTypeType = "source-mongodb_MongoDB Atlas"
 )
 
 type SourceMongodbMongoDbInstanceType struct {
-	StandaloneMongoDbInstance *SourceMongodbStandaloneMongoDbInstance
-	ReplicaSet                *SourceMongodbReplicaSet
-	MongoDBAtlas              *SourceMongodbMongoDBAtlas
+	SourceMongodbStandaloneMongoDbInstance *SourceMongodbStandaloneMongoDbInstance
+	SourceMongodbReplicaSet                *SourceMongodbReplicaSet
+	SourceMongodbMongoDBAtlas              *SourceMongodbMongoDBAtlas
 
 	Type SourceMongodbMongoDbInstanceTypeType
 }
 
-func CreateSourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance(standaloneMongoDbInstance SourceMongodbStandaloneMongoDbInstance) SourceMongodbMongoDbInstanceType {
-	typ := SourceMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance
+func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbStandaloneMongoDbInstance(sourceMongodbStandaloneMongoDbInstance SourceMongodbStandaloneMongoDbInstance) SourceMongodbMongoDbInstanceType {
+	typ := SourceMongodbMongoDbInstanceTypeTypeSourceMongodbStandaloneMongoDbInstance
 
 	return SourceMongodbMongoDbInstanceType{
-		StandaloneMongoDbInstance: &standaloneMongoDbInstance,
+		SourceMongodbStandaloneMongoDbInstance: &sourceMongodbStandaloneMongoDbInstance,
+		Type:                                   typ,
+	}
+}
+
+func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbReplicaSet(sourceMongodbReplicaSet SourceMongodbReplicaSet) SourceMongodbMongoDbInstanceType {
+	typ := SourceMongodbMongoDbInstanceTypeTypeSourceMongodbReplicaSet
+
+	return SourceMongodbMongoDbInstanceType{
+		SourceMongodbReplicaSet: &sourceMongodbReplicaSet,
+		Type:                    typ,
+	}
+}
+
+func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbMongoDBAtlas(sourceMongodbMongoDBAtlas SourceMongodbMongoDBAtlas) SourceMongodbMongoDbInstanceType {
+	typ := SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBAtlas
+
+	return SourceMongodbMongoDbInstanceType{
+		SourceMongodbMongoDBAtlas: &sourceMongodbMongoDBAtlas,
 		Type:                      typ,
-	}
-}
-
-func CreateSourceMongodbMongoDbInstanceTypeReplicaSet(replicaSet SourceMongodbReplicaSet) SourceMongodbMongoDbInstanceType {
-	typ := SourceMongodbMongoDbInstanceTypeTypeReplicaSet
-
-	return SourceMongodbMongoDbInstanceType{
-		ReplicaSet: &replicaSet,
-		Type:       typ,
-	}
-}
-
-func CreateSourceMongodbMongoDbInstanceTypeMongoDBAtlas(mongoDBAtlas SourceMongodbMongoDBAtlas) SourceMongodbMongoDbInstanceType {
-	typ := SourceMongodbMongoDbInstanceTypeTypeMongoDBAtlas
-
-	return SourceMongodbMongoDbInstanceType{
-		MongoDBAtlas: &mongoDBAtlas,
-		Type:         typ,
 	}
 }
 
 func (u *SourceMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 
-	standaloneMongoDbInstance := new(SourceMongodbStandaloneMongoDbInstance)
-	if err := utils.UnmarshalJSON(data, &standaloneMongoDbInstance, "", true, true); err == nil {
-		u.StandaloneMongoDbInstance = standaloneMongoDbInstance
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance
+	sourceMongodbStandaloneMongoDbInstance := new(SourceMongodbStandaloneMongoDbInstance)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbStandaloneMongoDbInstance, "", true, true); err == nil {
+		u.SourceMongodbStandaloneMongoDbInstance = sourceMongodbStandaloneMongoDbInstance
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbStandaloneMongoDbInstance
 		return nil
 	}
 
-	replicaSet := new(SourceMongodbReplicaSet)
-	if err := utils.UnmarshalJSON(data, &replicaSet, "", true, true); err == nil {
-		u.ReplicaSet = replicaSet
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeReplicaSet
+	sourceMongodbReplicaSet := new(SourceMongodbReplicaSet)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbReplicaSet, "", true, true); err == nil {
+		u.SourceMongodbReplicaSet = sourceMongodbReplicaSet
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbReplicaSet
 		return nil
 	}
 
-	mongoDBAtlas := new(SourceMongodbMongoDBAtlas)
-	if err := utils.UnmarshalJSON(data, &mongoDBAtlas, "", true, true); err == nil {
-		u.MongoDBAtlas = mongoDBAtlas
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeMongoDBAtlas
+	sourceMongodbMongoDBAtlas := new(SourceMongodbMongoDBAtlas)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbMongoDBAtlas, "", true, true); err == nil {
+		u.SourceMongodbMongoDBAtlas = sourceMongodbMongoDBAtlas
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBAtlas
 		return nil
 	}
 
@@ -264,16 +264,16 @@ func (u *SourceMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.StandaloneMongoDbInstance != nil {
-		return utils.MarshalJSON(u.StandaloneMongoDbInstance, "", true)
+	if u.SourceMongodbStandaloneMongoDbInstance != nil {
+		return utils.MarshalJSON(u.SourceMongodbStandaloneMongoDbInstance, "", true)
 	}
 
-	if u.ReplicaSet != nil {
-		return utils.MarshalJSON(u.ReplicaSet, "", true)
+	if u.SourceMongodbReplicaSet != nil {
+		return utils.MarshalJSON(u.SourceMongodbReplicaSet, "", true)
 	}
 
-	if u.MongoDBAtlas != nil {
-		return utils.MarshalJSON(u.MongoDBAtlas, "", true)
+	if u.SourceMongodbMongoDBAtlas != nil {
+		return utils.MarshalJSON(u.SourceMongodbMongoDBAtlas, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

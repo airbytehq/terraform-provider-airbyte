@@ -162,48 +162,48 @@ func (o *SourceZendeskSupportUpdateOAuth20) GetCredentials() *SourceZendeskSuppo
 type SourceZendeskSupportUpdateAuthenticationType string
 
 const (
-	SourceZendeskSupportUpdateAuthenticationTypeOAuth20  SourceZendeskSupportUpdateAuthenticationType = "OAuth20"
-	SourceZendeskSupportUpdateAuthenticationTypeAPIToken SourceZendeskSupportUpdateAuthenticationType = "APIToken"
+	SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateOAuth20  SourceZendeskSupportUpdateAuthenticationType = "source-zendesk-support-update_OAuth2.0"
+	SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateAPIToken SourceZendeskSupportUpdateAuthenticationType = "source-zendesk-support-update_API Token"
 )
 
 type SourceZendeskSupportUpdateAuthentication struct {
-	OAuth20  *SourceZendeskSupportUpdateOAuth20
-	APIToken *SourceZendeskSupportUpdateAPIToken
+	SourceZendeskSupportUpdateOAuth20  *SourceZendeskSupportUpdateOAuth20
+	SourceZendeskSupportUpdateAPIToken *SourceZendeskSupportUpdateAPIToken
 
 	Type SourceZendeskSupportUpdateAuthenticationType
 }
 
-func CreateSourceZendeskSupportUpdateAuthenticationOAuth20(oAuth20 SourceZendeskSupportUpdateOAuth20) SourceZendeskSupportUpdateAuthentication {
-	typ := SourceZendeskSupportUpdateAuthenticationTypeOAuth20
+func CreateSourceZendeskSupportUpdateAuthenticationSourceZendeskSupportUpdateOAuth20(sourceZendeskSupportUpdateOAuth20 SourceZendeskSupportUpdateOAuth20) SourceZendeskSupportUpdateAuthentication {
+	typ := SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateOAuth20
 
 	return SourceZendeskSupportUpdateAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceZendeskSupportUpdateOAuth20: &sourceZendeskSupportUpdateOAuth20,
+		Type:                              typ,
 	}
 }
 
-func CreateSourceZendeskSupportUpdateAuthenticationAPIToken(apiToken SourceZendeskSupportUpdateAPIToken) SourceZendeskSupportUpdateAuthentication {
-	typ := SourceZendeskSupportUpdateAuthenticationTypeAPIToken
+func CreateSourceZendeskSupportUpdateAuthenticationSourceZendeskSupportUpdateAPIToken(sourceZendeskSupportUpdateAPIToken SourceZendeskSupportUpdateAPIToken) SourceZendeskSupportUpdateAuthentication {
+	typ := SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateAPIToken
 
 	return SourceZendeskSupportUpdateAuthentication{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceZendeskSupportUpdateAPIToken: &sourceZendeskSupportUpdateAPIToken,
+		Type:                               typ,
 	}
 }
 
 func (u *SourceZendeskSupportUpdateAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceZendeskSupportUpdateAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceZendeskSupportUpdateAuthenticationTypeAPIToken
+	sourceZendeskSupportUpdateAPIToken := new(SourceZendeskSupportUpdateAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportUpdateAPIToken, "", true, true); err == nil {
+		u.SourceZendeskSupportUpdateAPIToken = sourceZendeskSupportUpdateAPIToken
+		u.Type = SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateAPIToken
 		return nil
 	}
 
-	oAuth20 := new(SourceZendeskSupportUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceZendeskSupportUpdateAuthenticationTypeOAuth20
+	sourceZendeskSupportUpdateOAuth20 := new(SourceZendeskSupportUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportUpdateOAuth20, "", true, true); err == nil {
+		u.SourceZendeskSupportUpdateOAuth20 = sourceZendeskSupportUpdateOAuth20
+		u.Type = SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateOAuth20
 		return nil
 	}
 
@@ -211,12 +211,12 @@ func (u *SourceZendeskSupportUpdateAuthentication) UnmarshalJSON(data []byte) er
 }
 
 func (u SourceZendeskSupportUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceZendeskSupportUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceZendeskSupportUpdateOAuth20, "", true)
 	}
 
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceZendeskSupportUpdateAPIToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskSupportUpdateAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

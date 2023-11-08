@@ -134,48 +134,48 @@ func (o *SourceOktaUpdateOAuth20) GetRefreshToken() string {
 type SourceOktaUpdateAuthorizationMethodType string
 
 const (
-	SourceOktaUpdateAuthorizationMethodTypeOAuth20  SourceOktaUpdateAuthorizationMethodType = "OAuth20"
-	SourceOktaUpdateAuthorizationMethodTypeAPIToken SourceOktaUpdateAuthorizationMethodType = "APIToken"
+	SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateOAuth20  SourceOktaUpdateAuthorizationMethodType = "source-okta-update_OAuth2.0"
+	SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateAPIToken SourceOktaUpdateAuthorizationMethodType = "source-okta-update_API Token"
 )
 
 type SourceOktaUpdateAuthorizationMethod struct {
-	OAuth20  *SourceOktaUpdateOAuth20
-	APIToken *SourceOktaUpdateAPIToken
+	SourceOktaUpdateOAuth20  *SourceOktaUpdateOAuth20
+	SourceOktaUpdateAPIToken *SourceOktaUpdateAPIToken
 
 	Type SourceOktaUpdateAuthorizationMethodType
 }
 
-func CreateSourceOktaUpdateAuthorizationMethodOAuth20(oAuth20 SourceOktaUpdateOAuth20) SourceOktaUpdateAuthorizationMethod {
-	typ := SourceOktaUpdateAuthorizationMethodTypeOAuth20
+func CreateSourceOktaUpdateAuthorizationMethodSourceOktaUpdateOAuth20(sourceOktaUpdateOAuth20 SourceOktaUpdateOAuth20) SourceOktaUpdateAuthorizationMethod {
+	typ := SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateOAuth20
 
 	return SourceOktaUpdateAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceOktaUpdateOAuth20: &sourceOktaUpdateOAuth20,
+		Type:                    typ,
 	}
 }
 
-func CreateSourceOktaUpdateAuthorizationMethodAPIToken(apiToken SourceOktaUpdateAPIToken) SourceOktaUpdateAuthorizationMethod {
-	typ := SourceOktaUpdateAuthorizationMethodTypeAPIToken
+func CreateSourceOktaUpdateAuthorizationMethodSourceOktaUpdateAPIToken(sourceOktaUpdateAPIToken SourceOktaUpdateAPIToken) SourceOktaUpdateAuthorizationMethod {
+	typ := SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateAPIToken
 
 	return SourceOktaUpdateAuthorizationMethod{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceOktaUpdateAPIToken: &sourceOktaUpdateAPIToken,
+		Type:                     typ,
 	}
 }
 
 func (u *SourceOktaUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceOktaUpdateAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceOktaUpdateAuthorizationMethodTypeAPIToken
+	sourceOktaUpdateAPIToken := new(SourceOktaUpdateAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceOktaUpdateAPIToken, "", true, true); err == nil {
+		u.SourceOktaUpdateAPIToken = sourceOktaUpdateAPIToken
+		u.Type = SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateAPIToken
 		return nil
 	}
 
-	oAuth20 := new(SourceOktaUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceOktaUpdateAuthorizationMethodTypeOAuth20
+	sourceOktaUpdateOAuth20 := new(SourceOktaUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceOktaUpdateOAuth20, "", true, true); err == nil {
+		u.SourceOktaUpdateOAuth20 = sourceOktaUpdateOAuth20
+		u.Type = SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateOAuth20
 		return nil
 	}
 
@@ -183,12 +183,12 @@ func (u *SourceOktaUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOktaUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceOktaUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceOktaUpdateOAuth20, "", true)
 	}
 
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceOktaUpdateAPIToken != nil {
+		return utils.MarshalJSON(u.SourceOktaUpdateAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

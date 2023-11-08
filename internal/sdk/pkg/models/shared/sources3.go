@@ -364,84 +364,84 @@ func (o *SourceS3CSV) GetQuoteChar() *string {
 type SourceS3FileFormatType string
 
 const (
-	SourceS3FileFormatTypeCsv     SourceS3FileFormatType = "Csv"
-	SourceS3FileFormatTypeParquet SourceS3FileFormatType = "Parquet"
-	SourceS3FileFormatTypeAvro    SourceS3FileFormatType = "Avro"
-	SourceS3FileFormatTypeJsonl   SourceS3FileFormatType = "Jsonl"
+	SourceS3FileFormatTypeSourceS3CSV     SourceS3FileFormatType = "source-s3_CSV"
+	SourceS3FileFormatTypeSourceS3Parquet SourceS3FileFormatType = "source-s3_Parquet"
+	SourceS3FileFormatTypeSourceS3Avro    SourceS3FileFormatType = "source-s3_Avro"
+	SourceS3FileFormatTypeSourceS3Jsonl   SourceS3FileFormatType = "source-s3_Jsonl"
 )
 
 type SourceS3FileFormat struct {
-	Csv     *SourceS3CSV
-	Parquet *SourceS3Parquet
-	Avro    *SourceS3Avro
-	Jsonl   *SourceS3Jsonl
+	SourceS3CSV     *SourceS3CSV
+	SourceS3Parquet *SourceS3Parquet
+	SourceS3Avro    *SourceS3Avro
+	SourceS3Jsonl   *SourceS3Jsonl
 
 	Type SourceS3FileFormatType
 }
 
-func CreateSourceS3FileFormatCsv(csv SourceS3CSV) SourceS3FileFormat {
-	typ := SourceS3FileFormatTypeCsv
+func CreateSourceS3FileFormatSourceS3CSV(sourceS3CSV SourceS3CSV) SourceS3FileFormat {
+	typ := SourceS3FileFormatTypeSourceS3CSV
 
 	return SourceS3FileFormat{
-		Csv:  &csv,
-		Type: typ,
+		SourceS3CSV: &sourceS3CSV,
+		Type:        typ,
 	}
 }
 
-func CreateSourceS3FileFormatParquet(parquet SourceS3Parquet) SourceS3FileFormat {
-	typ := SourceS3FileFormatTypeParquet
+func CreateSourceS3FileFormatSourceS3Parquet(sourceS3Parquet SourceS3Parquet) SourceS3FileFormat {
+	typ := SourceS3FileFormatTypeSourceS3Parquet
 
 	return SourceS3FileFormat{
-		Parquet: &parquet,
-		Type:    typ,
+		SourceS3Parquet: &sourceS3Parquet,
+		Type:            typ,
 	}
 }
 
-func CreateSourceS3FileFormatAvro(avro SourceS3Avro) SourceS3FileFormat {
-	typ := SourceS3FileFormatTypeAvro
+func CreateSourceS3FileFormatSourceS3Avro(sourceS3Avro SourceS3Avro) SourceS3FileFormat {
+	typ := SourceS3FileFormatTypeSourceS3Avro
 
 	return SourceS3FileFormat{
-		Avro: &avro,
-		Type: typ,
+		SourceS3Avro: &sourceS3Avro,
+		Type:         typ,
 	}
 }
 
-func CreateSourceS3FileFormatJsonl(jsonl SourceS3Jsonl) SourceS3FileFormat {
-	typ := SourceS3FileFormatTypeJsonl
+func CreateSourceS3FileFormatSourceS3Jsonl(sourceS3Jsonl SourceS3Jsonl) SourceS3FileFormat {
+	typ := SourceS3FileFormatTypeSourceS3Jsonl
 
 	return SourceS3FileFormat{
-		Jsonl: &jsonl,
-		Type:  typ,
+		SourceS3Jsonl: &sourceS3Jsonl,
+		Type:          typ,
 	}
 }
 
 func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 
-	avro := new(SourceS3Avro)
-	if err := utils.UnmarshalJSON(data, &avro, "", true, true); err == nil {
-		u.Avro = avro
-		u.Type = SourceS3FileFormatTypeAvro
+	sourceS3Avro := new(SourceS3Avro)
+	if err := utils.UnmarshalJSON(data, &sourceS3Avro, "", true, true); err == nil {
+		u.SourceS3Avro = sourceS3Avro
+		u.Type = SourceS3FileFormatTypeSourceS3Avro
 		return nil
 	}
 
-	parquet := new(SourceS3Parquet)
-	if err := utils.UnmarshalJSON(data, &parquet, "", true, true); err == nil {
-		u.Parquet = parquet
-		u.Type = SourceS3FileFormatTypeParquet
+	sourceS3Parquet := new(SourceS3Parquet)
+	if err := utils.UnmarshalJSON(data, &sourceS3Parquet, "", true, true); err == nil {
+		u.SourceS3Parquet = sourceS3Parquet
+		u.Type = SourceS3FileFormatTypeSourceS3Parquet
 		return nil
 	}
 
-	jsonl := new(SourceS3Jsonl)
-	if err := utils.UnmarshalJSON(data, &jsonl, "", true, true); err == nil {
-		u.Jsonl = jsonl
-		u.Type = SourceS3FileFormatTypeJsonl
+	sourceS3Jsonl := new(SourceS3Jsonl)
+	if err := utils.UnmarshalJSON(data, &sourceS3Jsonl, "", true, true); err == nil {
+		u.SourceS3Jsonl = sourceS3Jsonl
+		u.Type = SourceS3FileFormatTypeSourceS3Jsonl
 		return nil
 	}
 
-	csv := new(SourceS3CSV)
-	if err := utils.UnmarshalJSON(data, &csv, "", true, true); err == nil {
-		u.Csv = csv
-		u.Type = SourceS3FileFormatTypeCsv
+	sourceS3CSV := new(SourceS3CSV)
+	if err := utils.UnmarshalJSON(data, &sourceS3CSV, "", true, true); err == nil {
+		u.SourceS3CSV = sourceS3CSV
+		u.Type = SourceS3FileFormatTypeSourceS3CSV
 		return nil
 	}
 
@@ -449,20 +449,20 @@ func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceS3FileFormat) MarshalJSON() ([]byte, error) {
-	if u.Csv != nil {
-		return utils.MarshalJSON(u.Csv, "", true)
+	if u.SourceS3CSV != nil {
+		return utils.MarshalJSON(u.SourceS3CSV, "", true)
 	}
 
-	if u.Parquet != nil {
-		return utils.MarshalJSON(u.Parquet, "", true)
+	if u.SourceS3Parquet != nil {
+		return utils.MarshalJSON(u.SourceS3Parquet, "", true)
 	}
 
-	if u.Avro != nil {
-		return utils.MarshalJSON(u.Avro, "", true)
+	if u.SourceS3Avro != nil {
+		return utils.MarshalJSON(u.SourceS3Avro, "", true)
 	}
 
-	if u.Jsonl != nil {
-		return utils.MarshalJSON(u.Jsonl, "", true)
+	if u.SourceS3Jsonl != nil {
+		return utils.MarshalJSON(u.SourceS3Jsonl, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -826,66 +826,66 @@ func (o *SourceS3FromCSV) GetHeaderDefinitionType() *SourceS3HeaderDefinitionTyp
 type SourceS3CSVHeaderDefinitionType string
 
 const (
-	SourceS3CSVHeaderDefinitionTypeFromCSV       SourceS3CSVHeaderDefinitionType = "FromCSV"
-	SourceS3CSVHeaderDefinitionTypeAutogenerated SourceS3CSVHeaderDefinitionType = "Autogenerated"
-	SourceS3CSVHeaderDefinitionTypeUserProvided  SourceS3CSVHeaderDefinitionType = "UserProvided"
+	SourceS3CSVHeaderDefinitionTypeSourceS3FromCSV       SourceS3CSVHeaderDefinitionType = "source-s3_From CSV"
+	SourceS3CSVHeaderDefinitionTypeSourceS3Autogenerated SourceS3CSVHeaderDefinitionType = "source-s3_Autogenerated"
+	SourceS3CSVHeaderDefinitionTypeSourceS3UserProvided  SourceS3CSVHeaderDefinitionType = "source-s3_User Provided"
 )
 
 type SourceS3CSVHeaderDefinition struct {
-	FromCSV       *SourceS3FromCSV
-	Autogenerated *SourceS3Autogenerated
-	UserProvided  *SourceS3UserProvided
+	SourceS3FromCSV       *SourceS3FromCSV
+	SourceS3Autogenerated *SourceS3Autogenerated
+	SourceS3UserProvided  *SourceS3UserProvided
 
 	Type SourceS3CSVHeaderDefinitionType
 }
 
-func CreateSourceS3CSVHeaderDefinitionFromCSV(fromCSV SourceS3FromCSV) SourceS3CSVHeaderDefinition {
-	typ := SourceS3CSVHeaderDefinitionTypeFromCSV
+func CreateSourceS3CSVHeaderDefinitionSourceS3FromCSV(sourceS3FromCSV SourceS3FromCSV) SourceS3CSVHeaderDefinition {
+	typ := SourceS3CSVHeaderDefinitionTypeSourceS3FromCSV
 
 	return SourceS3CSVHeaderDefinition{
-		FromCSV: &fromCSV,
-		Type:    typ,
+		SourceS3FromCSV: &sourceS3FromCSV,
+		Type:            typ,
 	}
 }
 
-func CreateSourceS3CSVHeaderDefinitionAutogenerated(autogenerated SourceS3Autogenerated) SourceS3CSVHeaderDefinition {
-	typ := SourceS3CSVHeaderDefinitionTypeAutogenerated
+func CreateSourceS3CSVHeaderDefinitionSourceS3Autogenerated(sourceS3Autogenerated SourceS3Autogenerated) SourceS3CSVHeaderDefinition {
+	typ := SourceS3CSVHeaderDefinitionTypeSourceS3Autogenerated
 
 	return SourceS3CSVHeaderDefinition{
-		Autogenerated: &autogenerated,
-		Type:          typ,
+		SourceS3Autogenerated: &sourceS3Autogenerated,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceS3CSVHeaderDefinitionUserProvided(userProvided SourceS3UserProvided) SourceS3CSVHeaderDefinition {
-	typ := SourceS3CSVHeaderDefinitionTypeUserProvided
+func CreateSourceS3CSVHeaderDefinitionSourceS3UserProvided(sourceS3UserProvided SourceS3UserProvided) SourceS3CSVHeaderDefinition {
+	typ := SourceS3CSVHeaderDefinitionTypeSourceS3UserProvided
 
 	return SourceS3CSVHeaderDefinition{
-		UserProvided: &userProvided,
-		Type:         typ,
+		SourceS3UserProvided: &sourceS3UserProvided,
+		Type:                 typ,
 	}
 }
 
 func (u *SourceS3CSVHeaderDefinition) UnmarshalJSON(data []byte) error {
 
-	fromCSV := new(SourceS3FromCSV)
-	if err := utils.UnmarshalJSON(data, &fromCSV, "", true, true); err == nil {
-		u.FromCSV = fromCSV
-		u.Type = SourceS3CSVHeaderDefinitionTypeFromCSV
+	sourceS3FromCSV := new(SourceS3FromCSV)
+	if err := utils.UnmarshalJSON(data, &sourceS3FromCSV, "", true, true); err == nil {
+		u.SourceS3FromCSV = sourceS3FromCSV
+		u.Type = SourceS3CSVHeaderDefinitionTypeSourceS3FromCSV
 		return nil
 	}
 
-	autogenerated := new(SourceS3Autogenerated)
-	if err := utils.UnmarshalJSON(data, &autogenerated, "", true, true); err == nil {
-		u.Autogenerated = autogenerated
-		u.Type = SourceS3CSVHeaderDefinitionTypeAutogenerated
+	sourceS3Autogenerated := new(SourceS3Autogenerated)
+	if err := utils.UnmarshalJSON(data, &sourceS3Autogenerated, "", true, true); err == nil {
+		u.SourceS3Autogenerated = sourceS3Autogenerated
+		u.Type = SourceS3CSVHeaderDefinitionTypeSourceS3Autogenerated
 		return nil
 	}
 
-	userProvided := new(SourceS3UserProvided)
-	if err := utils.UnmarshalJSON(data, &userProvided, "", true, true); err == nil {
-		u.UserProvided = userProvided
-		u.Type = SourceS3CSVHeaderDefinitionTypeUserProvided
+	sourceS3UserProvided := new(SourceS3UserProvided)
+	if err := utils.UnmarshalJSON(data, &sourceS3UserProvided, "", true, true); err == nil {
+		u.SourceS3UserProvided = sourceS3UserProvided
+		u.Type = SourceS3CSVHeaderDefinitionTypeSourceS3UserProvided
 		return nil
 	}
 
@@ -893,16 +893,16 @@ func (u *SourceS3CSVHeaderDefinition) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceS3CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
-	if u.FromCSV != nil {
-		return utils.MarshalJSON(u.FromCSV, "", true)
+	if u.SourceS3FromCSV != nil {
+		return utils.MarshalJSON(u.SourceS3FromCSV, "", true)
 	}
 
-	if u.Autogenerated != nil {
-		return utils.MarshalJSON(u.Autogenerated, "", true)
+	if u.SourceS3Autogenerated != nil {
+		return utils.MarshalJSON(u.SourceS3Autogenerated, "", true)
 	}
 
-	if u.UserProvided != nil {
-		return utils.MarshalJSON(u.UserProvided, "", true)
+	if u.SourceS3UserProvided != nil {
+		return utils.MarshalJSON(u.SourceS3UserProvided, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1129,84 +1129,84 @@ func (o *SourceS3AvroFormat) GetFiletype() *SourceS3SchemasStreamsFiletype {
 type SourceS3FormatType string
 
 const (
-	SourceS3FormatTypeAvroFormat    SourceS3FormatType = "AvroFormat"
-	SourceS3FormatTypeCSVFormat     SourceS3FormatType = "CSVFormat"
-	SourceS3FormatTypeJsonlFormat   SourceS3FormatType = "JsonlFormat"
-	SourceS3FormatTypeParquetFormat SourceS3FormatType = "ParquetFormat"
+	SourceS3FormatTypeSourceS3AvroFormat    SourceS3FormatType = "source-s3_Avro Format"
+	SourceS3FormatTypeSourceS3CSVFormat     SourceS3FormatType = "source-s3_CSV Format"
+	SourceS3FormatTypeSourceS3JsonlFormat   SourceS3FormatType = "source-s3_Jsonl Format"
+	SourceS3FormatTypeSourceS3ParquetFormat SourceS3FormatType = "source-s3_Parquet Format"
 )
 
 type SourceS3Format struct {
-	AvroFormat    *SourceS3AvroFormat
-	CSVFormat     *SourceS3CSVFormat
-	JsonlFormat   *SourceS3JsonlFormat
-	ParquetFormat *SourceS3ParquetFormat
+	SourceS3AvroFormat    *SourceS3AvroFormat
+	SourceS3CSVFormat     *SourceS3CSVFormat
+	SourceS3JsonlFormat   *SourceS3JsonlFormat
+	SourceS3ParquetFormat *SourceS3ParquetFormat
 
 	Type SourceS3FormatType
 }
 
-func CreateSourceS3FormatAvroFormat(avroFormat SourceS3AvroFormat) SourceS3Format {
-	typ := SourceS3FormatTypeAvroFormat
+func CreateSourceS3FormatSourceS3AvroFormat(sourceS3AvroFormat SourceS3AvroFormat) SourceS3Format {
+	typ := SourceS3FormatTypeSourceS3AvroFormat
 
 	return SourceS3Format{
-		AvroFormat: &avroFormat,
-		Type:       typ,
+		SourceS3AvroFormat: &sourceS3AvroFormat,
+		Type:               typ,
 	}
 }
 
-func CreateSourceS3FormatCSVFormat(csvFormat SourceS3CSVFormat) SourceS3Format {
-	typ := SourceS3FormatTypeCSVFormat
+func CreateSourceS3FormatSourceS3CSVFormat(sourceS3CSVFormat SourceS3CSVFormat) SourceS3Format {
+	typ := SourceS3FormatTypeSourceS3CSVFormat
 
 	return SourceS3Format{
-		CSVFormat: &csvFormat,
-		Type:      typ,
+		SourceS3CSVFormat: &sourceS3CSVFormat,
+		Type:              typ,
 	}
 }
 
-func CreateSourceS3FormatJsonlFormat(jsonlFormat SourceS3JsonlFormat) SourceS3Format {
-	typ := SourceS3FormatTypeJsonlFormat
+func CreateSourceS3FormatSourceS3JsonlFormat(sourceS3JsonlFormat SourceS3JsonlFormat) SourceS3Format {
+	typ := SourceS3FormatTypeSourceS3JsonlFormat
 
 	return SourceS3Format{
-		JsonlFormat: &jsonlFormat,
-		Type:        typ,
+		SourceS3JsonlFormat: &sourceS3JsonlFormat,
+		Type:                typ,
 	}
 }
 
-func CreateSourceS3FormatParquetFormat(parquetFormat SourceS3ParquetFormat) SourceS3Format {
-	typ := SourceS3FormatTypeParquetFormat
+func CreateSourceS3FormatSourceS3ParquetFormat(sourceS3ParquetFormat SourceS3ParquetFormat) SourceS3Format {
+	typ := SourceS3FormatTypeSourceS3ParquetFormat
 
 	return SourceS3Format{
-		ParquetFormat: &parquetFormat,
-		Type:          typ,
+		SourceS3ParquetFormat: &sourceS3ParquetFormat,
+		Type:                  typ,
 	}
 }
 
 func (u *SourceS3Format) UnmarshalJSON(data []byte) error {
 
-	jsonlFormat := new(SourceS3JsonlFormat)
-	if err := utils.UnmarshalJSON(data, &jsonlFormat, "", true, true); err == nil {
-		u.JsonlFormat = jsonlFormat
-		u.Type = SourceS3FormatTypeJsonlFormat
+	sourceS3JsonlFormat := new(SourceS3JsonlFormat)
+	if err := utils.UnmarshalJSON(data, &sourceS3JsonlFormat, "", true, true); err == nil {
+		u.SourceS3JsonlFormat = sourceS3JsonlFormat
+		u.Type = SourceS3FormatTypeSourceS3JsonlFormat
 		return nil
 	}
 
-	avroFormat := new(SourceS3AvroFormat)
-	if err := utils.UnmarshalJSON(data, &avroFormat, "", true, true); err == nil {
-		u.AvroFormat = avroFormat
-		u.Type = SourceS3FormatTypeAvroFormat
+	sourceS3AvroFormat := new(SourceS3AvroFormat)
+	if err := utils.UnmarshalJSON(data, &sourceS3AvroFormat, "", true, true); err == nil {
+		u.SourceS3AvroFormat = sourceS3AvroFormat
+		u.Type = SourceS3FormatTypeSourceS3AvroFormat
 		return nil
 	}
 
-	parquetFormat := new(SourceS3ParquetFormat)
-	if err := utils.UnmarshalJSON(data, &parquetFormat, "", true, true); err == nil {
-		u.ParquetFormat = parquetFormat
-		u.Type = SourceS3FormatTypeParquetFormat
+	sourceS3ParquetFormat := new(SourceS3ParquetFormat)
+	if err := utils.UnmarshalJSON(data, &sourceS3ParquetFormat, "", true, true); err == nil {
+		u.SourceS3ParquetFormat = sourceS3ParquetFormat
+		u.Type = SourceS3FormatTypeSourceS3ParquetFormat
 		return nil
 	}
 
-	csvFormat := new(SourceS3CSVFormat)
-	if err := utils.UnmarshalJSON(data, &csvFormat, "", true, true); err == nil {
-		u.CSVFormat = csvFormat
-		u.Type = SourceS3FormatTypeCSVFormat
+	sourceS3CSVFormat := new(SourceS3CSVFormat)
+	if err := utils.UnmarshalJSON(data, &sourceS3CSVFormat, "", true, true); err == nil {
+		u.SourceS3CSVFormat = sourceS3CSVFormat
+		u.Type = SourceS3FormatTypeSourceS3CSVFormat
 		return nil
 	}
 
@@ -1214,20 +1214,20 @@ func (u *SourceS3Format) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceS3Format) MarshalJSON() ([]byte, error) {
-	if u.AvroFormat != nil {
-		return utils.MarshalJSON(u.AvroFormat, "", true)
+	if u.SourceS3AvroFormat != nil {
+		return utils.MarshalJSON(u.SourceS3AvroFormat, "", true)
 	}
 
-	if u.CSVFormat != nil {
-		return utils.MarshalJSON(u.CSVFormat, "", true)
+	if u.SourceS3CSVFormat != nil {
+		return utils.MarshalJSON(u.SourceS3CSVFormat, "", true)
 	}
 
-	if u.JsonlFormat != nil {
-		return utils.MarshalJSON(u.JsonlFormat, "", true)
+	if u.SourceS3JsonlFormat != nil {
+		return utils.MarshalJSON(u.SourceS3JsonlFormat, "", true)
 	}
 
-	if u.ParquetFormat != nil {
-		return utils.MarshalJSON(u.ParquetFormat, "", true)
+	if u.SourceS3ParquetFormat != nil {
+		return utils.MarshalJSON(u.SourceS3ParquetFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

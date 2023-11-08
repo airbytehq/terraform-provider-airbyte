@@ -137,13 +137,13 @@ func (o *CSVCommaSeparatedValues) GetFormatType() FormatType {
 type OutputFormatType string
 
 const (
-	OutputFormatTypeCSVCommaSeparatedValues       OutputFormatType = "CSVCommaSeparatedValues"
-	OutputFormatTypeJSONLinesNewlineDelimitedJSON OutputFormatType = "JSONLinesNewlineDelimitedJSON"
+	OutputFormatTypeCSVCommaSeparatedValues                                        OutputFormatType = "CSV: Comma-Separated Values"
+	OutputFormatTypeDestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON OutputFormatType = "destination-azure-blob-storage-update_JSON Lines: newline-delimited JSON"
 )
 
 type OutputFormat struct {
-	CSVCommaSeparatedValues       *CSVCommaSeparatedValues
-	JSONLinesNewlineDelimitedJSON *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
+	CSVCommaSeparatedValues                                        *CSVCommaSeparatedValues
+	DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
 
 	Type OutputFormatType
 }
@@ -157,21 +157,21 @@ func CreateOutputFormatCSVCommaSeparatedValues(csvCommaSeparatedValues CSVCommaS
 	}
 }
 
-func CreateOutputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) OutputFormat {
-	typ := OutputFormatTypeJSONLinesNewlineDelimitedJSON
+func CreateOutputFormatDestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON(destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) OutputFormat {
+	typ := OutputFormatTypeDestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
 
 	return OutputFormat{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
+		DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON: &destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
+		Type: typ,
 	}
 }
 
 func (u *OutputFormat) UnmarshalJSON(data []byte) error {
 
-	jsonLinesNewlineDelimitedJSON := new(DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON)
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
-		u.Type = OutputFormatTypeJSONLinesNewlineDelimitedJSON
+	destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON := new(DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON = destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
+		u.Type = OutputFormatTypeDestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
@@ -190,8 +190,8 @@ func (u OutputFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CSVCommaSeparatedValues, "", true)
 	}
 
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	if u.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

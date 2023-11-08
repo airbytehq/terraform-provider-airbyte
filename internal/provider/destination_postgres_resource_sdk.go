@@ -42,7 +42,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresDisable != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				Disable: destinationPostgresDisable,
+				DestinationPostgresDisable: destinationPostgresDisable,
 			}
 		}
 		var destinationPostgresAllow *shared.DestinationPostgresAllow
@@ -51,7 +51,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresAllow != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				Allow: destinationPostgresAllow,
+				DestinationPostgresAllow: destinationPostgresAllow,
 			}
 		}
 		var destinationPostgresPrefer *shared.DestinationPostgresPrefer
@@ -60,7 +60,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresPrefer != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				Prefer: destinationPostgresPrefer,
+				DestinationPostgresPrefer: destinationPostgresPrefer,
 			}
 		}
 		var destinationPostgresRequire *shared.DestinationPostgresRequire
@@ -69,7 +69,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresRequire != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				Require: destinationPostgresRequire,
+				DestinationPostgresRequire: destinationPostgresRequire,
 			}
 		}
 		var destinationPostgresVerifyCa *shared.DestinationPostgresVerifyCa
@@ -88,7 +88,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresVerifyCa != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				VerifyCa: destinationPostgresVerifyCa,
+				DestinationPostgresVerifyCa: destinationPostgresVerifyCa,
 			}
 		}
 		var destinationPostgresVerifyFull *shared.DestinationPostgresVerifyFull
@@ -111,7 +111,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresVerifyFull != nil {
 			sslMode = &shared.DestinationPostgresSSLModes{
-				VerifyFull: destinationPostgresVerifyFull,
+				DestinationPostgresVerifyFull: destinationPostgresVerifyFull,
 			}
 		}
 	}
@@ -123,7 +123,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresNoTunnel != nil {
 			tunnelMethod = &shared.DestinationPostgresSSHTunnelMethod{
-				NoTunnel: destinationPostgresNoTunnel,
+				DestinationPostgresNoTunnel: destinationPostgresNoTunnel,
 			}
 		}
 		var destinationPostgresSSHKeyAuthentication *shared.DestinationPostgresSSHKeyAuthentication
@@ -146,7 +146,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresSSHTunnelMethod{
-				SSHKeyAuthentication: destinationPostgresSSHKeyAuthentication,
+				DestinationPostgresSSHKeyAuthentication: destinationPostgresSSHKeyAuthentication,
 			}
 		}
 		var destinationPostgresPasswordAuthentication *shared.DestinationPostgresPasswordAuthentication
@@ -169,7 +169,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationPostgresPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresSSHTunnelMethod{
-				PasswordAuthentication: destinationPostgresPasswordAuthentication,
+				DestinationPostgresPasswordAuthentication: destinationPostgresPasswordAuthentication,
 			}
 		}
 	}
@@ -316,7 +316,7 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationPostgresUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationPostgresUpdateSSHTunnelMethod{
-				NoTunnel: destinationPostgresUpdateNoTunnel,
+				DestinationPostgresUpdateNoTunnel: destinationPostgresUpdateNoTunnel,
 			}
 		}
 		var destinationPostgresUpdateSSHKeyAuthentication *shared.DestinationPostgresUpdateSSHKeyAuthentication
@@ -339,7 +339,7 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationPostgresUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationPostgresUpdateSSHKeyAuthentication,
+				DestinationPostgresUpdateSSHKeyAuthentication: destinationPostgresUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationPostgresUpdatePasswordAuthentication *shared.DestinationPostgresUpdatePasswordAuthentication
@@ -362,7 +362,7 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationPostgresUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationPostgresUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationPostgresUpdatePasswordAuthentication,
+				DestinationPostgresUpdatePasswordAuthentication: destinationPostgresUpdatePasswordAuthentication,
 			}
 		}
 	}

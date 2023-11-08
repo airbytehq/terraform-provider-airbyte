@@ -137,48 +137,48 @@ func (o *SourceGithubOAuth) GetOptionTitle() *SourceGithubOptionTitle {
 type SourceGithubAuthenticationType string
 
 const (
-	SourceGithubAuthenticationTypeOAuth               SourceGithubAuthenticationType = "OAuth"
-	SourceGithubAuthenticationTypePersonalAccessToken SourceGithubAuthenticationType = "PersonalAccessToken"
+	SourceGithubAuthenticationTypeSourceGithubOAuth               SourceGithubAuthenticationType = "source-github_OAuth"
+	SourceGithubAuthenticationTypeSourceGithubPersonalAccessToken SourceGithubAuthenticationType = "source-github_Personal Access Token"
 )
 
 type SourceGithubAuthentication struct {
-	OAuth               *SourceGithubOAuth
-	PersonalAccessToken *SourceGithubPersonalAccessToken
+	SourceGithubOAuth               *SourceGithubOAuth
+	SourceGithubPersonalAccessToken *SourceGithubPersonalAccessToken
 
 	Type SourceGithubAuthenticationType
 }
 
-func CreateSourceGithubAuthenticationOAuth(oAuth SourceGithubOAuth) SourceGithubAuthentication {
-	typ := SourceGithubAuthenticationTypeOAuth
+func CreateSourceGithubAuthenticationSourceGithubOAuth(sourceGithubOAuth SourceGithubOAuth) SourceGithubAuthentication {
+	typ := SourceGithubAuthenticationTypeSourceGithubOAuth
 
 	return SourceGithubAuthentication{
-		OAuth: &oAuth,
-		Type:  typ,
+		SourceGithubOAuth: &sourceGithubOAuth,
+		Type:              typ,
 	}
 }
 
-func CreateSourceGithubAuthenticationPersonalAccessToken(personalAccessToken SourceGithubPersonalAccessToken) SourceGithubAuthentication {
-	typ := SourceGithubAuthenticationTypePersonalAccessToken
+func CreateSourceGithubAuthenticationSourceGithubPersonalAccessToken(sourceGithubPersonalAccessToken SourceGithubPersonalAccessToken) SourceGithubAuthentication {
+	typ := SourceGithubAuthenticationTypeSourceGithubPersonalAccessToken
 
 	return SourceGithubAuthentication{
-		PersonalAccessToken: &personalAccessToken,
-		Type:                typ,
+		SourceGithubPersonalAccessToken: &sourceGithubPersonalAccessToken,
+		Type:                            typ,
 	}
 }
 
 func (u *SourceGithubAuthentication) UnmarshalJSON(data []byte) error {
 
-	personalAccessToken := new(SourceGithubPersonalAccessToken)
-	if err := utils.UnmarshalJSON(data, &personalAccessToken, "", true, true); err == nil {
-		u.PersonalAccessToken = personalAccessToken
-		u.Type = SourceGithubAuthenticationTypePersonalAccessToken
+	sourceGithubPersonalAccessToken := new(SourceGithubPersonalAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceGithubPersonalAccessToken, "", true, true); err == nil {
+		u.SourceGithubPersonalAccessToken = sourceGithubPersonalAccessToken
+		u.Type = SourceGithubAuthenticationTypeSourceGithubPersonalAccessToken
 		return nil
 	}
 
-	oAuth := new(SourceGithubOAuth)
-	if err := utils.UnmarshalJSON(data, &oAuth, "", true, true); err == nil {
-		u.OAuth = oAuth
-		u.Type = SourceGithubAuthenticationTypeOAuth
+	sourceGithubOAuth := new(SourceGithubOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceGithubOAuth, "", true, true); err == nil {
+		u.SourceGithubOAuth = sourceGithubOAuth
+		u.Type = SourceGithubAuthenticationTypeSourceGithubOAuth
 		return nil
 	}
 
@@ -186,12 +186,12 @@ func (u *SourceGithubAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGithubAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth != nil {
-		return utils.MarshalJSON(u.OAuth, "", true)
+	if u.SourceGithubOAuth != nil {
+		return utils.MarshalJSON(u.SourceGithubOAuth, "", true)
 	}
 
-	if u.PersonalAccessToken != nil {
-		return utils.MarshalJSON(u.PersonalAccessToken, "", true)
+	if u.SourceGithubPersonalAccessToken != nil {
+		return utils.MarshalJSON(u.SourceGithubPersonalAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

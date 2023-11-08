@@ -35,7 +35,7 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 		}
 		if destinationBigqueryDenormalizedStandardInserts != nil {
 			loadingMethod = &shared.DestinationBigqueryDenormalizedLoadingMethod{
-				StandardInserts: destinationBigqueryDenormalizedStandardInserts,
+				DestinationBigqueryDenormalizedStandardInserts: destinationBigqueryDenormalizedStandardInserts,
 			}
 		}
 		var destinationBigqueryDenormalizedGCSStaging *shared.DestinationBigqueryDenormalizedGCSStaging
@@ -52,7 +52,7 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 			}
 			if destinationBigqueryDenormalizedHMACKey != nil {
 				credential = shared.DestinationBigqueryDenormalizedCredential{
-					HMACKey: destinationBigqueryDenormalizedHMACKey,
+					DestinationBigqueryDenormalizedHMACKey: destinationBigqueryDenormalizedHMACKey,
 				}
 			}
 			fileBufferCount := new(int64)
@@ -79,7 +79,7 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 		}
 		if destinationBigqueryDenormalizedGCSStaging != nil {
 			loadingMethod = &shared.DestinationBigqueryDenormalizedLoadingMethod{
-				GCSStaging: destinationBigqueryDenormalizedGCSStaging,
+				DestinationBigqueryDenormalizedGCSStaging: destinationBigqueryDenormalizedGCSStaging,
 			}
 		}
 	}
@@ -152,7 +152,7 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToUpdateSDKType() *shared
 			}
 			if destinationBigqueryDenormalizedUpdateHMACKey != nil {
 				credential = shared.Credential{
-					HMACKey: destinationBigqueryDenormalizedUpdateHMACKey,
+					DestinationBigqueryDenormalizedUpdateHMACKey: destinationBigqueryDenormalizedUpdateHMACKey,
 				}
 			}
 			fileBufferCount := new(int64)

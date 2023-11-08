@@ -37,7 +37,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationRedshiftNoTunnel != nil {
 			tunnelMethod = &shared.DestinationRedshiftSSHTunnelMethod{
-				NoTunnel: destinationRedshiftNoTunnel,
+				DestinationRedshiftNoTunnel: destinationRedshiftNoTunnel,
 			}
 		}
 		var destinationRedshiftSSHKeyAuthentication *shared.DestinationRedshiftSSHKeyAuthentication
@@ -60,7 +60,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationRedshiftSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedshiftSSHTunnelMethod{
-				SSHKeyAuthentication: destinationRedshiftSSHKeyAuthentication,
+				DestinationRedshiftSSHKeyAuthentication: destinationRedshiftSSHKeyAuthentication,
 			}
 		}
 		var destinationRedshiftPasswordAuthentication *shared.DestinationRedshiftPasswordAuthentication
@@ -83,7 +83,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationRedshiftPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedshiftSSHTunnelMethod{
-				PasswordAuthentication: destinationRedshiftPasswordAuthentication,
+				DestinationRedshiftPasswordAuthentication: destinationRedshiftPasswordAuthentication,
 			}
 		}
 	}
@@ -95,7 +95,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationRedshiftStandard != nil {
 			uploadingMethod = &shared.DestinationRedshiftUploadingMethod{
-				Standard: destinationRedshiftStandard,
+				DestinationRedshiftStandard: destinationRedshiftStandard,
 			}
 		}
 		var destinationRedshiftS3Staging *shared.DestinationRedshiftS3Staging
@@ -109,7 +109,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 				}
 				if destinationRedshiftNoEncryption != nil {
 					encryption = &shared.DestinationRedshiftEncryption{
-						NoEncryption: destinationRedshiftNoEncryption,
+						DestinationRedshiftNoEncryption: destinationRedshiftNoEncryption,
 					}
 				}
 				var destinationRedshiftAESCBCEnvelopeEncryption *shared.DestinationRedshiftAESCBCEnvelopeEncryption
@@ -126,7 +126,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 				}
 				if destinationRedshiftAESCBCEnvelopeEncryption != nil {
 					encryption = &shared.DestinationRedshiftEncryption{
-						AESCBCEnvelopeEncryption: destinationRedshiftAESCBCEnvelopeEncryption,
+						DestinationRedshiftAESCBCEnvelopeEncryption: destinationRedshiftAESCBCEnvelopeEncryption,
 					}
 				}
 			}
@@ -176,7 +176,7 @@ func (r *DestinationRedshiftResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		if destinationRedshiftS3Staging != nil {
 			uploadingMethod = &shared.DestinationRedshiftUploadingMethod{
-				S3Staging: destinationRedshiftS3Staging,
+				DestinationRedshiftS3Staging: destinationRedshiftS3Staging,
 			}
 		}
 	}
@@ -237,7 +237,7 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationRedshiftUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationRedshiftUpdateSSHTunnelMethod{
-				NoTunnel: destinationRedshiftUpdateNoTunnel,
+				DestinationRedshiftUpdateNoTunnel: destinationRedshiftUpdateNoTunnel,
 			}
 		}
 		var destinationRedshiftUpdateSSHKeyAuthentication *shared.DestinationRedshiftUpdateSSHKeyAuthentication
@@ -260,7 +260,7 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationRedshiftUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedshiftUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationRedshiftUpdateSSHKeyAuthentication,
+				DestinationRedshiftUpdateSSHKeyAuthentication: destinationRedshiftUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationRedshiftUpdatePasswordAuthentication *shared.DestinationRedshiftUpdatePasswordAuthentication
@@ -283,7 +283,7 @@ func (r *DestinationRedshiftResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 		if destinationRedshiftUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedshiftUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationRedshiftUpdatePasswordAuthentication,
+				DestinationRedshiftUpdatePasswordAuthentication: destinationRedshiftUpdatePasswordAuthentication,
 			}
 		}
 	}

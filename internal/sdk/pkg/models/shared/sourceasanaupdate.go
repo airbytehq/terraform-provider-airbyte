@@ -137,8 +137,8 @@ func (o *AuthenticateViaAsanaOauth) GetRefreshToken() string {
 type AuthenticationMechanismType string
 
 const (
-	AuthenticationMechanismTypeAuthenticateViaAsanaOauth           AuthenticationMechanismType = "AuthenticateViaAsanaOauth"
-	AuthenticationMechanismTypeAuthenticateWithPersonalAccessToken AuthenticationMechanismType = "AuthenticateWithPersonalAccessToken"
+	AuthenticationMechanismTypeAuthenticateViaAsanaOauth           AuthenticationMechanismType = "Authenticate via Asana (Oauth)"
+	AuthenticationMechanismTypeAuthenticateWithPersonalAccessToken AuthenticationMechanismType = "Authenticate with Personal Access Token"
 )
 
 type AuthenticationMechanism struct {

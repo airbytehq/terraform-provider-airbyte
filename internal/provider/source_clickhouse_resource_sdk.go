@@ -30,7 +30,7 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 		}
 		if sourceClickhouseNoTunnel != nil {
 			tunnelMethod = &shared.SourceClickhouseSSHTunnelMethod{
-				NoTunnel: sourceClickhouseNoTunnel,
+				SourceClickhouseNoTunnel: sourceClickhouseNoTunnel,
 			}
 		}
 		var sourceClickhouseSSHKeyAuthentication *shared.SourceClickhouseSSHKeyAuthentication
@@ -53,7 +53,7 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 		}
 		if sourceClickhouseSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceClickhouseSSHTunnelMethod{
-				SSHKeyAuthentication: sourceClickhouseSSHKeyAuthentication,
+				SourceClickhouseSSHKeyAuthentication: sourceClickhouseSSHKeyAuthentication,
 			}
 		}
 		var sourceClickhousePasswordAuthentication *shared.SourceClickhousePasswordAuthentication
@@ -76,7 +76,7 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 		}
 		if sourceClickhousePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceClickhouseSSHTunnelMethod{
-				PasswordAuthentication: sourceClickhousePasswordAuthentication,
+				SourceClickhousePasswordAuthentication: sourceClickhousePasswordAuthentication,
 			}
 		}
 	}
@@ -134,7 +134,7 @@ func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhou
 		}
 		if sourceClickhouseUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceClickhouseUpdateSSHTunnelMethod{
-				NoTunnel: sourceClickhouseUpdateNoTunnel,
+				SourceClickhouseUpdateNoTunnel: sourceClickhouseUpdateNoTunnel,
 			}
 		}
 		var sourceClickhouseUpdateSSHKeyAuthentication *shared.SourceClickhouseUpdateSSHKeyAuthentication
@@ -157,7 +157,7 @@ func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhou
 		}
 		if sourceClickhouseUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceClickhouseUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: sourceClickhouseUpdateSSHKeyAuthentication,
+				SourceClickhouseUpdateSSHKeyAuthentication: sourceClickhouseUpdateSSHKeyAuthentication,
 			}
 		}
 		var sourceClickhouseUpdatePasswordAuthentication *shared.SourceClickhouseUpdatePasswordAuthentication
@@ -180,7 +180,7 @@ func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhou
 		}
 		if sourceClickhouseUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceClickhouseUpdateSSHTunnelMethod{
-				PasswordAuthentication: sourceClickhouseUpdatePasswordAuthentication,
+				SourceClickhouseUpdatePasswordAuthentication: sourceClickhouseUpdatePasswordAuthentication,
 			}
 		}
 	}

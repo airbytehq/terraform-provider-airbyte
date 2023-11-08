@@ -18,7 +18,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusOpenAI != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			OpenAI: destinationMilvusOpenAI,
+			DestinationMilvusOpenAI: destinationMilvusOpenAI,
 		}
 	}
 	var destinationMilvusCohere *shared.DestinationMilvusCohere
@@ -30,7 +30,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusCohere != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			Cohere: destinationMilvusCohere,
+			DestinationMilvusCohere: destinationMilvusCohere,
 		}
 	}
 	var destinationMilvusFake *shared.DestinationMilvusFake
@@ -39,7 +39,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusFake != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			Fake: destinationMilvusFake,
+			DestinationMilvusFake: destinationMilvusFake,
 		}
 	}
 	var destinationMilvusFromField *shared.DestinationMilvusFromField
@@ -53,7 +53,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusFromField != nil {
 		embedding = shared.DestinationMilvusEmbedding{
-			FromField: destinationMilvusFromField,
+			DestinationMilvusFromField: destinationMilvusFromField,
 		}
 	}
 	var auth shared.DestinationMilvusAuthentication
@@ -66,7 +66,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusAPIToken != nil {
 		auth = shared.DestinationMilvusAuthentication{
-			APIToken: destinationMilvusAPIToken,
+			DestinationMilvusAPIToken: destinationMilvusAPIToken,
 		}
 	}
 	var destinationMilvusUsernamePassword *shared.DestinationMilvusUsernamePassword
@@ -80,7 +80,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusUsernamePassword != nil {
 		auth = shared.DestinationMilvusAuthentication{
-			UsernamePassword: destinationMilvusUsernamePassword,
+			DestinationMilvusUsernamePassword: destinationMilvusUsernamePassword,
 		}
 	}
 	var destinationMilvusNoAuth *shared.DestinationMilvusNoAuth
@@ -89,7 +89,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusNoAuth != nil {
 		auth = shared.DestinationMilvusAuthentication{
-			NoAuth: destinationMilvusNoAuth,
+			DestinationMilvusNoAuth: destinationMilvusNoAuth,
 		}
 	}
 	collection := r.Configuration.Indexing.Collection.ValueString()
@@ -172,7 +172,7 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusUpdateOpenAI != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			OpenAI: destinationMilvusUpdateOpenAI,
+			DestinationMilvusUpdateOpenAI: destinationMilvusUpdateOpenAI,
 		}
 	}
 	var cohere *shared.Cohere
@@ -193,7 +193,7 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusUpdateFake != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			Fake: destinationMilvusUpdateFake,
+			DestinationMilvusUpdateFake: destinationMilvusUpdateFake,
 		}
 	}
 	var fromField *shared.FromField
@@ -220,7 +220,7 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusUpdateAPIToken != nil {
 		auth = shared.DestinationMilvusUpdateAuthentication{
-			APIToken: destinationMilvusUpdateAPIToken,
+			DestinationMilvusUpdateAPIToken: destinationMilvusUpdateAPIToken,
 		}
 	}
 	var destinationMilvusUpdateUsernamePassword *shared.DestinationMilvusUpdateUsernamePassword
@@ -234,7 +234,7 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 	}
 	if destinationMilvusUpdateUsernamePassword != nil {
 		auth = shared.DestinationMilvusUpdateAuthentication{
-			UsernamePassword: destinationMilvusUpdateUsernamePassword,
+			DestinationMilvusUpdateUsernamePassword: destinationMilvusUpdateUsernamePassword,
 		}
 	}
 	var noAuth *shared.NoAuth

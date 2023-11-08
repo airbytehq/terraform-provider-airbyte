@@ -39,7 +39,7 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 		}
 		if sourceShopifyOAuth20 != nil {
 			credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
-				OAuth20: sourceShopifyOAuth20,
+				SourceShopifyOAuth20: sourceShopifyOAuth20,
 			}
 		}
 		var sourceShopifyAPIPassword *shared.SourceShopifyAPIPassword
@@ -51,7 +51,7 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 		}
 		if sourceShopifyAPIPassword != nil {
 			credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
-				APIPassword: sourceShopifyAPIPassword,
+				SourceShopifyAPIPassword: sourceShopifyAPIPassword,
 			}
 		}
 	}
@@ -120,7 +120,7 @@ func (r *SourceShopifyResourceModel) ToUpdateSDKType() *shared.SourceShopifyPutR
 		}
 		if sourceShopifyUpdateOAuth20 != nil {
 			credentials = &shared.ShopifyAuthorizationMethod{
-				OAuth20: sourceShopifyUpdateOAuth20,
+				SourceShopifyUpdateOAuth20: sourceShopifyUpdateOAuth20,
 			}
 		}
 		var apiPassword *shared.APIPassword

@@ -29,7 +29,7 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 	}
 	if sourceQuickbooksOAuth20 != nil {
 		credentials = shared.SourceQuickbooksAuthorizationMethod{
-			OAuth20: sourceQuickbooksOAuth20,
+			SourceQuickbooksOAuth20: sourceQuickbooksOAuth20,
 		}
 	}
 	sandbox := new(bool)
@@ -87,7 +87,7 @@ func (r *SourceQuickbooksResourceModel) ToUpdateSDKType() *shared.SourceQuickboo
 	}
 	if sourceQuickbooksUpdateOAuth20 != nil {
 		credentials = shared.SourceQuickbooksUpdateAuthorizationMethod{
-			OAuth20: sourceQuickbooksUpdateOAuth20,
+			SourceQuickbooksUpdateOAuth20: sourceQuickbooksUpdateOAuth20,
 		}
 	}
 	sandbox := new(bool)

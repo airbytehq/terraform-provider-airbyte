@@ -131,48 +131,48 @@ func (o *DestinationAwsDatalakeIAMRole) GetRoleArn() string {
 type DestinationAwsDatalakeAuthenticationModeType string
 
 const (
-	DestinationAwsDatalakeAuthenticationModeTypeIAMRole DestinationAwsDatalakeAuthenticationModeType = "IAMRole"
-	DestinationAwsDatalakeAuthenticationModeTypeIAMUser DestinationAwsDatalakeAuthenticationModeType = "IAMUser"
+	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMRole DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_IAM Role"
+	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_IAM User"
 )
 
 type DestinationAwsDatalakeAuthenticationMode struct {
-	IAMRole *DestinationAwsDatalakeIAMRole
-	IAMUser *DestinationAwsDatalakeIAMUser
+	DestinationAwsDatalakeIAMRole *DestinationAwsDatalakeIAMRole
+	DestinationAwsDatalakeIAMUser *DestinationAwsDatalakeIAMUser
 
 	Type DestinationAwsDatalakeAuthenticationModeType
 }
 
-func CreateDestinationAwsDatalakeAuthenticationModeIAMRole(iamRole DestinationAwsDatalakeIAMRole) DestinationAwsDatalakeAuthenticationMode {
-	typ := DestinationAwsDatalakeAuthenticationModeTypeIAMRole
+func CreateDestinationAwsDatalakeAuthenticationModeDestinationAwsDatalakeIAMRole(destinationAwsDatalakeIAMRole DestinationAwsDatalakeIAMRole) DestinationAwsDatalakeAuthenticationMode {
+	typ := DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMRole
 
 	return DestinationAwsDatalakeAuthenticationMode{
-		IAMRole: &iamRole,
-		Type:    typ,
+		DestinationAwsDatalakeIAMRole: &destinationAwsDatalakeIAMRole,
+		Type:                          typ,
 	}
 }
 
-func CreateDestinationAwsDatalakeAuthenticationModeIAMUser(iamUser DestinationAwsDatalakeIAMUser) DestinationAwsDatalakeAuthenticationMode {
-	typ := DestinationAwsDatalakeAuthenticationModeTypeIAMUser
+func CreateDestinationAwsDatalakeAuthenticationModeDestinationAwsDatalakeIAMUser(destinationAwsDatalakeIAMUser DestinationAwsDatalakeIAMUser) DestinationAwsDatalakeAuthenticationMode {
+	typ := DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser
 
 	return DestinationAwsDatalakeAuthenticationMode{
-		IAMUser: &iamUser,
-		Type:    typ,
+		DestinationAwsDatalakeIAMUser: &destinationAwsDatalakeIAMUser,
+		Type:                          typ,
 	}
 }
 
 func (u *DestinationAwsDatalakeAuthenticationMode) UnmarshalJSON(data []byte) error {
 
-	iamRole := new(DestinationAwsDatalakeIAMRole)
-	if err := utils.UnmarshalJSON(data, &iamRole, "", true, true); err == nil {
-		u.IAMRole = iamRole
-		u.Type = DestinationAwsDatalakeAuthenticationModeTypeIAMRole
+	destinationAwsDatalakeIAMRole := new(DestinationAwsDatalakeIAMRole)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeIAMRole, "", true, true); err == nil {
+		u.DestinationAwsDatalakeIAMRole = destinationAwsDatalakeIAMRole
+		u.Type = DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMRole
 		return nil
 	}
 
-	iamUser := new(DestinationAwsDatalakeIAMUser)
-	if err := utils.UnmarshalJSON(data, &iamUser, "", true, true); err == nil {
-		u.IAMUser = iamUser
-		u.Type = DestinationAwsDatalakeAuthenticationModeTypeIAMUser
+	destinationAwsDatalakeIAMUser := new(DestinationAwsDatalakeIAMUser)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeIAMUser, "", true, true); err == nil {
+		u.DestinationAwsDatalakeIAMUser = destinationAwsDatalakeIAMUser
+		u.Type = DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser
 		return nil
 	}
 
@@ -180,12 +180,12 @@ func (u *DestinationAwsDatalakeAuthenticationMode) UnmarshalJSON(data []byte) er
 }
 
 func (u DestinationAwsDatalakeAuthenticationMode) MarshalJSON() ([]byte, error) {
-	if u.IAMRole != nil {
-		return utils.MarshalJSON(u.IAMRole, "", true)
+	if u.DestinationAwsDatalakeIAMRole != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeIAMRole, "", true)
 	}
 
-	if u.IAMUser != nil {
-		return utils.MarshalJSON(u.IAMUser, "", true)
+	if u.DestinationAwsDatalakeIAMUser != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeIAMUser, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -392,48 +392,48 @@ func (o *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) GetFormatType() *D
 type DestinationAwsDatalakeOutputFormatWildcardType string
 
 const (
-	DestinationAwsDatalakeOutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeOutputFormatWildcardType = "JSONLinesNewlineDelimitedJSON"
-	DestinationAwsDatalakeOutputFormatWildcardTypeParquetColumnarStorage        DestinationAwsDatalakeOutputFormatWildcardType = "ParquetColumnarStorage"
+	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_JSON Lines: Newline-delimited JSON"
+	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage        DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_Parquet: Columnar Storage"
 )
 
 type DestinationAwsDatalakeOutputFormatWildcard struct {
-	JSONLinesNewlineDelimitedJSON *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
-	ParquetColumnarStorage        *DestinationAwsDatalakeParquetColumnarStorage
+	DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
+	DestinationAwsDatalakeParquetColumnarStorage        *DestinationAwsDatalakeParquetColumnarStorage
 
 	Type DestinationAwsDatalakeOutputFormatWildcardType
 }
 
-func CreateDestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) DestinationAwsDatalakeOutputFormatWildcard {
-	typ := DestinationAwsDatalakeOutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON
+func CreateDestinationAwsDatalakeOutputFormatWildcardDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON(destinationAwsDatalakeJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) DestinationAwsDatalakeOutputFormatWildcard {
+	typ := DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
 
 	return DestinationAwsDatalakeOutputFormatWildcard{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
+		DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON: &destinationAwsDatalakeJSONLinesNewlineDelimitedJSON,
+		Type: typ,
 	}
 }
 
-func CreateDestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage(parquetColumnarStorage DestinationAwsDatalakeParquetColumnarStorage) DestinationAwsDatalakeOutputFormatWildcard {
-	typ := DestinationAwsDatalakeOutputFormatWildcardTypeParquetColumnarStorage
+func CreateDestinationAwsDatalakeOutputFormatWildcardDestinationAwsDatalakeParquetColumnarStorage(destinationAwsDatalakeParquetColumnarStorage DestinationAwsDatalakeParquetColumnarStorage) DestinationAwsDatalakeOutputFormatWildcard {
+	typ := DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage
 
 	return DestinationAwsDatalakeOutputFormatWildcard{
-		ParquetColumnarStorage: &parquetColumnarStorage,
-		Type:                   typ,
+		DestinationAwsDatalakeParquetColumnarStorage: &destinationAwsDatalakeParquetColumnarStorage,
+		Type: typ,
 	}
 }
 
 func (u *DestinationAwsDatalakeOutputFormatWildcard) UnmarshalJSON(data []byte) error {
 
-	jsonLinesNewlineDelimitedJSON := new(DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON)
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
-		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON
+	destinationAwsDatalakeJSONLinesNewlineDelimitedJSON := new(DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON = destinationAwsDatalakeJSONLinesNewlineDelimitedJSON
+		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
-	parquetColumnarStorage := new(DestinationAwsDatalakeParquetColumnarStorage)
-	if err := utils.UnmarshalJSON(data, &parquetColumnarStorage, "", true, true); err == nil {
-		u.ParquetColumnarStorage = parquetColumnarStorage
-		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeParquetColumnarStorage
+	destinationAwsDatalakeParquetColumnarStorage := new(DestinationAwsDatalakeParquetColumnarStorage)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeParquetColumnarStorage, "", true, true); err == nil {
+		u.DestinationAwsDatalakeParquetColumnarStorage = destinationAwsDatalakeParquetColumnarStorage
+		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage
 		return nil
 	}
 
@@ -441,12 +441,12 @@ func (u *DestinationAwsDatalakeOutputFormatWildcard) UnmarshalJSON(data []byte) 
 }
 
 func (u DestinationAwsDatalakeOutputFormatWildcard) MarshalJSON() ([]byte, error) {
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	if u.DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	if u.ParquetColumnarStorage != nil {
-		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
+	if u.DestinationAwsDatalakeParquetColumnarStorage != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeParquetColumnarStorage, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

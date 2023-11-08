@@ -38,7 +38,7 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 		}
 		if sourceAirtableOAuth20 != nil {
 			credentials = &shared.SourceAirtableAuthentication{
-				OAuth20: sourceAirtableOAuth20,
+				SourceAirtableOAuth20: sourceAirtableOAuth20,
 			}
 		}
 		var sourceAirtablePersonalAccessToken *shared.SourceAirtablePersonalAccessToken
@@ -50,7 +50,7 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 		}
 		if sourceAirtablePersonalAccessToken != nil {
 			credentials = &shared.SourceAirtableAuthentication{
-				PersonalAccessToken: sourceAirtablePersonalAccessToken,
+				SourceAirtablePersonalAccessToken: sourceAirtablePersonalAccessToken,
 			}
 		}
 	}
@@ -109,7 +109,7 @@ func (r *SourceAirtableResourceModel) ToUpdateSDKType() *shared.SourceAirtablePu
 		}
 		if sourceAirtableUpdateOAuth20 != nil {
 			credentials = &shared.SourceAirtableUpdateAuthentication{
-				OAuth20: sourceAirtableUpdateOAuth20,
+				SourceAirtableUpdateOAuth20: sourceAirtableUpdateOAuth20,
 			}
 		}
 		var personalAccessToken *shared.PersonalAccessToken

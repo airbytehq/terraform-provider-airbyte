@@ -128,8 +128,8 @@ func (o *ServiceAccount) GetUsername() string {
 type AuthenticationWildcardType string
 
 const (
-	AuthenticationWildcardTypeServiceAccount AuthenticationWildcardType = "ServiceAccount"
-	AuthenticationWildcardTypeProjectSecret  AuthenticationWildcardType = "ProjectSecret"
+	AuthenticationWildcardTypeServiceAccount AuthenticationWildcardType = "Service Account"
+	AuthenticationWildcardTypeProjectSecret  AuthenticationWildcardType = "Project Secret"
 )
 
 type AuthenticationWildcard struct {

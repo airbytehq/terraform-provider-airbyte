@@ -162,48 +162,48 @@ func (o *SourceZendeskTalkUpdateAPIToken) GetEmail() string {
 type SourceZendeskTalkUpdateAuthenticationType string
 
 const (
-	SourceZendeskTalkUpdateAuthenticationTypeAPIToken SourceZendeskTalkUpdateAuthenticationType = "APIToken"
-	SourceZendeskTalkUpdateAuthenticationTypeOAuth20  SourceZendeskTalkUpdateAuthenticationType = "OAuth20"
+	SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAPIToken SourceZendeskTalkUpdateAuthenticationType = "source-zendesk-talk-update_API Token"
+	SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateOAuth20  SourceZendeskTalkUpdateAuthenticationType = "source-zendesk-talk-update_OAuth2.0"
 )
 
 type SourceZendeskTalkUpdateAuthentication struct {
-	APIToken *SourceZendeskTalkUpdateAPIToken
-	OAuth20  *SourceZendeskTalkUpdateOAuth20
+	SourceZendeskTalkUpdateAPIToken *SourceZendeskTalkUpdateAPIToken
+	SourceZendeskTalkUpdateOAuth20  *SourceZendeskTalkUpdateOAuth20
 
 	Type SourceZendeskTalkUpdateAuthenticationType
 }
 
-func CreateSourceZendeskTalkUpdateAuthenticationAPIToken(apiToken SourceZendeskTalkUpdateAPIToken) SourceZendeskTalkUpdateAuthentication {
-	typ := SourceZendeskTalkUpdateAuthenticationTypeAPIToken
+func CreateSourceZendeskTalkUpdateAuthenticationSourceZendeskTalkUpdateAPIToken(sourceZendeskTalkUpdateAPIToken SourceZendeskTalkUpdateAPIToken) SourceZendeskTalkUpdateAuthentication {
+	typ := SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAPIToken
 
 	return SourceZendeskTalkUpdateAuthentication{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceZendeskTalkUpdateAPIToken: &sourceZendeskTalkUpdateAPIToken,
+		Type:                            typ,
 	}
 }
 
-func CreateSourceZendeskTalkUpdateAuthenticationOAuth20(oAuth20 SourceZendeskTalkUpdateOAuth20) SourceZendeskTalkUpdateAuthentication {
-	typ := SourceZendeskTalkUpdateAuthenticationTypeOAuth20
+func CreateSourceZendeskTalkUpdateAuthenticationSourceZendeskTalkUpdateOAuth20(sourceZendeskTalkUpdateOAuth20 SourceZendeskTalkUpdateOAuth20) SourceZendeskTalkUpdateAuthentication {
+	typ := SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateOAuth20
 
 	return SourceZendeskTalkUpdateAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceZendeskTalkUpdateOAuth20: &sourceZendeskTalkUpdateOAuth20,
+		Type:                           typ,
 	}
 }
 
 func (u *SourceZendeskTalkUpdateAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceZendeskTalkUpdateAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceZendeskTalkUpdateAuthenticationTypeAPIToken
+	sourceZendeskTalkUpdateAPIToken := new(SourceZendeskTalkUpdateAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskTalkUpdateAPIToken, "", true, true); err == nil {
+		u.SourceZendeskTalkUpdateAPIToken = sourceZendeskTalkUpdateAPIToken
+		u.Type = SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateAPIToken
 		return nil
 	}
 
-	oAuth20 := new(SourceZendeskTalkUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceZendeskTalkUpdateAuthenticationTypeOAuth20
+	sourceZendeskTalkUpdateOAuth20 := new(SourceZendeskTalkUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskTalkUpdateOAuth20, "", true, true); err == nil {
+		u.SourceZendeskTalkUpdateOAuth20 = sourceZendeskTalkUpdateOAuth20
+		u.Type = SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateOAuth20
 		return nil
 	}
 
@@ -211,12 +211,12 @@ func (u *SourceZendeskTalkUpdateAuthentication) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceZendeskTalkUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceZendeskTalkUpdateAPIToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskTalkUpdateAPIToken, "", true)
 	}
 
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceZendeskTalkUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceZendeskTalkUpdateOAuth20, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

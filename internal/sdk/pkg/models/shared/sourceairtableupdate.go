@@ -153,23 +153,23 @@ func (o *SourceAirtableUpdateOAuth20) GetTokenExpiryDate() *time.Time {
 type SourceAirtableUpdateAuthenticationType string
 
 const (
-	SourceAirtableUpdateAuthenticationTypeOAuth20             SourceAirtableUpdateAuthenticationType = "OAuth20"
-	SourceAirtableUpdateAuthenticationTypePersonalAccessToken SourceAirtableUpdateAuthenticationType = "PersonalAccessToken"
+	SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateOAuth20 SourceAirtableUpdateAuthenticationType = "source-airtable-update_OAuth2.0"
+	SourceAirtableUpdateAuthenticationTypePersonalAccessToken         SourceAirtableUpdateAuthenticationType = "Personal Access Token"
 )
 
 type SourceAirtableUpdateAuthentication struct {
-	OAuth20             *SourceAirtableUpdateOAuth20
-	PersonalAccessToken *PersonalAccessToken
+	SourceAirtableUpdateOAuth20 *SourceAirtableUpdateOAuth20
+	PersonalAccessToken         *PersonalAccessToken
 
 	Type SourceAirtableUpdateAuthenticationType
 }
 
-func CreateSourceAirtableUpdateAuthenticationOAuth20(oAuth20 SourceAirtableUpdateOAuth20) SourceAirtableUpdateAuthentication {
-	typ := SourceAirtableUpdateAuthenticationTypeOAuth20
+func CreateSourceAirtableUpdateAuthenticationSourceAirtableUpdateOAuth20(sourceAirtableUpdateOAuth20 SourceAirtableUpdateOAuth20) SourceAirtableUpdateAuthentication {
+	typ := SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateOAuth20
 
 	return SourceAirtableUpdateAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceAirtableUpdateOAuth20: &sourceAirtableUpdateOAuth20,
+		Type:                        typ,
 	}
 }
 
@@ -191,10 +191,10 @@ func (u *SourceAirtableUpdateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	oAuth20 := new(SourceAirtableUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceAirtableUpdateAuthenticationTypeOAuth20
+	sourceAirtableUpdateOAuth20 := new(SourceAirtableUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceAirtableUpdateOAuth20, "", true, true); err == nil {
+		u.SourceAirtableUpdateOAuth20 = sourceAirtableUpdateOAuth20
+		u.Type = SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateOAuth20
 		return nil
 	}
 
@@ -202,8 +202,8 @@ func (u *SourceAirtableUpdateAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAirtableUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceAirtableUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceAirtableUpdateOAuth20, "", true)
 	}
 
 	if u.PersonalAccessToken != nil {

@@ -31,7 +31,7 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 	}
 	if sourceTrustpilotOAuth20 != nil {
 		credentials = shared.SourceTrustpilotAuthorizationMethod{
-			OAuth20: sourceTrustpilotOAuth20,
+			SourceTrustpilotOAuth20: sourceTrustpilotOAuth20,
 		}
 	}
 	var sourceTrustpilotAPIKey *shared.SourceTrustpilotAPIKey
@@ -43,7 +43,7 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 	}
 	if sourceTrustpilotAPIKey != nil {
 		credentials = shared.SourceTrustpilotAuthorizationMethod{
-			APIKey: sourceTrustpilotAPIKey,
+			SourceTrustpilotAPIKey: sourceTrustpilotAPIKey,
 		}
 	}
 	startDate := r.Configuration.StartDate.ValueString()
@@ -97,7 +97,7 @@ func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpil
 	}
 	if sourceTrustpilotUpdateOAuth20 != nil {
 		credentials = shared.SourceTrustpilotUpdateAuthorizationMethod{
-			OAuth20: sourceTrustpilotUpdateOAuth20,
+			SourceTrustpilotUpdateOAuth20: sourceTrustpilotUpdateOAuth20,
 		}
 	}
 	var sourceTrustpilotUpdateAPIKey *shared.SourceTrustpilotUpdateAPIKey
@@ -109,7 +109,7 @@ func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpil
 	}
 	if sourceTrustpilotUpdateAPIKey != nil {
 		credentials = shared.SourceTrustpilotUpdateAuthorizationMethod{
-			APIKey: sourceTrustpilotUpdateAPIKey,
+			SourceTrustpilotUpdateAPIKey: sourceTrustpilotUpdateAPIKey,
 		}
 	}
 	startDate := r.Configuration.StartDate.ValueString()

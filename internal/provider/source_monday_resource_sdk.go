@@ -30,7 +30,7 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 		}
 		if sourceMondayOAuth20 != nil {
 			credentials = &shared.SourceMondayAuthorizationMethod{
-				OAuth20: sourceMondayOAuth20,
+				SourceMondayOAuth20: sourceMondayOAuth20,
 			}
 		}
 		var sourceMondayAPIToken *shared.SourceMondayAPIToken
@@ -42,7 +42,7 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 		}
 		if sourceMondayAPIToken != nil {
 			credentials = &shared.SourceMondayAuthorizationMethod{
-				APIToken: sourceMondayAPIToken,
+				SourceMondayAPIToken: sourceMondayAPIToken,
 			}
 		}
 	}
@@ -94,7 +94,7 @@ func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutReq
 		}
 		if sourceMondayUpdateOAuth20 != nil {
 			credentials = &shared.SourceMondayUpdateAuthorizationMethod{
-				OAuth20: sourceMondayUpdateOAuth20,
+				SourceMondayUpdateOAuth20: sourceMondayUpdateOAuth20,
 			}
 		}
 		var apiToken *shared.APIToken

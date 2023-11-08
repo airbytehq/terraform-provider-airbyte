@@ -27,7 +27,7 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	}
 	if sourceSmartsheetsOAuth20 != nil {
 		credentials = shared.SourceSmartsheetsAuthorizationMethod{
-			OAuth20: sourceSmartsheetsOAuth20,
+			SourceSmartsheetsOAuth20: sourceSmartsheetsOAuth20,
 		}
 	}
 	var sourceSmartsheetsAPIAccessToken *shared.SourceSmartsheetsAPIAccessToken
@@ -39,7 +39,7 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	}
 	if sourceSmartsheetsAPIAccessToken != nil {
 		credentials = shared.SourceSmartsheetsAuthorizationMethod{
-			APIAccessToken: sourceSmartsheetsAPIAccessToken,
+			SourceSmartsheetsAPIAccessToken: sourceSmartsheetsAPIAccessToken,
 		}
 	}
 	var metadataFields []shared.SourceSmartsheetsValidenums = nil
@@ -100,7 +100,7 @@ func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsh
 	}
 	if sourceSmartsheetsUpdateOAuth20 != nil {
 		credentials = shared.SourceSmartsheetsUpdateAuthorizationMethod{
-			OAuth20: sourceSmartsheetsUpdateOAuth20,
+			SourceSmartsheetsUpdateOAuth20: sourceSmartsheetsUpdateOAuth20,
 		}
 	}
 	var apiAccessToken *shared.APIAccessToken

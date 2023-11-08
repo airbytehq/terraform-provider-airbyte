@@ -28,7 +28,7 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 		}
 		if sourceSlackSignInViaSlackOAuth != nil {
 			credentials = &shared.SourceSlackAuthenticationMechanism{
-				SignInViaSlackOAuth: sourceSlackSignInViaSlackOAuth,
+				SourceSlackSignInViaSlackOAuth: sourceSlackSignInViaSlackOAuth,
 			}
 		}
 		var sourceSlackAPIToken *shared.SourceSlackAPIToken
@@ -40,7 +40,7 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 		}
 		if sourceSlackAPIToken != nil {
 			credentials = &shared.SourceSlackAuthenticationMechanism{
-				APIToken: sourceSlackAPIToken,
+				SourceSlackAPIToken: sourceSlackAPIToken,
 			}
 		}
 	}
@@ -118,7 +118,7 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 		}
 		if sourceSlackUpdateAPIToken != nil {
 			credentials = &shared.SourceSlackUpdateAuthenticationMechanism{
-				APIToken: sourceSlackUpdateAPIToken,
+				SourceSlackUpdateAPIToken: sourceSlackUpdateAPIToken,
 			}
 		}
 	}

@@ -222,66 +222,66 @@ func (o *DestinationRedshiftUpdateNoTunnel) GetTunnelMethod() DestinationRedshif
 type DestinationRedshiftUpdateSSHTunnelMethodType string
 
 const (
-	DestinationRedshiftUpdateSSHTunnelMethodTypeNoTunnel               DestinationRedshiftUpdateSSHTunnelMethodType = "NoTunnel"
-	DestinationRedshiftUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationRedshiftUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationRedshiftUpdateSSHTunnelMethodTypePasswordAuthentication DestinationRedshiftUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel               DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_No Tunnel"
+	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication   DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_SSH Key Authentication"
+	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_Password Authentication"
 )
 
 type DestinationRedshiftUpdateSSHTunnelMethod struct {
-	NoTunnel               *DestinationRedshiftUpdateNoTunnel
-	SSHKeyAuthentication   *DestinationRedshiftUpdateSSHKeyAuthentication
-	PasswordAuthentication *DestinationRedshiftUpdatePasswordAuthentication
+	DestinationRedshiftUpdateNoTunnel               *DestinationRedshiftUpdateNoTunnel
+	DestinationRedshiftUpdateSSHKeyAuthentication   *DestinationRedshiftUpdateSSHKeyAuthentication
+	DestinationRedshiftUpdatePasswordAuthentication *DestinationRedshiftUpdatePasswordAuthentication
 
 	Type DestinationRedshiftUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationRedshiftUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationRedshiftUpdateNoTunnel) DestinationRedshiftUpdateSSHTunnelMethod {
-	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeNoTunnel
+func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdateNoTunnel(destinationRedshiftUpdateNoTunnel DestinationRedshiftUpdateNoTunnel) DestinationRedshiftUpdateSSHTunnelMethod {
+	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel
 
 	return DestinationRedshiftUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationRedshiftUpdateNoTunnel: &destinationRedshiftUpdateNoTunnel,
+		Type:                              typ,
 	}
 }
 
-func CreateDestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationRedshiftUpdateSSHKeyAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
-	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdateSSHKeyAuthentication(destinationRedshiftUpdateSSHKeyAuthentication DestinationRedshiftUpdateSSHKeyAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
+	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication
 
 	return DestinationRedshiftUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationRedshiftUpdateSSHKeyAuthentication: &destinationRedshiftUpdateSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationRedshiftUpdatePasswordAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
-	typ := DestinationRedshiftUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationRedshiftUpdateSSHTunnelMethodDestinationRedshiftUpdatePasswordAuthentication(destinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdatePasswordAuthentication) DestinationRedshiftUpdateSSHTunnelMethod {
+	typ := DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication
 
 	return DestinationRedshiftUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationRedshiftUpdatePasswordAuthentication: &destinationRedshiftUpdatePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationRedshiftUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationRedshiftUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeNoTunnel
+	destinationRedshiftUpdateNoTunnel := new(DestinationRedshiftUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationRedshiftUpdateNoTunnel = destinationRedshiftUpdateNoTunnel
+		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationRedshiftUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationRedshiftUpdateSSHKeyAuthentication := new(DestinationRedshiftUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftUpdateSSHKeyAuthentication = destinationRedshiftUpdateSSHKeyAuthentication
+		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationRedshiftUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypePasswordAuthentication
+	destinationRedshiftUpdatePasswordAuthentication := new(DestinationRedshiftUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftUpdatePasswordAuthentication = destinationRedshiftUpdatePasswordAuthentication
+		u.Type = DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -289,16 +289,16 @@ func (u *DestinationRedshiftUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) er
 }
 
 func (u DestinationRedshiftUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationRedshiftUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationRedshiftUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationRedshiftUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -404,8 +404,8 @@ func (o *NoEncryption) GetEncryptionType() *EncryptionType {
 type DestinationRedshiftUpdateEncryptionUnionType string
 
 const (
-	DestinationRedshiftUpdateEncryptionUnionTypeNoEncryption             DestinationRedshiftUpdateEncryptionUnionType = "NoEncryption"
-	DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption DestinationRedshiftUpdateEncryptionUnionType = "AESCBCEnvelopeEncryption"
+	DestinationRedshiftUpdateEncryptionUnionTypeNoEncryption             DestinationRedshiftUpdateEncryptionUnionType = "No encryption"
+	DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption DestinationRedshiftUpdateEncryptionUnionType = "AES-CBC envelope encryption"
 )
 
 type DestinationRedshiftUpdateEncryption struct {
@@ -424,11 +424,11 @@ func CreateDestinationRedshiftUpdateEncryptionNoEncryption(noEncryption NoEncryp
 	}
 }
 
-func CreateDestinationRedshiftUpdateEncryptionAESCBCEnvelopeEncryption(aescbcEnvelopeEncryption AESCBCEnvelopeEncryption) DestinationRedshiftUpdateEncryption {
+func CreateDestinationRedshiftUpdateEncryptionAESCBCEnvelopeEncryption(aesCBCEnvelopeEncryption AESCBCEnvelopeEncryption) DestinationRedshiftUpdateEncryption {
 	typ := DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption
 
 	return DestinationRedshiftUpdateEncryption{
-		AESCBCEnvelopeEncryption: &aescbcEnvelopeEncryption,
+		AESCBCEnvelopeEncryption: &aesCBCEnvelopeEncryption,
 		Type:                     typ,
 	}
 }
@@ -442,9 +442,9 @@ func (u *DestinationRedshiftUpdateEncryption) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	aescbcEnvelopeEncryption := new(AESCBCEnvelopeEncryption)
-	if err := utils.UnmarshalJSON(data, &aescbcEnvelopeEncryption, "", true, true); err == nil {
-		u.AESCBCEnvelopeEncryption = aescbcEnvelopeEncryption
+	aesCBCEnvelopeEncryption := new(AESCBCEnvelopeEncryption)
+	if err := utils.UnmarshalJSON(data, &aesCBCEnvelopeEncryption, "", true, true); err == nil {
+		u.AESCBCEnvelopeEncryption = aesCBCEnvelopeEncryption
 		u.Type = DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption
 		return nil
 	}
@@ -731,7 +731,7 @@ type UploadingMethodType string
 
 const (
 	UploadingMethodTypeStandard  UploadingMethodType = "Standard"
-	UploadingMethodTypeS3Staging UploadingMethodType = "S3Staging"
+	UploadingMethodTypeS3Staging UploadingMethodType = "S3 Staging"
 )
 
 type UploadingMethod struct {

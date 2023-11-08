@@ -259,66 +259,66 @@ func (o *SourceAlloydbStandardXmin) GetMethod() SourceAlloydbMethod {
 type SourceAlloydbReplicationMethodType string
 
 const (
-	SourceAlloydbReplicationMethodTypeStandardXmin          SourceAlloydbReplicationMethodType = "StandardXmin"
-	SourceAlloydbReplicationMethodTypeLogicalReplicationCDC SourceAlloydbReplicationMethodType = "LogicalReplicationCDC"
-	SourceAlloydbReplicationMethodTypeStandard              SourceAlloydbReplicationMethodType = "Standard"
+	SourceAlloydbReplicationMethodTypeSourceAlloydbStandardXmin          SourceAlloydbReplicationMethodType = "source-alloydb_Standard (Xmin)"
+	SourceAlloydbReplicationMethodTypeSourceAlloydbLogicalReplicationCDC SourceAlloydbReplicationMethodType = "source-alloydb_Logical Replication (CDC)"
+	SourceAlloydbReplicationMethodTypeSourceAlloydbStandard              SourceAlloydbReplicationMethodType = "source-alloydb_Standard"
 )
 
 type SourceAlloydbReplicationMethod struct {
-	StandardXmin          *SourceAlloydbStandardXmin
-	LogicalReplicationCDC *SourceAlloydbLogicalReplicationCDC
-	Standard              *SourceAlloydbStandard
+	SourceAlloydbStandardXmin          *SourceAlloydbStandardXmin
+	SourceAlloydbLogicalReplicationCDC *SourceAlloydbLogicalReplicationCDC
+	SourceAlloydbStandard              *SourceAlloydbStandard
 
 	Type SourceAlloydbReplicationMethodType
 }
 
-func CreateSourceAlloydbReplicationMethodStandardXmin(standardXmin SourceAlloydbStandardXmin) SourceAlloydbReplicationMethod {
-	typ := SourceAlloydbReplicationMethodTypeStandardXmin
+func CreateSourceAlloydbReplicationMethodSourceAlloydbStandardXmin(sourceAlloydbStandardXmin SourceAlloydbStandardXmin) SourceAlloydbReplicationMethod {
+	typ := SourceAlloydbReplicationMethodTypeSourceAlloydbStandardXmin
 
 	return SourceAlloydbReplicationMethod{
-		StandardXmin: &standardXmin,
-		Type:         typ,
+		SourceAlloydbStandardXmin: &sourceAlloydbStandardXmin,
+		Type:                      typ,
 	}
 }
 
-func CreateSourceAlloydbReplicationMethodLogicalReplicationCDC(logicalReplicationCDC SourceAlloydbLogicalReplicationCDC) SourceAlloydbReplicationMethod {
-	typ := SourceAlloydbReplicationMethodTypeLogicalReplicationCDC
+func CreateSourceAlloydbReplicationMethodSourceAlloydbLogicalReplicationCDC(sourceAlloydbLogicalReplicationCDC SourceAlloydbLogicalReplicationCDC) SourceAlloydbReplicationMethod {
+	typ := SourceAlloydbReplicationMethodTypeSourceAlloydbLogicalReplicationCDC
 
 	return SourceAlloydbReplicationMethod{
-		LogicalReplicationCDC: &logicalReplicationCDC,
+		SourceAlloydbLogicalReplicationCDC: &sourceAlloydbLogicalReplicationCDC,
+		Type:                               typ,
+	}
+}
+
+func CreateSourceAlloydbReplicationMethodSourceAlloydbStandard(sourceAlloydbStandard SourceAlloydbStandard) SourceAlloydbReplicationMethod {
+	typ := SourceAlloydbReplicationMethodTypeSourceAlloydbStandard
+
+	return SourceAlloydbReplicationMethod{
+		SourceAlloydbStandard: &sourceAlloydbStandard,
 		Type:                  typ,
-	}
-}
-
-func CreateSourceAlloydbReplicationMethodStandard(standard SourceAlloydbStandard) SourceAlloydbReplicationMethod {
-	typ := SourceAlloydbReplicationMethodTypeStandard
-
-	return SourceAlloydbReplicationMethod{
-		Standard: &standard,
-		Type:     typ,
 	}
 }
 
 func (u *SourceAlloydbReplicationMethod) UnmarshalJSON(data []byte) error {
 
-	standardXmin := new(SourceAlloydbStandardXmin)
-	if err := utils.UnmarshalJSON(data, &standardXmin, "", true, true); err == nil {
-		u.StandardXmin = standardXmin
-		u.Type = SourceAlloydbReplicationMethodTypeStandardXmin
+	sourceAlloydbStandardXmin := new(SourceAlloydbStandardXmin)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbStandardXmin, "", true, true); err == nil {
+		u.SourceAlloydbStandardXmin = sourceAlloydbStandardXmin
+		u.Type = SourceAlloydbReplicationMethodTypeSourceAlloydbStandardXmin
 		return nil
 	}
 
-	standard := new(SourceAlloydbStandard)
-	if err := utils.UnmarshalJSON(data, &standard, "", true, true); err == nil {
-		u.Standard = standard
-		u.Type = SourceAlloydbReplicationMethodTypeStandard
+	sourceAlloydbStandard := new(SourceAlloydbStandard)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbStandard, "", true, true); err == nil {
+		u.SourceAlloydbStandard = sourceAlloydbStandard
+		u.Type = SourceAlloydbReplicationMethodTypeSourceAlloydbStandard
 		return nil
 	}
 
-	logicalReplicationCDC := new(SourceAlloydbLogicalReplicationCDC)
-	if err := utils.UnmarshalJSON(data, &logicalReplicationCDC, "", true, true); err == nil {
-		u.LogicalReplicationCDC = logicalReplicationCDC
-		u.Type = SourceAlloydbReplicationMethodTypeLogicalReplicationCDC
+	sourceAlloydbLogicalReplicationCDC := new(SourceAlloydbLogicalReplicationCDC)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbLogicalReplicationCDC, "", true, true); err == nil {
+		u.SourceAlloydbLogicalReplicationCDC = sourceAlloydbLogicalReplicationCDC
+		u.Type = SourceAlloydbReplicationMethodTypeSourceAlloydbLogicalReplicationCDC
 		return nil
 	}
 
@@ -326,16 +326,16 @@ func (u *SourceAlloydbReplicationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAlloydbReplicationMethod) MarshalJSON() ([]byte, error) {
-	if u.StandardXmin != nil {
-		return utils.MarshalJSON(u.StandardXmin, "", true)
+	if u.SourceAlloydbStandardXmin != nil {
+		return utils.MarshalJSON(u.SourceAlloydbStandardXmin, "", true)
 	}
 
-	if u.LogicalReplicationCDC != nil {
-		return utils.MarshalJSON(u.LogicalReplicationCDC, "", true)
+	if u.SourceAlloydbLogicalReplicationCDC != nil {
+		return utils.MarshalJSON(u.SourceAlloydbLogicalReplicationCDC, "", true)
 	}
 
-	if u.Standard != nil {
-		return utils.MarshalJSON(u.Standard, "", true)
+	if u.SourceAlloydbStandard != nil {
+		return utils.MarshalJSON(u.SourceAlloydbStandard, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -752,120 +752,120 @@ func (o *SourceAlloydbDisable) GetMode() SourceAlloydbMode {
 type SourceAlloydbSSLModesType string
 
 const (
-	SourceAlloydbSSLModesTypeDisable    SourceAlloydbSSLModesType = "Disable"
-	SourceAlloydbSSLModesTypeAllow      SourceAlloydbSSLModesType = "Allow"
-	SourceAlloydbSSLModesTypePrefer     SourceAlloydbSSLModesType = "Prefer"
-	SourceAlloydbSSLModesTypeRequire    SourceAlloydbSSLModesType = "Require"
-	SourceAlloydbSSLModesTypeVerifyCa   SourceAlloydbSSLModesType = "VerifyCa"
-	SourceAlloydbSSLModesTypeVerifyFull SourceAlloydbSSLModesType = "VerifyFull"
+	SourceAlloydbSSLModesTypeSourceAlloydbDisable    SourceAlloydbSSLModesType = "source-alloydb_disable"
+	SourceAlloydbSSLModesTypeSourceAlloydbAllow      SourceAlloydbSSLModesType = "source-alloydb_allow"
+	SourceAlloydbSSLModesTypeSourceAlloydbPrefer     SourceAlloydbSSLModesType = "source-alloydb_prefer"
+	SourceAlloydbSSLModesTypeSourceAlloydbRequire    SourceAlloydbSSLModesType = "source-alloydb_require"
+	SourceAlloydbSSLModesTypeSourceAlloydbVerifyCa   SourceAlloydbSSLModesType = "source-alloydb_verify-ca"
+	SourceAlloydbSSLModesTypeSourceAlloydbVerifyFull SourceAlloydbSSLModesType = "source-alloydb_verify-full"
 )
 
 type SourceAlloydbSSLModes struct {
-	Disable    *SourceAlloydbDisable
-	Allow      *SourceAlloydbAllow
-	Prefer     *SourceAlloydbPrefer
-	Require    *SourceAlloydbRequire
-	VerifyCa   *SourceAlloydbVerifyCa
-	VerifyFull *SourceAlloydbVerifyFull
+	SourceAlloydbDisable    *SourceAlloydbDisable
+	SourceAlloydbAllow      *SourceAlloydbAllow
+	SourceAlloydbPrefer     *SourceAlloydbPrefer
+	SourceAlloydbRequire    *SourceAlloydbRequire
+	SourceAlloydbVerifyCa   *SourceAlloydbVerifyCa
+	SourceAlloydbVerifyFull *SourceAlloydbVerifyFull
 
 	Type SourceAlloydbSSLModesType
 }
 
-func CreateSourceAlloydbSSLModesDisable(disable SourceAlloydbDisable) SourceAlloydbSSLModes {
-	typ := SourceAlloydbSSLModesTypeDisable
+func CreateSourceAlloydbSSLModesSourceAlloydbDisable(sourceAlloydbDisable SourceAlloydbDisable) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbDisable
 
 	return SourceAlloydbSSLModes{
-		Disable: &disable,
-		Type:    typ,
+		SourceAlloydbDisable: &sourceAlloydbDisable,
+		Type:                 typ,
 	}
 }
 
-func CreateSourceAlloydbSSLModesAllow(allow SourceAlloydbAllow) SourceAlloydbSSLModes {
-	typ := SourceAlloydbSSLModesTypeAllow
+func CreateSourceAlloydbSSLModesSourceAlloydbAllow(sourceAlloydbAllow SourceAlloydbAllow) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbAllow
 
 	return SourceAlloydbSSLModes{
-		Allow: &allow,
-		Type:  typ,
+		SourceAlloydbAllow: &sourceAlloydbAllow,
+		Type:               typ,
 	}
 }
 
-func CreateSourceAlloydbSSLModesPrefer(prefer SourceAlloydbPrefer) SourceAlloydbSSLModes {
-	typ := SourceAlloydbSSLModesTypePrefer
+func CreateSourceAlloydbSSLModesSourceAlloydbPrefer(sourceAlloydbPrefer SourceAlloydbPrefer) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbPrefer
 
 	return SourceAlloydbSSLModes{
-		Prefer: &prefer,
-		Type:   typ,
+		SourceAlloydbPrefer: &sourceAlloydbPrefer,
+		Type:                typ,
 	}
 }
 
-func CreateSourceAlloydbSSLModesRequire(require SourceAlloydbRequire) SourceAlloydbSSLModes {
-	typ := SourceAlloydbSSLModesTypeRequire
+func CreateSourceAlloydbSSLModesSourceAlloydbRequire(sourceAlloydbRequire SourceAlloydbRequire) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbRequire
 
 	return SourceAlloydbSSLModes{
-		Require: &require,
-		Type:    typ,
+		SourceAlloydbRequire: &sourceAlloydbRequire,
+		Type:                 typ,
 	}
 }
 
-func CreateSourceAlloydbSSLModesVerifyCa(verifyCa SourceAlloydbVerifyCa) SourceAlloydbSSLModes {
-	typ := SourceAlloydbSSLModesTypeVerifyCa
+func CreateSourceAlloydbSSLModesSourceAlloydbVerifyCa(sourceAlloydbVerifyCa SourceAlloydbVerifyCa) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbVerifyCa
 
 	return SourceAlloydbSSLModes{
-		VerifyCa: &verifyCa,
-		Type:     typ,
+		SourceAlloydbVerifyCa: &sourceAlloydbVerifyCa,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceAlloydbSSLModesVerifyFull(verifyFull SourceAlloydbVerifyFull) SourceAlloydbSSLModes {
-	typ := SourceAlloydbSSLModesTypeVerifyFull
+func CreateSourceAlloydbSSLModesSourceAlloydbVerifyFull(sourceAlloydbVerifyFull SourceAlloydbVerifyFull) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbVerifyFull
 
 	return SourceAlloydbSSLModes{
-		VerifyFull: &verifyFull,
-		Type:       typ,
+		SourceAlloydbVerifyFull: &sourceAlloydbVerifyFull,
+		Type:                    typ,
 	}
 }
 
 func (u *SourceAlloydbSSLModes) UnmarshalJSON(data []byte) error {
 
-	disable := new(SourceAlloydbDisable)
-	if err := utils.UnmarshalJSON(data, &disable, "", true, true); err == nil {
-		u.Disable = disable
-		u.Type = SourceAlloydbSSLModesTypeDisable
+	sourceAlloydbDisable := new(SourceAlloydbDisable)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbDisable, "", true, true); err == nil {
+		u.SourceAlloydbDisable = sourceAlloydbDisable
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbDisable
 		return nil
 	}
 
-	allow := new(SourceAlloydbAllow)
-	if err := utils.UnmarshalJSON(data, &allow, "", true, true); err == nil {
-		u.Allow = allow
-		u.Type = SourceAlloydbSSLModesTypeAllow
+	sourceAlloydbAllow := new(SourceAlloydbAllow)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbAllow, "", true, true); err == nil {
+		u.SourceAlloydbAllow = sourceAlloydbAllow
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbAllow
 		return nil
 	}
 
-	prefer := new(SourceAlloydbPrefer)
-	if err := utils.UnmarshalJSON(data, &prefer, "", true, true); err == nil {
-		u.Prefer = prefer
-		u.Type = SourceAlloydbSSLModesTypePrefer
+	sourceAlloydbPrefer := new(SourceAlloydbPrefer)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbPrefer, "", true, true); err == nil {
+		u.SourceAlloydbPrefer = sourceAlloydbPrefer
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbPrefer
 		return nil
 	}
 
-	require := new(SourceAlloydbRequire)
-	if err := utils.UnmarshalJSON(data, &require, "", true, true); err == nil {
-		u.Require = require
-		u.Type = SourceAlloydbSSLModesTypeRequire
+	sourceAlloydbRequire := new(SourceAlloydbRequire)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbRequire, "", true, true); err == nil {
+		u.SourceAlloydbRequire = sourceAlloydbRequire
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbRequire
 		return nil
 	}
 
-	verifyCa := new(SourceAlloydbVerifyCa)
-	if err := utils.UnmarshalJSON(data, &verifyCa, "", true, true); err == nil {
-		u.VerifyCa = verifyCa
-		u.Type = SourceAlloydbSSLModesTypeVerifyCa
+	sourceAlloydbVerifyCa := new(SourceAlloydbVerifyCa)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbVerifyCa, "", true, true); err == nil {
+		u.SourceAlloydbVerifyCa = sourceAlloydbVerifyCa
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbVerifyCa
 		return nil
 	}
 
-	verifyFull := new(SourceAlloydbVerifyFull)
-	if err := utils.UnmarshalJSON(data, &verifyFull, "", true, true); err == nil {
-		u.VerifyFull = verifyFull
-		u.Type = SourceAlloydbSSLModesTypeVerifyFull
+	sourceAlloydbVerifyFull := new(SourceAlloydbVerifyFull)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbVerifyFull, "", true, true); err == nil {
+		u.SourceAlloydbVerifyFull = sourceAlloydbVerifyFull
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbVerifyFull
 		return nil
 	}
 
@@ -873,28 +873,28 @@ func (u *SourceAlloydbSSLModes) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAlloydbSSLModes) MarshalJSON() ([]byte, error) {
-	if u.Disable != nil {
-		return utils.MarshalJSON(u.Disable, "", true)
+	if u.SourceAlloydbDisable != nil {
+		return utils.MarshalJSON(u.SourceAlloydbDisable, "", true)
 	}
 
-	if u.Allow != nil {
-		return utils.MarshalJSON(u.Allow, "", true)
+	if u.SourceAlloydbAllow != nil {
+		return utils.MarshalJSON(u.SourceAlloydbAllow, "", true)
 	}
 
-	if u.Prefer != nil {
-		return utils.MarshalJSON(u.Prefer, "", true)
+	if u.SourceAlloydbPrefer != nil {
+		return utils.MarshalJSON(u.SourceAlloydbPrefer, "", true)
 	}
 
-	if u.Require != nil {
-		return utils.MarshalJSON(u.Require, "", true)
+	if u.SourceAlloydbRequire != nil {
+		return utils.MarshalJSON(u.SourceAlloydbRequire, "", true)
 	}
 
-	if u.VerifyCa != nil {
-		return utils.MarshalJSON(u.VerifyCa, "", true)
+	if u.SourceAlloydbVerifyCa != nil {
+		return utils.MarshalJSON(u.SourceAlloydbVerifyCa, "", true)
 	}
 
-	if u.VerifyFull != nil {
-		return utils.MarshalJSON(u.VerifyFull, "", true)
+	if u.SourceAlloydbVerifyFull != nil {
+		return utils.MarshalJSON(u.SourceAlloydbVerifyFull, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1113,66 +1113,66 @@ func (o *SourceAlloydbNoTunnel) GetTunnelMethod() SourceAlloydbTunnelMethod {
 type SourceAlloydbSSHTunnelMethodType string
 
 const (
-	SourceAlloydbSSHTunnelMethodTypeNoTunnel               SourceAlloydbSSHTunnelMethodType = "NoTunnel"
-	SourceAlloydbSSHTunnelMethodTypeSSHKeyAuthentication   SourceAlloydbSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourceAlloydbSSHTunnelMethodTypePasswordAuthentication SourceAlloydbSSHTunnelMethodType = "PasswordAuthentication"
+	SourceAlloydbSSHTunnelMethodTypeSourceAlloydbNoTunnel               SourceAlloydbSSHTunnelMethodType = "source-alloydb_No Tunnel"
+	SourceAlloydbSSHTunnelMethodTypeSourceAlloydbSSHKeyAuthentication   SourceAlloydbSSHTunnelMethodType = "source-alloydb_SSH Key Authentication"
+	SourceAlloydbSSHTunnelMethodTypeSourceAlloydbPasswordAuthentication SourceAlloydbSSHTunnelMethodType = "source-alloydb_Password Authentication"
 )
 
 type SourceAlloydbSSHTunnelMethod struct {
-	NoTunnel               *SourceAlloydbNoTunnel
-	SSHKeyAuthentication   *SourceAlloydbSSHKeyAuthentication
-	PasswordAuthentication *SourceAlloydbPasswordAuthentication
+	SourceAlloydbNoTunnel               *SourceAlloydbNoTunnel
+	SourceAlloydbSSHKeyAuthentication   *SourceAlloydbSSHKeyAuthentication
+	SourceAlloydbPasswordAuthentication *SourceAlloydbPasswordAuthentication
 
 	Type SourceAlloydbSSHTunnelMethodType
 }
 
-func CreateSourceAlloydbSSHTunnelMethodNoTunnel(noTunnel SourceAlloydbNoTunnel) SourceAlloydbSSHTunnelMethod {
-	typ := SourceAlloydbSSHTunnelMethodTypeNoTunnel
+func CreateSourceAlloydbSSHTunnelMethodSourceAlloydbNoTunnel(sourceAlloydbNoTunnel SourceAlloydbNoTunnel) SourceAlloydbSSHTunnelMethod {
+	typ := SourceAlloydbSSHTunnelMethodTypeSourceAlloydbNoTunnel
 
 	return SourceAlloydbSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		SourceAlloydbNoTunnel: &sourceAlloydbNoTunnel,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceAlloydbSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceAlloydbSSHKeyAuthentication) SourceAlloydbSSHTunnelMethod {
-	typ := SourceAlloydbSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateSourceAlloydbSSHTunnelMethodSourceAlloydbSSHKeyAuthentication(sourceAlloydbSSHKeyAuthentication SourceAlloydbSSHKeyAuthentication) SourceAlloydbSSHTunnelMethod {
+	typ := SourceAlloydbSSHTunnelMethodTypeSourceAlloydbSSHKeyAuthentication
 
 	return SourceAlloydbSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		SourceAlloydbSSHKeyAuthentication: &sourceAlloydbSSHKeyAuthentication,
+		Type:                              typ,
 	}
 }
 
-func CreateSourceAlloydbSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceAlloydbPasswordAuthentication) SourceAlloydbSSHTunnelMethod {
-	typ := SourceAlloydbSSHTunnelMethodTypePasswordAuthentication
+func CreateSourceAlloydbSSHTunnelMethodSourceAlloydbPasswordAuthentication(sourceAlloydbPasswordAuthentication SourceAlloydbPasswordAuthentication) SourceAlloydbSSHTunnelMethod {
+	typ := SourceAlloydbSSHTunnelMethodTypeSourceAlloydbPasswordAuthentication
 
 	return SourceAlloydbSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceAlloydbPasswordAuthentication: &sourceAlloydbPasswordAuthentication,
+		Type:                                typ,
 	}
 }
 
 func (u *SourceAlloydbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourceAlloydbNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourceAlloydbSSHTunnelMethodTypeNoTunnel
+	sourceAlloydbNoTunnel := new(SourceAlloydbNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbNoTunnel, "", true, true); err == nil {
+		u.SourceAlloydbNoTunnel = sourceAlloydbNoTunnel
+		u.Type = SourceAlloydbSSHTunnelMethodTypeSourceAlloydbNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceAlloydbSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceAlloydbSSHTunnelMethodTypeSSHKeyAuthentication
+	sourceAlloydbSSHKeyAuthentication := new(SourceAlloydbSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceAlloydbSSHKeyAuthentication = sourceAlloydbSSHKeyAuthentication
+		u.Type = SourceAlloydbSSHTunnelMethodTypeSourceAlloydbSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourceAlloydbPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceAlloydbSSHTunnelMethodTypePasswordAuthentication
+	sourceAlloydbPasswordAuthentication := new(SourceAlloydbPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceAlloydbPasswordAuthentication, "", true, true); err == nil {
+		u.SourceAlloydbPasswordAuthentication = sourceAlloydbPasswordAuthentication
+		u.Type = SourceAlloydbSSHTunnelMethodTypeSourceAlloydbPasswordAuthentication
 		return nil
 	}
 
@@ -1180,16 +1180,16 @@ func (u *SourceAlloydbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAlloydbSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourceAlloydbNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceAlloydbNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceAlloydbSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceAlloydbSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceAlloydbPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceAlloydbPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

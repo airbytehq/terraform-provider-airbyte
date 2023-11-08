@@ -19,7 +19,7 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 		}
 		if sourceSftpPasswordAuthentication != nil {
 			credentials = &shared.SourceSftpAuthenticationWildcard{
-				PasswordAuthentication: sourceSftpPasswordAuthentication,
+				SourceSftpPasswordAuthentication: sourceSftpPasswordAuthentication,
 			}
 		}
 		var sourceSftpSSHKeyAuthentication *shared.SourceSftpSSHKeyAuthentication
@@ -31,7 +31,7 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 		}
 		if sourceSftpSSHKeyAuthentication != nil {
 			credentials = &shared.SourceSftpAuthenticationWildcard{
-				SSHKeyAuthentication: sourceSftpSSHKeyAuthentication,
+				SourceSftpSSHKeyAuthentication: sourceSftpSSHKeyAuthentication,
 			}
 		}
 	}
@@ -104,7 +104,7 @@ func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest
 		}
 		if sourceSftpUpdatePasswordAuthentication != nil {
 			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
-				PasswordAuthentication: sourceSftpUpdatePasswordAuthentication,
+				SourceSftpUpdatePasswordAuthentication: sourceSftpUpdatePasswordAuthentication,
 			}
 		}
 		var sourceSftpUpdateSSHKeyAuthentication *shared.SourceSftpUpdateSSHKeyAuthentication
@@ -116,7 +116,7 @@ func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest
 		}
 		if sourceSftpUpdateSSHKeyAuthentication != nil {
 			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
-				SSHKeyAuthentication: sourceSftpUpdateSSHKeyAuthentication,
+				SourceSftpUpdateSSHKeyAuthentication: sourceSftpUpdateSSHKeyAuthentication,
 			}
 		}
 	}

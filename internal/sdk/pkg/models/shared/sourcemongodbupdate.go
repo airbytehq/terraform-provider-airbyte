@@ -197,66 +197,66 @@ func (o *SourceMongodbUpdateStandaloneMongoDbInstance) GetPort() *int64 {
 type SourceMongodbUpdateMongoDbInstanceTypeType string
 
 const (
-	SourceMongodbUpdateMongoDbInstanceTypeTypeStandaloneMongoDbInstance SourceMongodbUpdateMongoDbInstanceTypeType = "StandaloneMongoDbInstance"
-	SourceMongodbUpdateMongoDbInstanceTypeTypeReplicaSet                SourceMongodbUpdateMongoDbInstanceTypeType = "ReplicaSet"
-	SourceMongodbUpdateMongoDbInstanceTypeTypeMongoDBAtlas              SourceMongodbUpdateMongoDbInstanceTypeType = "MongoDBAtlas"
+	SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateStandaloneMongoDbInstance SourceMongodbUpdateMongoDbInstanceTypeType = "source-mongodb-update_Standalone MongoDb Instance"
+	SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateReplicaSet                SourceMongodbUpdateMongoDbInstanceTypeType = "source-mongodb-update_Replica Set"
+	SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDBAtlas              SourceMongodbUpdateMongoDbInstanceTypeType = "source-mongodb-update_MongoDB Atlas"
 )
 
 type SourceMongodbUpdateMongoDbInstanceType struct {
-	StandaloneMongoDbInstance *SourceMongodbUpdateStandaloneMongoDbInstance
-	ReplicaSet                *SourceMongodbUpdateReplicaSet
-	MongoDBAtlas              *SourceMongodbUpdateMongoDBAtlas
+	SourceMongodbUpdateStandaloneMongoDbInstance *SourceMongodbUpdateStandaloneMongoDbInstance
+	SourceMongodbUpdateReplicaSet                *SourceMongodbUpdateReplicaSet
+	SourceMongodbUpdateMongoDBAtlas              *SourceMongodbUpdateMongoDBAtlas
 
 	Type SourceMongodbUpdateMongoDbInstanceTypeType
 }
 
-func CreateSourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance(standaloneMongoDbInstance SourceMongodbUpdateStandaloneMongoDbInstance) SourceMongodbUpdateMongoDbInstanceType {
-	typ := SourceMongodbUpdateMongoDbInstanceTypeTypeStandaloneMongoDbInstance
+func CreateSourceMongodbUpdateMongoDbInstanceTypeSourceMongodbUpdateStandaloneMongoDbInstance(sourceMongodbUpdateStandaloneMongoDbInstance SourceMongodbUpdateStandaloneMongoDbInstance) SourceMongodbUpdateMongoDbInstanceType {
+	typ := SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateStandaloneMongoDbInstance
 
 	return SourceMongodbUpdateMongoDbInstanceType{
-		StandaloneMongoDbInstance: &standaloneMongoDbInstance,
-		Type:                      typ,
+		SourceMongodbUpdateStandaloneMongoDbInstance: &sourceMongodbUpdateStandaloneMongoDbInstance,
+		Type: typ,
 	}
 }
 
-func CreateSourceMongodbUpdateMongoDbInstanceTypeReplicaSet(replicaSet SourceMongodbUpdateReplicaSet) SourceMongodbUpdateMongoDbInstanceType {
-	typ := SourceMongodbUpdateMongoDbInstanceTypeTypeReplicaSet
+func CreateSourceMongodbUpdateMongoDbInstanceTypeSourceMongodbUpdateReplicaSet(sourceMongodbUpdateReplicaSet SourceMongodbUpdateReplicaSet) SourceMongodbUpdateMongoDbInstanceType {
+	typ := SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateReplicaSet
 
 	return SourceMongodbUpdateMongoDbInstanceType{
-		ReplicaSet: &replicaSet,
-		Type:       typ,
+		SourceMongodbUpdateReplicaSet: &sourceMongodbUpdateReplicaSet,
+		Type:                          typ,
 	}
 }
 
-func CreateSourceMongodbUpdateMongoDbInstanceTypeMongoDBAtlas(mongoDBAtlas SourceMongodbUpdateMongoDBAtlas) SourceMongodbUpdateMongoDbInstanceType {
-	typ := SourceMongodbUpdateMongoDbInstanceTypeTypeMongoDBAtlas
+func CreateSourceMongodbUpdateMongoDbInstanceTypeSourceMongodbUpdateMongoDBAtlas(sourceMongodbUpdateMongoDBAtlas SourceMongodbUpdateMongoDBAtlas) SourceMongodbUpdateMongoDbInstanceType {
+	typ := SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDBAtlas
 
 	return SourceMongodbUpdateMongoDbInstanceType{
-		MongoDBAtlas: &mongoDBAtlas,
-		Type:         typ,
+		SourceMongodbUpdateMongoDBAtlas: &sourceMongodbUpdateMongoDBAtlas,
+		Type:                            typ,
 	}
 }
 
 func (u *SourceMongodbUpdateMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 
-	standaloneMongoDbInstance := new(SourceMongodbUpdateStandaloneMongoDbInstance)
-	if err := utils.UnmarshalJSON(data, &standaloneMongoDbInstance, "", true, true); err == nil {
-		u.StandaloneMongoDbInstance = standaloneMongoDbInstance
-		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeStandaloneMongoDbInstance
+	sourceMongodbUpdateStandaloneMongoDbInstance := new(SourceMongodbUpdateStandaloneMongoDbInstance)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbUpdateStandaloneMongoDbInstance, "", true, true); err == nil {
+		u.SourceMongodbUpdateStandaloneMongoDbInstance = sourceMongodbUpdateStandaloneMongoDbInstance
+		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateStandaloneMongoDbInstance
 		return nil
 	}
 
-	replicaSet := new(SourceMongodbUpdateReplicaSet)
-	if err := utils.UnmarshalJSON(data, &replicaSet, "", true, true); err == nil {
-		u.ReplicaSet = replicaSet
-		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeReplicaSet
+	sourceMongodbUpdateReplicaSet := new(SourceMongodbUpdateReplicaSet)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbUpdateReplicaSet, "", true, true); err == nil {
+		u.SourceMongodbUpdateReplicaSet = sourceMongodbUpdateReplicaSet
+		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateReplicaSet
 		return nil
 	}
 
-	mongoDBAtlas := new(SourceMongodbUpdateMongoDBAtlas)
-	if err := utils.UnmarshalJSON(data, &mongoDBAtlas, "", true, true); err == nil {
-		u.MongoDBAtlas = mongoDBAtlas
-		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeMongoDBAtlas
+	sourceMongodbUpdateMongoDBAtlas := new(SourceMongodbUpdateMongoDBAtlas)
+	if err := utils.UnmarshalJSON(data, &sourceMongodbUpdateMongoDBAtlas, "", true, true); err == nil {
+		u.SourceMongodbUpdateMongoDBAtlas = sourceMongodbUpdateMongoDBAtlas
+		u.Type = SourceMongodbUpdateMongoDbInstanceTypeTypeSourceMongodbUpdateMongoDBAtlas
 		return nil
 	}
 
@@ -264,16 +264,16 @@ func (u *SourceMongodbUpdateMongoDbInstanceType) UnmarshalJSON(data []byte) erro
 }
 
 func (u SourceMongodbUpdateMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.StandaloneMongoDbInstance != nil {
-		return utils.MarshalJSON(u.StandaloneMongoDbInstance, "", true)
+	if u.SourceMongodbUpdateStandaloneMongoDbInstance != nil {
+		return utils.MarshalJSON(u.SourceMongodbUpdateStandaloneMongoDbInstance, "", true)
 	}
 
-	if u.ReplicaSet != nil {
-		return utils.MarshalJSON(u.ReplicaSet, "", true)
+	if u.SourceMongodbUpdateReplicaSet != nil {
+		return utils.MarshalJSON(u.SourceMongodbUpdateReplicaSet, "", true)
 	}
 
-	if u.MongoDBAtlas != nil {
-		return utils.MarshalJSON(u.MongoDBAtlas, "", true)
+	if u.SourceMongodbUpdateMongoDBAtlas != nil {
+		return utils.MarshalJSON(u.SourceMongodbUpdateMongoDBAtlas, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -153,48 +153,48 @@ func (o *SourceTypeformOAuth20) GetTokenExpiryDate() time.Time {
 type SourceTypeformAuthorizationMethodType string
 
 const (
-	SourceTypeformAuthorizationMethodTypeOAuth20      SourceTypeformAuthorizationMethodType = "OAuth20"
-	SourceTypeformAuthorizationMethodTypePrivateToken SourceTypeformAuthorizationMethodType = "PrivateToken"
+	SourceTypeformAuthorizationMethodTypeSourceTypeformOAuth20      SourceTypeformAuthorizationMethodType = "source-typeform_OAuth2.0"
+	SourceTypeformAuthorizationMethodTypeSourceTypeformPrivateToken SourceTypeformAuthorizationMethodType = "source-typeform_Private Token"
 )
 
 type SourceTypeformAuthorizationMethod struct {
-	OAuth20      *SourceTypeformOAuth20
-	PrivateToken *SourceTypeformPrivateToken
+	SourceTypeformOAuth20      *SourceTypeformOAuth20
+	SourceTypeformPrivateToken *SourceTypeformPrivateToken
 
 	Type SourceTypeformAuthorizationMethodType
 }
 
-func CreateSourceTypeformAuthorizationMethodOAuth20(oAuth20 SourceTypeformOAuth20) SourceTypeformAuthorizationMethod {
-	typ := SourceTypeformAuthorizationMethodTypeOAuth20
+func CreateSourceTypeformAuthorizationMethodSourceTypeformOAuth20(sourceTypeformOAuth20 SourceTypeformOAuth20) SourceTypeformAuthorizationMethod {
+	typ := SourceTypeformAuthorizationMethodTypeSourceTypeformOAuth20
 
 	return SourceTypeformAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceTypeformOAuth20: &sourceTypeformOAuth20,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceTypeformAuthorizationMethodPrivateToken(privateToken SourceTypeformPrivateToken) SourceTypeformAuthorizationMethod {
-	typ := SourceTypeformAuthorizationMethodTypePrivateToken
+func CreateSourceTypeformAuthorizationMethodSourceTypeformPrivateToken(sourceTypeformPrivateToken SourceTypeformPrivateToken) SourceTypeformAuthorizationMethod {
+	typ := SourceTypeformAuthorizationMethodTypeSourceTypeformPrivateToken
 
 	return SourceTypeformAuthorizationMethod{
-		PrivateToken: &privateToken,
-		Type:         typ,
+		SourceTypeformPrivateToken: &sourceTypeformPrivateToken,
+		Type:                       typ,
 	}
 }
 
 func (u *SourceTypeformAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	privateToken := new(SourceTypeformPrivateToken)
-	if err := utils.UnmarshalJSON(data, &privateToken, "", true, true); err == nil {
-		u.PrivateToken = privateToken
-		u.Type = SourceTypeformAuthorizationMethodTypePrivateToken
+	sourceTypeformPrivateToken := new(SourceTypeformPrivateToken)
+	if err := utils.UnmarshalJSON(data, &sourceTypeformPrivateToken, "", true, true); err == nil {
+		u.SourceTypeformPrivateToken = sourceTypeformPrivateToken
+		u.Type = SourceTypeformAuthorizationMethodTypeSourceTypeformPrivateToken
 		return nil
 	}
 
-	oAuth20 := new(SourceTypeformOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceTypeformAuthorizationMethodTypeOAuth20
+	sourceTypeformOAuth20 := new(SourceTypeformOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceTypeformOAuth20, "", true, true); err == nil {
+		u.SourceTypeformOAuth20 = sourceTypeformOAuth20
+		u.Type = SourceTypeformAuthorizationMethodTypeSourceTypeformOAuth20
 		return nil
 	}
 
@@ -202,12 +202,12 @@ func (u *SourceTypeformAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceTypeformAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceTypeformOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceTypeformOAuth20, "", true)
 	}
 
-	if u.PrivateToken != nil {
-		return utils.MarshalJSON(u.PrivateToken, "", true)
+	if u.SourceTypeformPrivateToken != nil {
+		return utils.MarshalJSON(u.SourceTypeformPrivateToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

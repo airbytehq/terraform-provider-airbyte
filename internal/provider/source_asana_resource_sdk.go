@@ -23,7 +23,7 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 		}
 		if sourceAsanaAuthenticateViaAsanaOauth != nil {
 			credentials = &shared.SourceAsanaAuthenticationMechanism{
-				AuthenticateViaAsanaOauth: sourceAsanaAuthenticateViaAsanaOauth,
+				SourceAsanaAuthenticateViaAsanaOauth: sourceAsanaAuthenticateViaAsanaOauth,
 			}
 		}
 		var sourceAsanaAuthenticateWithPersonalAccessToken *shared.SourceAsanaAuthenticateWithPersonalAccessToken
@@ -35,7 +35,7 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 		}
 		if sourceAsanaAuthenticateWithPersonalAccessToken != nil {
 			credentials = &shared.SourceAsanaAuthenticationMechanism{
-				AuthenticateWithPersonalAccessToken: sourceAsanaAuthenticateWithPersonalAccessToken,
+				SourceAsanaAuthenticateWithPersonalAccessToken: sourceAsanaAuthenticateWithPersonalAccessToken,
 			}
 		}
 	}

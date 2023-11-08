@@ -204,66 +204,66 @@ func (o *DestinationSnowflakeOAuth20) GetRefreshToken() string {
 type DestinationSnowflakeAuthorizationMethodType string
 
 const (
-	DestinationSnowflakeAuthorizationMethodTypeOAuth20               DestinationSnowflakeAuthorizationMethodType = "OAuth20"
-	DestinationSnowflakeAuthorizationMethodTypeKeyPairAuthentication DestinationSnowflakeAuthorizationMethodType = "KeyPairAuthentication"
-	DestinationSnowflakeAuthorizationMethodTypeUsernameAndPassword   DestinationSnowflakeAuthorizationMethodType = "UsernameAndPassword"
+	DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeOAuth20               DestinationSnowflakeAuthorizationMethodType = "destination-snowflake_OAuth2.0"
+	DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeKeyPairAuthentication DestinationSnowflakeAuthorizationMethodType = "destination-snowflake_Key Pair Authentication"
+	DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeUsernameAndPassword   DestinationSnowflakeAuthorizationMethodType = "destination-snowflake_Username and Password"
 )
 
 type DestinationSnowflakeAuthorizationMethod struct {
-	OAuth20               *DestinationSnowflakeOAuth20
-	KeyPairAuthentication *DestinationSnowflakeKeyPairAuthentication
-	UsernameAndPassword   *DestinationSnowflakeUsernameAndPassword
+	DestinationSnowflakeOAuth20               *DestinationSnowflakeOAuth20
+	DestinationSnowflakeKeyPairAuthentication *DestinationSnowflakeKeyPairAuthentication
+	DestinationSnowflakeUsernameAndPassword   *DestinationSnowflakeUsernameAndPassword
 
 	Type DestinationSnowflakeAuthorizationMethodType
 }
 
-func CreateDestinationSnowflakeAuthorizationMethodOAuth20(oAuth20 DestinationSnowflakeOAuth20) DestinationSnowflakeAuthorizationMethod {
-	typ := DestinationSnowflakeAuthorizationMethodTypeOAuth20
+func CreateDestinationSnowflakeAuthorizationMethodDestinationSnowflakeOAuth20(destinationSnowflakeOAuth20 DestinationSnowflakeOAuth20) DestinationSnowflakeAuthorizationMethod {
+	typ := DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeOAuth20
 
 	return DestinationSnowflakeAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		DestinationSnowflakeOAuth20: &destinationSnowflakeOAuth20,
+		Type:                        typ,
 	}
 }
 
-func CreateDestinationSnowflakeAuthorizationMethodKeyPairAuthentication(keyPairAuthentication DestinationSnowflakeKeyPairAuthentication) DestinationSnowflakeAuthorizationMethod {
-	typ := DestinationSnowflakeAuthorizationMethodTypeKeyPairAuthentication
+func CreateDestinationSnowflakeAuthorizationMethodDestinationSnowflakeKeyPairAuthentication(destinationSnowflakeKeyPairAuthentication DestinationSnowflakeKeyPairAuthentication) DestinationSnowflakeAuthorizationMethod {
+	typ := DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeKeyPairAuthentication
 
 	return DestinationSnowflakeAuthorizationMethod{
-		KeyPairAuthentication: &keyPairAuthentication,
-		Type:                  typ,
+		DestinationSnowflakeKeyPairAuthentication: &destinationSnowflakeKeyPairAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationSnowflakeAuthorizationMethodUsernameAndPassword(usernameAndPassword DestinationSnowflakeUsernameAndPassword) DestinationSnowflakeAuthorizationMethod {
-	typ := DestinationSnowflakeAuthorizationMethodTypeUsernameAndPassword
+func CreateDestinationSnowflakeAuthorizationMethodDestinationSnowflakeUsernameAndPassword(destinationSnowflakeUsernameAndPassword DestinationSnowflakeUsernameAndPassword) DestinationSnowflakeAuthorizationMethod {
+	typ := DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeUsernameAndPassword
 
 	return DestinationSnowflakeAuthorizationMethod{
-		UsernameAndPassword: &usernameAndPassword,
-		Type:                typ,
+		DestinationSnowflakeUsernameAndPassword: &destinationSnowflakeUsernameAndPassword,
+		Type:                                    typ,
 	}
 }
 
 func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	usernameAndPassword := new(DestinationSnowflakeUsernameAndPassword)
-	if err := utils.UnmarshalJSON(data, &usernameAndPassword, "", true, true); err == nil {
-		u.UsernameAndPassword = usernameAndPassword
-		u.Type = DestinationSnowflakeAuthorizationMethodTypeUsernameAndPassword
+	destinationSnowflakeUsernameAndPassword := new(DestinationSnowflakeUsernameAndPassword)
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeUsernameAndPassword, "", true, true); err == nil {
+		u.DestinationSnowflakeUsernameAndPassword = destinationSnowflakeUsernameAndPassword
+		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeUsernameAndPassword
 		return nil
 	}
 
-	keyPairAuthentication := new(DestinationSnowflakeKeyPairAuthentication)
-	if err := utils.UnmarshalJSON(data, &keyPairAuthentication, "", true, true); err == nil {
-		u.KeyPairAuthentication = keyPairAuthentication
-		u.Type = DestinationSnowflakeAuthorizationMethodTypeKeyPairAuthentication
+	destinationSnowflakeKeyPairAuthentication := new(DestinationSnowflakeKeyPairAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeKeyPairAuthentication, "", true, true); err == nil {
+		u.DestinationSnowflakeKeyPairAuthentication = destinationSnowflakeKeyPairAuthentication
+		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeKeyPairAuthentication
 		return nil
 	}
 
-	oAuth20 := new(DestinationSnowflakeOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = DestinationSnowflakeAuthorizationMethodTypeOAuth20
+	destinationSnowflakeOAuth20 := new(DestinationSnowflakeOAuth20)
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeOAuth20, "", true, true); err == nil {
+		u.DestinationSnowflakeOAuth20 = destinationSnowflakeOAuth20
+		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeOAuth20
 		return nil
 	}
 
@@ -271,16 +271,16 @@ func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.DestinationSnowflakeOAuth20 != nil {
+		return utils.MarshalJSON(u.DestinationSnowflakeOAuth20, "", true)
 	}
 
-	if u.KeyPairAuthentication != nil {
-		return utils.MarshalJSON(u.KeyPairAuthentication, "", true)
+	if u.DestinationSnowflakeKeyPairAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationSnowflakeKeyPairAuthentication, "", true)
 	}
 
-	if u.UsernameAndPassword != nil {
-		return utils.MarshalJSON(u.UsernameAndPassword, "", true)
+	if u.DestinationSnowflakeUsernameAndPassword != nil {
+		return utils.MarshalJSON(u.DestinationSnowflakeUsernameAndPassword, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

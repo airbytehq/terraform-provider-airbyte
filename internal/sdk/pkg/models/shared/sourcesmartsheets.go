@@ -153,48 +153,48 @@ func (o *SourceSmartsheetsOAuth20) GetTokenExpiryDate() time.Time {
 type SourceSmartsheetsAuthorizationMethodType string
 
 const (
-	SourceSmartsheetsAuthorizationMethodTypeOAuth20        SourceSmartsheetsAuthorizationMethodType = "OAuth20"
-	SourceSmartsheetsAuthorizationMethodTypeAPIAccessToken SourceSmartsheetsAuthorizationMethodType = "APIAccessToken"
+	SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsOAuth20        SourceSmartsheetsAuthorizationMethodType = "source-smartsheets_OAuth2.0"
+	SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsAPIAccessToken SourceSmartsheetsAuthorizationMethodType = "source-smartsheets_API Access Token"
 )
 
 type SourceSmartsheetsAuthorizationMethod struct {
-	OAuth20        *SourceSmartsheetsOAuth20
-	APIAccessToken *SourceSmartsheetsAPIAccessToken
+	SourceSmartsheetsOAuth20        *SourceSmartsheetsOAuth20
+	SourceSmartsheetsAPIAccessToken *SourceSmartsheetsAPIAccessToken
 
 	Type SourceSmartsheetsAuthorizationMethodType
 }
 
-func CreateSourceSmartsheetsAuthorizationMethodOAuth20(oAuth20 SourceSmartsheetsOAuth20) SourceSmartsheetsAuthorizationMethod {
-	typ := SourceSmartsheetsAuthorizationMethodTypeOAuth20
+func CreateSourceSmartsheetsAuthorizationMethodSourceSmartsheetsOAuth20(sourceSmartsheetsOAuth20 SourceSmartsheetsOAuth20) SourceSmartsheetsAuthorizationMethod {
+	typ := SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsOAuth20
 
 	return SourceSmartsheetsAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceSmartsheetsOAuth20: &sourceSmartsheetsOAuth20,
+		Type:                     typ,
 	}
 }
 
-func CreateSourceSmartsheetsAuthorizationMethodAPIAccessToken(apiAccessToken SourceSmartsheetsAPIAccessToken) SourceSmartsheetsAuthorizationMethod {
-	typ := SourceSmartsheetsAuthorizationMethodTypeAPIAccessToken
+func CreateSourceSmartsheetsAuthorizationMethodSourceSmartsheetsAPIAccessToken(sourceSmartsheetsAPIAccessToken SourceSmartsheetsAPIAccessToken) SourceSmartsheetsAuthorizationMethod {
+	typ := SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsAPIAccessToken
 
 	return SourceSmartsheetsAuthorizationMethod{
-		APIAccessToken: &apiAccessToken,
-		Type:           typ,
+		SourceSmartsheetsAPIAccessToken: &sourceSmartsheetsAPIAccessToken,
+		Type:                            typ,
 	}
 }
 
 func (u *SourceSmartsheetsAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	apiAccessToken := new(SourceSmartsheetsAPIAccessToken)
-	if err := utils.UnmarshalJSON(data, &apiAccessToken, "", true, true); err == nil {
-		u.APIAccessToken = apiAccessToken
-		u.Type = SourceSmartsheetsAuthorizationMethodTypeAPIAccessToken
+	sourceSmartsheetsAPIAccessToken := new(SourceSmartsheetsAPIAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceSmartsheetsAPIAccessToken, "", true, true); err == nil {
+		u.SourceSmartsheetsAPIAccessToken = sourceSmartsheetsAPIAccessToken
+		u.Type = SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsAPIAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourceSmartsheetsOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceSmartsheetsAuthorizationMethodTypeOAuth20
+	sourceSmartsheetsOAuth20 := new(SourceSmartsheetsOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceSmartsheetsOAuth20, "", true, true); err == nil {
+		u.SourceSmartsheetsOAuth20 = sourceSmartsheetsOAuth20
+		u.Type = SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsOAuth20
 		return nil
 	}
 
@@ -202,12 +202,12 @@ func (u *SourceSmartsheetsAuthorizationMethod) UnmarshalJSON(data []byte) error 
 }
 
 func (u SourceSmartsheetsAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceSmartsheetsOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceSmartsheetsOAuth20, "", true)
 	}
 
-	if u.APIAccessToken != nil {
-		return utils.MarshalJSON(u.APIAccessToken, "", true)
+	if u.SourceSmartsheetsAPIAccessToken != nil {
+		return utils.MarshalJSON(u.SourceSmartsheetsAPIAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

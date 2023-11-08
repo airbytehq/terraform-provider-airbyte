@@ -136,48 +136,48 @@ func (o *SourceE2eTestCloudSingleSchema) GetType() *SourceE2eTestCloudSchemasMoc
 type SourceE2eTestCloudMockCatalogType string
 
 const (
-	SourceE2eTestCloudMockCatalogTypeSingleSchema SourceE2eTestCloudMockCatalogType = "SingleSchema"
-	SourceE2eTestCloudMockCatalogTypeMultiSchema  SourceE2eTestCloudMockCatalogType = "MultiSchema"
+	SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudSingleSchema SourceE2eTestCloudMockCatalogType = "source-e2e-test-cloud_Single Schema"
+	SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMultiSchema  SourceE2eTestCloudMockCatalogType = "source-e2e-test-cloud_Multi Schema"
 )
 
 type SourceE2eTestCloudMockCatalog struct {
-	SingleSchema *SourceE2eTestCloudSingleSchema
-	MultiSchema  *SourceE2eTestCloudMultiSchema
+	SourceE2eTestCloudSingleSchema *SourceE2eTestCloudSingleSchema
+	SourceE2eTestCloudMultiSchema  *SourceE2eTestCloudMultiSchema
 
 	Type SourceE2eTestCloudMockCatalogType
 }
 
-func CreateSourceE2eTestCloudMockCatalogSingleSchema(singleSchema SourceE2eTestCloudSingleSchema) SourceE2eTestCloudMockCatalog {
-	typ := SourceE2eTestCloudMockCatalogTypeSingleSchema
+func CreateSourceE2eTestCloudMockCatalogSourceE2eTestCloudSingleSchema(sourceE2eTestCloudSingleSchema SourceE2eTestCloudSingleSchema) SourceE2eTestCloudMockCatalog {
+	typ := SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudSingleSchema
 
 	return SourceE2eTestCloudMockCatalog{
-		SingleSchema: &singleSchema,
-		Type:         typ,
+		SourceE2eTestCloudSingleSchema: &sourceE2eTestCloudSingleSchema,
+		Type:                           typ,
 	}
 }
 
-func CreateSourceE2eTestCloudMockCatalogMultiSchema(multiSchema SourceE2eTestCloudMultiSchema) SourceE2eTestCloudMockCatalog {
-	typ := SourceE2eTestCloudMockCatalogTypeMultiSchema
+func CreateSourceE2eTestCloudMockCatalogSourceE2eTestCloudMultiSchema(sourceE2eTestCloudMultiSchema SourceE2eTestCloudMultiSchema) SourceE2eTestCloudMockCatalog {
+	typ := SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMultiSchema
 
 	return SourceE2eTestCloudMockCatalog{
-		MultiSchema: &multiSchema,
-		Type:        typ,
+		SourceE2eTestCloudMultiSchema: &sourceE2eTestCloudMultiSchema,
+		Type:                          typ,
 	}
 }
 
 func (u *SourceE2eTestCloudMockCatalog) UnmarshalJSON(data []byte) error {
 
-	multiSchema := new(SourceE2eTestCloudMultiSchema)
-	if err := utils.UnmarshalJSON(data, &multiSchema, "", true, true); err == nil {
-		u.MultiSchema = multiSchema
-		u.Type = SourceE2eTestCloudMockCatalogTypeMultiSchema
+	sourceE2eTestCloudMultiSchema := new(SourceE2eTestCloudMultiSchema)
+	if err := utils.UnmarshalJSON(data, &sourceE2eTestCloudMultiSchema, "", true, true); err == nil {
+		u.SourceE2eTestCloudMultiSchema = sourceE2eTestCloudMultiSchema
+		u.Type = SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMultiSchema
 		return nil
 	}
 
-	singleSchema := new(SourceE2eTestCloudSingleSchema)
-	if err := utils.UnmarshalJSON(data, &singleSchema, "", true, true); err == nil {
-		u.SingleSchema = singleSchema
-		u.Type = SourceE2eTestCloudMockCatalogTypeSingleSchema
+	sourceE2eTestCloudSingleSchema := new(SourceE2eTestCloudSingleSchema)
+	if err := utils.UnmarshalJSON(data, &sourceE2eTestCloudSingleSchema, "", true, true); err == nil {
+		u.SourceE2eTestCloudSingleSchema = sourceE2eTestCloudSingleSchema
+		u.Type = SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudSingleSchema
 		return nil
 	}
 
@@ -185,12 +185,12 @@ func (u *SourceE2eTestCloudMockCatalog) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceE2eTestCloudMockCatalog) MarshalJSON() ([]byte, error) {
-	if u.SingleSchema != nil {
-		return utils.MarshalJSON(u.SingleSchema, "", true)
+	if u.SourceE2eTestCloudSingleSchema != nil {
+		return utils.MarshalJSON(u.SourceE2eTestCloudSingleSchema, "", true)
 	}
 
-	if u.MultiSchema != nil {
-		return utils.MarshalJSON(u.MultiSchema, "", true)
+	if u.SourceE2eTestCloudMultiSchema != nil {
+		return utils.MarshalJSON(u.SourceE2eTestCloudMultiSchema, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

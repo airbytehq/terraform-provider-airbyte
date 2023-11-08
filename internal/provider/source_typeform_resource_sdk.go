@@ -27,7 +27,7 @@ func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCr
 	}
 	if sourceTypeformOAuth20 != nil {
 		credentials = shared.SourceTypeformAuthorizationMethod{
-			OAuth20: sourceTypeformOAuth20,
+			SourceTypeformOAuth20: sourceTypeformOAuth20,
 		}
 	}
 	var sourceTypeformPrivateToken *shared.SourceTypeformPrivateToken
@@ -39,7 +39,7 @@ func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCr
 	}
 	if sourceTypeformPrivateToken != nil {
 		credentials = shared.SourceTypeformAuthorizationMethod{
-			PrivateToken: sourceTypeformPrivateToken,
+			SourceTypeformPrivateToken: sourceTypeformPrivateToken,
 		}
 	}
 	var formIds []string = nil
@@ -98,7 +98,7 @@ func (r *SourceTypeformResourceModel) ToUpdateSDKType() *shared.SourceTypeformPu
 	}
 	if sourceTypeformUpdateOAuth20 != nil {
 		credentials = shared.SourceTypeformUpdateAuthorizationMethod{
-			OAuth20: sourceTypeformUpdateOAuth20,
+			SourceTypeformUpdateOAuth20: sourceTypeformUpdateOAuth20,
 		}
 	}
 	var sourceTypeformUpdatePrivateToken *shared.SourceTypeformUpdatePrivateToken
@@ -110,7 +110,7 @@ func (r *SourceTypeformResourceModel) ToUpdateSDKType() *shared.SourceTypeformPu
 	}
 	if sourceTypeformUpdatePrivateToken != nil {
 		credentials = shared.SourceTypeformUpdateAuthorizationMethod{
-			PrivateToken: sourceTypeformUpdatePrivateToken,
+			SourceTypeformUpdatePrivateToken: sourceTypeformUpdatePrivateToken,
 		}
 	}
 	var formIds []string = nil

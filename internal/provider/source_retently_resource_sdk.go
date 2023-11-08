@@ -29,7 +29,7 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 		}
 		if sourceRetentlyAuthenticateViaRetentlyOAuth != nil {
 			credentials = &shared.SourceRetentlyAuthenticationMechanism{
-				AuthenticateViaRetentlyOAuth: sourceRetentlyAuthenticateViaRetentlyOAuth,
+				SourceRetentlyAuthenticateViaRetentlyOAuth: sourceRetentlyAuthenticateViaRetentlyOAuth,
 			}
 		}
 		var sourceRetentlyAuthenticateWithAPIToken *shared.SourceRetentlyAuthenticateWithAPIToken
@@ -46,7 +46,7 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 		}
 		if sourceRetentlyAuthenticateWithAPIToken != nil {
 			credentials = &shared.SourceRetentlyAuthenticationMechanism{
-				AuthenticateWithAPIToken: sourceRetentlyAuthenticateWithAPIToken,
+				SourceRetentlyAuthenticateWithAPIToken: sourceRetentlyAuthenticateWithAPIToken,
 			}
 		}
 	}

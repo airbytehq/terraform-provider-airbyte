@@ -137,13 +137,13 @@ func (o *SignInViaSlackOAuth) GetOptionTitle() SourceSlackUpdateOptionTitle {
 type SourceSlackUpdateAuthenticationMechanismType string
 
 const (
-	SourceSlackUpdateAuthenticationMechanismTypeSignInViaSlackOAuth SourceSlackUpdateAuthenticationMechanismType = "SignInViaSlackOAuth"
-	SourceSlackUpdateAuthenticationMechanismTypeAPIToken            SourceSlackUpdateAuthenticationMechanismType = "APIToken"
+	SourceSlackUpdateAuthenticationMechanismTypeSignInViaSlackOAuth       SourceSlackUpdateAuthenticationMechanismType = "Sign in via Slack (OAuth)"
+	SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAPIToken SourceSlackUpdateAuthenticationMechanismType = "source-slack-update_API Token"
 )
 
 type SourceSlackUpdateAuthenticationMechanism struct {
-	SignInViaSlackOAuth *SignInViaSlackOAuth
-	APIToken            *SourceSlackUpdateAPIToken
+	SignInViaSlackOAuth       *SignInViaSlackOAuth
+	SourceSlackUpdateAPIToken *SourceSlackUpdateAPIToken
 
 	Type SourceSlackUpdateAuthenticationMechanismType
 }
@@ -157,21 +157,21 @@ func CreateSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth(signInVia
 	}
 }
 
-func CreateSourceSlackUpdateAuthenticationMechanismAPIToken(apiToken SourceSlackUpdateAPIToken) SourceSlackUpdateAuthenticationMechanism {
-	typ := SourceSlackUpdateAuthenticationMechanismTypeAPIToken
+func CreateSourceSlackUpdateAuthenticationMechanismSourceSlackUpdateAPIToken(sourceSlackUpdateAPIToken SourceSlackUpdateAPIToken) SourceSlackUpdateAuthenticationMechanism {
+	typ := SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAPIToken
 
 	return SourceSlackUpdateAuthenticationMechanism{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceSlackUpdateAPIToken: &sourceSlackUpdateAPIToken,
+		Type:                      typ,
 	}
 }
 
 func (u *SourceSlackUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceSlackUpdateAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceSlackUpdateAuthenticationMechanismTypeAPIToken
+	sourceSlackUpdateAPIToken := new(SourceSlackUpdateAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceSlackUpdateAPIToken, "", true, true); err == nil {
+		u.SourceSlackUpdateAPIToken = sourceSlackUpdateAPIToken
+		u.Type = SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAPIToken
 		return nil
 	}
 
@@ -190,8 +190,8 @@ func (u SourceSlackUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) 
 		return utils.MarshalJSON(u.SignInViaSlackOAuth, "", true)
 	}
 
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceSlackUpdateAPIToken != nil {
+		return utils.MarshalJSON(u.SourceSlackUpdateAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

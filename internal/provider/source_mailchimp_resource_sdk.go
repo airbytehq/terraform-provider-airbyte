@@ -39,7 +39,7 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 		}
 		if sourceMailchimpOAuth20 != nil {
 			credentials = &shared.SourceMailchimpAuthentication{
-				OAuth20: sourceMailchimpOAuth20,
+				SourceMailchimpOAuth20: sourceMailchimpOAuth20,
 			}
 		}
 		var sourceMailchimpAPIKey *shared.SourceMailchimpAPIKey
@@ -51,7 +51,7 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 		}
 		if sourceMailchimpAPIKey != nil {
 			credentials = &shared.SourceMailchimpAuthentication{
-				APIKey: sourceMailchimpAPIKey,
+				SourceMailchimpAPIKey: sourceMailchimpAPIKey,
 			}
 		}
 	}
@@ -113,7 +113,7 @@ func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimp
 		}
 		if sourceMailchimpUpdateOAuth20 != nil {
 			credentials = &shared.SourceMailchimpUpdateAuthentication{
-				OAuth20: sourceMailchimpUpdateOAuth20,
+				SourceMailchimpUpdateOAuth20: sourceMailchimpUpdateOAuth20,
 			}
 		}
 		var apiKey *shared.APIKey

@@ -330,12 +330,12 @@ func (o *Disable) GetMode() *Mode {
 type SSLModesType string
 
 const (
-	SSLModesTypeDisable    SSLModesType = "Disable"
-	SSLModesTypeAllow      SSLModesType = "Allow"
-	SSLModesTypePrefer     SSLModesType = "Prefer"
-	SSLModesTypeRequire    SSLModesType = "Require"
-	SSLModesTypeVerifyCa   SSLModesType = "VerifyCa"
-	SSLModesTypeVerifyFull SSLModesType = "VerifyFull"
+	SSLModesTypeDisable    SSLModesType = "disable"
+	SSLModesTypeAllow      SSLModesType = "allow"
+	SSLModesTypePrefer     SSLModesType = "prefer"
+	SSLModesTypeRequire    SSLModesType = "require"
+	SSLModesTypeVerifyCa   SSLModesType = "verify-ca"
+	SSLModesTypeVerifyFull SSLModesType = "verify-full"
 )
 
 type SSLModes struct {
@@ -691,66 +691,66 @@ func (o *DestinationPostgresUpdateNoTunnel) GetTunnelMethod() DestinationPostgre
 type DestinationPostgresUpdateSSHTunnelMethodType string
 
 const (
-	DestinationPostgresUpdateSSHTunnelMethodTypeNoTunnel               DestinationPostgresUpdateSSHTunnelMethodType = "NoTunnel"
-	DestinationPostgresUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationPostgresUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationPostgresUpdateSSHTunnelMethodTypePasswordAuthentication DestinationPostgresUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdateNoTunnel               DestinationPostgresUpdateSSHTunnelMethodType = "destination-postgres-update_No Tunnel"
+	DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdateSSHKeyAuthentication   DestinationPostgresUpdateSSHTunnelMethodType = "destination-postgres-update_SSH Key Authentication"
+	DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdatePasswordAuthentication DestinationPostgresUpdateSSHTunnelMethodType = "destination-postgres-update_Password Authentication"
 )
 
 type DestinationPostgresUpdateSSHTunnelMethod struct {
-	NoTunnel               *DestinationPostgresUpdateNoTunnel
-	SSHKeyAuthentication   *DestinationPostgresUpdateSSHKeyAuthentication
-	PasswordAuthentication *DestinationPostgresUpdatePasswordAuthentication
+	DestinationPostgresUpdateNoTunnel               *DestinationPostgresUpdateNoTunnel
+	DestinationPostgresUpdateSSHKeyAuthentication   *DestinationPostgresUpdateSSHKeyAuthentication
+	DestinationPostgresUpdatePasswordAuthentication *DestinationPostgresUpdatePasswordAuthentication
 
 	Type DestinationPostgresUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationPostgresUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationPostgresUpdateNoTunnel) DestinationPostgresUpdateSSHTunnelMethod {
-	typ := DestinationPostgresUpdateSSHTunnelMethodTypeNoTunnel
+func CreateDestinationPostgresUpdateSSHTunnelMethodDestinationPostgresUpdateNoTunnel(destinationPostgresUpdateNoTunnel DestinationPostgresUpdateNoTunnel) DestinationPostgresUpdateSSHTunnelMethod {
+	typ := DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdateNoTunnel
 
 	return DestinationPostgresUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationPostgresUpdateNoTunnel: &destinationPostgresUpdateNoTunnel,
+		Type:                              typ,
 	}
 }
 
-func CreateDestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationPostgresUpdateSSHKeyAuthentication) DestinationPostgresUpdateSSHTunnelMethod {
-	typ := DestinationPostgresUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationPostgresUpdateSSHTunnelMethodDestinationPostgresUpdateSSHKeyAuthentication(destinationPostgresUpdateSSHKeyAuthentication DestinationPostgresUpdateSSHKeyAuthentication) DestinationPostgresUpdateSSHTunnelMethod {
+	typ := DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdateSSHKeyAuthentication
 
 	return DestinationPostgresUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationPostgresUpdateSSHKeyAuthentication: &destinationPostgresUpdateSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationPostgresUpdatePasswordAuthentication) DestinationPostgresUpdateSSHTunnelMethod {
-	typ := DestinationPostgresUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationPostgresUpdateSSHTunnelMethodDestinationPostgresUpdatePasswordAuthentication(destinationPostgresUpdatePasswordAuthentication DestinationPostgresUpdatePasswordAuthentication) DestinationPostgresUpdateSSHTunnelMethod {
+	typ := DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdatePasswordAuthentication
 
 	return DestinationPostgresUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationPostgresUpdatePasswordAuthentication: &destinationPostgresUpdatePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationPostgresUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationPostgresUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationPostgresUpdateSSHTunnelMethodTypeNoTunnel
+	destinationPostgresUpdateNoTunnel := new(DestinationPostgresUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationPostgresUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationPostgresUpdateNoTunnel = destinationPostgresUpdateNoTunnel
+		u.Type = DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationPostgresUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationPostgresUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationPostgresUpdateSSHKeyAuthentication := new(DestinationPostgresUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationPostgresUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationPostgresUpdateSSHKeyAuthentication = destinationPostgresUpdateSSHKeyAuthentication
+		u.Type = DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationPostgresUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationPostgresUpdateSSHTunnelMethodTypePasswordAuthentication
+	destinationPostgresUpdatePasswordAuthentication := new(DestinationPostgresUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationPostgresUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationPostgresUpdatePasswordAuthentication = destinationPostgresUpdatePasswordAuthentication
+		u.Type = DestinationPostgresUpdateSSHTunnelMethodTypeDestinationPostgresUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -758,16 +758,16 @@ func (u *DestinationPostgresUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) er
 }
 
 func (u DestinationPostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationPostgresUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationPostgresUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationPostgresUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationPostgresUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationPostgresUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationPostgresUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

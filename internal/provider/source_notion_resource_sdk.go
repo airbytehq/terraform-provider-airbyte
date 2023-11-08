@@ -24,7 +24,7 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 		}
 		if sourceNotionOAuth20 != nil {
 			credentials = &shared.SourceNotionAuthenticateUsing{
-				OAuth20: sourceNotionOAuth20,
+				SourceNotionOAuth20: sourceNotionOAuth20,
 			}
 		}
 		var sourceNotionAccessToken *shared.SourceNotionAccessToken
@@ -36,7 +36,7 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 		}
 		if sourceNotionAccessToken != nil {
 			credentials = &shared.SourceNotionAuthenticateUsing{
-				AccessToken: sourceNotionAccessToken,
+				SourceNotionAccessToken: sourceNotionAccessToken,
 			}
 		}
 	}
@@ -83,7 +83,7 @@ func (r *SourceNotionResourceModel) ToUpdateSDKType() *shared.SourceNotionPutReq
 		}
 		if sourceNotionUpdateOAuth20 != nil {
 			credentials = &shared.AuthenticateUsing{
-				OAuth20: sourceNotionUpdateOAuth20,
+				SourceNotionUpdateOAuth20: sourceNotionUpdateOAuth20,
 			}
 		}
 		var sourceNotionUpdateAccessToken *shared.SourceNotionUpdateAccessToken
@@ -95,7 +95,7 @@ func (r *SourceNotionResourceModel) ToUpdateSDKType() *shared.SourceNotionPutReq
 		}
 		if sourceNotionUpdateAccessToken != nil {
 			credentials = &shared.AuthenticateUsing{
-				AccessToken: sourceNotionUpdateAccessToken,
+				SourceNotionUpdateAccessToken: sourceNotionUpdateAccessToken,
 			}
 		}
 	}

@@ -134,48 +134,48 @@ func (o *SourceLinkedinPagesOAuth20) GetRefreshToken() string {
 type SourceLinkedinPagesAuthenticationType string
 
 const (
-	SourceLinkedinPagesAuthenticationTypeOAuth20     SourceLinkedinPagesAuthenticationType = "OAuth20"
-	SourceLinkedinPagesAuthenticationTypeAccessToken SourceLinkedinPagesAuthenticationType = "AccessToken"
+	SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesOAuth20     SourceLinkedinPagesAuthenticationType = "source-linkedin-pages_OAuth2.0"
+	SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesAccessToken SourceLinkedinPagesAuthenticationType = "source-linkedin-pages_Access token"
 )
 
 type SourceLinkedinPagesAuthentication struct {
-	OAuth20     *SourceLinkedinPagesOAuth20
-	AccessToken *SourceLinkedinPagesAccessToken
+	SourceLinkedinPagesOAuth20     *SourceLinkedinPagesOAuth20
+	SourceLinkedinPagesAccessToken *SourceLinkedinPagesAccessToken
 
 	Type SourceLinkedinPagesAuthenticationType
 }
 
-func CreateSourceLinkedinPagesAuthenticationOAuth20(oAuth20 SourceLinkedinPagesOAuth20) SourceLinkedinPagesAuthentication {
-	typ := SourceLinkedinPagesAuthenticationTypeOAuth20
+func CreateSourceLinkedinPagesAuthenticationSourceLinkedinPagesOAuth20(sourceLinkedinPagesOAuth20 SourceLinkedinPagesOAuth20) SourceLinkedinPagesAuthentication {
+	typ := SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesOAuth20
 
 	return SourceLinkedinPagesAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceLinkedinPagesOAuth20: &sourceLinkedinPagesOAuth20,
+		Type:                       typ,
 	}
 }
 
-func CreateSourceLinkedinPagesAuthenticationAccessToken(accessToken SourceLinkedinPagesAccessToken) SourceLinkedinPagesAuthentication {
-	typ := SourceLinkedinPagesAuthenticationTypeAccessToken
+func CreateSourceLinkedinPagesAuthenticationSourceLinkedinPagesAccessToken(sourceLinkedinPagesAccessToken SourceLinkedinPagesAccessToken) SourceLinkedinPagesAuthentication {
+	typ := SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesAccessToken
 
 	return SourceLinkedinPagesAuthentication{
-		AccessToken: &accessToken,
-		Type:        typ,
+		SourceLinkedinPagesAccessToken: &sourceLinkedinPagesAccessToken,
+		Type:                           typ,
 	}
 }
 
 func (u *SourceLinkedinPagesAuthentication) UnmarshalJSON(data []byte) error {
 
-	accessToken := new(SourceLinkedinPagesAccessToken)
-	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
-		u.AccessToken = accessToken
-		u.Type = SourceLinkedinPagesAuthenticationTypeAccessToken
+	sourceLinkedinPagesAccessToken := new(SourceLinkedinPagesAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceLinkedinPagesAccessToken, "", true, true); err == nil {
+		u.SourceLinkedinPagesAccessToken = sourceLinkedinPagesAccessToken
+		u.Type = SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourceLinkedinPagesOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceLinkedinPagesAuthenticationTypeOAuth20
+	sourceLinkedinPagesOAuth20 := new(SourceLinkedinPagesOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceLinkedinPagesOAuth20, "", true, true); err == nil {
+		u.SourceLinkedinPagesOAuth20 = sourceLinkedinPagesOAuth20
+		u.Type = SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesOAuth20
 		return nil
 	}
 
@@ -183,12 +183,12 @@ func (u *SourceLinkedinPagesAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceLinkedinPagesAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceLinkedinPagesOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceLinkedinPagesOAuth20, "", true)
 	}
 
-	if u.AccessToken != nil {
-		return utils.MarshalJSON(u.AccessToken, "", true)
+	if u.SourceLinkedinPagesAccessToken != nil {
+		return utils.MarshalJSON(u.SourceLinkedinPagesAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -128,48 +128,48 @@ func (o *SourceMixpanelServiceAccount) GetUsername() string {
 type SourceMixpanelAuthenticationWildcardType string
 
 const (
-	SourceMixpanelAuthenticationWildcardTypeServiceAccount SourceMixpanelAuthenticationWildcardType = "ServiceAccount"
-	SourceMixpanelAuthenticationWildcardTypeProjectSecret  SourceMixpanelAuthenticationWildcardType = "ProjectSecret"
+	SourceMixpanelAuthenticationWildcardTypeSourceMixpanelServiceAccount SourceMixpanelAuthenticationWildcardType = "source-mixpanel_Service Account"
+	SourceMixpanelAuthenticationWildcardTypeSourceMixpanelProjectSecret  SourceMixpanelAuthenticationWildcardType = "source-mixpanel_Project Secret"
 )
 
 type SourceMixpanelAuthenticationWildcard struct {
-	ServiceAccount *SourceMixpanelServiceAccount
-	ProjectSecret  *SourceMixpanelProjectSecret
+	SourceMixpanelServiceAccount *SourceMixpanelServiceAccount
+	SourceMixpanelProjectSecret  *SourceMixpanelProjectSecret
 
 	Type SourceMixpanelAuthenticationWildcardType
 }
 
-func CreateSourceMixpanelAuthenticationWildcardServiceAccount(serviceAccount SourceMixpanelServiceAccount) SourceMixpanelAuthenticationWildcard {
-	typ := SourceMixpanelAuthenticationWildcardTypeServiceAccount
+func CreateSourceMixpanelAuthenticationWildcardSourceMixpanelServiceAccount(sourceMixpanelServiceAccount SourceMixpanelServiceAccount) SourceMixpanelAuthenticationWildcard {
+	typ := SourceMixpanelAuthenticationWildcardTypeSourceMixpanelServiceAccount
 
 	return SourceMixpanelAuthenticationWildcard{
-		ServiceAccount: &serviceAccount,
-		Type:           typ,
+		SourceMixpanelServiceAccount: &sourceMixpanelServiceAccount,
+		Type:                         typ,
 	}
 }
 
-func CreateSourceMixpanelAuthenticationWildcardProjectSecret(projectSecret SourceMixpanelProjectSecret) SourceMixpanelAuthenticationWildcard {
-	typ := SourceMixpanelAuthenticationWildcardTypeProjectSecret
+func CreateSourceMixpanelAuthenticationWildcardSourceMixpanelProjectSecret(sourceMixpanelProjectSecret SourceMixpanelProjectSecret) SourceMixpanelAuthenticationWildcard {
+	typ := SourceMixpanelAuthenticationWildcardTypeSourceMixpanelProjectSecret
 
 	return SourceMixpanelAuthenticationWildcard{
-		ProjectSecret: &projectSecret,
-		Type:          typ,
+		SourceMixpanelProjectSecret: &sourceMixpanelProjectSecret,
+		Type:                        typ,
 	}
 }
 
 func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error {
 
-	projectSecret := new(SourceMixpanelProjectSecret)
-	if err := utils.UnmarshalJSON(data, &projectSecret, "", true, true); err == nil {
-		u.ProjectSecret = projectSecret
-		u.Type = SourceMixpanelAuthenticationWildcardTypeProjectSecret
+	sourceMixpanelProjectSecret := new(SourceMixpanelProjectSecret)
+	if err := utils.UnmarshalJSON(data, &sourceMixpanelProjectSecret, "", true, true); err == nil {
+		u.SourceMixpanelProjectSecret = sourceMixpanelProjectSecret
+		u.Type = SourceMixpanelAuthenticationWildcardTypeSourceMixpanelProjectSecret
 		return nil
 	}
 
-	serviceAccount := new(SourceMixpanelServiceAccount)
-	if err := utils.UnmarshalJSON(data, &serviceAccount, "", true, true); err == nil {
-		u.ServiceAccount = serviceAccount
-		u.Type = SourceMixpanelAuthenticationWildcardTypeServiceAccount
+	sourceMixpanelServiceAccount := new(SourceMixpanelServiceAccount)
+	if err := utils.UnmarshalJSON(data, &sourceMixpanelServiceAccount, "", true, true); err == nil {
+		u.SourceMixpanelServiceAccount = sourceMixpanelServiceAccount
+		u.Type = SourceMixpanelAuthenticationWildcardTypeSourceMixpanelServiceAccount
 		return nil
 	}
 
@@ -177,12 +177,12 @@ func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error 
 }
 
 func (u SourceMixpanelAuthenticationWildcard) MarshalJSON() ([]byte, error) {
-	if u.ServiceAccount != nil {
-		return utils.MarshalJSON(u.ServiceAccount, "", true)
+	if u.SourceMixpanelServiceAccount != nil {
+		return utils.MarshalJSON(u.SourceMixpanelServiceAccount, "", true)
 	}
 
-	if u.ProjectSecret != nil {
-		return utils.MarshalJSON(u.ProjectSecret, "", true)
+	if u.SourceMixpanelProjectSecret != nil {
+		return utils.MarshalJSON(u.SourceMixpanelProjectSecret, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

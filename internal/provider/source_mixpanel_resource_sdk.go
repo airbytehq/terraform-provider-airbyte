@@ -28,7 +28,7 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 		}
 		if sourceMixpanelServiceAccount != nil {
 			credentials = &shared.SourceMixpanelAuthenticationWildcard{
-				ServiceAccount: sourceMixpanelServiceAccount,
+				SourceMixpanelServiceAccount: sourceMixpanelServiceAccount,
 			}
 		}
 		var sourceMixpanelProjectSecret *shared.SourceMixpanelProjectSecret
@@ -40,7 +40,7 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 		}
 		if sourceMixpanelProjectSecret != nil {
 			credentials = &shared.SourceMixpanelAuthenticationWildcard{
-				ProjectSecret: sourceMixpanelProjectSecret,
+				SourceMixpanelProjectSecret: sourceMixpanelProjectSecret,
 			}
 		}
 	}

@@ -153,48 +153,48 @@ func (o *SourceHarvestAuthenticateViaHarvestOAuth) GetRefreshToken() string {
 type SourceHarvestAuthenticationMechanismType string
 
 const (
-	SourceHarvestAuthenticationMechanismTypeAuthenticateViaHarvestOAuth         SourceHarvestAuthenticationMechanismType = "AuthenticateViaHarvestOAuth"
-	SourceHarvestAuthenticationMechanismTypeAuthenticateWithPersonalAccessToken SourceHarvestAuthenticationMechanismType = "AuthenticateWithPersonalAccessToken"
+	SourceHarvestAuthenticationMechanismTypeSourceHarvestAuthenticateViaHarvestOAuth         SourceHarvestAuthenticationMechanismType = "source-harvest_Authenticate via Harvest (OAuth)"
+	SourceHarvestAuthenticationMechanismTypeSourceHarvestAuthenticateWithPersonalAccessToken SourceHarvestAuthenticationMechanismType = "source-harvest_Authenticate with Personal Access Token"
 )
 
 type SourceHarvestAuthenticationMechanism struct {
-	AuthenticateViaHarvestOAuth         *SourceHarvestAuthenticateViaHarvestOAuth
-	AuthenticateWithPersonalAccessToken *SourceHarvestAuthenticateWithPersonalAccessToken
+	SourceHarvestAuthenticateViaHarvestOAuth         *SourceHarvestAuthenticateViaHarvestOAuth
+	SourceHarvestAuthenticateWithPersonalAccessToken *SourceHarvestAuthenticateWithPersonalAccessToken
 
 	Type SourceHarvestAuthenticationMechanismType
 }
 
-func CreateSourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth(authenticateViaHarvestOAuth SourceHarvestAuthenticateViaHarvestOAuth) SourceHarvestAuthenticationMechanism {
-	typ := SourceHarvestAuthenticationMechanismTypeAuthenticateViaHarvestOAuth
+func CreateSourceHarvestAuthenticationMechanismSourceHarvestAuthenticateViaHarvestOAuth(sourceHarvestAuthenticateViaHarvestOAuth SourceHarvestAuthenticateViaHarvestOAuth) SourceHarvestAuthenticationMechanism {
+	typ := SourceHarvestAuthenticationMechanismTypeSourceHarvestAuthenticateViaHarvestOAuth
 
 	return SourceHarvestAuthenticationMechanism{
-		AuthenticateViaHarvestOAuth: &authenticateViaHarvestOAuth,
-		Type:                        typ,
+		SourceHarvestAuthenticateViaHarvestOAuth: &sourceHarvestAuthenticateViaHarvestOAuth,
+		Type:                                     typ,
 	}
 }
 
-func CreateSourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken(authenticateWithPersonalAccessToken SourceHarvestAuthenticateWithPersonalAccessToken) SourceHarvestAuthenticationMechanism {
-	typ := SourceHarvestAuthenticationMechanismTypeAuthenticateWithPersonalAccessToken
+func CreateSourceHarvestAuthenticationMechanismSourceHarvestAuthenticateWithPersonalAccessToken(sourceHarvestAuthenticateWithPersonalAccessToken SourceHarvestAuthenticateWithPersonalAccessToken) SourceHarvestAuthenticationMechanism {
+	typ := SourceHarvestAuthenticationMechanismTypeSourceHarvestAuthenticateWithPersonalAccessToken
 
 	return SourceHarvestAuthenticationMechanism{
-		AuthenticateWithPersonalAccessToken: &authenticateWithPersonalAccessToken,
-		Type:                                typ,
+		SourceHarvestAuthenticateWithPersonalAccessToken: &sourceHarvestAuthenticateWithPersonalAccessToken,
+		Type: typ,
 	}
 }
 
 func (u *SourceHarvestAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	authenticateWithPersonalAccessToken := new(SourceHarvestAuthenticateWithPersonalAccessToken)
-	if err := utils.UnmarshalJSON(data, &authenticateWithPersonalAccessToken, "", true, true); err == nil {
-		u.AuthenticateWithPersonalAccessToken = authenticateWithPersonalAccessToken
-		u.Type = SourceHarvestAuthenticationMechanismTypeAuthenticateWithPersonalAccessToken
+	sourceHarvestAuthenticateWithPersonalAccessToken := new(SourceHarvestAuthenticateWithPersonalAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceHarvestAuthenticateWithPersonalAccessToken, "", true, true); err == nil {
+		u.SourceHarvestAuthenticateWithPersonalAccessToken = sourceHarvestAuthenticateWithPersonalAccessToken
+		u.Type = SourceHarvestAuthenticationMechanismTypeSourceHarvestAuthenticateWithPersonalAccessToken
 		return nil
 	}
 
-	authenticateViaHarvestOAuth := new(SourceHarvestAuthenticateViaHarvestOAuth)
-	if err := utils.UnmarshalJSON(data, &authenticateViaHarvestOAuth, "", true, true); err == nil {
-		u.AuthenticateViaHarvestOAuth = authenticateViaHarvestOAuth
-		u.Type = SourceHarvestAuthenticationMechanismTypeAuthenticateViaHarvestOAuth
+	sourceHarvestAuthenticateViaHarvestOAuth := new(SourceHarvestAuthenticateViaHarvestOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceHarvestAuthenticateViaHarvestOAuth, "", true, true); err == nil {
+		u.SourceHarvestAuthenticateViaHarvestOAuth = sourceHarvestAuthenticateViaHarvestOAuth
+		u.Type = SourceHarvestAuthenticationMechanismTypeSourceHarvestAuthenticateViaHarvestOAuth
 		return nil
 	}
 
@@ -202,12 +202,12 @@ func (u *SourceHarvestAuthenticationMechanism) UnmarshalJSON(data []byte) error 
 }
 
 func (u SourceHarvestAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaHarvestOAuth != nil {
-		return utils.MarshalJSON(u.AuthenticateViaHarvestOAuth, "", true)
+	if u.SourceHarvestAuthenticateViaHarvestOAuth != nil {
+		return utils.MarshalJSON(u.SourceHarvestAuthenticateViaHarvestOAuth, "", true)
 	}
 
-	if u.AuthenticateWithPersonalAccessToken != nil {
-		return utils.MarshalJSON(u.AuthenticateWithPersonalAccessToken, "", true)
+	if u.SourceHarvestAuthenticateWithPersonalAccessToken != nil {
+		return utils.MarshalJSON(u.SourceHarvestAuthenticateWithPersonalAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

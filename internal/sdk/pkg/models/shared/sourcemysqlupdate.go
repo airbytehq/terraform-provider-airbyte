@@ -118,13 +118,13 @@ func (o *ReadChangesUsingBinaryLogCDC) GetServerTimeZone() *string {
 type SourceMysqlUpdateUpdateMethodType string
 
 const (
-	SourceMysqlUpdateUpdateMethodTypeReadChangesUsingBinaryLogCDC     SourceMysqlUpdateUpdateMethodType = "ReadChangesUsingBinaryLogCDC"
-	SourceMysqlUpdateUpdateMethodTypeScanChangesWithUserDefinedCursor SourceMysqlUpdateUpdateMethodType = "ScanChangesWithUserDefinedCursor"
+	SourceMysqlUpdateUpdateMethodTypeReadChangesUsingBinaryLogCDC                      SourceMysqlUpdateUpdateMethodType = "Read Changes using Binary Log (CDC)"
+	SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateScanChangesWithUserDefinedCursor SourceMysqlUpdateUpdateMethodType = "source-mysql-update_Scan Changes with User Defined Cursor"
 )
 
 type SourceMysqlUpdateUpdateMethod struct {
-	ReadChangesUsingBinaryLogCDC     *ReadChangesUsingBinaryLogCDC
-	ScanChangesWithUserDefinedCursor *SourceMysqlUpdateScanChangesWithUserDefinedCursor
+	ReadChangesUsingBinaryLogCDC                      *ReadChangesUsingBinaryLogCDC
+	SourceMysqlUpdateScanChangesWithUserDefinedCursor *SourceMysqlUpdateScanChangesWithUserDefinedCursor
 
 	Type SourceMysqlUpdateUpdateMethodType
 }
@@ -138,21 +138,21 @@ func CreateSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC(readChanges
 	}
 }
 
-func CreateSourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor(scanChangesWithUserDefinedCursor SourceMysqlUpdateScanChangesWithUserDefinedCursor) SourceMysqlUpdateUpdateMethod {
-	typ := SourceMysqlUpdateUpdateMethodTypeScanChangesWithUserDefinedCursor
+func CreateSourceMysqlUpdateUpdateMethodSourceMysqlUpdateScanChangesWithUserDefinedCursor(sourceMysqlUpdateScanChangesWithUserDefinedCursor SourceMysqlUpdateScanChangesWithUserDefinedCursor) SourceMysqlUpdateUpdateMethod {
+	typ := SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateScanChangesWithUserDefinedCursor
 
 	return SourceMysqlUpdateUpdateMethod{
-		ScanChangesWithUserDefinedCursor: &scanChangesWithUserDefinedCursor,
-		Type:                             typ,
+		SourceMysqlUpdateScanChangesWithUserDefinedCursor: &sourceMysqlUpdateScanChangesWithUserDefinedCursor,
+		Type: typ,
 	}
 }
 
 func (u *SourceMysqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 
-	scanChangesWithUserDefinedCursor := new(SourceMysqlUpdateScanChangesWithUserDefinedCursor)
-	if err := utils.UnmarshalJSON(data, &scanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.ScanChangesWithUserDefinedCursor = scanChangesWithUserDefinedCursor
-		u.Type = SourceMysqlUpdateUpdateMethodTypeScanChangesWithUserDefinedCursor
+	sourceMysqlUpdateScanChangesWithUserDefinedCursor := new(SourceMysqlUpdateScanChangesWithUserDefinedCursor)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourceMysqlUpdateScanChangesWithUserDefinedCursor = sourceMysqlUpdateScanChangesWithUserDefinedCursor
+		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateScanChangesWithUserDefinedCursor
 		return nil
 	}
 
@@ -171,8 +171,8 @@ func (u SourceMysqlUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ReadChangesUsingBinaryLogCDC, "", true)
 	}
 
-	if u.ScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.ScanChangesWithUserDefinedCursor, "", true)
+	if u.SourceMysqlUpdateScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceMysqlUpdateScanChangesWithUserDefinedCursor, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -429,17 +429,17 @@ func (o *Preferred) GetMode() SourceMysqlUpdateMode {
 type SourceMysqlUpdateSSLModesType string
 
 const (
-	SourceMysqlUpdateSSLModesTypePreferred      SourceMysqlUpdateSSLModesType = "Preferred"
-	SourceMysqlUpdateSSLModesTypeRequired       SourceMysqlUpdateSSLModesType = "Required"
-	SourceMysqlUpdateSSLModesTypeVerifyCA       SourceMysqlUpdateSSLModesType = "VerifyCA"
-	SourceMysqlUpdateSSLModesTypeVerifyIdentity SourceMysqlUpdateSSLModesType = "VerifyIdentity"
+	SourceMysqlUpdateSSLModesTypePreferred                 SourceMysqlUpdateSSLModesType = "preferred"
+	SourceMysqlUpdateSSLModesTypeRequired                  SourceMysqlUpdateSSLModesType = "required"
+	SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateVerifyCA SourceMysqlUpdateSSLModesType = "source-mysql-update_Verify CA"
+	SourceMysqlUpdateSSLModesTypeVerifyIdentity            SourceMysqlUpdateSSLModesType = "Verify Identity"
 )
 
 type SourceMysqlUpdateSSLModes struct {
-	Preferred      *Preferred
-	Required       *Required
-	VerifyCA       *SourceMysqlUpdateVerifyCA
-	VerifyIdentity *VerifyIdentity
+	Preferred                 *Preferred
+	Required                  *Required
+	SourceMysqlUpdateVerifyCA *SourceMysqlUpdateVerifyCA
+	VerifyIdentity            *VerifyIdentity
 
 	Type SourceMysqlUpdateSSLModesType
 }
@@ -462,12 +462,12 @@ func CreateSourceMysqlUpdateSSLModesRequired(required Required) SourceMysqlUpdat
 	}
 }
 
-func CreateSourceMysqlUpdateSSLModesVerifyCA(verifyCA SourceMysqlUpdateVerifyCA) SourceMysqlUpdateSSLModes {
-	typ := SourceMysqlUpdateSSLModesTypeVerifyCA
+func CreateSourceMysqlUpdateSSLModesSourceMysqlUpdateVerifyCA(sourceMysqlUpdateVerifyCA SourceMysqlUpdateVerifyCA) SourceMysqlUpdateSSLModes {
+	typ := SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateVerifyCA
 
 	return SourceMysqlUpdateSSLModes{
-		VerifyCA: &verifyCA,
-		Type:     typ,
+		SourceMysqlUpdateVerifyCA: &sourceMysqlUpdateVerifyCA,
+		Type:                      typ,
 	}
 }
 
@@ -496,10 +496,10 @@ func (u *SourceMysqlUpdateSSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	verifyCA := new(SourceMysqlUpdateVerifyCA)
-	if err := utils.UnmarshalJSON(data, &verifyCA, "", true, true); err == nil {
-		u.VerifyCA = verifyCA
-		u.Type = SourceMysqlUpdateSSLModesTypeVerifyCA
+	sourceMysqlUpdateVerifyCA := new(SourceMysqlUpdateVerifyCA)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateVerifyCA, "", true, true); err == nil {
+		u.SourceMysqlUpdateVerifyCA = sourceMysqlUpdateVerifyCA
+		u.Type = SourceMysqlUpdateSSLModesTypeSourceMysqlUpdateVerifyCA
 		return nil
 	}
 
@@ -522,8 +522,8 @@ func (u SourceMysqlUpdateSSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Required, "", true)
 	}
 
-	if u.VerifyCA != nil {
-		return utils.MarshalJSON(u.VerifyCA, "", true)
+	if u.SourceMysqlUpdateVerifyCA != nil {
+		return utils.MarshalJSON(u.SourceMysqlUpdateVerifyCA, "", true)
 	}
 
 	if u.VerifyIdentity != nil {
@@ -746,66 +746,66 @@ func (o *SourceMysqlUpdateNoTunnel) GetTunnelMethod() SourceMysqlUpdateTunnelMet
 type SourceMysqlUpdateSSHTunnelMethodType string
 
 const (
-	SourceMysqlUpdateSSHTunnelMethodTypeNoTunnel               SourceMysqlUpdateSSHTunnelMethodType = "NoTunnel"
-	SourceMysqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication   SourceMysqlUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourceMysqlUpdateSSHTunnelMethodTypePasswordAuthentication SourceMysqlUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateNoTunnel               SourceMysqlUpdateSSHTunnelMethodType = "source-mysql-update_No Tunnel"
+	SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateSSHKeyAuthentication   SourceMysqlUpdateSSHTunnelMethodType = "source-mysql-update_SSH Key Authentication"
+	SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdatePasswordAuthentication SourceMysqlUpdateSSHTunnelMethodType = "source-mysql-update_Password Authentication"
 )
 
 type SourceMysqlUpdateSSHTunnelMethod struct {
-	NoTunnel               *SourceMysqlUpdateNoTunnel
-	SSHKeyAuthentication   *SourceMysqlUpdateSSHKeyAuthentication
-	PasswordAuthentication *SourceMysqlUpdatePasswordAuthentication
+	SourceMysqlUpdateNoTunnel               *SourceMysqlUpdateNoTunnel
+	SourceMysqlUpdateSSHKeyAuthentication   *SourceMysqlUpdateSSHKeyAuthentication
+	SourceMysqlUpdatePasswordAuthentication *SourceMysqlUpdatePasswordAuthentication
 
 	Type SourceMysqlUpdateSSHTunnelMethodType
 }
 
-func CreateSourceMysqlUpdateSSHTunnelMethodNoTunnel(noTunnel SourceMysqlUpdateNoTunnel) SourceMysqlUpdateSSHTunnelMethod {
-	typ := SourceMysqlUpdateSSHTunnelMethodTypeNoTunnel
+func CreateSourceMysqlUpdateSSHTunnelMethodSourceMysqlUpdateNoTunnel(sourceMysqlUpdateNoTunnel SourceMysqlUpdateNoTunnel) SourceMysqlUpdateSSHTunnelMethod {
+	typ := SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateNoTunnel
 
 	return SourceMysqlUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		SourceMysqlUpdateNoTunnel: &sourceMysqlUpdateNoTunnel,
+		Type:                      typ,
 	}
 }
 
-func CreateSourceMysqlUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceMysqlUpdateSSHKeyAuthentication) SourceMysqlUpdateSSHTunnelMethod {
-	typ := SourceMysqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateSourceMysqlUpdateSSHTunnelMethodSourceMysqlUpdateSSHKeyAuthentication(sourceMysqlUpdateSSHKeyAuthentication SourceMysqlUpdateSSHKeyAuthentication) SourceMysqlUpdateSSHTunnelMethod {
+	typ := SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateSSHKeyAuthentication
 
 	return SourceMysqlUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		SourceMysqlUpdateSSHKeyAuthentication: &sourceMysqlUpdateSSHKeyAuthentication,
+		Type:                                  typ,
 	}
 }
 
-func CreateSourceMysqlUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceMysqlUpdatePasswordAuthentication) SourceMysqlUpdateSSHTunnelMethod {
-	typ := SourceMysqlUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateSourceMysqlUpdateSSHTunnelMethodSourceMysqlUpdatePasswordAuthentication(sourceMysqlUpdatePasswordAuthentication SourceMysqlUpdatePasswordAuthentication) SourceMysqlUpdateSSHTunnelMethod {
+	typ := SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdatePasswordAuthentication
 
 	return SourceMysqlUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceMysqlUpdatePasswordAuthentication: &sourceMysqlUpdatePasswordAuthentication,
+		Type:                                    typ,
 	}
 }
 
 func (u *SourceMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourceMysqlUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeNoTunnel
+	sourceMysqlUpdateNoTunnel := new(SourceMysqlUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateNoTunnel, "", true, true); err == nil {
+		u.SourceMysqlUpdateNoTunnel = sourceMysqlUpdateNoTunnel
+		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceMysqlUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	sourceMysqlUpdateSSHKeyAuthentication := new(SourceMysqlUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceMysqlUpdateSSHKeyAuthentication = sourceMysqlUpdateSSHKeyAuthentication
+		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourceMysqlUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceMysqlUpdateSSHTunnelMethodTypePasswordAuthentication
+	sourceMysqlUpdatePasswordAuthentication := new(SourceMysqlUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.SourceMysqlUpdatePasswordAuthentication = sourceMysqlUpdatePasswordAuthentication
+		u.Type = SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -813,16 +813,16 @@ func (u *SourceMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourceMysqlUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceMysqlUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceMysqlUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMysqlUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceMysqlUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMysqlUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

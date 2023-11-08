@@ -153,48 +153,48 @@ func (o *SourceAirtableOAuth20) GetTokenExpiryDate() *time.Time {
 type SourceAirtableAuthenticationType string
 
 const (
-	SourceAirtableAuthenticationTypeOAuth20             SourceAirtableAuthenticationType = "OAuth20"
-	SourceAirtableAuthenticationTypePersonalAccessToken SourceAirtableAuthenticationType = "PersonalAccessToken"
+	SourceAirtableAuthenticationTypeSourceAirtableOAuth20             SourceAirtableAuthenticationType = "source-airtable_OAuth2.0"
+	SourceAirtableAuthenticationTypeSourceAirtablePersonalAccessToken SourceAirtableAuthenticationType = "source-airtable_Personal Access Token"
 )
 
 type SourceAirtableAuthentication struct {
-	OAuth20             *SourceAirtableOAuth20
-	PersonalAccessToken *SourceAirtablePersonalAccessToken
+	SourceAirtableOAuth20             *SourceAirtableOAuth20
+	SourceAirtablePersonalAccessToken *SourceAirtablePersonalAccessToken
 
 	Type SourceAirtableAuthenticationType
 }
 
-func CreateSourceAirtableAuthenticationOAuth20(oAuth20 SourceAirtableOAuth20) SourceAirtableAuthentication {
-	typ := SourceAirtableAuthenticationTypeOAuth20
+func CreateSourceAirtableAuthenticationSourceAirtableOAuth20(sourceAirtableOAuth20 SourceAirtableOAuth20) SourceAirtableAuthentication {
+	typ := SourceAirtableAuthenticationTypeSourceAirtableOAuth20
 
 	return SourceAirtableAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceAirtableOAuth20: &sourceAirtableOAuth20,
+		Type:                  typ,
 	}
 }
 
-func CreateSourceAirtableAuthenticationPersonalAccessToken(personalAccessToken SourceAirtablePersonalAccessToken) SourceAirtableAuthentication {
-	typ := SourceAirtableAuthenticationTypePersonalAccessToken
+func CreateSourceAirtableAuthenticationSourceAirtablePersonalAccessToken(sourceAirtablePersonalAccessToken SourceAirtablePersonalAccessToken) SourceAirtableAuthentication {
+	typ := SourceAirtableAuthenticationTypeSourceAirtablePersonalAccessToken
 
 	return SourceAirtableAuthentication{
-		PersonalAccessToken: &personalAccessToken,
-		Type:                typ,
+		SourceAirtablePersonalAccessToken: &sourceAirtablePersonalAccessToken,
+		Type:                              typ,
 	}
 }
 
 func (u *SourceAirtableAuthentication) UnmarshalJSON(data []byte) error {
 
-	personalAccessToken := new(SourceAirtablePersonalAccessToken)
-	if err := utils.UnmarshalJSON(data, &personalAccessToken, "", true, true); err == nil {
-		u.PersonalAccessToken = personalAccessToken
-		u.Type = SourceAirtableAuthenticationTypePersonalAccessToken
+	sourceAirtablePersonalAccessToken := new(SourceAirtablePersonalAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceAirtablePersonalAccessToken, "", true, true); err == nil {
+		u.SourceAirtablePersonalAccessToken = sourceAirtablePersonalAccessToken
+		u.Type = SourceAirtableAuthenticationTypeSourceAirtablePersonalAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourceAirtableOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceAirtableAuthenticationTypeOAuth20
+	sourceAirtableOAuth20 := new(SourceAirtableOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceAirtableOAuth20, "", true, true); err == nil {
+		u.SourceAirtableOAuth20 = sourceAirtableOAuth20
+		u.Type = SourceAirtableAuthenticationTypeSourceAirtableOAuth20
 		return nil
 	}
 
@@ -202,12 +202,12 @@ func (u *SourceAirtableAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAirtableAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceAirtableOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceAirtableOAuth20, "", true)
 	}
 
-	if u.PersonalAccessToken != nil {
-		return utils.MarshalJSON(u.PersonalAccessToken, "", true)
+	if u.SourceAirtablePersonalAccessToken != nil {
+		return utils.MarshalJSON(u.SourceAirtablePersonalAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

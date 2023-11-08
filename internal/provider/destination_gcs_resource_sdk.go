@@ -27,7 +27,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	}
 	if destinationGcsHMACKey != nil {
 		credential = shared.DestinationGcsAuthentication{
-			HMACKey: destinationGcsHMACKey,
+			DestinationGcsHMACKey: destinationGcsHMACKey,
 		}
 	}
 	var format shared.DestinationGcsOutputFormat
@@ -48,7 +48,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		if destinationGcsNoCompression != nil {
 			compressionCodec = shared.DestinationGcsCompressionCodec{
-				NoCompression: destinationGcsNoCompression,
+				DestinationGcsNoCompression: destinationGcsNoCompression,
 			}
 		}
 		var destinationGcsDeflate *shared.DestinationGcsDeflate
@@ -72,7 +72,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		if destinationGcsDeflate != nil {
 			compressionCodec = shared.DestinationGcsCompressionCodec{
-				Deflate: destinationGcsDeflate,
+				DestinationGcsDeflate: destinationGcsDeflate,
 			}
 		}
 		var destinationGcsBzip2 *shared.DestinationGcsBzip2
@@ -89,7 +89,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		if destinationGcsBzip2 != nil {
 			compressionCodec = shared.DestinationGcsCompressionCodec{
-				Bzip2: destinationGcsBzip2,
+				DestinationGcsBzip2: destinationGcsBzip2,
 			}
 		}
 		var destinationGcsXz *shared.DestinationGcsXz
@@ -113,7 +113,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		if destinationGcsXz != nil {
 			compressionCodec = shared.DestinationGcsCompressionCodec{
-				Xz: destinationGcsXz,
+				DestinationGcsXz: destinationGcsXz,
 			}
 		}
 		var destinationGcsZstandard *shared.DestinationGcsZstandard
@@ -144,7 +144,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		if destinationGcsZstandard != nil {
 			compressionCodec = shared.DestinationGcsCompressionCodec{
-				Zstandard: destinationGcsZstandard,
+				DestinationGcsZstandard: destinationGcsZstandard,
 			}
 		}
 		var destinationGcsSnappy *shared.DestinationGcsSnappy
@@ -161,7 +161,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		if destinationGcsSnappy != nil {
 			compressionCodec = shared.DestinationGcsCompressionCodec{
-				Snappy: destinationGcsSnappy,
+				DestinationGcsSnappy: destinationGcsSnappy,
 			}
 		}
 		formatType := new(shared.DestinationGcsFormatType)
@@ -177,7 +177,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	}
 	if destinationGcsAvroApacheAvro != nil {
 		format = shared.DestinationGcsOutputFormat{
-			AvroApacheAvro: destinationGcsAvroApacheAvro,
+			DestinationGcsAvroApacheAvro: destinationGcsAvroApacheAvro,
 		}
 	}
 	var destinationGcsCSVCommaSeparatedValues *shared.DestinationGcsCSVCommaSeparatedValues
@@ -198,7 +198,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 			if destinationGcsSchemasNoCompression != nil {
 				compression = &shared.DestinationGcsCompression{
-					NoCompression: destinationGcsSchemasNoCompression,
+					DestinationGcsSchemasNoCompression: destinationGcsSchemasNoCompression,
 				}
 			}
 			var destinationGcsGZIP *shared.DestinationGcsGZIP
@@ -215,7 +215,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 			if destinationGcsGZIP != nil {
 				compression = &shared.DestinationGcsCompression{
-					Gzip: destinationGcsGZIP,
+					DestinationGcsGZIP: destinationGcsGZIP,
 				}
 			}
 		}
@@ -239,7 +239,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	}
 	if destinationGcsCSVCommaSeparatedValues != nil {
 		format = shared.DestinationGcsOutputFormat{
-			CSVCommaSeparatedValues: destinationGcsCSVCommaSeparatedValues,
+			DestinationGcsCSVCommaSeparatedValues: destinationGcsCSVCommaSeparatedValues,
 		}
 	}
 	var destinationGcsJSONLinesNewlineDelimitedJSON *shared.DestinationGcsJSONLinesNewlineDelimitedJSON
@@ -260,7 +260,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 			if destinationGcsSchemasFormatNoCompression != nil {
 				compression1 = &shared.DestinationGcsSchemasCompression{
-					NoCompression: destinationGcsSchemasFormatNoCompression,
+					DestinationGcsSchemasFormatNoCompression: destinationGcsSchemasFormatNoCompression,
 				}
 			}
 			var destinationGcsSchemasGZIP *shared.DestinationGcsSchemasGZIP
@@ -277,7 +277,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 			if destinationGcsSchemasGZIP != nil {
 				compression1 = &shared.DestinationGcsSchemasCompression{
-					Gzip: destinationGcsSchemasGZIP,
+					DestinationGcsSchemasGZIP: destinationGcsSchemasGZIP,
 				}
 			}
 		}
@@ -294,7 +294,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	}
 	if destinationGcsJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationGcsOutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationGcsJSONLinesNewlineDelimitedJSON,
+			DestinationGcsJSONLinesNewlineDelimitedJSON: destinationGcsJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	var destinationGcsParquetColumnarStorage *shared.DestinationGcsParquetColumnarStorage
@@ -353,7 +353,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	}
 	if destinationGcsParquetColumnarStorage != nil {
 		format = shared.DestinationGcsOutputFormat{
-			ParquetColumnarStorage: destinationGcsParquetColumnarStorage,
+			DestinationGcsParquetColumnarStorage: destinationGcsParquetColumnarStorage,
 		}
 	}
 	gcsBucketName := r.Configuration.GcsBucketName.ValueString()
@@ -577,7 +577,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 			if destinationGcsUpdateNoCompression != nil {
 				compression = &shared.Compression{
-					NoCompression: destinationGcsUpdateNoCompression,
+					DestinationGcsUpdateNoCompression: destinationGcsUpdateNoCompression,
 				}
 			}
 			var gzip *shared.Gzip
@@ -618,7 +618,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 	}
 	if destinationGcsUpdateCSVCommaSeparatedValues != nil {
 		format = shared.DestinationGcsUpdateOutputFormat{
-			CSVCommaSeparatedValues: destinationGcsUpdateCSVCommaSeparatedValues,
+			DestinationGcsUpdateCSVCommaSeparatedValues: destinationGcsUpdateCSVCommaSeparatedValues,
 		}
 	}
 	var destinationGcsUpdateJSONLinesNewlineDelimitedJSON *shared.DestinationGcsUpdateJSONLinesNewlineDelimitedJSON
@@ -639,7 +639,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 			if destinationGcsUpdateSchemasNoCompression != nil {
 				compression1 = &shared.DestinationGcsUpdateCompression{
-					NoCompression: destinationGcsUpdateSchemasNoCompression,
+					DestinationGcsUpdateSchemasNoCompression: destinationGcsUpdateSchemasNoCompression,
 				}
 			}
 			var destinationGcsUpdateGZIP *shared.DestinationGcsUpdateGZIP
@@ -656,7 +656,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 			if destinationGcsUpdateGZIP != nil {
 				compression1 = &shared.DestinationGcsUpdateCompression{
-					Gzip: destinationGcsUpdateGZIP,
+					DestinationGcsUpdateGZIP: destinationGcsUpdateGZIP,
 				}
 			}
 		}
@@ -673,7 +673,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 	}
 	if destinationGcsUpdateJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationGcsUpdateOutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationGcsUpdateJSONLinesNewlineDelimitedJSON,
+			DestinationGcsUpdateJSONLinesNewlineDelimitedJSON: destinationGcsUpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	var destinationGcsUpdateParquetColumnarStorage *shared.DestinationGcsUpdateParquetColumnarStorage
@@ -732,7 +732,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 	}
 	if destinationGcsUpdateParquetColumnarStorage != nil {
 		format = shared.DestinationGcsUpdateOutputFormat{
-			ParquetColumnarStorage: destinationGcsUpdateParquetColumnarStorage,
+			DestinationGcsUpdateParquetColumnarStorage: destinationGcsUpdateParquetColumnarStorage,
 		}
 	}
 	gcsBucketName := r.Configuration.GcsBucketName.ValueString()

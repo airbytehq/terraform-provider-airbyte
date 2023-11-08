@@ -23,7 +23,7 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	}
 	if sourceHubspotOAuth != nil {
 		credentials = shared.SourceHubspotAuthentication{
-			OAuth: sourceHubspotOAuth,
+			SourceHubspotOAuth: sourceHubspotOAuth,
 		}
 	}
 	var sourceHubspotPrivateApp *shared.SourceHubspotPrivateApp
@@ -35,7 +35,7 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	}
 	if sourceHubspotPrivateApp != nil {
 		credentials = shared.SourceHubspotAuthentication{
-			PrivateApp: sourceHubspotPrivateApp,
+			SourceHubspotPrivateApp: sourceHubspotPrivateApp,
 		}
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -80,7 +80,7 @@ func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutR
 	}
 	if sourceHubspotUpdateOAuth != nil {
 		credentials = shared.SourceHubspotUpdateAuthentication{
-			OAuth: sourceHubspotUpdateOAuth,
+			SourceHubspotUpdateOAuth: sourceHubspotUpdateOAuth,
 		}
 	}
 	var privateApp *shared.PrivateApp

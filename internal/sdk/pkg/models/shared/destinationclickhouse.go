@@ -246,66 +246,66 @@ func (o *DestinationClickhouseNoTunnel) GetTunnelMethod() DestinationClickhouseT
 type DestinationClickhouseSSHTunnelMethodType string
 
 const (
-	DestinationClickhouseSSHTunnelMethodTypeNoTunnel               DestinationClickhouseSSHTunnelMethodType = "NoTunnel"
-	DestinationClickhouseSSHTunnelMethodTypeSSHKeyAuthentication   DestinationClickhouseSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationClickhouseSSHTunnelMethodTypePasswordAuthentication DestinationClickhouseSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseNoTunnel               DestinationClickhouseSSHTunnelMethodType = "destination-clickhouse_No Tunnel"
+	DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseSSHKeyAuthentication   DestinationClickhouseSSHTunnelMethodType = "destination-clickhouse_SSH Key Authentication"
+	DestinationClickhouseSSHTunnelMethodTypeDestinationClickhousePasswordAuthentication DestinationClickhouseSSHTunnelMethodType = "destination-clickhouse_Password Authentication"
 )
 
 type DestinationClickhouseSSHTunnelMethod struct {
-	NoTunnel               *DestinationClickhouseNoTunnel
-	SSHKeyAuthentication   *DestinationClickhouseSSHKeyAuthentication
-	PasswordAuthentication *DestinationClickhousePasswordAuthentication
+	DestinationClickhouseNoTunnel               *DestinationClickhouseNoTunnel
+	DestinationClickhouseSSHKeyAuthentication   *DestinationClickhouseSSHKeyAuthentication
+	DestinationClickhousePasswordAuthentication *DestinationClickhousePasswordAuthentication
 
 	Type DestinationClickhouseSSHTunnelMethodType
 }
 
-func CreateDestinationClickhouseSSHTunnelMethodNoTunnel(noTunnel DestinationClickhouseNoTunnel) DestinationClickhouseSSHTunnelMethod {
-	typ := DestinationClickhouseSSHTunnelMethodTypeNoTunnel
+func CreateDestinationClickhouseSSHTunnelMethodDestinationClickhouseNoTunnel(destinationClickhouseNoTunnel DestinationClickhouseNoTunnel) DestinationClickhouseSSHTunnelMethod {
+	typ := DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseNoTunnel
 
 	return DestinationClickhouseSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationClickhouseNoTunnel: &destinationClickhouseNoTunnel,
+		Type:                          typ,
 	}
 }
 
-func CreateDestinationClickhouseSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationClickhouseSSHKeyAuthentication) DestinationClickhouseSSHTunnelMethod {
-	typ := DestinationClickhouseSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationClickhouseSSHTunnelMethodDestinationClickhouseSSHKeyAuthentication(destinationClickhouseSSHKeyAuthentication DestinationClickhouseSSHKeyAuthentication) DestinationClickhouseSSHTunnelMethod {
+	typ := DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseSSHKeyAuthentication
 
 	return DestinationClickhouseSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationClickhouseSSHKeyAuthentication: &destinationClickhouseSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationClickhouseSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationClickhousePasswordAuthentication) DestinationClickhouseSSHTunnelMethod {
-	typ := DestinationClickhouseSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationClickhouseSSHTunnelMethodDestinationClickhousePasswordAuthentication(destinationClickhousePasswordAuthentication DestinationClickhousePasswordAuthentication) DestinationClickhouseSSHTunnelMethod {
+	typ := DestinationClickhouseSSHTunnelMethodTypeDestinationClickhousePasswordAuthentication
 
 	return DestinationClickhouseSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationClickhousePasswordAuthentication: &destinationClickhousePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationClickhouseSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationClickhouseNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationClickhouseSSHTunnelMethodTypeNoTunnel
+	destinationClickhouseNoTunnel := new(DestinationClickhouseNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationClickhouseNoTunnel, "", true, true); err == nil {
+		u.DestinationClickhouseNoTunnel = destinationClickhouseNoTunnel
+		u.Type = DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationClickhouseSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationClickhouseSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationClickhouseSSHKeyAuthentication := new(DestinationClickhouseSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationClickhouseSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationClickhouseSSHKeyAuthentication = destinationClickhouseSSHKeyAuthentication
+		u.Type = DestinationClickhouseSSHTunnelMethodTypeDestinationClickhouseSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationClickhousePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationClickhouseSSHTunnelMethodTypePasswordAuthentication
+	destinationClickhousePasswordAuthentication := new(DestinationClickhousePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationClickhousePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationClickhousePasswordAuthentication = destinationClickhousePasswordAuthentication
+		u.Type = DestinationClickhouseSSHTunnelMethodTypeDestinationClickhousePasswordAuthentication
 		return nil
 	}
 
@@ -313,16 +313,16 @@ func (u *DestinationClickhouseSSHTunnelMethod) UnmarshalJSON(data []byte) error 
 }
 
 func (u DestinationClickhouseSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationClickhouseNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationClickhouseNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationClickhouseSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationClickhouseSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationClickhousePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationClickhousePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

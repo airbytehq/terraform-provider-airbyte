@@ -80,30 +80,30 @@ func (o *DestinationDevNullSilent) GetTestDestinationType() *DestinationDevNullT
 type DestinationDevNullTestDestinationUnionType string
 
 const (
-	DestinationDevNullTestDestinationUnionTypeSilent DestinationDevNullTestDestinationUnionType = "Silent"
+	DestinationDevNullTestDestinationUnionTypeDestinationDevNullSilent DestinationDevNullTestDestinationUnionType = "destination-dev-null_Silent"
 )
 
 type DestinationDevNullTestDestination struct {
-	Silent *DestinationDevNullSilent
+	DestinationDevNullSilent *DestinationDevNullSilent
 
 	Type DestinationDevNullTestDestinationUnionType
 }
 
-func CreateDestinationDevNullTestDestinationSilent(silent DestinationDevNullSilent) DestinationDevNullTestDestination {
-	typ := DestinationDevNullTestDestinationUnionTypeSilent
+func CreateDestinationDevNullTestDestinationDestinationDevNullSilent(destinationDevNullSilent DestinationDevNullSilent) DestinationDevNullTestDestination {
+	typ := DestinationDevNullTestDestinationUnionTypeDestinationDevNullSilent
 
 	return DestinationDevNullTestDestination{
-		Silent: &silent,
-		Type:   typ,
+		DestinationDevNullSilent: &destinationDevNullSilent,
+		Type:                     typ,
 	}
 }
 
 func (u *DestinationDevNullTestDestination) UnmarshalJSON(data []byte) error {
 
-	silent := new(DestinationDevNullSilent)
-	if err := utils.UnmarshalJSON(data, &silent, "", true, true); err == nil {
-		u.Silent = silent
-		u.Type = DestinationDevNullTestDestinationUnionTypeSilent
+	destinationDevNullSilent := new(DestinationDevNullSilent)
+	if err := utils.UnmarshalJSON(data, &destinationDevNullSilent, "", true, true); err == nil {
+		u.DestinationDevNullSilent = destinationDevNullSilent
+		u.Type = DestinationDevNullTestDestinationUnionTypeDestinationDevNullSilent
 		return nil
 	}
 
@@ -111,8 +111,8 @@ func (u *DestinationDevNullTestDestination) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationDevNullTestDestination) MarshalJSON() ([]byte, error) {
-	if u.Silent != nil {
-		return utils.MarshalJSON(u.Silent, "", true)
+	if u.DestinationDevNullSilent != nil {
+		return utils.MarshalJSON(u.DestinationDevNullSilent, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

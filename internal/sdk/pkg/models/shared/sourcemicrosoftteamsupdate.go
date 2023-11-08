@@ -163,8 +163,8 @@ func (o *AuthenticateViaMicrosoftOAuth20) GetTenantID() string {
 type SourceMicrosoftTeamsUpdateAuthenticationMechanismType string
 
 const (
-	SourceMicrosoftTeamsUpdateAuthenticationMechanismTypeAuthenticateViaMicrosoftOAuth20 SourceMicrosoftTeamsUpdateAuthenticationMechanismType = "AuthenticateViaMicrosoftOAuth20"
-	SourceMicrosoftTeamsUpdateAuthenticationMechanismTypeAuthenticateViaMicrosoft        SourceMicrosoftTeamsUpdateAuthenticationMechanismType = "AuthenticateViaMicrosoft"
+	SourceMicrosoftTeamsUpdateAuthenticationMechanismTypeAuthenticateViaMicrosoftOAuth20 SourceMicrosoftTeamsUpdateAuthenticationMechanismType = "Authenticate via Microsoft (OAuth 2.0)"
+	SourceMicrosoftTeamsUpdateAuthenticationMechanismTypeAuthenticateViaMicrosoft        SourceMicrosoftTeamsUpdateAuthenticationMechanismType = "Authenticate via Microsoft"
 )
 
 type SourceMicrosoftTeamsUpdateAuthenticationMechanism struct {

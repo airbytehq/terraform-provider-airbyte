@@ -100,8 +100,8 @@ func (o *EUBasedAccount) GetURLBase() *URLBase {
 type BaseURLType string
 
 const (
-	BaseURLTypeEUBasedAccount BaseURLType = "EUBasedAccount"
-	BaseURLTypeGlobalAccount  BaseURLType = "GlobalAccount"
+	BaseURLTypeEUBasedAccount BaseURLType = "EU-based account"
+	BaseURLTypeGlobalAccount  BaseURLType = "Global account"
 )
 
 type BaseURL struct {

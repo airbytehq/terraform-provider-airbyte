@@ -222,9 +222,9 @@ func (o *NoTunnel) GetTunnelMethod() TunnelMethod {
 type SSHTunnelMethodType string
 
 const (
-	SSHTunnelMethodTypeNoTunnel               SSHTunnelMethodType = "NoTunnel"
-	SSHTunnelMethodTypeSSHKeyAuthentication   SSHTunnelMethodType = "SSHKeyAuthentication"
-	SSHTunnelMethodTypePasswordAuthentication SSHTunnelMethodType = "PasswordAuthentication"
+	SSHTunnelMethodTypeNoTunnel               SSHTunnelMethodType = "No Tunnel"
+	SSHTunnelMethodTypeSSHKeyAuthentication   SSHTunnelMethodType = "SSH Key Authentication"
+	SSHTunnelMethodTypePasswordAuthentication SSHTunnelMethodType = "Password Authentication"
 )
 
 type SSHTunnelMethod struct {

@@ -135,48 +135,48 @@ func (o *SourcePinterestOAuth20) GetRefreshToken() string {
 type SourcePinterestAuthorizationMethodType string
 
 const (
-	SourcePinterestAuthorizationMethodTypeOAuth20     SourcePinterestAuthorizationMethodType = "OAuth20"
-	SourcePinterestAuthorizationMethodTypeAccessToken SourcePinterestAuthorizationMethodType = "AccessToken"
+	SourcePinterestAuthorizationMethodTypeSourcePinterestOAuth20     SourcePinterestAuthorizationMethodType = "source-pinterest_OAuth2.0"
+	SourcePinterestAuthorizationMethodTypeSourcePinterestAccessToken SourcePinterestAuthorizationMethodType = "source-pinterest_Access Token"
 )
 
 type SourcePinterestAuthorizationMethod struct {
-	OAuth20     *SourcePinterestOAuth20
-	AccessToken *SourcePinterestAccessToken
+	SourcePinterestOAuth20     *SourcePinterestOAuth20
+	SourcePinterestAccessToken *SourcePinterestAccessToken
 
 	Type SourcePinterestAuthorizationMethodType
 }
 
-func CreateSourcePinterestAuthorizationMethodOAuth20(oAuth20 SourcePinterestOAuth20) SourcePinterestAuthorizationMethod {
-	typ := SourcePinterestAuthorizationMethodTypeOAuth20
+func CreateSourcePinterestAuthorizationMethodSourcePinterestOAuth20(sourcePinterestOAuth20 SourcePinterestOAuth20) SourcePinterestAuthorizationMethod {
+	typ := SourcePinterestAuthorizationMethodTypeSourcePinterestOAuth20
 
 	return SourcePinterestAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourcePinterestOAuth20: &sourcePinterestOAuth20,
+		Type:                   typ,
 	}
 }
 
-func CreateSourcePinterestAuthorizationMethodAccessToken(accessToken SourcePinterestAccessToken) SourcePinterestAuthorizationMethod {
-	typ := SourcePinterestAuthorizationMethodTypeAccessToken
+func CreateSourcePinterestAuthorizationMethodSourcePinterestAccessToken(sourcePinterestAccessToken SourcePinterestAccessToken) SourcePinterestAuthorizationMethod {
+	typ := SourcePinterestAuthorizationMethodTypeSourcePinterestAccessToken
 
 	return SourcePinterestAuthorizationMethod{
-		AccessToken: &accessToken,
-		Type:        typ,
+		SourcePinterestAccessToken: &sourcePinterestAccessToken,
+		Type:                       typ,
 	}
 }
 
 func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	accessToken := new(SourcePinterestAccessToken)
-	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
-		u.AccessToken = accessToken
-		u.Type = SourcePinterestAuthorizationMethodTypeAccessToken
+	sourcePinterestAccessToken := new(SourcePinterestAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourcePinterestAccessToken, "", true, true); err == nil {
+		u.SourcePinterestAccessToken = sourcePinterestAccessToken
+		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourcePinterestOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourcePinterestAuthorizationMethodTypeOAuth20
+	sourcePinterestOAuth20 := new(SourcePinterestOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourcePinterestOAuth20, "", true, true); err == nil {
+		u.SourcePinterestOAuth20 = sourcePinterestOAuth20
+		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestOAuth20
 		return nil
 	}
 
@@ -184,12 +184,12 @@ func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePinterestAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourcePinterestOAuth20 != nil {
+		return utils.MarshalJSON(u.SourcePinterestOAuth20, "", true)
 	}
 
-	if u.AccessToken != nil {
-		return utils.MarshalJSON(u.AccessToken, "", true)
+	if u.SourcePinterestAccessToken != nil {
+		return utils.MarshalJSON(u.SourcePinterestAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -37,7 +37,7 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 		}
 		if sourceTiktokMarketingOAuth20 != nil {
 			credentials = &shared.SourceTiktokMarketingAuthenticationMethod{
-				OAuth20: sourceTiktokMarketingOAuth20,
+				SourceTiktokMarketingOAuth20: sourceTiktokMarketingOAuth20,
 			}
 		}
 		var sourceTiktokMarketingSandboxAccessToken *shared.SourceTiktokMarketingSandboxAccessToken
@@ -51,7 +51,7 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 		}
 		if sourceTiktokMarketingSandboxAccessToken != nil {
 			credentials = &shared.SourceTiktokMarketingAuthenticationMethod{
-				SandboxAccessToken: sourceTiktokMarketingSandboxAccessToken,
+				SourceTiktokMarketingSandboxAccessToken: sourceTiktokMarketingSandboxAccessToken,
 			}
 		}
 	}
@@ -131,7 +131,7 @@ func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTik
 		}
 		if sourceTiktokMarketingUpdateOAuth20 != nil {
 			credentials = &shared.SourceTiktokMarketingUpdateAuthenticationMethod{
-				OAuth20: sourceTiktokMarketingUpdateOAuth20,
+				SourceTiktokMarketingUpdateOAuth20: sourceTiktokMarketingUpdateOAuth20,
 			}
 		}
 		var sandboxAccessToken *shared.SandboxAccessToken

@@ -153,23 +153,23 @@ func (o *SourceGitlabUpdateOAuth20) GetTokenExpiryDate() time.Time {
 type SourceGitlabUpdateAuthorizationMethodType string
 
 const (
-	SourceGitlabUpdateAuthorizationMethodTypeOAuth20      SourceGitlabUpdateAuthorizationMethodType = "OAuth20"
-	SourceGitlabUpdateAuthorizationMethodTypePrivateToken SourceGitlabUpdateAuthorizationMethodType = "PrivateToken"
+	SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateOAuth20 SourceGitlabUpdateAuthorizationMethodType = "source-gitlab-update_OAuth2.0"
+	SourceGitlabUpdateAuthorizationMethodTypePrivateToken              SourceGitlabUpdateAuthorizationMethodType = "Private Token"
 )
 
 type SourceGitlabUpdateAuthorizationMethod struct {
-	OAuth20      *SourceGitlabUpdateOAuth20
-	PrivateToken *PrivateToken
+	SourceGitlabUpdateOAuth20 *SourceGitlabUpdateOAuth20
+	PrivateToken              *PrivateToken
 
 	Type SourceGitlabUpdateAuthorizationMethodType
 }
 
-func CreateSourceGitlabUpdateAuthorizationMethodOAuth20(oAuth20 SourceGitlabUpdateOAuth20) SourceGitlabUpdateAuthorizationMethod {
-	typ := SourceGitlabUpdateAuthorizationMethodTypeOAuth20
+func CreateSourceGitlabUpdateAuthorizationMethodSourceGitlabUpdateOAuth20(sourceGitlabUpdateOAuth20 SourceGitlabUpdateOAuth20) SourceGitlabUpdateAuthorizationMethod {
+	typ := SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateOAuth20
 
 	return SourceGitlabUpdateAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceGitlabUpdateOAuth20: &sourceGitlabUpdateOAuth20,
+		Type:                      typ,
 	}
 }
 
@@ -191,10 +191,10 @@ func (u *SourceGitlabUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	oAuth20 := new(SourceGitlabUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceGitlabUpdateAuthorizationMethodTypeOAuth20
+	sourceGitlabUpdateOAuth20 := new(SourceGitlabUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceGitlabUpdateOAuth20, "", true, true); err == nil {
+		u.SourceGitlabUpdateOAuth20 = sourceGitlabUpdateOAuth20
+		u.Type = SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateOAuth20
 		return nil
 	}
 
@@ -202,8 +202,8 @@ func (u *SourceGitlabUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceGitlabUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceGitlabUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceGitlabUpdateOAuth20, "", true)
 	}
 
 	if u.PrivateToken != nil {

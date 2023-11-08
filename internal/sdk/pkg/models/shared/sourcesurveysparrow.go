@@ -100,48 +100,48 @@ func (o *SourceSurveySparrowEUBasedAccount) GetURLBase() *SourceSurveySparrowURL
 type SourceSurveySparrowBaseURLType string
 
 const (
-	SourceSurveySparrowBaseURLTypeEUBasedAccount SourceSurveySparrowBaseURLType = "EUBasedAccount"
-	SourceSurveySparrowBaseURLTypeGlobalAccount  SourceSurveySparrowBaseURLType = "GlobalAccount"
+	SourceSurveySparrowBaseURLTypeSourceSurveySparrowEUBasedAccount SourceSurveySparrowBaseURLType = "source-survey-sparrow_EU-based account"
+	SourceSurveySparrowBaseURLTypeSourceSurveySparrowGlobalAccount  SourceSurveySparrowBaseURLType = "source-survey-sparrow_Global account"
 )
 
 type SourceSurveySparrowBaseURL struct {
-	EUBasedAccount *SourceSurveySparrowEUBasedAccount
-	GlobalAccount  *SourceSurveySparrowGlobalAccount
+	SourceSurveySparrowEUBasedAccount *SourceSurveySparrowEUBasedAccount
+	SourceSurveySparrowGlobalAccount  *SourceSurveySparrowGlobalAccount
 
 	Type SourceSurveySparrowBaseURLType
 }
 
-func CreateSourceSurveySparrowBaseURLEUBasedAccount(euBasedAccount SourceSurveySparrowEUBasedAccount) SourceSurveySparrowBaseURL {
-	typ := SourceSurveySparrowBaseURLTypeEUBasedAccount
+func CreateSourceSurveySparrowBaseURLSourceSurveySparrowEUBasedAccount(sourceSurveySparrowEUBasedAccount SourceSurveySparrowEUBasedAccount) SourceSurveySparrowBaseURL {
+	typ := SourceSurveySparrowBaseURLTypeSourceSurveySparrowEUBasedAccount
 
 	return SourceSurveySparrowBaseURL{
-		EUBasedAccount: &euBasedAccount,
-		Type:           typ,
+		SourceSurveySparrowEUBasedAccount: &sourceSurveySparrowEUBasedAccount,
+		Type:                              typ,
 	}
 }
 
-func CreateSourceSurveySparrowBaseURLGlobalAccount(globalAccount SourceSurveySparrowGlobalAccount) SourceSurveySparrowBaseURL {
-	typ := SourceSurveySparrowBaseURLTypeGlobalAccount
+func CreateSourceSurveySparrowBaseURLSourceSurveySparrowGlobalAccount(sourceSurveySparrowGlobalAccount SourceSurveySparrowGlobalAccount) SourceSurveySparrowBaseURL {
+	typ := SourceSurveySparrowBaseURLTypeSourceSurveySparrowGlobalAccount
 
 	return SourceSurveySparrowBaseURL{
-		GlobalAccount: &globalAccount,
-		Type:          typ,
+		SourceSurveySparrowGlobalAccount: &sourceSurveySparrowGlobalAccount,
+		Type:                             typ,
 	}
 }
 
 func (u *SourceSurveySparrowBaseURL) UnmarshalJSON(data []byte) error {
 
-	euBasedAccount := new(SourceSurveySparrowEUBasedAccount)
-	if err := utils.UnmarshalJSON(data, &euBasedAccount, "", true, true); err == nil {
-		u.EUBasedAccount = euBasedAccount
-		u.Type = SourceSurveySparrowBaseURLTypeEUBasedAccount
+	sourceSurveySparrowEUBasedAccount := new(SourceSurveySparrowEUBasedAccount)
+	if err := utils.UnmarshalJSON(data, &sourceSurveySparrowEUBasedAccount, "", true, true); err == nil {
+		u.SourceSurveySparrowEUBasedAccount = sourceSurveySparrowEUBasedAccount
+		u.Type = SourceSurveySparrowBaseURLTypeSourceSurveySparrowEUBasedAccount
 		return nil
 	}
 
-	globalAccount := new(SourceSurveySparrowGlobalAccount)
-	if err := utils.UnmarshalJSON(data, &globalAccount, "", true, true); err == nil {
-		u.GlobalAccount = globalAccount
-		u.Type = SourceSurveySparrowBaseURLTypeGlobalAccount
+	sourceSurveySparrowGlobalAccount := new(SourceSurveySparrowGlobalAccount)
+	if err := utils.UnmarshalJSON(data, &sourceSurveySparrowGlobalAccount, "", true, true); err == nil {
+		u.SourceSurveySparrowGlobalAccount = sourceSurveySparrowGlobalAccount
+		u.Type = SourceSurveySparrowBaseURLTypeSourceSurveySparrowGlobalAccount
 		return nil
 	}
 
@@ -149,12 +149,12 @@ func (u *SourceSurveySparrowBaseURL) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceSurveySparrowBaseURL) MarshalJSON() ([]byte, error) {
-	if u.EUBasedAccount != nil {
-		return utils.MarshalJSON(u.EUBasedAccount, "", true)
+	if u.SourceSurveySparrowEUBasedAccount != nil {
+		return utils.MarshalJSON(u.SourceSurveySparrowEUBasedAccount, "", true)
 	}
 
-	if u.GlobalAccount != nil {
-		return utils.MarshalJSON(u.GlobalAccount, "", true)
+	if u.SourceSurveySparrowGlobalAccount != nil {
+		return utils.MarshalJSON(u.SourceSurveySparrowGlobalAccount, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

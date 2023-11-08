@@ -216,30 +216,30 @@ func (o *DestinationBigqueryUpdateHMACKey) GetHmacKeySecret() string {
 type DestinationBigqueryUpdateCredentialUnionType string
 
 const (
-	DestinationBigqueryUpdateCredentialUnionTypeHMACKey DestinationBigqueryUpdateCredentialUnionType = "HMACKey"
+	DestinationBigqueryUpdateCredentialUnionTypeDestinationBigqueryUpdateHMACKey DestinationBigqueryUpdateCredentialUnionType = "destination-bigquery-update_HMAC key"
 )
 
 type DestinationBigqueryUpdateCredential struct {
-	HMACKey *DestinationBigqueryUpdateHMACKey
+	DestinationBigqueryUpdateHMACKey *DestinationBigqueryUpdateHMACKey
 
 	Type DestinationBigqueryUpdateCredentialUnionType
 }
 
-func CreateDestinationBigqueryUpdateCredentialHMACKey(hmacKey DestinationBigqueryUpdateHMACKey) DestinationBigqueryUpdateCredential {
-	typ := DestinationBigqueryUpdateCredentialUnionTypeHMACKey
+func CreateDestinationBigqueryUpdateCredentialDestinationBigqueryUpdateHMACKey(destinationBigqueryUpdateHMACKey DestinationBigqueryUpdateHMACKey) DestinationBigqueryUpdateCredential {
+	typ := DestinationBigqueryUpdateCredentialUnionTypeDestinationBigqueryUpdateHMACKey
 
 	return DestinationBigqueryUpdateCredential{
-		HMACKey: &hmacKey,
-		Type:    typ,
+		DestinationBigqueryUpdateHMACKey: &destinationBigqueryUpdateHMACKey,
+		Type:                             typ,
 	}
 }
 
 func (u *DestinationBigqueryUpdateCredential) UnmarshalJSON(data []byte) error {
 
-	hmacKey := new(DestinationBigqueryUpdateHMACKey)
-	if err := utils.UnmarshalJSON(data, &hmacKey, "", true, true); err == nil {
-		u.HMACKey = hmacKey
-		u.Type = DestinationBigqueryUpdateCredentialUnionTypeHMACKey
+	destinationBigqueryUpdateHMACKey := new(DestinationBigqueryUpdateHMACKey)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryUpdateHMACKey, "", true, true); err == nil {
+		u.DestinationBigqueryUpdateHMACKey = destinationBigqueryUpdateHMACKey
+		u.Type = DestinationBigqueryUpdateCredentialUnionTypeDestinationBigqueryUpdateHMACKey
 		return nil
 	}
 
@@ -247,8 +247,8 @@ func (u *DestinationBigqueryUpdateCredential) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationBigqueryUpdateCredential) MarshalJSON() ([]byte, error) {
-	if u.HMACKey != nil {
-		return utils.MarshalJSON(u.HMACKey, "", true)
+	if u.DestinationBigqueryUpdateHMACKey != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryUpdateHMACKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -418,48 +418,48 @@ func (o *DestinationBigqueryUpdateStandardInserts) GetMethod() DestinationBigque
 type DestinationBigqueryUpdateLoadingMethodType string
 
 const (
-	DestinationBigqueryUpdateLoadingMethodTypeStandardInserts DestinationBigqueryUpdateLoadingMethodType = "StandardInserts"
-	DestinationBigqueryUpdateLoadingMethodTypeGCSStaging      DestinationBigqueryUpdateLoadingMethodType = "GCSStaging"
+	DestinationBigqueryUpdateLoadingMethodTypeDestinationBigqueryUpdateStandardInserts DestinationBigqueryUpdateLoadingMethodType = "destination-bigquery-update_Standard Inserts"
+	DestinationBigqueryUpdateLoadingMethodTypeDestinationBigqueryUpdateGCSStaging      DestinationBigqueryUpdateLoadingMethodType = "destination-bigquery-update_GCS Staging"
 )
 
 type DestinationBigqueryUpdateLoadingMethod struct {
-	StandardInserts *DestinationBigqueryUpdateStandardInserts
-	GCSStaging      *DestinationBigqueryUpdateGCSStaging
+	DestinationBigqueryUpdateStandardInserts *DestinationBigqueryUpdateStandardInserts
+	DestinationBigqueryUpdateGCSStaging      *DestinationBigqueryUpdateGCSStaging
 
 	Type DestinationBigqueryUpdateLoadingMethodType
 }
 
-func CreateDestinationBigqueryUpdateLoadingMethodStandardInserts(standardInserts DestinationBigqueryUpdateStandardInserts) DestinationBigqueryUpdateLoadingMethod {
-	typ := DestinationBigqueryUpdateLoadingMethodTypeStandardInserts
+func CreateDestinationBigqueryUpdateLoadingMethodDestinationBigqueryUpdateStandardInserts(destinationBigqueryUpdateStandardInserts DestinationBigqueryUpdateStandardInserts) DestinationBigqueryUpdateLoadingMethod {
+	typ := DestinationBigqueryUpdateLoadingMethodTypeDestinationBigqueryUpdateStandardInserts
 
 	return DestinationBigqueryUpdateLoadingMethod{
-		StandardInserts: &standardInserts,
-		Type:            typ,
+		DestinationBigqueryUpdateStandardInserts: &destinationBigqueryUpdateStandardInserts,
+		Type:                                     typ,
 	}
 }
 
-func CreateDestinationBigqueryUpdateLoadingMethodGCSStaging(gcsStaging DestinationBigqueryUpdateGCSStaging) DestinationBigqueryUpdateLoadingMethod {
-	typ := DestinationBigqueryUpdateLoadingMethodTypeGCSStaging
+func CreateDestinationBigqueryUpdateLoadingMethodDestinationBigqueryUpdateGCSStaging(destinationBigqueryUpdateGCSStaging DestinationBigqueryUpdateGCSStaging) DestinationBigqueryUpdateLoadingMethod {
+	typ := DestinationBigqueryUpdateLoadingMethodTypeDestinationBigqueryUpdateGCSStaging
 
 	return DestinationBigqueryUpdateLoadingMethod{
-		GCSStaging: &gcsStaging,
-		Type:       typ,
+		DestinationBigqueryUpdateGCSStaging: &destinationBigqueryUpdateGCSStaging,
+		Type:                                typ,
 	}
 }
 
 func (u *DestinationBigqueryUpdateLoadingMethod) UnmarshalJSON(data []byte) error {
 
-	standardInserts := new(DestinationBigqueryUpdateStandardInserts)
-	if err := utils.UnmarshalJSON(data, &standardInserts, "", true, true); err == nil {
-		u.StandardInserts = standardInserts
-		u.Type = DestinationBigqueryUpdateLoadingMethodTypeStandardInserts
+	destinationBigqueryUpdateStandardInserts := new(DestinationBigqueryUpdateStandardInserts)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryUpdateStandardInserts, "", true, true); err == nil {
+		u.DestinationBigqueryUpdateStandardInserts = destinationBigqueryUpdateStandardInserts
+		u.Type = DestinationBigqueryUpdateLoadingMethodTypeDestinationBigqueryUpdateStandardInserts
 		return nil
 	}
 
-	gcsStaging := new(DestinationBigqueryUpdateGCSStaging)
-	if err := utils.UnmarshalJSON(data, &gcsStaging, "", true, true); err == nil {
-		u.GCSStaging = gcsStaging
-		u.Type = DestinationBigqueryUpdateLoadingMethodTypeGCSStaging
+	destinationBigqueryUpdateGCSStaging := new(DestinationBigqueryUpdateGCSStaging)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryUpdateGCSStaging, "", true, true); err == nil {
+		u.DestinationBigqueryUpdateGCSStaging = destinationBigqueryUpdateGCSStaging
+		u.Type = DestinationBigqueryUpdateLoadingMethodTypeDestinationBigqueryUpdateGCSStaging
 		return nil
 	}
 
@@ -467,12 +467,12 @@ func (u *DestinationBigqueryUpdateLoadingMethod) UnmarshalJSON(data []byte) erro
 }
 
 func (u DestinationBigqueryUpdateLoadingMethod) MarshalJSON() ([]byte, error) {
-	if u.StandardInserts != nil {
-		return utils.MarshalJSON(u.StandardInserts, "", true)
+	if u.DestinationBigqueryUpdateStandardInserts != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryUpdateStandardInserts, "", true)
 	}
 
-	if u.GCSStaging != nil {
-		return utils.MarshalJSON(u.GCSStaging, "", true)
+	if u.DestinationBigqueryUpdateGCSStaging != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryUpdateGCSStaging, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

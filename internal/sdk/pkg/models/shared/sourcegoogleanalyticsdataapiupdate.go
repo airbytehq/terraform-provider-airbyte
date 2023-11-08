@@ -146,8 +146,8 @@ func (o *AuthenticateViaGoogleOauth) GetRefreshToken() string {
 type CredentialsType string
 
 const (
-	CredentialsTypeAuthenticateViaGoogleOauth      CredentialsType = "AuthenticateViaGoogleOauth"
-	CredentialsTypeServiceAccountKeyAuthentication CredentialsType = "ServiceAccountKeyAuthentication"
+	CredentialsTypeAuthenticateViaGoogleOauth      CredentialsType = "Authenticate via Google (Oauth)"
+	CredentialsTypeServiceAccountKeyAuthentication CredentialsType = "Service Account Key Authentication"
 )
 
 type Credentials struct {

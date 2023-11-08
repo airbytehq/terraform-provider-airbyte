@@ -17,7 +17,7 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 		}
 		if sourceFaunaDisabled != nil {
 			deletions = shared.SourceFaunaDeletionMode{
-				Disabled: sourceFaunaDisabled,
+				SourceFaunaDisabled: sourceFaunaDisabled,
 			}
 		}
 		var sourceFaunaEnabled *shared.SourceFaunaEnabled
@@ -34,7 +34,7 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 		}
 		if sourceFaunaEnabled != nil {
 			deletions = shared.SourceFaunaDeletionMode{
-				Enabled: sourceFaunaEnabled,
+				SourceFaunaEnabled: sourceFaunaEnabled,
 			}
 		}
 		pageSize := new(int64)

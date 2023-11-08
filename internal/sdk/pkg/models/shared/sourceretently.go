@@ -152,48 +152,48 @@ func (o *SourceRetentlyAuthenticateViaRetentlyOAuth) GetRefreshToken() string {
 type SourceRetentlyAuthenticationMechanismType string
 
 const (
-	SourceRetentlyAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth SourceRetentlyAuthenticationMechanismType = "AuthenticateViaRetentlyOAuth"
-	SourceRetentlyAuthenticationMechanismTypeAuthenticateWithAPIToken     SourceRetentlyAuthenticationMechanismType = "AuthenticateWithAPIToken"
+	SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateViaRetentlyOAuth SourceRetentlyAuthenticationMechanismType = "source-retently_Authenticate via Retently (OAuth)"
+	SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateWithAPIToken     SourceRetentlyAuthenticationMechanismType = "source-retently_Authenticate with API Token"
 )
 
 type SourceRetentlyAuthenticationMechanism struct {
-	AuthenticateViaRetentlyOAuth *SourceRetentlyAuthenticateViaRetentlyOAuth
-	AuthenticateWithAPIToken     *SourceRetentlyAuthenticateWithAPIToken
+	SourceRetentlyAuthenticateViaRetentlyOAuth *SourceRetentlyAuthenticateViaRetentlyOAuth
+	SourceRetentlyAuthenticateWithAPIToken     *SourceRetentlyAuthenticateWithAPIToken
 
 	Type SourceRetentlyAuthenticationMechanismType
 }
 
-func CreateSourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth(authenticateViaRetentlyOAuth SourceRetentlyAuthenticateViaRetentlyOAuth) SourceRetentlyAuthenticationMechanism {
-	typ := SourceRetentlyAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth
+func CreateSourceRetentlyAuthenticationMechanismSourceRetentlyAuthenticateViaRetentlyOAuth(sourceRetentlyAuthenticateViaRetentlyOAuth SourceRetentlyAuthenticateViaRetentlyOAuth) SourceRetentlyAuthenticationMechanism {
+	typ := SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateViaRetentlyOAuth
 
 	return SourceRetentlyAuthenticationMechanism{
-		AuthenticateViaRetentlyOAuth: &authenticateViaRetentlyOAuth,
-		Type:                         typ,
+		SourceRetentlyAuthenticateViaRetentlyOAuth: &sourceRetentlyAuthenticateViaRetentlyOAuth,
+		Type: typ,
 	}
 }
 
-func CreateSourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken(authenticateWithAPIToken SourceRetentlyAuthenticateWithAPIToken) SourceRetentlyAuthenticationMechanism {
-	typ := SourceRetentlyAuthenticationMechanismTypeAuthenticateWithAPIToken
+func CreateSourceRetentlyAuthenticationMechanismSourceRetentlyAuthenticateWithAPIToken(sourceRetentlyAuthenticateWithAPIToken SourceRetentlyAuthenticateWithAPIToken) SourceRetentlyAuthenticationMechanism {
+	typ := SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateWithAPIToken
 
 	return SourceRetentlyAuthenticationMechanism{
-		AuthenticateWithAPIToken: &authenticateWithAPIToken,
-		Type:                     typ,
+		SourceRetentlyAuthenticateWithAPIToken: &sourceRetentlyAuthenticateWithAPIToken,
+		Type:                                   typ,
 	}
 }
 
 func (u *SourceRetentlyAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	authenticateWithAPIToken := new(SourceRetentlyAuthenticateWithAPIToken)
-	if err := utils.UnmarshalJSON(data, &authenticateWithAPIToken, "", true, true); err == nil {
-		u.AuthenticateWithAPIToken = authenticateWithAPIToken
-		u.Type = SourceRetentlyAuthenticationMechanismTypeAuthenticateWithAPIToken
+	sourceRetentlyAuthenticateWithAPIToken := new(SourceRetentlyAuthenticateWithAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceRetentlyAuthenticateWithAPIToken, "", true, true); err == nil {
+		u.SourceRetentlyAuthenticateWithAPIToken = sourceRetentlyAuthenticateWithAPIToken
+		u.Type = SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateWithAPIToken
 		return nil
 	}
 
-	authenticateViaRetentlyOAuth := new(SourceRetentlyAuthenticateViaRetentlyOAuth)
-	if err := utils.UnmarshalJSON(data, &authenticateViaRetentlyOAuth, "", true, true); err == nil {
-		u.AuthenticateViaRetentlyOAuth = authenticateViaRetentlyOAuth
-		u.Type = SourceRetentlyAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth
+	sourceRetentlyAuthenticateViaRetentlyOAuth := new(SourceRetentlyAuthenticateViaRetentlyOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceRetentlyAuthenticateViaRetentlyOAuth, "", true, true); err == nil {
+		u.SourceRetentlyAuthenticateViaRetentlyOAuth = sourceRetentlyAuthenticateViaRetentlyOAuth
+		u.Type = SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateViaRetentlyOAuth
 		return nil
 	}
 
@@ -201,12 +201,12 @@ func (u *SourceRetentlyAuthenticationMechanism) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceRetentlyAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaRetentlyOAuth != nil {
-		return utils.MarshalJSON(u.AuthenticateViaRetentlyOAuth, "", true)
+	if u.SourceRetentlyAuthenticateViaRetentlyOAuth != nil {
+		return utils.MarshalJSON(u.SourceRetentlyAuthenticateViaRetentlyOAuth, "", true)
 	}
 
-	if u.AuthenticateWithAPIToken != nil {
-		return utils.MarshalJSON(u.AuthenticateWithAPIToken, "", true)
+	if u.SourceRetentlyAuthenticateWithAPIToken != nil {
+		return utils.MarshalJSON(u.SourceRetentlyAuthenticateWithAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

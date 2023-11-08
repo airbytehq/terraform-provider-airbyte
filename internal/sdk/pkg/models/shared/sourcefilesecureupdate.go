@@ -525,23 +525,23 @@ func (o *HTTPSPublicWeb) GetUserAgent() *bool {
 type StorageProviderType string
 
 const (
-	StorageProviderTypeHTTPSPublicWeb                 StorageProviderType = "HTTPSPublicWeb"
-	StorageProviderTypeGCSGoogleCloudStorage          StorageProviderType = "GCSGoogleCloudStorage"
-	StorageProviderTypeS3AmazonWebServices            StorageProviderType = "S3AmazonWebServices"
-	StorageProviderTypeAzBlobAzureBlobStorage         StorageProviderType = "AzBlobAzureBlobStorage"
-	StorageProviderTypeSSHSecureShell                 StorageProviderType = "SSHSecureShell"
-	StorageProviderTypeSCPSecureCopyProtocol          StorageProviderType = "SCPSecureCopyProtocol"
-	StorageProviderTypeSFTPSecureFileTransferProtocol StorageProviderType = "SFTPSecureFileTransferProtocol"
+	StorageProviderTypeHTTPSPublicWeb                            StorageProviderType = "HTTPS: Public Web"
+	StorageProviderTypeGCSGoogleCloudStorage                     StorageProviderType = "GCS: Google Cloud Storage"
+	StorageProviderTypeSourceFileSecureUpdateS3AmazonWebServices StorageProviderType = "source-file-secure-update_S3: Amazon Web Services"
+	StorageProviderTypeAzBlobAzureBlobStorage                    StorageProviderType = "AzBlob: Azure Blob Storage"
+	StorageProviderTypeSSHSecureShell                            StorageProviderType = "SSH: Secure Shell"
+	StorageProviderTypeSCPSecureCopyProtocol                     StorageProviderType = "SCP: Secure copy protocol"
+	StorageProviderTypeSFTPSecureFileTransferProtocol            StorageProviderType = "SFTP: Secure File Transfer Protocol"
 )
 
 type StorageProvider struct {
-	HTTPSPublicWeb                 *HTTPSPublicWeb
-	GCSGoogleCloudStorage          *GCSGoogleCloudStorage
-	S3AmazonWebServices            *SourceFileSecureUpdateS3AmazonWebServices
-	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage
-	SSHSecureShell                 *SSHSecureShell
-	SCPSecureCopyProtocol          *SCPSecureCopyProtocol
-	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol
+	HTTPSPublicWeb                            *HTTPSPublicWeb
+	GCSGoogleCloudStorage                     *GCSGoogleCloudStorage
+	SourceFileSecureUpdateS3AmazonWebServices *SourceFileSecureUpdateS3AmazonWebServices
+	AzBlobAzureBlobStorage                    *AzBlobAzureBlobStorage
+	SSHSecureShell                            *SSHSecureShell
+	SCPSecureCopyProtocol                     *SCPSecureCopyProtocol
+	SFTPSecureFileTransferProtocol            *SFTPSecureFileTransferProtocol
 
 	Type StorageProviderType
 }
@@ -564,12 +564,12 @@ func CreateStorageProviderGCSGoogleCloudStorage(gcsGoogleCloudStorage GCSGoogleC
 	}
 }
 
-func CreateStorageProviderS3AmazonWebServices(s3AmazonWebServices SourceFileSecureUpdateS3AmazonWebServices) StorageProvider {
-	typ := StorageProviderTypeS3AmazonWebServices
+func CreateStorageProviderSourceFileSecureUpdateS3AmazonWebServices(sourceFileSecureUpdateS3AmazonWebServices SourceFileSecureUpdateS3AmazonWebServices) StorageProvider {
+	typ := StorageProviderTypeSourceFileSecureUpdateS3AmazonWebServices
 
 	return StorageProvider{
-		S3AmazonWebServices: &s3AmazonWebServices,
-		Type:                typ,
+		SourceFileSecureUpdateS3AmazonWebServices: &sourceFileSecureUpdateS3AmazonWebServices,
+		Type: typ,
 	}
 }
 
@@ -625,10 +625,10 @@ func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	s3AmazonWebServices := new(SourceFileSecureUpdateS3AmazonWebServices)
-	if err := utils.UnmarshalJSON(data, &s3AmazonWebServices, "", true, true); err == nil {
-		u.S3AmazonWebServices = s3AmazonWebServices
-		u.Type = StorageProviderTypeS3AmazonWebServices
+	sourceFileSecureUpdateS3AmazonWebServices := new(SourceFileSecureUpdateS3AmazonWebServices)
+	if err := utils.UnmarshalJSON(data, &sourceFileSecureUpdateS3AmazonWebServices, "", true, true); err == nil {
+		u.SourceFileSecureUpdateS3AmazonWebServices = sourceFileSecureUpdateS3AmazonWebServices
+		u.Type = StorageProviderTypeSourceFileSecureUpdateS3AmazonWebServices
 		return nil
 	}
 
@@ -672,8 +672,8 @@ func (u StorageProvider) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.GCSGoogleCloudStorage, "", true)
 	}
 
-	if u.S3AmazonWebServices != nil {
-		return utils.MarshalJSON(u.S3AmazonWebServices, "", true)
+	if u.SourceFileSecureUpdateS3AmazonWebServices != nil {
+		return utils.MarshalJSON(u.SourceFileSecureUpdateS3AmazonWebServices, "", true)
 	}
 
 	if u.AzBlobAzureBlobStorage != nil {

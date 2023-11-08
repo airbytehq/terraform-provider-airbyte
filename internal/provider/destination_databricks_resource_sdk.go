@@ -21,7 +21,7 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	}
 	if destinationDatabricksRecommendedManagedTables != nil {
 		dataSource = shared.DestinationDatabricksDataSource{
-			RecommendedManagedTables: destinationDatabricksRecommendedManagedTables,
+			DestinationDatabricksRecommendedManagedTables: destinationDatabricksRecommendedManagedTables,
 		}
 	}
 	var destinationDatabricksAmazonS3 *shared.DestinationDatabricksAmazonS3
@@ -53,7 +53,7 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	}
 	if destinationDatabricksAmazonS3 != nil {
 		dataSource = shared.DestinationDatabricksDataSource{
-			AmazonS3: destinationDatabricksAmazonS3,
+			DestinationDatabricksAmazonS3: destinationDatabricksAmazonS3,
 		}
 	}
 	var destinationDatabricksAzureBlobStorage *shared.DestinationDatabricksAzureBlobStorage
@@ -76,7 +76,7 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	}
 	if destinationDatabricksAzureBlobStorage != nil {
 		dataSource = shared.DestinationDatabricksDataSource{
-			AzureBlobStorage: destinationDatabricksAzureBlobStorage,
+			DestinationDatabricksAzureBlobStorage: destinationDatabricksAzureBlobStorage,
 		}
 	}
 	database := new(string)
@@ -208,7 +208,7 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 	}
 	if destinationDatabricksUpdateAzureBlobStorage != nil {
 		dataSource = shared.DataSource{
-			AzureBlobStorage: destinationDatabricksUpdateAzureBlobStorage,
+			DestinationDatabricksUpdateAzureBlobStorage: destinationDatabricksUpdateAzureBlobStorage,
 		}
 	}
 	database := new(string)

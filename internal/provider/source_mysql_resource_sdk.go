@@ -50,7 +50,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	}
 	if sourceMysqlReadChangesUsingBinaryLogCDC != nil {
 		replicationMethod = shared.SourceMysqlUpdateMethod{
-			ReadChangesUsingBinaryLogCDC: sourceMysqlReadChangesUsingBinaryLogCDC,
+			SourceMysqlReadChangesUsingBinaryLogCDC: sourceMysqlReadChangesUsingBinaryLogCDC,
 		}
 	}
 	var sourceMysqlScanChangesWithUserDefinedCursor *shared.SourceMysqlScanChangesWithUserDefinedCursor
@@ -59,7 +59,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	}
 	if sourceMysqlScanChangesWithUserDefinedCursor != nil {
 		replicationMethod = shared.SourceMysqlUpdateMethod{
-			ScanChangesWithUserDefinedCursor: sourceMysqlScanChangesWithUserDefinedCursor,
+			SourceMysqlScanChangesWithUserDefinedCursor: sourceMysqlScanChangesWithUserDefinedCursor,
 		}
 	}
 	var sslMode *shared.SourceMysqlSSLModes
@@ -70,7 +70,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlPreferred != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				Preferred: sourceMysqlPreferred,
+				SourceMysqlPreferred: sourceMysqlPreferred,
 			}
 		}
 		var sourceMysqlRequired *shared.SourceMysqlRequired
@@ -79,7 +79,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlRequired != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				Required: sourceMysqlRequired,
+				SourceMysqlRequired: sourceMysqlRequired,
 			}
 		}
 		var sourceMysqlVerifyCA *shared.SourceMysqlVerifyCA
@@ -112,7 +112,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlVerifyCA != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				VerifyCA: sourceMysqlVerifyCA,
+				SourceMysqlVerifyCA: sourceMysqlVerifyCA,
 			}
 		}
 		var sourceMysqlVerifyIdentity *shared.SourceMysqlVerifyIdentity
@@ -145,7 +145,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlVerifyIdentity != nil {
 			sslMode = &shared.SourceMysqlSSLModes{
-				VerifyIdentity: sourceMysqlVerifyIdentity,
+				SourceMysqlVerifyIdentity: sourceMysqlVerifyIdentity,
 			}
 		}
 	}
@@ -157,7 +157,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlNoTunnel != nil {
 			tunnelMethod = &shared.SourceMysqlSSHTunnelMethod{
-				NoTunnel: sourceMysqlNoTunnel,
+				SourceMysqlNoTunnel: sourceMysqlNoTunnel,
 			}
 		}
 		var sourceMysqlSSHKeyAuthentication *shared.SourceMysqlSSHKeyAuthentication
@@ -180,7 +180,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlSSHTunnelMethod{
-				SSHKeyAuthentication: sourceMysqlSSHKeyAuthentication,
+				SourceMysqlSSHKeyAuthentication: sourceMysqlSSHKeyAuthentication,
 			}
 		}
 		var sourceMysqlPasswordAuthentication *shared.SourceMysqlPasswordAuthentication
@@ -203,7 +203,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		}
 		if sourceMysqlPasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlSSHTunnelMethod{
-				PasswordAuthentication: sourceMysqlPasswordAuthentication,
+				SourceMysqlPasswordAuthentication: sourceMysqlPasswordAuthentication,
 			}
 		}
 	}
@@ -293,7 +293,7 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 	}
 	if sourceMysqlUpdateScanChangesWithUserDefinedCursor != nil {
 		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
-			ScanChangesWithUserDefinedCursor: sourceMysqlUpdateScanChangesWithUserDefinedCursor,
+			SourceMysqlUpdateScanChangesWithUserDefinedCursor: sourceMysqlUpdateScanChangesWithUserDefinedCursor,
 		}
 	}
 	var sslMode *shared.SourceMysqlUpdateSSLModes
@@ -346,7 +346,7 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 		}
 		if sourceMysqlUpdateVerifyCA != nil {
 			sslMode = &shared.SourceMysqlUpdateSSLModes{
-				VerifyCA: sourceMysqlUpdateVerifyCA,
+				SourceMysqlUpdateVerifyCA: sourceMysqlUpdateVerifyCA,
 			}
 		}
 		var verifyIdentity *shared.VerifyIdentity
@@ -391,7 +391,7 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 		}
 		if sourceMysqlUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceMysqlUpdateSSHTunnelMethod{
-				NoTunnel: sourceMysqlUpdateNoTunnel,
+				SourceMysqlUpdateNoTunnel: sourceMysqlUpdateNoTunnel,
 			}
 		}
 		var sourceMysqlUpdateSSHKeyAuthentication *shared.SourceMysqlUpdateSSHKeyAuthentication
@@ -414,7 +414,7 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 		}
 		if sourceMysqlUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: sourceMysqlUpdateSSHKeyAuthentication,
+				SourceMysqlUpdateSSHKeyAuthentication: sourceMysqlUpdateSSHKeyAuthentication,
 			}
 		}
 		var sourceMysqlUpdatePasswordAuthentication *shared.SourceMysqlUpdatePasswordAuthentication
@@ -437,7 +437,7 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 		}
 		if sourceMysqlUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceMysqlUpdateSSHTunnelMethod{
-				PasswordAuthentication: sourceMysqlUpdatePasswordAuthentication,
+				SourceMysqlUpdatePasswordAuthentication: sourceMysqlUpdatePasswordAuthentication,
 			}
 		}
 	}

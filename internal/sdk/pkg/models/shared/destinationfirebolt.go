@@ -160,48 +160,48 @@ func (o *DestinationFireboltSQLInserts) GetMethod() DestinationFireboltMethod {
 type DestinationFireboltLoadingMethodType string
 
 const (
-	DestinationFireboltLoadingMethodTypeSQLInserts         DestinationFireboltLoadingMethodType = "SQLInserts"
-	DestinationFireboltLoadingMethodTypeExternalTableViaS3 DestinationFireboltLoadingMethodType = "ExternalTableViaS3"
+	DestinationFireboltLoadingMethodTypeDestinationFireboltSQLInserts         DestinationFireboltLoadingMethodType = "destination-firebolt_SQL Inserts"
+	DestinationFireboltLoadingMethodTypeDestinationFireboltExternalTableViaS3 DestinationFireboltLoadingMethodType = "destination-firebolt_External Table via S3"
 )
 
 type DestinationFireboltLoadingMethod struct {
-	SQLInserts         *DestinationFireboltSQLInserts
-	ExternalTableViaS3 *DestinationFireboltExternalTableViaS3
+	DestinationFireboltSQLInserts         *DestinationFireboltSQLInserts
+	DestinationFireboltExternalTableViaS3 *DestinationFireboltExternalTableViaS3
 
 	Type DestinationFireboltLoadingMethodType
 }
 
-func CreateDestinationFireboltLoadingMethodSQLInserts(sqlInserts DestinationFireboltSQLInserts) DestinationFireboltLoadingMethod {
-	typ := DestinationFireboltLoadingMethodTypeSQLInserts
+func CreateDestinationFireboltLoadingMethodDestinationFireboltSQLInserts(destinationFireboltSQLInserts DestinationFireboltSQLInserts) DestinationFireboltLoadingMethod {
+	typ := DestinationFireboltLoadingMethodTypeDestinationFireboltSQLInserts
 
 	return DestinationFireboltLoadingMethod{
-		SQLInserts: &sqlInserts,
-		Type:       typ,
+		DestinationFireboltSQLInserts: &destinationFireboltSQLInserts,
+		Type:                          typ,
 	}
 }
 
-func CreateDestinationFireboltLoadingMethodExternalTableViaS3(externalTableViaS3 DestinationFireboltExternalTableViaS3) DestinationFireboltLoadingMethod {
-	typ := DestinationFireboltLoadingMethodTypeExternalTableViaS3
+func CreateDestinationFireboltLoadingMethodDestinationFireboltExternalTableViaS3(destinationFireboltExternalTableViaS3 DestinationFireboltExternalTableViaS3) DestinationFireboltLoadingMethod {
+	typ := DestinationFireboltLoadingMethodTypeDestinationFireboltExternalTableViaS3
 
 	return DestinationFireboltLoadingMethod{
-		ExternalTableViaS3: &externalTableViaS3,
-		Type:               typ,
+		DestinationFireboltExternalTableViaS3: &destinationFireboltExternalTableViaS3,
+		Type:                                  typ,
 	}
 }
 
 func (u *DestinationFireboltLoadingMethod) UnmarshalJSON(data []byte) error {
 
-	sqlInserts := new(DestinationFireboltSQLInserts)
-	if err := utils.UnmarshalJSON(data, &sqlInserts, "", true, true); err == nil {
-		u.SQLInserts = sqlInserts
-		u.Type = DestinationFireboltLoadingMethodTypeSQLInserts
+	destinationFireboltSQLInserts := new(DestinationFireboltSQLInserts)
+	if err := utils.UnmarshalJSON(data, &destinationFireboltSQLInserts, "", true, true); err == nil {
+		u.DestinationFireboltSQLInserts = destinationFireboltSQLInserts
+		u.Type = DestinationFireboltLoadingMethodTypeDestinationFireboltSQLInserts
 		return nil
 	}
 
-	externalTableViaS3 := new(DestinationFireboltExternalTableViaS3)
-	if err := utils.UnmarshalJSON(data, &externalTableViaS3, "", true, true); err == nil {
-		u.ExternalTableViaS3 = externalTableViaS3
-		u.Type = DestinationFireboltLoadingMethodTypeExternalTableViaS3
+	destinationFireboltExternalTableViaS3 := new(DestinationFireboltExternalTableViaS3)
+	if err := utils.UnmarshalJSON(data, &destinationFireboltExternalTableViaS3, "", true, true); err == nil {
+		u.DestinationFireboltExternalTableViaS3 = destinationFireboltExternalTableViaS3
+		u.Type = DestinationFireboltLoadingMethodTypeDestinationFireboltExternalTableViaS3
 		return nil
 	}
 
@@ -209,12 +209,12 @@ func (u *DestinationFireboltLoadingMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationFireboltLoadingMethod) MarshalJSON() ([]byte, error) {
-	if u.SQLInserts != nil {
-		return utils.MarshalJSON(u.SQLInserts, "", true)
+	if u.DestinationFireboltSQLInserts != nil {
+		return utils.MarshalJSON(u.DestinationFireboltSQLInserts, "", true)
 	}
 
-	if u.ExternalTableViaS3 != nil {
-		return utils.MarshalJSON(u.ExternalTableViaS3, "", true)
+	if u.DestinationFireboltExternalTableViaS3 != nil {
+		return utils.MarshalJSON(u.DestinationFireboltExternalTableViaS3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

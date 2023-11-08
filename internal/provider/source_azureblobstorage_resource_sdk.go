@@ -36,7 +36,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	}
 	if sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.SourceAzureBlobStorageInputFormat{
-			JSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON,
+			SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.SourceAzureBlobStorage{
@@ -99,7 +99,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAz
 	}
 	if sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.InputFormat{
-			JSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
+			SourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.SourceAzureBlobStorageUpdate{

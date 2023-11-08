@@ -115,48 +115,48 @@ func (o *SourceFaunaDisabled) GetDeletionMode() SourceFaunaSchemasDeletionMode {
 type SourceFaunaDeletionModeType string
 
 const (
-	SourceFaunaDeletionModeTypeDisabled SourceFaunaDeletionModeType = "Disabled"
-	SourceFaunaDeletionModeTypeEnabled  SourceFaunaDeletionModeType = "Enabled"
+	SourceFaunaDeletionModeTypeSourceFaunaDisabled SourceFaunaDeletionModeType = "source-fauna_Disabled"
+	SourceFaunaDeletionModeTypeSourceFaunaEnabled  SourceFaunaDeletionModeType = "source-fauna_Enabled"
 )
 
 type SourceFaunaDeletionMode struct {
-	Disabled *SourceFaunaDisabled
-	Enabled  *SourceFaunaEnabled
+	SourceFaunaDisabled *SourceFaunaDisabled
+	SourceFaunaEnabled  *SourceFaunaEnabled
 
 	Type SourceFaunaDeletionModeType
 }
 
-func CreateSourceFaunaDeletionModeDisabled(disabled SourceFaunaDisabled) SourceFaunaDeletionMode {
-	typ := SourceFaunaDeletionModeTypeDisabled
+func CreateSourceFaunaDeletionModeSourceFaunaDisabled(sourceFaunaDisabled SourceFaunaDisabled) SourceFaunaDeletionMode {
+	typ := SourceFaunaDeletionModeTypeSourceFaunaDisabled
 
 	return SourceFaunaDeletionMode{
-		Disabled: &disabled,
-		Type:     typ,
+		SourceFaunaDisabled: &sourceFaunaDisabled,
+		Type:                typ,
 	}
 }
 
-func CreateSourceFaunaDeletionModeEnabled(enabled SourceFaunaEnabled) SourceFaunaDeletionMode {
-	typ := SourceFaunaDeletionModeTypeEnabled
+func CreateSourceFaunaDeletionModeSourceFaunaEnabled(sourceFaunaEnabled SourceFaunaEnabled) SourceFaunaDeletionMode {
+	typ := SourceFaunaDeletionModeTypeSourceFaunaEnabled
 
 	return SourceFaunaDeletionMode{
-		Enabled: &enabled,
-		Type:    typ,
+		SourceFaunaEnabled: &sourceFaunaEnabled,
+		Type:               typ,
 	}
 }
 
 func (u *SourceFaunaDeletionMode) UnmarshalJSON(data []byte) error {
 
-	disabled := new(SourceFaunaDisabled)
-	if err := utils.UnmarshalJSON(data, &disabled, "", true, true); err == nil {
-		u.Disabled = disabled
-		u.Type = SourceFaunaDeletionModeTypeDisabled
+	sourceFaunaDisabled := new(SourceFaunaDisabled)
+	if err := utils.UnmarshalJSON(data, &sourceFaunaDisabled, "", true, true); err == nil {
+		u.SourceFaunaDisabled = sourceFaunaDisabled
+		u.Type = SourceFaunaDeletionModeTypeSourceFaunaDisabled
 		return nil
 	}
 
-	enabled := new(SourceFaunaEnabled)
-	if err := utils.UnmarshalJSON(data, &enabled, "", true, true); err == nil {
-		u.Enabled = enabled
-		u.Type = SourceFaunaDeletionModeTypeEnabled
+	sourceFaunaEnabled := new(SourceFaunaEnabled)
+	if err := utils.UnmarshalJSON(data, &sourceFaunaEnabled, "", true, true); err == nil {
+		u.SourceFaunaEnabled = sourceFaunaEnabled
+		u.Type = SourceFaunaDeletionModeTypeSourceFaunaEnabled
 		return nil
 	}
 
@@ -164,12 +164,12 @@ func (u *SourceFaunaDeletionMode) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceFaunaDeletionMode) MarshalJSON() ([]byte, error) {
-	if u.Disabled != nil {
-		return utils.MarshalJSON(u.Disabled, "", true)
+	if u.SourceFaunaDisabled != nil {
+		return utils.MarshalJSON(u.SourceFaunaDisabled, "", true)
 	}
 
-	if u.Enabled != nil {
-		return utils.MarshalJSON(u.Enabled, "", true)
+	if u.SourceFaunaEnabled != nil {
+		return utils.MarshalJSON(u.SourceFaunaEnabled, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

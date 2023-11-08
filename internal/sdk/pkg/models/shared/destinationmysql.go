@@ -246,66 +246,66 @@ func (o *DestinationMysqlNoTunnel) GetTunnelMethod() DestinationMysqlTunnelMetho
 type DestinationMysqlSSHTunnelMethodType string
 
 const (
-	DestinationMysqlSSHTunnelMethodTypeNoTunnel               DestinationMysqlSSHTunnelMethodType = "NoTunnel"
-	DestinationMysqlSSHTunnelMethodTypeSSHKeyAuthentication   DestinationMysqlSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationMysqlSSHTunnelMethodTypePasswordAuthentication DestinationMysqlSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationMysqlSSHTunnelMethodTypeDestinationMysqlNoTunnel               DestinationMysqlSSHTunnelMethodType = "destination-mysql_No Tunnel"
+	DestinationMysqlSSHTunnelMethodTypeDestinationMysqlSSHKeyAuthentication   DestinationMysqlSSHTunnelMethodType = "destination-mysql_SSH Key Authentication"
+	DestinationMysqlSSHTunnelMethodTypeDestinationMysqlPasswordAuthentication DestinationMysqlSSHTunnelMethodType = "destination-mysql_Password Authentication"
 )
 
 type DestinationMysqlSSHTunnelMethod struct {
-	NoTunnel               *DestinationMysqlNoTunnel
-	SSHKeyAuthentication   *DestinationMysqlSSHKeyAuthentication
-	PasswordAuthentication *DestinationMysqlPasswordAuthentication
+	DestinationMysqlNoTunnel               *DestinationMysqlNoTunnel
+	DestinationMysqlSSHKeyAuthentication   *DestinationMysqlSSHKeyAuthentication
+	DestinationMysqlPasswordAuthentication *DestinationMysqlPasswordAuthentication
 
 	Type DestinationMysqlSSHTunnelMethodType
 }
 
-func CreateDestinationMysqlSSHTunnelMethodNoTunnel(noTunnel DestinationMysqlNoTunnel) DestinationMysqlSSHTunnelMethod {
-	typ := DestinationMysqlSSHTunnelMethodTypeNoTunnel
+func CreateDestinationMysqlSSHTunnelMethodDestinationMysqlNoTunnel(destinationMysqlNoTunnel DestinationMysqlNoTunnel) DestinationMysqlSSHTunnelMethod {
+	typ := DestinationMysqlSSHTunnelMethodTypeDestinationMysqlNoTunnel
 
 	return DestinationMysqlSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationMysqlNoTunnel: &destinationMysqlNoTunnel,
+		Type:                     typ,
 	}
 }
 
-func CreateDestinationMysqlSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationMysqlSSHKeyAuthentication) DestinationMysqlSSHTunnelMethod {
-	typ := DestinationMysqlSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationMysqlSSHTunnelMethodDestinationMysqlSSHKeyAuthentication(destinationMysqlSSHKeyAuthentication DestinationMysqlSSHKeyAuthentication) DestinationMysqlSSHTunnelMethod {
+	typ := DestinationMysqlSSHTunnelMethodTypeDestinationMysqlSSHKeyAuthentication
 
 	return DestinationMysqlSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationMysqlSSHKeyAuthentication: &destinationMysqlSSHKeyAuthentication,
+		Type:                                 typ,
 	}
 }
 
-func CreateDestinationMysqlSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationMysqlPasswordAuthentication) DestinationMysqlSSHTunnelMethod {
-	typ := DestinationMysqlSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationMysqlSSHTunnelMethodDestinationMysqlPasswordAuthentication(destinationMysqlPasswordAuthentication DestinationMysqlPasswordAuthentication) DestinationMysqlSSHTunnelMethod {
+	typ := DestinationMysqlSSHTunnelMethodTypeDestinationMysqlPasswordAuthentication
 
 	return DestinationMysqlSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationMysqlPasswordAuthentication: &destinationMysqlPasswordAuthentication,
+		Type:                                   typ,
 	}
 }
 
 func (u *DestinationMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationMysqlNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationMysqlSSHTunnelMethodTypeNoTunnel
+	destinationMysqlNoTunnel := new(DestinationMysqlNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMysqlNoTunnel, "", true, true); err == nil {
+		u.DestinationMysqlNoTunnel = destinationMysqlNoTunnel
+		u.Type = DestinationMysqlSSHTunnelMethodTypeDestinationMysqlNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationMysqlSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationMysqlSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationMysqlSSHKeyAuthentication := new(DestinationMysqlSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMysqlSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMysqlSSHKeyAuthentication = destinationMysqlSSHKeyAuthentication
+		u.Type = DestinationMysqlSSHTunnelMethodTypeDestinationMysqlSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationMysqlPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationMysqlSSHTunnelMethodTypePasswordAuthentication
+	destinationMysqlPasswordAuthentication := new(DestinationMysqlPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMysqlPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMysqlPasswordAuthentication = destinationMysqlPasswordAuthentication
+		u.Type = DestinationMysqlSSHTunnelMethodTypeDestinationMysqlPasswordAuthentication
 		return nil
 	}
 
@@ -313,16 +313,16 @@ func (u *DestinationMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationMysqlNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMysqlNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationMysqlSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMysqlSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationMysqlPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMysqlPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

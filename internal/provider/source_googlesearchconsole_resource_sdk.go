@@ -30,7 +30,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	}
 	if sourceGoogleSearchConsoleOAuth != nil {
 		authorization = shared.SourceGoogleSearchConsoleAuthenticationType{
-			OAuth: sourceGoogleSearchConsoleOAuth,
+			SourceGoogleSearchConsoleOAuth: sourceGoogleSearchConsoleOAuth,
 		}
 	}
 	var sourceGoogleSearchConsoleServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleServiceAccountKeyAuthentication
@@ -44,7 +44,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	}
 	if sourceGoogleSearchConsoleServiceAccountKeyAuthentication != nil {
 		authorization = shared.SourceGoogleSearchConsoleAuthenticationType{
-			ServiceAccountKeyAuthentication: sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
+			SourceGoogleSearchConsoleServiceAccountKeyAuthentication: sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 		}
 	}
 	customReports := new(string)
@@ -140,7 +140,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.Sourc
 	}
 	if sourceGoogleSearchConsoleUpdateOAuth != nil {
 		authorization = shared.AuthenticationType{
-			OAuth: sourceGoogleSearchConsoleUpdateOAuth,
+			SourceGoogleSearchConsoleUpdateOAuth: sourceGoogleSearchConsoleUpdateOAuth,
 		}
 	}
 	var sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication
@@ -154,7 +154,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.Sourc
 	}
 	if sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication != nil {
 		authorization = shared.AuthenticationType{
-			ServiceAccountKeyAuthentication: sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication,
+			SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication: sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication,
 		}
 	}
 	customReports := new(string)

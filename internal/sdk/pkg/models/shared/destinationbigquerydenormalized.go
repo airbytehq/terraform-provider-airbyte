@@ -240,30 +240,30 @@ func (o *DestinationBigqueryDenormalizedHMACKey) GetHmacKeySecret() string {
 type DestinationBigqueryDenormalizedCredentialUnionType string
 
 const (
-	DestinationBigqueryDenormalizedCredentialUnionTypeHMACKey DestinationBigqueryDenormalizedCredentialUnionType = "HMACKey"
+	DestinationBigqueryDenormalizedCredentialUnionTypeDestinationBigqueryDenormalizedHMACKey DestinationBigqueryDenormalizedCredentialUnionType = "destination-bigquery-denormalized_HMAC key"
 )
 
 type DestinationBigqueryDenormalizedCredential struct {
-	HMACKey *DestinationBigqueryDenormalizedHMACKey
+	DestinationBigqueryDenormalizedHMACKey *DestinationBigqueryDenormalizedHMACKey
 
 	Type DestinationBigqueryDenormalizedCredentialUnionType
 }
 
-func CreateDestinationBigqueryDenormalizedCredentialHMACKey(hmacKey DestinationBigqueryDenormalizedHMACKey) DestinationBigqueryDenormalizedCredential {
-	typ := DestinationBigqueryDenormalizedCredentialUnionTypeHMACKey
+func CreateDestinationBigqueryDenormalizedCredentialDestinationBigqueryDenormalizedHMACKey(destinationBigqueryDenormalizedHMACKey DestinationBigqueryDenormalizedHMACKey) DestinationBigqueryDenormalizedCredential {
+	typ := DestinationBigqueryDenormalizedCredentialUnionTypeDestinationBigqueryDenormalizedHMACKey
 
 	return DestinationBigqueryDenormalizedCredential{
-		HMACKey: &hmacKey,
-		Type:    typ,
+		DestinationBigqueryDenormalizedHMACKey: &destinationBigqueryDenormalizedHMACKey,
+		Type:                                   typ,
 	}
 }
 
 func (u *DestinationBigqueryDenormalizedCredential) UnmarshalJSON(data []byte) error {
 
-	hmacKey := new(DestinationBigqueryDenormalizedHMACKey)
-	if err := utils.UnmarshalJSON(data, &hmacKey, "", true, true); err == nil {
-		u.HMACKey = hmacKey
-		u.Type = DestinationBigqueryDenormalizedCredentialUnionTypeHMACKey
+	destinationBigqueryDenormalizedHMACKey := new(DestinationBigqueryDenormalizedHMACKey)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryDenormalizedHMACKey, "", true, true); err == nil {
+		u.DestinationBigqueryDenormalizedHMACKey = destinationBigqueryDenormalizedHMACKey
+		u.Type = DestinationBigqueryDenormalizedCredentialUnionTypeDestinationBigqueryDenormalizedHMACKey
 		return nil
 	}
 
@@ -271,8 +271,8 @@ func (u *DestinationBigqueryDenormalizedCredential) UnmarshalJSON(data []byte) e
 }
 
 func (u DestinationBigqueryDenormalizedCredential) MarshalJSON() ([]byte, error) {
-	if u.HMACKey != nil {
-		return utils.MarshalJSON(u.HMACKey, "", true)
+	if u.DestinationBigqueryDenormalizedHMACKey != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryDenormalizedHMACKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -442,48 +442,48 @@ func (o *DestinationBigqueryDenormalizedStandardInserts) GetMethod() Destination
 type DestinationBigqueryDenormalizedLoadingMethodType string
 
 const (
-	DestinationBigqueryDenormalizedLoadingMethodTypeStandardInserts DestinationBigqueryDenormalizedLoadingMethodType = "StandardInserts"
-	DestinationBigqueryDenormalizedLoadingMethodTypeGCSStaging      DestinationBigqueryDenormalizedLoadingMethodType = "GCSStaging"
+	DestinationBigqueryDenormalizedLoadingMethodTypeDestinationBigqueryDenormalizedStandardInserts DestinationBigqueryDenormalizedLoadingMethodType = "destination-bigquery-denormalized_Standard Inserts"
+	DestinationBigqueryDenormalizedLoadingMethodTypeDestinationBigqueryDenormalizedGCSStaging      DestinationBigqueryDenormalizedLoadingMethodType = "destination-bigquery-denormalized_GCS Staging"
 )
 
 type DestinationBigqueryDenormalizedLoadingMethod struct {
-	StandardInserts *DestinationBigqueryDenormalizedStandardInserts
-	GCSStaging      *DestinationBigqueryDenormalizedGCSStaging
+	DestinationBigqueryDenormalizedStandardInserts *DestinationBigqueryDenormalizedStandardInserts
+	DestinationBigqueryDenormalizedGCSStaging      *DestinationBigqueryDenormalizedGCSStaging
 
 	Type DestinationBigqueryDenormalizedLoadingMethodType
 }
 
-func CreateDestinationBigqueryDenormalizedLoadingMethodStandardInserts(standardInserts DestinationBigqueryDenormalizedStandardInserts) DestinationBigqueryDenormalizedLoadingMethod {
-	typ := DestinationBigqueryDenormalizedLoadingMethodTypeStandardInserts
+func CreateDestinationBigqueryDenormalizedLoadingMethodDestinationBigqueryDenormalizedStandardInserts(destinationBigqueryDenormalizedStandardInserts DestinationBigqueryDenormalizedStandardInserts) DestinationBigqueryDenormalizedLoadingMethod {
+	typ := DestinationBigqueryDenormalizedLoadingMethodTypeDestinationBigqueryDenormalizedStandardInserts
 
 	return DestinationBigqueryDenormalizedLoadingMethod{
-		StandardInserts: &standardInserts,
-		Type:            typ,
+		DestinationBigqueryDenormalizedStandardInserts: &destinationBigqueryDenormalizedStandardInserts,
+		Type: typ,
 	}
 }
 
-func CreateDestinationBigqueryDenormalizedLoadingMethodGCSStaging(gcsStaging DestinationBigqueryDenormalizedGCSStaging) DestinationBigqueryDenormalizedLoadingMethod {
-	typ := DestinationBigqueryDenormalizedLoadingMethodTypeGCSStaging
+func CreateDestinationBigqueryDenormalizedLoadingMethodDestinationBigqueryDenormalizedGCSStaging(destinationBigqueryDenormalizedGCSStaging DestinationBigqueryDenormalizedGCSStaging) DestinationBigqueryDenormalizedLoadingMethod {
+	typ := DestinationBigqueryDenormalizedLoadingMethodTypeDestinationBigqueryDenormalizedGCSStaging
 
 	return DestinationBigqueryDenormalizedLoadingMethod{
-		GCSStaging: &gcsStaging,
-		Type:       typ,
+		DestinationBigqueryDenormalizedGCSStaging: &destinationBigqueryDenormalizedGCSStaging,
+		Type: typ,
 	}
 }
 
 func (u *DestinationBigqueryDenormalizedLoadingMethod) UnmarshalJSON(data []byte) error {
 
-	standardInserts := new(DestinationBigqueryDenormalizedStandardInserts)
-	if err := utils.UnmarshalJSON(data, &standardInserts, "", true, true); err == nil {
-		u.StandardInserts = standardInserts
-		u.Type = DestinationBigqueryDenormalizedLoadingMethodTypeStandardInserts
+	destinationBigqueryDenormalizedStandardInserts := new(DestinationBigqueryDenormalizedStandardInserts)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryDenormalizedStandardInserts, "", true, true); err == nil {
+		u.DestinationBigqueryDenormalizedStandardInserts = destinationBigqueryDenormalizedStandardInserts
+		u.Type = DestinationBigqueryDenormalizedLoadingMethodTypeDestinationBigqueryDenormalizedStandardInserts
 		return nil
 	}
 
-	gcsStaging := new(DestinationBigqueryDenormalizedGCSStaging)
-	if err := utils.UnmarshalJSON(data, &gcsStaging, "", true, true); err == nil {
-		u.GCSStaging = gcsStaging
-		u.Type = DestinationBigqueryDenormalizedLoadingMethodTypeGCSStaging
+	destinationBigqueryDenormalizedGCSStaging := new(DestinationBigqueryDenormalizedGCSStaging)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryDenormalizedGCSStaging, "", true, true); err == nil {
+		u.DestinationBigqueryDenormalizedGCSStaging = destinationBigqueryDenormalizedGCSStaging
+		u.Type = DestinationBigqueryDenormalizedLoadingMethodTypeDestinationBigqueryDenormalizedGCSStaging
 		return nil
 	}
 
@@ -491,12 +491,12 @@ func (u *DestinationBigqueryDenormalizedLoadingMethod) UnmarshalJSON(data []byte
 }
 
 func (u DestinationBigqueryDenormalizedLoadingMethod) MarshalJSON() ([]byte, error) {
-	if u.StandardInserts != nil {
-		return utils.MarshalJSON(u.StandardInserts, "", true)
+	if u.DestinationBigqueryDenormalizedStandardInserts != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryDenormalizedStandardInserts, "", true)
 	}
 
-	if u.GCSStaging != nil {
-		return utils.MarshalJSON(u.GCSStaging, "", true)
+	if u.DestinationBigqueryDenormalizedGCSStaging != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryDenormalizedGCSStaging, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

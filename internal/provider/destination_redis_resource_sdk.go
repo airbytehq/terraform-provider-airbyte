@@ -41,7 +41,7 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisDisable != nil {
 			sslMode = &shared.DestinationRedisSSLModes{
-				Disable: destinationRedisDisable,
+				DestinationRedisDisable: destinationRedisDisable,
 			}
 		}
 		var destinationRedisVerifyFull *shared.DestinationRedisVerifyFull
@@ -64,7 +64,7 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisVerifyFull != nil {
 			sslMode = &shared.DestinationRedisSSLModes{
-				VerifyFull: destinationRedisVerifyFull,
+				DestinationRedisVerifyFull: destinationRedisVerifyFull,
 			}
 		}
 	}
@@ -76,7 +76,7 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisNoTunnel != nil {
 			tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
-				NoTunnel: destinationRedisNoTunnel,
+				DestinationRedisNoTunnel: destinationRedisNoTunnel,
 			}
 		}
 		var destinationRedisSSHKeyAuthentication *shared.DestinationRedisSSHKeyAuthentication
@@ -99,7 +99,7 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
-				SSHKeyAuthentication: destinationRedisSSHKeyAuthentication,
+				DestinationRedisSSHKeyAuthentication: destinationRedisSSHKeyAuthentication,
 			}
 		}
 		var destinationRedisPasswordAuthentication *shared.DestinationRedisPasswordAuthentication
@@ -122,7 +122,7 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
-				PasswordAuthentication: destinationRedisPasswordAuthentication,
+				DestinationRedisPasswordAuthentication: destinationRedisPasswordAuthentication,
 			}
 		}
 	}
@@ -186,7 +186,7 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisUpdateDisable != nil {
 			sslMode = &shared.DestinationRedisUpdateSSLModes{
-				Disable: destinationRedisUpdateDisable,
+				DestinationRedisUpdateDisable: destinationRedisUpdateDisable,
 			}
 		}
 		var destinationRedisUpdateVerifyFull *shared.DestinationRedisUpdateVerifyFull
@@ -209,7 +209,7 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisUpdateVerifyFull != nil {
 			sslMode = &shared.DestinationRedisUpdateSSLModes{
-				VerifyFull: destinationRedisUpdateVerifyFull,
+				DestinationRedisUpdateVerifyFull: destinationRedisUpdateVerifyFull,
 			}
 		}
 	}
@@ -221,7 +221,7 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
-				NoTunnel: destinationRedisUpdateNoTunnel,
+				DestinationRedisUpdateNoTunnel: destinationRedisUpdateNoTunnel,
 			}
 		}
 		var destinationRedisUpdateSSHKeyAuthentication *shared.DestinationRedisUpdateSSHKeyAuthentication
@@ -244,7 +244,7 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationRedisUpdateSSHKeyAuthentication,
+				DestinationRedisUpdateSSHKeyAuthentication: destinationRedisUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationRedisUpdatePasswordAuthentication *shared.DestinationRedisUpdatePasswordAuthentication
@@ -267,7 +267,7 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		}
 		if destinationRedisUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationRedisUpdatePasswordAuthentication,
+				DestinationRedisUpdatePasswordAuthentication: destinationRedisUpdatePasswordAuthentication,
 			}
 		}
 	}

@@ -22,7 +22,7 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	}
 	if sourceGoogleSheetsAuthenticateViaGoogleOAuth != nil {
 		credentials = shared.SourceGoogleSheetsAuthentication{
-			AuthenticateViaGoogleOAuth: sourceGoogleSheetsAuthenticateViaGoogleOAuth,
+			SourceGoogleSheetsAuthenticateViaGoogleOAuth: sourceGoogleSheetsAuthenticateViaGoogleOAuth,
 		}
 	}
 	var sourceGoogleSheetsServiceAccountKeyAuthentication *shared.SourceGoogleSheetsServiceAccountKeyAuthentication
@@ -34,7 +34,7 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	}
 	if sourceGoogleSheetsServiceAccountKeyAuthentication != nil {
 		credentials = shared.SourceGoogleSheetsAuthentication{
-			ServiceAccountKeyAuthentication: sourceGoogleSheetsServiceAccountKeyAuthentication,
+			SourceGoogleSheetsServiceAccountKeyAuthentication: sourceGoogleSheetsServiceAccountKeyAuthentication,
 		}
 	}
 	namesConversion := new(bool)
@@ -86,7 +86,7 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 	}
 	if sourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth != nil {
 		credentials = shared.SourceGoogleSheetsUpdateAuthentication{
-			AuthenticateViaGoogleOAuth: sourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth,
+			SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth: sourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth,
 		}
 	}
 	var sourceGoogleSheetsUpdateServiceAccountKeyAuthentication *shared.SourceGoogleSheetsUpdateServiceAccountKeyAuthentication
@@ -98,7 +98,7 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 	}
 	if sourceGoogleSheetsUpdateServiceAccountKeyAuthentication != nil {
 		credentials = shared.SourceGoogleSheetsUpdateAuthentication{
-			ServiceAccountKeyAuthentication: sourceGoogleSheetsUpdateServiceAccountKeyAuthentication,
+			SourceGoogleSheetsUpdateServiceAccountKeyAuthentication: sourceGoogleSheetsUpdateServiceAccountKeyAuthentication,
 		}
 	}
 	namesConversion := new(bool)

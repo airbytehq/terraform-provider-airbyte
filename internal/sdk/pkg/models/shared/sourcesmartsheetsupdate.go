@@ -153,23 +153,23 @@ func (o *SourceSmartsheetsUpdateOAuth20) GetTokenExpiryDate() time.Time {
 type SourceSmartsheetsUpdateAuthorizationMethodType string
 
 const (
-	SourceSmartsheetsUpdateAuthorizationMethodTypeOAuth20        SourceSmartsheetsUpdateAuthorizationMethodType = "OAuth20"
-	SourceSmartsheetsUpdateAuthorizationMethodTypeAPIAccessToken SourceSmartsheetsUpdateAuthorizationMethodType = "APIAccessToken"
+	SourceSmartsheetsUpdateAuthorizationMethodTypeSourceSmartsheetsUpdateOAuth20 SourceSmartsheetsUpdateAuthorizationMethodType = "source-smartsheets-update_OAuth2.0"
+	SourceSmartsheetsUpdateAuthorizationMethodTypeAPIAccessToken                 SourceSmartsheetsUpdateAuthorizationMethodType = "API Access Token"
 )
 
 type SourceSmartsheetsUpdateAuthorizationMethod struct {
-	OAuth20        *SourceSmartsheetsUpdateOAuth20
-	APIAccessToken *APIAccessToken
+	SourceSmartsheetsUpdateOAuth20 *SourceSmartsheetsUpdateOAuth20
+	APIAccessToken                 *APIAccessToken
 
 	Type SourceSmartsheetsUpdateAuthorizationMethodType
 }
 
-func CreateSourceSmartsheetsUpdateAuthorizationMethodOAuth20(oAuth20 SourceSmartsheetsUpdateOAuth20) SourceSmartsheetsUpdateAuthorizationMethod {
-	typ := SourceSmartsheetsUpdateAuthorizationMethodTypeOAuth20
+func CreateSourceSmartsheetsUpdateAuthorizationMethodSourceSmartsheetsUpdateOAuth20(sourceSmartsheetsUpdateOAuth20 SourceSmartsheetsUpdateOAuth20) SourceSmartsheetsUpdateAuthorizationMethod {
+	typ := SourceSmartsheetsUpdateAuthorizationMethodTypeSourceSmartsheetsUpdateOAuth20
 
 	return SourceSmartsheetsUpdateAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceSmartsheetsUpdateOAuth20: &sourceSmartsheetsUpdateOAuth20,
+		Type:                           typ,
 	}
 }
 
@@ -191,10 +191,10 @@ func (u *SourceSmartsheetsUpdateAuthorizationMethod) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
-	oAuth20 := new(SourceSmartsheetsUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceSmartsheetsUpdateAuthorizationMethodTypeOAuth20
+	sourceSmartsheetsUpdateOAuth20 := new(SourceSmartsheetsUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceSmartsheetsUpdateOAuth20, "", true, true); err == nil {
+		u.SourceSmartsheetsUpdateOAuth20 = sourceSmartsheetsUpdateOAuth20
+		u.Type = SourceSmartsheetsUpdateAuthorizationMethodTypeSourceSmartsheetsUpdateOAuth20
 		return nil
 	}
 
@@ -202,8 +202,8 @@ func (u *SourceSmartsheetsUpdateAuthorizationMethod) UnmarshalJSON(data []byte) 
 }
 
 func (u SourceSmartsheetsUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceSmartsheetsUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceSmartsheetsUpdateOAuth20, "", true)
 	}
 
 	if u.APIAccessToken != nil {

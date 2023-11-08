@@ -53,7 +53,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlReadChangesUsingChangeDataCaptureCDC != nil {
 			replicationMethod = &shared.SourceMssqlUpdateMethod{
-				ReadChangesUsingChangeDataCaptureCDC: sourceMssqlReadChangesUsingChangeDataCaptureCDC,
+				SourceMssqlReadChangesUsingChangeDataCaptureCDC: sourceMssqlReadChangesUsingChangeDataCaptureCDC,
 			}
 		}
 		var sourceMssqlScanChangesWithUserDefinedCursor *shared.SourceMssqlScanChangesWithUserDefinedCursor
@@ -62,7 +62,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlScanChangesWithUserDefinedCursor != nil {
 			replicationMethod = &shared.SourceMssqlUpdateMethod{
-				ScanChangesWithUserDefinedCursor: sourceMssqlScanChangesWithUserDefinedCursor,
+				SourceMssqlScanChangesWithUserDefinedCursor: sourceMssqlScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -78,7 +78,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlEncryptedTrustServerCertificate != nil {
 			sslMethod = &shared.SourceMssqlSSLMethod{
-				EncryptedTrustServerCertificate: sourceMssqlEncryptedTrustServerCertificate,
+				SourceMssqlEncryptedTrustServerCertificate: sourceMssqlEncryptedTrustServerCertificate,
 			}
 		}
 		var sourceMssqlEncryptedVerifyCertificate *shared.SourceMssqlEncryptedVerifyCertificate
@@ -95,7 +95,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlEncryptedVerifyCertificate != nil {
 			sslMethod = &shared.SourceMssqlSSLMethod{
-				EncryptedVerifyCertificate: sourceMssqlEncryptedVerifyCertificate,
+				SourceMssqlEncryptedVerifyCertificate: sourceMssqlEncryptedVerifyCertificate,
 			}
 		}
 	}
@@ -107,7 +107,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlNoTunnel != nil {
 			tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
-				NoTunnel: sourceMssqlNoTunnel,
+				SourceMssqlNoTunnel: sourceMssqlNoTunnel,
 			}
 		}
 		var sourceMssqlSSHKeyAuthentication *shared.SourceMssqlSSHKeyAuthentication
@@ -130,7 +130,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
-				SSHKeyAuthentication: sourceMssqlSSHKeyAuthentication,
+				SourceMssqlSSHKeyAuthentication: sourceMssqlSSHKeyAuthentication,
 			}
 		}
 		var sourceMssqlPasswordAuthentication *shared.SourceMssqlPasswordAuthentication
@@ -153,7 +153,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		if sourceMssqlPasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
-				PasswordAuthentication: sourceMssqlPasswordAuthentication,
+				SourceMssqlPasswordAuthentication: sourceMssqlPasswordAuthentication,
 			}
 		}
 	}
@@ -263,7 +263,7 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 		if sourceMssqlUpdateEncryptedTrustServerCertificate != nil {
 			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
-				EncryptedTrustServerCertificate: sourceMssqlUpdateEncryptedTrustServerCertificate,
+				SourceMssqlUpdateEncryptedTrustServerCertificate: sourceMssqlUpdateEncryptedTrustServerCertificate,
 			}
 		}
 		var sourceMssqlUpdateEncryptedVerifyCertificate *shared.SourceMssqlUpdateEncryptedVerifyCertificate
@@ -280,7 +280,7 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 		if sourceMssqlUpdateEncryptedVerifyCertificate != nil {
 			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
-				EncryptedVerifyCertificate: sourceMssqlUpdateEncryptedVerifyCertificate,
+				SourceMssqlUpdateEncryptedVerifyCertificate: sourceMssqlUpdateEncryptedVerifyCertificate,
 			}
 		}
 	}
@@ -292,7 +292,7 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 		if sourceMssqlUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
-				NoTunnel: sourceMssqlUpdateNoTunnel,
+				SourceMssqlUpdateNoTunnel: sourceMssqlUpdateNoTunnel,
 			}
 		}
 		var sourceMssqlUpdateSSHKeyAuthentication *shared.SourceMssqlUpdateSSHKeyAuthentication
@@ -315,7 +315,7 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 		if sourceMssqlUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: sourceMssqlUpdateSSHKeyAuthentication,
+				SourceMssqlUpdateSSHKeyAuthentication: sourceMssqlUpdateSSHKeyAuthentication,
 			}
 		}
 		var sourceMssqlUpdatePasswordAuthentication *shared.SourceMssqlUpdatePasswordAuthentication
@@ -338,7 +338,7 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 		if sourceMssqlUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
-				PasswordAuthentication: sourceMssqlUpdatePasswordAuthentication,
+				SourceMssqlUpdatePasswordAuthentication: sourceMssqlUpdatePasswordAuthentication,
 			}
 		}
 	}

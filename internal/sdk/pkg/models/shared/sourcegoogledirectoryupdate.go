@@ -149,8 +149,8 @@ func (o *SignInViaGoogleOAuth) GetRefreshToken() string {
 type SourceGoogleDirectoryUpdateGoogleCredentialsType string
 
 const (
-	SourceGoogleDirectoryUpdateGoogleCredentialsTypeSignInViaGoogleOAuth SourceGoogleDirectoryUpdateGoogleCredentialsType = "SignInViaGoogleOAuth"
-	SourceGoogleDirectoryUpdateGoogleCredentialsTypeServiceAccountKey    SourceGoogleDirectoryUpdateGoogleCredentialsType = "ServiceAccountKey"
+	SourceGoogleDirectoryUpdateGoogleCredentialsTypeSignInViaGoogleOAuth SourceGoogleDirectoryUpdateGoogleCredentialsType = "Sign in via Google (OAuth)"
+	SourceGoogleDirectoryUpdateGoogleCredentialsTypeServiceAccountKey    SourceGoogleDirectoryUpdateGoogleCredentialsType = "Service Account Key"
 )
 
 type SourceGoogleDirectoryUpdateGoogleCredentials struct {

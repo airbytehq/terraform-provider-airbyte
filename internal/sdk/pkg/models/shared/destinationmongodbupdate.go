@@ -119,7 +119,7 @@ type AuthorizationTypeType string
 
 const (
 	AuthorizationTypeTypeNone          AuthorizationTypeType = "None"
-	AuthorizationTypeTypeLoginPassword AuthorizationTypeType = "LoginPassword"
+	AuthorizationTypeTypeLoginPassword AuthorizationTypeType = "Login/Password"
 )
 
 type AuthorizationType struct {
@@ -367,9 +367,9 @@ func (o *StandaloneMongoDbInstance) GetPort() *int64 {
 type MongoDbInstanceTypeType string
 
 const (
-	MongoDbInstanceTypeTypeStandaloneMongoDbInstance MongoDbInstanceTypeType = "StandaloneMongoDbInstance"
-	MongoDbInstanceTypeTypeReplicaSet                MongoDbInstanceTypeType = "ReplicaSet"
-	MongoDbInstanceTypeTypeMongoDBAtlas              MongoDbInstanceTypeType = "MongoDBAtlas"
+	MongoDbInstanceTypeTypeStandaloneMongoDbInstance MongoDbInstanceTypeType = "Standalone MongoDb Instance"
+	MongoDbInstanceTypeTypeReplicaSet                MongoDbInstanceTypeType = "Replica Set"
+	MongoDbInstanceTypeTypeMongoDBAtlas              MongoDbInstanceTypeType = "MongoDB Atlas"
 )
 
 type MongoDbInstanceType struct {
@@ -662,66 +662,66 @@ func (o *DestinationMongodbUpdateNoTunnel) GetTunnelMethod() DestinationMongodbU
 type DestinationMongodbUpdateSSHTunnelMethodType string
 
 const (
-	DestinationMongodbUpdateSSHTunnelMethodTypeNoTunnel               DestinationMongodbUpdateSSHTunnelMethodType = "NoTunnel"
-	DestinationMongodbUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationMongodbUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationMongodbUpdateSSHTunnelMethodTypePasswordAuthentication DestinationMongodbUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdateNoTunnel               DestinationMongodbUpdateSSHTunnelMethodType = "destination-mongodb-update_No Tunnel"
+	DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdateSSHKeyAuthentication   DestinationMongodbUpdateSSHTunnelMethodType = "destination-mongodb-update_SSH Key Authentication"
+	DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdatePasswordAuthentication DestinationMongodbUpdateSSHTunnelMethodType = "destination-mongodb-update_Password Authentication"
 )
 
 type DestinationMongodbUpdateSSHTunnelMethod struct {
-	NoTunnel               *DestinationMongodbUpdateNoTunnel
-	SSHKeyAuthentication   *DestinationMongodbUpdateSSHKeyAuthentication
-	PasswordAuthentication *DestinationMongodbUpdatePasswordAuthentication
+	DestinationMongodbUpdateNoTunnel               *DestinationMongodbUpdateNoTunnel
+	DestinationMongodbUpdateSSHKeyAuthentication   *DestinationMongodbUpdateSSHKeyAuthentication
+	DestinationMongodbUpdatePasswordAuthentication *DestinationMongodbUpdatePasswordAuthentication
 
 	Type DestinationMongodbUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationMongodbUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationMongodbUpdateNoTunnel) DestinationMongodbUpdateSSHTunnelMethod {
-	typ := DestinationMongodbUpdateSSHTunnelMethodTypeNoTunnel
+func CreateDestinationMongodbUpdateSSHTunnelMethodDestinationMongodbUpdateNoTunnel(destinationMongodbUpdateNoTunnel DestinationMongodbUpdateNoTunnel) DestinationMongodbUpdateSSHTunnelMethod {
+	typ := DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdateNoTunnel
 
 	return DestinationMongodbUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationMongodbUpdateNoTunnel: &destinationMongodbUpdateNoTunnel,
+		Type:                             typ,
 	}
 }
 
-func CreateDestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationMongodbUpdateSSHKeyAuthentication) DestinationMongodbUpdateSSHTunnelMethod {
-	typ := DestinationMongodbUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationMongodbUpdateSSHTunnelMethodDestinationMongodbUpdateSSHKeyAuthentication(destinationMongodbUpdateSSHKeyAuthentication DestinationMongodbUpdateSSHKeyAuthentication) DestinationMongodbUpdateSSHTunnelMethod {
+	typ := DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdateSSHKeyAuthentication
 
 	return DestinationMongodbUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationMongodbUpdateSSHKeyAuthentication: &destinationMongodbUpdateSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationMongodbUpdatePasswordAuthentication) DestinationMongodbUpdateSSHTunnelMethod {
-	typ := DestinationMongodbUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationMongodbUpdateSSHTunnelMethodDestinationMongodbUpdatePasswordAuthentication(destinationMongodbUpdatePasswordAuthentication DestinationMongodbUpdatePasswordAuthentication) DestinationMongodbUpdateSSHTunnelMethod {
+	typ := DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdatePasswordAuthentication
 
 	return DestinationMongodbUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationMongodbUpdatePasswordAuthentication: &destinationMongodbUpdatePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationMongodbUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationMongodbUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationMongodbUpdateSSHTunnelMethodTypeNoTunnel
+	destinationMongodbUpdateNoTunnel := new(DestinationMongodbUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationMongodbUpdateNoTunnel = destinationMongodbUpdateNoTunnel
+		u.Type = DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationMongodbUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationMongodbUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationMongodbUpdateSSHKeyAuthentication := new(DestinationMongodbUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMongodbUpdateSSHKeyAuthentication = destinationMongodbUpdateSSHKeyAuthentication
+		u.Type = DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationMongodbUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationMongodbUpdateSSHTunnelMethodTypePasswordAuthentication
+	destinationMongodbUpdatePasswordAuthentication := new(DestinationMongodbUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMongodbUpdatePasswordAuthentication = destinationMongodbUpdatePasswordAuthentication
+		u.Type = DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -729,16 +729,16 @@ func (u *DestinationMongodbUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationMongodbUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationMongodbUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationMongodbUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationMongodbUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

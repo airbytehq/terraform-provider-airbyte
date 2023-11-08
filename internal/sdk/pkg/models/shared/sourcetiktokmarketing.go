@@ -155,48 +155,48 @@ func (o *SourceTiktokMarketingOAuth20) GetSecret() string {
 type SourceTiktokMarketingAuthenticationMethodType string
 
 const (
-	SourceTiktokMarketingAuthenticationMethodTypeOAuth20            SourceTiktokMarketingAuthenticationMethodType = "OAuth20"
-	SourceTiktokMarketingAuthenticationMethodTypeSandboxAccessToken SourceTiktokMarketingAuthenticationMethodType = "SandboxAccessToken"
+	SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingOAuth20            SourceTiktokMarketingAuthenticationMethodType = "source-tiktok-marketing_OAuth2.0"
+	SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingSandboxAccessToken SourceTiktokMarketingAuthenticationMethodType = "source-tiktok-marketing_Sandbox Access Token"
 )
 
 type SourceTiktokMarketingAuthenticationMethod struct {
-	OAuth20            *SourceTiktokMarketingOAuth20
-	SandboxAccessToken *SourceTiktokMarketingSandboxAccessToken
+	SourceTiktokMarketingOAuth20            *SourceTiktokMarketingOAuth20
+	SourceTiktokMarketingSandboxAccessToken *SourceTiktokMarketingSandboxAccessToken
 
 	Type SourceTiktokMarketingAuthenticationMethodType
 }
 
-func CreateSourceTiktokMarketingAuthenticationMethodOAuth20(oAuth20 SourceTiktokMarketingOAuth20) SourceTiktokMarketingAuthenticationMethod {
-	typ := SourceTiktokMarketingAuthenticationMethodTypeOAuth20
+func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingOAuth20(sourceTiktokMarketingOAuth20 SourceTiktokMarketingOAuth20) SourceTiktokMarketingAuthenticationMethod {
+	typ := SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingOAuth20
 
 	return SourceTiktokMarketingAuthenticationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceTiktokMarketingOAuth20: &sourceTiktokMarketingOAuth20,
+		Type:                         typ,
 	}
 }
 
-func CreateSourceTiktokMarketingAuthenticationMethodSandboxAccessToken(sandboxAccessToken SourceTiktokMarketingSandboxAccessToken) SourceTiktokMarketingAuthenticationMethod {
-	typ := SourceTiktokMarketingAuthenticationMethodTypeSandboxAccessToken
+func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingSandboxAccessToken(sourceTiktokMarketingSandboxAccessToken SourceTiktokMarketingSandboxAccessToken) SourceTiktokMarketingAuthenticationMethod {
+	typ := SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingSandboxAccessToken
 
 	return SourceTiktokMarketingAuthenticationMethod{
-		SandboxAccessToken: &sandboxAccessToken,
-		Type:               typ,
+		SourceTiktokMarketingSandboxAccessToken: &sourceTiktokMarketingSandboxAccessToken,
+		Type:                                    typ,
 	}
 }
 
 func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) error {
 
-	sandboxAccessToken := new(SourceTiktokMarketingSandboxAccessToken)
-	if err := utils.UnmarshalJSON(data, &sandboxAccessToken, "", true, true); err == nil {
-		u.SandboxAccessToken = sandboxAccessToken
-		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSandboxAccessToken
+	sourceTiktokMarketingSandboxAccessToken := new(SourceTiktokMarketingSandboxAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceTiktokMarketingSandboxAccessToken, "", true, true); err == nil {
+		u.SourceTiktokMarketingSandboxAccessToken = sourceTiktokMarketingSandboxAccessToken
+		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingSandboxAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourceTiktokMarketingOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceTiktokMarketingAuthenticationMethodTypeOAuth20
+	sourceTiktokMarketingOAuth20 := new(SourceTiktokMarketingOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceTiktokMarketingOAuth20, "", true, true); err == nil {
+		u.SourceTiktokMarketingOAuth20 = sourceTiktokMarketingOAuth20
+		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingOAuth20
 		return nil
 	}
 
@@ -204,12 +204,12 @@ func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) e
 }
 
 func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceTiktokMarketingOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceTiktokMarketingOAuth20, "", true)
 	}
 
-	if u.SandboxAccessToken != nil {
-		return utils.MarshalJSON(u.SandboxAccessToken, "", true)
+	if u.SourceTiktokMarketingSandboxAccessToken != nil {
+		return utils.MarshalJSON(u.SourceTiktokMarketingSandboxAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -162,48 +162,48 @@ func (o *SourceZendeskTalkAPIToken) GetEmail() string {
 type SourceZendeskTalkAuthenticationType string
 
 const (
-	SourceZendeskTalkAuthenticationTypeAPIToken SourceZendeskTalkAuthenticationType = "APIToken"
-	SourceZendeskTalkAuthenticationTypeOAuth20  SourceZendeskTalkAuthenticationType = "OAuth20"
+	SourceZendeskTalkAuthenticationTypeSourceZendeskTalkAPIToken SourceZendeskTalkAuthenticationType = "source-zendesk-talk_API Token"
+	SourceZendeskTalkAuthenticationTypeSourceZendeskTalkOAuth20  SourceZendeskTalkAuthenticationType = "source-zendesk-talk_OAuth2.0"
 )
 
 type SourceZendeskTalkAuthentication struct {
-	APIToken *SourceZendeskTalkAPIToken
-	OAuth20  *SourceZendeskTalkOAuth20
+	SourceZendeskTalkAPIToken *SourceZendeskTalkAPIToken
+	SourceZendeskTalkOAuth20  *SourceZendeskTalkOAuth20
 
 	Type SourceZendeskTalkAuthenticationType
 }
 
-func CreateSourceZendeskTalkAuthenticationAPIToken(apiToken SourceZendeskTalkAPIToken) SourceZendeskTalkAuthentication {
-	typ := SourceZendeskTalkAuthenticationTypeAPIToken
+func CreateSourceZendeskTalkAuthenticationSourceZendeskTalkAPIToken(sourceZendeskTalkAPIToken SourceZendeskTalkAPIToken) SourceZendeskTalkAuthentication {
+	typ := SourceZendeskTalkAuthenticationTypeSourceZendeskTalkAPIToken
 
 	return SourceZendeskTalkAuthentication{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceZendeskTalkAPIToken: &sourceZendeskTalkAPIToken,
+		Type:                      typ,
 	}
 }
 
-func CreateSourceZendeskTalkAuthenticationOAuth20(oAuth20 SourceZendeskTalkOAuth20) SourceZendeskTalkAuthentication {
-	typ := SourceZendeskTalkAuthenticationTypeOAuth20
+func CreateSourceZendeskTalkAuthenticationSourceZendeskTalkOAuth20(sourceZendeskTalkOAuth20 SourceZendeskTalkOAuth20) SourceZendeskTalkAuthentication {
+	typ := SourceZendeskTalkAuthenticationTypeSourceZendeskTalkOAuth20
 
 	return SourceZendeskTalkAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceZendeskTalkOAuth20: &sourceZendeskTalkOAuth20,
+		Type:                     typ,
 	}
 }
 
 func (u *SourceZendeskTalkAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceZendeskTalkAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceZendeskTalkAuthenticationTypeAPIToken
+	sourceZendeskTalkAPIToken := new(SourceZendeskTalkAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskTalkAPIToken, "", true, true); err == nil {
+		u.SourceZendeskTalkAPIToken = sourceZendeskTalkAPIToken
+		u.Type = SourceZendeskTalkAuthenticationTypeSourceZendeskTalkAPIToken
 		return nil
 	}
 
-	oAuth20 := new(SourceZendeskTalkOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceZendeskTalkAuthenticationTypeOAuth20
+	sourceZendeskTalkOAuth20 := new(SourceZendeskTalkOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskTalkOAuth20, "", true, true); err == nil {
+		u.SourceZendeskTalkOAuth20 = sourceZendeskTalkOAuth20
+		u.Type = SourceZendeskTalkAuthenticationTypeSourceZendeskTalkOAuth20
 		return nil
 	}
 
@@ -211,12 +211,12 @@ func (u *SourceZendeskTalkAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceZendeskTalkAuthentication) MarshalJSON() ([]byte, error) {
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceZendeskTalkAPIToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskTalkAPIToken, "", true)
 	}
 
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceZendeskTalkOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceZendeskTalkOAuth20, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

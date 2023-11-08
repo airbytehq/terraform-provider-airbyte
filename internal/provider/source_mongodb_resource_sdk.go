@@ -34,7 +34,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		}
 		if sourceMongodbStandaloneMongoDbInstance != nil {
 			instanceType = &shared.SourceMongodbMongoDbInstanceType{
-				StandaloneMongoDbInstance: sourceMongodbStandaloneMongoDbInstance,
+				SourceMongodbStandaloneMongoDbInstance: sourceMongodbStandaloneMongoDbInstance,
 			}
 		}
 		var sourceMongodbReplicaSet *shared.SourceMongodbReplicaSet
@@ -53,7 +53,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		}
 		if sourceMongodbReplicaSet != nil {
 			instanceType = &shared.SourceMongodbMongoDbInstanceType{
-				ReplicaSet: sourceMongodbReplicaSet,
+				SourceMongodbReplicaSet: sourceMongodbReplicaSet,
 			}
 		}
 		var sourceMongodbMongoDBAtlas *shared.SourceMongodbMongoDBAtlas
@@ -70,7 +70,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		}
 		if sourceMongodbMongoDBAtlas != nil {
 			instanceType = &shared.SourceMongodbMongoDbInstanceType{
-				MongoDBAtlas: sourceMongodbMongoDBAtlas,
+				SourceMongodbMongoDBAtlas: sourceMongodbMongoDBAtlas,
 			}
 		}
 	}
@@ -141,7 +141,7 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		}
 		if sourceMongodbUpdateStandaloneMongoDbInstance != nil {
 			instanceType = &shared.SourceMongodbUpdateMongoDbInstanceType{
-				StandaloneMongoDbInstance: sourceMongodbUpdateStandaloneMongoDbInstance,
+				SourceMongodbUpdateStandaloneMongoDbInstance: sourceMongodbUpdateStandaloneMongoDbInstance,
 			}
 		}
 		var sourceMongodbUpdateReplicaSet *shared.SourceMongodbUpdateReplicaSet
@@ -160,7 +160,7 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		}
 		if sourceMongodbUpdateReplicaSet != nil {
 			instanceType = &shared.SourceMongodbUpdateMongoDbInstanceType{
-				ReplicaSet: sourceMongodbUpdateReplicaSet,
+				SourceMongodbUpdateReplicaSet: sourceMongodbUpdateReplicaSet,
 			}
 		}
 		var sourceMongodbUpdateMongoDBAtlas *shared.SourceMongodbUpdateMongoDBAtlas
@@ -177,7 +177,7 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		}
 		if sourceMongodbUpdateMongoDBAtlas != nil {
 			instanceType = &shared.SourceMongodbUpdateMongoDbInstanceType{
-				MongoDBAtlas: sourceMongodbUpdateMongoDBAtlas,
+				SourceMongodbUpdateMongoDBAtlas: sourceMongodbUpdateMongoDBAtlas,
 			}
 		}
 	}

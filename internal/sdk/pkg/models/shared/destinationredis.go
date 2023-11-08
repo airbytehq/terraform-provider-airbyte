@@ -185,48 +185,48 @@ func (o *DestinationRedisDisable) GetMode() *DestinationRedisMode {
 type DestinationRedisSSLModesType string
 
 const (
-	DestinationRedisSSLModesTypeDisable    DestinationRedisSSLModesType = "Disable"
-	DestinationRedisSSLModesTypeVerifyFull DestinationRedisSSLModesType = "VerifyFull"
+	DestinationRedisSSLModesTypeDestinationRedisDisable    DestinationRedisSSLModesType = "destination-redis_disable"
+	DestinationRedisSSLModesTypeDestinationRedisVerifyFull DestinationRedisSSLModesType = "destination-redis_verify-full"
 )
 
 type DestinationRedisSSLModes struct {
-	Disable    *DestinationRedisDisable
-	VerifyFull *DestinationRedisVerifyFull
+	DestinationRedisDisable    *DestinationRedisDisable
+	DestinationRedisVerifyFull *DestinationRedisVerifyFull
 
 	Type DestinationRedisSSLModesType
 }
 
-func CreateDestinationRedisSSLModesDisable(disable DestinationRedisDisable) DestinationRedisSSLModes {
-	typ := DestinationRedisSSLModesTypeDisable
+func CreateDestinationRedisSSLModesDestinationRedisDisable(destinationRedisDisable DestinationRedisDisable) DestinationRedisSSLModes {
+	typ := DestinationRedisSSLModesTypeDestinationRedisDisable
 
 	return DestinationRedisSSLModes{
-		Disable: &disable,
-		Type:    typ,
+		DestinationRedisDisable: &destinationRedisDisable,
+		Type:                    typ,
 	}
 }
 
-func CreateDestinationRedisSSLModesVerifyFull(verifyFull DestinationRedisVerifyFull) DestinationRedisSSLModes {
-	typ := DestinationRedisSSLModesTypeVerifyFull
+func CreateDestinationRedisSSLModesDestinationRedisVerifyFull(destinationRedisVerifyFull DestinationRedisVerifyFull) DestinationRedisSSLModes {
+	typ := DestinationRedisSSLModesTypeDestinationRedisVerifyFull
 
 	return DestinationRedisSSLModes{
-		VerifyFull: &verifyFull,
-		Type:       typ,
+		DestinationRedisVerifyFull: &destinationRedisVerifyFull,
+		Type:                       typ,
 	}
 }
 
 func (u *DestinationRedisSSLModes) UnmarshalJSON(data []byte) error {
 
-	disable := new(DestinationRedisDisable)
-	if err := utils.UnmarshalJSON(data, &disable, "", true, true); err == nil {
-		u.Disable = disable
-		u.Type = DestinationRedisSSLModesTypeDisable
+	destinationRedisDisable := new(DestinationRedisDisable)
+	if err := utils.UnmarshalJSON(data, &destinationRedisDisable, "", true, true); err == nil {
+		u.DestinationRedisDisable = destinationRedisDisable
+		u.Type = DestinationRedisSSLModesTypeDestinationRedisDisable
 		return nil
 	}
 
-	verifyFull := new(DestinationRedisVerifyFull)
-	if err := utils.UnmarshalJSON(data, &verifyFull, "", true, true); err == nil {
-		u.VerifyFull = verifyFull
-		u.Type = DestinationRedisSSLModesTypeVerifyFull
+	destinationRedisVerifyFull := new(DestinationRedisVerifyFull)
+	if err := utils.UnmarshalJSON(data, &destinationRedisVerifyFull, "", true, true); err == nil {
+		u.DestinationRedisVerifyFull = destinationRedisVerifyFull
+		u.Type = DestinationRedisSSLModesTypeDestinationRedisVerifyFull
 		return nil
 	}
 
@@ -234,12 +234,12 @@ func (u *DestinationRedisSSLModes) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedisSSLModes) MarshalJSON() ([]byte, error) {
-	if u.Disable != nil {
-		return utils.MarshalJSON(u.Disable, "", true)
+	if u.DestinationRedisDisable != nil {
+		return utils.MarshalJSON(u.DestinationRedisDisable, "", true)
 	}
 
-	if u.VerifyFull != nil {
-		return utils.MarshalJSON(u.VerifyFull, "", true)
+	if u.DestinationRedisVerifyFull != nil {
+		return utils.MarshalJSON(u.DestinationRedisVerifyFull, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -458,66 +458,66 @@ func (o *DestinationRedisNoTunnel) GetTunnelMethod() DestinationRedisTunnelMetho
 type DestinationRedisSSHTunnelMethodType string
 
 const (
-	DestinationRedisSSHTunnelMethodTypeNoTunnel               DestinationRedisSSHTunnelMethodType = "NoTunnel"
-	DestinationRedisSSHTunnelMethodTypeSSHKeyAuthentication   DestinationRedisSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationRedisSSHTunnelMethodTypePasswordAuthentication DestinationRedisSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationRedisSSHTunnelMethodTypeDestinationRedisNoTunnel               DestinationRedisSSHTunnelMethodType = "destination-redis_No Tunnel"
+	DestinationRedisSSHTunnelMethodTypeDestinationRedisSSHKeyAuthentication   DestinationRedisSSHTunnelMethodType = "destination-redis_SSH Key Authentication"
+	DestinationRedisSSHTunnelMethodTypeDestinationRedisPasswordAuthentication DestinationRedisSSHTunnelMethodType = "destination-redis_Password Authentication"
 )
 
 type DestinationRedisSSHTunnelMethod struct {
-	NoTunnel               *DestinationRedisNoTunnel
-	SSHKeyAuthentication   *DestinationRedisSSHKeyAuthentication
-	PasswordAuthentication *DestinationRedisPasswordAuthentication
+	DestinationRedisNoTunnel               *DestinationRedisNoTunnel
+	DestinationRedisSSHKeyAuthentication   *DestinationRedisSSHKeyAuthentication
+	DestinationRedisPasswordAuthentication *DestinationRedisPasswordAuthentication
 
 	Type DestinationRedisSSHTunnelMethodType
 }
 
-func CreateDestinationRedisSSHTunnelMethodNoTunnel(noTunnel DestinationRedisNoTunnel) DestinationRedisSSHTunnelMethod {
-	typ := DestinationRedisSSHTunnelMethodTypeNoTunnel
+func CreateDestinationRedisSSHTunnelMethodDestinationRedisNoTunnel(destinationRedisNoTunnel DestinationRedisNoTunnel) DestinationRedisSSHTunnelMethod {
+	typ := DestinationRedisSSHTunnelMethodTypeDestinationRedisNoTunnel
 
 	return DestinationRedisSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationRedisNoTunnel: &destinationRedisNoTunnel,
+		Type:                     typ,
 	}
 }
 
-func CreateDestinationRedisSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationRedisSSHKeyAuthentication) DestinationRedisSSHTunnelMethod {
-	typ := DestinationRedisSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationRedisSSHTunnelMethodDestinationRedisSSHKeyAuthentication(destinationRedisSSHKeyAuthentication DestinationRedisSSHKeyAuthentication) DestinationRedisSSHTunnelMethod {
+	typ := DestinationRedisSSHTunnelMethodTypeDestinationRedisSSHKeyAuthentication
 
 	return DestinationRedisSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationRedisSSHKeyAuthentication: &destinationRedisSSHKeyAuthentication,
+		Type:                                 typ,
 	}
 }
 
-func CreateDestinationRedisSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationRedisPasswordAuthentication) DestinationRedisSSHTunnelMethod {
-	typ := DestinationRedisSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationRedisSSHTunnelMethodDestinationRedisPasswordAuthentication(destinationRedisPasswordAuthentication DestinationRedisPasswordAuthentication) DestinationRedisSSHTunnelMethod {
+	typ := DestinationRedisSSHTunnelMethodTypeDestinationRedisPasswordAuthentication
 
 	return DestinationRedisSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationRedisPasswordAuthentication: &destinationRedisPasswordAuthentication,
+		Type:                                   typ,
 	}
 }
 
 func (u *DestinationRedisSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationRedisNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationRedisSSHTunnelMethodTypeNoTunnel
+	destinationRedisNoTunnel := new(DestinationRedisNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationRedisNoTunnel, "", true, true); err == nil {
+		u.DestinationRedisNoTunnel = destinationRedisNoTunnel
+		u.Type = DestinationRedisSSHTunnelMethodTypeDestinationRedisNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationRedisSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationRedisSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationRedisSSHKeyAuthentication := new(DestinationRedisSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedisSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationRedisSSHKeyAuthentication = destinationRedisSSHKeyAuthentication
+		u.Type = DestinationRedisSSHTunnelMethodTypeDestinationRedisSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationRedisPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationRedisSSHTunnelMethodTypePasswordAuthentication
+	destinationRedisPasswordAuthentication := new(DestinationRedisPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedisPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationRedisPasswordAuthentication = destinationRedisPasswordAuthentication
+		u.Type = DestinationRedisSSHTunnelMethodTypeDestinationRedisPasswordAuthentication
 		return nil
 	}
 
@@ -525,16 +525,16 @@ func (u *DestinationRedisSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedisSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationRedisNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationRedisNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationRedisSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedisSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationRedisPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedisPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

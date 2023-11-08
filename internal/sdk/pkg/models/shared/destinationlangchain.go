@@ -132,48 +132,48 @@ func (o *DestinationLangchainOpenAI) GetOpenaiKey() string {
 type DestinationLangchainEmbeddingType string
 
 const (
-	DestinationLangchainEmbeddingTypeOpenAI DestinationLangchainEmbeddingType = "OpenAI"
-	DestinationLangchainEmbeddingTypeFake   DestinationLangchainEmbeddingType = "Fake"
+	DestinationLangchainEmbeddingTypeDestinationLangchainOpenAI DestinationLangchainEmbeddingType = "destination-langchain_OpenAI"
+	DestinationLangchainEmbeddingTypeDestinationLangchainFake   DestinationLangchainEmbeddingType = "destination-langchain_Fake"
 )
 
 type DestinationLangchainEmbedding struct {
-	OpenAI *DestinationLangchainOpenAI
-	Fake   *DestinationLangchainFake
+	DestinationLangchainOpenAI *DestinationLangchainOpenAI
+	DestinationLangchainFake   *DestinationLangchainFake
 
 	Type DestinationLangchainEmbeddingType
 }
 
-func CreateDestinationLangchainEmbeddingOpenAI(openAI DestinationLangchainOpenAI) DestinationLangchainEmbedding {
-	typ := DestinationLangchainEmbeddingTypeOpenAI
+func CreateDestinationLangchainEmbeddingDestinationLangchainOpenAI(destinationLangchainOpenAI DestinationLangchainOpenAI) DestinationLangchainEmbedding {
+	typ := DestinationLangchainEmbeddingTypeDestinationLangchainOpenAI
 
 	return DestinationLangchainEmbedding{
-		OpenAI: &openAI,
-		Type:   typ,
+		DestinationLangchainOpenAI: &destinationLangchainOpenAI,
+		Type:                       typ,
 	}
 }
 
-func CreateDestinationLangchainEmbeddingFake(fake DestinationLangchainFake) DestinationLangchainEmbedding {
-	typ := DestinationLangchainEmbeddingTypeFake
+func CreateDestinationLangchainEmbeddingDestinationLangchainFake(destinationLangchainFake DestinationLangchainFake) DestinationLangchainEmbedding {
+	typ := DestinationLangchainEmbeddingTypeDestinationLangchainFake
 
 	return DestinationLangchainEmbedding{
-		Fake: &fake,
-		Type: typ,
+		DestinationLangchainFake: &destinationLangchainFake,
+		Type:                     typ,
 	}
 }
 
 func (u *DestinationLangchainEmbedding) UnmarshalJSON(data []byte) error {
 
-	fake := new(DestinationLangchainFake)
-	if err := utils.UnmarshalJSON(data, &fake, "", true, true); err == nil {
-		u.Fake = fake
-		u.Type = DestinationLangchainEmbeddingTypeFake
+	destinationLangchainFake := new(DestinationLangchainFake)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainFake, "", true, true); err == nil {
+		u.DestinationLangchainFake = destinationLangchainFake
+		u.Type = DestinationLangchainEmbeddingTypeDestinationLangchainFake
 		return nil
 	}
 
-	openAI := new(DestinationLangchainOpenAI)
-	if err := utils.UnmarshalJSON(data, &openAI, "", true, true); err == nil {
-		u.OpenAI = openAI
-		u.Type = DestinationLangchainEmbeddingTypeOpenAI
+	destinationLangchainOpenAI := new(DestinationLangchainOpenAI)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainOpenAI, "", true, true); err == nil {
+		u.DestinationLangchainOpenAI = destinationLangchainOpenAI
+		u.Type = DestinationLangchainEmbeddingTypeDestinationLangchainOpenAI
 		return nil
 	}
 
@@ -181,12 +181,12 @@ func (u *DestinationLangchainEmbedding) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationLangchainEmbedding) MarshalJSON() ([]byte, error) {
-	if u.OpenAI != nil {
-		return utils.MarshalJSON(u.OpenAI, "", true)
+	if u.DestinationLangchainOpenAI != nil {
+		return utils.MarshalJSON(u.DestinationLangchainOpenAI, "", true)
 	}
 
-	if u.Fake != nil {
-		return utils.MarshalJSON(u.Fake, "", true)
+	if u.DestinationLangchainFake != nil {
+		return utils.MarshalJSON(u.DestinationLangchainFake, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -380,66 +380,66 @@ func (o *DestinationLangchainPinecone) GetPineconeKey() string {
 type DestinationLangchainIndexingType string
 
 const (
-	DestinationLangchainIndexingTypePinecone               DestinationLangchainIndexingType = "Pinecone"
-	DestinationLangchainIndexingTypeDocArrayHnswSearch     DestinationLangchainIndexingType = "DocArrayHnswSearch"
-	DestinationLangchainIndexingTypeChromaLocalPersistance DestinationLangchainIndexingType = "ChromaLocalPersistance"
+	DestinationLangchainIndexingTypeDestinationLangchainPinecone               DestinationLangchainIndexingType = "destination-langchain_Pinecone"
+	DestinationLangchainIndexingTypeDestinationLangchainDocArrayHnswSearch     DestinationLangchainIndexingType = "destination-langchain_DocArrayHnswSearch"
+	DestinationLangchainIndexingTypeDestinationLangchainChromaLocalPersistance DestinationLangchainIndexingType = "destination-langchain_Chroma (local persistance)"
 )
 
 type DestinationLangchainIndexing struct {
-	Pinecone               *DestinationLangchainPinecone
-	DocArrayHnswSearch     *DestinationLangchainDocArrayHnswSearch
-	ChromaLocalPersistance *DestinationLangchainChromaLocalPersistance
+	DestinationLangchainPinecone               *DestinationLangchainPinecone
+	DestinationLangchainDocArrayHnswSearch     *DestinationLangchainDocArrayHnswSearch
+	DestinationLangchainChromaLocalPersistance *DestinationLangchainChromaLocalPersistance
 
 	Type DestinationLangchainIndexingType
 }
 
-func CreateDestinationLangchainIndexingPinecone(pinecone DestinationLangchainPinecone) DestinationLangchainIndexing {
-	typ := DestinationLangchainIndexingTypePinecone
+func CreateDestinationLangchainIndexingDestinationLangchainPinecone(destinationLangchainPinecone DestinationLangchainPinecone) DestinationLangchainIndexing {
+	typ := DestinationLangchainIndexingTypeDestinationLangchainPinecone
 
 	return DestinationLangchainIndexing{
-		Pinecone: &pinecone,
-		Type:     typ,
+		DestinationLangchainPinecone: &destinationLangchainPinecone,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationLangchainIndexingDocArrayHnswSearch(docArrayHnswSearch DestinationLangchainDocArrayHnswSearch) DestinationLangchainIndexing {
-	typ := DestinationLangchainIndexingTypeDocArrayHnswSearch
+func CreateDestinationLangchainIndexingDestinationLangchainDocArrayHnswSearch(destinationLangchainDocArrayHnswSearch DestinationLangchainDocArrayHnswSearch) DestinationLangchainIndexing {
+	typ := DestinationLangchainIndexingTypeDestinationLangchainDocArrayHnswSearch
 
 	return DestinationLangchainIndexing{
-		DocArrayHnswSearch: &docArrayHnswSearch,
-		Type:               typ,
+		DestinationLangchainDocArrayHnswSearch: &destinationLangchainDocArrayHnswSearch,
+		Type:                                   typ,
 	}
 }
 
-func CreateDestinationLangchainIndexingChromaLocalPersistance(chromaLocalPersistance DestinationLangchainChromaLocalPersistance) DestinationLangchainIndexing {
-	typ := DestinationLangchainIndexingTypeChromaLocalPersistance
+func CreateDestinationLangchainIndexingDestinationLangchainChromaLocalPersistance(destinationLangchainChromaLocalPersistance DestinationLangchainChromaLocalPersistance) DestinationLangchainIndexing {
+	typ := DestinationLangchainIndexingTypeDestinationLangchainChromaLocalPersistance
 
 	return DestinationLangchainIndexing{
-		ChromaLocalPersistance: &chromaLocalPersistance,
-		Type:                   typ,
+		DestinationLangchainChromaLocalPersistance: &destinationLangchainChromaLocalPersistance,
+		Type: typ,
 	}
 }
 
 func (u *DestinationLangchainIndexing) UnmarshalJSON(data []byte) error {
 
-	docArrayHnswSearch := new(DestinationLangchainDocArrayHnswSearch)
-	if err := utils.UnmarshalJSON(data, &docArrayHnswSearch, "", true, true); err == nil {
-		u.DocArrayHnswSearch = docArrayHnswSearch
-		u.Type = DestinationLangchainIndexingTypeDocArrayHnswSearch
+	destinationLangchainDocArrayHnswSearch := new(DestinationLangchainDocArrayHnswSearch)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainDocArrayHnswSearch, "", true, true); err == nil {
+		u.DestinationLangchainDocArrayHnswSearch = destinationLangchainDocArrayHnswSearch
+		u.Type = DestinationLangchainIndexingTypeDestinationLangchainDocArrayHnswSearch
 		return nil
 	}
 
-	chromaLocalPersistance := new(DestinationLangchainChromaLocalPersistance)
-	if err := utils.UnmarshalJSON(data, &chromaLocalPersistance, "", true, true); err == nil {
-		u.ChromaLocalPersistance = chromaLocalPersistance
-		u.Type = DestinationLangchainIndexingTypeChromaLocalPersistance
+	destinationLangchainChromaLocalPersistance := new(DestinationLangchainChromaLocalPersistance)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainChromaLocalPersistance, "", true, true); err == nil {
+		u.DestinationLangchainChromaLocalPersistance = destinationLangchainChromaLocalPersistance
+		u.Type = DestinationLangchainIndexingTypeDestinationLangchainChromaLocalPersistance
 		return nil
 	}
 
-	pinecone := new(DestinationLangchainPinecone)
-	if err := utils.UnmarshalJSON(data, &pinecone, "", true, true); err == nil {
-		u.Pinecone = pinecone
-		u.Type = DestinationLangchainIndexingTypePinecone
+	destinationLangchainPinecone := new(DestinationLangchainPinecone)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainPinecone, "", true, true); err == nil {
+		u.DestinationLangchainPinecone = destinationLangchainPinecone
+		u.Type = DestinationLangchainIndexingTypeDestinationLangchainPinecone
 		return nil
 	}
 
@@ -447,16 +447,16 @@ func (u *DestinationLangchainIndexing) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationLangchainIndexing) MarshalJSON() ([]byte, error) {
-	if u.Pinecone != nil {
-		return utils.MarshalJSON(u.Pinecone, "", true)
+	if u.DestinationLangchainPinecone != nil {
+		return utils.MarshalJSON(u.DestinationLangchainPinecone, "", true)
 	}
 
-	if u.DocArrayHnswSearch != nil {
-		return utils.MarshalJSON(u.DocArrayHnswSearch, "", true)
+	if u.DestinationLangchainDocArrayHnswSearch != nil {
+		return utils.MarshalJSON(u.DestinationLangchainDocArrayHnswSearch, "", true)
 	}
 
-	if u.ChromaLocalPersistance != nil {
-		return utils.MarshalJSON(u.ChromaLocalPersistance, "", true)
+	if u.DestinationLangchainChromaLocalPersistance != nil {
+		return utils.MarshalJSON(u.DestinationLangchainChromaLocalPersistance, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

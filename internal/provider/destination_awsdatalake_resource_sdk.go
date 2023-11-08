@@ -31,7 +31,7 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	}
 	if destinationAwsDatalakeIAMRole != nil {
 		credentials = shared.DestinationAwsDatalakeAuthenticationMode{
-			IAMRole: destinationAwsDatalakeIAMRole,
+			DestinationAwsDatalakeIAMRole: destinationAwsDatalakeIAMRole,
 		}
 	}
 	var destinationAwsDatalakeIAMUser *shared.DestinationAwsDatalakeIAMUser
@@ -45,7 +45,7 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	}
 	if destinationAwsDatalakeIAMUser != nil {
 		credentials = shared.DestinationAwsDatalakeAuthenticationMode{
-			IAMUser: destinationAwsDatalakeIAMUser,
+			DestinationAwsDatalakeIAMUser: destinationAwsDatalakeIAMUser,
 		}
 	}
 	var format *shared.DestinationAwsDatalakeOutputFormatWildcard
@@ -71,7 +71,7 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 		}
 		if destinationAwsDatalakeJSONLinesNewlineDelimitedJSON != nil {
 			format = &shared.DestinationAwsDatalakeOutputFormatWildcard{
-				JSONLinesNewlineDelimitedJSON: destinationAwsDatalakeJSONLinesNewlineDelimitedJSON,
+				DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeJSONLinesNewlineDelimitedJSON,
 			}
 		}
 		var destinationAwsDatalakeParquetColumnarStorage *shared.DestinationAwsDatalakeParquetColumnarStorage
@@ -95,7 +95,7 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 		}
 		if destinationAwsDatalakeParquetColumnarStorage != nil {
 			format = &shared.DestinationAwsDatalakeOutputFormatWildcard{
-				ParquetColumnarStorage: destinationAwsDatalakeParquetColumnarStorage,
+				DestinationAwsDatalakeParquetColumnarStorage: destinationAwsDatalakeParquetColumnarStorage,
 			}
 		}
 	}

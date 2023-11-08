@@ -133,48 +133,48 @@ func (o *DestinationMssqlEncryptedTrustServerCertificate) GetSslMethod() *Destin
 type DestinationMssqlSSLMethodType string
 
 const (
-	DestinationMssqlSSLMethodTypeEncryptedTrustServerCertificate DestinationMssqlSSLMethodType = "EncryptedTrustServerCertificate"
-	DestinationMssqlSSLMethodTypeEncryptedVerifyCertificate      DestinationMssqlSSLMethodType = "EncryptedVerifyCertificate"
+	DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedTrustServerCertificate DestinationMssqlSSLMethodType = "destination-mssql_Encrypted (trust server certificate)"
+	DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedVerifyCertificate      DestinationMssqlSSLMethodType = "destination-mssql_Encrypted (verify certificate)"
 )
 
 type DestinationMssqlSSLMethod struct {
-	EncryptedTrustServerCertificate *DestinationMssqlEncryptedTrustServerCertificate
-	EncryptedVerifyCertificate      *DestinationMssqlEncryptedVerifyCertificate
+	DestinationMssqlEncryptedTrustServerCertificate *DestinationMssqlEncryptedTrustServerCertificate
+	DestinationMssqlEncryptedVerifyCertificate      *DestinationMssqlEncryptedVerifyCertificate
 
 	Type DestinationMssqlSSLMethodType
 }
 
-func CreateDestinationMssqlSSLMethodEncryptedTrustServerCertificate(encryptedTrustServerCertificate DestinationMssqlEncryptedTrustServerCertificate) DestinationMssqlSSLMethod {
-	typ := DestinationMssqlSSLMethodTypeEncryptedTrustServerCertificate
+func CreateDestinationMssqlSSLMethodDestinationMssqlEncryptedTrustServerCertificate(destinationMssqlEncryptedTrustServerCertificate DestinationMssqlEncryptedTrustServerCertificate) DestinationMssqlSSLMethod {
+	typ := DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedTrustServerCertificate
 
 	return DestinationMssqlSSLMethod{
-		EncryptedTrustServerCertificate: &encryptedTrustServerCertificate,
-		Type:                            typ,
+		DestinationMssqlEncryptedTrustServerCertificate: &destinationMssqlEncryptedTrustServerCertificate,
+		Type: typ,
 	}
 }
 
-func CreateDestinationMssqlSSLMethodEncryptedVerifyCertificate(encryptedVerifyCertificate DestinationMssqlEncryptedVerifyCertificate) DestinationMssqlSSLMethod {
-	typ := DestinationMssqlSSLMethodTypeEncryptedVerifyCertificate
+func CreateDestinationMssqlSSLMethodDestinationMssqlEncryptedVerifyCertificate(destinationMssqlEncryptedVerifyCertificate DestinationMssqlEncryptedVerifyCertificate) DestinationMssqlSSLMethod {
+	typ := DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedVerifyCertificate
 
 	return DestinationMssqlSSLMethod{
-		EncryptedVerifyCertificate: &encryptedVerifyCertificate,
-		Type:                       typ,
+		DestinationMssqlEncryptedVerifyCertificate: &destinationMssqlEncryptedVerifyCertificate,
+		Type: typ,
 	}
 }
 
 func (u *DestinationMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 
-	encryptedTrustServerCertificate := new(DestinationMssqlEncryptedTrustServerCertificate)
-	if err := utils.UnmarshalJSON(data, &encryptedTrustServerCertificate, "", true, true); err == nil {
-		u.EncryptedTrustServerCertificate = encryptedTrustServerCertificate
-		u.Type = DestinationMssqlSSLMethodTypeEncryptedTrustServerCertificate
+	destinationMssqlEncryptedTrustServerCertificate := new(DestinationMssqlEncryptedTrustServerCertificate)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlEncryptedTrustServerCertificate, "", true, true); err == nil {
+		u.DestinationMssqlEncryptedTrustServerCertificate = destinationMssqlEncryptedTrustServerCertificate
+		u.Type = DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedTrustServerCertificate
 		return nil
 	}
 
-	encryptedVerifyCertificate := new(DestinationMssqlEncryptedVerifyCertificate)
-	if err := utils.UnmarshalJSON(data, &encryptedVerifyCertificate, "", true, true); err == nil {
-		u.EncryptedVerifyCertificate = encryptedVerifyCertificate
-		u.Type = DestinationMssqlSSLMethodTypeEncryptedVerifyCertificate
+	destinationMssqlEncryptedVerifyCertificate := new(DestinationMssqlEncryptedVerifyCertificate)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlEncryptedVerifyCertificate, "", true, true); err == nil {
+		u.DestinationMssqlEncryptedVerifyCertificate = destinationMssqlEncryptedVerifyCertificate
+		u.Type = DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedVerifyCertificate
 		return nil
 	}
 
@@ -182,12 +182,12 @@ func (u *DestinationMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMssqlSSLMethod) MarshalJSON() ([]byte, error) {
-	if u.EncryptedTrustServerCertificate != nil {
-		return utils.MarshalJSON(u.EncryptedTrustServerCertificate, "", true)
+	if u.DestinationMssqlEncryptedTrustServerCertificate != nil {
+		return utils.MarshalJSON(u.DestinationMssqlEncryptedTrustServerCertificate, "", true)
 	}
 
-	if u.EncryptedVerifyCertificate != nil {
-		return utils.MarshalJSON(u.EncryptedVerifyCertificate, "", true)
+	if u.DestinationMssqlEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.DestinationMssqlEncryptedVerifyCertificate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -406,66 +406,66 @@ func (o *DestinationMssqlNoTunnel) GetTunnelMethod() DestinationMssqlTunnelMetho
 type DestinationMssqlSSHTunnelMethodType string
 
 const (
-	DestinationMssqlSSHTunnelMethodTypeNoTunnel               DestinationMssqlSSHTunnelMethodType = "NoTunnel"
-	DestinationMssqlSSHTunnelMethodTypeSSHKeyAuthentication   DestinationMssqlSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationMssqlSSHTunnelMethodTypePasswordAuthentication DestinationMssqlSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationMssqlSSHTunnelMethodTypeDestinationMssqlNoTunnel               DestinationMssqlSSHTunnelMethodType = "destination-mssql_No Tunnel"
+	DestinationMssqlSSHTunnelMethodTypeDestinationMssqlSSHKeyAuthentication   DestinationMssqlSSHTunnelMethodType = "destination-mssql_SSH Key Authentication"
+	DestinationMssqlSSHTunnelMethodTypeDestinationMssqlPasswordAuthentication DestinationMssqlSSHTunnelMethodType = "destination-mssql_Password Authentication"
 )
 
 type DestinationMssqlSSHTunnelMethod struct {
-	NoTunnel               *DestinationMssqlNoTunnel
-	SSHKeyAuthentication   *DestinationMssqlSSHKeyAuthentication
-	PasswordAuthentication *DestinationMssqlPasswordAuthentication
+	DestinationMssqlNoTunnel               *DestinationMssqlNoTunnel
+	DestinationMssqlSSHKeyAuthentication   *DestinationMssqlSSHKeyAuthentication
+	DestinationMssqlPasswordAuthentication *DestinationMssqlPasswordAuthentication
 
 	Type DestinationMssqlSSHTunnelMethodType
 }
 
-func CreateDestinationMssqlSSHTunnelMethodNoTunnel(noTunnel DestinationMssqlNoTunnel) DestinationMssqlSSHTunnelMethod {
-	typ := DestinationMssqlSSHTunnelMethodTypeNoTunnel
+func CreateDestinationMssqlSSHTunnelMethodDestinationMssqlNoTunnel(destinationMssqlNoTunnel DestinationMssqlNoTunnel) DestinationMssqlSSHTunnelMethod {
+	typ := DestinationMssqlSSHTunnelMethodTypeDestinationMssqlNoTunnel
 
 	return DestinationMssqlSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationMssqlNoTunnel: &destinationMssqlNoTunnel,
+		Type:                     typ,
 	}
 }
 
-func CreateDestinationMssqlSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationMssqlSSHKeyAuthentication) DestinationMssqlSSHTunnelMethod {
-	typ := DestinationMssqlSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationMssqlSSHTunnelMethodDestinationMssqlSSHKeyAuthentication(destinationMssqlSSHKeyAuthentication DestinationMssqlSSHKeyAuthentication) DestinationMssqlSSHTunnelMethod {
+	typ := DestinationMssqlSSHTunnelMethodTypeDestinationMssqlSSHKeyAuthentication
 
 	return DestinationMssqlSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationMssqlSSHKeyAuthentication: &destinationMssqlSSHKeyAuthentication,
+		Type:                                 typ,
 	}
 }
 
-func CreateDestinationMssqlSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationMssqlPasswordAuthentication) DestinationMssqlSSHTunnelMethod {
-	typ := DestinationMssqlSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationMssqlSSHTunnelMethodDestinationMssqlPasswordAuthentication(destinationMssqlPasswordAuthentication DestinationMssqlPasswordAuthentication) DestinationMssqlSSHTunnelMethod {
+	typ := DestinationMssqlSSHTunnelMethodTypeDestinationMssqlPasswordAuthentication
 
 	return DestinationMssqlSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationMssqlPasswordAuthentication: &destinationMssqlPasswordAuthentication,
+		Type:                                   typ,
 	}
 }
 
 func (u *DestinationMssqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationMssqlNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationMssqlSSHTunnelMethodTypeNoTunnel
+	destinationMssqlNoTunnel := new(DestinationMssqlNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlNoTunnel, "", true, true); err == nil {
+		u.DestinationMssqlNoTunnel = destinationMssqlNoTunnel
+		u.Type = DestinationMssqlSSHTunnelMethodTypeDestinationMssqlNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationMssqlSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationMssqlSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationMssqlSSHKeyAuthentication := new(DestinationMssqlSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMssqlSSHKeyAuthentication = destinationMssqlSSHKeyAuthentication
+		u.Type = DestinationMssqlSSHTunnelMethodTypeDestinationMssqlSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationMssqlPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationMssqlSSHTunnelMethodTypePasswordAuthentication
+	destinationMssqlPasswordAuthentication := new(DestinationMssqlPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMssqlPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMssqlPasswordAuthentication = destinationMssqlPasswordAuthentication
+		u.Type = DestinationMssqlSSHTunnelMethodTypeDestinationMssqlPasswordAuthentication
 		return nil
 	}
 
@@ -473,16 +473,16 @@ func (u *DestinationMssqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMssqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationMssqlNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMssqlNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationMssqlSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMssqlSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationMssqlPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMssqlPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

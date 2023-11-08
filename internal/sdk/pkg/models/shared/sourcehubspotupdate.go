@@ -141,23 +141,23 @@ func (o *SourceHubspotUpdateOAuth) GetRefreshToken() string {
 type SourceHubspotUpdateAuthenticationType string
 
 const (
-	SourceHubspotUpdateAuthenticationTypeOAuth      SourceHubspotUpdateAuthenticationType = "OAuth"
-	SourceHubspotUpdateAuthenticationTypePrivateApp SourceHubspotUpdateAuthenticationType = "PrivateApp"
+	SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateOAuth SourceHubspotUpdateAuthenticationType = "source-hubspot-update_OAuth"
+	SourceHubspotUpdateAuthenticationTypePrivateApp               SourceHubspotUpdateAuthenticationType = "Private App"
 )
 
 type SourceHubspotUpdateAuthentication struct {
-	OAuth      *SourceHubspotUpdateOAuth
-	PrivateApp *PrivateApp
+	SourceHubspotUpdateOAuth *SourceHubspotUpdateOAuth
+	PrivateApp               *PrivateApp
 
 	Type SourceHubspotUpdateAuthenticationType
 }
 
-func CreateSourceHubspotUpdateAuthenticationOAuth(oAuth SourceHubspotUpdateOAuth) SourceHubspotUpdateAuthentication {
-	typ := SourceHubspotUpdateAuthenticationTypeOAuth
+func CreateSourceHubspotUpdateAuthenticationSourceHubspotUpdateOAuth(sourceHubspotUpdateOAuth SourceHubspotUpdateOAuth) SourceHubspotUpdateAuthentication {
+	typ := SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateOAuth
 
 	return SourceHubspotUpdateAuthentication{
-		OAuth: &oAuth,
-		Type:  typ,
+		SourceHubspotUpdateOAuth: &sourceHubspotUpdateOAuth,
+		Type:                     typ,
 	}
 }
 
@@ -179,10 +179,10 @@ func (u *SourceHubspotUpdateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	oAuth := new(SourceHubspotUpdateOAuth)
-	if err := utils.UnmarshalJSON(data, &oAuth, "", true, true); err == nil {
-		u.OAuth = oAuth
-		u.Type = SourceHubspotUpdateAuthenticationTypeOAuth
+	sourceHubspotUpdateOAuth := new(SourceHubspotUpdateOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceHubspotUpdateOAuth, "", true, true); err == nil {
+		u.SourceHubspotUpdateOAuth = sourceHubspotUpdateOAuth
+		u.Type = SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateOAuth
 		return nil
 	}
 
@@ -190,8 +190,8 @@ func (u *SourceHubspotUpdateAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceHubspotUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth != nil {
-		return utils.MarshalJSON(u.OAuth, "", true)
+	if u.SourceHubspotUpdateOAuth != nil {
+		return utils.MarshalJSON(u.SourceHubspotUpdateOAuth, "", true)
 	}
 
 	if u.PrivateApp != nil {

@@ -259,66 +259,66 @@ func (o *SourcePostgresReadChangesUsingWriteAheadLogCDC) GetReplicationSlot() st
 type SourcePostgresUpdateMethodType string
 
 const (
-	SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC  SourcePostgresUpdateMethodType = "ReadChangesUsingWriteAheadLogCDC"
-	SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn SourcePostgresUpdateMethodType = "DetectChangesWithXminSystemColumn"
-	SourcePostgresUpdateMethodTypeScanChangesWithUserDefinedCursor  SourcePostgresUpdateMethodType = "ScanChangesWithUserDefinedCursor"
+	SourcePostgresUpdateMethodTypeSourcePostgresReadChangesUsingWriteAheadLogCDC  SourcePostgresUpdateMethodType = "source-postgres_Read Changes using Write-Ahead Log (CDC)"
+	SourcePostgresUpdateMethodTypeSourcePostgresDetectChangesWithXminSystemColumn SourcePostgresUpdateMethodType = "source-postgres_Detect Changes with Xmin System Column"
+	SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor  SourcePostgresUpdateMethodType = "source-postgres_Scan Changes with User Defined Cursor"
 )
 
 type SourcePostgresUpdateMethod struct {
-	ReadChangesUsingWriteAheadLogCDC  *SourcePostgresReadChangesUsingWriteAheadLogCDC
-	DetectChangesWithXminSystemColumn *SourcePostgresDetectChangesWithXminSystemColumn
-	ScanChangesWithUserDefinedCursor  *SourcePostgresScanChangesWithUserDefinedCursor
+	SourcePostgresReadChangesUsingWriteAheadLogCDC  *SourcePostgresReadChangesUsingWriteAheadLogCDC
+	SourcePostgresDetectChangesWithXminSystemColumn *SourcePostgresDetectChangesWithXminSystemColumn
+	SourcePostgresScanChangesWithUserDefinedCursor  *SourcePostgresScanChangesWithUserDefinedCursor
 
 	Type SourcePostgresUpdateMethodType
 }
 
-func CreateSourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC(readChangesUsingWriteAheadLogCDC SourcePostgresReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateMethod {
-	typ := SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
+func CreateSourcePostgresUpdateMethodSourcePostgresReadChangesUsingWriteAheadLogCDC(sourcePostgresReadChangesUsingWriteAheadLogCDC SourcePostgresReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateMethod {
+	typ := SourcePostgresUpdateMethodTypeSourcePostgresReadChangesUsingWriteAheadLogCDC
 
 	return SourcePostgresUpdateMethod{
-		ReadChangesUsingWriteAheadLogCDC: &readChangesUsingWriteAheadLogCDC,
-		Type:                             typ,
+		SourcePostgresReadChangesUsingWriteAheadLogCDC: &sourcePostgresReadChangesUsingWriteAheadLogCDC,
+		Type: typ,
 	}
 }
 
-func CreateSourcePostgresUpdateMethodDetectChangesWithXminSystemColumn(detectChangesWithXminSystemColumn SourcePostgresDetectChangesWithXminSystemColumn) SourcePostgresUpdateMethod {
-	typ := SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn
+func CreateSourcePostgresUpdateMethodSourcePostgresDetectChangesWithXminSystemColumn(sourcePostgresDetectChangesWithXminSystemColumn SourcePostgresDetectChangesWithXminSystemColumn) SourcePostgresUpdateMethod {
+	typ := SourcePostgresUpdateMethodTypeSourcePostgresDetectChangesWithXminSystemColumn
 
 	return SourcePostgresUpdateMethod{
-		DetectChangesWithXminSystemColumn: &detectChangesWithXminSystemColumn,
-		Type:                              typ,
+		SourcePostgresDetectChangesWithXminSystemColumn: &sourcePostgresDetectChangesWithXminSystemColumn,
+		Type: typ,
 	}
 }
 
-func CreateSourcePostgresUpdateMethodScanChangesWithUserDefinedCursor(scanChangesWithUserDefinedCursor SourcePostgresScanChangesWithUserDefinedCursor) SourcePostgresUpdateMethod {
-	typ := SourcePostgresUpdateMethodTypeScanChangesWithUserDefinedCursor
+func CreateSourcePostgresUpdateMethodSourcePostgresScanChangesWithUserDefinedCursor(sourcePostgresScanChangesWithUserDefinedCursor SourcePostgresScanChangesWithUserDefinedCursor) SourcePostgresUpdateMethod {
+	typ := SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor
 
 	return SourcePostgresUpdateMethod{
-		ScanChangesWithUserDefinedCursor: &scanChangesWithUserDefinedCursor,
-		Type:                             typ,
+		SourcePostgresScanChangesWithUserDefinedCursor: &sourcePostgresScanChangesWithUserDefinedCursor,
+		Type: typ,
 	}
 }
 
 func (u *SourcePostgresUpdateMethod) UnmarshalJSON(data []byte) error {
 
-	detectChangesWithXminSystemColumn := new(SourcePostgresDetectChangesWithXminSystemColumn)
-	if err := utils.UnmarshalJSON(data, &detectChangesWithXminSystemColumn, "", true, true); err == nil {
-		u.DetectChangesWithXminSystemColumn = detectChangesWithXminSystemColumn
-		u.Type = SourcePostgresUpdateMethodTypeDetectChangesWithXminSystemColumn
+	sourcePostgresDetectChangesWithXminSystemColumn := new(SourcePostgresDetectChangesWithXminSystemColumn)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresDetectChangesWithXminSystemColumn, "", true, true); err == nil {
+		u.SourcePostgresDetectChangesWithXminSystemColumn = sourcePostgresDetectChangesWithXminSystemColumn
+		u.Type = SourcePostgresUpdateMethodTypeSourcePostgresDetectChangesWithXminSystemColumn
 		return nil
 	}
 
-	scanChangesWithUserDefinedCursor := new(SourcePostgresScanChangesWithUserDefinedCursor)
-	if err := utils.UnmarshalJSON(data, &scanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.ScanChangesWithUserDefinedCursor = scanChangesWithUserDefinedCursor
-		u.Type = SourcePostgresUpdateMethodTypeScanChangesWithUserDefinedCursor
+	sourcePostgresScanChangesWithUserDefinedCursor := new(SourcePostgresScanChangesWithUserDefinedCursor)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourcePostgresScanChangesWithUserDefinedCursor = sourcePostgresScanChangesWithUserDefinedCursor
+		u.Type = SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor
 		return nil
 	}
 
-	readChangesUsingWriteAheadLogCDC := new(SourcePostgresReadChangesUsingWriteAheadLogCDC)
-	if err := utils.UnmarshalJSON(data, &readChangesUsingWriteAheadLogCDC, "", true, true); err == nil {
-		u.ReadChangesUsingWriteAheadLogCDC = readChangesUsingWriteAheadLogCDC
-		u.Type = SourcePostgresUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
+	sourcePostgresReadChangesUsingWriteAheadLogCDC := new(SourcePostgresReadChangesUsingWriteAheadLogCDC)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresReadChangesUsingWriteAheadLogCDC, "", true, true); err == nil {
+		u.SourcePostgresReadChangesUsingWriteAheadLogCDC = sourcePostgresReadChangesUsingWriteAheadLogCDC
+		u.Type = SourcePostgresUpdateMethodTypeSourcePostgresReadChangesUsingWriteAheadLogCDC
 		return nil
 	}
 
@@ -326,16 +326,16 @@ func (u *SourcePostgresUpdateMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePostgresUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.ReadChangesUsingWriteAheadLogCDC != nil {
-		return utils.MarshalJSON(u.ReadChangesUsingWriteAheadLogCDC, "", true)
+	if u.SourcePostgresReadChangesUsingWriteAheadLogCDC != nil {
+		return utils.MarshalJSON(u.SourcePostgresReadChangesUsingWriteAheadLogCDC, "", true)
 	}
 
-	if u.DetectChangesWithXminSystemColumn != nil {
-		return utils.MarshalJSON(u.DetectChangesWithXminSystemColumn, "", true)
+	if u.SourcePostgresDetectChangesWithXminSystemColumn != nil {
+		return utils.MarshalJSON(u.SourcePostgresDetectChangesWithXminSystemColumn, "", true)
 	}
 
-	if u.ScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.ScanChangesWithUserDefinedCursor, "", true)
+	if u.SourcePostgresScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourcePostgresScanChangesWithUserDefinedCursor, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -752,120 +752,120 @@ func (o *SourcePostgresDisable) GetMode() SourcePostgresMode {
 type SourcePostgresSSLModesType string
 
 const (
-	SourcePostgresSSLModesTypeDisable    SourcePostgresSSLModesType = "Disable"
-	SourcePostgresSSLModesTypeAllow      SourcePostgresSSLModesType = "Allow"
-	SourcePostgresSSLModesTypePrefer     SourcePostgresSSLModesType = "Prefer"
-	SourcePostgresSSLModesTypeRequire    SourcePostgresSSLModesType = "Require"
-	SourcePostgresSSLModesTypeVerifyCa   SourcePostgresSSLModesType = "VerifyCa"
-	SourcePostgresSSLModesTypeVerifyFull SourcePostgresSSLModesType = "VerifyFull"
+	SourcePostgresSSLModesTypeSourcePostgresDisable    SourcePostgresSSLModesType = "source-postgres_disable"
+	SourcePostgresSSLModesTypeSourcePostgresAllow      SourcePostgresSSLModesType = "source-postgres_allow"
+	SourcePostgresSSLModesTypeSourcePostgresPrefer     SourcePostgresSSLModesType = "source-postgres_prefer"
+	SourcePostgresSSLModesTypeSourcePostgresRequire    SourcePostgresSSLModesType = "source-postgres_require"
+	SourcePostgresSSLModesTypeSourcePostgresVerifyCa   SourcePostgresSSLModesType = "source-postgres_verify-ca"
+	SourcePostgresSSLModesTypeSourcePostgresVerifyFull SourcePostgresSSLModesType = "source-postgres_verify-full"
 )
 
 type SourcePostgresSSLModes struct {
-	Disable    *SourcePostgresDisable
-	Allow      *SourcePostgresAllow
-	Prefer     *SourcePostgresPrefer
-	Require    *SourcePostgresRequire
-	VerifyCa   *SourcePostgresVerifyCa
-	VerifyFull *SourcePostgresVerifyFull
+	SourcePostgresDisable    *SourcePostgresDisable
+	SourcePostgresAllow      *SourcePostgresAllow
+	SourcePostgresPrefer     *SourcePostgresPrefer
+	SourcePostgresRequire    *SourcePostgresRequire
+	SourcePostgresVerifyCa   *SourcePostgresVerifyCa
+	SourcePostgresVerifyFull *SourcePostgresVerifyFull
 
 	Type SourcePostgresSSLModesType
 }
 
-func CreateSourcePostgresSSLModesDisable(disable SourcePostgresDisable) SourcePostgresSSLModes {
-	typ := SourcePostgresSSLModesTypeDisable
+func CreateSourcePostgresSSLModesSourcePostgresDisable(sourcePostgresDisable SourcePostgresDisable) SourcePostgresSSLModes {
+	typ := SourcePostgresSSLModesTypeSourcePostgresDisable
 
 	return SourcePostgresSSLModes{
-		Disable: &disable,
-		Type:    typ,
+		SourcePostgresDisable: &sourcePostgresDisable,
+		Type:                  typ,
 	}
 }
 
-func CreateSourcePostgresSSLModesAllow(allow SourcePostgresAllow) SourcePostgresSSLModes {
-	typ := SourcePostgresSSLModesTypeAllow
+func CreateSourcePostgresSSLModesSourcePostgresAllow(sourcePostgresAllow SourcePostgresAllow) SourcePostgresSSLModes {
+	typ := SourcePostgresSSLModesTypeSourcePostgresAllow
 
 	return SourcePostgresSSLModes{
-		Allow: &allow,
-		Type:  typ,
+		SourcePostgresAllow: &sourcePostgresAllow,
+		Type:                typ,
 	}
 }
 
-func CreateSourcePostgresSSLModesPrefer(prefer SourcePostgresPrefer) SourcePostgresSSLModes {
-	typ := SourcePostgresSSLModesTypePrefer
+func CreateSourcePostgresSSLModesSourcePostgresPrefer(sourcePostgresPrefer SourcePostgresPrefer) SourcePostgresSSLModes {
+	typ := SourcePostgresSSLModesTypeSourcePostgresPrefer
 
 	return SourcePostgresSSLModes{
-		Prefer: &prefer,
-		Type:   typ,
+		SourcePostgresPrefer: &sourcePostgresPrefer,
+		Type:                 typ,
 	}
 }
 
-func CreateSourcePostgresSSLModesRequire(require SourcePostgresRequire) SourcePostgresSSLModes {
-	typ := SourcePostgresSSLModesTypeRequire
+func CreateSourcePostgresSSLModesSourcePostgresRequire(sourcePostgresRequire SourcePostgresRequire) SourcePostgresSSLModes {
+	typ := SourcePostgresSSLModesTypeSourcePostgresRequire
 
 	return SourcePostgresSSLModes{
-		Require: &require,
-		Type:    typ,
+		SourcePostgresRequire: &sourcePostgresRequire,
+		Type:                  typ,
 	}
 }
 
-func CreateSourcePostgresSSLModesVerifyCa(verifyCa SourcePostgresVerifyCa) SourcePostgresSSLModes {
-	typ := SourcePostgresSSLModesTypeVerifyCa
+func CreateSourcePostgresSSLModesSourcePostgresVerifyCa(sourcePostgresVerifyCa SourcePostgresVerifyCa) SourcePostgresSSLModes {
+	typ := SourcePostgresSSLModesTypeSourcePostgresVerifyCa
 
 	return SourcePostgresSSLModes{
-		VerifyCa: &verifyCa,
-		Type:     typ,
+		SourcePostgresVerifyCa: &sourcePostgresVerifyCa,
+		Type:                   typ,
 	}
 }
 
-func CreateSourcePostgresSSLModesVerifyFull(verifyFull SourcePostgresVerifyFull) SourcePostgresSSLModes {
-	typ := SourcePostgresSSLModesTypeVerifyFull
+func CreateSourcePostgresSSLModesSourcePostgresVerifyFull(sourcePostgresVerifyFull SourcePostgresVerifyFull) SourcePostgresSSLModes {
+	typ := SourcePostgresSSLModesTypeSourcePostgresVerifyFull
 
 	return SourcePostgresSSLModes{
-		VerifyFull: &verifyFull,
-		Type:       typ,
+		SourcePostgresVerifyFull: &sourcePostgresVerifyFull,
+		Type:                     typ,
 	}
 }
 
 func (u *SourcePostgresSSLModes) UnmarshalJSON(data []byte) error {
 
-	disable := new(SourcePostgresDisable)
-	if err := utils.UnmarshalJSON(data, &disable, "", true, true); err == nil {
-		u.Disable = disable
-		u.Type = SourcePostgresSSLModesTypeDisable
+	sourcePostgresDisable := new(SourcePostgresDisable)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresDisable, "", true, true); err == nil {
+		u.SourcePostgresDisable = sourcePostgresDisable
+		u.Type = SourcePostgresSSLModesTypeSourcePostgresDisable
 		return nil
 	}
 
-	allow := new(SourcePostgresAllow)
-	if err := utils.UnmarshalJSON(data, &allow, "", true, true); err == nil {
-		u.Allow = allow
-		u.Type = SourcePostgresSSLModesTypeAllow
+	sourcePostgresAllow := new(SourcePostgresAllow)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresAllow, "", true, true); err == nil {
+		u.SourcePostgresAllow = sourcePostgresAllow
+		u.Type = SourcePostgresSSLModesTypeSourcePostgresAllow
 		return nil
 	}
 
-	prefer := new(SourcePostgresPrefer)
-	if err := utils.UnmarshalJSON(data, &prefer, "", true, true); err == nil {
-		u.Prefer = prefer
-		u.Type = SourcePostgresSSLModesTypePrefer
+	sourcePostgresPrefer := new(SourcePostgresPrefer)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresPrefer, "", true, true); err == nil {
+		u.SourcePostgresPrefer = sourcePostgresPrefer
+		u.Type = SourcePostgresSSLModesTypeSourcePostgresPrefer
 		return nil
 	}
 
-	require := new(SourcePostgresRequire)
-	if err := utils.UnmarshalJSON(data, &require, "", true, true); err == nil {
-		u.Require = require
-		u.Type = SourcePostgresSSLModesTypeRequire
+	sourcePostgresRequire := new(SourcePostgresRequire)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresRequire, "", true, true); err == nil {
+		u.SourcePostgresRequire = sourcePostgresRequire
+		u.Type = SourcePostgresSSLModesTypeSourcePostgresRequire
 		return nil
 	}
 
-	verifyCa := new(SourcePostgresVerifyCa)
-	if err := utils.UnmarshalJSON(data, &verifyCa, "", true, true); err == nil {
-		u.VerifyCa = verifyCa
-		u.Type = SourcePostgresSSLModesTypeVerifyCa
+	sourcePostgresVerifyCa := new(SourcePostgresVerifyCa)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresVerifyCa, "", true, true); err == nil {
+		u.SourcePostgresVerifyCa = sourcePostgresVerifyCa
+		u.Type = SourcePostgresSSLModesTypeSourcePostgresVerifyCa
 		return nil
 	}
 
-	verifyFull := new(SourcePostgresVerifyFull)
-	if err := utils.UnmarshalJSON(data, &verifyFull, "", true, true); err == nil {
-		u.VerifyFull = verifyFull
-		u.Type = SourcePostgresSSLModesTypeVerifyFull
+	sourcePostgresVerifyFull := new(SourcePostgresVerifyFull)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresVerifyFull, "", true, true); err == nil {
+		u.SourcePostgresVerifyFull = sourcePostgresVerifyFull
+		u.Type = SourcePostgresSSLModesTypeSourcePostgresVerifyFull
 		return nil
 	}
 
@@ -873,28 +873,28 @@ func (u *SourcePostgresSSLModes) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePostgresSSLModes) MarshalJSON() ([]byte, error) {
-	if u.Disable != nil {
-		return utils.MarshalJSON(u.Disable, "", true)
+	if u.SourcePostgresDisable != nil {
+		return utils.MarshalJSON(u.SourcePostgresDisable, "", true)
 	}
 
-	if u.Allow != nil {
-		return utils.MarshalJSON(u.Allow, "", true)
+	if u.SourcePostgresAllow != nil {
+		return utils.MarshalJSON(u.SourcePostgresAllow, "", true)
 	}
 
-	if u.Prefer != nil {
-		return utils.MarshalJSON(u.Prefer, "", true)
+	if u.SourcePostgresPrefer != nil {
+		return utils.MarshalJSON(u.SourcePostgresPrefer, "", true)
 	}
 
-	if u.Require != nil {
-		return utils.MarshalJSON(u.Require, "", true)
+	if u.SourcePostgresRequire != nil {
+		return utils.MarshalJSON(u.SourcePostgresRequire, "", true)
 	}
 
-	if u.VerifyCa != nil {
-		return utils.MarshalJSON(u.VerifyCa, "", true)
+	if u.SourcePostgresVerifyCa != nil {
+		return utils.MarshalJSON(u.SourcePostgresVerifyCa, "", true)
 	}
 
-	if u.VerifyFull != nil {
-		return utils.MarshalJSON(u.VerifyFull, "", true)
+	if u.SourcePostgresVerifyFull != nil {
+		return utils.MarshalJSON(u.SourcePostgresVerifyFull, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1113,66 +1113,66 @@ func (o *SourcePostgresNoTunnel) GetTunnelMethod() SourcePostgresTunnelMethod {
 type SourcePostgresSSHTunnelMethodType string
 
 const (
-	SourcePostgresSSHTunnelMethodTypeNoTunnel               SourcePostgresSSHTunnelMethodType = "NoTunnel"
-	SourcePostgresSSHTunnelMethodTypeSSHKeyAuthentication   SourcePostgresSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourcePostgresSSHTunnelMethodTypePasswordAuthentication SourcePostgresSSHTunnelMethodType = "PasswordAuthentication"
+	SourcePostgresSSHTunnelMethodTypeSourcePostgresNoTunnel               SourcePostgresSSHTunnelMethodType = "source-postgres_No Tunnel"
+	SourcePostgresSSHTunnelMethodTypeSourcePostgresSSHKeyAuthentication   SourcePostgresSSHTunnelMethodType = "source-postgres_SSH Key Authentication"
+	SourcePostgresSSHTunnelMethodTypeSourcePostgresPasswordAuthentication SourcePostgresSSHTunnelMethodType = "source-postgres_Password Authentication"
 )
 
 type SourcePostgresSSHTunnelMethod struct {
-	NoTunnel               *SourcePostgresNoTunnel
-	SSHKeyAuthentication   *SourcePostgresSSHKeyAuthentication
-	PasswordAuthentication *SourcePostgresPasswordAuthentication
+	SourcePostgresNoTunnel               *SourcePostgresNoTunnel
+	SourcePostgresSSHKeyAuthentication   *SourcePostgresSSHKeyAuthentication
+	SourcePostgresPasswordAuthentication *SourcePostgresPasswordAuthentication
 
 	Type SourcePostgresSSHTunnelMethodType
 }
 
-func CreateSourcePostgresSSHTunnelMethodNoTunnel(noTunnel SourcePostgresNoTunnel) SourcePostgresSSHTunnelMethod {
-	typ := SourcePostgresSSHTunnelMethodTypeNoTunnel
+func CreateSourcePostgresSSHTunnelMethodSourcePostgresNoTunnel(sourcePostgresNoTunnel SourcePostgresNoTunnel) SourcePostgresSSHTunnelMethod {
+	typ := SourcePostgresSSHTunnelMethodTypeSourcePostgresNoTunnel
 
 	return SourcePostgresSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
-	}
-}
-
-func CreateSourcePostgresSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourcePostgresSSHKeyAuthentication) SourcePostgresSSHTunnelMethod {
-	typ := SourcePostgresSSHTunnelMethodTypeSSHKeyAuthentication
-
-	return SourcePostgresSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
-	}
-}
-
-func CreateSourcePostgresSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourcePostgresPasswordAuthentication) SourcePostgresSSHTunnelMethod {
-	typ := SourcePostgresSSHTunnelMethodTypePasswordAuthentication
-
-	return SourcePostgresSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
+		SourcePostgresNoTunnel: &sourcePostgresNoTunnel,
 		Type:                   typ,
+	}
+}
+
+func CreateSourcePostgresSSHTunnelMethodSourcePostgresSSHKeyAuthentication(sourcePostgresSSHKeyAuthentication SourcePostgresSSHKeyAuthentication) SourcePostgresSSHTunnelMethod {
+	typ := SourcePostgresSSHTunnelMethodTypeSourcePostgresSSHKeyAuthentication
+
+	return SourcePostgresSSHTunnelMethod{
+		SourcePostgresSSHKeyAuthentication: &sourcePostgresSSHKeyAuthentication,
+		Type:                               typ,
+	}
+}
+
+func CreateSourcePostgresSSHTunnelMethodSourcePostgresPasswordAuthentication(sourcePostgresPasswordAuthentication SourcePostgresPasswordAuthentication) SourcePostgresSSHTunnelMethod {
+	typ := SourcePostgresSSHTunnelMethodTypeSourcePostgresPasswordAuthentication
+
+	return SourcePostgresSSHTunnelMethod{
+		SourcePostgresPasswordAuthentication: &sourcePostgresPasswordAuthentication,
+		Type:                                 typ,
 	}
 }
 
 func (u *SourcePostgresSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourcePostgresNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourcePostgresSSHTunnelMethodTypeNoTunnel
+	sourcePostgresNoTunnel := new(SourcePostgresNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresNoTunnel, "", true, true); err == nil {
+		u.SourcePostgresNoTunnel = sourcePostgresNoTunnel
+		u.Type = SourcePostgresSSHTunnelMethodTypeSourcePostgresNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourcePostgresSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourcePostgresSSHTunnelMethodTypeSSHKeyAuthentication
+	sourcePostgresSSHKeyAuthentication := new(SourcePostgresSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourcePostgresSSHKeyAuthentication = sourcePostgresSSHKeyAuthentication
+		u.Type = SourcePostgresSSHTunnelMethodTypeSourcePostgresSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourcePostgresPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourcePostgresSSHTunnelMethodTypePasswordAuthentication
+	sourcePostgresPasswordAuthentication := new(SourcePostgresPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresPasswordAuthentication, "", true, true); err == nil {
+		u.SourcePostgresPasswordAuthentication = sourcePostgresPasswordAuthentication
+		u.Type = SourcePostgresSSHTunnelMethodTypeSourcePostgresPasswordAuthentication
 		return nil
 	}
 
@@ -1180,16 +1180,16 @@ func (u *SourcePostgresSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePostgresSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourcePostgresNoTunnel != nil {
+		return utils.MarshalJSON(u.SourcePostgresNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourcePostgresSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourcePostgresSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourcePostgresPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourcePostgresPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

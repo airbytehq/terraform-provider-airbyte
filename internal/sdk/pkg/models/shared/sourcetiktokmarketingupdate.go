@@ -155,23 +155,23 @@ func (o *SourceTiktokMarketingUpdateOAuth20) GetSecret() string {
 type SourceTiktokMarketingUpdateAuthenticationMethodType string
 
 const (
-	SourceTiktokMarketingUpdateAuthenticationMethodTypeOAuth20            SourceTiktokMarketingUpdateAuthenticationMethodType = "OAuth20"
-	SourceTiktokMarketingUpdateAuthenticationMethodTypeSandboxAccessToken SourceTiktokMarketingUpdateAuthenticationMethodType = "SandboxAccessToken"
+	SourceTiktokMarketingUpdateAuthenticationMethodTypeSourceTiktokMarketingUpdateOAuth20 SourceTiktokMarketingUpdateAuthenticationMethodType = "source-tiktok-marketing-update_OAuth2.0"
+	SourceTiktokMarketingUpdateAuthenticationMethodTypeSandboxAccessToken                 SourceTiktokMarketingUpdateAuthenticationMethodType = "Sandbox Access Token"
 )
 
 type SourceTiktokMarketingUpdateAuthenticationMethod struct {
-	OAuth20            *SourceTiktokMarketingUpdateOAuth20
-	SandboxAccessToken *SandboxAccessToken
+	SourceTiktokMarketingUpdateOAuth20 *SourceTiktokMarketingUpdateOAuth20
+	SandboxAccessToken                 *SandboxAccessToken
 
 	Type SourceTiktokMarketingUpdateAuthenticationMethodType
 }
 
-func CreateSourceTiktokMarketingUpdateAuthenticationMethodOAuth20(oAuth20 SourceTiktokMarketingUpdateOAuth20) SourceTiktokMarketingUpdateAuthenticationMethod {
-	typ := SourceTiktokMarketingUpdateAuthenticationMethodTypeOAuth20
+func CreateSourceTiktokMarketingUpdateAuthenticationMethodSourceTiktokMarketingUpdateOAuth20(sourceTiktokMarketingUpdateOAuth20 SourceTiktokMarketingUpdateOAuth20) SourceTiktokMarketingUpdateAuthenticationMethod {
+	typ := SourceTiktokMarketingUpdateAuthenticationMethodTypeSourceTiktokMarketingUpdateOAuth20
 
 	return SourceTiktokMarketingUpdateAuthenticationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceTiktokMarketingUpdateOAuth20: &sourceTiktokMarketingUpdateOAuth20,
+		Type:                               typ,
 	}
 }
 
@@ -193,10 +193,10 @@ func (u *SourceTiktokMarketingUpdateAuthenticationMethod) UnmarshalJSON(data []b
 		return nil
 	}
 
-	oAuth20 := new(SourceTiktokMarketingUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceTiktokMarketingUpdateAuthenticationMethodTypeOAuth20
+	sourceTiktokMarketingUpdateOAuth20 := new(SourceTiktokMarketingUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceTiktokMarketingUpdateOAuth20, "", true, true); err == nil {
+		u.SourceTiktokMarketingUpdateOAuth20 = sourceTiktokMarketingUpdateOAuth20
+		u.Type = SourceTiktokMarketingUpdateAuthenticationMethodTypeSourceTiktokMarketingUpdateOAuth20
 		return nil
 	}
 
@@ -204,8 +204,8 @@ func (u *SourceTiktokMarketingUpdateAuthenticationMethod) UnmarshalJSON(data []b
 }
 
 func (u SourceTiktokMarketingUpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceTiktokMarketingUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceTiktokMarketingUpdateOAuth20, "", true)
 	}
 
 	if u.SandboxAccessToken != nil {

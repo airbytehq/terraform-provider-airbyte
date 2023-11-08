@@ -137,48 +137,48 @@ func (o *SourceSlackSignInViaSlackOAuth) GetOptionTitle() SourceSlackOptionTitle
 type SourceSlackAuthenticationMechanismType string
 
 const (
-	SourceSlackAuthenticationMechanismTypeSignInViaSlackOAuth SourceSlackAuthenticationMechanismType = "SignInViaSlackOAuth"
-	SourceSlackAuthenticationMechanismTypeAPIToken            SourceSlackAuthenticationMechanismType = "APIToken"
+	SourceSlackAuthenticationMechanismTypeSourceSlackSignInViaSlackOAuth SourceSlackAuthenticationMechanismType = "source-slack_Sign in via Slack (OAuth)"
+	SourceSlackAuthenticationMechanismTypeSourceSlackAPIToken            SourceSlackAuthenticationMechanismType = "source-slack_API Token"
 )
 
 type SourceSlackAuthenticationMechanism struct {
-	SignInViaSlackOAuth *SourceSlackSignInViaSlackOAuth
-	APIToken            *SourceSlackAPIToken
+	SourceSlackSignInViaSlackOAuth *SourceSlackSignInViaSlackOAuth
+	SourceSlackAPIToken            *SourceSlackAPIToken
 
 	Type SourceSlackAuthenticationMechanismType
 }
 
-func CreateSourceSlackAuthenticationMechanismSignInViaSlackOAuth(signInViaSlackOAuth SourceSlackSignInViaSlackOAuth) SourceSlackAuthenticationMechanism {
-	typ := SourceSlackAuthenticationMechanismTypeSignInViaSlackOAuth
+func CreateSourceSlackAuthenticationMechanismSourceSlackSignInViaSlackOAuth(sourceSlackSignInViaSlackOAuth SourceSlackSignInViaSlackOAuth) SourceSlackAuthenticationMechanism {
+	typ := SourceSlackAuthenticationMechanismTypeSourceSlackSignInViaSlackOAuth
 
 	return SourceSlackAuthenticationMechanism{
-		SignInViaSlackOAuth: &signInViaSlackOAuth,
-		Type:                typ,
+		SourceSlackSignInViaSlackOAuth: &sourceSlackSignInViaSlackOAuth,
+		Type:                           typ,
 	}
 }
 
-func CreateSourceSlackAuthenticationMechanismAPIToken(apiToken SourceSlackAPIToken) SourceSlackAuthenticationMechanism {
-	typ := SourceSlackAuthenticationMechanismTypeAPIToken
+func CreateSourceSlackAuthenticationMechanismSourceSlackAPIToken(sourceSlackAPIToken SourceSlackAPIToken) SourceSlackAuthenticationMechanism {
+	typ := SourceSlackAuthenticationMechanismTypeSourceSlackAPIToken
 
 	return SourceSlackAuthenticationMechanism{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceSlackAPIToken: &sourceSlackAPIToken,
+		Type:                typ,
 	}
 }
 
 func (u *SourceSlackAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceSlackAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceSlackAuthenticationMechanismTypeAPIToken
+	sourceSlackAPIToken := new(SourceSlackAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceSlackAPIToken, "", true, true); err == nil {
+		u.SourceSlackAPIToken = sourceSlackAPIToken
+		u.Type = SourceSlackAuthenticationMechanismTypeSourceSlackAPIToken
 		return nil
 	}
 
-	signInViaSlackOAuth := new(SourceSlackSignInViaSlackOAuth)
-	if err := utils.UnmarshalJSON(data, &signInViaSlackOAuth, "", true, true); err == nil {
-		u.SignInViaSlackOAuth = signInViaSlackOAuth
-		u.Type = SourceSlackAuthenticationMechanismTypeSignInViaSlackOAuth
+	sourceSlackSignInViaSlackOAuth := new(SourceSlackSignInViaSlackOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceSlackSignInViaSlackOAuth, "", true, true); err == nil {
+		u.SourceSlackSignInViaSlackOAuth = sourceSlackSignInViaSlackOAuth
+		u.Type = SourceSlackAuthenticationMechanismTypeSourceSlackSignInViaSlackOAuth
 		return nil
 	}
 
@@ -186,12 +186,12 @@ func (u *SourceSlackAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceSlackAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SignInViaSlackOAuth != nil {
-		return utils.MarshalJSON(u.SignInViaSlackOAuth, "", true)
+	if u.SourceSlackSignInViaSlackOAuth != nil {
+		return utils.MarshalJSON(u.SourceSlackSignInViaSlackOAuth, "", true)
 	}
 
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceSlackAPIToken != nil {
+		return utils.MarshalJSON(u.SourceSlackAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

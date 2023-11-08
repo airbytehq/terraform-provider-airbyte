@@ -136,48 +136,48 @@ func (o *SourceLeverHiringAuthenticateViaLeverOAuth) GetRefreshToken() string {
 type SourceLeverHiringAuthenticationMechanismType string
 
 const (
-	SourceLeverHiringAuthenticationMechanismTypeAuthenticateViaLeverOAuth  SourceLeverHiringAuthenticationMechanismType = "AuthenticateViaLeverOAuth"
-	SourceLeverHiringAuthenticationMechanismTypeAuthenticateViaLeverAPIKey SourceLeverHiringAuthenticationMechanismType = "AuthenticateViaLeverAPIKey"
+	SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverOAuth  SourceLeverHiringAuthenticationMechanismType = "source-lever-hiring_Authenticate via Lever (OAuth)"
+	SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverAPIKey SourceLeverHiringAuthenticationMechanismType = "source-lever-hiring_Authenticate via Lever (Api Key)"
 )
 
 type SourceLeverHiringAuthenticationMechanism struct {
-	AuthenticateViaLeverOAuth  *SourceLeverHiringAuthenticateViaLeverOAuth
-	AuthenticateViaLeverAPIKey *SourceLeverHiringAuthenticateViaLeverAPIKey
+	SourceLeverHiringAuthenticateViaLeverOAuth  *SourceLeverHiringAuthenticateViaLeverOAuth
+	SourceLeverHiringAuthenticateViaLeverAPIKey *SourceLeverHiringAuthenticateViaLeverAPIKey
 
 	Type SourceLeverHiringAuthenticationMechanismType
 }
 
-func CreateSourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth(authenticateViaLeverOAuth SourceLeverHiringAuthenticateViaLeverOAuth) SourceLeverHiringAuthenticationMechanism {
-	typ := SourceLeverHiringAuthenticationMechanismTypeAuthenticateViaLeverOAuth
+func CreateSourceLeverHiringAuthenticationMechanismSourceLeverHiringAuthenticateViaLeverOAuth(sourceLeverHiringAuthenticateViaLeverOAuth SourceLeverHiringAuthenticateViaLeverOAuth) SourceLeverHiringAuthenticationMechanism {
+	typ := SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverOAuth
 
 	return SourceLeverHiringAuthenticationMechanism{
-		AuthenticateViaLeverOAuth: &authenticateViaLeverOAuth,
-		Type:                      typ,
+		SourceLeverHiringAuthenticateViaLeverOAuth: &sourceLeverHiringAuthenticateViaLeverOAuth,
+		Type: typ,
 	}
 }
 
-func CreateSourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey(authenticateViaLeverAPIKey SourceLeverHiringAuthenticateViaLeverAPIKey) SourceLeverHiringAuthenticationMechanism {
-	typ := SourceLeverHiringAuthenticationMechanismTypeAuthenticateViaLeverAPIKey
+func CreateSourceLeverHiringAuthenticationMechanismSourceLeverHiringAuthenticateViaLeverAPIKey(sourceLeverHiringAuthenticateViaLeverAPIKey SourceLeverHiringAuthenticateViaLeverAPIKey) SourceLeverHiringAuthenticationMechanism {
+	typ := SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverAPIKey
 
 	return SourceLeverHiringAuthenticationMechanism{
-		AuthenticateViaLeverAPIKey: &authenticateViaLeverAPIKey,
-		Type:                       typ,
+		SourceLeverHiringAuthenticateViaLeverAPIKey: &sourceLeverHiringAuthenticateViaLeverAPIKey,
+		Type: typ,
 	}
 }
 
 func (u *SourceLeverHiringAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	authenticateViaLeverAPIKey := new(SourceLeverHiringAuthenticateViaLeverAPIKey)
-	if err := utils.UnmarshalJSON(data, &authenticateViaLeverAPIKey, "", true, true); err == nil {
-		u.AuthenticateViaLeverAPIKey = authenticateViaLeverAPIKey
-		u.Type = SourceLeverHiringAuthenticationMechanismTypeAuthenticateViaLeverAPIKey
+	sourceLeverHiringAuthenticateViaLeverAPIKey := new(SourceLeverHiringAuthenticateViaLeverAPIKey)
+	if err := utils.UnmarshalJSON(data, &sourceLeverHiringAuthenticateViaLeverAPIKey, "", true, true); err == nil {
+		u.SourceLeverHiringAuthenticateViaLeverAPIKey = sourceLeverHiringAuthenticateViaLeverAPIKey
+		u.Type = SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverAPIKey
 		return nil
 	}
 
-	authenticateViaLeverOAuth := new(SourceLeverHiringAuthenticateViaLeverOAuth)
-	if err := utils.UnmarshalJSON(data, &authenticateViaLeverOAuth, "", true, true); err == nil {
-		u.AuthenticateViaLeverOAuth = authenticateViaLeverOAuth
-		u.Type = SourceLeverHiringAuthenticationMechanismTypeAuthenticateViaLeverOAuth
+	sourceLeverHiringAuthenticateViaLeverOAuth := new(SourceLeverHiringAuthenticateViaLeverOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceLeverHiringAuthenticateViaLeverOAuth, "", true, true); err == nil {
+		u.SourceLeverHiringAuthenticateViaLeverOAuth = sourceLeverHiringAuthenticateViaLeverOAuth
+		u.Type = SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverOAuth
 		return nil
 	}
 
@@ -185,12 +185,12 @@ func (u *SourceLeverHiringAuthenticationMechanism) UnmarshalJSON(data []byte) er
 }
 
 func (u SourceLeverHiringAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaLeverOAuth != nil {
-		return utils.MarshalJSON(u.AuthenticateViaLeverOAuth, "", true)
+	if u.SourceLeverHiringAuthenticateViaLeverOAuth != nil {
+		return utils.MarshalJSON(u.SourceLeverHiringAuthenticateViaLeverOAuth, "", true)
 	}
 
-	if u.AuthenticateViaLeverAPIKey != nil {
-		return utils.MarshalJSON(u.AuthenticateViaLeverAPIKey, "", true)
+	if u.SourceLeverHiringAuthenticateViaLeverAPIKey != nil {
+		return utils.MarshalJSON(u.SourceLeverHiringAuthenticateViaLeverAPIKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

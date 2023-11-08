@@ -33,7 +33,7 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 		}
 		if sourceLeverHiringAuthenticateViaLeverOAuth != nil {
 			credentials = &shared.SourceLeverHiringAuthenticationMechanism{
-				AuthenticateViaLeverOAuth: sourceLeverHiringAuthenticateViaLeverOAuth,
+				SourceLeverHiringAuthenticateViaLeverOAuth: sourceLeverHiringAuthenticateViaLeverOAuth,
 			}
 		}
 		var sourceLeverHiringAuthenticateViaLeverAPIKey *shared.SourceLeverHiringAuthenticateViaLeverAPIKey
@@ -45,7 +45,7 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 		}
 		if sourceLeverHiringAuthenticateViaLeverAPIKey != nil {
 			credentials = &shared.SourceLeverHiringAuthenticationMechanism{
-				AuthenticateViaLeverAPIKey: sourceLeverHiringAuthenticateViaLeverAPIKey,
+				SourceLeverHiringAuthenticateViaLeverAPIKey: sourceLeverHiringAuthenticateViaLeverAPIKey,
 			}
 		}
 	}

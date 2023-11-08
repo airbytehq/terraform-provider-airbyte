@@ -136,48 +136,48 @@ func (o *DestinationElasticsearchAPIKeySecret) GetMethod() DestinationElasticsea
 type DestinationElasticsearchAuthenticationMethodType string
 
 const (
-	DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret     DestinationElasticsearchAuthenticationMethodType = "APIKeySecret"
-	DestinationElasticsearchAuthenticationMethodTypeUsernamePassword DestinationElasticsearchAuthenticationMethodType = "UsernamePassword"
+	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret     DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Api Key/Secret"
+	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Username/Password"
 )
 
 type DestinationElasticsearchAuthenticationMethod struct {
-	APIKeySecret     *DestinationElasticsearchAPIKeySecret
-	UsernamePassword *DestinationElasticsearchUsernamePassword
+	DestinationElasticsearchAPIKeySecret     *DestinationElasticsearchAPIKeySecret
+	DestinationElasticsearchUsernamePassword *DestinationElasticsearchUsernamePassword
 
 	Type DestinationElasticsearchAuthenticationMethodType
 }
 
-func CreateDestinationElasticsearchAuthenticationMethodAPIKeySecret(apiKeySecret DestinationElasticsearchAPIKeySecret) DestinationElasticsearchAuthenticationMethod {
-	typ := DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret
+func CreateDestinationElasticsearchAuthenticationMethodDestinationElasticsearchAPIKeySecret(destinationElasticsearchAPIKeySecret DestinationElasticsearchAPIKeySecret) DestinationElasticsearchAuthenticationMethod {
+	typ := DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret
 
 	return DestinationElasticsearchAuthenticationMethod{
-		APIKeySecret: &apiKeySecret,
-		Type:         typ,
+		DestinationElasticsearchAPIKeySecret: &destinationElasticsearchAPIKeySecret,
+		Type:                                 typ,
 	}
 }
 
-func CreateDestinationElasticsearchAuthenticationMethodUsernamePassword(usernamePassword DestinationElasticsearchUsernamePassword) DestinationElasticsearchAuthenticationMethod {
-	typ := DestinationElasticsearchAuthenticationMethodTypeUsernamePassword
+func CreateDestinationElasticsearchAuthenticationMethodDestinationElasticsearchUsernamePassword(destinationElasticsearchUsernamePassword DestinationElasticsearchUsernamePassword) DestinationElasticsearchAuthenticationMethod {
+	typ := DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword
 
 	return DestinationElasticsearchAuthenticationMethod{
-		UsernamePassword: &usernamePassword,
-		Type:             typ,
+		DestinationElasticsearchUsernamePassword: &destinationElasticsearchUsernamePassword,
+		Type:                                     typ,
 	}
 }
 
 func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte) error {
 
-	apiKeySecret := new(DestinationElasticsearchAPIKeySecret)
-	if err := utils.UnmarshalJSON(data, &apiKeySecret, "", true, true); err == nil {
-		u.APIKeySecret = apiKeySecret
-		u.Type = DestinationElasticsearchAuthenticationMethodTypeAPIKeySecret
+	destinationElasticsearchAPIKeySecret := new(DestinationElasticsearchAPIKeySecret)
+	if err := utils.UnmarshalJSON(data, &destinationElasticsearchAPIKeySecret, "", true, true); err == nil {
+		u.DestinationElasticsearchAPIKeySecret = destinationElasticsearchAPIKeySecret
+		u.Type = DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchAPIKeySecret
 		return nil
 	}
 
-	usernamePassword := new(DestinationElasticsearchUsernamePassword)
-	if err := utils.UnmarshalJSON(data, &usernamePassword, "", true, true); err == nil {
-		u.UsernamePassword = usernamePassword
-		u.Type = DestinationElasticsearchAuthenticationMethodTypeUsernamePassword
+	destinationElasticsearchUsernamePassword := new(DestinationElasticsearchUsernamePassword)
+	if err := utils.UnmarshalJSON(data, &destinationElasticsearchUsernamePassword, "", true, true); err == nil {
+		u.DestinationElasticsearchUsernamePassword = destinationElasticsearchUsernamePassword
+		u.Type = DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword
 		return nil
 	}
 
@@ -185,12 +185,12 @@ func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte
 }
 
 func (u DestinationElasticsearchAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.APIKeySecret != nil {
-		return utils.MarshalJSON(u.APIKeySecret, "", true)
+	if u.DestinationElasticsearchAPIKeySecret != nil {
+		return utils.MarshalJSON(u.DestinationElasticsearchAPIKeySecret, "", true)
 	}
 
-	if u.UsernamePassword != nil {
-		return utils.MarshalJSON(u.UsernamePassword, "", true)
+	if u.DestinationElasticsearchUsernamePassword != nil {
+		return utils.MarshalJSON(u.DestinationElasticsearchUsernamePassword, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

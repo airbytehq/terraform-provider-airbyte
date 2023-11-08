@@ -39,7 +39,7 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 			}
 			if destinationS3GlueNoCompression != nil {
 				compression = &shared.DestinationS3GlueCompression{
-					NoCompression: destinationS3GlueNoCompression,
+					DestinationS3GlueNoCompression: destinationS3GlueNoCompression,
 				}
 			}
 			var destinationS3GlueGZIP *shared.DestinationS3GlueGZIP
@@ -56,7 +56,7 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 			}
 			if destinationS3GlueGZIP != nil {
 				compression = &shared.DestinationS3GlueCompression{
-					Gzip: destinationS3GlueGZIP,
+					DestinationS3GlueGZIP: destinationS3GlueGZIP,
 				}
 			}
 		}
@@ -80,7 +80,7 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 	}
 	if destinationS3GlueJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationS3GlueOutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationS3GlueJSONLinesNewlineDelimitedJSON,
+			DestinationS3GlueJSONLinesNewlineDelimitedJSON: destinationS3GlueJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	glueDatabase := r.Configuration.GlueDatabase.ValueString()
@@ -176,7 +176,7 @@ func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3
 			}
 			if destinationS3GlueUpdateNoCompression != nil {
 				compression = &shared.DestinationS3GlueUpdateCompression{
-					NoCompression: destinationS3GlueUpdateNoCompression,
+					DestinationS3GlueUpdateNoCompression: destinationS3GlueUpdateNoCompression,
 				}
 			}
 			var destinationS3GlueUpdateGZIP *shared.DestinationS3GlueUpdateGZIP
@@ -193,7 +193,7 @@ func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3
 			}
 			if destinationS3GlueUpdateGZIP != nil {
 				compression = &shared.DestinationS3GlueUpdateCompression{
-					Gzip: destinationS3GlueUpdateGZIP,
+					DestinationS3GlueUpdateGZIP: destinationS3GlueUpdateGZIP,
 				}
 			}
 		}
@@ -217,7 +217,7 @@ func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3
 	}
 	if destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationS3GlueUpdateOutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON,
+			DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON: destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	glueDatabase := r.Configuration.GlueDatabase.ValueString()

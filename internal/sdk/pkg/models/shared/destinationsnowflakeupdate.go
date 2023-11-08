@@ -204,9 +204,9 @@ func (o *OAuth20) GetRefreshToken() string {
 type AuthorizationMethodType string
 
 const (
-	AuthorizationMethodTypeOAuth20               AuthorizationMethodType = "OAuth20"
-	AuthorizationMethodTypeKeyPairAuthentication AuthorizationMethodType = "KeyPairAuthentication"
-	AuthorizationMethodTypeUsernameAndPassword   AuthorizationMethodType = "UsernameAndPassword"
+	AuthorizationMethodTypeOAuth20               AuthorizationMethodType = "OAuth2.0"
+	AuthorizationMethodTypeKeyPairAuthentication AuthorizationMethodType = "Key Pair Authentication"
+	AuthorizationMethodTypeUsernameAndPassword   AuthorizationMethodType = "Username and Password"
 )
 
 type AuthorizationMethod struct {

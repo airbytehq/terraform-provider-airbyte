@@ -131,8 +131,8 @@ func (o *IAMRole) GetRoleArn() string {
 type AuthenticationModeType string
 
 const (
-	AuthenticationModeTypeIAMRole AuthenticationModeType = "IAMRole"
-	AuthenticationModeTypeIAMUser AuthenticationModeType = "IAMUser"
+	AuthenticationModeTypeIAMRole AuthenticationModeType = "IAM Role"
+	AuthenticationModeTypeIAMUser AuthenticationModeType = "IAM User"
 )
 
 type AuthenticationMode struct {
@@ -368,8 +368,8 @@ func (o *JSONLinesNewlineDelimitedJSON) GetFormatType() *FormatTypeWildcard {
 type OutputFormatWildcardType string
 
 const (
-	OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON OutputFormatWildcardType = "JSONLinesNewlineDelimitedJSON"
-	OutputFormatWildcardTypeParquetColumnarStorage        OutputFormatWildcardType = "ParquetColumnarStorage"
+	OutputFormatWildcardTypeJSONLinesNewlineDelimitedJSON OutputFormatWildcardType = "JSON Lines: Newline-delimited JSON"
+	OutputFormatWildcardTypeParquetColumnarStorage        OutputFormatWildcardType = "Parquet: Columnar Storage"
 )
 
 type OutputFormatWildcard struct {

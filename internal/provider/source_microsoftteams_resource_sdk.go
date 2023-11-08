@@ -25,7 +25,7 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 		}
 		if sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 != nil {
 			credentials = &shared.SourceMicrosoftTeamsAuthenticationMechanism{
-				AuthenticateViaMicrosoftOAuth20: sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20,
+				SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20: sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20,
 			}
 		}
 		var sourceMicrosoftTeamsAuthenticateViaMicrosoft *shared.SourceMicrosoftTeamsAuthenticateViaMicrosoft
@@ -41,7 +41,7 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 		}
 		if sourceMicrosoftTeamsAuthenticateViaMicrosoft != nil {
 			credentials = &shared.SourceMicrosoftTeamsAuthenticationMechanism{
-				AuthenticateViaMicrosoft: sourceMicrosoftTeamsAuthenticateViaMicrosoft,
+				SourceMicrosoftTeamsAuthenticateViaMicrosoft: sourceMicrosoftTeamsAuthenticateViaMicrosoft,
 			}
 		}
 	}

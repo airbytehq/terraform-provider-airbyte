@@ -137,48 +137,48 @@ func (o *SourceSquareOauthAuthentication) GetRefreshToken() string {
 type SourceSquareAuthenticationType string
 
 const (
-	SourceSquareAuthenticationTypeOauthAuthentication SourceSquareAuthenticationType = "OauthAuthentication"
-	SourceSquareAuthenticationTypeAPIKey              SourceSquareAuthenticationType = "APIKey"
+	SourceSquareAuthenticationTypeSourceSquareOauthAuthentication SourceSquareAuthenticationType = "source-square_Oauth authentication"
+	SourceSquareAuthenticationTypeSourceSquareAPIKey              SourceSquareAuthenticationType = "source-square_API key"
 )
 
 type SourceSquareAuthentication struct {
-	OauthAuthentication *SourceSquareOauthAuthentication
-	APIKey              *SourceSquareAPIKey
+	SourceSquareOauthAuthentication *SourceSquareOauthAuthentication
+	SourceSquareAPIKey              *SourceSquareAPIKey
 
 	Type SourceSquareAuthenticationType
 }
 
-func CreateSourceSquareAuthenticationOauthAuthentication(oauthAuthentication SourceSquareOauthAuthentication) SourceSquareAuthentication {
-	typ := SourceSquareAuthenticationTypeOauthAuthentication
+func CreateSourceSquareAuthenticationSourceSquareOauthAuthentication(sourceSquareOauthAuthentication SourceSquareOauthAuthentication) SourceSquareAuthentication {
+	typ := SourceSquareAuthenticationTypeSourceSquareOauthAuthentication
 
 	return SourceSquareAuthentication{
-		OauthAuthentication: &oauthAuthentication,
-		Type:                typ,
+		SourceSquareOauthAuthentication: &sourceSquareOauthAuthentication,
+		Type:                            typ,
 	}
 }
 
-func CreateSourceSquareAuthenticationAPIKey(apiKey SourceSquareAPIKey) SourceSquareAuthentication {
-	typ := SourceSquareAuthenticationTypeAPIKey
+func CreateSourceSquareAuthenticationSourceSquareAPIKey(sourceSquareAPIKey SourceSquareAPIKey) SourceSquareAuthentication {
+	typ := SourceSquareAuthenticationTypeSourceSquareAPIKey
 
 	return SourceSquareAuthentication{
-		APIKey: &apiKey,
-		Type:   typ,
+		SourceSquareAPIKey: &sourceSquareAPIKey,
+		Type:               typ,
 	}
 }
 
 func (u *SourceSquareAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiKey := new(SourceSquareAPIKey)
-	if err := utils.UnmarshalJSON(data, &apiKey, "", true, true); err == nil {
-		u.APIKey = apiKey
-		u.Type = SourceSquareAuthenticationTypeAPIKey
+	sourceSquareAPIKey := new(SourceSquareAPIKey)
+	if err := utils.UnmarshalJSON(data, &sourceSquareAPIKey, "", true, true); err == nil {
+		u.SourceSquareAPIKey = sourceSquareAPIKey
+		u.Type = SourceSquareAuthenticationTypeSourceSquareAPIKey
 		return nil
 	}
 
-	oauthAuthentication := new(SourceSquareOauthAuthentication)
-	if err := utils.UnmarshalJSON(data, &oauthAuthentication, "", true, true); err == nil {
-		u.OauthAuthentication = oauthAuthentication
-		u.Type = SourceSquareAuthenticationTypeOauthAuthentication
+	sourceSquareOauthAuthentication := new(SourceSquareOauthAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceSquareOauthAuthentication, "", true, true); err == nil {
+		u.SourceSquareOauthAuthentication = sourceSquareOauthAuthentication
+		u.Type = SourceSquareAuthenticationTypeSourceSquareOauthAuthentication
 		return nil
 	}
 
@@ -186,12 +186,12 @@ func (u *SourceSquareAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceSquareAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OauthAuthentication != nil {
-		return utils.MarshalJSON(u.OauthAuthentication, "", true)
+	if u.SourceSquareOauthAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSquareOauthAuthentication, "", true)
 	}
 
-	if u.APIKey != nil {
-		return utils.MarshalJSON(u.APIKey, "", true)
+	if u.SourceSquareAPIKey != nil {
+		return utils.MarshalJSON(u.SourceSquareAPIKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

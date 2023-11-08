@@ -143,23 +143,23 @@ func (o *SourceMondayUpdateOAuth20) GetSubdomain() *string {
 type SourceMondayUpdateAuthorizationMethodType string
 
 const (
-	SourceMondayUpdateAuthorizationMethodTypeOAuth20  SourceMondayUpdateAuthorizationMethodType = "OAuth20"
-	SourceMondayUpdateAuthorizationMethodTypeAPIToken SourceMondayUpdateAuthorizationMethodType = "APIToken"
+	SourceMondayUpdateAuthorizationMethodTypeSourceMondayUpdateOAuth20 SourceMondayUpdateAuthorizationMethodType = "source-monday-update_OAuth2.0"
+	SourceMondayUpdateAuthorizationMethodTypeAPIToken                  SourceMondayUpdateAuthorizationMethodType = "API Token"
 )
 
 type SourceMondayUpdateAuthorizationMethod struct {
-	OAuth20  *SourceMondayUpdateOAuth20
-	APIToken *APIToken
+	SourceMondayUpdateOAuth20 *SourceMondayUpdateOAuth20
+	APIToken                  *APIToken
 
 	Type SourceMondayUpdateAuthorizationMethodType
 }
 
-func CreateSourceMondayUpdateAuthorizationMethodOAuth20(oAuth20 SourceMondayUpdateOAuth20) SourceMondayUpdateAuthorizationMethod {
-	typ := SourceMondayUpdateAuthorizationMethodTypeOAuth20
+func CreateSourceMondayUpdateAuthorizationMethodSourceMondayUpdateOAuth20(sourceMondayUpdateOAuth20 SourceMondayUpdateOAuth20) SourceMondayUpdateAuthorizationMethod {
+	typ := SourceMondayUpdateAuthorizationMethodTypeSourceMondayUpdateOAuth20
 
 	return SourceMondayUpdateAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceMondayUpdateOAuth20: &sourceMondayUpdateOAuth20,
+		Type:                      typ,
 	}
 }
 
@@ -181,10 +181,10 @@ func (u *SourceMondayUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	oAuth20 := new(SourceMondayUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceMondayUpdateAuthorizationMethodTypeOAuth20
+	sourceMondayUpdateOAuth20 := new(SourceMondayUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceMondayUpdateOAuth20, "", true, true); err == nil {
+		u.SourceMondayUpdateOAuth20 = sourceMondayUpdateOAuth20
+		u.Type = SourceMondayUpdateAuthorizationMethodTypeSourceMondayUpdateOAuth20
 		return nil
 	}
 
@@ -192,8 +192,8 @@ func (u *SourceMondayUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u SourceMondayUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceMondayUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceMondayUpdateOAuth20, "", true)
 	}
 
 	if u.APIToken != nil {

@@ -35,7 +35,7 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 		}
 		if sourceSnowflakeOAuth20 != nil {
 			credentials = &shared.SourceSnowflakeAuthorizationMethod{
-				OAuth20: sourceSnowflakeOAuth20,
+				SourceSnowflakeOAuth20: sourceSnowflakeOAuth20,
 			}
 		}
 		var sourceSnowflakeUsernameAndPassword *shared.SourceSnowflakeUsernameAndPassword
@@ -49,7 +49,7 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 		}
 		if sourceSnowflakeUsernameAndPassword != nil {
 			credentials = &shared.SourceSnowflakeAuthorizationMethod{
-				UsernameAndPassword: sourceSnowflakeUsernameAndPassword,
+				SourceSnowflakeUsernameAndPassword: sourceSnowflakeUsernameAndPassword,
 			}
 		}
 	}
@@ -128,7 +128,7 @@ func (r *SourceSnowflakeResourceModel) ToUpdateSDKType() *shared.SourceSnowflake
 		}
 		if sourceSnowflakeUpdateOAuth20 != nil {
 			credentials = &shared.SourceSnowflakeUpdateAuthorizationMethod{
-				OAuth20: sourceSnowflakeUpdateOAuth20,
+				SourceSnowflakeUpdateOAuth20: sourceSnowflakeUpdateOAuth20,
 			}
 		}
 		var sourceSnowflakeUpdateUsernameAndPassword *shared.SourceSnowflakeUpdateUsernameAndPassword
@@ -142,7 +142,7 @@ func (r *SourceSnowflakeResourceModel) ToUpdateSDKType() *shared.SourceSnowflake
 		}
 		if sourceSnowflakeUpdateUsernameAndPassword != nil {
 			credentials = &shared.SourceSnowflakeUpdateAuthorizationMethod{
-				UsernameAndPassword: sourceSnowflakeUpdateUsernameAndPassword,
+				SourceSnowflakeUpdateUsernameAndPassword: sourceSnowflakeUpdateUsernameAndPassword,
 			}
 		}
 	}

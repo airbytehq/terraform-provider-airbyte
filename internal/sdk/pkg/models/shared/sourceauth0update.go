@@ -134,8 +134,8 @@ func (o *OAuth2ConfidentialApplication) GetClientSecret() string {
 type SourceAuth0UpdateAuthenticationMethodType string
 
 const (
-	SourceAuth0UpdateAuthenticationMethodTypeOAuth2ConfidentialApplication SourceAuth0UpdateAuthenticationMethodType = "OAuth2ConfidentialApplication"
-	SourceAuth0UpdateAuthenticationMethodTypeOAuth2AccessToken             SourceAuth0UpdateAuthenticationMethodType = "OAuth2AccessToken"
+	SourceAuth0UpdateAuthenticationMethodTypeOAuth2ConfidentialApplication SourceAuth0UpdateAuthenticationMethodType = "OAuth2 Confidential Application"
+	SourceAuth0UpdateAuthenticationMethodTypeOAuth2AccessToken             SourceAuth0UpdateAuthenticationMethodType = "OAuth2 Access Token"
 )
 
 type SourceAuth0UpdateAuthenticationMethod struct {

@@ -122,48 +122,48 @@ func (o *SourceSftpPasswordAuthentication) GetAuthUserPassword() string {
 type SourceSftpAuthenticationWildcardType string
 
 const (
-	SourceSftpAuthenticationWildcardTypePasswordAuthentication SourceSftpAuthenticationWildcardType = "PasswordAuthentication"
-	SourceSftpAuthenticationWildcardTypeSSHKeyAuthentication   SourceSftpAuthenticationWildcardType = "SSHKeyAuthentication"
+	SourceSftpAuthenticationWildcardTypeSourceSftpPasswordAuthentication SourceSftpAuthenticationWildcardType = "source-sftp_Password Authentication"
+	SourceSftpAuthenticationWildcardTypeSourceSftpSSHKeyAuthentication   SourceSftpAuthenticationWildcardType = "source-sftp_SSH Key Authentication"
 )
 
 type SourceSftpAuthenticationWildcard struct {
-	PasswordAuthentication *SourceSftpPasswordAuthentication
-	SSHKeyAuthentication   *SourceSftpSSHKeyAuthentication
+	SourceSftpPasswordAuthentication *SourceSftpPasswordAuthentication
+	SourceSftpSSHKeyAuthentication   *SourceSftpSSHKeyAuthentication
 
 	Type SourceSftpAuthenticationWildcardType
 }
 
-func CreateSourceSftpAuthenticationWildcardPasswordAuthentication(passwordAuthentication SourceSftpPasswordAuthentication) SourceSftpAuthenticationWildcard {
-	typ := SourceSftpAuthenticationWildcardTypePasswordAuthentication
+func CreateSourceSftpAuthenticationWildcardSourceSftpPasswordAuthentication(sourceSftpPasswordAuthentication SourceSftpPasswordAuthentication) SourceSftpAuthenticationWildcard {
+	typ := SourceSftpAuthenticationWildcardTypeSourceSftpPasswordAuthentication
 
 	return SourceSftpAuthenticationWildcard{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceSftpPasswordAuthentication: &sourceSftpPasswordAuthentication,
+		Type:                             typ,
 	}
 }
 
-func CreateSourceSftpAuthenticationWildcardSSHKeyAuthentication(sshKeyAuthentication SourceSftpSSHKeyAuthentication) SourceSftpAuthenticationWildcard {
-	typ := SourceSftpAuthenticationWildcardTypeSSHKeyAuthentication
+func CreateSourceSftpAuthenticationWildcardSourceSftpSSHKeyAuthentication(sourceSftpSSHKeyAuthentication SourceSftpSSHKeyAuthentication) SourceSftpAuthenticationWildcard {
+	typ := SourceSftpAuthenticationWildcardTypeSourceSftpSSHKeyAuthentication
 
 	return SourceSftpAuthenticationWildcard{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		SourceSftpSSHKeyAuthentication: &sourceSftpSSHKeyAuthentication,
+		Type:                           typ,
 	}
 }
 
 func (u *SourceSftpAuthenticationWildcard) UnmarshalJSON(data []byte) error {
 
-	passwordAuthentication := new(SourceSftpPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceSftpAuthenticationWildcardTypePasswordAuthentication
+	sourceSftpPasswordAuthentication := new(SourceSftpPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceSftpPasswordAuthentication, "", true, true); err == nil {
+		u.SourceSftpPasswordAuthentication = sourceSftpPasswordAuthentication
+		u.Type = SourceSftpAuthenticationWildcardTypeSourceSftpPasswordAuthentication
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceSftpSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceSftpAuthenticationWildcardTypeSSHKeyAuthentication
+	sourceSftpSSHKeyAuthentication := new(SourceSftpSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceSftpSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceSftpSSHKeyAuthentication = sourceSftpSSHKeyAuthentication
+		u.Type = SourceSftpAuthenticationWildcardTypeSourceSftpSSHKeyAuthentication
 		return nil
 	}
 
@@ -171,12 +171,12 @@ func (u *SourceSftpAuthenticationWildcard) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceSftpAuthenticationWildcard) MarshalJSON() ([]byte, error) {
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceSftpPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSftpPasswordAuthentication, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceSftpSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSftpSSHKeyAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

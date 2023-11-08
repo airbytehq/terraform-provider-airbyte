@@ -56,30 +56,30 @@ func (o *SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON) GetFormatType() So
 type SourceAzureBlobStorageInputFormatType string
 
 const (
-	SourceAzureBlobStorageInputFormatTypeJSONLinesNewlineDelimitedJSON SourceAzureBlobStorageInputFormatType = "JSONLinesNewlineDelimitedJSON"
+	SourceAzureBlobStorageInputFormatTypeSourceAzureBlobStorageJSONLinesNewlineDelimitedJSON SourceAzureBlobStorageInputFormatType = "source-azure-blob-storage_JSON Lines: newline-delimited JSON"
 )
 
 type SourceAzureBlobStorageInputFormat struct {
-	JSONLinesNewlineDelimitedJSON *SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON
+	SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON *SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON
 
 	Type SourceAzureBlobStorageInputFormatType
 }
 
-func CreateSourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON) SourceAzureBlobStorageInputFormat {
-	typ := SourceAzureBlobStorageInputFormatTypeJSONLinesNewlineDelimitedJSON
+func CreateSourceAzureBlobStorageInputFormatSourceAzureBlobStorageJSONLinesNewlineDelimitedJSON(sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON) SourceAzureBlobStorageInputFormat {
+	typ := SourceAzureBlobStorageInputFormatTypeSourceAzureBlobStorageJSONLinesNewlineDelimitedJSON
 
 	return SourceAzureBlobStorageInputFormat{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
+		SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON: &sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON,
+		Type: typ,
 	}
 }
 
 func (u *SourceAzureBlobStorageInputFormat) UnmarshalJSON(data []byte) error {
 
-	jsonLinesNewlineDelimitedJSON := new(SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON)
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
-		u.Type = SourceAzureBlobStorageInputFormatTypeJSONLinesNewlineDelimitedJSON
+	sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON := new(SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON = sourceAzureBlobStorageJSONLinesNewlineDelimitedJSON
+		u.Type = SourceAzureBlobStorageInputFormatTypeSourceAzureBlobStorageJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
@@ -87,8 +87,8 @@ func (u *SourceAzureBlobStorageInputFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAzureBlobStorageInputFormat) MarshalJSON() ([]byte, error) {
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	if u.SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.SourceAzureBlobStorageJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -31,7 +31,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		}
 		if sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPICredentials{
-				AuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth,
+				SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth,
 			}
 		}
 		var sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication
@@ -43,7 +43,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		}
 		if sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPICredentials{
-				ServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication,
+				SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication,
 			}
 		}
 	}

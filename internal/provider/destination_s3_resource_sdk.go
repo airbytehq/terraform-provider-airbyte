@@ -38,7 +38,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		if destinationS3NoCompression != nil {
 			compressionCodec = shared.DestinationS3CompressionCodec{
-				NoCompression: destinationS3NoCompression,
+				DestinationS3NoCompression: destinationS3NoCompression,
 			}
 		}
 		var destinationS3Deflate *shared.DestinationS3Deflate
@@ -62,7 +62,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		if destinationS3Deflate != nil {
 			compressionCodec = shared.DestinationS3CompressionCodec{
-				Deflate: destinationS3Deflate,
+				DestinationS3Deflate: destinationS3Deflate,
 			}
 		}
 		var destinationS3Bzip2 *shared.DestinationS3Bzip2
@@ -79,7 +79,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		if destinationS3Bzip2 != nil {
 			compressionCodec = shared.DestinationS3CompressionCodec{
-				Bzip2: destinationS3Bzip2,
+				DestinationS3Bzip2: destinationS3Bzip2,
 			}
 		}
 		var destinationS3Xz *shared.DestinationS3Xz
@@ -103,7 +103,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		if destinationS3Xz != nil {
 			compressionCodec = shared.DestinationS3CompressionCodec{
-				Xz: destinationS3Xz,
+				DestinationS3Xz: destinationS3Xz,
 			}
 		}
 		var destinationS3Zstandard *shared.DestinationS3Zstandard
@@ -134,7 +134,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		if destinationS3Zstandard != nil {
 			compressionCodec = shared.DestinationS3CompressionCodec{
-				Zstandard: destinationS3Zstandard,
+				DestinationS3Zstandard: destinationS3Zstandard,
 			}
 		}
 		var destinationS3Snappy *shared.DestinationS3Snappy
@@ -151,7 +151,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 		}
 		if destinationS3Snappy != nil {
 			compressionCodec = shared.DestinationS3CompressionCodec{
-				Snappy: destinationS3Snappy,
+				DestinationS3Snappy: destinationS3Snappy,
 			}
 		}
 		formatType := new(shared.DestinationS3FormatType)
@@ -167,7 +167,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	}
 	if destinationS3AvroApacheAvro != nil {
 		format = shared.DestinationS3OutputFormat{
-			AvroApacheAvro: destinationS3AvroApacheAvro,
+			DestinationS3AvroApacheAvro: destinationS3AvroApacheAvro,
 		}
 	}
 	var destinationS3CSVCommaSeparatedValues *shared.DestinationS3CSVCommaSeparatedValues
@@ -188,7 +188,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 			}
 			if destinationS3SchemasNoCompression != nil {
 				compression = &shared.DestinationS3Compression{
-					NoCompression: destinationS3SchemasNoCompression,
+					DestinationS3SchemasNoCompression: destinationS3SchemasNoCompression,
 				}
 			}
 			var destinationS3GZIP *shared.DestinationS3GZIP
@@ -205,7 +205,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 			}
 			if destinationS3GZIP != nil {
 				compression = &shared.DestinationS3Compression{
-					Gzip: destinationS3GZIP,
+					DestinationS3GZIP: destinationS3GZIP,
 				}
 			}
 		}
@@ -229,7 +229,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	}
 	if destinationS3CSVCommaSeparatedValues != nil {
 		format = shared.DestinationS3OutputFormat{
-			CSVCommaSeparatedValues: destinationS3CSVCommaSeparatedValues,
+			DestinationS3CSVCommaSeparatedValues: destinationS3CSVCommaSeparatedValues,
 		}
 	}
 	var destinationS3JSONLinesNewlineDelimitedJSON *shared.DestinationS3JSONLinesNewlineDelimitedJSON
@@ -250,7 +250,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 			}
 			if destinationS3SchemasFormatNoCompression != nil {
 				compression1 = &shared.DestinationS3SchemasCompression{
-					NoCompression: destinationS3SchemasFormatNoCompression,
+					DestinationS3SchemasFormatNoCompression: destinationS3SchemasFormatNoCompression,
 				}
 			}
 			var destinationS3SchemasGZIP *shared.DestinationS3SchemasGZIP
@@ -267,7 +267,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 			}
 			if destinationS3SchemasGZIP != nil {
 				compression1 = &shared.DestinationS3SchemasCompression{
-					Gzip: destinationS3SchemasGZIP,
+					DestinationS3SchemasGZIP: destinationS3SchemasGZIP,
 				}
 			}
 		}
@@ -291,7 +291,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	}
 	if destinationS3JSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationS3OutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationS3JSONLinesNewlineDelimitedJSON,
+			DestinationS3JSONLinesNewlineDelimitedJSON: destinationS3JSONLinesNewlineDelimitedJSON,
 		}
 	}
 	var destinationS3ParquetColumnarStorage *shared.DestinationS3ParquetColumnarStorage
@@ -350,7 +350,7 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	}
 	if destinationS3ParquetColumnarStorage != nil {
 		format = shared.DestinationS3OutputFormat{
-			ParquetColumnarStorage: destinationS3ParquetColumnarStorage,
+			DestinationS3ParquetColumnarStorage: destinationS3ParquetColumnarStorage,
 		}
 	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
@@ -436,7 +436,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		if destinationS3UpdateNoCompression != nil {
 			compressionCodec = shared.DestinationS3UpdateCompressionCodec{
-				NoCompression: destinationS3UpdateNoCompression,
+				DestinationS3UpdateNoCompression: destinationS3UpdateNoCompression,
 			}
 		}
 		var destinationS3UpdateDeflate *shared.DestinationS3UpdateDeflate
@@ -460,7 +460,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		if destinationS3UpdateDeflate != nil {
 			compressionCodec = shared.DestinationS3UpdateCompressionCodec{
-				Deflate: destinationS3UpdateDeflate,
+				DestinationS3UpdateDeflate: destinationS3UpdateDeflate,
 			}
 		}
 		var destinationS3UpdateBzip2 *shared.DestinationS3UpdateBzip2
@@ -477,7 +477,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		if destinationS3UpdateBzip2 != nil {
 			compressionCodec = shared.DestinationS3UpdateCompressionCodec{
-				Bzip2: destinationS3UpdateBzip2,
+				DestinationS3UpdateBzip2: destinationS3UpdateBzip2,
 			}
 		}
 		var destinationS3UpdateXz *shared.DestinationS3UpdateXz
@@ -501,7 +501,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		if destinationS3UpdateXz != nil {
 			compressionCodec = shared.DestinationS3UpdateCompressionCodec{
-				Xz: destinationS3UpdateXz,
+				DestinationS3UpdateXz: destinationS3UpdateXz,
 			}
 		}
 		var destinationS3UpdateZstandard *shared.DestinationS3UpdateZstandard
@@ -532,7 +532,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		if destinationS3UpdateZstandard != nil {
 			compressionCodec = shared.DestinationS3UpdateCompressionCodec{
-				Zstandard: destinationS3UpdateZstandard,
+				DestinationS3UpdateZstandard: destinationS3UpdateZstandard,
 			}
 		}
 		var destinationS3UpdateSnappy *shared.DestinationS3UpdateSnappy
@@ -549,7 +549,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 		}
 		if destinationS3UpdateSnappy != nil {
 			compressionCodec = shared.DestinationS3UpdateCompressionCodec{
-				Snappy: destinationS3UpdateSnappy,
+				DestinationS3UpdateSnappy: destinationS3UpdateSnappy,
 			}
 		}
 		formatType := new(shared.DestinationS3UpdateFormatType)
@@ -565,7 +565,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	}
 	if destinationS3UpdateAvroApacheAvro != nil {
 		format = shared.DestinationS3UpdateOutputFormat{
-			AvroApacheAvro: destinationS3UpdateAvroApacheAvro,
+			DestinationS3UpdateAvroApacheAvro: destinationS3UpdateAvroApacheAvro,
 		}
 	}
 	var destinationS3UpdateCSVCommaSeparatedValues *shared.DestinationS3UpdateCSVCommaSeparatedValues
@@ -586,7 +586,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 			}
 			if destinationS3UpdateSchemasNoCompression != nil {
 				compression = &shared.DestinationS3UpdateCompression{
-					NoCompression: destinationS3UpdateSchemasNoCompression,
+					DestinationS3UpdateSchemasNoCompression: destinationS3UpdateSchemasNoCompression,
 				}
 			}
 			var destinationS3UpdateGZIP *shared.DestinationS3UpdateGZIP
@@ -603,7 +603,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 			}
 			if destinationS3UpdateGZIP != nil {
 				compression = &shared.DestinationS3UpdateCompression{
-					Gzip: destinationS3UpdateGZIP,
+					DestinationS3UpdateGZIP: destinationS3UpdateGZIP,
 				}
 			}
 		}
@@ -627,7 +627,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	}
 	if destinationS3UpdateCSVCommaSeparatedValues != nil {
 		format = shared.DestinationS3UpdateOutputFormat{
-			CSVCommaSeparatedValues: destinationS3UpdateCSVCommaSeparatedValues,
+			DestinationS3UpdateCSVCommaSeparatedValues: destinationS3UpdateCSVCommaSeparatedValues,
 		}
 	}
 	var destinationS3UpdateJSONLinesNewlineDelimitedJSON *shared.DestinationS3UpdateJSONLinesNewlineDelimitedJSON
@@ -648,7 +648,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 			}
 			if destinationS3UpdateSchemasFormatNoCompression != nil {
 				compression1 = &shared.DestinationS3UpdateSchemasCompression{
-					NoCompression: destinationS3UpdateSchemasFormatNoCompression,
+					DestinationS3UpdateSchemasFormatNoCompression: destinationS3UpdateSchemasFormatNoCompression,
 				}
 			}
 			var destinationS3UpdateSchemasGZIP *shared.DestinationS3UpdateSchemasGZIP
@@ -665,7 +665,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 			}
 			if destinationS3UpdateSchemasGZIP != nil {
 				compression1 = &shared.DestinationS3UpdateSchemasCompression{
-					Gzip: destinationS3UpdateSchemasGZIP,
+					DestinationS3UpdateSchemasGZIP: destinationS3UpdateSchemasGZIP,
 				}
 			}
 		}
@@ -689,7 +689,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	}
 	if destinationS3UpdateJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationS3UpdateOutputFormat{
-			JSONLinesNewlineDelimitedJSON: destinationS3UpdateJSONLinesNewlineDelimitedJSON,
+			DestinationS3UpdateJSONLinesNewlineDelimitedJSON: destinationS3UpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	var destinationS3UpdateParquetColumnarStorage *shared.DestinationS3UpdateParquetColumnarStorage
@@ -748,7 +748,7 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	}
 	if destinationS3UpdateParquetColumnarStorage != nil {
 		format = shared.DestinationS3UpdateOutputFormat{
-			ParquetColumnarStorage: destinationS3UpdateParquetColumnarStorage,
+			DestinationS3UpdateParquetColumnarStorage: destinationS3UpdateParquetColumnarStorage,
 		}
 	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()

@@ -40,7 +40,7 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 		}
 		if sourceGithubOAuth != nil {
 			credentials = &shared.SourceGithubAuthentication{
-				OAuth: sourceGithubOAuth,
+				SourceGithubOAuth: sourceGithubOAuth,
 			}
 		}
 		var sourceGithubPersonalAccessToken *shared.SourceGithubPersonalAccessToken
@@ -52,7 +52,7 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 		}
 		if sourceGithubPersonalAccessToken != nil {
 			credentials = &shared.SourceGithubAuthentication{
-				PersonalAccessToken: sourceGithubPersonalAccessToken,
+				SourceGithubPersonalAccessToken: sourceGithubPersonalAccessToken,
 			}
 		}
 	}
@@ -137,7 +137,7 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 		}
 		if sourceGithubUpdatePersonalAccessToken != nil {
 			credentials = &shared.SourceGithubUpdateAuthentication{
-				PersonalAccessToken: sourceGithubUpdatePersonalAccessToken,
+				SourceGithubUpdatePersonalAccessToken: sourceGithubUpdatePersonalAccessToken,
 			}
 		}
 	}

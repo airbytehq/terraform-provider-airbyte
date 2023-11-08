@@ -23,7 +23,7 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	}
 	if sourceAuth0OAuth2ConfidentialApplication != nil {
 		credentials = shared.SourceAuth0AuthenticationMethod{
-			OAuth2ConfidentialApplication: sourceAuth0OAuth2ConfidentialApplication,
+			SourceAuth0OAuth2ConfidentialApplication: sourceAuth0OAuth2ConfidentialApplication,
 		}
 	}
 	var sourceAuth0OAuth2AccessToken *shared.SourceAuth0OAuth2AccessToken
@@ -35,7 +35,7 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	}
 	if sourceAuth0OAuth2AccessToken != nil {
 		credentials = shared.SourceAuth0AuthenticationMethod{
-			OAuth2AccessToken: sourceAuth0OAuth2AccessToken,
+			SourceAuth0OAuth2AccessToken: sourceAuth0OAuth2AccessToken,
 		}
 	}
 	startDate := new(string)

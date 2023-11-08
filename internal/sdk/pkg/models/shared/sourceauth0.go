@@ -134,48 +134,48 @@ func (o *SourceAuth0OAuth2ConfidentialApplication) GetClientSecret() string {
 type SourceAuth0AuthenticationMethodType string
 
 const (
-	SourceAuth0AuthenticationMethodTypeOAuth2ConfidentialApplication SourceAuth0AuthenticationMethodType = "OAuth2ConfidentialApplication"
-	SourceAuth0AuthenticationMethodTypeOAuth2AccessToken             SourceAuth0AuthenticationMethodType = "OAuth2AccessToken"
+	SourceAuth0AuthenticationMethodTypeSourceAuth0OAuth2ConfidentialApplication SourceAuth0AuthenticationMethodType = "source-auth0_OAuth2 Confidential Application"
+	SourceAuth0AuthenticationMethodTypeSourceAuth0OAuth2AccessToken             SourceAuth0AuthenticationMethodType = "source-auth0_OAuth2 Access Token"
 )
 
 type SourceAuth0AuthenticationMethod struct {
-	OAuth2ConfidentialApplication *SourceAuth0OAuth2ConfidentialApplication
-	OAuth2AccessToken             *SourceAuth0OAuth2AccessToken
+	SourceAuth0OAuth2ConfidentialApplication *SourceAuth0OAuth2ConfidentialApplication
+	SourceAuth0OAuth2AccessToken             *SourceAuth0OAuth2AccessToken
 
 	Type SourceAuth0AuthenticationMethodType
 }
 
-func CreateSourceAuth0AuthenticationMethodOAuth2ConfidentialApplication(oAuth2ConfidentialApplication SourceAuth0OAuth2ConfidentialApplication) SourceAuth0AuthenticationMethod {
-	typ := SourceAuth0AuthenticationMethodTypeOAuth2ConfidentialApplication
+func CreateSourceAuth0AuthenticationMethodSourceAuth0OAuth2ConfidentialApplication(sourceAuth0OAuth2ConfidentialApplication SourceAuth0OAuth2ConfidentialApplication) SourceAuth0AuthenticationMethod {
+	typ := SourceAuth0AuthenticationMethodTypeSourceAuth0OAuth2ConfidentialApplication
 
 	return SourceAuth0AuthenticationMethod{
-		OAuth2ConfidentialApplication: &oAuth2ConfidentialApplication,
-		Type:                          typ,
+		SourceAuth0OAuth2ConfidentialApplication: &sourceAuth0OAuth2ConfidentialApplication,
+		Type:                                     typ,
 	}
 }
 
-func CreateSourceAuth0AuthenticationMethodOAuth2AccessToken(oAuth2AccessToken SourceAuth0OAuth2AccessToken) SourceAuth0AuthenticationMethod {
-	typ := SourceAuth0AuthenticationMethodTypeOAuth2AccessToken
+func CreateSourceAuth0AuthenticationMethodSourceAuth0OAuth2AccessToken(sourceAuth0OAuth2AccessToken SourceAuth0OAuth2AccessToken) SourceAuth0AuthenticationMethod {
+	typ := SourceAuth0AuthenticationMethodTypeSourceAuth0OAuth2AccessToken
 
 	return SourceAuth0AuthenticationMethod{
-		OAuth2AccessToken: &oAuth2AccessToken,
-		Type:              typ,
+		SourceAuth0OAuth2AccessToken: &sourceAuth0OAuth2AccessToken,
+		Type:                         typ,
 	}
 }
 
 func (u *SourceAuth0AuthenticationMethod) UnmarshalJSON(data []byte) error {
 
-	oAuth2AccessToken := new(SourceAuth0OAuth2AccessToken)
-	if err := utils.UnmarshalJSON(data, &oAuth2AccessToken, "", true, true); err == nil {
-		u.OAuth2AccessToken = oAuth2AccessToken
-		u.Type = SourceAuth0AuthenticationMethodTypeOAuth2AccessToken
+	sourceAuth0OAuth2AccessToken := new(SourceAuth0OAuth2AccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceAuth0OAuth2AccessToken, "", true, true); err == nil {
+		u.SourceAuth0OAuth2AccessToken = sourceAuth0OAuth2AccessToken
+		u.Type = SourceAuth0AuthenticationMethodTypeSourceAuth0OAuth2AccessToken
 		return nil
 	}
 
-	oAuth2ConfidentialApplication := new(SourceAuth0OAuth2ConfidentialApplication)
-	if err := utils.UnmarshalJSON(data, &oAuth2ConfidentialApplication, "", true, true); err == nil {
-		u.OAuth2ConfidentialApplication = oAuth2ConfidentialApplication
-		u.Type = SourceAuth0AuthenticationMethodTypeOAuth2ConfidentialApplication
+	sourceAuth0OAuth2ConfidentialApplication := new(SourceAuth0OAuth2ConfidentialApplication)
+	if err := utils.UnmarshalJSON(data, &sourceAuth0OAuth2ConfidentialApplication, "", true, true); err == nil {
+		u.SourceAuth0OAuth2ConfidentialApplication = sourceAuth0OAuth2ConfidentialApplication
+		u.Type = SourceAuth0AuthenticationMethodTypeSourceAuth0OAuth2ConfidentialApplication
 		return nil
 	}
 
@@ -183,12 +183,12 @@ func (u *SourceAuth0AuthenticationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAuth0AuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth2ConfidentialApplication != nil {
-		return utils.MarshalJSON(u.OAuth2ConfidentialApplication, "", true)
+	if u.SourceAuth0OAuth2ConfidentialApplication != nil {
+		return utils.MarshalJSON(u.SourceAuth0OAuth2ConfidentialApplication, "", true)
 	}
 
-	if u.OAuth2AccessToken != nil {
-		return utils.MarshalJSON(u.OAuth2AccessToken, "", true)
+	if u.SourceAuth0OAuth2AccessToken != nil {
+		return utils.MarshalJSON(u.SourceAuth0OAuth2AccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

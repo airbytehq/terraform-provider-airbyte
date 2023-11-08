@@ -153,48 +153,48 @@ func (o *SourceGoogleSearchConsoleOAuth) GetRefreshToken() string {
 type SourceGoogleSearchConsoleAuthenticationTypeType string
 
 const (
-	SourceGoogleSearchConsoleAuthenticationTypeTypeOAuth                           SourceGoogleSearchConsoleAuthenticationTypeType = "OAuth"
-	SourceGoogleSearchConsoleAuthenticationTypeTypeServiceAccountKeyAuthentication SourceGoogleSearchConsoleAuthenticationTypeType = "ServiceAccountKeyAuthentication"
+	SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth                           SourceGoogleSearchConsoleAuthenticationTypeType = "source-google-search-console_OAuth"
+	SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleAuthenticationTypeType = "source-google-search-console_Service Account Key Authentication"
 )
 
 type SourceGoogleSearchConsoleAuthenticationType struct {
-	OAuth                           *SourceGoogleSearchConsoleOAuth
-	ServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication
+	SourceGoogleSearchConsoleOAuth                           *SourceGoogleSearchConsoleOAuth
+	SourceGoogleSearchConsoleServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication
 
 	Type SourceGoogleSearchConsoleAuthenticationTypeType
 }
 
-func CreateSourceGoogleSearchConsoleAuthenticationTypeOAuth(oAuth SourceGoogleSearchConsoleOAuth) SourceGoogleSearchConsoleAuthenticationType {
-	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeOAuth
+func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleOAuth(sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth) SourceGoogleSearchConsoleAuthenticationType {
+	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
 
 	return SourceGoogleSearchConsoleAuthenticationType{
-		OAuth: &oAuth,
-		Type:  typ,
+		SourceGoogleSearchConsoleOAuth: &sourceGoogleSearchConsoleOAuth,
+		Type:                           typ,
 	}
 }
 
-func CreateSourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication(serviceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication) SourceGoogleSearchConsoleAuthenticationType {
-	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeServiceAccountKeyAuthentication
+func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication(sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication) SourceGoogleSearchConsoleAuthenticationType {
+	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
 
 	return SourceGoogleSearchConsoleAuthenticationType{
-		ServiceAccountKeyAuthentication: &serviceAccountKeyAuthentication,
-		Type:                            typ,
+		SourceGoogleSearchConsoleServiceAccountKeyAuthentication: &sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte) error {
 
-	serviceAccountKeyAuthentication := new(SourceGoogleSearchConsoleServiceAccountKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &serviceAccountKeyAuthentication, "", true, true); err == nil {
-		u.ServiceAccountKeyAuthentication = serviceAccountKeyAuthentication
-		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeServiceAccountKeyAuthentication
+	sourceGoogleSearchConsoleServiceAccountKeyAuthentication := new(SourceGoogleSearchConsoleServiceAccountKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true, true); err == nil {
+		u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication = sourceGoogleSearchConsoleServiceAccountKeyAuthentication
+		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
 		return nil
 	}
 
-	oAuth := new(SourceGoogleSearchConsoleOAuth)
-	if err := utils.UnmarshalJSON(data, &oAuth, "", true, true); err == nil {
-		u.OAuth = oAuth
-		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeOAuth
+	sourceGoogleSearchConsoleOAuth := new(SourceGoogleSearchConsoleOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleOAuth, "", true, true); err == nil {
+		u.SourceGoogleSearchConsoleOAuth = sourceGoogleSearchConsoleOAuth
+		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
 		return nil
 	}
 
@@ -202,12 +202,12 @@ func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte)
 }
 
 func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, error) {
-	if u.OAuth != nil {
-		return utils.MarshalJSON(u.OAuth, "", true)
+	if u.SourceGoogleSearchConsoleOAuth != nil {
+		return utils.MarshalJSON(u.SourceGoogleSearchConsoleOAuth, "", true)
 	}
 
-	if u.ServiceAccountKeyAuthentication != nil {
-		return utils.MarshalJSON(u.ServiceAccountKeyAuthentication, "", true)
+	if u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

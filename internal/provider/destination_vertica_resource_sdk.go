@@ -37,7 +37,7 @@ func (r *DestinationVerticaResourceModel) ToCreateSDKType() *shared.DestinationV
 		}
 		if destinationVerticaNoTunnel != nil {
 			tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
-				NoTunnel: destinationVerticaNoTunnel,
+				DestinationVerticaNoTunnel: destinationVerticaNoTunnel,
 			}
 		}
 		var destinationVerticaSSHKeyAuthentication *shared.DestinationVerticaSSHKeyAuthentication
@@ -60,7 +60,7 @@ func (r *DestinationVerticaResourceModel) ToCreateSDKType() *shared.DestinationV
 		}
 		if destinationVerticaSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
-				SSHKeyAuthentication: destinationVerticaSSHKeyAuthentication,
+				DestinationVerticaSSHKeyAuthentication: destinationVerticaSSHKeyAuthentication,
 			}
 		}
 		var destinationVerticaPasswordAuthentication *shared.DestinationVerticaPasswordAuthentication
@@ -83,7 +83,7 @@ func (r *DestinationVerticaResourceModel) ToCreateSDKType() *shared.DestinationV
 		}
 		if destinationVerticaPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
-				PasswordAuthentication: destinationVerticaPasswordAuthentication,
+				DestinationVerticaPasswordAuthentication: destinationVerticaPasswordAuthentication,
 			}
 		}
 	}
@@ -143,7 +143,7 @@ func (r *DestinationVerticaResourceModel) ToUpdateSDKType() *shared.DestinationV
 		}
 		if destinationVerticaUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
-				NoTunnel: destinationVerticaUpdateNoTunnel,
+				DestinationVerticaUpdateNoTunnel: destinationVerticaUpdateNoTunnel,
 			}
 		}
 		var destinationVerticaUpdateSSHKeyAuthentication *shared.DestinationVerticaUpdateSSHKeyAuthentication
@@ -166,7 +166,7 @@ func (r *DestinationVerticaResourceModel) ToUpdateSDKType() *shared.DestinationV
 		}
 		if destinationVerticaUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationVerticaUpdateSSHKeyAuthentication,
+				DestinationVerticaUpdateSSHKeyAuthentication: destinationVerticaUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationVerticaUpdatePasswordAuthentication *shared.DestinationVerticaUpdatePasswordAuthentication
@@ -189,7 +189,7 @@ func (r *DestinationVerticaResourceModel) ToUpdateSDKType() *shared.DestinationV
 		}
 		if destinationVerticaUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationVerticaUpdatePasswordAuthentication,
+				DestinationVerticaUpdatePasswordAuthentication: destinationVerticaUpdatePasswordAuthentication,
 			}
 		}
 	}

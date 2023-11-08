@@ -162,48 +162,48 @@ func (o *SourceZendeskSupportOAuth20) GetCredentials() *SourceZendeskSupportCred
 type SourceZendeskSupportAuthenticationType string
 
 const (
-	SourceZendeskSupportAuthenticationTypeOAuth20  SourceZendeskSupportAuthenticationType = "OAuth20"
-	SourceZendeskSupportAuthenticationTypeAPIToken SourceZendeskSupportAuthenticationType = "APIToken"
+	SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20  SourceZendeskSupportAuthenticationType = "source-zendesk-support_OAuth2.0"
+	SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken SourceZendeskSupportAuthenticationType = "source-zendesk-support_API Token"
 )
 
 type SourceZendeskSupportAuthentication struct {
-	OAuth20  *SourceZendeskSupportOAuth20
-	APIToken *SourceZendeskSupportAPIToken
+	SourceZendeskSupportOAuth20  *SourceZendeskSupportOAuth20
+	SourceZendeskSupportAPIToken *SourceZendeskSupportAPIToken
 
 	Type SourceZendeskSupportAuthenticationType
 }
 
-func CreateSourceZendeskSupportAuthenticationOAuth20(oAuth20 SourceZendeskSupportOAuth20) SourceZendeskSupportAuthentication {
-	typ := SourceZendeskSupportAuthenticationTypeOAuth20
+func CreateSourceZendeskSupportAuthenticationSourceZendeskSupportOAuth20(sourceZendeskSupportOAuth20 SourceZendeskSupportOAuth20) SourceZendeskSupportAuthentication {
+	typ := SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20
 
 	return SourceZendeskSupportAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceZendeskSupportOAuth20: &sourceZendeskSupportOAuth20,
+		Type:                        typ,
 	}
 }
 
-func CreateSourceZendeskSupportAuthenticationAPIToken(apiToken SourceZendeskSupportAPIToken) SourceZendeskSupportAuthentication {
-	typ := SourceZendeskSupportAuthenticationTypeAPIToken
+func CreateSourceZendeskSupportAuthenticationSourceZendeskSupportAPIToken(sourceZendeskSupportAPIToken SourceZendeskSupportAPIToken) SourceZendeskSupportAuthentication {
+	typ := SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken
 
 	return SourceZendeskSupportAuthentication{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceZendeskSupportAPIToken: &sourceZendeskSupportAPIToken,
+		Type:                         typ,
 	}
 }
 
 func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceZendeskSupportAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceZendeskSupportAuthenticationTypeAPIToken
+	sourceZendeskSupportAPIToken := new(SourceZendeskSupportAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportAPIToken, "", true, true); err == nil {
+		u.SourceZendeskSupportAPIToken = sourceZendeskSupportAPIToken
+		u.Type = SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken
 		return nil
 	}
 
-	oAuth20 := new(SourceZendeskSupportOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceZendeskSupportAuthenticationTypeOAuth20
+	sourceZendeskSupportOAuth20 := new(SourceZendeskSupportOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskSupportOAuth20, "", true, true); err == nil {
+		u.SourceZendeskSupportOAuth20 = sourceZendeskSupportOAuth20
+		u.Type = SourceZendeskSupportAuthenticationTypeSourceZendeskSupportOAuth20
 		return nil
 	}
 
@@ -211,12 +211,12 @@ func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceZendeskSupportAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceZendeskSupportOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceZendeskSupportOAuth20, "", true)
 	}
 
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceZendeskSupportAPIToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskSupportAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

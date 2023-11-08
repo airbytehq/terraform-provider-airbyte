@@ -19,7 +19,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 		}
 		if sourceOracleServiceName != nil {
 			connectionData = &shared.SourceOracleConnectBy{
-				ServiceName: sourceOracleServiceName,
+				SourceOracleServiceName: sourceOracleServiceName,
 			}
 		}
 		var sourceOracleSystemIDSID *shared.SourceOracleSystemIDSID
@@ -31,7 +31,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 		}
 		if sourceOracleSystemIDSID != nil {
 			connectionData = &shared.SourceOracleConnectBy{
-				SystemIDSID: sourceOracleSystemIDSID,
+				SourceOracleSystemIDSID: sourceOracleSystemIDSID,
 			}
 		}
 	}
@@ -50,7 +50,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	}
 	if sourceOracleNativeNetworkEncryptionNNE != nil {
 		encryption = shared.SourceOracleEncryption{
-			NativeNetworkEncryptionNNE: sourceOracleNativeNetworkEncryptionNNE,
+			SourceOracleNativeNetworkEncryptionNNE: sourceOracleNativeNetworkEncryptionNNE,
 		}
 	}
 	var sourceOracleTLSEncryptedVerifyCertificate *shared.SourceOracleTLSEncryptedVerifyCertificate
@@ -62,7 +62,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	}
 	if sourceOracleTLSEncryptedVerifyCertificate != nil {
 		encryption = shared.SourceOracleEncryption{
-			TLSEncryptedVerifyCertificate: sourceOracleTLSEncryptedVerifyCertificate,
+			SourceOracleTLSEncryptedVerifyCertificate: sourceOracleTLSEncryptedVerifyCertificate,
 		}
 	}
 	host := r.Configuration.Host.ValueString()
@@ -96,7 +96,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 		}
 		if sourceOracleNoTunnel != nil {
 			tunnelMethod = &shared.SourceOracleSSHTunnelMethod{
-				NoTunnel: sourceOracleNoTunnel,
+				SourceOracleNoTunnel: sourceOracleNoTunnel,
 			}
 		}
 		var sourceOracleSSHKeyAuthentication *shared.SourceOracleSSHKeyAuthentication
@@ -119,7 +119,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 		}
 		if sourceOracleSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceOracleSSHTunnelMethod{
-				SSHKeyAuthentication: sourceOracleSSHKeyAuthentication,
+				SourceOracleSSHKeyAuthentication: sourceOracleSSHKeyAuthentication,
 			}
 		}
 		var sourceOraclePasswordAuthentication *shared.SourceOraclePasswordAuthentication
@@ -142,7 +142,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 		}
 		if sourceOraclePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceOracleSSHTunnelMethod{
-				PasswordAuthentication: sourceOraclePasswordAuthentication,
+				SourceOraclePasswordAuthentication: sourceOraclePasswordAuthentication,
 			}
 		}
 	}
@@ -269,7 +269,7 @@ func (r *SourceOracleResourceModel) ToUpdateSDKType() *shared.SourceOraclePutReq
 		}
 		if sourceOracleUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceOracleUpdateSSHTunnelMethod{
-				NoTunnel: sourceOracleUpdateNoTunnel,
+				SourceOracleUpdateNoTunnel: sourceOracleUpdateNoTunnel,
 			}
 		}
 		var sourceOracleUpdateSSHKeyAuthentication *shared.SourceOracleUpdateSSHKeyAuthentication
@@ -292,7 +292,7 @@ func (r *SourceOracleResourceModel) ToUpdateSDKType() *shared.SourceOraclePutReq
 		}
 		if sourceOracleUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceOracleUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: sourceOracleUpdateSSHKeyAuthentication,
+				SourceOracleUpdateSSHKeyAuthentication: sourceOracleUpdateSSHKeyAuthentication,
 			}
 		}
 		var sourceOracleUpdatePasswordAuthentication *shared.SourceOracleUpdatePasswordAuthentication
@@ -315,7 +315,7 @@ func (r *SourceOracleResourceModel) ToUpdateSDKType() *shared.SourceOraclePutReq
 		}
 		if sourceOracleUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceOracleUpdateSSHTunnelMethod{
-				PasswordAuthentication: sourceOracleUpdatePasswordAuthentication,
+				SourceOracleUpdatePasswordAuthentication: sourceOracleUpdatePasswordAuthentication,
 			}
 		}
 	}

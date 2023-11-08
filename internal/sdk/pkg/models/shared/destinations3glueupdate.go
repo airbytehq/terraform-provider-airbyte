@@ -106,48 +106,48 @@ func (o *DestinationS3GlueUpdateNoCompression) GetCompressionType() *Destination
 type DestinationS3GlueUpdateCompressionUnionType string
 
 const (
-	DestinationS3GlueUpdateCompressionUnionTypeNoCompression DestinationS3GlueUpdateCompressionUnionType = "NoCompression"
-	DestinationS3GlueUpdateCompressionUnionTypeGzip          DestinationS3GlueUpdateCompressionUnionType = "Gzip"
+	DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateNoCompression DestinationS3GlueUpdateCompressionUnionType = "destination-s3-glue-update_No Compression"
+	DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateGZIP          DestinationS3GlueUpdateCompressionUnionType = "destination-s3-glue-update_GZIP"
 )
 
 type DestinationS3GlueUpdateCompression struct {
-	NoCompression *DestinationS3GlueUpdateNoCompression
-	Gzip          *DestinationS3GlueUpdateGZIP
+	DestinationS3GlueUpdateNoCompression *DestinationS3GlueUpdateNoCompression
+	DestinationS3GlueUpdateGZIP          *DestinationS3GlueUpdateGZIP
 
 	Type DestinationS3GlueUpdateCompressionUnionType
 }
 
-func CreateDestinationS3GlueUpdateCompressionNoCompression(noCompression DestinationS3GlueUpdateNoCompression) DestinationS3GlueUpdateCompression {
-	typ := DestinationS3GlueUpdateCompressionUnionTypeNoCompression
+func CreateDestinationS3GlueUpdateCompressionDestinationS3GlueUpdateNoCompression(destinationS3GlueUpdateNoCompression DestinationS3GlueUpdateNoCompression) DestinationS3GlueUpdateCompression {
+	typ := DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateNoCompression
 
 	return DestinationS3GlueUpdateCompression{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationS3GlueUpdateNoCompression: &destinationS3GlueUpdateNoCompression,
+		Type:                                 typ,
 	}
 }
 
-func CreateDestinationS3GlueUpdateCompressionGzip(gzip DestinationS3GlueUpdateGZIP) DestinationS3GlueUpdateCompression {
-	typ := DestinationS3GlueUpdateCompressionUnionTypeGzip
+func CreateDestinationS3GlueUpdateCompressionDestinationS3GlueUpdateGZIP(destinationS3GlueUpdateGZIP DestinationS3GlueUpdateGZIP) DestinationS3GlueUpdateCompression {
+	typ := DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateGZIP
 
 	return DestinationS3GlueUpdateCompression{
-		Gzip: &gzip,
-		Type: typ,
+		DestinationS3GlueUpdateGZIP: &destinationS3GlueUpdateGZIP,
+		Type:                        typ,
 	}
 }
 
 func (u *DestinationS3GlueUpdateCompression) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationS3GlueUpdateNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationS3GlueUpdateCompressionUnionTypeNoCompression
+	destinationS3GlueUpdateNoCompression := new(DestinationS3GlueUpdateNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationS3GlueUpdateNoCompression, "", true, true); err == nil {
+		u.DestinationS3GlueUpdateNoCompression = destinationS3GlueUpdateNoCompression
+		u.Type = DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateNoCompression
 		return nil
 	}
 
-	gzip := new(DestinationS3GlueUpdateGZIP)
-	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
-		u.Gzip = gzip
-		u.Type = DestinationS3GlueUpdateCompressionUnionTypeGzip
+	destinationS3GlueUpdateGZIP := new(DestinationS3GlueUpdateGZIP)
+	if err := utils.UnmarshalJSON(data, &destinationS3GlueUpdateGZIP, "", true, true); err == nil {
+		u.DestinationS3GlueUpdateGZIP = destinationS3GlueUpdateGZIP
+		u.Type = DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateGZIP
 		return nil
 	}
 
@@ -155,12 +155,12 @@ func (u *DestinationS3GlueUpdateCompression) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3GlueUpdateCompression) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationS3GlueUpdateNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationS3GlueUpdateNoCompression, "", true)
 	}
 
-	if u.Gzip != nil {
-		return utils.MarshalJSON(u.Gzip, "", true)
+	if u.DestinationS3GlueUpdateGZIP != nil {
+		return utils.MarshalJSON(u.DestinationS3GlueUpdateGZIP, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -262,30 +262,30 @@ func (o *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() *
 type DestinationS3GlueUpdateOutputFormatType string
 
 const (
-	DestinationS3GlueUpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateOutputFormatType = "JSONLinesNewlineDelimitedJSON"
+	DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateOutputFormatType = "destination-s3-glue-update_JSON Lines: Newline-delimited JSON"
 )
 
 type DestinationS3GlueUpdateOutputFormat struct {
-	JSONLinesNewlineDelimitedJSON *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
+	DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
 
 	Type DestinationS3GlueUpdateOutputFormatType
 }
 
-func CreateDestinationS3GlueUpdateOutputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) DestinationS3GlueUpdateOutputFormat {
-	typ := DestinationS3GlueUpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON
+func CreateDestinationS3GlueUpdateOutputFormatDestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON(destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON) DestinationS3GlueUpdateOutputFormat {
+	typ := DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
 
 	return DestinationS3GlueUpdateOutputFormat{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
+		DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON: &destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON,
+		Type: typ,
 	}
 }
 
 func (u *DestinationS3GlueUpdateOutputFormat) UnmarshalJSON(data []byte) error {
 
-	jsonLinesNewlineDelimitedJSON := new(DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON)
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
-		u.Type = DestinationS3GlueUpdateOutputFormatTypeJSONLinesNewlineDelimitedJSON
+	destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON := new(DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON = destinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
+		u.Type = DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
@@ -293,8 +293,8 @@ func (u *DestinationS3GlueUpdateOutputFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationS3GlueUpdateOutputFormat) MarshalJSON() ([]byte, error) {
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	if u.DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

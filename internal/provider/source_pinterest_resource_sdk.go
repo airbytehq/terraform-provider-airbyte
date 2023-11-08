@@ -34,7 +34,7 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 		}
 		if sourcePinterestOAuth20 != nil {
 			credentials = &shared.SourcePinterestAuthorizationMethod{
-				OAuth20: sourcePinterestOAuth20,
+				SourcePinterestOAuth20: sourcePinterestOAuth20,
 			}
 		}
 		var sourcePinterestAccessToken *shared.SourcePinterestAccessToken
@@ -46,7 +46,7 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 		}
 		if sourcePinterestAccessToken != nil {
 			credentials = &shared.SourcePinterestAuthorizationMethod{
-				AccessToken: sourcePinterestAccessToken,
+				SourcePinterestAccessToken: sourcePinterestAccessToken,
 			}
 		}
 	}
@@ -108,7 +108,7 @@ func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterest
 		}
 		if sourcePinterestUpdateOAuth20 != nil {
 			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-				OAuth20: sourcePinterestUpdateOAuth20,
+				SourcePinterestUpdateOAuth20: sourcePinterestUpdateOAuth20,
 			}
 		}
 		var sourcePinterestUpdateAccessToken *shared.SourcePinterestUpdateAccessToken
@@ -120,7 +120,7 @@ func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterest
 		}
 		if sourcePinterestUpdateAccessToken != nil {
 			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-				AccessToken: sourcePinterestUpdateAccessToken,
+				SourcePinterestUpdateAccessToken: sourcePinterestUpdateAccessToken,
 			}
 		}
 	}

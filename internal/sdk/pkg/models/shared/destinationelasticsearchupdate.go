@@ -136,8 +136,8 @@ func (o *APIKeySecret) GetMethod() DestinationElasticsearchUpdateMethod {
 type AuthenticationMethodType string
 
 const (
-	AuthenticationMethodTypeAPIKeySecret     AuthenticationMethodType = "APIKeySecret"
-	AuthenticationMethodTypeUsernamePassword AuthenticationMethodType = "UsernamePassword"
+	AuthenticationMethodTypeAPIKeySecret     AuthenticationMethodType = "Api Key/Secret"
+	AuthenticationMethodTypeUsernamePassword AuthenticationMethodType = "Username/Password"
 )
 
 type AuthenticationMethod struct {

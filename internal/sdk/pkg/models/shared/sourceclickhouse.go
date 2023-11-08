@@ -246,66 +246,66 @@ func (o *SourceClickhouseNoTunnel) GetTunnelMethod() SourceClickhouseTunnelMetho
 type SourceClickhouseSSHTunnelMethodType string
 
 const (
-	SourceClickhouseSSHTunnelMethodTypeNoTunnel               SourceClickhouseSSHTunnelMethodType = "NoTunnel"
-	SourceClickhouseSSHTunnelMethodTypeSSHKeyAuthentication   SourceClickhouseSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourceClickhouseSSHTunnelMethodTypePasswordAuthentication SourceClickhouseSSHTunnelMethodType = "PasswordAuthentication"
+	SourceClickhouseSSHTunnelMethodTypeSourceClickhouseNoTunnel               SourceClickhouseSSHTunnelMethodType = "source-clickhouse_No Tunnel"
+	SourceClickhouseSSHTunnelMethodTypeSourceClickhouseSSHKeyAuthentication   SourceClickhouseSSHTunnelMethodType = "source-clickhouse_SSH Key Authentication"
+	SourceClickhouseSSHTunnelMethodTypeSourceClickhousePasswordAuthentication SourceClickhouseSSHTunnelMethodType = "source-clickhouse_Password Authentication"
 )
 
 type SourceClickhouseSSHTunnelMethod struct {
-	NoTunnel               *SourceClickhouseNoTunnel
-	SSHKeyAuthentication   *SourceClickhouseSSHKeyAuthentication
-	PasswordAuthentication *SourceClickhousePasswordAuthentication
+	SourceClickhouseNoTunnel               *SourceClickhouseNoTunnel
+	SourceClickhouseSSHKeyAuthentication   *SourceClickhouseSSHKeyAuthentication
+	SourceClickhousePasswordAuthentication *SourceClickhousePasswordAuthentication
 
 	Type SourceClickhouseSSHTunnelMethodType
 }
 
-func CreateSourceClickhouseSSHTunnelMethodNoTunnel(noTunnel SourceClickhouseNoTunnel) SourceClickhouseSSHTunnelMethod {
-	typ := SourceClickhouseSSHTunnelMethodTypeNoTunnel
+func CreateSourceClickhouseSSHTunnelMethodSourceClickhouseNoTunnel(sourceClickhouseNoTunnel SourceClickhouseNoTunnel) SourceClickhouseSSHTunnelMethod {
+	typ := SourceClickhouseSSHTunnelMethodTypeSourceClickhouseNoTunnel
 
 	return SourceClickhouseSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		SourceClickhouseNoTunnel: &sourceClickhouseNoTunnel,
+		Type:                     typ,
 	}
 }
 
-func CreateSourceClickhouseSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceClickhouseSSHKeyAuthentication) SourceClickhouseSSHTunnelMethod {
-	typ := SourceClickhouseSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateSourceClickhouseSSHTunnelMethodSourceClickhouseSSHKeyAuthentication(sourceClickhouseSSHKeyAuthentication SourceClickhouseSSHKeyAuthentication) SourceClickhouseSSHTunnelMethod {
+	typ := SourceClickhouseSSHTunnelMethodTypeSourceClickhouseSSHKeyAuthentication
 
 	return SourceClickhouseSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		SourceClickhouseSSHKeyAuthentication: &sourceClickhouseSSHKeyAuthentication,
+		Type:                                 typ,
 	}
 }
 
-func CreateSourceClickhouseSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceClickhousePasswordAuthentication) SourceClickhouseSSHTunnelMethod {
-	typ := SourceClickhouseSSHTunnelMethodTypePasswordAuthentication
+func CreateSourceClickhouseSSHTunnelMethodSourceClickhousePasswordAuthentication(sourceClickhousePasswordAuthentication SourceClickhousePasswordAuthentication) SourceClickhouseSSHTunnelMethod {
+	typ := SourceClickhouseSSHTunnelMethodTypeSourceClickhousePasswordAuthentication
 
 	return SourceClickhouseSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceClickhousePasswordAuthentication: &sourceClickhousePasswordAuthentication,
+		Type:                                   typ,
 	}
 }
 
 func (u *SourceClickhouseSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourceClickhouseNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourceClickhouseSSHTunnelMethodTypeNoTunnel
+	sourceClickhouseNoTunnel := new(SourceClickhouseNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceClickhouseNoTunnel, "", true, true); err == nil {
+		u.SourceClickhouseNoTunnel = sourceClickhouseNoTunnel
+		u.Type = SourceClickhouseSSHTunnelMethodTypeSourceClickhouseNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceClickhouseSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceClickhouseSSHTunnelMethodTypeSSHKeyAuthentication
+	sourceClickhouseSSHKeyAuthentication := new(SourceClickhouseSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceClickhouseSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceClickhouseSSHKeyAuthentication = sourceClickhouseSSHKeyAuthentication
+		u.Type = SourceClickhouseSSHTunnelMethodTypeSourceClickhouseSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourceClickhousePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceClickhouseSSHTunnelMethodTypePasswordAuthentication
+	sourceClickhousePasswordAuthentication := new(SourceClickhousePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceClickhousePasswordAuthentication, "", true, true); err == nil {
+		u.SourceClickhousePasswordAuthentication = sourceClickhousePasswordAuthentication
+		u.Type = SourceClickhouseSSHTunnelMethodTypeSourceClickhousePasswordAuthentication
 		return nil
 	}
 
@@ -313,16 +313,16 @@ func (u *SourceClickhouseSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceClickhouseSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourceClickhouseNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceClickhouseNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceClickhouseSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceClickhouseSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceClickhousePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceClickhousePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

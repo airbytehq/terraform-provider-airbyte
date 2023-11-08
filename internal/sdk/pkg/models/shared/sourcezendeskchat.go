@@ -144,48 +144,48 @@ func (o *SourceZendeskChatOAuth20) GetRefreshToken() *string {
 type SourceZendeskChatAuthorizationMethodType string
 
 const (
-	SourceZendeskChatAuthorizationMethodTypeOAuth20     SourceZendeskChatAuthorizationMethodType = "OAuth20"
-	SourceZendeskChatAuthorizationMethodTypeAccessToken SourceZendeskChatAuthorizationMethodType = "AccessToken"
+	SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatOAuth20     SourceZendeskChatAuthorizationMethodType = "source-zendesk-chat_OAuth2.0"
+	SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAccessToken SourceZendeskChatAuthorizationMethodType = "source-zendesk-chat_Access Token"
 )
 
 type SourceZendeskChatAuthorizationMethod struct {
-	OAuth20     *SourceZendeskChatOAuth20
-	AccessToken *SourceZendeskChatAccessToken
+	SourceZendeskChatOAuth20     *SourceZendeskChatOAuth20
+	SourceZendeskChatAccessToken *SourceZendeskChatAccessToken
 
 	Type SourceZendeskChatAuthorizationMethodType
 }
 
-func CreateSourceZendeskChatAuthorizationMethodOAuth20(oAuth20 SourceZendeskChatOAuth20) SourceZendeskChatAuthorizationMethod {
-	typ := SourceZendeskChatAuthorizationMethodTypeOAuth20
+func CreateSourceZendeskChatAuthorizationMethodSourceZendeskChatOAuth20(sourceZendeskChatOAuth20 SourceZendeskChatOAuth20) SourceZendeskChatAuthorizationMethod {
+	typ := SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatOAuth20
 
 	return SourceZendeskChatAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceZendeskChatOAuth20: &sourceZendeskChatOAuth20,
+		Type:                     typ,
 	}
 }
 
-func CreateSourceZendeskChatAuthorizationMethodAccessToken(accessToken SourceZendeskChatAccessToken) SourceZendeskChatAuthorizationMethod {
-	typ := SourceZendeskChatAuthorizationMethodTypeAccessToken
+func CreateSourceZendeskChatAuthorizationMethodSourceZendeskChatAccessToken(sourceZendeskChatAccessToken SourceZendeskChatAccessToken) SourceZendeskChatAuthorizationMethod {
+	typ := SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAccessToken
 
 	return SourceZendeskChatAuthorizationMethod{
-		AccessToken: &accessToken,
-		Type:        typ,
+		SourceZendeskChatAccessToken: &sourceZendeskChatAccessToken,
+		Type:                         typ,
 	}
 }
 
 func (u *SourceZendeskChatAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	accessToken := new(SourceZendeskChatAccessToken)
-	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
-		u.AccessToken = accessToken
-		u.Type = SourceZendeskChatAuthorizationMethodTypeAccessToken
+	sourceZendeskChatAccessToken := new(SourceZendeskChatAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskChatAccessToken, "", true, true); err == nil {
+		u.SourceZendeskChatAccessToken = sourceZendeskChatAccessToken
+		u.Type = SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourceZendeskChatOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceZendeskChatAuthorizationMethodTypeOAuth20
+	sourceZendeskChatOAuth20 := new(SourceZendeskChatOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceZendeskChatOAuth20, "", true, true); err == nil {
+		u.SourceZendeskChatOAuth20 = sourceZendeskChatOAuth20
+		u.Type = SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatOAuth20
 		return nil
 	}
 
@@ -193,12 +193,12 @@ func (u *SourceZendeskChatAuthorizationMethod) UnmarshalJSON(data []byte) error 
 }
 
 func (u SourceZendeskChatAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceZendeskChatOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceZendeskChatOAuth20, "", true)
 	}
 
-	if u.AccessToken != nil {
-		return utils.MarshalJSON(u.AccessToken, "", true)
+	if u.SourceZendeskChatAccessToken != nil {
+		return utils.MarshalJSON(u.SourceZendeskChatAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

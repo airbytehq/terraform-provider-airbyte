@@ -222,66 +222,66 @@ func (o *DestinationMysqlUpdateNoTunnel) GetTunnelMethod() DestinationMysqlUpdat
 type DestinationMysqlUpdateSSHTunnelMethodType string
 
 const (
-	DestinationMysqlUpdateSSHTunnelMethodTypeNoTunnel               DestinationMysqlUpdateSSHTunnelMethodType = "NoTunnel"
-	DestinationMysqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationMysqlUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationMysqlUpdateSSHTunnelMethodTypePasswordAuthentication DestinationMysqlUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdateNoTunnel               DestinationMysqlUpdateSSHTunnelMethodType = "destination-mysql-update_No Tunnel"
+	DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdateSSHKeyAuthentication   DestinationMysqlUpdateSSHTunnelMethodType = "destination-mysql-update_SSH Key Authentication"
+	DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdatePasswordAuthentication DestinationMysqlUpdateSSHTunnelMethodType = "destination-mysql-update_Password Authentication"
 )
 
 type DestinationMysqlUpdateSSHTunnelMethod struct {
-	NoTunnel               *DestinationMysqlUpdateNoTunnel
-	SSHKeyAuthentication   *DestinationMysqlUpdateSSHKeyAuthentication
-	PasswordAuthentication *DestinationMysqlUpdatePasswordAuthentication
+	DestinationMysqlUpdateNoTunnel               *DestinationMysqlUpdateNoTunnel
+	DestinationMysqlUpdateSSHKeyAuthentication   *DestinationMysqlUpdateSSHKeyAuthentication
+	DestinationMysqlUpdatePasswordAuthentication *DestinationMysqlUpdatePasswordAuthentication
 
 	Type DestinationMysqlUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationMysqlUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationMysqlUpdateNoTunnel) DestinationMysqlUpdateSSHTunnelMethod {
-	typ := DestinationMysqlUpdateSSHTunnelMethodTypeNoTunnel
+func CreateDestinationMysqlUpdateSSHTunnelMethodDestinationMysqlUpdateNoTunnel(destinationMysqlUpdateNoTunnel DestinationMysqlUpdateNoTunnel) DestinationMysqlUpdateSSHTunnelMethod {
+	typ := DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdateNoTunnel
 
 	return DestinationMysqlUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationMysqlUpdateNoTunnel: &destinationMysqlUpdateNoTunnel,
+		Type:                           typ,
 	}
 }
 
-func CreateDestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationMysqlUpdateSSHKeyAuthentication) DestinationMysqlUpdateSSHTunnelMethod {
-	typ := DestinationMysqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationMysqlUpdateSSHTunnelMethodDestinationMysqlUpdateSSHKeyAuthentication(destinationMysqlUpdateSSHKeyAuthentication DestinationMysqlUpdateSSHKeyAuthentication) DestinationMysqlUpdateSSHTunnelMethod {
+	typ := DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdateSSHKeyAuthentication
 
 	return DestinationMysqlUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationMysqlUpdateSSHKeyAuthentication: &destinationMysqlUpdateSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationMysqlUpdatePasswordAuthentication) DestinationMysqlUpdateSSHTunnelMethod {
-	typ := DestinationMysqlUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationMysqlUpdateSSHTunnelMethodDestinationMysqlUpdatePasswordAuthentication(destinationMysqlUpdatePasswordAuthentication DestinationMysqlUpdatePasswordAuthentication) DestinationMysqlUpdateSSHTunnelMethod {
+	typ := DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdatePasswordAuthentication
 
 	return DestinationMysqlUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationMysqlUpdatePasswordAuthentication: &destinationMysqlUpdatePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationMysqlUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationMysqlUpdateSSHTunnelMethodTypeNoTunnel
+	destinationMysqlUpdateNoTunnel := new(DestinationMysqlUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMysqlUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationMysqlUpdateNoTunnel = destinationMysqlUpdateNoTunnel
+		u.Type = DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationMysqlUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationMysqlUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationMysqlUpdateSSHKeyAuthentication := new(DestinationMysqlUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMysqlUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMysqlUpdateSSHKeyAuthentication = destinationMysqlUpdateSSHKeyAuthentication
+		u.Type = DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationMysqlUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationMysqlUpdateSSHTunnelMethodTypePasswordAuthentication
+	destinationMysqlUpdatePasswordAuthentication := new(DestinationMysqlUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMysqlUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMysqlUpdatePasswordAuthentication = destinationMysqlUpdatePasswordAuthentication
+		u.Type = DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -289,16 +289,16 @@ func (u *DestinationMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error
 }
 
 func (u DestinationMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationMysqlUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMysqlUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationMysqlUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMysqlUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationMysqlUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMysqlUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

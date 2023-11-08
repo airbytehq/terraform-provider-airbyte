@@ -24,7 +24,7 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		}
 		if sourceSquareOauthAuthentication != nil {
 			credentials = &shared.SourceSquareAuthentication{
-				OauthAuthentication: sourceSquareOauthAuthentication,
+				SourceSquareOauthAuthentication: sourceSquareOauthAuthentication,
 			}
 		}
 		var sourceSquareAPIKey *shared.SourceSquareAPIKey
@@ -36,7 +36,7 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		}
 		if sourceSquareAPIKey != nil {
 			credentials = &shared.SourceSquareAuthentication{
-				APIKey: sourceSquareAPIKey,
+				SourceSquareAPIKey: sourceSquareAPIKey,
 			}
 		}
 	}
@@ -114,7 +114,7 @@ func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutReq
 		}
 		if sourceSquareUpdateAPIKey != nil {
 			credentials = &shared.SourceSquareUpdateAuthentication{
-				APIKey: sourceSquareUpdateAPIKey,
+				SourceSquareUpdateAPIKey: sourceSquareUpdateAPIKey,
 			}
 		}
 	}

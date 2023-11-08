@@ -246,66 +246,66 @@ func (o *DestinationOracleNoTunnel) GetTunnelMethod() DestinationOracleTunnelMet
 type DestinationOracleSSHTunnelMethodType string
 
 const (
-	DestinationOracleSSHTunnelMethodTypeNoTunnel               DestinationOracleSSHTunnelMethodType = "NoTunnel"
-	DestinationOracleSSHTunnelMethodTypeSSHKeyAuthentication   DestinationOracleSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationOracleSSHTunnelMethodTypePasswordAuthentication DestinationOracleSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationOracleSSHTunnelMethodTypeDestinationOracleNoTunnel               DestinationOracleSSHTunnelMethodType = "destination-oracle_No Tunnel"
+	DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHKeyAuthentication   DestinationOracleSSHTunnelMethodType = "destination-oracle_SSH Key Authentication"
+	DestinationOracleSSHTunnelMethodTypeDestinationOraclePasswordAuthentication DestinationOracleSSHTunnelMethodType = "destination-oracle_Password Authentication"
 )
 
 type DestinationOracleSSHTunnelMethod struct {
-	NoTunnel               *DestinationOracleNoTunnel
-	SSHKeyAuthentication   *DestinationOracleSSHKeyAuthentication
-	PasswordAuthentication *DestinationOraclePasswordAuthentication
+	DestinationOracleNoTunnel               *DestinationOracleNoTunnel
+	DestinationOracleSSHKeyAuthentication   *DestinationOracleSSHKeyAuthentication
+	DestinationOraclePasswordAuthentication *DestinationOraclePasswordAuthentication
 
 	Type DestinationOracleSSHTunnelMethodType
 }
 
-func CreateDestinationOracleSSHTunnelMethodNoTunnel(noTunnel DestinationOracleNoTunnel) DestinationOracleSSHTunnelMethod {
-	typ := DestinationOracleSSHTunnelMethodTypeNoTunnel
+func CreateDestinationOracleSSHTunnelMethodDestinationOracleNoTunnel(destinationOracleNoTunnel DestinationOracleNoTunnel) DestinationOracleSSHTunnelMethod {
+	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleNoTunnel
 
 	return DestinationOracleSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationOracleNoTunnel: &destinationOracleNoTunnel,
+		Type:                      typ,
 	}
 }
 
-func CreateDestinationOracleSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationOracleSSHKeyAuthentication) DestinationOracleSSHTunnelMethod {
-	typ := DestinationOracleSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationOracleSSHTunnelMethodDestinationOracleSSHKeyAuthentication(destinationOracleSSHKeyAuthentication DestinationOracleSSHKeyAuthentication) DestinationOracleSSHTunnelMethod {
+	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHKeyAuthentication
 
 	return DestinationOracleSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationOracleSSHKeyAuthentication: &destinationOracleSSHKeyAuthentication,
+		Type:                                  typ,
 	}
 }
 
-func CreateDestinationOracleSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationOraclePasswordAuthentication) DestinationOracleSSHTunnelMethod {
-	typ := DestinationOracleSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationOracleSSHTunnelMethodDestinationOraclePasswordAuthentication(destinationOraclePasswordAuthentication DestinationOraclePasswordAuthentication) DestinationOracleSSHTunnelMethod {
+	typ := DestinationOracleSSHTunnelMethodTypeDestinationOraclePasswordAuthentication
 
 	return DestinationOracleSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationOraclePasswordAuthentication: &destinationOraclePasswordAuthentication,
+		Type:                                    typ,
 	}
 }
 
 func (u *DestinationOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationOracleNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationOracleSSHTunnelMethodTypeNoTunnel
+	destinationOracleNoTunnel := new(DestinationOracleNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationOracleNoTunnel, "", true, true); err == nil {
+		u.DestinationOracleNoTunnel = destinationOracleNoTunnel
+		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationOracleSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationOracleSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationOracleSSHKeyAuthentication := new(DestinationOracleSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationOracleSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationOracleSSHKeyAuthentication = destinationOracleSSHKeyAuthentication
+		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationOraclePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationOracleSSHTunnelMethodTypePasswordAuthentication
+	destinationOraclePasswordAuthentication := new(DestinationOraclePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationOraclePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationOraclePasswordAuthentication = destinationOraclePasswordAuthentication
+		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOraclePasswordAuthentication
 		return nil
 	}
 
@@ -313,16 +313,16 @@ func (u *DestinationOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationOracleNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationOracleNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationOracleSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationOracleSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationOraclePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationOraclePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

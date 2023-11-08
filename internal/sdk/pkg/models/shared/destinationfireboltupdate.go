@@ -136,8 +136,8 @@ func (o *SQLInserts) GetMethod() DestinationFireboltUpdateMethod {
 type DestinationFireboltUpdateLoadingMethodType string
 
 const (
-	DestinationFireboltUpdateLoadingMethodTypeSQLInserts         DestinationFireboltUpdateLoadingMethodType = "SQLInserts"
-	DestinationFireboltUpdateLoadingMethodTypeExternalTableViaS3 DestinationFireboltUpdateLoadingMethodType = "ExternalTableViaS3"
+	DestinationFireboltUpdateLoadingMethodTypeSQLInserts         DestinationFireboltUpdateLoadingMethodType = "SQL Inserts"
+	DestinationFireboltUpdateLoadingMethodTypeExternalTableViaS3 DestinationFireboltUpdateLoadingMethodType = "External Table via S3"
 )
 
 type DestinationFireboltUpdateLoadingMethod struct {

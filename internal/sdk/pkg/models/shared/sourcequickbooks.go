@@ -110,30 +110,30 @@ func (o *SourceQuickbooksOAuth20) GetTokenExpiryDate() time.Time {
 type SourceQuickbooksAuthorizationMethodType string
 
 const (
-	SourceQuickbooksAuthorizationMethodTypeOAuth20 SourceQuickbooksAuthorizationMethodType = "OAuth20"
+	SourceQuickbooksAuthorizationMethodTypeSourceQuickbooksOAuth20 SourceQuickbooksAuthorizationMethodType = "source-quickbooks_OAuth2.0"
 )
 
 type SourceQuickbooksAuthorizationMethod struct {
-	OAuth20 *SourceQuickbooksOAuth20
+	SourceQuickbooksOAuth20 *SourceQuickbooksOAuth20
 
 	Type SourceQuickbooksAuthorizationMethodType
 }
 
-func CreateSourceQuickbooksAuthorizationMethodOAuth20(oAuth20 SourceQuickbooksOAuth20) SourceQuickbooksAuthorizationMethod {
-	typ := SourceQuickbooksAuthorizationMethodTypeOAuth20
+func CreateSourceQuickbooksAuthorizationMethodSourceQuickbooksOAuth20(sourceQuickbooksOAuth20 SourceQuickbooksOAuth20) SourceQuickbooksAuthorizationMethod {
+	typ := SourceQuickbooksAuthorizationMethodTypeSourceQuickbooksOAuth20
 
 	return SourceQuickbooksAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceQuickbooksOAuth20: &sourceQuickbooksOAuth20,
+		Type:                    typ,
 	}
 }
 
 func (u *SourceQuickbooksAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	oAuth20 := new(SourceQuickbooksOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceQuickbooksAuthorizationMethodTypeOAuth20
+	sourceQuickbooksOAuth20 := new(SourceQuickbooksOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceQuickbooksOAuth20, "", true, true); err == nil {
+		u.SourceQuickbooksOAuth20 = sourceQuickbooksOAuth20
+		u.Type = SourceQuickbooksAuthorizationMethodTypeSourceQuickbooksOAuth20
 		return nil
 	}
 
@@ -141,8 +141,8 @@ func (u *SourceQuickbooksAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceQuickbooksAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceQuickbooksOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceQuickbooksOAuth20, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

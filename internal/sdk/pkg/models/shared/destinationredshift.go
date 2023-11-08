@@ -246,66 +246,66 @@ func (o *DestinationRedshiftNoTunnel) GetTunnelMethod() DestinationRedshiftTunne
 type DestinationRedshiftSSHTunnelMethodType string
 
 const (
-	DestinationRedshiftSSHTunnelMethodTypeNoTunnel               DestinationRedshiftSSHTunnelMethodType = "NoTunnel"
-	DestinationRedshiftSSHTunnelMethodTypeSSHKeyAuthentication   DestinationRedshiftSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationRedshiftSSHTunnelMethodTypePasswordAuthentication DestinationRedshiftSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftNoTunnel               DestinationRedshiftSSHTunnelMethodType = "destination-redshift_No Tunnel"
+	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHKeyAuthentication   DestinationRedshiftSSHTunnelMethodType = "destination-redshift_SSH Key Authentication"
+	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftPasswordAuthentication DestinationRedshiftSSHTunnelMethodType = "destination-redshift_Password Authentication"
 )
 
 type DestinationRedshiftSSHTunnelMethod struct {
-	NoTunnel               *DestinationRedshiftNoTunnel
-	SSHKeyAuthentication   *DestinationRedshiftSSHKeyAuthentication
-	PasswordAuthentication *DestinationRedshiftPasswordAuthentication
+	DestinationRedshiftNoTunnel               *DestinationRedshiftNoTunnel
+	DestinationRedshiftSSHKeyAuthentication   *DestinationRedshiftSSHKeyAuthentication
+	DestinationRedshiftPasswordAuthentication *DestinationRedshiftPasswordAuthentication
 
 	Type DestinationRedshiftSSHTunnelMethodType
 }
 
-func CreateDestinationRedshiftSSHTunnelMethodNoTunnel(noTunnel DestinationRedshiftNoTunnel) DestinationRedshiftSSHTunnelMethod {
-	typ := DestinationRedshiftSSHTunnelMethodTypeNoTunnel
+func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftNoTunnel(destinationRedshiftNoTunnel DestinationRedshiftNoTunnel) DestinationRedshiftSSHTunnelMethod {
+	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftNoTunnel
 
 	return DestinationRedshiftSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationRedshiftNoTunnel: &destinationRedshiftNoTunnel,
+		Type:                        typ,
 	}
 }
 
-func CreateDestinationRedshiftSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationRedshiftSSHKeyAuthentication) DestinationRedshiftSSHTunnelMethod {
-	typ := DestinationRedshiftSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftSSHKeyAuthentication(destinationRedshiftSSHKeyAuthentication DestinationRedshiftSSHKeyAuthentication) DestinationRedshiftSSHTunnelMethod {
+	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHKeyAuthentication
 
 	return DestinationRedshiftSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationRedshiftSSHKeyAuthentication: &destinationRedshiftSSHKeyAuthentication,
+		Type:                                    typ,
 	}
 }
 
-func CreateDestinationRedshiftSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationRedshiftPasswordAuthentication) DestinationRedshiftSSHTunnelMethod {
-	typ := DestinationRedshiftSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftPasswordAuthentication(destinationRedshiftPasswordAuthentication DestinationRedshiftPasswordAuthentication) DestinationRedshiftSSHTunnelMethod {
+	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftPasswordAuthentication
 
 	return DestinationRedshiftSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationRedshiftPasswordAuthentication: &destinationRedshiftPasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationRedshiftSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationRedshiftNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationRedshiftSSHTunnelMethodTypeNoTunnel
+	destinationRedshiftNoTunnel := new(DestinationRedshiftNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftNoTunnel, "", true, true); err == nil {
+		u.DestinationRedshiftNoTunnel = destinationRedshiftNoTunnel
+		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationRedshiftSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationRedshiftSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationRedshiftSSHKeyAuthentication := new(DestinationRedshiftSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftSSHKeyAuthentication = destinationRedshiftSSHKeyAuthentication
+		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationRedshiftPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationRedshiftSSHTunnelMethodTypePasswordAuthentication
+	destinationRedshiftPasswordAuthentication := new(DestinationRedshiftPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftPasswordAuthentication = destinationRedshiftPasswordAuthentication
+		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftPasswordAuthentication
 		return nil
 	}
 
@@ -313,16 +313,16 @@ func (u *DestinationRedshiftSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedshiftSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationRedshiftNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationRedshiftSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationRedshiftPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -428,48 +428,48 @@ func (o *DestinationRedshiftNoEncryption) GetEncryptionType() *DestinationRedshi
 type DestinationRedshiftEncryptionUnionType string
 
 const (
-	DestinationRedshiftEncryptionUnionTypeNoEncryption             DestinationRedshiftEncryptionUnionType = "NoEncryption"
-	DestinationRedshiftEncryptionUnionTypeAESCBCEnvelopeEncryption DestinationRedshiftEncryptionUnionType = "AESCBCEnvelopeEncryption"
+	DestinationRedshiftEncryptionUnionTypeDestinationRedshiftNoEncryption             DestinationRedshiftEncryptionUnionType = "destination-redshift_No encryption"
+	DestinationRedshiftEncryptionUnionTypeDestinationRedshiftAESCBCEnvelopeEncryption DestinationRedshiftEncryptionUnionType = "destination-redshift_AES-CBC envelope encryption"
 )
 
 type DestinationRedshiftEncryption struct {
-	NoEncryption             *DestinationRedshiftNoEncryption
-	AESCBCEnvelopeEncryption *DestinationRedshiftAESCBCEnvelopeEncryption
+	DestinationRedshiftNoEncryption             *DestinationRedshiftNoEncryption
+	DestinationRedshiftAESCBCEnvelopeEncryption *DestinationRedshiftAESCBCEnvelopeEncryption
 
 	Type DestinationRedshiftEncryptionUnionType
 }
 
-func CreateDestinationRedshiftEncryptionNoEncryption(noEncryption DestinationRedshiftNoEncryption) DestinationRedshiftEncryption {
-	typ := DestinationRedshiftEncryptionUnionTypeNoEncryption
+func CreateDestinationRedshiftEncryptionDestinationRedshiftNoEncryption(destinationRedshiftNoEncryption DestinationRedshiftNoEncryption) DestinationRedshiftEncryption {
+	typ := DestinationRedshiftEncryptionUnionTypeDestinationRedshiftNoEncryption
 
 	return DestinationRedshiftEncryption{
-		NoEncryption: &noEncryption,
-		Type:         typ,
+		DestinationRedshiftNoEncryption: &destinationRedshiftNoEncryption,
+		Type:                            typ,
 	}
 }
 
-func CreateDestinationRedshiftEncryptionAESCBCEnvelopeEncryption(aescbcEnvelopeEncryption DestinationRedshiftAESCBCEnvelopeEncryption) DestinationRedshiftEncryption {
-	typ := DestinationRedshiftEncryptionUnionTypeAESCBCEnvelopeEncryption
+func CreateDestinationRedshiftEncryptionDestinationRedshiftAESCBCEnvelopeEncryption(destinationRedshiftAESCBCEnvelopeEncryption DestinationRedshiftAESCBCEnvelopeEncryption) DestinationRedshiftEncryption {
+	typ := DestinationRedshiftEncryptionUnionTypeDestinationRedshiftAESCBCEnvelopeEncryption
 
 	return DestinationRedshiftEncryption{
-		AESCBCEnvelopeEncryption: &aescbcEnvelopeEncryption,
-		Type:                     typ,
+		DestinationRedshiftAESCBCEnvelopeEncryption: &destinationRedshiftAESCBCEnvelopeEncryption,
+		Type: typ,
 	}
 }
 
 func (u *DestinationRedshiftEncryption) UnmarshalJSON(data []byte) error {
 
-	noEncryption := new(DestinationRedshiftNoEncryption)
-	if err := utils.UnmarshalJSON(data, &noEncryption, "", true, true); err == nil {
-		u.NoEncryption = noEncryption
-		u.Type = DestinationRedshiftEncryptionUnionTypeNoEncryption
+	destinationRedshiftNoEncryption := new(DestinationRedshiftNoEncryption)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftNoEncryption, "", true, true); err == nil {
+		u.DestinationRedshiftNoEncryption = destinationRedshiftNoEncryption
+		u.Type = DestinationRedshiftEncryptionUnionTypeDestinationRedshiftNoEncryption
 		return nil
 	}
 
-	aescbcEnvelopeEncryption := new(DestinationRedshiftAESCBCEnvelopeEncryption)
-	if err := utils.UnmarshalJSON(data, &aescbcEnvelopeEncryption, "", true, true); err == nil {
-		u.AESCBCEnvelopeEncryption = aescbcEnvelopeEncryption
-		u.Type = DestinationRedshiftEncryptionUnionTypeAESCBCEnvelopeEncryption
+	destinationRedshiftAESCBCEnvelopeEncryption := new(DestinationRedshiftAESCBCEnvelopeEncryption)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftAESCBCEnvelopeEncryption, "", true, true); err == nil {
+		u.DestinationRedshiftAESCBCEnvelopeEncryption = destinationRedshiftAESCBCEnvelopeEncryption
+		u.Type = DestinationRedshiftEncryptionUnionTypeDestinationRedshiftAESCBCEnvelopeEncryption
 		return nil
 	}
 
@@ -477,12 +477,12 @@ func (u *DestinationRedshiftEncryption) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedshiftEncryption) MarshalJSON() ([]byte, error) {
-	if u.NoEncryption != nil {
-		return utils.MarshalJSON(u.NoEncryption, "", true)
+	if u.DestinationRedshiftNoEncryption != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftNoEncryption, "", true)
 	}
 
-	if u.AESCBCEnvelopeEncryption != nil {
-		return utils.MarshalJSON(u.AESCBCEnvelopeEncryption, "", true)
+	if u.DestinationRedshiftAESCBCEnvelopeEncryption != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftAESCBCEnvelopeEncryption, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -754,48 +754,48 @@ func (o *DestinationRedshiftStandard) GetMethod() DestinationRedshiftMethod {
 type DestinationRedshiftUploadingMethodType string
 
 const (
-	DestinationRedshiftUploadingMethodTypeStandard  DestinationRedshiftUploadingMethodType = "Standard"
-	DestinationRedshiftUploadingMethodTypeS3Staging DestinationRedshiftUploadingMethodType = "S3Staging"
+	DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard  DestinationRedshiftUploadingMethodType = "destination-redshift_Standard"
+	DestinationRedshiftUploadingMethodTypeDestinationRedshiftS3Staging DestinationRedshiftUploadingMethodType = "destination-redshift_S3 Staging"
 )
 
 type DestinationRedshiftUploadingMethod struct {
-	Standard  *DestinationRedshiftStandard
-	S3Staging *DestinationRedshiftS3Staging
+	DestinationRedshiftStandard  *DestinationRedshiftStandard
+	DestinationRedshiftS3Staging *DestinationRedshiftS3Staging
 
 	Type DestinationRedshiftUploadingMethodType
 }
 
-func CreateDestinationRedshiftUploadingMethodStandard(standard DestinationRedshiftStandard) DestinationRedshiftUploadingMethod {
-	typ := DestinationRedshiftUploadingMethodTypeStandard
+func CreateDestinationRedshiftUploadingMethodDestinationRedshiftStandard(destinationRedshiftStandard DestinationRedshiftStandard) DestinationRedshiftUploadingMethod {
+	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard
 
 	return DestinationRedshiftUploadingMethod{
-		Standard: &standard,
-		Type:     typ,
+		DestinationRedshiftStandard: &destinationRedshiftStandard,
+		Type:                        typ,
 	}
 }
 
-func CreateDestinationRedshiftUploadingMethodS3Staging(s3Staging DestinationRedshiftS3Staging) DestinationRedshiftUploadingMethod {
-	typ := DestinationRedshiftUploadingMethodTypeS3Staging
+func CreateDestinationRedshiftUploadingMethodDestinationRedshiftS3Staging(destinationRedshiftS3Staging DestinationRedshiftS3Staging) DestinationRedshiftUploadingMethod {
+	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftS3Staging
 
 	return DestinationRedshiftUploadingMethod{
-		S3Staging: &s3Staging,
-		Type:      typ,
+		DestinationRedshiftS3Staging: &destinationRedshiftS3Staging,
+		Type:                         typ,
 	}
 }
 
 func (u *DestinationRedshiftUploadingMethod) UnmarshalJSON(data []byte) error {
 
-	standard := new(DestinationRedshiftStandard)
-	if err := utils.UnmarshalJSON(data, &standard, "", true, true); err == nil {
-		u.Standard = standard
-		u.Type = DestinationRedshiftUploadingMethodTypeStandard
+	destinationRedshiftStandard := new(DestinationRedshiftStandard)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftStandard, "", true, true); err == nil {
+		u.DestinationRedshiftStandard = destinationRedshiftStandard
+		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard
 		return nil
 	}
 
-	s3Staging := new(DestinationRedshiftS3Staging)
-	if err := utils.UnmarshalJSON(data, &s3Staging, "", true, true); err == nil {
-		u.S3Staging = s3Staging
-		u.Type = DestinationRedshiftUploadingMethodTypeS3Staging
+	destinationRedshiftS3Staging := new(DestinationRedshiftS3Staging)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftS3Staging, "", true, true); err == nil {
+		u.DestinationRedshiftS3Staging = destinationRedshiftS3Staging
+		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftS3Staging
 		return nil
 	}
 
@@ -803,12 +803,12 @@ func (u *DestinationRedshiftUploadingMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedshiftUploadingMethod) MarshalJSON() ([]byte, error) {
-	if u.Standard != nil {
-		return utils.MarshalJSON(u.Standard, "", true)
+	if u.DestinationRedshiftStandard != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftStandard, "", true)
 	}
 
-	if u.S3Staging != nil {
-		return utils.MarshalJSON(u.S3Staging, "", true)
+	if u.DestinationRedshiftS3Staging != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftS3Staging, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

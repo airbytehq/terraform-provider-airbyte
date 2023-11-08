@@ -31,7 +31,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 		}
 		if sourceGoogleAnalyticsV4AuthenticateViaGoogleOauth != nil {
 			credentials = &shared.SourceGoogleAnalyticsV4Credentials{
-				AuthenticateViaGoogleOauth: sourceGoogleAnalyticsV4AuthenticateViaGoogleOauth,
+				SourceGoogleAnalyticsV4AuthenticateViaGoogleOauth: sourceGoogleAnalyticsV4AuthenticateViaGoogleOauth,
 			}
 		}
 		var sourceGoogleAnalyticsV4ServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication
@@ -43,7 +43,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 		}
 		if sourceGoogleAnalyticsV4ServiceAccountKeyAuthentication != nil {
 			credentials = &shared.SourceGoogleAnalyticsV4Credentials{
-				ServiceAccountKeyAuthentication: sourceGoogleAnalyticsV4ServiceAccountKeyAuthentication,
+				SourceGoogleAnalyticsV4ServiceAccountKeyAuthentication: sourceGoogleAnalyticsV4ServiceAccountKeyAuthentication,
 			}
 		}
 	}
@@ -113,7 +113,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToUpdateSDKType() *shared.SourceG
 		}
 		if sourceGoogleAnalyticsV4UpdateAuthenticateViaGoogleOauth != nil {
 			credentials = &shared.SourceGoogleAnalyticsV4UpdateCredentials{
-				AuthenticateViaGoogleOauth: sourceGoogleAnalyticsV4UpdateAuthenticateViaGoogleOauth,
+				SourceGoogleAnalyticsV4UpdateAuthenticateViaGoogleOauth: sourceGoogleAnalyticsV4UpdateAuthenticateViaGoogleOauth,
 			}
 		}
 		var sourceGoogleAnalyticsV4UpdateServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsV4UpdateServiceAccountKeyAuthentication
@@ -125,7 +125,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToUpdateSDKType() *shared.SourceG
 		}
 		if sourceGoogleAnalyticsV4UpdateServiceAccountKeyAuthentication != nil {
 			credentials = &shared.SourceGoogleAnalyticsV4UpdateCredentials{
-				ServiceAccountKeyAuthentication: sourceGoogleAnalyticsV4UpdateServiceAccountKeyAuthentication,
+				SourceGoogleAnalyticsV4UpdateServiceAccountKeyAuthentication: sourceGoogleAnalyticsV4UpdateServiceAccountKeyAuthentication,
 			}
 		}
 	}

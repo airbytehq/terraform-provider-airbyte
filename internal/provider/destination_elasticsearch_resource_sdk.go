@@ -21,7 +21,7 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 		}
 		if destinationElasticsearchAPIKeySecret != nil {
 			authenticationMethod = &shared.DestinationElasticsearchAuthenticationMethod{
-				APIKeySecret: destinationElasticsearchAPIKeySecret,
+				DestinationElasticsearchAPIKeySecret: destinationElasticsearchAPIKeySecret,
 			}
 		}
 		var destinationElasticsearchUsernamePassword *shared.DestinationElasticsearchUsernamePassword
@@ -35,7 +35,7 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 		}
 		if destinationElasticsearchUsernamePassword != nil {
 			authenticationMethod = &shared.DestinationElasticsearchAuthenticationMethod{
-				UsernamePassword: destinationElasticsearchUsernamePassword,
+				DestinationElasticsearchUsernamePassword: destinationElasticsearchUsernamePassword,
 			}
 		}
 	}

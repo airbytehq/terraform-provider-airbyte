@@ -137,23 +137,23 @@ func (o *SourceShopifyUpdateOAuth20) GetClientSecret() *string {
 type ShopifyAuthorizationMethodType string
 
 const (
-	ShopifyAuthorizationMethodTypeOAuth20     ShopifyAuthorizationMethodType = "OAuth20"
-	ShopifyAuthorizationMethodTypeAPIPassword ShopifyAuthorizationMethodType = "APIPassword"
+	ShopifyAuthorizationMethodTypeSourceShopifyUpdateOAuth20 ShopifyAuthorizationMethodType = "source-shopify-update_OAuth2.0"
+	ShopifyAuthorizationMethodTypeAPIPassword                ShopifyAuthorizationMethodType = "API Password"
 )
 
 type ShopifyAuthorizationMethod struct {
-	OAuth20     *SourceShopifyUpdateOAuth20
-	APIPassword *APIPassword
+	SourceShopifyUpdateOAuth20 *SourceShopifyUpdateOAuth20
+	APIPassword                *APIPassword
 
 	Type ShopifyAuthorizationMethodType
 }
 
-func CreateShopifyAuthorizationMethodOAuth20(oAuth20 SourceShopifyUpdateOAuth20) ShopifyAuthorizationMethod {
-	typ := ShopifyAuthorizationMethodTypeOAuth20
+func CreateShopifyAuthorizationMethodSourceShopifyUpdateOAuth20(sourceShopifyUpdateOAuth20 SourceShopifyUpdateOAuth20) ShopifyAuthorizationMethod {
+	typ := ShopifyAuthorizationMethodTypeSourceShopifyUpdateOAuth20
 
 	return ShopifyAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceShopifyUpdateOAuth20: &sourceShopifyUpdateOAuth20,
+		Type:                       typ,
 	}
 }
 
@@ -175,10 +175,10 @@ func (u *ShopifyAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	oAuth20 := new(SourceShopifyUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = ShopifyAuthorizationMethodTypeOAuth20
+	sourceShopifyUpdateOAuth20 := new(SourceShopifyUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceShopifyUpdateOAuth20, "", true, true); err == nil {
+		u.SourceShopifyUpdateOAuth20 = sourceShopifyUpdateOAuth20
+		u.Type = ShopifyAuthorizationMethodTypeSourceShopifyUpdateOAuth20
 		return nil
 	}
 
@@ -186,8 +186,8 @@ func (u *ShopifyAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u ShopifyAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceShopifyUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceShopifyUpdateOAuth20, "", true)
 	}
 
 	if u.APIPassword != nil {

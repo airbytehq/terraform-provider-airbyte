@@ -143,48 +143,48 @@ func (o *SourceMondayOAuth20) GetSubdomain() *string {
 type SourceMondayAuthorizationMethodType string
 
 const (
-	SourceMondayAuthorizationMethodTypeOAuth20  SourceMondayAuthorizationMethodType = "OAuth20"
-	SourceMondayAuthorizationMethodTypeAPIToken SourceMondayAuthorizationMethodType = "APIToken"
+	SourceMondayAuthorizationMethodTypeSourceMondayOAuth20  SourceMondayAuthorizationMethodType = "source-monday_OAuth2.0"
+	SourceMondayAuthorizationMethodTypeSourceMondayAPIToken SourceMondayAuthorizationMethodType = "source-monday_API Token"
 )
 
 type SourceMondayAuthorizationMethod struct {
-	OAuth20  *SourceMondayOAuth20
-	APIToken *SourceMondayAPIToken
+	SourceMondayOAuth20  *SourceMondayOAuth20
+	SourceMondayAPIToken *SourceMondayAPIToken
 
 	Type SourceMondayAuthorizationMethodType
 }
 
-func CreateSourceMondayAuthorizationMethodOAuth20(oAuth20 SourceMondayOAuth20) SourceMondayAuthorizationMethod {
-	typ := SourceMondayAuthorizationMethodTypeOAuth20
+func CreateSourceMondayAuthorizationMethodSourceMondayOAuth20(sourceMondayOAuth20 SourceMondayOAuth20) SourceMondayAuthorizationMethod {
+	typ := SourceMondayAuthorizationMethodTypeSourceMondayOAuth20
 
 	return SourceMondayAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceMondayOAuth20: &sourceMondayOAuth20,
+		Type:                typ,
 	}
 }
 
-func CreateSourceMondayAuthorizationMethodAPIToken(apiToken SourceMondayAPIToken) SourceMondayAuthorizationMethod {
-	typ := SourceMondayAuthorizationMethodTypeAPIToken
+func CreateSourceMondayAuthorizationMethodSourceMondayAPIToken(sourceMondayAPIToken SourceMondayAPIToken) SourceMondayAuthorizationMethod {
+	typ := SourceMondayAuthorizationMethodTypeSourceMondayAPIToken
 
 	return SourceMondayAuthorizationMethod{
-		APIToken: &apiToken,
-		Type:     typ,
+		SourceMondayAPIToken: &sourceMondayAPIToken,
+		Type:                 typ,
 	}
 }
 
 func (u *SourceMondayAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	apiToken := new(SourceMondayAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = SourceMondayAuthorizationMethodTypeAPIToken
+	sourceMondayAPIToken := new(SourceMondayAPIToken)
+	if err := utils.UnmarshalJSON(data, &sourceMondayAPIToken, "", true, true); err == nil {
+		u.SourceMondayAPIToken = sourceMondayAPIToken
+		u.Type = SourceMondayAuthorizationMethodTypeSourceMondayAPIToken
 		return nil
 	}
 
-	oAuth20 := new(SourceMondayOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceMondayAuthorizationMethodTypeOAuth20
+	sourceMondayOAuth20 := new(SourceMondayOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceMondayOAuth20, "", true, true); err == nil {
+		u.SourceMondayOAuth20 = sourceMondayOAuth20
+		u.Type = SourceMondayAuthorizationMethodTypeSourceMondayOAuth20
 		return nil
 	}
 
@@ -192,12 +192,12 @@ func (u *SourceMondayAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMondayAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceMondayOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceMondayOAuth20, "", true)
 	}
 
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.SourceMondayAPIToken != nil {
+		return utils.MarshalJSON(u.SourceMondayAPIToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

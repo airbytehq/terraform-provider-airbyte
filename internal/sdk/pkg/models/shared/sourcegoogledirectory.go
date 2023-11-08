@@ -149,48 +149,48 @@ func (o *SourceGoogleDirectorySignInViaGoogleOAuth) GetRefreshToken() string {
 type SourceGoogleDirectoryGoogleCredentialsType string
 
 const (
-	SourceGoogleDirectoryGoogleCredentialsTypeSignInViaGoogleOAuth SourceGoogleDirectoryGoogleCredentialsType = "SignInViaGoogleOAuth"
-	SourceGoogleDirectoryGoogleCredentialsTypeServiceAccountKey    SourceGoogleDirectoryGoogleCredentialsType = "ServiceAccountKey"
+	SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectorySignInViaGoogleOAuth SourceGoogleDirectoryGoogleCredentialsType = "source-google-directory_Sign in via Google (OAuth)"
+	SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryServiceAccountKey    SourceGoogleDirectoryGoogleCredentialsType = "source-google-directory_Service Account Key"
 )
 
 type SourceGoogleDirectoryGoogleCredentials struct {
-	SignInViaGoogleOAuth *SourceGoogleDirectorySignInViaGoogleOAuth
-	ServiceAccountKey    *SourceGoogleDirectoryServiceAccountKey
+	SourceGoogleDirectorySignInViaGoogleOAuth *SourceGoogleDirectorySignInViaGoogleOAuth
+	SourceGoogleDirectoryServiceAccountKey    *SourceGoogleDirectoryServiceAccountKey
 
 	Type SourceGoogleDirectoryGoogleCredentialsType
 }
 
-func CreateSourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth(signInViaGoogleOAuth SourceGoogleDirectorySignInViaGoogleOAuth) SourceGoogleDirectoryGoogleCredentials {
-	typ := SourceGoogleDirectoryGoogleCredentialsTypeSignInViaGoogleOAuth
+func CreateSourceGoogleDirectoryGoogleCredentialsSourceGoogleDirectorySignInViaGoogleOAuth(sourceGoogleDirectorySignInViaGoogleOAuth SourceGoogleDirectorySignInViaGoogleOAuth) SourceGoogleDirectoryGoogleCredentials {
+	typ := SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectorySignInViaGoogleOAuth
 
 	return SourceGoogleDirectoryGoogleCredentials{
-		SignInViaGoogleOAuth: &signInViaGoogleOAuth,
-		Type:                 typ,
+		SourceGoogleDirectorySignInViaGoogleOAuth: &sourceGoogleDirectorySignInViaGoogleOAuth,
+		Type: typ,
 	}
 }
 
-func CreateSourceGoogleDirectoryGoogleCredentialsServiceAccountKey(serviceAccountKey SourceGoogleDirectoryServiceAccountKey) SourceGoogleDirectoryGoogleCredentials {
-	typ := SourceGoogleDirectoryGoogleCredentialsTypeServiceAccountKey
+func CreateSourceGoogleDirectoryGoogleCredentialsSourceGoogleDirectoryServiceAccountKey(sourceGoogleDirectoryServiceAccountKey SourceGoogleDirectoryServiceAccountKey) SourceGoogleDirectoryGoogleCredentials {
+	typ := SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryServiceAccountKey
 
 	return SourceGoogleDirectoryGoogleCredentials{
-		ServiceAccountKey: &serviceAccountKey,
-		Type:              typ,
+		SourceGoogleDirectoryServiceAccountKey: &sourceGoogleDirectoryServiceAccountKey,
+		Type:                                   typ,
 	}
 }
 
 func (u *SourceGoogleDirectoryGoogleCredentials) UnmarshalJSON(data []byte) error {
 
-	serviceAccountKey := new(SourceGoogleDirectoryServiceAccountKey)
-	if err := utils.UnmarshalJSON(data, &serviceAccountKey, "", true, true); err == nil {
-		u.ServiceAccountKey = serviceAccountKey
-		u.Type = SourceGoogleDirectoryGoogleCredentialsTypeServiceAccountKey
+	sourceGoogleDirectoryServiceAccountKey := new(SourceGoogleDirectoryServiceAccountKey)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleDirectoryServiceAccountKey, "", true, true); err == nil {
+		u.SourceGoogleDirectoryServiceAccountKey = sourceGoogleDirectoryServiceAccountKey
+		u.Type = SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryServiceAccountKey
 		return nil
 	}
 
-	signInViaGoogleOAuth := new(SourceGoogleDirectorySignInViaGoogleOAuth)
-	if err := utils.UnmarshalJSON(data, &signInViaGoogleOAuth, "", true, true); err == nil {
-		u.SignInViaGoogleOAuth = signInViaGoogleOAuth
-		u.Type = SourceGoogleDirectoryGoogleCredentialsTypeSignInViaGoogleOAuth
+	sourceGoogleDirectorySignInViaGoogleOAuth := new(SourceGoogleDirectorySignInViaGoogleOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleDirectorySignInViaGoogleOAuth, "", true, true); err == nil {
+		u.SourceGoogleDirectorySignInViaGoogleOAuth = sourceGoogleDirectorySignInViaGoogleOAuth
+		u.Type = SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectorySignInViaGoogleOAuth
 		return nil
 	}
 
@@ -198,12 +198,12 @@ func (u *SourceGoogleDirectoryGoogleCredentials) UnmarshalJSON(data []byte) erro
 }
 
 func (u SourceGoogleDirectoryGoogleCredentials) MarshalJSON() ([]byte, error) {
-	if u.SignInViaGoogleOAuth != nil {
-		return utils.MarshalJSON(u.SignInViaGoogleOAuth, "", true)
+	if u.SourceGoogleDirectorySignInViaGoogleOAuth != nil {
+		return utils.MarshalJSON(u.SourceGoogleDirectorySignInViaGoogleOAuth, "", true)
 	}
 
-	if u.ServiceAccountKey != nil {
-		return utils.MarshalJSON(u.ServiceAccountKey, "", true)
+	if u.SourceGoogleDirectoryServiceAccountKey != nil {
+		return utils.MarshalJSON(u.SourceGoogleDirectoryServiceAccountKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

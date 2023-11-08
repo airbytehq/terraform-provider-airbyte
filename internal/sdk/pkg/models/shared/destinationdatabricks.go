@@ -334,66 +334,66 @@ func (o *DestinationDatabricksRecommendedManagedTables) GetDataSourceType() Dest
 type DestinationDatabricksDataSourceUnionType string
 
 const (
-	DestinationDatabricksDataSourceUnionTypeRecommendedManagedTables DestinationDatabricksDataSourceUnionType = "RecommendedManagedTables"
-	DestinationDatabricksDataSourceUnionTypeAmazonS3                 DestinationDatabricksDataSourceUnionType = "AmazonS3"
-	DestinationDatabricksDataSourceUnionTypeAzureBlobStorage         DestinationDatabricksDataSourceUnionType = "AzureBlobStorage"
+	DestinationDatabricksDataSourceUnionTypeDestinationDatabricksRecommendedManagedTables DestinationDatabricksDataSourceUnionType = "destination-databricks_[Recommended] Managed tables"
+	DestinationDatabricksDataSourceUnionTypeDestinationDatabricksAmazonS3                 DestinationDatabricksDataSourceUnionType = "destination-databricks_Amazon S3"
+	DestinationDatabricksDataSourceUnionTypeDestinationDatabricksAzureBlobStorage         DestinationDatabricksDataSourceUnionType = "destination-databricks_Azure Blob Storage"
 )
 
 type DestinationDatabricksDataSource struct {
-	RecommendedManagedTables *DestinationDatabricksRecommendedManagedTables
-	AmazonS3                 *DestinationDatabricksAmazonS3
-	AzureBlobStorage         *DestinationDatabricksAzureBlobStorage
+	DestinationDatabricksRecommendedManagedTables *DestinationDatabricksRecommendedManagedTables
+	DestinationDatabricksAmazonS3                 *DestinationDatabricksAmazonS3
+	DestinationDatabricksAzureBlobStorage         *DestinationDatabricksAzureBlobStorage
 
 	Type DestinationDatabricksDataSourceUnionType
 }
 
-func CreateDestinationDatabricksDataSourceRecommendedManagedTables(recommendedManagedTables DestinationDatabricksRecommendedManagedTables) DestinationDatabricksDataSource {
-	typ := DestinationDatabricksDataSourceUnionTypeRecommendedManagedTables
+func CreateDestinationDatabricksDataSourceDestinationDatabricksRecommendedManagedTables(destinationDatabricksRecommendedManagedTables DestinationDatabricksRecommendedManagedTables) DestinationDatabricksDataSource {
+	typ := DestinationDatabricksDataSourceUnionTypeDestinationDatabricksRecommendedManagedTables
 
 	return DestinationDatabricksDataSource{
-		RecommendedManagedTables: &recommendedManagedTables,
-		Type:                     typ,
+		DestinationDatabricksRecommendedManagedTables: &destinationDatabricksRecommendedManagedTables,
+		Type: typ,
 	}
 }
 
-func CreateDestinationDatabricksDataSourceAmazonS3(amazonS3 DestinationDatabricksAmazonS3) DestinationDatabricksDataSource {
-	typ := DestinationDatabricksDataSourceUnionTypeAmazonS3
+func CreateDestinationDatabricksDataSourceDestinationDatabricksAmazonS3(destinationDatabricksAmazonS3 DestinationDatabricksAmazonS3) DestinationDatabricksDataSource {
+	typ := DestinationDatabricksDataSourceUnionTypeDestinationDatabricksAmazonS3
 
 	return DestinationDatabricksDataSource{
-		AmazonS3: &amazonS3,
-		Type:     typ,
+		DestinationDatabricksAmazonS3: &destinationDatabricksAmazonS3,
+		Type:                          typ,
 	}
 }
 
-func CreateDestinationDatabricksDataSourceAzureBlobStorage(azureBlobStorage DestinationDatabricksAzureBlobStorage) DestinationDatabricksDataSource {
-	typ := DestinationDatabricksDataSourceUnionTypeAzureBlobStorage
+func CreateDestinationDatabricksDataSourceDestinationDatabricksAzureBlobStorage(destinationDatabricksAzureBlobStorage DestinationDatabricksAzureBlobStorage) DestinationDatabricksDataSource {
+	typ := DestinationDatabricksDataSourceUnionTypeDestinationDatabricksAzureBlobStorage
 
 	return DestinationDatabricksDataSource{
-		AzureBlobStorage: &azureBlobStorage,
-		Type:             typ,
+		DestinationDatabricksAzureBlobStorage: &destinationDatabricksAzureBlobStorage,
+		Type:                                  typ,
 	}
 }
 
 func (u *DestinationDatabricksDataSource) UnmarshalJSON(data []byte) error {
 
-	recommendedManagedTables := new(DestinationDatabricksRecommendedManagedTables)
-	if err := utils.UnmarshalJSON(data, &recommendedManagedTables, "", true, true); err == nil {
-		u.RecommendedManagedTables = recommendedManagedTables
-		u.Type = DestinationDatabricksDataSourceUnionTypeRecommendedManagedTables
+	destinationDatabricksRecommendedManagedTables := new(DestinationDatabricksRecommendedManagedTables)
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksRecommendedManagedTables, "", true, true); err == nil {
+		u.DestinationDatabricksRecommendedManagedTables = destinationDatabricksRecommendedManagedTables
+		u.Type = DestinationDatabricksDataSourceUnionTypeDestinationDatabricksRecommendedManagedTables
 		return nil
 	}
 
-	azureBlobStorage := new(DestinationDatabricksAzureBlobStorage)
-	if err := utils.UnmarshalJSON(data, &azureBlobStorage, "", true, true); err == nil {
-		u.AzureBlobStorage = azureBlobStorage
-		u.Type = DestinationDatabricksDataSourceUnionTypeAzureBlobStorage
+	destinationDatabricksAzureBlobStorage := new(DestinationDatabricksAzureBlobStorage)
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksAzureBlobStorage, "", true, true); err == nil {
+		u.DestinationDatabricksAzureBlobStorage = destinationDatabricksAzureBlobStorage
+		u.Type = DestinationDatabricksDataSourceUnionTypeDestinationDatabricksAzureBlobStorage
 		return nil
 	}
 
-	amazonS3 := new(DestinationDatabricksAmazonS3)
-	if err := utils.UnmarshalJSON(data, &amazonS3, "", true, true); err == nil {
-		u.AmazonS3 = amazonS3
-		u.Type = DestinationDatabricksDataSourceUnionTypeAmazonS3
+	destinationDatabricksAmazonS3 := new(DestinationDatabricksAmazonS3)
+	if err := utils.UnmarshalJSON(data, &destinationDatabricksAmazonS3, "", true, true); err == nil {
+		u.DestinationDatabricksAmazonS3 = destinationDatabricksAmazonS3
+		u.Type = DestinationDatabricksDataSourceUnionTypeDestinationDatabricksAmazonS3
 		return nil
 	}
 
@@ -401,16 +401,16 @@ func (u *DestinationDatabricksDataSource) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationDatabricksDataSource) MarshalJSON() ([]byte, error) {
-	if u.RecommendedManagedTables != nil {
-		return utils.MarshalJSON(u.RecommendedManagedTables, "", true)
+	if u.DestinationDatabricksRecommendedManagedTables != nil {
+		return utils.MarshalJSON(u.DestinationDatabricksRecommendedManagedTables, "", true)
 	}
 
-	if u.AmazonS3 != nil {
-		return utils.MarshalJSON(u.AmazonS3, "", true)
+	if u.DestinationDatabricksAmazonS3 != nil {
+		return utils.MarshalJSON(u.DestinationDatabricksAmazonS3, "", true)
 	}
 
-	if u.AzureBlobStorage != nil {
-		return utils.MarshalJSON(u.AzureBlobStorage, "", true)
+	if u.DestinationDatabricksAzureBlobStorage != nil {
+		return utils.MarshalJSON(u.DestinationDatabricksAzureBlobStorage, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

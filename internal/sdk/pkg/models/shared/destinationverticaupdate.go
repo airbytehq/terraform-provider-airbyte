@@ -222,66 +222,66 @@ func (o *DestinationVerticaUpdateNoTunnel) GetTunnelMethod() DestinationVerticaU
 type DestinationVerticaUpdateSSHTunnelMethodType string
 
 const (
-	DestinationVerticaUpdateSSHTunnelMethodTypeNoTunnel               DestinationVerticaUpdateSSHTunnelMethodType = "NoTunnel"
-	DestinationVerticaUpdateSSHTunnelMethodTypeSSHKeyAuthentication   DestinationVerticaUpdateSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationVerticaUpdateSSHTunnelMethodTypePasswordAuthentication DestinationVerticaUpdateSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateNoTunnel               DestinationVerticaUpdateSSHTunnelMethodType = "destination-vertica-update_No Tunnel"
+	DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHKeyAuthentication   DestinationVerticaUpdateSSHTunnelMethodType = "destination-vertica-update_SSH Key Authentication"
+	DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdatePasswordAuthentication DestinationVerticaUpdateSSHTunnelMethodType = "destination-vertica-update_Password Authentication"
 )
 
 type DestinationVerticaUpdateSSHTunnelMethod struct {
-	NoTunnel               *DestinationVerticaUpdateNoTunnel
-	SSHKeyAuthentication   *DestinationVerticaUpdateSSHKeyAuthentication
-	PasswordAuthentication *DestinationVerticaUpdatePasswordAuthentication
+	DestinationVerticaUpdateNoTunnel               *DestinationVerticaUpdateNoTunnel
+	DestinationVerticaUpdateSSHKeyAuthentication   *DestinationVerticaUpdateSSHKeyAuthentication
+	DestinationVerticaUpdatePasswordAuthentication *DestinationVerticaUpdatePasswordAuthentication
 
 	Type DestinationVerticaUpdateSSHTunnelMethodType
 }
 
-func CreateDestinationVerticaUpdateSSHTunnelMethodNoTunnel(noTunnel DestinationVerticaUpdateNoTunnel) DestinationVerticaUpdateSSHTunnelMethod {
-	typ := DestinationVerticaUpdateSSHTunnelMethodTypeNoTunnel
+func CreateDestinationVerticaUpdateSSHTunnelMethodDestinationVerticaUpdateNoTunnel(destinationVerticaUpdateNoTunnel DestinationVerticaUpdateNoTunnel) DestinationVerticaUpdateSSHTunnelMethod {
+	typ := DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateNoTunnel
 
 	return DestinationVerticaUpdateSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationVerticaUpdateNoTunnel: &destinationVerticaUpdateNoTunnel,
+		Type:                             typ,
 	}
 }
 
-func CreateDestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationVerticaUpdateSSHKeyAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
-	typ := DestinationVerticaUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationVerticaUpdateSSHTunnelMethodDestinationVerticaUpdateSSHKeyAuthentication(destinationVerticaUpdateSSHKeyAuthentication DestinationVerticaUpdateSSHKeyAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
+	typ := DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHKeyAuthentication
 
 	return DestinationVerticaUpdateSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationVerticaUpdateSSHKeyAuthentication: &destinationVerticaUpdateSSHKeyAuthentication,
+		Type: typ,
 	}
 }
 
-func CreateDestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationVerticaUpdatePasswordAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
-	typ := DestinationVerticaUpdateSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationVerticaUpdateSSHTunnelMethodDestinationVerticaUpdatePasswordAuthentication(destinationVerticaUpdatePasswordAuthentication DestinationVerticaUpdatePasswordAuthentication) DestinationVerticaUpdateSSHTunnelMethod {
+	typ := DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdatePasswordAuthentication
 
 	return DestinationVerticaUpdateSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationVerticaUpdatePasswordAuthentication: &destinationVerticaUpdatePasswordAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *DestinationVerticaUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationVerticaUpdateNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeNoTunnel
+	destinationVerticaUpdateNoTunnel := new(DestinationVerticaUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationVerticaUpdateNoTunnel, "", true, true); err == nil {
+		u.DestinationVerticaUpdateNoTunnel = destinationVerticaUpdateNoTunnel
+		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationVerticaUpdateSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationVerticaUpdateSSHKeyAuthentication := new(DestinationVerticaUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationVerticaUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationVerticaUpdateSSHKeyAuthentication = destinationVerticaUpdateSSHKeyAuthentication
+		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationVerticaUpdatePasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypePasswordAuthentication
+	destinationVerticaUpdatePasswordAuthentication := new(DestinationVerticaUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationVerticaUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationVerticaUpdatePasswordAuthentication = destinationVerticaUpdatePasswordAuthentication
+		u.Type = DestinationVerticaUpdateSSHTunnelMethodTypeDestinationVerticaUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -289,16 +289,16 @@ func (u *DestinationVerticaUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationVerticaUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationVerticaUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationVerticaUpdateNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationVerticaUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationVerticaUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationVerticaUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationVerticaUpdatePasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

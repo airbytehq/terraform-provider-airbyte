@@ -77,30 +77,30 @@ func (o *DestinationGcsHMACKey) GetHmacKeySecret() string {
 type DestinationGcsAuthenticationType string
 
 const (
-	DestinationGcsAuthenticationTypeHMACKey DestinationGcsAuthenticationType = "HMACKey"
+	DestinationGcsAuthenticationTypeDestinationGcsHMACKey DestinationGcsAuthenticationType = "destination-gcs_HMAC Key"
 )
 
 type DestinationGcsAuthentication struct {
-	HMACKey *DestinationGcsHMACKey
+	DestinationGcsHMACKey *DestinationGcsHMACKey
 
 	Type DestinationGcsAuthenticationType
 }
 
-func CreateDestinationGcsAuthenticationHMACKey(hmacKey DestinationGcsHMACKey) DestinationGcsAuthentication {
-	typ := DestinationGcsAuthenticationTypeHMACKey
+func CreateDestinationGcsAuthenticationDestinationGcsHMACKey(destinationGcsHMACKey DestinationGcsHMACKey) DestinationGcsAuthentication {
+	typ := DestinationGcsAuthenticationTypeDestinationGcsHMACKey
 
 	return DestinationGcsAuthentication{
-		HMACKey: &hmacKey,
-		Type:    typ,
+		DestinationGcsHMACKey: &destinationGcsHMACKey,
+		Type:                  typ,
 	}
 }
 
 func (u *DestinationGcsAuthentication) UnmarshalJSON(data []byte) error {
 
-	hmacKey := new(DestinationGcsHMACKey)
-	if err := utils.UnmarshalJSON(data, &hmacKey, "", true, true); err == nil {
-		u.HMACKey = hmacKey
-		u.Type = DestinationGcsAuthenticationTypeHMACKey
+	destinationGcsHMACKey := new(DestinationGcsHMACKey)
+	if err := utils.UnmarshalJSON(data, &destinationGcsHMACKey, "", true, true); err == nil {
+		u.DestinationGcsHMACKey = destinationGcsHMACKey
+		u.Type = DestinationGcsAuthenticationTypeDestinationGcsHMACKey
 		return nil
 	}
 
@@ -108,8 +108,8 @@ func (u *DestinationGcsAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationGcsAuthentication) MarshalJSON() ([]byte, error) {
-	if u.HMACKey != nil {
-		return utils.MarshalJSON(u.HMACKey, "", true)
+	if u.DestinationGcsHMACKey != nil {
+		return utils.MarshalJSON(u.DestinationGcsHMACKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -380,48 +380,48 @@ func (o *DestinationGcsSchemasFormatNoCompression) GetCompressionType() *Destina
 type DestinationGcsSchemasCompressionUnionType string
 
 const (
-	DestinationGcsSchemasCompressionUnionTypeNoCompression DestinationGcsSchemasCompressionUnionType = "NoCompression"
-	DestinationGcsSchemasCompressionUnionTypeGzip          DestinationGcsSchemasCompressionUnionType = "Gzip"
+	DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression DestinationGcsSchemasCompressionUnionType = "destination-gcs_Schemas_format_No Compression"
+	DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP                DestinationGcsSchemasCompressionUnionType = "destination-gcs_Schemas_GZIP"
 )
 
 type DestinationGcsSchemasCompression struct {
-	NoCompression *DestinationGcsSchemasFormatNoCompression
-	Gzip          *DestinationGcsSchemasGZIP
+	DestinationGcsSchemasFormatNoCompression *DestinationGcsSchemasFormatNoCompression
+	DestinationGcsSchemasGZIP                *DestinationGcsSchemasGZIP
 
 	Type DestinationGcsSchemasCompressionUnionType
 }
 
-func CreateDestinationGcsSchemasCompressionNoCompression(noCompression DestinationGcsSchemasFormatNoCompression) DestinationGcsSchemasCompression {
-	typ := DestinationGcsSchemasCompressionUnionTypeNoCompression
+func CreateDestinationGcsSchemasCompressionDestinationGcsSchemasFormatNoCompression(destinationGcsSchemasFormatNoCompression DestinationGcsSchemasFormatNoCompression) DestinationGcsSchemasCompression {
+	typ := DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression
 
 	return DestinationGcsSchemasCompression{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationGcsSchemasFormatNoCompression: &destinationGcsSchemasFormatNoCompression,
+		Type:                                     typ,
 	}
 }
 
-func CreateDestinationGcsSchemasCompressionGzip(gzip DestinationGcsSchemasGZIP) DestinationGcsSchemasCompression {
-	typ := DestinationGcsSchemasCompressionUnionTypeGzip
+func CreateDestinationGcsSchemasCompressionDestinationGcsSchemasGZIP(destinationGcsSchemasGZIP DestinationGcsSchemasGZIP) DestinationGcsSchemasCompression {
+	typ := DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP
 
 	return DestinationGcsSchemasCompression{
-		Gzip: &gzip,
-		Type: typ,
+		DestinationGcsSchemasGZIP: &destinationGcsSchemasGZIP,
+		Type:                      typ,
 	}
 }
 
 func (u *DestinationGcsSchemasCompression) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationGcsSchemasFormatNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationGcsSchemasCompressionUnionTypeNoCompression
+	destinationGcsSchemasFormatNoCompression := new(DestinationGcsSchemasFormatNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationGcsSchemasFormatNoCompression, "", true, true); err == nil {
+		u.DestinationGcsSchemasFormatNoCompression = destinationGcsSchemasFormatNoCompression
+		u.Type = DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasFormatNoCompression
 		return nil
 	}
 
-	gzip := new(DestinationGcsSchemasGZIP)
-	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
-		u.Gzip = gzip
-		u.Type = DestinationGcsSchemasCompressionUnionTypeGzip
+	destinationGcsSchemasGZIP := new(DestinationGcsSchemasGZIP)
+	if err := utils.UnmarshalJSON(data, &destinationGcsSchemasGZIP, "", true, true); err == nil {
+		u.DestinationGcsSchemasGZIP = destinationGcsSchemasGZIP
+		u.Type = DestinationGcsSchemasCompressionUnionTypeDestinationGcsSchemasGZIP
 		return nil
 	}
 
@@ -429,12 +429,12 @@ func (u *DestinationGcsSchemasCompression) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationGcsSchemasCompression) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationGcsSchemasFormatNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationGcsSchemasFormatNoCompression, "", true)
 	}
 
-	if u.Gzip != nil {
-		return utils.MarshalJSON(u.Gzip, "", true)
+	if u.DestinationGcsSchemasGZIP != nil {
+		return utils.MarshalJSON(u.DestinationGcsSchemasGZIP, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -593,48 +593,48 @@ func (o *DestinationGcsSchemasNoCompression) GetCompressionType() *DestinationGc
 type DestinationGcsCompressionUnionType string
 
 const (
-	DestinationGcsCompressionUnionTypeNoCompression DestinationGcsCompressionUnionType = "NoCompression"
-	DestinationGcsCompressionUnionTypeGzip          DestinationGcsCompressionUnionType = "Gzip"
+	DestinationGcsCompressionUnionTypeDestinationGcsSchemasNoCompression DestinationGcsCompressionUnionType = "destination-gcs_Schemas_No Compression"
+	DestinationGcsCompressionUnionTypeDestinationGcsGZIP                 DestinationGcsCompressionUnionType = "destination-gcs_GZIP"
 )
 
 type DestinationGcsCompression struct {
-	NoCompression *DestinationGcsSchemasNoCompression
-	Gzip          *DestinationGcsGZIP
+	DestinationGcsSchemasNoCompression *DestinationGcsSchemasNoCompression
+	DestinationGcsGZIP                 *DestinationGcsGZIP
 
 	Type DestinationGcsCompressionUnionType
 }
 
-func CreateDestinationGcsCompressionNoCompression(noCompression DestinationGcsSchemasNoCompression) DestinationGcsCompression {
-	typ := DestinationGcsCompressionUnionTypeNoCompression
+func CreateDestinationGcsCompressionDestinationGcsSchemasNoCompression(destinationGcsSchemasNoCompression DestinationGcsSchemasNoCompression) DestinationGcsCompression {
+	typ := DestinationGcsCompressionUnionTypeDestinationGcsSchemasNoCompression
 
 	return DestinationGcsCompression{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationGcsSchemasNoCompression: &destinationGcsSchemasNoCompression,
+		Type:                               typ,
 	}
 }
 
-func CreateDestinationGcsCompressionGzip(gzip DestinationGcsGZIP) DestinationGcsCompression {
-	typ := DestinationGcsCompressionUnionTypeGzip
+func CreateDestinationGcsCompressionDestinationGcsGZIP(destinationGcsGZIP DestinationGcsGZIP) DestinationGcsCompression {
+	typ := DestinationGcsCompressionUnionTypeDestinationGcsGZIP
 
 	return DestinationGcsCompression{
-		Gzip: &gzip,
-		Type: typ,
+		DestinationGcsGZIP: &destinationGcsGZIP,
+		Type:               typ,
 	}
 }
 
 func (u *DestinationGcsCompression) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationGcsSchemasNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationGcsCompressionUnionTypeNoCompression
+	destinationGcsSchemasNoCompression := new(DestinationGcsSchemasNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationGcsSchemasNoCompression, "", true, true); err == nil {
+		u.DestinationGcsSchemasNoCompression = destinationGcsSchemasNoCompression
+		u.Type = DestinationGcsCompressionUnionTypeDestinationGcsSchemasNoCompression
 		return nil
 	}
 
-	gzip := new(DestinationGcsGZIP)
-	if err := utils.UnmarshalJSON(data, &gzip, "", true, true); err == nil {
-		u.Gzip = gzip
-		u.Type = DestinationGcsCompressionUnionTypeGzip
+	destinationGcsGZIP := new(DestinationGcsGZIP)
+	if err := utils.UnmarshalJSON(data, &destinationGcsGZIP, "", true, true); err == nil {
+		u.DestinationGcsGZIP = destinationGcsGZIP
+		u.Type = DestinationGcsCompressionUnionTypeDestinationGcsGZIP
 		return nil
 	}
 
@@ -642,12 +642,12 @@ func (u *DestinationGcsCompression) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationGcsCompression) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationGcsSchemasNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationGcsSchemasNoCompression, "", true)
 	}
 
-	if u.Gzip != nil {
-		return utils.MarshalJSON(u.Gzip, "", true)
+	if u.DestinationGcsGZIP != nil {
+		return utils.MarshalJSON(u.DestinationGcsGZIP, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1067,120 +1067,120 @@ func (o *DestinationGcsNoCompression) GetCodec() *DestinationGcsCodec {
 type DestinationGcsCompressionCodecType string
 
 const (
-	DestinationGcsCompressionCodecTypeNoCompression DestinationGcsCompressionCodecType = "NoCompression"
-	DestinationGcsCompressionCodecTypeDeflate       DestinationGcsCompressionCodecType = "Deflate"
-	DestinationGcsCompressionCodecTypeBzip2         DestinationGcsCompressionCodecType = "Bzip2"
-	DestinationGcsCompressionCodecTypeXz            DestinationGcsCompressionCodecType = "Xz"
-	DestinationGcsCompressionCodecTypeZstandard     DestinationGcsCompressionCodecType = "Zstandard"
-	DestinationGcsCompressionCodecTypeSnappy        DestinationGcsCompressionCodecType = "Snappy"
+	DestinationGcsCompressionCodecTypeDestinationGcsNoCompression DestinationGcsCompressionCodecType = "destination-gcs_No Compression"
+	DestinationGcsCompressionCodecTypeDestinationGcsDeflate       DestinationGcsCompressionCodecType = "destination-gcs_Deflate"
+	DestinationGcsCompressionCodecTypeDestinationGcsBzip2         DestinationGcsCompressionCodecType = "destination-gcs_bzip2"
+	DestinationGcsCompressionCodecTypeDestinationGcsXz            DestinationGcsCompressionCodecType = "destination-gcs_xz"
+	DestinationGcsCompressionCodecTypeDestinationGcsZstandard     DestinationGcsCompressionCodecType = "destination-gcs_zstandard"
+	DestinationGcsCompressionCodecTypeDestinationGcsSnappy        DestinationGcsCompressionCodecType = "destination-gcs_snappy"
 )
 
 type DestinationGcsCompressionCodec struct {
-	NoCompression *DestinationGcsNoCompression
-	Deflate       *DestinationGcsDeflate
-	Bzip2         *DestinationGcsBzip2
-	Xz            *DestinationGcsXz
-	Zstandard     *DestinationGcsZstandard
-	Snappy        *DestinationGcsSnappy
+	DestinationGcsNoCompression *DestinationGcsNoCompression
+	DestinationGcsDeflate       *DestinationGcsDeflate
+	DestinationGcsBzip2         *DestinationGcsBzip2
+	DestinationGcsXz            *DestinationGcsXz
+	DestinationGcsZstandard     *DestinationGcsZstandard
+	DestinationGcsSnappy        *DestinationGcsSnappy
 
 	Type DestinationGcsCompressionCodecType
 }
 
-func CreateDestinationGcsCompressionCodecNoCompression(noCompression DestinationGcsNoCompression) DestinationGcsCompressionCodec {
-	typ := DestinationGcsCompressionCodecTypeNoCompression
+func CreateDestinationGcsCompressionCodecDestinationGcsNoCompression(destinationGcsNoCompression DestinationGcsNoCompression) DestinationGcsCompressionCodec {
+	typ := DestinationGcsCompressionCodecTypeDestinationGcsNoCompression
 
 	return DestinationGcsCompressionCodec{
-		NoCompression: &noCompression,
-		Type:          typ,
+		DestinationGcsNoCompression: &destinationGcsNoCompression,
+		Type:                        typ,
 	}
 }
 
-func CreateDestinationGcsCompressionCodecDeflate(deflate DestinationGcsDeflate) DestinationGcsCompressionCodec {
-	typ := DestinationGcsCompressionCodecTypeDeflate
+func CreateDestinationGcsCompressionCodecDestinationGcsDeflate(destinationGcsDeflate DestinationGcsDeflate) DestinationGcsCompressionCodec {
+	typ := DestinationGcsCompressionCodecTypeDestinationGcsDeflate
 
 	return DestinationGcsCompressionCodec{
-		Deflate: &deflate,
-		Type:    typ,
+		DestinationGcsDeflate: &destinationGcsDeflate,
+		Type:                  typ,
 	}
 }
 
-func CreateDestinationGcsCompressionCodecBzip2(bzip2 DestinationGcsBzip2) DestinationGcsCompressionCodec {
-	typ := DestinationGcsCompressionCodecTypeBzip2
+func CreateDestinationGcsCompressionCodecDestinationGcsBzip2(destinationGcsBzip2 DestinationGcsBzip2) DestinationGcsCompressionCodec {
+	typ := DestinationGcsCompressionCodecTypeDestinationGcsBzip2
 
 	return DestinationGcsCompressionCodec{
-		Bzip2: &bzip2,
-		Type:  typ,
+		DestinationGcsBzip2: &destinationGcsBzip2,
+		Type:                typ,
 	}
 }
 
-func CreateDestinationGcsCompressionCodecXz(xz DestinationGcsXz) DestinationGcsCompressionCodec {
-	typ := DestinationGcsCompressionCodecTypeXz
+func CreateDestinationGcsCompressionCodecDestinationGcsXz(destinationGcsXz DestinationGcsXz) DestinationGcsCompressionCodec {
+	typ := DestinationGcsCompressionCodecTypeDestinationGcsXz
 
 	return DestinationGcsCompressionCodec{
-		Xz:   &xz,
-		Type: typ,
+		DestinationGcsXz: &destinationGcsXz,
+		Type:             typ,
 	}
 }
 
-func CreateDestinationGcsCompressionCodecZstandard(zstandard DestinationGcsZstandard) DestinationGcsCompressionCodec {
-	typ := DestinationGcsCompressionCodecTypeZstandard
+func CreateDestinationGcsCompressionCodecDestinationGcsZstandard(destinationGcsZstandard DestinationGcsZstandard) DestinationGcsCompressionCodec {
+	typ := DestinationGcsCompressionCodecTypeDestinationGcsZstandard
 
 	return DestinationGcsCompressionCodec{
-		Zstandard: &zstandard,
-		Type:      typ,
+		DestinationGcsZstandard: &destinationGcsZstandard,
+		Type:                    typ,
 	}
 }
 
-func CreateDestinationGcsCompressionCodecSnappy(snappy DestinationGcsSnappy) DestinationGcsCompressionCodec {
-	typ := DestinationGcsCompressionCodecTypeSnappy
+func CreateDestinationGcsCompressionCodecDestinationGcsSnappy(destinationGcsSnappy DestinationGcsSnappy) DestinationGcsCompressionCodec {
+	typ := DestinationGcsCompressionCodecTypeDestinationGcsSnappy
 
 	return DestinationGcsCompressionCodec{
-		Snappy: &snappy,
-		Type:   typ,
+		DestinationGcsSnappy: &destinationGcsSnappy,
+		Type:                 typ,
 	}
 }
 
 func (u *DestinationGcsCompressionCodec) UnmarshalJSON(data []byte) error {
 
-	noCompression := new(DestinationGcsNoCompression)
-	if err := utils.UnmarshalJSON(data, &noCompression, "", true, true); err == nil {
-		u.NoCompression = noCompression
-		u.Type = DestinationGcsCompressionCodecTypeNoCompression
+	destinationGcsNoCompression := new(DestinationGcsNoCompression)
+	if err := utils.UnmarshalJSON(data, &destinationGcsNoCompression, "", true, true); err == nil {
+		u.DestinationGcsNoCompression = destinationGcsNoCompression
+		u.Type = DestinationGcsCompressionCodecTypeDestinationGcsNoCompression
 		return nil
 	}
 
-	bzip2 := new(DestinationGcsBzip2)
-	if err := utils.UnmarshalJSON(data, &bzip2, "", true, true); err == nil {
-		u.Bzip2 = bzip2
-		u.Type = DestinationGcsCompressionCodecTypeBzip2
+	destinationGcsBzip2 := new(DestinationGcsBzip2)
+	if err := utils.UnmarshalJSON(data, &destinationGcsBzip2, "", true, true); err == nil {
+		u.DestinationGcsBzip2 = destinationGcsBzip2
+		u.Type = DestinationGcsCompressionCodecTypeDestinationGcsBzip2
 		return nil
 	}
 
-	snappy := new(DestinationGcsSnappy)
-	if err := utils.UnmarshalJSON(data, &snappy, "", true, true); err == nil {
-		u.Snappy = snappy
-		u.Type = DestinationGcsCompressionCodecTypeSnappy
+	destinationGcsSnappy := new(DestinationGcsSnappy)
+	if err := utils.UnmarshalJSON(data, &destinationGcsSnappy, "", true, true); err == nil {
+		u.DestinationGcsSnappy = destinationGcsSnappy
+		u.Type = DestinationGcsCompressionCodecTypeDestinationGcsSnappy
 		return nil
 	}
 
-	deflate := new(DestinationGcsDeflate)
-	if err := utils.UnmarshalJSON(data, &deflate, "", true, true); err == nil {
-		u.Deflate = deflate
-		u.Type = DestinationGcsCompressionCodecTypeDeflate
+	destinationGcsDeflate := new(DestinationGcsDeflate)
+	if err := utils.UnmarshalJSON(data, &destinationGcsDeflate, "", true, true); err == nil {
+		u.DestinationGcsDeflate = destinationGcsDeflate
+		u.Type = DestinationGcsCompressionCodecTypeDestinationGcsDeflate
 		return nil
 	}
 
-	xz := new(DestinationGcsXz)
-	if err := utils.UnmarshalJSON(data, &xz, "", true, true); err == nil {
-		u.Xz = xz
-		u.Type = DestinationGcsCompressionCodecTypeXz
+	destinationGcsXz := new(DestinationGcsXz)
+	if err := utils.UnmarshalJSON(data, &destinationGcsXz, "", true, true); err == nil {
+		u.DestinationGcsXz = destinationGcsXz
+		u.Type = DestinationGcsCompressionCodecTypeDestinationGcsXz
 		return nil
 	}
 
-	zstandard := new(DestinationGcsZstandard)
-	if err := utils.UnmarshalJSON(data, &zstandard, "", true, true); err == nil {
-		u.Zstandard = zstandard
-		u.Type = DestinationGcsCompressionCodecTypeZstandard
+	destinationGcsZstandard := new(DestinationGcsZstandard)
+	if err := utils.UnmarshalJSON(data, &destinationGcsZstandard, "", true, true); err == nil {
+		u.DestinationGcsZstandard = destinationGcsZstandard
+		u.Type = DestinationGcsCompressionCodecTypeDestinationGcsZstandard
 		return nil
 	}
 
@@ -1188,28 +1188,28 @@ func (u *DestinationGcsCompressionCodec) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationGcsCompressionCodec) MarshalJSON() ([]byte, error) {
-	if u.NoCompression != nil {
-		return utils.MarshalJSON(u.NoCompression, "", true)
+	if u.DestinationGcsNoCompression != nil {
+		return utils.MarshalJSON(u.DestinationGcsNoCompression, "", true)
 	}
 
-	if u.Deflate != nil {
-		return utils.MarshalJSON(u.Deflate, "", true)
+	if u.DestinationGcsDeflate != nil {
+		return utils.MarshalJSON(u.DestinationGcsDeflate, "", true)
 	}
 
-	if u.Bzip2 != nil {
-		return utils.MarshalJSON(u.Bzip2, "", true)
+	if u.DestinationGcsBzip2 != nil {
+		return utils.MarshalJSON(u.DestinationGcsBzip2, "", true)
 	}
 
-	if u.Xz != nil {
-		return utils.MarshalJSON(u.Xz, "", true)
+	if u.DestinationGcsXz != nil {
+		return utils.MarshalJSON(u.DestinationGcsXz, "", true)
 	}
 
-	if u.Zstandard != nil {
-		return utils.MarshalJSON(u.Zstandard, "", true)
+	if u.DestinationGcsZstandard != nil {
+		return utils.MarshalJSON(u.DestinationGcsZstandard, "", true)
 	}
 
-	if u.Snappy != nil {
-		return utils.MarshalJSON(u.Snappy, "", true)
+	if u.DestinationGcsSnappy != nil {
+		return utils.MarshalJSON(u.DestinationGcsSnappy, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1274,84 +1274,84 @@ func (o *DestinationGcsAvroApacheAvro) GetFormatType() *DestinationGcsFormatType
 type DestinationGcsOutputFormatType string
 
 const (
-	DestinationGcsOutputFormatTypeAvroApacheAvro                DestinationGcsOutputFormatType = "AvroApacheAvro"
-	DestinationGcsOutputFormatTypeCSVCommaSeparatedValues       DestinationGcsOutputFormatType = "CSVCommaSeparatedValues"
-	DestinationGcsOutputFormatTypeJSONLinesNewlineDelimitedJSON DestinationGcsOutputFormatType = "JSONLinesNewlineDelimitedJSON"
-	DestinationGcsOutputFormatTypeParquetColumnarStorage        DestinationGcsOutputFormatType = "ParquetColumnarStorage"
+	DestinationGcsOutputFormatTypeDestinationGcsAvroApacheAvro                DestinationGcsOutputFormatType = "destination-gcs_Avro: Apache Avro"
+	DestinationGcsOutputFormatTypeDestinationGcsCSVCommaSeparatedValues       DestinationGcsOutputFormatType = "destination-gcs_CSV: Comma-Separated Values"
+	DestinationGcsOutputFormatTypeDestinationGcsJSONLinesNewlineDelimitedJSON DestinationGcsOutputFormatType = "destination-gcs_JSON Lines: newline-delimited JSON"
+	DestinationGcsOutputFormatTypeDestinationGcsParquetColumnarStorage        DestinationGcsOutputFormatType = "destination-gcs_Parquet: Columnar Storage"
 )
 
 type DestinationGcsOutputFormat struct {
-	AvroApacheAvro                *DestinationGcsAvroApacheAvro
-	CSVCommaSeparatedValues       *DestinationGcsCSVCommaSeparatedValues
-	JSONLinesNewlineDelimitedJSON *DestinationGcsJSONLinesNewlineDelimitedJSON
-	ParquetColumnarStorage        *DestinationGcsParquetColumnarStorage
+	DestinationGcsAvroApacheAvro                *DestinationGcsAvroApacheAvro
+	DestinationGcsCSVCommaSeparatedValues       *DestinationGcsCSVCommaSeparatedValues
+	DestinationGcsJSONLinesNewlineDelimitedJSON *DestinationGcsJSONLinesNewlineDelimitedJSON
+	DestinationGcsParquetColumnarStorage        *DestinationGcsParquetColumnarStorage
 
 	Type DestinationGcsOutputFormatType
 }
 
-func CreateDestinationGcsOutputFormatAvroApacheAvro(avroApacheAvro DestinationGcsAvroApacheAvro) DestinationGcsOutputFormat {
-	typ := DestinationGcsOutputFormatTypeAvroApacheAvro
+func CreateDestinationGcsOutputFormatDestinationGcsAvroApacheAvro(destinationGcsAvroApacheAvro DestinationGcsAvroApacheAvro) DestinationGcsOutputFormat {
+	typ := DestinationGcsOutputFormatTypeDestinationGcsAvroApacheAvro
 
 	return DestinationGcsOutputFormat{
-		AvroApacheAvro: &avroApacheAvro,
-		Type:           typ,
+		DestinationGcsAvroApacheAvro: &destinationGcsAvroApacheAvro,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationGcsOutputFormatCSVCommaSeparatedValues(csvCommaSeparatedValues DestinationGcsCSVCommaSeparatedValues) DestinationGcsOutputFormat {
-	typ := DestinationGcsOutputFormatTypeCSVCommaSeparatedValues
+func CreateDestinationGcsOutputFormatDestinationGcsCSVCommaSeparatedValues(destinationGcsCSVCommaSeparatedValues DestinationGcsCSVCommaSeparatedValues) DestinationGcsOutputFormat {
+	typ := DestinationGcsOutputFormatTypeDestinationGcsCSVCommaSeparatedValues
 
 	return DestinationGcsOutputFormat{
-		CSVCommaSeparatedValues: &csvCommaSeparatedValues,
-		Type:                    typ,
+		DestinationGcsCSVCommaSeparatedValues: &destinationGcsCSVCommaSeparatedValues,
+		Type:                                  typ,
 	}
 }
 
-func CreateDestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON(jsonLinesNewlineDelimitedJSON DestinationGcsJSONLinesNewlineDelimitedJSON) DestinationGcsOutputFormat {
-	typ := DestinationGcsOutputFormatTypeJSONLinesNewlineDelimitedJSON
+func CreateDestinationGcsOutputFormatDestinationGcsJSONLinesNewlineDelimitedJSON(destinationGcsJSONLinesNewlineDelimitedJSON DestinationGcsJSONLinesNewlineDelimitedJSON) DestinationGcsOutputFormat {
+	typ := DestinationGcsOutputFormatTypeDestinationGcsJSONLinesNewlineDelimitedJSON
 
 	return DestinationGcsOutputFormat{
-		JSONLinesNewlineDelimitedJSON: &jsonLinesNewlineDelimitedJSON,
-		Type:                          typ,
+		DestinationGcsJSONLinesNewlineDelimitedJSON: &destinationGcsJSONLinesNewlineDelimitedJSON,
+		Type: typ,
 	}
 }
 
-func CreateDestinationGcsOutputFormatParquetColumnarStorage(parquetColumnarStorage DestinationGcsParquetColumnarStorage) DestinationGcsOutputFormat {
-	typ := DestinationGcsOutputFormatTypeParquetColumnarStorage
+func CreateDestinationGcsOutputFormatDestinationGcsParquetColumnarStorage(destinationGcsParquetColumnarStorage DestinationGcsParquetColumnarStorage) DestinationGcsOutputFormat {
+	typ := DestinationGcsOutputFormatTypeDestinationGcsParquetColumnarStorage
 
 	return DestinationGcsOutputFormat{
-		ParquetColumnarStorage: &parquetColumnarStorage,
-		Type:                   typ,
+		DestinationGcsParquetColumnarStorage: &destinationGcsParquetColumnarStorage,
+		Type:                                 typ,
 	}
 }
 
 func (u *DestinationGcsOutputFormat) UnmarshalJSON(data []byte) error {
 
-	avroApacheAvro := new(DestinationGcsAvroApacheAvro)
-	if err := utils.UnmarshalJSON(data, &avroApacheAvro, "", true, true); err == nil {
-		u.AvroApacheAvro = avroApacheAvro
-		u.Type = DestinationGcsOutputFormatTypeAvroApacheAvro
+	destinationGcsAvroApacheAvro := new(DestinationGcsAvroApacheAvro)
+	if err := utils.UnmarshalJSON(data, &destinationGcsAvroApacheAvro, "", true, true); err == nil {
+		u.DestinationGcsAvroApacheAvro = destinationGcsAvroApacheAvro
+		u.Type = DestinationGcsOutputFormatTypeDestinationGcsAvroApacheAvro
 		return nil
 	}
 
-	jsonLinesNewlineDelimitedJSON := new(DestinationGcsJSONLinesNewlineDelimitedJSON)
-	if err := utils.UnmarshalJSON(data, &jsonLinesNewlineDelimitedJSON, "", true, true); err == nil {
-		u.JSONLinesNewlineDelimitedJSON = jsonLinesNewlineDelimitedJSON
-		u.Type = DestinationGcsOutputFormatTypeJSONLinesNewlineDelimitedJSON
+	destinationGcsJSONLinesNewlineDelimitedJSON := new(DestinationGcsJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &destinationGcsJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.DestinationGcsJSONLinesNewlineDelimitedJSON = destinationGcsJSONLinesNewlineDelimitedJSON
+		u.Type = DestinationGcsOutputFormatTypeDestinationGcsJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
-	csvCommaSeparatedValues := new(DestinationGcsCSVCommaSeparatedValues)
-	if err := utils.UnmarshalJSON(data, &csvCommaSeparatedValues, "", true, true); err == nil {
-		u.CSVCommaSeparatedValues = csvCommaSeparatedValues
-		u.Type = DestinationGcsOutputFormatTypeCSVCommaSeparatedValues
+	destinationGcsCSVCommaSeparatedValues := new(DestinationGcsCSVCommaSeparatedValues)
+	if err := utils.UnmarshalJSON(data, &destinationGcsCSVCommaSeparatedValues, "", true, true); err == nil {
+		u.DestinationGcsCSVCommaSeparatedValues = destinationGcsCSVCommaSeparatedValues
+		u.Type = DestinationGcsOutputFormatTypeDestinationGcsCSVCommaSeparatedValues
 		return nil
 	}
 
-	parquetColumnarStorage := new(DestinationGcsParquetColumnarStorage)
-	if err := utils.UnmarshalJSON(data, &parquetColumnarStorage, "", true, true); err == nil {
-		u.ParquetColumnarStorage = parquetColumnarStorage
-		u.Type = DestinationGcsOutputFormatTypeParquetColumnarStorage
+	destinationGcsParquetColumnarStorage := new(DestinationGcsParquetColumnarStorage)
+	if err := utils.UnmarshalJSON(data, &destinationGcsParquetColumnarStorage, "", true, true); err == nil {
+		u.DestinationGcsParquetColumnarStorage = destinationGcsParquetColumnarStorage
+		u.Type = DestinationGcsOutputFormatTypeDestinationGcsParquetColumnarStorage
 		return nil
 	}
 
@@ -1359,20 +1359,20 @@ func (u *DestinationGcsOutputFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationGcsOutputFormat) MarshalJSON() ([]byte, error) {
-	if u.AvroApacheAvro != nil {
-		return utils.MarshalJSON(u.AvroApacheAvro, "", true)
+	if u.DestinationGcsAvroApacheAvro != nil {
+		return utils.MarshalJSON(u.DestinationGcsAvroApacheAvro, "", true)
 	}
 
-	if u.CSVCommaSeparatedValues != nil {
-		return utils.MarshalJSON(u.CSVCommaSeparatedValues, "", true)
+	if u.DestinationGcsCSVCommaSeparatedValues != nil {
+		return utils.MarshalJSON(u.DestinationGcsCSVCommaSeparatedValues, "", true)
 	}
 
-	if u.JSONLinesNewlineDelimitedJSON != nil {
-		return utils.MarshalJSON(u.JSONLinesNewlineDelimitedJSON, "", true)
+	if u.DestinationGcsJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationGcsJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	if u.ParquetColumnarStorage != nil {
-		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
+	if u.DestinationGcsParquetColumnarStorage != nil {
+		return utils.MarshalJSON(u.DestinationGcsParquetColumnarStorage, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

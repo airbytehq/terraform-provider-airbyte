@@ -163,48 +163,48 @@ func (o *SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20) GetTenantID() stri
 type SourceMicrosoftTeamsAuthenticationMechanismType string
 
 const (
-	SourceMicrosoftTeamsAuthenticationMechanismTypeAuthenticateViaMicrosoftOAuth20 SourceMicrosoftTeamsAuthenticationMechanismType = "AuthenticateViaMicrosoftOAuth20"
-	SourceMicrosoftTeamsAuthenticationMechanismTypeAuthenticateViaMicrosoft        SourceMicrosoftTeamsAuthenticationMechanismType = "AuthenticateViaMicrosoft"
+	SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 SourceMicrosoftTeamsAuthenticationMechanismType = "source-microsoft-teams_Authenticate via Microsoft (OAuth 2.0)"
+	SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoft        SourceMicrosoftTeamsAuthenticationMechanismType = "source-microsoft-teams_Authenticate via Microsoft"
 )
 
 type SourceMicrosoftTeamsAuthenticationMechanism struct {
-	AuthenticateViaMicrosoftOAuth20 *SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
-	AuthenticateViaMicrosoft        *SourceMicrosoftTeamsAuthenticateViaMicrosoft
+	SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 *SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
+	SourceMicrosoftTeamsAuthenticateViaMicrosoft        *SourceMicrosoftTeamsAuthenticateViaMicrosoft
 
 	Type SourceMicrosoftTeamsAuthenticationMechanismType
 }
 
-func CreateSourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20(authenticateViaMicrosoftOAuth20 SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20) SourceMicrosoftTeamsAuthenticationMechanism {
-	typ := SourceMicrosoftTeamsAuthenticationMechanismTypeAuthenticateViaMicrosoftOAuth20
+func CreateSourceMicrosoftTeamsAuthenticationMechanismSourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20(sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20) SourceMicrosoftTeamsAuthenticationMechanism {
+	typ := SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
 
 	return SourceMicrosoftTeamsAuthenticationMechanism{
-		AuthenticateViaMicrosoftOAuth20: &authenticateViaMicrosoftOAuth20,
-		Type:                            typ,
+		SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20: &sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20,
+		Type: typ,
 	}
 }
 
-func CreateSourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft(authenticateViaMicrosoft SourceMicrosoftTeamsAuthenticateViaMicrosoft) SourceMicrosoftTeamsAuthenticationMechanism {
-	typ := SourceMicrosoftTeamsAuthenticationMechanismTypeAuthenticateViaMicrosoft
+func CreateSourceMicrosoftTeamsAuthenticationMechanismSourceMicrosoftTeamsAuthenticateViaMicrosoft(sourceMicrosoftTeamsAuthenticateViaMicrosoft SourceMicrosoftTeamsAuthenticateViaMicrosoft) SourceMicrosoftTeamsAuthenticationMechanism {
+	typ := SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoft
 
 	return SourceMicrosoftTeamsAuthenticationMechanism{
-		AuthenticateViaMicrosoft: &authenticateViaMicrosoft,
-		Type:                     typ,
+		SourceMicrosoftTeamsAuthenticateViaMicrosoft: &sourceMicrosoftTeamsAuthenticateViaMicrosoft,
+		Type: typ,
 	}
 }
 
 func (u *SourceMicrosoftTeamsAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 
-	authenticateViaMicrosoft := new(SourceMicrosoftTeamsAuthenticateViaMicrosoft)
-	if err := utils.UnmarshalJSON(data, &authenticateViaMicrosoft, "", true, true); err == nil {
-		u.AuthenticateViaMicrosoft = authenticateViaMicrosoft
-		u.Type = SourceMicrosoftTeamsAuthenticationMechanismTypeAuthenticateViaMicrosoft
+	sourceMicrosoftTeamsAuthenticateViaMicrosoft := new(SourceMicrosoftTeamsAuthenticateViaMicrosoft)
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftTeamsAuthenticateViaMicrosoft, "", true, true); err == nil {
+		u.SourceMicrosoftTeamsAuthenticateViaMicrosoft = sourceMicrosoftTeamsAuthenticateViaMicrosoft
+		u.Type = SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoft
 		return nil
 	}
 
-	authenticateViaMicrosoftOAuth20 := new(SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20)
-	if err := utils.UnmarshalJSON(data, &authenticateViaMicrosoftOAuth20, "", true, true); err == nil {
-		u.AuthenticateViaMicrosoftOAuth20 = authenticateViaMicrosoftOAuth20
-		u.Type = SourceMicrosoftTeamsAuthenticationMechanismTypeAuthenticateViaMicrosoftOAuth20
+	sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 := new(SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20, "", true, true); err == nil {
+		u.SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 = sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
+		u.Type = SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
 		return nil
 	}
 
@@ -212,12 +212,12 @@ func (u *SourceMicrosoftTeamsAuthenticationMechanism) UnmarshalJSON(data []byte)
 }
 
 func (u SourceMicrosoftTeamsAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaMicrosoftOAuth20 != nil {
-		return utils.MarshalJSON(u.AuthenticateViaMicrosoftOAuth20, "", true)
+	if u.SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20, "", true)
 	}
 
-	if u.AuthenticateViaMicrosoft != nil {
-		return utils.MarshalJSON(u.AuthenticateViaMicrosoft, "", true)
+	if u.SourceMicrosoftTeamsAuthenticateViaMicrosoft != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftTeamsAuthenticateViaMicrosoft, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

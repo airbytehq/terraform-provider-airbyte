@@ -136,48 +136,48 @@ func (o *SourceGoogleSheetsAuthenticateViaGoogleOAuth) GetRefreshToken() string 
 type SourceGoogleSheetsAuthenticationType string
 
 const (
-	SourceGoogleSheetsAuthenticationTypeAuthenticateViaGoogleOAuth      SourceGoogleSheetsAuthenticationType = "AuthenticateViaGoogleOAuth"
-	SourceGoogleSheetsAuthenticationTypeServiceAccountKeyAuthentication SourceGoogleSheetsAuthenticationType = "ServiceAccountKeyAuthentication"
+	SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsAuthenticateViaGoogleOAuth      SourceGoogleSheetsAuthenticationType = "source-google-sheets_Authenticate via Google (OAuth)"
+	SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsServiceAccountKeyAuthentication SourceGoogleSheetsAuthenticationType = "source-google-sheets_Service Account Key Authentication"
 )
 
 type SourceGoogleSheetsAuthentication struct {
-	AuthenticateViaGoogleOAuth      *SourceGoogleSheetsAuthenticateViaGoogleOAuth
-	ServiceAccountKeyAuthentication *SourceGoogleSheetsServiceAccountKeyAuthentication
+	SourceGoogleSheetsAuthenticateViaGoogleOAuth      *SourceGoogleSheetsAuthenticateViaGoogleOAuth
+	SourceGoogleSheetsServiceAccountKeyAuthentication *SourceGoogleSheetsServiceAccountKeyAuthentication
 
 	Type SourceGoogleSheetsAuthenticationType
 }
 
-func CreateSourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth(authenticateViaGoogleOAuth SourceGoogleSheetsAuthenticateViaGoogleOAuth) SourceGoogleSheetsAuthentication {
-	typ := SourceGoogleSheetsAuthenticationTypeAuthenticateViaGoogleOAuth
+func CreateSourceGoogleSheetsAuthenticationSourceGoogleSheetsAuthenticateViaGoogleOAuth(sourceGoogleSheetsAuthenticateViaGoogleOAuth SourceGoogleSheetsAuthenticateViaGoogleOAuth) SourceGoogleSheetsAuthentication {
+	typ := SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsAuthenticateViaGoogleOAuth
 
 	return SourceGoogleSheetsAuthentication{
-		AuthenticateViaGoogleOAuth: &authenticateViaGoogleOAuth,
-		Type:                       typ,
+		SourceGoogleSheetsAuthenticateViaGoogleOAuth: &sourceGoogleSheetsAuthenticateViaGoogleOAuth,
+		Type: typ,
 	}
 }
 
-func CreateSourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication(serviceAccountKeyAuthentication SourceGoogleSheetsServiceAccountKeyAuthentication) SourceGoogleSheetsAuthentication {
-	typ := SourceGoogleSheetsAuthenticationTypeServiceAccountKeyAuthentication
+func CreateSourceGoogleSheetsAuthenticationSourceGoogleSheetsServiceAccountKeyAuthentication(sourceGoogleSheetsServiceAccountKeyAuthentication SourceGoogleSheetsServiceAccountKeyAuthentication) SourceGoogleSheetsAuthentication {
+	typ := SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsServiceAccountKeyAuthentication
 
 	return SourceGoogleSheetsAuthentication{
-		ServiceAccountKeyAuthentication: &serviceAccountKeyAuthentication,
-		Type:                            typ,
+		SourceGoogleSheetsServiceAccountKeyAuthentication: &sourceGoogleSheetsServiceAccountKeyAuthentication,
+		Type: typ,
 	}
 }
 
 func (u *SourceGoogleSheetsAuthentication) UnmarshalJSON(data []byte) error {
 
-	serviceAccountKeyAuthentication := new(SourceGoogleSheetsServiceAccountKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &serviceAccountKeyAuthentication, "", true, true); err == nil {
-		u.ServiceAccountKeyAuthentication = serviceAccountKeyAuthentication
-		u.Type = SourceGoogleSheetsAuthenticationTypeServiceAccountKeyAuthentication
+	sourceGoogleSheetsServiceAccountKeyAuthentication := new(SourceGoogleSheetsServiceAccountKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleSheetsServiceAccountKeyAuthentication, "", true, true); err == nil {
+		u.SourceGoogleSheetsServiceAccountKeyAuthentication = sourceGoogleSheetsServiceAccountKeyAuthentication
+		u.Type = SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsServiceAccountKeyAuthentication
 		return nil
 	}
 
-	authenticateViaGoogleOAuth := new(SourceGoogleSheetsAuthenticateViaGoogleOAuth)
-	if err := utils.UnmarshalJSON(data, &authenticateViaGoogleOAuth, "", true, true); err == nil {
-		u.AuthenticateViaGoogleOAuth = authenticateViaGoogleOAuth
-		u.Type = SourceGoogleSheetsAuthenticationTypeAuthenticateViaGoogleOAuth
+	sourceGoogleSheetsAuthenticateViaGoogleOAuth := new(SourceGoogleSheetsAuthenticateViaGoogleOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleSheetsAuthenticateViaGoogleOAuth, "", true, true); err == nil {
+		u.SourceGoogleSheetsAuthenticateViaGoogleOAuth = sourceGoogleSheetsAuthenticateViaGoogleOAuth
+		u.Type = SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsAuthenticateViaGoogleOAuth
 		return nil
 	}
 
@@ -185,12 +185,12 @@ func (u *SourceGoogleSheetsAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGoogleSheetsAuthentication) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaGoogleOAuth != nil {
-		return utils.MarshalJSON(u.AuthenticateViaGoogleOAuth, "", true)
+	if u.SourceGoogleSheetsAuthenticateViaGoogleOAuth != nil {
+		return utils.MarshalJSON(u.SourceGoogleSheetsAuthenticateViaGoogleOAuth, "", true)
 	}
 
-	if u.ServiceAccountKeyAuthentication != nil {
-		return utils.MarshalJSON(u.ServiceAccountKeyAuthentication, "", true)
+	if u.SourceGoogleSheetsServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceGoogleSheetsServiceAccountKeyAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

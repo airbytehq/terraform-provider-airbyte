@@ -137,13 +137,13 @@ func (o *OAuth) GetOptionTitle() *OptionTitle {
 type SourceGithubUpdateAuthenticationType string
 
 const (
-	SourceGithubUpdateAuthenticationTypeOAuth               SourceGithubUpdateAuthenticationType = "OAuth"
-	SourceGithubUpdateAuthenticationTypePersonalAccessToken SourceGithubUpdateAuthenticationType = "PersonalAccessToken"
+	SourceGithubUpdateAuthenticationTypeOAuth                                 SourceGithubUpdateAuthenticationType = "OAuth"
+	SourceGithubUpdateAuthenticationTypeSourceGithubUpdatePersonalAccessToken SourceGithubUpdateAuthenticationType = "source-github-update_Personal Access Token"
 )
 
 type SourceGithubUpdateAuthentication struct {
-	OAuth               *OAuth
-	PersonalAccessToken *SourceGithubUpdatePersonalAccessToken
+	OAuth                                 *OAuth
+	SourceGithubUpdatePersonalAccessToken *SourceGithubUpdatePersonalAccessToken
 
 	Type SourceGithubUpdateAuthenticationType
 }
@@ -157,21 +157,21 @@ func CreateSourceGithubUpdateAuthenticationOAuth(oAuth OAuth) SourceGithubUpdate
 	}
 }
 
-func CreateSourceGithubUpdateAuthenticationPersonalAccessToken(personalAccessToken SourceGithubUpdatePersonalAccessToken) SourceGithubUpdateAuthentication {
-	typ := SourceGithubUpdateAuthenticationTypePersonalAccessToken
+func CreateSourceGithubUpdateAuthenticationSourceGithubUpdatePersonalAccessToken(sourceGithubUpdatePersonalAccessToken SourceGithubUpdatePersonalAccessToken) SourceGithubUpdateAuthentication {
+	typ := SourceGithubUpdateAuthenticationTypeSourceGithubUpdatePersonalAccessToken
 
 	return SourceGithubUpdateAuthentication{
-		PersonalAccessToken: &personalAccessToken,
-		Type:                typ,
+		SourceGithubUpdatePersonalAccessToken: &sourceGithubUpdatePersonalAccessToken,
+		Type:                                  typ,
 	}
 }
 
 func (u *SourceGithubUpdateAuthentication) UnmarshalJSON(data []byte) error {
 
-	personalAccessToken := new(SourceGithubUpdatePersonalAccessToken)
-	if err := utils.UnmarshalJSON(data, &personalAccessToken, "", true, true); err == nil {
-		u.PersonalAccessToken = personalAccessToken
-		u.Type = SourceGithubUpdateAuthenticationTypePersonalAccessToken
+	sourceGithubUpdatePersonalAccessToken := new(SourceGithubUpdatePersonalAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceGithubUpdatePersonalAccessToken, "", true, true); err == nil {
+		u.SourceGithubUpdatePersonalAccessToken = sourceGithubUpdatePersonalAccessToken
+		u.Type = SourceGithubUpdateAuthenticationTypeSourceGithubUpdatePersonalAccessToken
 		return nil
 	}
 
@@ -190,8 +190,8 @@ func (u SourceGithubUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.OAuth, "", true)
 	}
 
-	if u.PersonalAccessToken != nil {
-		return utils.MarshalJSON(u.PersonalAccessToken, "", true)
+	if u.SourceGithubUpdatePersonalAccessToken != nil {
+		return utils.MarshalJSON(u.SourceGithubUpdatePersonalAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

@@ -246,84 +246,84 @@ func (o *DestinationMilvusOpenAI) GetOpenaiKey() string {
 type DestinationMilvusEmbeddingType string
 
 const (
-	DestinationMilvusEmbeddingTypeOpenAI    DestinationMilvusEmbeddingType = "OpenAI"
-	DestinationMilvusEmbeddingTypeCohere    DestinationMilvusEmbeddingType = "Cohere"
-	DestinationMilvusEmbeddingTypeFake      DestinationMilvusEmbeddingType = "Fake"
-	DestinationMilvusEmbeddingTypeFromField DestinationMilvusEmbeddingType = "FromField"
+	DestinationMilvusEmbeddingTypeDestinationMilvusOpenAI    DestinationMilvusEmbeddingType = "destination-milvus_OpenAI"
+	DestinationMilvusEmbeddingTypeDestinationMilvusCohere    DestinationMilvusEmbeddingType = "destination-milvus_Cohere"
+	DestinationMilvusEmbeddingTypeDestinationMilvusFake      DestinationMilvusEmbeddingType = "destination-milvus_Fake"
+	DestinationMilvusEmbeddingTypeDestinationMilvusFromField DestinationMilvusEmbeddingType = "destination-milvus_From Field"
 )
 
 type DestinationMilvusEmbedding struct {
-	OpenAI    *DestinationMilvusOpenAI
-	Cohere    *DestinationMilvusCohere
-	Fake      *DestinationMilvusFake
-	FromField *DestinationMilvusFromField
+	DestinationMilvusOpenAI    *DestinationMilvusOpenAI
+	DestinationMilvusCohere    *DestinationMilvusCohere
+	DestinationMilvusFake      *DestinationMilvusFake
+	DestinationMilvusFromField *DestinationMilvusFromField
 
 	Type DestinationMilvusEmbeddingType
 }
 
-func CreateDestinationMilvusEmbeddingOpenAI(openAI DestinationMilvusOpenAI) DestinationMilvusEmbedding {
-	typ := DestinationMilvusEmbeddingTypeOpenAI
+func CreateDestinationMilvusEmbeddingDestinationMilvusOpenAI(destinationMilvusOpenAI DestinationMilvusOpenAI) DestinationMilvusEmbedding {
+	typ := DestinationMilvusEmbeddingTypeDestinationMilvusOpenAI
 
 	return DestinationMilvusEmbedding{
-		OpenAI: &openAI,
-		Type:   typ,
+		DestinationMilvusOpenAI: &destinationMilvusOpenAI,
+		Type:                    typ,
 	}
 }
 
-func CreateDestinationMilvusEmbeddingCohere(cohere DestinationMilvusCohere) DestinationMilvusEmbedding {
-	typ := DestinationMilvusEmbeddingTypeCohere
+func CreateDestinationMilvusEmbeddingDestinationMilvusCohere(destinationMilvusCohere DestinationMilvusCohere) DestinationMilvusEmbedding {
+	typ := DestinationMilvusEmbeddingTypeDestinationMilvusCohere
 
 	return DestinationMilvusEmbedding{
-		Cohere: &cohere,
-		Type:   typ,
+		DestinationMilvusCohere: &destinationMilvusCohere,
+		Type:                    typ,
 	}
 }
 
-func CreateDestinationMilvusEmbeddingFake(fake DestinationMilvusFake) DestinationMilvusEmbedding {
-	typ := DestinationMilvusEmbeddingTypeFake
+func CreateDestinationMilvusEmbeddingDestinationMilvusFake(destinationMilvusFake DestinationMilvusFake) DestinationMilvusEmbedding {
+	typ := DestinationMilvusEmbeddingTypeDestinationMilvusFake
 
 	return DestinationMilvusEmbedding{
-		Fake: &fake,
-		Type: typ,
+		DestinationMilvusFake: &destinationMilvusFake,
+		Type:                  typ,
 	}
 }
 
-func CreateDestinationMilvusEmbeddingFromField(fromField DestinationMilvusFromField) DestinationMilvusEmbedding {
-	typ := DestinationMilvusEmbeddingTypeFromField
+func CreateDestinationMilvusEmbeddingDestinationMilvusFromField(destinationMilvusFromField DestinationMilvusFromField) DestinationMilvusEmbedding {
+	typ := DestinationMilvusEmbeddingTypeDestinationMilvusFromField
 
 	return DestinationMilvusEmbedding{
-		FromField: &fromField,
-		Type:      typ,
+		DestinationMilvusFromField: &destinationMilvusFromField,
+		Type:                       typ,
 	}
 }
 
 func (u *DestinationMilvusEmbedding) UnmarshalJSON(data []byte) error {
 
-	fake := new(DestinationMilvusFake)
-	if err := utils.UnmarshalJSON(data, &fake, "", true, true); err == nil {
-		u.Fake = fake
-		u.Type = DestinationMilvusEmbeddingTypeFake
+	destinationMilvusFake := new(DestinationMilvusFake)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusFake, "", true, true); err == nil {
+		u.DestinationMilvusFake = destinationMilvusFake
+		u.Type = DestinationMilvusEmbeddingTypeDestinationMilvusFake
 		return nil
 	}
 
-	openAI := new(DestinationMilvusOpenAI)
-	if err := utils.UnmarshalJSON(data, &openAI, "", true, true); err == nil {
-		u.OpenAI = openAI
-		u.Type = DestinationMilvusEmbeddingTypeOpenAI
+	destinationMilvusOpenAI := new(DestinationMilvusOpenAI)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusOpenAI, "", true, true); err == nil {
+		u.DestinationMilvusOpenAI = destinationMilvusOpenAI
+		u.Type = DestinationMilvusEmbeddingTypeDestinationMilvusOpenAI
 		return nil
 	}
 
-	cohere := new(DestinationMilvusCohere)
-	if err := utils.UnmarshalJSON(data, &cohere, "", true, true); err == nil {
-		u.Cohere = cohere
-		u.Type = DestinationMilvusEmbeddingTypeCohere
+	destinationMilvusCohere := new(DestinationMilvusCohere)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusCohere, "", true, true); err == nil {
+		u.DestinationMilvusCohere = destinationMilvusCohere
+		u.Type = DestinationMilvusEmbeddingTypeDestinationMilvusCohere
 		return nil
 	}
 
-	fromField := new(DestinationMilvusFromField)
-	if err := utils.UnmarshalJSON(data, &fromField, "", true, true); err == nil {
-		u.FromField = fromField
-		u.Type = DestinationMilvusEmbeddingTypeFromField
+	destinationMilvusFromField := new(DestinationMilvusFromField)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusFromField, "", true, true); err == nil {
+		u.DestinationMilvusFromField = destinationMilvusFromField
+		u.Type = DestinationMilvusEmbeddingTypeDestinationMilvusFromField
 		return nil
 	}
 
@@ -331,20 +331,20 @@ func (u *DestinationMilvusEmbedding) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMilvusEmbedding) MarshalJSON() ([]byte, error) {
-	if u.OpenAI != nil {
-		return utils.MarshalJSON(u.OpenAI, "", true)
+	if u.DestinationMilvusOpenAI != nil {
+		return utils.MarshalJSON(u.DestinationMilvusOpenAI, "", true)
 	}
 
-	if u.Cohere != nil {
-		return utils.MarshalJSON(u.Cohere, "", true)
+	if u.DestinationMilvusCohere != nil {
+		return utils.MarshalJSON(u.DestinationMilvusCohere, "", true)
 	}
 
-	if u.Fake != nil {
-		return utils.MarshalJSON(u.Fake, "", true)
+	if u.DestinationMilvusFake != nil {
+		return utils.MarshalJSON(u.DestinationMilvusFake, "", true)
 	}
 
-	if u.FromField != nil {
-		return utils.MarshalJSON(u.FromField, "", true)
+	if u.DestinationMilvusFromField != nil {
+		return utils.MarshalJSON(u.DestinationMilvusFromField, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -512,66 +512,66 @@ func (o *DestinationMilvusAPIToken) GetToken() string {
 type DestinationMilvusAuthenticationType string
 
 const (
-	DestinationMilvusAuthenticationTypeAPIToken         DestinationMilvusAuthenticationType = "APIToken"
-	DestinationMilvusAuthenticationTypeUsernamePassword DestinationMilvusAuthenticationType = "UsernamePassword"
-	DestinationMilvusAuthenticationTypeNoAuth           DestinationMilvusAuthenticationType = "NoAuth"
+	DestinationMilvusAuthenticationTypeDestinationMilvusAPIToken         DestinationMilvusAuthenticationType = "destination-milvus_API Token"
+	DestinationMilvusAuthenticationTypeDestinationMilvusUsernamePassword DestinationMilvusAuthenticationType = "destination-milvus_Username/Password"
+	DestinationMilvusAuthenticationTypeDestinationMilvusNoAuth           DestinationMilvusAuthenticationType = "destination-milvus_No auth"
 )
 
 type DestinationMilvusAuthentication struct {
-	APIToken         *DestinationMilvusAPIToken
-	UsernamePassword *DestinationMilvusUsernamePassword
-	NoAuth           *DestinationMilvusNoAuth
+	DestinationMilvusAPIToken         *DestinationMilvusAPIToken
+	DestinationMilvusUsernamePassword *DestinationMilvusUsernamePassword
+	DestinationMilvusNoAuth           *DestinationMilvusNoAuth
 
 	Type DestinationMilvusAuthenticationType
 }
 
-func CreateDestinationMilvusAuthenticationAPIToken(apiToken DestinationMilvusAPIToken) DestinationMilvusAuthentication {
-	typ := DestinationMilvusAuthenticationTypeAPIToken
+func CreateDestinationMilvusAuthenticationDestinationMilvusAPIToken(destinationMilvusAPIToken DestinationMilvusAPIToken) DestinationMilvusAuthentication {
+	typ := DestinationMilvusAuthenticationTypeDestinationMilvusAPIToken
 
 	return DestinationMilvusAuthentication{
-		APIToken: &apiToken,
-		Type:     typ,
+		DestinationMilvusAPIToken: &destinationMilvusAPIToken,
+		Type:                      typ,
 	}
 }
 
-func CreateDestinationMilvusAuthenticationUsernamePassword(usernamePassword DestinationMilvusUsernamePassword) DestinationMilvusAuthentication {
-	typ := DestinationMilvusAuthenticationTypeUsernamePassword
+func CreateDestinationMilvusAuthenticationDestinationMilvusUsernamePassword(destinationMilvusUsernamePassword DestinationMilvusUsernamePassword) DestinationMilvusAuthentication {
+	typ := DestinationMilvusAuthenticationTypeDestinationMilvusUsernamePassword
 
 	return DestinationMilvusAuthentication{
-		UsernamePassword: &usernamePassword,
-		Type:             typ,
+		DestinationMilvusUsernamePassword: &destinationMilvusUsernamePassword,
+		Type:                              typ,
 	}
 }
 
-func CreateDestinationMilvusAuthenticationNoAuth(noAuth DestinationMilvusNoAuth) DestinationMilvusAuthentication {
-	typ := DestinationMilvusAuthenticationTypeNoAuth
+func CreateDestinationMilvusAuthenticationDestinationMilvusNoAuth(destinationMilvusNoAuth DestinationMilvusNoAuth) DestinationMilvusAuthentication {
+	typ := DestinationMilvusAuthenticationTypeDestinationMilvusNoAuth
 
 	return DestinationMilvusAuthentication{
-		NoAuth: &noAuth,
-		Type:   typ,
+		DestinationMilvusNoAuth: &destinationMilvusNoAuth,
+		Type:                    typ,
 	}
 }
 
 func (u *DestinationMilvusAuthentication) UnmarshalJSON(data []byte) error {
 
-	noAuth := new(DestinationMilvusNoAuth)
-	if err := utils.UnmarshalJSON(data, &noAuth, "", true, true); err == nil {
-		u.NoAuth = noAuth
-		u.Type = DestinationMilvusAuthenticationTypeNoAuth
+	destinationMilvusNoAuth := new(DestinationMilvusNoAuth)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusNoAuth, "", true, true); err == nil {
+		u.DestinationMilvusNoAuth = destinationMilvusNoAuth
+		u.Type = DestinationMilvusAuthenticationTypeDestinationMilvusNoAuth
 		return nil
 	}
 
-	apiToken := new(DestinationMilvusAPIToken)
-	if err := utils.UnmarshalJSON(data, &apiToken, "", true, true); err == nil {
-		u.APIToken = apiToken
-		u.Type = DestinationMilvusAuthenticationTypeAPIToken
+	destinationMilvusAPIToken := new(DestinationMilvusAPIToken)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusAPIToken, "", true, true); err == nil {
+		u.DestinationMilvusAPIToken = destinationMilvusAPIToken
+		u.Type = DestinationMilvusAuthenticationTypeDestinationMilvusAPIToken
 		return nil
 	}
 
-	usernamePassword := new(DestinationMilvusUsernamePassword)
-	if err := utils.UnmarshalJSON(data, &usernamePassword, "", true, true); err == nil {
-		u.UsernamePassword = usernamePassword
-		u.Type = DestinationMilvusAuthenticationTypeUsernamePassword
+	destinationMilvusUsernamePassword := new(DestinationMilvusUsernamePassword)
+	if err := utils.UnmarshalJSON(data, &destinationMilvusUsernamePassword, "", true, true); err == nil {
+		u.DestinationMilvusUsernamePassword = destinationMilvusUsernamePassword
+		u.Type = DestinationMilvusAuthenticationTypeDestinationMilvusUsernamePassword
 		return nil
 	}
 
@@ -579,16 +579,16 @@ func (u *DestinationMilvusAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMilvusAuthentication) MarshalJSON() ([]byte, error) {
-	if u.APIToken != nil {
-		return utils.MarshalJSON(u.APIToken, "", true)
+	if u.DestinationMilvusAPIToken != nil {
+		return utils.MarshalJSON(u.DestinationMilvusAPIToken, "", true)
 	}
 
-	if u.UsernamePassword != nil {
-		return utils.MarshalJSON(u.UsernamePassword, "", true)
+	if u.DestinationMilvusUsernamePassword != nil {
+		return utils.MarshalJSON(u.DestinationMilvusUsernamePassword, "", true)
 	}
 
-	if u.NoAuth != nil {
-		return utils.MarshalJSON(u.NoAuth, "", true)
+	if u.DestinationMilvusNoAuth != nil {
+		return utils.MarshalJSON(u.DestinationMilvusNoAuth, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

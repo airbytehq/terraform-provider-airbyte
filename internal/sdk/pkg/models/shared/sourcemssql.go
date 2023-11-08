@@ -183,48 +183,48 @@ func (o *SourceMssqlReadChangesUsingChangeDataCaptureCDC) GetSnapshotIsolation()
 type SourceMssqlUpdateMethodType string
 
 const (
-	SourceMssqlUpdateMethodTypeReadChangesUsingChangeDataCaptureCDC SourceMssqlUpdateMethodType = "ReadChangesUsingChangeDataCaptureCDC"
-	SourceMssqlUpdateMethodTypeScanChangesWithUserDefinedCursor     SourceMssqlUpdateMethodType = "ScanChangesWithUserDefinedCursor"
+	SourceMssqlUpdateMethodTypeSourceMssqlReadChangesUsingChangeDataCaptureCDC SourceMssqlUpdateMethodType = "source-mssql_Read Changes using Change Data Capture (CDC)"
+	SourceMssqlUpdateMethodTypeSourceMssqlScanChangesWithUserDefinedCursor     SourceMssqlUpdateMethodType = "source-mssql_Scan Changes with User Defined Cursor"
 )
 
 type SourceMssqlUpdateMethod struct {
-	ReadChangesUsingChangeDataCaptureCDC *SourceMssqlReadChangesUsingChangeDataCaptureCDC
-	ScanChangesWithUserDefinedCursor     *SourceMssqlScanChangesWithUserDefinedCursor
+	SourceMssqlReadChangesUsingChangeDataCaptureCDC *SourceMssqlReadChangesUsingChangeDataCaptureCDC
+	SourceMssqlScanChangesWithUserDefinedCursor     *SourceMssqlScanChangesWithUserDefinedCursor
 
 	Type SourceMssqlUpdateMethodType
 }
 
-func CreateSourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC(readChangesUsingChangeDataCaptureCDC SourceMssqlReadChangesUsingChangeDataCaptureCDC) SourceMssqlUpdateMethod {
-	typ := SourceMssqlUpdateMethodTypeReadChangesUsingChangeDataCaptureCDC
+func CreateSourceMssqlUpdateMethodSourceMssqlReadChangesUsingChangeDataCaptureCDC(sourceMssqlReadChangesUsingChangeDataCaptureCDC SourceMssqlReadChangesUsingChangeDataCaptureCDC) SourceMssqlUpdateMethod {
+	typ := SourceMssqlUpdateMethodTypeSourceMssqlReadChangesUsingChangeDataCaptureCDC
 
 	return SourceMssqlUpdateMethod{
-		ReadChangesUsingChangeDataCaptureCDC: &readChangesUsingChangeDataCaptureCDC,
-		Type:                                 typ,
+		SourceMssqlReadChangesUsingChangeDataCaptureCDC: &sourceMssqlReadChangesUsingChangeDataCaptureCDC,
+		Type: typ,
 	}
 }
 
-func CreateSourceMssqlUpdateMethodScanChangesWithUserDefinedCursor(scanChangesWithUserDefinedCursor SourceMssqlScanChangesWithUserDefinedCursor) SourceMssqlUpdateMethod {
-	typ := SourceMssqlUpdateMethodTypeScanChangesWithUserDefinedCursor
+func CreateSourceMssqlUpdateMethodSourceMssqlScanChangesWithUserDefinedCursor(sourceMssqlScanChangesWithUserDefinedCursor SourceMssqlScanChangesWithUserDefinedCursor) SourceMssqlUpdateMethod {
+	typ := SourceMssqlUpdateMethodTypeSourceMssqlScanChangesWithUserDefinedCursor
 
 	return SourceMssqlUpdateMethod{
-		ScanChangesWithUserDefinedCursor: &scanChangesWithUserDefinedCursor,
-		Type:                             typ,
+		SourceMssqlScanChangesWithUserDefinedCursor: &sourceMssqlScanChangesWithUserDefinedCursor,
+		Type: typ,
 	}
 }
 
 func (u *SourceMssqlUpdateMethod) UnmarshalJSON(data []byte) error {
 
-	scanChangesWithUserDefinedCursor := new(SourceMssqlScanChangesWithUserDefinedCursor)
-	if err := utils.UnmarshalJSON(data, &scanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.ScanChangesWithUserDefinedCursor = scanChangesWithUserDefinedCursor
-		u.Type = SourceMssqlUpdateMethodTypeScanChangesWithUserDefinedCursor
+	sourceMssqlScanChangesWithUserDefinedCursor := new(SourceMssqlScanChangesWithUserDefinedCursor)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourceMssqlScanChangesWithUserDefinedCursor = sourceMssqlScanChangesWithUserDefinedCursor
+		u.Type = SourceMssqlUpdateMethodTypeSourceMssqlScanChangesWithUserDefinedCursor
 		return nil
 	}
 
-	readChangesUsingChangeDataCaptureCDC := new(SourceMssqlReadChangesUsingChangeDataCaptureCDC)
-	if err := utils.UnmarshalJSON(data, &readChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
-		u.ReadChangesUsingChangeDataCaptureCDC = readChangesUsingChangeDataCaptureCDC
-		u.Type = SourceMssqlUpdateMethodTypeReadChangesUsingChangeDataCaptureCDC
+	sourceMssqlReadChangesUsingChangeDataCaptureCDC := new(SourceMssqlReadChangesUsingChangeDataCaptureCDC)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlReadChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
+		u.SourceMssqlReadChangesUsingChangeDataCaptureCDC = sourceMssqlReadChangesUsingChangeDataCaptureCDC
+		u.Type = SourceMssqlUpdateMethodTypeSourceMssqlReadChangesUsingChangeDataCaptureCDC
 		return nil
 	}
 
@@ -232,12 +232,12 @@ func (u *SourceMssqlUpdateMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMssqlUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.ReadChangesUsingChangeDataCaptureCDC != nil {
-		return utils.MarshalJSON(u.ReadChangesUsingChangeDataCaptureCDC, "", true)
+	if u.SourceMssqlReadChangesUsingChangeDataCaptureCDC != nil {
+		return utils.MarshalJSON(u.SourceMssqlReadChangesUsingChangeDataCaptureCDC, "", true)
 	}
 
-	if u.ScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.ScanChangesWithUserDefinedCursor, "", true)
+	if u.SourceMssqlScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceMssqlScanChangesWithUserDefinedCursor, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -367,48 +367,48 @@ func (o *SourceMssqlEncryptedTrustServerCertificate) GetSslMethod() SourceMssqlS
 type SourceMssqlSSLMethodType string
 
 const (
-	SourceMssqlSSLMethodTypeEncryptedTrustServerCertificate SourceMssqlSSLMethodType = "EncryptedTrustServerCertificate"
-	SourceMssqlSSLMethodTypeEncryptedVerifyCertificate      SourceMssqlSSLMethodType = "EncryptedVerifyCertificate"
+	SourceMssqlSSLMethodTypeSourceMssqlEncryptedTrustServerCertificate SourceMssqlSSLMethodType = "source-mssql_Encrypted (trust server certificate)"
+	SourceMssqlSSLMethodTypeSourceMssqlEncryptedVerifyCertificate      SourceMssqlSSLMethodType = "source-mssql_Encrypted (verify certificate)"
 )
 
 type SourceMssqlSSLMethod struct {
-	EncryptedTrustServerCertificate *SourceMssqlEncryptedTrustServerCertificate
-	EncryptedVerifyCertificate      *SourceMssqlEncryptedVerifyCertificate
+	SourceMssqlEncryptedTrustServerCertificate *SourceMssqlEncryptedTrustServerCertificate
+	SourceMssqlEncryptedVerifyCertificate      *SourceMssqlEncryptedVerifyCertificate
 
 	Type SourceMssqlSSLMethodType
 }
 
-func CreateSourceMssqlSSLMethodEncryptedTrustServerCertificate(encryptedTrustServerCertificate SourceMssqlEncryptedTrustServerCertificate) SourceMssqlSSLMethod {
-	typ := SourceMssqlSSLMethodTypeEncryptedTrustServerCertificate
+func CreateSourceMssqlSSLMethodSourceMssqlEncryptedTrustServerCertificate(sourceMssqlEncryptedTrustServerCertificate SourceMssqlEncryptedTrustServerCertificate) SourceMssqlSSLMethod {
+	typ := SourceMssqlSSLMethodTypeSourceMssqlEncryptedTrustServerCertificate
 
 	return SourceMssqlSSLMethod{
-		EncryptedTrustServerCertificate: &encryptedTrustServerCertificate,
-		Type:                            typ,
+		SourceMssqlEncryptedTrustServerCertificate: &sourceMssqlEncryptedTrustServerCertificate,
+		Type: typ,
 	}
 }
 
-func CreateSourceMssqlSSLMethodEncryptedVerifyCertificate(encryptedVerifyCertificate SourceMssqlEncryptedVerifyCertificate) SourceMssqlSSLMethod {
-	typ := SourceMssqlSSLMethodTypeEncryptedVerifyCertificate
+func CreateSourceMssqlSSLMethodSourceMssqlEncryptedVerifyCertificate(sourceMssqlEncryptedVerifyCertificate SourceMssqlEncryptedVerifyCertificate) SourceMssqlSSLMethod {
+	typ := SourceMssqlSSLMethodTypeSourceMssqlEncryptedVerifyCertificate
 
 	return SourceMssqlSSLMethod{
-		EncryptedVerifyCertificate: &encryptedVerifyCertificate,
-		Type:                       typ,
+		SourceMssqlEncryptedVerifyCertificate: &sourceMssqlEncryptedVerifyCertificate,
+		Type:                                  typ,
 	}
 }
 
 func (u *SourceMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 
-	encryptedTrustServerCertificate := new(SourceMssqlEncryptedTrustServerCertificate)
-	if err := utils.UnmarshalJSON(data, &encryptedTrustServerCertificate, "", true, true); err == nil {
-		u.EncryptedTrustServerCertificate = encryptedTrustServerCertificate
-		u.Type = SourceMssqlSSLMethodTypeEncryptedTrustServerCertificate
+	sourceMssqlEncryptedTrustServerCertificate := new(SourceMssqlEncryptedTrustServerCertificate)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlEncryptedTrustServerCertificate, "", true, true); err == nil {
+		u.SourceMssqlEncryptedTrustServerCertificate = sourceMssqlEncryptedTrustServerCertificate
+		u.Type = SourceMssqlSSLMethodTypeSourceMssqlEncryptedTrustServerCertificate
 		return nil
 	}
 
-	encryptedVerifyCertificate := new(SourceMssqlEncryptedVerifyCertificate)
-	if err := utils.UnmarshalJSON(data, &encryptedVerifyCertificate, "", true, true); err == nil {
-		u.EncryptedVerifyCertificate = encryptedVerifyCertificate
-		u.Type = SourceMssqlSSLMethodTypeEncryptedVerifyCertificate
+	sourceMssqlEncryptedVerifyCertificate := new(SourceMssqlEncryptedVerifyCertificate)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlEncryptedVerifyCertificate, "", true, true); err == nil {
+		u.SourceMssqlEncryptedVerifyCertificate = sourceMssqlEncryptedVerifyCertificate
+		u.Type = SourceMssqlSSLMethodTypeSourceMssqlEncryptedVerifyCertificate
 		return nil
 	}
 
@@ -416,12 +416,12 @@ func (u *SourceMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMssqlSSLMethod) MarshalJSON() ([]byte, error) {
-	if u.EncryptedTrustServerCertificate != nil {
-		return utils.MarshalJSON(u.EncryptedTrustServerCertificate, "", true)
+	if u.SourceMssqlEncryptedTrustServerCertificate != nil {
+		return utils.MarshalJSON(u.SourceMssqlEncryptedTrustServerCertificate, "", true)
 	}
 
-	if u.EncryptedVerifyCertificate != nil {
-		return utils.MarshalJSON(u.EncryptedVerifyCertificate, "", true)
+	if u.SourceMssqlEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.SourceMssqlEncryptedVerifyCertificate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -640,66 +640,66 @@ func (o *SourceMssqlNoTunnel) GetTunnelMethod() SourceMssqlTunnelMethod {
 type SourceMssqlSSHTunnelMethodType string
 
 const (
-	SourceMssqlSSHTunnelMethodTypeNoTunnel               SourceMssqlSSHTunnelMethodType = "NoTunnel"
-	SourceMssqlSSHTunnelMethodTypeSSHKeyAuthentication   SourceMssqlSSHTunnelMethodType = "SSHKeyAuthentication"
-	SourceMssqlSSHTunnelMethodTypePasswordAuthentication SourceMssqlSSHTunnelMethodType = "PasswordAuthentication"
+	SourceMssqlSSHTunnelMethodTypeSourceMssqlNoTunnel               SourceMssqlSSHTunnelMethodType = "source-mssql_No Tunnel"
+	SourceMssqlSSHTunnelMethodTypeSourceMssqlSSHKeyAuthentication   SourceMssqlSSHTunnelMethodType = "source-mssql_SSH Key Authentication"
+	SourceMssqlSSHTunnelMethodTypeSourceMssqlPasswordAuthentication SourceMssqlSSHTunnelMethodType = "source-mssql_Password Authentication"
 )
 
 type SourceMssqlSSHTunnelMethod struct {
-	NoTunnel               *SourceMssqlNoTunnel
-	SSHKeyAuthentication   *SourceMssqlSSHKeyAuthentication
-	PasswordAuthentication *SourceMssqlPasswordAuthentication
+	SourceMssqlNoTunnel               *SourceMssqlNoTunnel
+	SourceMssqlSSHKeyAuthentication   *SourceMssqlSSHKeyAuthentication
+	SourceMssqlPasswordAuthentication *SourceMssqlPasswordAuthentication
 
 	Type SourceMssqlSSHTunnelMethodType
 }
 
-func CreateSourceMssqlSSHTunnelMethodNoTunnel(noTunnel SourceMssqlNoTunnel) SourceMssqlSSHTunnelMethod {
-	typ := SourceMssqlSSHTunnelMethodTypeNoTunnel
+func CreateSourceMssqlSSHTunnelMethodSourceMssqlNoTunnel(sourceMssqlNoTunnel SourceMssqlNoTunnel) SourceMssqlSSHTunnelMethod {
+	typ := SourceMssqlSSHTunnelMethodTypeSourceMssqlNoTunnel
 
 	return SourceMssqlSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		SourceMssqlNoTunnel: &sourceMssqlNoTunnel,
+		Type:                typ,
 	}
 }
 
-func CreateSourceMssqlSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication SourceMssqlSSHKeyAuthentication) SourceMssqlSSHTunnelMethod {
-	typ := SourceMssqlSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateSourceMssqlSSHTunnelMethodSourceMssqlSSHKeyAuthentication(sourceMssqlSSHKeyAuthentication SourceMssqlSSHKeyAuthentication) SourceMssqlSSHTunnelMethod {
+	typ := SourceMssqlSSHTunnelMethodTypeSourceMssqlSSHKeyAuthentication
 
 	return SourceMssqlSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		SourceMssqlSSHKeyAuthentication: &sourceMssqlSSHKeyAuthentication,
+		Type:                            typ,
 	}
 }
 
-func CreateSourceMssqlSSHTunnelMethodPasswordAuthentication(passwordAuthentication SourceMssqlPasswordAuthentication) SourceMssqlSSHTunnelMethod {
-	typ := SourceMssqlSSHTunnelMethodTypePasswordAuthentication
+func CreateSourceMssqlSSHTunnelMethodSourceMssqlPasswordAuthentication(sourceMssqlPasswordAuthentication SourceMssqlPasswordAuthentication) SourceMssqlSSHTunnelMethod {
+	typ := SourceMssqlSSHTunnelMethodTypeSourceMssqlPasswordAuthentication
 
 	return SourceMssqlSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		SourceMssqlPasswordAuthentication: &sourceMssqlPasswordAuthentication,
+		Type:                              typ,
 	}
 }
 
 func (u *SourceMssqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(SourceMssqlNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = SourceMssqlSSHTunnelMethodTypeNoTunnel
+	sourceMssqlNoTunnel := new(SourceMssqlNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlNoTunnel, "", true, true); err == nil {
+		u.SourceMssqlNoTunnel = sourceMssqlNoTunnel
+		u.Type = SourceMssqlSSHTunnelMethodTypeSourceMssqlNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(SourceMssqlSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = SourceMssqlSSHTunnelMethodTypeSSHKeyAuthentication
+	sourceMssqlSSHKeyAuthentication := new(SourceMssqlSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceMssqlSSHKeyAuthentication = sourceMssqlSSHKeyAuthentication
+		u.Type = SourceMssqlSSHTunnelMethodTypeSourceMssqlSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(SourceMssqlPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = SourceMssqlSSHTunnelMethodTypePasswordAuthentication
+	sourceMssqlPasswordAuthentication := new(SourceMssqlPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceMssqlPasswordAuthentication, "", true, true); err == nil {
+		u.SourceMssqlPasswordAuthentication = sourceMssqlPasswordAuthentication
+		u.Type = SourceMssqlSSHTunnelMethodTypeSourceMssqlPasswordAuthentication
 		return nil
 	}
 
@@ -707,16 +707,16 @@ func (u *SourceMssqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMssqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.SourceMssqlNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceMssqlNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.SourceMssqlSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMssqlSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.SourceMssqlPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMssqlPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

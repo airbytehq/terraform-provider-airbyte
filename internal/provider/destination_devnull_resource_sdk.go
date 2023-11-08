@@ -15,7 +15,7 @@ func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationD
 	}
 	if destinationDevNullSilent != nil {
 		testDestination = shared.DestinationDevNullTestDestination{
-			Silent: destinationDevNullSilent,
+			DestinationDevNullSilent: destinationDevNullSilent,
 		}
 	}
 	configuration := shared.DestinationDevNull{

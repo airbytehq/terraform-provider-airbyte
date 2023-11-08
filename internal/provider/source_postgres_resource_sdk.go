@@ -75,7 +75,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresReadChangesUsingWriteAheadLogCDC != nil {
 			replicationMethod = &shared.SourcePostgresUpdateMethod{
-				ReadChangesUsingWriteAheadLogCDC: sourcePostgresReadChangesUsingWriteAheadLogCDC,
+				SourcePostgresReadChangesUsingWriteAheadLogCDC: sourcePostgresReadChangesUsingWriteAheadLogCDC,
 			}
 		}
 		var sourcePostgresDetectChangesWithXminSystemColumn *shared.SourcePostgresDetectChangesWithXminSystemColumn
@@ -84,7 +84,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresDetectChangesWithXminSystemColumn != nil {
 			replicationMethod = &shared.SourcePostgresUpdateMethod{
-				DetectChangesWithXminSystemColumn: sourcePostgresDetectChangesWithXminSystemColumn,
+				SourcePostgresDetectChangesWithXminSystemColumn: sourcePostgresDetectChangesWithXminSystemColumn,
 			}
 		}
 		var sourcePostgresScanChangesWithUserDefinedCursor *shared.SourcePostgresScanChangesWithUserDefinedCursor
@@ -93,7 +93,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresScanChangesWithUserDefinedCursor != nil {
 			replicationMethod = &shared.SourcePostgresUpdateMethod{
-				ScanChangesWithUserDefinedCursor: sourcePostgresScanChangesWithUserDefinedCursor,
+				SourcePostgresScanChangesWithUserDefinedCursor: sourcePostgresScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -115,7 +115,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresDisable != nil {
 			sslMode = &shared.SourcePostgresSSLModes{
-				Disable: sourcePostgresDisable,
+				SourcePostgresDisable: sourcePostgresDisable,
 			}
 		}
 		var sourcePostgresAllow *shared.SourcePostgresAllow
@@ -130,7 +130,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresAllow != nil {
 			sslMode = &shared.SourcePostgresSSLModes{
-				Allow: sourcePostgresAllow,
+				SourcePostgresAllow: sourcePostgresAllow,
 			}
 		}
 		var sourcePostgresPrefer *shared.SourcePostgresPrefer
@@ -145,7 +145,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresPrefer != nil {
 			sslMode = &shared.SourcePostgresSSLModes{
-				Prefer: sourcePostgresPrefer,
+				SourcePostgresPrefer: sourcePostgresPrefer,
 			}
 		}
 		var sourcePostgresRequire *shared.SourcePostgresRequire
@@ -160,7 +160,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresRequire != nil {
 			sslMode = &shared.SourcePostgresSSLModes{
-				Require: sourcePostgresRequire,
+				SourcePostgresRequire: sourcePostgresRequire,
 			}
 		}
 		var sourcePostgresVerifyCa *shared.SourcePostgresVerifyCa
@@ -198,7 +198,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresVerifyCa != nil {
 			sslMode = &shared.SourcePostgresSSLModes{
-				VerifyCa: sourcePostgresVerifyCa,
+				SourcePostgresVerifyCa: sourcePostgresVerifyCa,
 			}
 		}
 		var sourcePostgresVerifyFull *shared.SourcePostgresVerifyFull
@@ -236,7 +236,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresVerifyFull != nil {
 			sslMode = &shared.SourcePostgresSSLModes{
-				VerifyFull: sourcePostgresVerifyFull,
+				SourcePostgresVerifyFull: sourcePostgresVerifyFull,
 			}
 		}
 	}
@@ -248,7 +248,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresNoTunnel != nil {
 			tunnelMethod = &shared.SourcePostgresSSHTunnelMethod{
-				NoTunnel: sourcePostgresNoTunnel,
+				SourcePostgresNoTunnel: sourcePostgresNoTunnel,
 			}
 		}
 		var sourcePostgresSSHKeyAuthentication *shared.SourcePostgresSSHKeyAuthentication
@@ -271,7 +271,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourcePostgresSSHTunnelMethod{
-				SSHKeyAuthentication: sourcePostgresSSHKeyAuthentication,
+				SourcePostgresSSHKeyAuthentication: sourcePostgresSSHKeyAuthentication,
 			}
 		}
 		var sourcePostgresPasswordAuthentication *shared.SourcePostgresPasswordAuthentication
@@ -294,7 +294,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		}
 		if sourcePostgresPasswordAuthentication != nil {
 			tunnelMethod = &shared.SourcePostgresSSHTunnelMethod{
-				PasswordAuthentication: sourcePostgresPasswordAuthentication,
+				SourcePostgresPasswordAuthentication: sourcePostgresPasswordAuthentication,
 			}
 		}
 	}
@@ -418,7 +418,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateScanChangesWithUserDefinedCursor != nil {
 			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
-				ScanChangesWithUserDefinedCursor: sourcePostgresUpdateScanChangesWithUserDefinedCursor,
+				SourcePostgresUpdateScanChangesWithUserDefinedCursor: sourcePostgresUpdateScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -440,7 +440,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateDisable != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
-				Disable: sourcePostgresUpdateDisable,
+				SourcePostgresUpdateDisable: sourcePostgresUpdateDisable,
 			}
 		}
 		var sourcePostgresUpdateAllow *shared.SourcePostgresUpdateAllow
@@ -455,7 +455,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateAllow != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
-				Allow: sourcePostgresUpdateAllow,
+				SourcePostgresUpdateAllow: sourcePostgresUpdateAllow,
 			}
 		}
 		var sourcePostgresUpdatePrefer *shared.SourcePostgresUpdatePrefer
@@ -470,7 +470,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdatePrefer != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
-				Prefer: sourcePostgresUpdatePrefer,
+				SourcePostgresUpdatePrefer: sourcePostgresUpdatePrefer,
 			}
 		}
 		var sourcePostgresUpdateRequire *shared.SourcePostgresUpdateRequire
@@ -485,7 +485,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateRequire != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
-				Require: sourcePostgresUpdateRequire,
+				SourcePostgresUpdateRequire: sourcePostgresUpdateRequire,
 			}
 		}
 		var sourcePostgresUpdateVerifyCa *shared.SourcePostgresUpdateVerifyCa
@@ -523,7 +523,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateVerifyCa != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
-				VerifyCa: sourcePostgresUpdateVerifyCa,
+				SourcePostgresUpdateVerifyCa: sourcePostgresUpdateVerifyCa,
 			}
 		}
 		var sourcePostgresUpdateVerifyFull *shared.SourcePostgresUpdateVerifyFull
@@ -561,7 +561,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateVerifyFull != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
-				VerifyFull: sourcePostgresUpdateVerifyFull,
+				SourcePostgresUpdateVerifyFull: sourcePostgresUpdateVerifyFull,
 			}
 		}
 	}
@@ -573,7 +573,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourcePostgresUpdateSSHTunnelMethod{
-				NoTunnel: sourcePostgresUpdateNoTunnel,
+				SourcePostgresUpdateNoTunnel: sourcePostgresUpdateNoTunnel,
 			}
 		}
 		var sourcePostgresUpdateSSHKeyAuthentication *shared.SourcePostgresUpdateSSHKeyAuthentication
@@ -596,7 +596,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourcePostgresUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: sourcePostgresUpdateSSHKeyAuthentication,
+				SourcePostgresUpdateSSHKeyAuthentication: sourcePostgresUpdateSSHKeyAuthentication,
 			}
 		}
 		var sourcePostgresUpdatePasswordAuthentication *shared.SourcePostgresUpdatePasswordAuthentication
@@ -619,7 +619,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		}
 		if sourcePostgresUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourcePostgresUpdateSSHTunnelMethod{
-				PasswordAuthentication: sourcePostgresUpdatePasswordAuthentication,
+				SourcePostgresUpdatePasswordAuthentication: sourcePostgresUpdatePasswordAuthentication,
 			}
 		}
 	}

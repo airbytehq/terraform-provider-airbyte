@@ -23,7 +23,7 @@ func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoo
 		}
 		if sourceGoogleDirectorySignInViaGoogleOAuth != nil {
 			credentials = &shared.SourceGoogleDirectoryGoogleCredentials{
-				SignInViaGoogleOAuth: sourceGoogleDirectorySignInViaGoogleOAuth,
+				SourceGoogleDirectorySignInViaGoogleOAuth: sourceGoogleDirectorySignInViaGoogleOAuth,
 			}
 		}
 		var sourceGoogleDirectoryServiceAccountKey *shared.SourceGoogleDirectoryServiceAccountKey
@@ -37,7 +37,7 @@ func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoo
 		}
 		if sourceGoogleDirectoryServiceAccountKey != nil {
 			credentials = &shared.SourceGoogleDirectoryGoogleCredentials{
-				ServiceAccountKey: sourceGoogleDirectoryServiceAccountKey,
+				SourceGoogleDirectoryServiceAccountKey: sourceGoogleDirectoryServiceAccountKey,
 			}
 		}
 	}

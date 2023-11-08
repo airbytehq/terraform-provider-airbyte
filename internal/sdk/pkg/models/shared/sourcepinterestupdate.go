@@ -135,48 +135,48 @@ func (o *SourcePinterestUpdateOAuth20) GetRefreshToken() string {
 type SourcePinterestUpdateAuthorizationMethodType string
 
 const (
-	SourcePinterestUpdateAuthorizationMethodTypeOAuth20     SourcePinterestUpdateAuthorizationMethodType = "OAuth20"
-	SourcePinterestUpdateAuthorizationMethodTypeAccessToken SourcePinterestUpdateAuthorizationMethodType = "AccessToken"
+	SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateOAuth20     SourcePinterestUpdateAuthorizationMethodType = "source-pinterest-update_OAuth2.0"
+	SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateAccessToken SourcePinterestUpdateAuthorizationMethodType = "source-pinterest-update_Access Token"
 )
 
 type SourcePinterestUpdateAuthorizationMethod struct {
-	OAuth20     *SourcePinterestUpdateOAuth20
-	AccessToken *SourcePinterestUpdateAccessToken
+	SourcePinterestUpdateOAuth20     *SourcePinterestUpdateOAuth20
+	SourcePinterestUpdateAccessToken *SourcePinterestUpdateAccessToken
 
 	Type SourcePinterestUpdateAuthorizationMethodType
 }
 
-func CreateSourcePinterestUpdateAuthorizationMethodOAuth20(oAuth20 SourcePinterestUpdateOAuth20) SourcePinterestUpdateAuthorizationMethod {
-	typ := SourcePinterestUpdateAuthorizationMethodTypeOAuth20
+func CreateSourcePinterestUpdateAuthorizationMethodSourcePinterestUpdateOAuth20(sourcePinterestUpdateOAuth20 SourcePinterestUpdateOAuth20) SourcePinterestUpdateAuthorizationMethod {
+	typ := SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateOAuth20
 
 	return SourcePinterestUpdateAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourcePinterestUpdateOAuth20: &sourcePinterestUpdateOAuth20,
+		Type:                         typ,
 	}
 }
 
-func CreateSourcePinterestUpdateAuthorizationMethodAccessToken(accessToken SourcePinterestUpdateAccessToken) SourcePinterestUpdateAuthorizationMethod {
-	typ := SourcePinterestUpdateAuthorizationMethodTypeAccessToken
+func CreateSourcePinterestUpdateAuthorizationMethodSourcePinterestUpdateAccessToken(sourcePinterestUpdateAccessToken SourcePinterestUpdateAccessToken) SourcePinterestUpdateAuthorizationMethod {
+	typ := SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateAccessToken
 
 	return SourcePinterestUpdateAuthorizationMethod{
-		AccessToken: &accessToken,
-		Type:        typ,
+		SourcePinterestUpdateAccessToken: &sourcePinterestUpdateAccessToken,
+		Type:                             typ,
 	}
 }
 
 func (u *SourcePinterestUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	accessToken := new(SourcePinterestUpdateAccessToken)
-	if err := utils.UnmarshalJSON(data, &accessToken, "", true, true); err == nil {
-		u.AccessToken = accessToken
-		u.Type = SourcePinterestUpdateAuthorizationMethodTypeAccessToken
+	sourcePinterestUpdateAccessToken := new(SourcePinterestUpdateAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourcePinterestUpdateAccessToken, "", true, true); err == nil {
+		u.SourcePinterestUpdateAccessToken = sourcePinterestUpdateAccessToken
+		u.Type = SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateAccessToken
 		return nil
 	}
 
-	oAuth20 := new(SourcePinterestUpdateOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourcePinterestUpdateAuthorizationMethodTypeOAuth20
+	sourcePinterestUpdateOAuth20 := new(SourcePinterestUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourcePinterestUpdateOAuth20, "", true, true); err == nil {
+		u.SourcePinterestUpdateOAuth20 = sourcePinterestUpdateOAuth20
+		u.Type = SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateOAuth20
 		return nil
 	}
 
@@ -184,12 +184,12 @@ func (u *SourcePinterestUpdateAuthorizationMethod) UnmarshalJSON(data []byte) er
 }
 
 func (u SourcePinterestUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourcePinterestUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.SourcePinterestUpdateOAuth20, "", true)
 	}
 
-	if u.AccessToken != nil {
-		return utils.MarshalJSON(u.AccessToken, "", true)
+	if u.SourcePinterestUpdateAccessToken != nil {
+		return utils.MarshalJSON(u.SourcePinterestUpdateAccessToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

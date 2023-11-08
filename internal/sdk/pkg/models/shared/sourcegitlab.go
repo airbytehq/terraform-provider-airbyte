@@ -153,48 +153,48 @@ func (o *SourceGitlabOAuth20) GetTokenExpiryDate() time.Time {
 type SourceGitlabAuthorizationMethodType string
 
 const (
-	SourceGitlabAuthorizationMethodTypeOAuth20      SourceGitlabAuthorizationMethodType = "OAuth20"
-	SourceGitlabAuthorizationMethodTypePrivateToken SourceGitlabAuthorizationMethodType = "PrivateToken"
+	SourceGitlabAuthorizationMethodTypeSourceGitlabOAuth20      SourceGitlabAuthorizationMethodType = "source-gitlab_OAuth2.0"
+	SourceGitlabAuthorizationMethodTypeSourceGitlabPrivateToken SourceGitlabAuthorizationMethodType = "source-gitlab_Private Token"
 )
 
 type SourceGitlabAuthorizationMethod struct {
-	OAuth20      *SourceGitlabOAuth20
-	PrivateToken *SourceGitlabPrivateToken
+	SourceGitlabOAuth20      *SourceGitlabOAuth20
+	SourceGitlabPrivateToken *SourceGitlabPrivateToken
 
 	Type SourceGitlabAuthorizationMethodType
 }
 
-func CreateSourceGitlabAuthorizationMethodOAuth20(oAuth20 SourceGitlabOAuth20) SourceGitlabAuthorizationMethod {
-	typ := SourceGitlabAuthorizationMethodTypeOAuth20
+func CreateSourceGitlabAuthorizationMethodSourceGitlabOAuth20(sourceGitlabOAuth20 SourceGitlabOAuth20) SourceGitlabAuthorizationMethod {
+	typ := SourceGitlabAuthorizationMethodTypeSourceGitlabOAuth20
 
 	return SourceGitlabAuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceGitlabOAuth20: &sourceGitlabOAuth20,
+		Type:                typ,
 	}
 }
 
-func CreateSourceGitlabAuthorizationMethodPrivateToken(privateToken SourceGitlabPrivateToken) SourceGitlabAuthorizationMethod {
-	typ := SourceGitlabAuthorizationMethodTypePrivateToken
+func CreateSourceGitlabAuthorizationMethodSourceGitlabPrivateToken(sourceGitlabPrivateToken SourceGitlabPrivateToken) SourceGitlabAuthorizationMethod {
+	typ := SourceGitlabAuthorizationMethodTypeSourceGitlabPrivateToken
 
 	return SourceGitlabAuthorizationMethod{
-		PrivateToken: &privateToken,
-		Type:         typ,
+		SourceGitlabPrivateToken: &sourceGitlabPrivateToken,
+		Type:                     typ,
 	}
 }
 
 func (u *SourceGitlabAuthorizationMethod) UnmarshalJSON(data []byte) error {
 
-	privateToken := new(SourceGitlabPrivateToken)
-	if err := utils.UnmarshalJSON(data, &privateToken, "", true, true); err == nil {
-		u.PrivateToken = privateToken
-		u.Type = SourceGitlabAuthorizationMethodTypePrivateToken
+	sourceGitlabPrivateToken := new(SourceGitlabPrivateToken)
+	if err := utils.UnmarshalJSON(data, &sourceGitlabPrivateToken, "", true, true); err == nil {
+		u.SourceGitlabPrivateToken = sourceGitlabPrivateToken
+		u.Type = SourceGitlabAuthorizationMethodTypeSourceGitlabPrivateToken
 		return nil
 	}
 
-	oAuth20 := new(SourceGitlabOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceGitlabAuthorizationMethodTypeOAuth20
+	sourceGitlabOAuth20 := new(SourceGitlabOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceGitlabOAuth20, "", true, true); err == nil {
+		u.SourceGitlabOAuth20 = sourceGitlabOAuth20
+		u.Type = SourceGitlabAuthorizationMethodTypeSourceGitlabOAuth20
 		return nil
 	}
 
@@ -202,12 +202,12 @@ func (u *SourceGitlabAuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGitlabAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceGitlabOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceGitlabOAuth20, "", true)
 	}
 
-	if u.PrivateToken != nil {
-		return utils.MarshalJSON(u.PrivateToken, "", true)
+	if u.SourceGitlabPrivateToken != nil {
+		return utils.MarshalJSON(u.SourceGitlabPrivateToken, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

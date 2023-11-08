@@ -36,7 +36,7 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 		}
 		if destinationClickhouseNoTunnel != nil {
 			tunnelMethod = &shared.DestinationClickhouseSSHTunnelMethod{
-				NoTunnel: destinationClickhouseNoTunnel,
+				DestinationClickhouseNoTunnel: destinationClickhouseNoTunnel,
 			}
 		}
 		var destinationClickhouseSSHKeyAuthentication *shared.DestinationClickhouseSSHKeyAuthentication
@@ -59,7 +59,7 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 		}
 		if destinationClickhouseSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationClickhouseSSHTunnelMethod{
-				SSHKeyAuthentication: destinationClickhouseSSHKeyAuthentication,
+				DestinationClickhouseSSHKeyAuthentication: destinationClickhouseSSHKeyAuthentication,
 			}
 		}
 		var destinationClickhousePasswordAuthentication *shared.DestinationClickhousePasswordAuthentication
@@ -82,7 +82,7 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 		}
 		if destinationClickhousePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationClickhouseSSHTunnelMethod{
-				PasswordAuthentication: destinationClickhousePasswordAuthentication,
+				DestinationClickhousePasswordAuthentication: destinationClickhousePasswordAuthentication,
 			}
 		}
 	}

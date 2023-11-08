@@ -118,48 +118,48 @@ func (o *DestinationMongodbNone) GetAuthorization() DestinationMongodbAuthorizat
 type DestinationMongodbAuthorizationTypeType string
 
 const (
-	DestinationMongodbAuthorizationTypeTypeNone          DestinationMongodbAuthorizationTypeType = "None"
-	DestinationMongodbAuthorizationTypeTypeLoginPassword DestinationMongodbAuthorizationTypeType = "LoginPassword"
+	DestinationMongodbAuthorizationTypeTypeDestinationMongodbNone          DestinationMongodbAuthorizationTypeType = "destination-mongodb_None"
+	DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword DestinationMongodbAuthorizationTypeType = "destination-mongodb_Login/Password"
 )
 
 type DestinationMongodbAuthorizationType struct {
-	None          *DestinationMongodbNone
-	LoginPassword *DestinationMongodbLoginPassword
+	DestinationMongodbNone          *DestinationMongodbNone
+	DestinationMongodbLoginPassword *DestinationMongodbLoginPassword
 
 	Type DestinationMongodbAuthorizationTypeType
 }
 
-func CreateDestinationMongodbAuthorizationTypeNone(none DestinationMongodbNone) DestinationMongodbAuthorizationType {
-	typ := DestinationMongodbAuthorizationTypeTypeNone
+func CreateDestinationMongodbAuthorizationTypeDestinationMongodbNone(destinationMongodbNone DestinationMongodbNone) DestinationMongodbAuthorizationType {
+	typ := DestinationMongodbAuthorizationTypeTypeDestinationMongodbNone
 
 	return DestinationMongodbAuthorizationType{
-		None: &none,
-		Type: typ,
+		DestinationMongodbNone: &destinationMongodbNone,
+		Type:                   typ,
 	}
 }
 
-func CreateDestinationMongodbAuthorizationTypeLoginPassword(loginPassword DestinationMongodbLoginPassword) DestinationMongodbAuthorizationType {
-	typ := DestinationMongodbAuthorizationTypeTypeLoginPassword
+func CreateDestinationMongodbAuthorizationTypeDestinationMongodbLoginPassword(destinationMongodbLoginPassword DestinationMongodbLoginPassword) DestinationMongodbAuthorizationType {
+	typ := DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword
 
 	return DestinationMongodbAuthorizationType{
-		LoginPassword: &loginPassword,
-		Type:          typ,
+		DestinationMongodbLoginPassword: &destinationMongodbLoginPassword,
+		Type:                            typ,
 	}
 }
 
 func (u *DestinationMongodbAuthorizationType) UnmarshalJSON(data []byte) error {
 
-	none := new(DestinationMongodbNone)
-	if err := utils.UnmarshalJSON(data, &none, "", true, true); err == nil {
-		u.None = none
-		u.Type = DestinationMongodbAuthorizationTypeTypeNone
+	destinationMongodbNone := new(DestinationMongodbNone)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbNone, "", true, true); err == nil {
+		u.DestinationMongodbNone = destinationMongodbNone
+		u.Type = DestinationMongodbAuthorizationTypeTypeDestinationMongodbNone
 		return nil
 	}
 
-	loginPassword := new(DestinationMongodbLoginPassword)
-	if err := utils.UnmarshalJSON(data, &loginPassword, "", true, true); err == nil {
-		u.LoginPassword = loginPassword
-		u.Type = DestinationMongodbAuthorizationTypeTypeLoginPassword
+	destinationMongodbLoginPassword := new(DestinationMongodbLoginPassword)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbLoginPassword, "", true, true); err == nil {
+		u.DestinationMongodbLoginPassword = destinationMongodbLoginPassword
+		u.Type = DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword
 		return nil
 	}
 
@@ -167,12 +167,12 @@ func (u *DestinationMongodbAuthorizationType) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMongodbAuthorizationType) MarshalJSON() ([]byte, error) {
-	if u.None != nil {
-		return utils.MarshalJSON(u.None, "", true)
+	if u.DestinationMongodbNone != nil {
+		return utils.MarshalJSON(u.DestinationMongodbNone, "", true)
 	}
 
-	if u.LoginPassword != nil {
-		return utils.MarshalJSON(u.LoginPassword, "", true)
+	if u.DestinationMongodbLoginPassword != nil {
+		return utils.MarshalJSON(u.DestinationMongodbLoginPassword, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -391,66 +391,66 @@ func (o *DestinationMongodbStandaloneMongoDbInstance) GetPort() *int64 {
 type DestinationMongodbMongoDbInstanceTypeType string
 
 const (
-	DestinationMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance DestinationMongodbMongoDbInstanceTypeType = "StandaloneMongoDbInstance"
-	DestinationMongodbMongoDbInstanceTypeTypeReplicaSet                DestinationMongodbMongoDbInstanceTypeType = "ReplicaSet"
-	DestinationMongodbMongoDbInstanceTypeTypeMongoDBAtlas              DestinationMongodbMongoDbInstanceTypeType = "MongoDBAtlas"
+	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_Standalone MongoDb Instance"
+	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet                DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_Replica Set"
+	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas              DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_MongoDB Atlas"
 )
 
 type DestinationMongodbMongoDbInstanceType struct {
-	StandaloneMongoDbInstance *DestinationMongodbStandaloneMongoDbInstance
-	ReplicaSet                *DestinationMongodbReplicaSet
-	MongoDBAtlas              *DestinationMongodbMongoDBAtlas
+	DestinationMongodbStandaloneMongoDbInstance *DestinationMongodbStandaloneMongoDbInstance
+	DestinationMongodbReplicaSet                *DestinationMongodbReplicaSet
+	DestinationMongodbMongoDBAtlas              *DestinationMongodbMongoDBAtlas
 
 	Type DestinationMongodbMongoDbInstanceTypeType
 }
 
-func CreateDestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance(standaloneMongoDbInstance DestinationMongodbStandaloneMongoDbInstance) DestinationMongodbMongoDbInstanceType {
-	typ := DestinationMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance
+func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbStandaloneMongoDbInstance(destinationMongodbStandaloneMongoDbInstance DestinationMongodbStandaloneMongoDbInstance) DestinationMongodbMongoDbInstanceType {
+	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance
 
 	return DestinationMongodbMongoDbInstanceType{
-		StandaloneMongoDbInstance: &standaloneMongoDbInstance,
-		Type:                      typ,
+		DestinationMongodbStandaloneMongoDbInstance: &destinationMongodbStandaloneMongoDbInstance,
+		Type: typ,
 	}
 }
 
-func CreateDestinationMongodbMongoDbInstanceTypeReplicaSet(replicaSet DestinationMongodbReplicaSet) DestinationMongodbMongoDbInstanceType {
-	typ := DestinationMongodbMongoDbInstanceTypeTypeReplicaSet
+func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbReplicaSet(destinationMongodbReplicaSet DestinationMongodbReplicaSet) DestinationMongodbMongoDbInstanceType {
+	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet
 
 	return DestinationMongodbMongoDbInstanceType{
-		ReplicaSet: &replicaSet,
-		Type:       typ,
+		DestinationMongodbReplicaSet: &destinationMongodbReplicaSet,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationMongodbMongoDbInstanceTypeMongoDBAtlas(mongoDBAtlas DestinationMongodbMongoDBAtlas) DestinationMongodbMongoDbInstanceType {
-	typ := DestinationMongodbMongoDbInstanceTypeTypeMongoDBAtlas
+func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbMongoDBAtlas(destinationMongodbMongoDBAtlas DestinationMongodbMongoDBAtlas) DestinationMongodbMongoDbInstanceType {
+	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas
 
 	return DestinationMongodbMongoDbInstanceType{
-		MongoDBAtlas: &mongoDBAtlas,
-		Type:         typ,
+		DestinationMongodbMongoDBAtlas: &destinationMongodbMongoDBAtlas,
+		Type:                           typ,
 	}
 }
 
 func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 
-	mongoDBAtlas := new(DestinationMongodbMongoDBAtlas)
-	if err := utils.UnmarshalJSON(data, &mongoDBAtlas, "", true, true); err == nil {
-		u.MongoDBAtlas = mongoDBAtlas
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeMongoDBAtlas
+	destinationMongodbMongoDBAtlas := new(DestinationMongodbMongoDBAtlas)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbMongoDBAtlas, "", true, true); err == nil {
+		u.DestinationMongodbMongoDBAtlas = destinationMongodbMongoDBAtlas
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas
 		return nil
 	}
 
-	standaloneMongoDbInstance := new(DestinationMongodbStandaloneMongoDbInstance)
-	if err := utils.UnmarshalJSON(data, &standaloneMongoDbInstance, "", true, true); err == nil {
-		u.StandaloneMongoDbInstance = standaloneMongoDbInstance
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeStandaloneMongoDbInstance
+	destinationMongodbStandaloneMongoDbInstance := new(DestinationMongodbStandaloneMongoDbInstance)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbStandaloneMongoDbInstance, "", true, true); err == nil {
+		u.DestinationMongodbStandaloneMongoDbInstance = destinationMongodbStandaloneMongoDbInstance
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance
 		return nil
 	}
 
-	replicaSet := new(DestinationMongodbReplicaSet)
-	if err := utils.UnmarshalJSON(data, &replicaSet, "", true, true); err == nil {
-		u.ReplicaSet = replicaSet
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeReplicaSet
+	destinationMongodbReplicaSet := new(DestinationMongodbReplicaSet)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbReplicaSet, "", true, true); err == nil {
+		u.DestinationMongodbReplicaSet = destinationMongodbReplicaSet
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet
 		return nil
 	}
 
@@ -458,16 +458,16 @@ func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error
 }
 
 func (u DestinationMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.StandaloneMongoDbInstance != nil {
-		return utils.MarshalJSON(u.StandaloneMongoDbInstance, "", true)
+	if u.DestinationMongodbStandaloneMongoDbInstance != nil {
+		return utils.MarshalJSON(u.DestinationMongodbStandaloneMongoDbInstance, "", true)
 	}
 
-	if u.ReplicaSet != nil {
-		return utils.MarshalJSON(u.ReplicaSet, "", true)
+	if u.DestinationMongodbReplicaSet != nil {
+		return utils.MarshalJSON(u.DestinationMongodbReplicaSet, "", true)
 	}
 
-	if u.MongoDBAtlas != nil {
-		return utils.MarshalJSON(u.MongoDBAtlas, "", true)
+	if u.DestinationMongodbMongoDBAtlas != nil {
+		return utils.MarshalJSON(u.DestinationMongodbMongoDBAtlas, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -686,66 +686,66 @@ func (o *DestinationMongodbNoTunnel) GetTunnelMethod() DestinationMongodbTunnelM
 type DestinationMongodbSSHTunnelMethodType string
 
 const (
-	DestinationMongodbSSHTunnelMethodTypeNoTunnel               DestinationMongodbSSHTunnelMethodType = "NoTunnel"
-	DestinationMongodbSSHTunnelMethodTypeSSHKeyAuthentication   DestinationMongodbSSHTunnelMethodType = "SSHKeyAuthentication"
-	DestinationMongodbSSHTunnelMethodTypePasswordAuthentication DestinationMongodbSSHTunnelMethodType = "PasswordAuthentication"
+	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbNoTunnel               DestinationMongodbSSHTunnelMethodType = "destination-mongodb_No Tunnel"
+	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHKeyAuthentication   DestinationMongodbSSHTunnelMethodType = "destination-mongodb_SSH Key Authentication"
+	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication DestinationMongodbSSHTunnelMethodType = "destination-mongodb_Password Authentication"
 )
 
 type DestinationMongodbSSHTunnelMethod struct {
-	NoTunnel               *DestinationMongodbNoTunnel
-	SSHKeyAuthentication   *DestinationMongodbSSHKeyAuthentication
-	PasswordAuthentication *DestinationMongodbPasswordAuthentication
+	DestinationMongodbNoTunnel               *DestinationMongodbNoTunnel
+	DestinationMongodbSSHKeyAuthentication   *DestinationMongodbSSHKeyAuthentication
+	DestinationMongodbPasswordAuthentication *DestinationMongodbPasswordAuthentication
 
 	Type DestinationMongodbSSHTunnelMethodType
 }
 
-func CreateDestinationMongodbSSHTunnelMethodNoTunnel(noTunnel DestinationMongodbNoTunnel) DestinationMongodbSSHTunnelMethod {
-	typ := DestinationMongodbSSHTunnelMethodTypeNoTunnel
+func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbNoTunnel(destinationMongodbNoTunnel DestinationMongodbNoTunnel) DestinationMongodbSSHTunnelMethod {
+	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbNoTunnel
 
 	return DestinationMongodbSSHTunnelMethod{
-		NoTunnel: &noTunnel,
-		Type:     typ,
+		DestinationMongodbNoTunnel: &destinationMongodbNoTunnel,
+		Type:                       typ,
 	}
 }
 
-func CreateDestinationMongodbSSHTunnelMethodSSHKeyAuthentication(sshKeyAuthentication DestinationMongodbSSHKeyAuthentication) DestinationMongodbSSHTunnelMethod {
-	typ := DestinationMongodbSSHTunnelMethodTypeSSHKeyAuthentication
+func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbSSHKeyAuthentication(destinationMongodbSSHKeyAuthentication DestinationMongodbSSHKeyAuthentication) DestinationMongodbSSHTunnelMethod {
+	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHKeyAuthentication
 
 	return DestinationMongodbSSHTunnelMethod{
-		SSHKeyAuthentication: &sshKeyAuthentication,
-		Type:                 typ,
+		DestinationMongodbSSHKeyAuthentication: &destinationMongodbSSHKeyAuthentication,
+		Type:                                   typ,
 	}
 }
 
-func CreateDestinationMongodbSSHTunnelMethodPasswordAuthentication(passwordAuthentication DestinationMongodbPasswordAuthentication) DestinationMongodbSSHTunnelMethod {
-	typ := DestinationMongodbSSHTunnelMethodTypePasswordAuthentication
+func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbPasswordAuthentication(destinationMongodbPasswordAuthentication DestinationMongodbPasswordAuthentication) DestinationMongodbSSHTunnelMethod {
+	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication
 
 	return DestinationMongodbSSHTunnelMethod{
-		PasswordAuthentication: &passwordAuthentication,
-		Type:                   typ,
+		DestinationMongodbPasswordAuthentication: &destinationMongodbPasswordAuthentication,
+		Type:                                     typ,
 	}
 }
 
 func (u *DestinationMongodbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 
-	noTunnel := new(DestinationMongodbNoTunnel)
-	if err := utils.UnmarshalJSON(data, &noTunnel, "", true, true); err == nil {
-		u.NoTunnel = noTunnel
-		u.Type = DestinationMongodbSSHTunnelMethodTypeNoTunnel
+	destinationMongodbNoTunnel := new(DestinationMongodbNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbNoTunnel, "", true, true); err == nil {
+		u.DestinationMongodbNoTunnel = destinationMongodbNoTunnel
+		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbNoTunnel
 		return nil
 	}
 
-	sshKeyAuthentication := new(DestinationMongodbSSHKeyAuthentication)
-	if err := utils.UnmarshalJSON(data, &sshKeyAuthentication, "", true, true); err == nil {
-		u.SSHKeyAuthentication = sshKeyAuthentication
-		u.Type = DestinationMongodbSSHTunnelMethodTypeSSHKeyAuthentication
+	destinationMongodbSSHKeyAuthentication := new(DestinationMongodbSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMongodbSSHKeyAuthentication = destinationMongodbSSHKeyAuthentication
+		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHKeyAuthentication
 		return nil
 	}
 
-	passwordAuthentication := new(DestinationMongodbPasswordAuthentication)
-	if err := utils.UnmarshalJSON(data, &passwordAuthentication, "", true, true); err == nil {
-		u.PasswordAuthentication = passwordAuthentication
-		u.Type = DestinationMongodbSSHTunnelMethodTypePasswordAuthentication
+	destinationMongodbPasswordAuthentication := new(DestinationMongodbPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMongodbPasswordAuthentication = destinationMongodbPasswordAuthentication
+		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication
 		return nil
 	}
 
@@ -753,16 +753,16 @@ func (u *DestinationMongodbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMongodbSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.NoTunnel != nil {
-		return utils.MarshalJSON(u.NoTunnel, "", true)
+	if u.DestinationMongodbNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMongodbNoTunnel, "", true)
 	}
 
-	if u.SSHKeyAuthentication != nil {
-		return utils.MarshalJSON(u.SSHKeyAuthentication, "", true)
+	if u.DestinationMongodbSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMongodbSSHKeyAuthentication, "", true)
 	}
 
-	if u.PasswordAuthentication != nil {
-		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
+	if u.DestinationMongodbPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMongodbPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

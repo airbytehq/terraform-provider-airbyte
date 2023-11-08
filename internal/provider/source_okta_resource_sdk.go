@@ -23,7 +23,7 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 		}
 		if sourceOktaOAuth20 != nil {
 			credentials = &shared.SourceOktaAuthorizationMethod{
-				OAuth20: sourceOktaOAuth20,
+				SourceOktaOAuth20: sourceOktaOAuth20,
 			}
 		}
 		var sourceOktaAPIToken *shared.SourceOktaAPIToken
@@ -35,7 +35,7 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 		}
 		if sourceOktaAPIToken != nil {
 			credentials = &shared.SourceOktaAuthorizationMethod{
-				APIToken: sourceOktaAPIToken,
+				SourceOktaAPIToken: sourceOktaAPIToken,
 			}
 		}
 	}
@@ -94,7 +94,7 @@ func (r *SourceOktaResourceModel) ToUpdateSDKType() *shared.SourceOktaPutRequest
 		}
 		if sourceOktaUpdateOAuth20 != nil {
 			credentials = &shared.SourceOktaUpdateAuthorizationMethod{
-				OAuth20: sourceOktaUpdateOAuth20,
+				SourceOktaUpdateOAuth20: sourceOktaUpdateOAuth20,
 			}
 		}
 		var sourceOktaUpdateAPIToken *shared.SourceOktaUpdateAPIToken
@@ -106,7 +106,7 @@ func (r *SourceOktaResourceModel) ToUpdateSDKType() *shared.SourceOktaPutRequest
 		}
 		if sourceOktaUpdateAPIToken != nil {
 			credentials = &shared.SourceOktaUpdateAuthorizationMethod{
-				APIToken: sourceOktaUpdateAPIToken,
+				SourceOktaUpdateAPIToken: sourceOktaUpdateAPIToken,
 			}
 		}
 	}

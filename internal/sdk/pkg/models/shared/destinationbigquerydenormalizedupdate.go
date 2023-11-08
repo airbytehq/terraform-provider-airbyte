@@ -216,30 +216,30 @@ func (o *DestinationBigqueryDenormalizedUpdateHMACKey) GetHmacKeySecret() string
 type CredentialUnionType string
 
 const (
-	CredentialUnionTypeHMACKey CredentialUnionType = "HMACKey"
+	CredentialUnionTypeDestinationBigqueryDenormalizedUpdateHMACKey CredentialUnionType = "destination-bigquery-denormalized-update_HMAC key"
 )
 
 type Credential struct {
-	HMACKey *DestinationBigqueryDenormalizedUpdateHMACKey
+	DestinationBigqueryDenormalizedUpdateHMACKey *DestinationBigqueryDenormalizedUpdateHMACKey
 
 	Type CredentialUnionType
 }
 
-func CreateCredentialHMACKey(hmacKey DestinationBigqueryDenormalizedUpdateHMACKey) Credential {
-	typ := CredentialUnionTypeHMACKey
+func CreateCredentialDestinationBigqueryDenormalizedUpdateHMACKey(destinationBigqueryDenormalizedUpdateHMACKey DestinationBigqueryDenormalizedUpdateHMACKey) Credential {
+	typ := CredentialUnionTypeDestinationBigqueryDenormalizedUpdateHMACKey
 
 	return Credential{
-		HMACKey: &hmacKey,
-		Type:    typ,
+		DestinationBigqueryDenormalizedUpdateHMACKey: &destinationBigqueryDenormalizedUpdateHMACKey,
+		Type: typ,
 	}
 }
 
 func (u *Credential) UnmarshalJSON(data []byte) error {
 
-	hmacKey := new(DestinationBigqueryDenormalizedUpdateHMACKey)
-	if err := utils.UnmarshalJSON(data, &hmacKey, "", true, true); err == nil {
-		u.HMACKey = hmacKey
-		u.Type = CredentialUnionTypeHMACKey
+	destinationBigqueryDenormalizedUpdateHMACKey := new(DestinationBigqueryDenormalizedUpdateHMACKey)
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryDenormalizedUpdateHMACKey, "", true, true); err == nil {
+		u.DestinationBigqueryDenormalizedUpdateHMACKey = destinationBigqueryDenormalizedUpdateHMACKey
+		u.Type = CredentialUnionTypeDestinationBigqueryDenormalizedUpdateHMACKey
 		return nil
 	}
 
@@ -247,8 +247,8 @@ func (u *Credential) UnmarshalJSON(data []byte) error {
 }
 
 func (u Credential) MarshalJSON() ([]byte, error) {
-	if u.HMACKey != nil {
-		return utils.MarshalJSON(u.HMACKey, "", true)
+	if u.DestinationBigqueryDenormalizedUpdateHMACKey != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryDenormalizedUpdateHMACKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -418,8 +418,8 @@ func (o *StandardInserts) GetMethod() Method {
 type LoadingMethodType string
 
 const (
-	LoadingMethodTypeStandardInserts LoadingMethodType = "StandardInserts"
-	LoadingMethodTypeGCSStaging      LoadingMethodType = "GCSStaging"
+	LoadingMethodTypeStandardInserts LoadingMethodType = "Standard Inserts"
+	LoadingMethodTypeGCSStaging      LoadingMethodType = "GCS Staging"
 )
 
 type LoadingMethod struct {

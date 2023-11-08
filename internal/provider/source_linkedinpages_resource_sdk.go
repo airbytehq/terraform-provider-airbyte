@@ -23,7 +23,7 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 		}
 		if sourceLinkedinPagesOAuth20 != nil {
 			credentials = &shared.SourceLinkedinPagesAuthentication{
-				OAuth20: sourceLinkedinPagesOAuth20,
+				SourceLinkedinPagesOAuth20: sourceLinkedinPagesOAuth20,
 			}
 		}
 		var sourceLinkedinPagesAccessToken *shared.SourceLinkedinPagesAccessToken
@@ -35,7 +35,7 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 		}
 		if sourceLinkedinPagesAccessToken != nil {
 			credentials = &shared.SourceLinkedinPagesAuthentication{
-				AccessToken: sourceLinkedinPagesAccessToken,
+				SourceLinkedinPagesAccessToken: sourceLinkedinPagesAccessToken,
 			}
 		}
 	}
@@ -82,7 +82,7 @@ func (r *SourceLinkedinPagesResourceModel) ToUpdateSDKType() *shared.SourceLinke
 		}
 		if sourceLinkedinPagesUpdateOAuth20 != nil {
 			credentials = &shared.SourceLinkedinPagesUpdateAuthentication{
-				OAuth20: sourceLinkedinPagesUpdateOAuth20,
+				SourceLinkedinPagesUpdateOAuth20: sourceLinkedinPagesUpdateOAuth20,
 			}
 		}
 		var sourceLinkedinPagesUpdateAccessToken *shared.SourceLinkedinPagesUpdateAccessToken
@@ -94,7 +94,7 @@ func (r *SourceLinkedinPagesResourceModel) ToUpdateSDKType() *shared.SourceLinke
 		}
 		if sourceLinkedinPagesUpdateAccessToken != nil {
 			credentials = &shared.SourceLinkedinPagesUpdateAuthentication{
-				AccessToken: sourceLinkedinPagesUpdateAccessToken,
+				SourceLinkedinPagesUpdateAccessToken: sourceLinkedinPagesUpdateAccessToken,
 			}
 		}
 	}

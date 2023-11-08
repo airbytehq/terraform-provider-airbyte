@@ -46,7 +46,7 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 		}
 		if sourceZendeskChatOAuth20 != nil {
 			credentials = &shared.SourceZendeskChatAuthorizationMethod{
-				OAuth20: sourceZendeskChatOAuth20,
+				SourceZendeskChatOAuth20: sourceZendeskChatOAuth20,
 			}
 		}
 		var sourceZendeskChatAccessToken *shared.SourceZendeskChatAccessToken
@@ -58,7 +58,7 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 		}
 		if sourceZendeskChatAccessToken != nil {
 			credentials = &shared.SourceZendeskChatAuthorizationMethod{
-				AccessToken: sourceZendeskChatAccessToken,
+				SourceZendeskChatAccessToken: sourceZendeskChatAccessToken,
 			}
 		}
 	}
@@ -134,7 +134,7 @@ func (r *SourceZendeskChatResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 		}
 		if sourceZendeskChatUpdateOAuth20 != nil {
 			credentials = &shared.SourceZendeskChatUpdateAuthorizationMethod{
-				OAuth20: sourceZendeskChatUpdateOAuth20,
+				SourceZendeskChatUpdateOAuth20: sourceZendeskChatUpdateOAuth20,
 			}
 		}
 		var sourceZendeskChatUpdateAccessToken *shared.SourceZendeskChatUpdateAccessToken
@@ -146,7 +146,7 @@ func (r *SourceZendeskChatResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 		}
 		if sourceZendeskChatUpdateAccessToken != nil {
 			credentials = &shared.SourceZendeskChatUpdateAuthorizationMethod{
-				AccessToken: sourceZendeskChatUpdateAccessToken,
+				SourceZendeskChatUpdateAccessToken: sourceZendeskChatUpdateAccessToken,
 			}
 		}
 	}

@@ -136,8 +136,8 @@ func (o *SingleSchema) GetType() *SourceE2eTestCloudUpdateSchemasType {
 type MockCatalogType string
 
 const (
-	MockCatalogTypeSingleSchema MockCatalogType = "SingleSchema"
-	MockCatalogTypeMultiSchema  MockCatalogType = "MultiSchema"
+	MockCatalogTypeSingleSchema MockCatalogType = "Single Schema"
+	MockCatalogTypeMultiSchema  MockCatalogType = "Multi Schema"
 )
 
 type MockCatalog struct {

@@ -33,7 +33,7 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	}
 	if sourceGitlabOAuth20 != nil {
 		credentials = shared.SourceGitlabAuthorizationMethod{
-			OAuth20: sourceGitlabOAuth20,
+			SourceGitlabOAuth20: sourceGitlabOAuth20,
 		}
 	}
 	var sourceGitlabPrivateToken *shared.SourceGitlabPrivateToken
@@ -45,7 +45,7 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	}
 	if sourceGitlabPrivateToken != nil {
 		credentials = shared.SourceGitlabAuthorizationMethod{
-			PrivateToken: sourceGitlabPrivateToken,
+			SourceGitlabPrivateToken: sourceGitlabPrivateToken,
 		}
 	}
 	groups := new(string)
@@ -115,7 +115,7 @@ func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutReq
 	}
 	if sourceGitlabUpdateOAuth20 != nil {
 		credentials = shared.SourceGitlabUpdateAuthorizationMethod{
-			OAuth20: sourceGitlabUpdateOAuth20,
+			SourceGitlabUpdateOAuth20: sourceGitlabUpdateOAuth20,
 		}
 	}
 	var privateToken *shared.PrivateToken

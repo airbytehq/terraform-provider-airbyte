@@ -18,7 +18,7 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	}
 	if sourceOutbrainAmplifyAccessToken != nil {
 		credentials = shared.SourceOutbrainAmplifyAuthenticationMethod{
-			AccessToken: sourceOutbrainAmplifyAccessToken,
+			SourceOutbrainAmplifyAccessToken: sourceOutbrainAmplifyAccessToken,
 		}
 	}
 	var sourceOutbrainAmplifyUsernamePassword *shared.SourceOutbrainAmplifyUsernamePassword
@@ -32,7 +32,7 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	}
 	if sourceOutbrainAmplifyUsernamePassword != nil {
 		credentials = shared.SourceOutbrainAmplifyAuthenticationMethod{
-			UsernamePassword: sourceOutbrainAmplifyUsernamePassword,
+			SourceOutbrainAmplifyUsernamePassword: sourceOutbrainAmplifyUsernamePassword,
 		}
 	}
 	endDate := new(string)
@@ -94,7 +94,7 @@ func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOut
 	}
 	if sourceOutbrainAmplifyUpdateAccessToken != nil {
 		credentials = shared.SourceOutbrainAmplifyUpdateAuthenticationMethod{
-			AccessToken: sourceOutbrainAmplifyUpdateAccessToken,
+			SourceOutbrainAmplifyUpdateAccessToken: sourceOutbrainAmplifyUpdateAccessToken,
 		}
 	}
 	var sourceOutbrainAmplifyUpdateUsernamePassword *shared.SourceOutbrainAmplifyUpdateUsernamePassword
@@ -108,7 +108,7 @@ func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOut
 	}
 	if sourceOutbrainAmplifyUpdateUsernamePassword != nil {
 		credentials = shared.SourceOutbrainAmplifyUpdateAuthenticationMethod{
-			UsernamePassword: sourceOutbrainAmplifyUpdateUsernamePassword,
+			SourceOutbrainAmplifyUpdateUsernamePassword: sourceOutbrainAmplifyUpdateUsernamePassword,
 		}
 	}
 	endDate := new(string)

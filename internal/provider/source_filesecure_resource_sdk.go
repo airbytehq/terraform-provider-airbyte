@@ -30,7 +30,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureHTTPSPublicWeb != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			HTTPSPublicWeb: sourceFileSecureHTTPSPublicWeb,
+			SourceFileSecureHTTPSPublicWeb: sourceFileSecureHTTPSPublicWeb,
 		}
 	}
 	var sourceFileSecureGCSGoogleCloudStorage *shared.SourceFileSecureGCSGoogleCloudStorage
@@ -47,7 +47,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureGCSGoogleCloudStorage != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			GCSGoogleCloudStorage: sourceFileSecureGCSGoogleCloudStorage,
+			SourceFileSecureGCSGoogleCloudStorage: sourceFileSecureGCSGoogleCloudStorage,
 		}
 	}
 	var sourceFileSecureS3AmazonWebServices *shared.SourceFileSecureS3AmazonWebServices
@@ -71,7 +71,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureS3AmazonWebServices != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			S3AmazonWebServices: sourceFileSecureS3AmazonWebServices,
+			SourceFileSecureS3AmazonWebServices: sourceFileSecureS3AmazonWebServices,
 		}
 	}
 	var sourceFileSecureAzBlobAzureBlobStorage *shared.SourceFileSecureAzBlobAzureBlobStorage
@@ -97,7 +97,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureAzBlobAzureBlobStorage != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			AzBlobAzureBlobStorage: sourceFileSecureAzBlobAzureBlobStorage,
+			SourceFileSecureAzBlobAzureBlobStorage: sourceFileSecureAzBlobAzureBlobStorage,
 		}
 	}
 	var sourceFileSecureSSHSecureShell *shared.SourceFileSecureSSHSecureShell
@@ -125,7 +125,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureSSHSecureShell != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			SSHSecureShell: sourceFileSecureSSHSecureShell,
+			SourceFileSecureSSHSecureShell: sourceFileSecureSSHSecureShell,
 		}
 	}
 	var sourceFileSecureSCPSecureCopyProtocol *shared.SourceFileSecureSCPSecureCopyProtocol
@@ -153,7 +153,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureSCPSecureCopyProtocol != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			SCPSecureCopyProtocol: sourceFileSecureSCPSecureCopyProtocol,
+			SourceFileSecureSCPSecureCopyProtocol: sourceFileSecureSCPSecureCopyProtocol,
 		}
 	}
 	var sourceFileSecureSFTPSecureFileTransferProtocol *shared.SourceFileSecureSFTPSecureFileTransferProtocol
@@ -181,7 +181,7 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureSFTPSecureFileTransferProtocol != nil {
 		provider = shared.SourceFileSecureStorageProvider{
-			SFTPSecureFileTransferProtocol: sourceFileSecureSFTPSecureFileTransferProtocol,
+			SourceFileSecureSFTPSecureFileTransferProtocol: sourceFileSecureSFTPSecureFileTransferProtocol,
 		}
 	}
 	readerOptions := new(string)
@@ -284,7 +284,7 @@ func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecu
 	}
 	if sourceFileSecureUpdateS3AmazonWebServices != nil {
 		provider = shared.StorageProvider{
-			S3AmazonWebServices: sourceFileSecureUpdateS3AmazonWebServices,
+			SourceFileSecureUpdateS3AmazonWebServices: sourceFileSecureUpdateS3AmazonWebServices,
 		}
 	}
 	var azBlobAzureBlobStorage *shared.AzBlobAzureBlobStorage

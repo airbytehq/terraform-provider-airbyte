@@ -134,48 +134,48 @@ func (o *SourceMailchimpOAuth20) GetClientSecret() *string {
 type SourceMailchimpAuthenticationType string
 
 const (
-	SourceMailchimpAuthenticationTypeOAuth20 SourceMailchimpAuthenticationType = "OAuth20"
-	SourceMailchimpAuthenticationTypeAPIKey  SourceMailchimpAuthenticationType = "APIKey"
+	SourceMailchimpAuthenticationTypeSourceMailchimpOAuth20 SourceMailchimpAuthenticationType = "source-mailchimp_OAuth2.0"
+	SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey  SourceMailchimpAuthenticationType = "source-mailchimp_API Key"
 )
 
 type SourceMailchimpAuthentication struct {
-	OAuth20 *SourceMailchimpOAuth20
-	APIKey  *SourceMailchimpAPIKey
+	SourceMailchimpOAuth20 *SourceMailchimpOAuth20
+	SourceMailchimpAPIKey  *SourceMailchimpAPIKey
 
 	Type SourceMailchimpAuthenticationType
 }
 
-func CreateSourceMailchimpAuthenticationOAuth20(oAuth20 SourceMailchimpOAuth20) SourceMailchimpAuthentication {
-	typ := SourceMailchimpAuthenticationTypeOAuth20
+func CreateSourceMailchimpAuthenticationSourceMailchimpOAuth20(sourceMailchimpOAuth20 SourceMailchimpOAuth20) SourceMailchimpAuthentication {
+	typ := SourceMailchimpAuthenticationTypeSourceMailchimpOAuth20
 
 	return SourceMailchimpAuthentication{
-		OAuth20: &oAuth20,
-		Type:    typ,
+		SourceMailchimpOAuth20: &sourceMailchimpOAuth20,
+		Type:                   typ,
 	}
 }
 
-func CreateSourceMailchimpAuthenticationAPIKey(apiKey SourceMailchimpAPIKey) SourceMailchimpAuthentication {
-	typ := SourceMailchimpAuthenticationTypeAPIKey
+func CreateSourceMailchimpAuthenticationSourceMailchimpAPIKey(sourceMailchimpAPIKey SourceMailchimpAPIKey) SourceMailchimpAuthentication {
+	typ := SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey
 
 	return SourceMailchimpAuthentication{
-		APIKey: &apiKey,
-		Type:   typ,
+		SourceMailchimpAPIKey: &sourceMailchimpAPIKey,
+		Type:                  typ,
 	}
 }
 
 func (u *SourceMailchimpAuthentication) UnmarshalJSON(data []byte) error {
 
-	apiKey := new(SourceMailchimpAPIKey)
-	if err := utils.UnmarshalJSON(data, &apiKey, "", true, true); err == nil {
-		u.APIKey = apiKey
-		u.Type = SourceMailchimpAuthenticationTypeAPIKey
+	sourceMailchimpAPIKey := new(SourceMailchimpAPIKey)
+	if err := utils.UnmarshalJSON(data, &sourceMailchimpAPIKey, "", true, true); err == nil {
+		u.SourceMailchimpAPIKey = sourceMailchimpAPIKey
+		u.Type = SourceMailchimpAuthenticationTypeSourceMailchimpAPIKey
 		return nil
 	}
 
-	oAuth20 := new(SourceMailchimpOAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = SourceMailchimpAuthenticationTypeOAuth20
+	sourceMailchimpOAuth20 := new(SourceMailchimpOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceMailchimpOAuth20, "", true, true); err == nil {
+		u.SourceMailchimpOAuth20 = sourceMailchimpOAuth20
+		u.Type = SourceMailchimpAuthenticationTypeSourceMailchimpOAuth20
 		return nil
 	}
 
@@ -183,12 +183,12 @@ func (u *SourceMailchimpAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMailchimpAuthentication) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
+	if u.SourceMailchimpOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceMailchimpOAuth20, "", true)
 	}
 
-	if u.APIKey != nil {
-		return utils.MarshalJSON(u.APIKey, "", true)
+	if u.SourceMailchimpAPIKey != nil {
+		return utils.MarshalJSON(u.SourceMailchimpAPIKey, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

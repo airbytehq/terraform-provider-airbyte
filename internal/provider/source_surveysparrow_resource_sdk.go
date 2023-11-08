@@ -18,7 +18,7 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 		}
 		if sourceSurveySparrowEUBasedAccount != nil {
 			region = &shared.SourceSurveySparrowBaseURL{
-				EUBasedAccount: sourceSurveySparrowEUBasedAccount,
+				SourceSurveySparrowEUBasedAccount: sourceSurveySparrowEUBasedAccount,
 			}
 		}
 		var sourceSurveySparrowGlobalAccount *shared.SourceSurveySparrowGlobalAccount
@@ -27,7 +27,7 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 		}
 		if sourceSurveySparrowGlobalAccount != nil {
 			region = &shared.SourceSurveySparrowBaseURL{
-				GlobalAccount: sourceSurveySparrowGlobalAccount,
+				SourceSurveySparrowGlobalAccount: sourceSurveySparrowGlobalAccount,
 			}
 		}
 	}

@@ -36,7 +36,7 @@ func (r *DestinationMysqlResourceModel) ToCreateSDKType() *shared.DestinationMys
 		}
 		if destinationMysqlNoTunnel != nil {
 			tunnelMethod = &shared.DestinationMysqlSSHTunnelMethod{
-				NoTunnel: destinationMysqlNoTunnel,
+				DestinationMysqlNoTunnel: destinationMysqlNoTunnel,
 			}
 		}
 		var destinationMysqlSSHKeyAuthentication *shared.DestinationMysqlSSHKeyAuthentication
@@ -59,7 +59,7 @@ func (r *DestinationMysqlResourceModel) ToCreateSDKType() *shared.DestinationMys
 		}
 		if destinationMysqlSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlSSHTunnelMethod{
-				SSHKeyAuthentication: destinationMysqlSSHKeyAuthentication,
+				DestinationMysqlSSHKeyAuthentication: destinationMysqlSSHKeyAuthentication,
 			}
 		}
 		var destinationMysqlPasswordAuthentication *shared.DestinationMysqlPasswordAuthentication
@@ -82,7 +82,7 @@ func (r *DestinationMysqlResourceModel) ToCreateSDKType() *shared.DestinationMys
 		}
 		if destinationMysqlPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlSSHTunnelMethod{
-				PasswordAuthentication: destinationMysqlPasswordAuthentication,
+				DestinationMysqlPasswordAuthentication: destinationMysqlPasswordAuthentication,
 			}
 		}
 	}
@@ -140,7 +140,7 @@ func (r *DestinationMysqlResourceModel) ToUpdateSDKType() *shared.DestinationMys
 		}
 		if destinationMysqlUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationMysqlUpdateSSHTunnelMethod{
-				NoTunnel: destinationMysqlUpdateNoTunnel,
+				DestinationMysqlUpdateNoTunnel: destinationMysqlUpdateNoTunnel,
 			}
 		}
 		var destinationMysqlUpdateSSHKeyAuthentication *shared.DestinationMysqlUpdateSSHKeyAuthentication
@@ -163,7 +163,7 @@ func (r *DestinationMysqlResourceModel) ToUpdateSDKType() *shared.DestinationMys
 		}
 		if destinationMysqlUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: destinationMysqlUpdateSSHKeyAuthentication,
+				DestinationMysqlUpdateSSHKeyAuthentication: destinationMysqlUpdateSSHKeyAuthentication,
 			}
 		}
 		var destinationMysqlUpdatePasswordAuthentication *shared.DestinationMysqlUpdatePasswordAuthentication
@@ -186,7 +186,7 @@ func (r *DestinationMysqlResourceModel) ToUpdateSDKType() *shared.DestinationMys
 		}
 		if destinationMysqlUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlUpdateSSHTunnelMethod{
-				PasswordAuthentication: destinationMysqlUpdatePasswordAuthentication,
+				DestinationMysqlUpdatePasswordAuthentication: destinationMysqlUpdatePasswordAuthentication,
 			}
 		}
 	}

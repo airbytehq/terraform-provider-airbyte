@@ -24,7 +24,7 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 		}
 		if sourceZendeskSunshineOAuth20 != nil {
 			credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
-				OAuth20: sourceZendeskSunshineOAuth20,
+				SourceZendeskSunshineOAuth20: sourceZendeskSunshineOAuth20,
 			}
 		}
 		var sourceZendeskSunshineAPIToken *shared.SourceZendeskSunshineAPIToken
@@ -38,7 +38,7 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 		}
 		if sourceZendeskSunshineAPIToken != nil {
 			credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
-				APIToken: sourceZendeskSunshineAPIToken,
+				SourceZendeskSunshineAPIToken: sourceZendeskSunshineAPIToken,
 			}
 		}
 	}
@@ -87,7 +87,7 @@ func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZen
 		}
 		if sourceZendeskSunshineUpdateOAuth20 != nil {
 			credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
-				OAuth20: sourceZendeskSunshineUpdateOAuth20,
+				SourceZendeskSunshineUpdateOAuth20: sourceZendeskSunshineUpdateOAuth20,
 			}
 		}
 		var sourceZendeskSunshineUpdateAPIToken *shared.SourceZendeskSunshineUpdateAPIToken
@@ -101,7 +101,7 @@ func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZen
 		}
 		if sourceZendeskSunshineUpdateAPIToken != nil {
 			credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
-				APIToken: sourceZendeskSunshineUpdateAPIToken,
+				SourceZendeskSunshineUpdateAPIToken: sourceZendeskSunshineUpdateAPIToken,
 			}
 		}
 	}

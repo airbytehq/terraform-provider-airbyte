@@ -27,7 +27,7 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 	}
 	if sourceSalesloftAuthenticateViaOAuth != nil {
 		credentials = shared.SourceSalesloftCredentials{
-			AuthenticateViaOAuth: sourceSalesloftAuthenticateViaOAuth,
+			SourceSalesloftAuthenticateViaOAuth: sourceSalesloftAuthenticateViaOAuth,
 		}
 	}
 	var sourceSalesloftAuthenticateViaAPIKey *shared.SourceSalesloftAuthenticateViaAPIKey
@@ -39,7 +39,7 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 	}
 	if sourceSalesloftAuthenticateViaAPIKey != nil {
 		credentials = shared.SourceSalesloftCredentials{
-			AuthenticateViaAPIKey: sourceSalesloftAuthenticateViaAPIKey,
+			SourceSalesloftAuthenticateViaAPIKey: sourceSalesloftAuthenticateViaAPIKey,
 		}
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())

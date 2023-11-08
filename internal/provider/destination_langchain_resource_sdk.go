@@ -18,7 +18,7 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	if destinationLangchainOpenAI != nil {
 		embedding = shared.DestinationLangchainEmbedding{
-			OpenAI: destinationLangchainOpenAI,
+			DestinationLangchainOpenAI: destinationLangchainOpenAI,
 		}
 	}
 	var destinationLangchainFake *shared.DestinationLangchainFake
@@ -27,7 +27,7 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	if destinationLangchainFake != nil {
 		embedding = shared.DestinationLangchainEmbedding{
-			Fake: destinationLangchainFake,
+			DestinationLangchainFake: destinationLangchainFake,
 		}
 	}
 	var indexing shared.DestinationLangchainIndexing
@@ -44,7 +44,7 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	if destinationLangchainPinecone != nil {
 		indexing = shared.DestinationLangchainIndexing{
-			Pinecone: destinationLangchainPinecone,
+			DestinationLangchainPinecone: destinationLangchainPinecone,
 		}
 	}
 	var destinationLangchainDocArrayHnswSearch *shared.DestinationLangchainDocArrayHnswSearch
@@ -56,7 +56,7 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	if destinationLangchainDocArrayHnswSearch != nil {
 		indexing = shared.DestinationLangchainIndexing{
-			DocArrayHnswSearch: destinationLangchainDocArrayHnswSearch,
+			DestinationLangchainDocArrayHnswSearch: destinationLangchainDocArrayHnswSearch,
 		}
 	}
 	var destinationLangchainChromaLocalPersistance *shared.DestinationLangchainChromaLocalPersistance
@@ -75,7 +75,7 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	if destinationLangchainChromaLocalPersistance != nil {
 		indexing = shared.DestinationLangchainIndexing{
-			ChromaLocalPersistance: destinationLangchainChromaLocalPersistance,
+			DestinationLangchainChromaLocalPersistance: destinationLangchainChromaLocalPersistance,
 		}
 	}
 	chunkOverlap := new(int64)
@@ -151,7 +151,7 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 	}
 	if destinationLangchainUpdatePinecone != nil {
 		indexing = shared.Indexing{
-			Pinecone: destinationLangchainUpdatePinecone,
+			DestinationLangchainUpdatePinecone: destinationLangchainUpdatePinecone,
 		}
 	}
 	var docArrayHnswSearch *shared.DocArrayHnswSearch

@@ -37,7 +37,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbStandardXmin != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				StandardXmin: sourceAlloydbStandardXmin,
+				SourceAlloydbStandardXmin: sourceAlloydbStandardXmin,
 			}
 		}
 		var sourceAlloydbLogicalReplicationCDC *shared.SourceAlloydbLogicalReplicationCDC
@@ -84,7 +84,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbLogicalReplicationCDC != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				LogicalReplicationCDC: sourceAlloydbLogicalReplicationCDC,
+				SourceAlloydbLogicalReplicationCDC: sourceAlloydbLogicalReplicationCDC,
 			}
 		}
 		var sourceAlloydbStandard *shared.SourceAlloydbStandard
@@ -93,7 +93,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbStandard != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				Standard: sourceAlloydbStandard,
+				SourceAlloydbStandard: sourceAlloydbStandard,
 			}
 		}
 	}
@@ -115,7 +115,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbDisable != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				Disable: sourceAlloydbDisable,
+				SourceAlloydbDisable: sourceAlloydbDisable,
 			}
 		}
 		var sourceAlloydbAllow *shared.SourceAlloydbAllow
@@ -130,7 +130,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbAllow != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				Allow: sourceAlloydbAllow,
+				SourceAlloydbAllow: sourceAlloydbAllow,
 			}
 		}
 		var sourceAlloydbPrefer *shared.SourceAlloydbPrefer
@@ -145,7 +145,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbPrefer != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				Prefer: sourceAlloydbPrefer,
+				SourceAlloydbPrefer: sourceAlloydbPrefer,
 			}
 		}
 		var sourceAlloydbRequire *shared.SourceAlloydbRequire
@@ -160,7 +160,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbRequire != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				Require: sourceAlloydbRequire,
+				SourceAlloydbRequire: sourceAlloydbRequire,
 			}
 		}
 		var sourceAlloydbVerifyCa *shared.SourceAlloydbVerifyCa
@@ -198,7 +198,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbVerifyCa != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				VerifyCa: sourceAlloydbVerifyCa,
+				SourceAlloydbVerifyCa: sourceAlloydbVerifyCa,
 			}
 		}
 		var sourceAlloydbVerifyFull *shared.SourceAlloydbVerifyFull
@@ -236,7 +236,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbVerifyFull != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				VerifyFull: sourceAlloydbVerifyFull,
+				SourceAlloydbVerifyFull: sourceAlloydbVerifyFull,
 			}
 		}
 	}
@@ -248,7 +248,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbNoTunnel != nil {
 			tunnelMethod = &shared.SourceAlloydbSSHTunnelMethod{
-				NoTunnel: sourceAlloydbNoTunnel,
+				SourceAlloydbNoTunnel: sourceAlloydbNoTunnel,
 			}
 		}
 		var sourceAlloydbSSHKeyAuthentication *shared.SourceAlloydbSSHKeyAuthentication
@@ -271,7 +271,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbSSHTunnelMethod{
-				SSHKeyAuthentication: sourceAlloydbSSHKeyAuthentication,
+				SourceAlloydbSSHKeyAuthentication: sourceAlloydbSSHKeyAuthentication,
 			}
 		}
 		var sourceAlloydbPasswordAuthentication *shared.SourceAlloydbPasswordAuthentication
@@ -294,7 +294,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		}
 		if sourceAlloydbPasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbSSHTunnelMethod{
-				PasswordAuthentication: sourceAlloydbPasswordAuthentication,
+				SourceAlloydbPasswordAuthentication: sourceAlloydbPasswordAuthentication,
 			}
 		}
 	}
@@ -418,7 +418,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateStandard != nil {
 			replicationMethod = &shared.ReplicationMethod{
-				Standard: sourceAlloydbUpdateStandard,
+				SourceAlloydbUpdateStandard: sourceAlloydbUpdateStandard,
 			}
 		}
 	}
@@ -440,7 +440,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateDisable != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				Disable: sourceAlloydbUpdateDisable,
+				SourceAlloydbUpdateDisable: sourceAlloydbUpdateDisable,
 			}
 		}
 		var sourceAlloydbUpdateAllow *shared.SourceAlloydbUpdateAllow
@@ -455,7 +455,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateAllow != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				Allow: sourceAlloydbUpdateAllow,
+				SourceAlloydbUpdateAllow: sourceAlloydbUpdateAllow,
 			}
 		}
 		var sourceAlloydbUpdatePrefer *shared.SourceAlloydbUpdatePrefer
@@ -470,7 +470,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdatePrefer != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				Prefer: sourceAlloydbUpdatePrefer,
+				SourceAlloydbUpdatePrefer: sourceAlloydbUpdatePrefer,
 			}
 		}
 		var sourceAlloydbUpdateRequire *shared.SourceAlloydbUpdateRequire
@@ -485,7 +485,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateRequire != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				Require: sourceAlloydbUpdateRequire,
+				SourceAlloydbUpdateRequire: sourceAlloydbUpdateRequire,
 			}
 		}
 		var sourceAlloydbUpdateVerifyCa *shared.SourceAlloydbUpdateVerifyCa
@@ -523,7 +523,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateVerifyCa != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				VerifyCa: sourceAlloydbUpdateVerifyCa,
+				SourceAlloydbUpdateVerifyCa: sourceAlloydbUpdateVerifyCa,
 			}
 		}
 		var sourceAlloydbUpdateVerifyFull *shared.SourceAlloydbUpdateVerifyFull
@@ -561,7 +561,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateVerifyFull != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				VerifyFull: sourceAlloydbUpdateVerifyFull,
+				SourceAlloydbUpdateVerifyFull: sourceAlloydbUpdateVerifyFull,
 			}
 		}
 	}
@@ -573,7 +573,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceAlloydbUpdateSSHTunnelMethod{
-				NoTunnel: sourceAlloydbUpdateNoTunnel,
+				SourceAlloydbUpdateNoTunnel: sourceAlloydbUpdateNoTunnel,
 			}
 		}
 		var sourceAlloydbUpdateSSHKeyAuthentication *shared.SourceAlloydbUpdateSSHKeyAuthentication
@@ -596,7 +596,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbUpdateSSHTunnelMethod{
-				SSHKeyAuthentication: sourceAlloydbUpdateSSHKeyAuthentication,
+				SourceAlloydbUpdateSSHKeyAuthentication: sourceAlloydbUpdateSSHKeyAuthentication,
 			}
 		}
 		var sourceAlloydbUpdatePasswordAuthentication *shared.SourceAlloydbUpdatePasswordAuthentication
@@ -619,7 +619,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		}
 		if sourceAlloydbUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbUpdateSSHTunnelMethod{
-				PasswordAuthentication: sourceAlloydbUpdatePasswordAuthentication,
+				SourceAlloydbUpdatePasswordAuthentication: sourceAlloydbUpdatePasswordAuthentication,
 			}
 		}
 	}

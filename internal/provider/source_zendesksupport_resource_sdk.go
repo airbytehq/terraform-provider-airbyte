@@ -40,7 +40,7 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 		}
 		if sourceZendeskSupportOAuth20 != nil {
 			credentials = &shared.SourceZendeskSupportAuthentication{
-				OAuth20: sourceZendeskSupportOAuth20,
+				SourceZendeskSupportOAuth20: sourceZendeskSupportOAuth20,
 			}
 		}
 		var sourceZendeskSupportAPIToken *shared.SourceZendeskSupportAPIToken
@@ -59,7 +59,7 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 		}
 		if sourceZendeskSupportAPIToken != nil {
 			credentials = &shared.SourceZendeskSupportAuthentication{
-				APIToken: sourceZendeskSupportAPIToken,
+				SourceZendeskSupportAPIToken: sourceZendeskSupportAPIToken,
 			}
 		}
 	}
@@ -135,7 +135,7 @@ func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZend
 		}
 		if sourceZendeskSupportUpdateOAuth20 != nil {
 			credentials = &shared.SourceZendeskSupportUpdateAuthentication{
-				OAuth20: sourceZendeskSupportUpdateOAuth20,
+				SourceZendeskSupportUpdateOAuth20: sourceZendeskSupportUpdateOAuth20,
 			}
 		}
 		var sourceZendeskSupportUpdateAPIToken *shared.SourceZendeskSupportUpdateAPIToken
@@ -154,7 +154,7 @@ func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZend
 		}
 		if sourceZendeskSupportUpdateAPIToken != nil {
 			credentials = &shared.SourceZendeskSupportUpdateAuthentication{
-				APIToken: sourceZendeskSupportUpdateAPIToken,
+				SourceZendeskSupportUpdateAPIToken: sourceZendeskSupportUpdateAPIToken,
 			}
 		}
 	}
