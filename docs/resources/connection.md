@@ -47,7 +47,7 @@ resource "airbyte_connection" "my_connection" {
 }
 ```
 
-With Stream Module 
+Example using [Stream Module](#nestedatt--stream-module)
 
 ```terraform
 
@@ -128,6 +128,7 @@ Optional:
 - `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
 - `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
 
+<a id="nestedatt--stream-module"></a>
 ## Stream Module
 If you want to discover the available streams programmatically with terraform, we have released a [Stream Discovery Module](https://registry.terraform.io/modules/airbytehq/stream-discovery/airbyte/latest) which fetches the available streams and sync modes between a source and destination.
 
