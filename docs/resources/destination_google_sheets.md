@@ -20,11 +20,11 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
       client_secret = "...my_client_secret..."
       refresh_token = "...my_refresh_token..."
     }
-    destination_type = "google-sheets"
-    spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
+    spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  name         = "Mr. Irma Schaefer"
-  workspace_id = "b3cdca42-5190-44e5-a3c7-e0bc7178e479"
+  definition_id = "a78cf13c-3589-4bc3-aaba-63d3987f09ed"
+  name          = "Manuel Cronin IV"
+  workspace_id  = "dddbef1f-87bb-4506-9e16-a5a735a4e180"
 }
 ```
 
@@ -34,8 +34,12 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -48,7 +52,6 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
 Required:
 
 - `credentials` (Attributes) Google API Credentials for connecting to Google Sheets and Google Drive APIs (see [below for nested schema](#nestedatt--configuration--credentials))
-- `destination_type` (String) must be one of ["google-sheets"]
 - `spreadsheet_id` (String) The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -58,6 +61,6 @@ Required:
 
 - `client_id` (String) The Client ID of your Google Sheets developer application.
 - `client_secret` (String) The Client Secret of your Google Sheets developer application.
-- `refresh_token` (String) The token for obtaining new access token.
+- `refresh_token` (String, Sensitive) The token for obtaining new access token.
 
 

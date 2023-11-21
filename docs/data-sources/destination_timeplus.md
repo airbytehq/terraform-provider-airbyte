@@ -27,17 +27,10 @@ data "airbyte_destination_timeplus" "my_destination_timeplus" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `apikey` (String) Personal API key
-- `destination_type` (String) must be one of ["timeplus"]
-- `endpoint` (String) Timeplus workspace endpoint
 
 

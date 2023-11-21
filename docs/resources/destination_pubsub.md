@@ -15,18 +15,18 @@ DestinationPubsub Resource
 ```terraform
 resource "airbyte_destination_pubsub" "my_destination_pubsub" {
   configuration = {
-    batching_delay_threshold         = 7
+    batching_delay_threshold         = 5
     batching_element_count_threshold = 5
     batching_enabled                 = true
     batching_request_bytes_threshold = 3
     credentials_json                 = "...my_credentials_json..."
-    destination_type                 = "pubsub"
     ordering_enabled                 = true
     project_id                       = "...my_project_id..."
     topic_id                         = "...my_topic_id..."
   }
-  name         = "Phil Boyer"
-  workspace_id = "f86bc173-d689-4eee-9526-f8d986e881ea"
+  definition_id = "b6294a31-a29a-4af3-8680-70eca1537042"
+  name          = "Ada Harber"
+  workspace_id  = "e54dc306-1658-46b7-b990-fea69beba7dc"
 }
 ```
 
@@ -36,8 +36,12 @@ resource "airbyte_destination_pubsub" "my_destination_pubsub" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -49,17 +53,21 @@ resource "airbyte_destination_pubsub" "my_destination_pubsub" {
 
 Required:
 
-- `batching_enabled` (Boolean) If TRUE messages will be buffered instead of sending them one by one
 - `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.
-- `destination_type` (String) must be one of ["pubsub"]
-- `ordering_enabled` (Boolean) If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream
 - `project_id` (String) The GCP project ID for the project containing the target PubSub.
 - `topic_id` (String) The PubSub topic ID in the given GCP project ID.
 
 Optional:
 
-- `batching_delay_threshold` (Number) Number of ms before the buffer is flushed
-- `batching_element_count_threshold` (Number) Number of messages before the buffer is flushed
-- `batching_request_bytes_threshold` (Number) Number of bytes before the buffer is flushed
+- `batching_delay_threshold` (Number) Default: 1
+Number of ms before the buffer is flushed
+- `batching_element_count_threshold` (Number) Default: 1
+Number of messages before the buffer is flushed
+- `batching_enabled` (Boolean) Default: false
+If TRUE messages will be buffered instead of sending them one by one
+- `batching_request_bytes_threshold` (Number) Default: 1
+Number of bytes before the buffer is flushed
+- `ordering_enabled` (Boolean) Default: false
+If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream
 
 

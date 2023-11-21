@@ -14,7 +14,6 @@ SourceOrbit DataSource
 
 ```terraform
 data "airbyte_source_orbit" "my_source_orbit" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,24 +25,12 @@ data "airbyte_source_orbit" "my_source_orbit" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_token` (String) Authorizes you to work with Orbit workspaces associated with the token.
-- `source_type` (String) must be one of ["orbit"]
-- `start_date` (String) Date in the format 2022-06-26. Only load members whose last activities are after this date.
-- `workspace` (String) The unique name of the workspace that your API token is associated with.
 
 

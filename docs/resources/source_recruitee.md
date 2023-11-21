@@ -15,13 +15,13 @@ SourceRecruitee Resource
 ```terraform
 resource "airbyte_source_recruitee" "my_source_recruitee" {
   configuration = {
-    api_key     = "...my_api_key..."
-    company_id  = 9
-    source_type = "recruitee"
+    api_key    = "...my_api_key..."
+    company_id = 4
   }
-  name         = "Mrs. Tina White"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "6bcf1525-58da-4a95-be6c-d02756c354aa"
+  definition_id = "f1211e1f-cb26-4b90-8c0d-f941919892a2"
+  name          = "Mrs. Sherri Rosenbaum"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "af7bc34c-463b-4838-9c5f-976535f73a45"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_recruitee" "my_source_recruitee" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_recruitee" "my_source_recruitee" {
 
 Required:
 
-- `api_key` (String) Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
+- `api_key` (String, Sensitive) Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
 - `company_id` (Number) Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
-- `source_type` (String) must be one of ["recruitee"]
 
 

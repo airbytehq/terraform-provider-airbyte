@@ -16,23 +16,22 @@ SourceQuickbooks Resource
 resource "airbyte_source_quickbooks" "my_source_quickbooks" {
   configuration = {
     credentials = {
-      source_quickbooks_authorization_method_o_auth2_0 = {
+      source_quickbooks_o_auth2_0 = {
         access_token      = "...my_access_token..."
-        auth_type         = "oauth2.0"
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         realm_id          = "...my_realm_id..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-06-15T23:02:57.447Z"
+        token_expiry_date = "2020-06-15T02:42:19.793Z"
       }
     }
-    sandbox     = false
-    source_type = "quickbooks"
-    start_date  = "2021-03-20T00:00:00Z"
+    sandbox    = true
+    start_date = "2021-03-20T00:00:00Z"
   }
-  name         = "William Gottlieb"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "e00a1d6e-b943-4464-9d03-084fbba5ccef"
+  definition_id = "054daa84-a4e2-48fe-a10a-8a64b77a4fe6"
+  name          = "Patricia Dickens"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "88c95001-e515-4b2e-b405-22a67dad65e8"
 }
 ```
 
@@ -42,11 +41,12 @@ resource "airbyte_source_quickbooks" "my_source_quickbooks" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -60,49 +60,30 @@ resource "airbyte_source_quickbooks" "my_source_quickbooks" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `source_type` (String) must be one of ["quickbooks"]
 - `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
+
+Optional:
+
+- `sandbox` (Boolean) Default: false
+Determines whether to use the sandbox or production environment.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_quickbooks_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_quickbooks_authorization_method_o_auth2_0))
-- `source_quickbooks_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_quickbooks_update_authorization_method_o_auth2_0))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_quickbooks_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_quickbooks_authorization_method_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Access token fot making authenticated requests.
-- `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
-- `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
-- `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
-- `refresh_token` (String) A token used when refreshing the access token.
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-Optional:
-
-- `auth_type` (String) must be one of ["oauth2.0"]
-
-
-<a id="nestedatt--configuration--credentials--source_quickbooks_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_quickbooks_update_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) Access token fot making authenticated requests.
+- `access_token` (String, Sensitive) Access token fot making authenticated requests.
 - `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 - `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 - `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
-- `refresh_token` (String) A token used when refreshing the access token.
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-Optional:
-
-- `auth_type` (String) must be one of ["oauth2.0"]
+- `refresh_token` (String, Sensitive) A token used when refreshing the access token.
+- `token_expiry_date` (String, Sensitive) The date-time when the access token should be refreshed.
 
 

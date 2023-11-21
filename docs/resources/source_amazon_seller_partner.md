@@ -15,26 +15,22 @@ SourceAmazonSellerPartner Resource
 ```terraform
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
+    account_type            = "Seller"
     advanced_stream_options = "{\"GET_SALES_AND_TRAFFIC_REPORT\": {\"availability_sla_days\": 3}}"
-    auth_type               = "oauth2.0"
-    aws_access_key          = "...my_aws_access_key..."
-    aws_environment         = "PRODUCTION"
-    aws_secret_key          = "...my_aws_secret_key..."
+    aws_environment         = "SANDBOX"
     lwa_app_id              = "...my_lwa_app_id..."
     lwa_client_secret       = "...my_lwa_client_secret..."
-    max_wait_seconds        = 1980
-    period_in_days          = 5
+    period_in_days          = 2
     refresh_token           = "...my_refresh_token..."
-    region                  = "SA"
+    region                  = "AE"
     replication_end_date    = "2017-01-25T00:00:00Z"
     replication_start_date  = "2017-01-25T00:00:00Z"
-    report_options          = "{\"GET_SOME_REPORT\": {\"custom\": \"true\"}}"
-    role_arn                = "...my_role_arn..."
-    source_type             = "amazon-seller-partner"
+    report_options          = "{\"GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT\": {\"reportPeriod\": \"WEEK\"}}"
   }
-  name         = "Phyllis Quitzon"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5c537c64-54ef-4b0b-b489-6c3ca5acfbe2"
+  definition_id = "69bb26e6-b9f2-45aa-9f8c-7d4107048d9f"
+  name          = "Caleb Legros"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9afeef69-ead1-4e5d-b690-efc6e828b1d2"
 }
 ```
 
@@ -44,11 +40,12 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -61,26 +58,23 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 
 Required:
 
-- `aws_environment` (String) must be one of ["PRODUCTION", "SANDBOX"]
-Select the AWS Environment.
 - `lwa_app_id` (String) Your Login with Amazon Client ID.
 - `lwa_client_secret` (String) Your Login with Amazon Client Secret.
-- `refresh_token` (String) The Refresh Token obtained via OAuth flow authorization.
-- `region` (String) must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]
-Select the AWS Region.
+- `refresh_token` (String, Sensitive) The Refresh Token obtained via OAuth flow authorization.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-- `source_type` (String) must be one of ["amazon-seller-partner"]
 
 Optional:
 
+- `account_type` (String) must be one of ["Seller", "Vendor"]; Default: "Seller"
+Type of the Account you're going to authorize the Airbyte application by
 - `advanced_stream_options` (String) Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.
-- `auth_type` (String) must be one of ["oauth2.0"]
-- `aws_access_key` (String) Specifies the AWS access key used as part of the credentials to authenticate the user.
-- `aws_secret_key` (String) Specifies the AWS secret key used as part of the credentials to authenticate the user.
-- `max_wait_seconds` (Number) Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.
-- `period_in_days` (Number) Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
+- `aws_environment` (String) must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"
+Select the AWS Environment.
+- `period_in_days` (Number) Default: 90
+Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
+- `region` (String) must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"
+Select the AWS Region.
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 - `report_options` (String) Additional information passed to reports. This varies by report type. Must be a valid json string.
-- `role_arn` (String) Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).
 
 

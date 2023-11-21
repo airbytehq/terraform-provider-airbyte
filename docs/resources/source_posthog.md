@@ -17,13 +17,13 @@ resource "airbyte_source_posthog" "my_source_posthog" {
   configuration = {
     api_key          = "...my_api_key..."
     base_url         = "https://posthog.example.com"
-    events_time_step = 30
-    source_type      = "posthog"
+    events_time_step = 5
     start_date       = "2021-01-01T00:00:00Z"
   }
-  name         = "Terence Wisozk"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "21ec2053-b749-4366-ac8e-e0f2bf19588d"
+  definition_id = "07521b21-ea9b-4c9d-9c88-f1ee12f8a7db"
+  name          = "Daisy Ledner"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "41266a87-d389-4094-afa6-7bbea9f5a35d"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_posthog" "my_source_posthog" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,13 +51,14 @@ resource "airbyte_source_posthog" "my_source_posthog" {
 
 Required:
 
-- `api_key` (String) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
-- `source_type` (String) must be one of ["posthog"]
+- `api_key` (String, Sensitive) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
 - `start_date` (String) The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 
 Optional:
 
-- `base_url` (String) Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
-- `events_time_step` (Number) Set lower value in case of failing long running sync of events stream.
+- `base_url` (String) Default: "https://app.posthog.com"
+Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
+- `events_time_step` (Number) Default: 30
+Set lower value in case of failing long running sync of events stream.
 
 

@@ -15,14 +15,14 @@ SourceShortio Resource
 ```terraform
 resource "airbyte_source_shortio" "my_source_shortio" {
   configuration = {
-    domain_id   = "...my_domain_id..."
-    secret_key  = "...my_secret_key..."
-    source_type = "shortio"
-    start_date  = "2023-07-30T03:43:59.244Z"
+    domain_id  = "...my_domain_id..."
+    secret_key = "...my_secret_key..."
+    start_date = "2023-07-30T03:43:59.244Z"
   }
-  name         = "Troy Streich I"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "9ea5f9b1-8a24-44fd-a190-39dacd38ed0d"
+  definition_id = "b2aae6c2-0ac9-4c19-9b3e-1c883c55acce"
+  name          = "Bethany Donnelly"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "29a15c36-062a-463f-9716-d2b265f2af56"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_shortio" "my_source_shortio" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,8 +51,7 @@ resource "airbyte_source_shortio" "my_source_shortio" {
 Required:
 
 - `domain_id` (String)
-- `secret_key` (String) Short.io Secret Key
-- `source_type` (String) must be one of ["shortio"]
+- `secret_key` (String, Sensitive) Short.io Secret Key
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

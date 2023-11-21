@@ -28,15 +28,15 @@ data "airbyte_connection" "my_connection" {
 ### Read-Only
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String) must be one of ["auto", "us", "eu"]; Default: "auto"
 - `destination_id` (String)
-- `name` (String) Optional name of the connection
-- `namespace_definition` (String) must be one of ["source", "destination", "custom_format"]
+- `name` (String)
+- `namespace_definition` (String) must be one of ["source", "destination", "custom_format"]; Default: "destination"
 Define the location where the data will be stored in the destination
-- `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
-- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
+- `namespace_format` (String)
+- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"
 Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
-- `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
+- `prefix` (String)
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `source_id` (String)
 - `status` (String) must be one of ["active", "inactive", "deprecated"]
@@ -68,6 +68,6 @@ Read-Only:
 
 - `basic_timing` (String)
 - `cron_expression` (String)
-- `schedule_type` (String) must be one of ["manual", "cron"]
+- `schedule_type` (String) must be one of ["manual", "cron", "basic"]
 
 

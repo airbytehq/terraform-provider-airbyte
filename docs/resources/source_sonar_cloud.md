@@ -20,13 +20,13 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
     ]
     end_date     = "YYYY-MM-DD"
     organization = "airbyte"
-    source_type  = "sonar-cloud"
     start_date   = "YYYY-MM-DD"
     user_token   = "...my_user_token..."
   }
-  name         = "Mildred Rosenbaum"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "43ad2daa-784a-4ba3-9230-edf73811a115"
+  definition_id = "d259943d-fa52-4a9e-875a-bffba2c1e7b6"
+  name          = "Jose Lindgren"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "d761f19b-60aa-4080-8c97-1e60235dc09f"
 }
 ```
 
@@ -36,11 +36,12 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,10 +54,9 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
 
 Required:
 
-- `component_keys` (List of String) Comma-separated list of component keys.
+- `component_keys` (List of String, Sensitive) Comma-separated list of component keys.
 - `organization` (String) Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.
-- `source_type` (String) must be one of ["sonar-cloud"]
-- `user_token` (String) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
+- `user_token` (String, Sensitive) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 
 Optional:
 

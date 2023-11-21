@@ -15,12 +15,12 @@ DestinationConvex Resource
 ```terraform
 resource "airbyte_destination_convex" "my_destination_convex" {
   configuration = {
-    access_key       = "...my_access_key..."
-    deployment_url   = "https://murky-swan-635.convex.cloud"
-    destination_type = "convex"
+    access_key     = "...my_access_key..."
+    deployment_url = "https://cluttered-owl-337.convex.cloud"
   }
-  name         = "Joyce Kertzmann"
-  workspace_id = "4c8b711e-5b7f-4d2e-9028-921cddc69260"
+  definition_id = "335e03ab-ebb7-41b5-8e87-2ec68b6d2a9c"
+  name          = "Patsy Powlowski"
+  workspace_id  = "6941566f-22fd-430a-a8af-8c1d27b3e573"
 }
 ```
 
@@ -30,8 +30,12 @@ resource "airbyte_destination_convex" "my_destination_convex" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -43,8 +47,7 @@ resource "airbyte_destination_convex" "my_destination_convex" {
 
 Required:
 
-- `access_key` (String) API access key used to send data to a Convex deployment.
+- `access_key` (String, Sensitive) API access key used to send data to a Convex deployment.
 - `deployment_url` (String) URL of the Convex deployment that is the destination
-- `destination_type` (String) must be one of ["convex"]
 
 

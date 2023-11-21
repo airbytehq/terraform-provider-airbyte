@@ -15,12 +15,12 @@ SourceRss Resource
 ```terraform
 resource "airbyte_source_rss" "my_source_rss" {
   configuration = {
-    source_type = "rss"
-    url         = "...my_url..."
+    url = "...my_url..."
   }
-  name         = "Gustavo Donnelly"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "ba9216bc-b415-4835-8736-41723133edc0"
+  definition_id = "da21f739-86a7-41e9-92c2-b81056bc977a"
+  name          = "Alison Wunsch"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "ff8dd835-d804-427d-a3a4-e1d8c723c8e5"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_rss" "my_source_rss" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_rss" "my_source_rss" {
 
 Required:
 
-- `source_type` (String) must be one of ["rss"]
 - `url` (String) RSS Feed URL
 
 

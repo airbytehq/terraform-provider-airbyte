@@ -14,7 +14,6 @@ SourceConfluence DataSource
 
 ```terraform
 data "airbyte_source_confluence" "my_source_confluence" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,24 +25,12 @@ data "airbyte_source_confluence" "my_source_confluence" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_token` (String) Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
-- `domain_name` (String) Your Confluence domain name
-- `email` (String) Your Confluence login email
-- `source_type` (String) must be one of ["confluence"]
 
 

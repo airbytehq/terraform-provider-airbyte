@@ -14,7 +14,6 @@ SourceSmartengage DataSource
 
 ```terraform
 data "airbyte_source_smartengage" "my_source_smartengage" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,22 +25,12 @@ data "airbyte_source_smartengage" "my_source_smartengage" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key
-- `source_type` (String) must be one of ["smartengage"]
 
 

@@ -14,7 +14,6 @@ SourceFaker DataSource
 
 ```terraform
 data "airbyte_source_faker" "my_source_faker" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,26 +25,12 @@ data "airbyte_source_faker" "my_source_faker" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `always_updated` (Boolean) Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.
-- `count` (Number) How many users should be generated in total.  This setting does not apply to the purchases or products stream.
-- `parallelism` (Number) How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
-- `records_per_slice` (Number) How many fake records will be in each page (stream slice), before a state message is emitted?
-- `seed` (Number) Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
-- `source_type` (String) must be one of ["faker"]
 
 

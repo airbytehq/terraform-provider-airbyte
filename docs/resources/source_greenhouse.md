@@ -15,12 +15,12 @@ SourceGreenhouse Resource
 ```terraform
 resource "airbyte_source_greenhouse" "my_source_greenhouse" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "greenhouse"
+    api_key = "...my_api_key..."
   }
-  name         = "Patricia Pouros"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5722dd89-5b8b-4cf2-8db9-59693352f745"
+  definition_id = "47c0f9ce-33c0-4f29-8c11-e4e993d29474"
+  name          = "Cassandra Carroll"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "54dff6cf-9b79-4e23-a888-b6bde25154a5"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
 
 Required:
 
-- `api_key` (String) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
-- `source_type` (String) must be one of ["greenhouse"]
+- `api_key` (String, Sensitive) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
 
 

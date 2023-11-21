@@ -15,13 +15,13 @@ SourceDelighted Resource
 ```terraform
 resource "airbyte_source_delighted" "my_source_delighted" {
   configuration = {
-    api_key     = "...my_api_key..."
-    since       = "2022-05-30 04:50:23"
-    source_type = "delighted"
+    api_key = "...my_api_key..."
+    since   = "2022-05-30 04:50:23"
   }
-  name         = "Sarah Collier"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "14f4cc6f-18bf-4962-9a6a-4f77a87ee3e4"
+  definition_id = "b8f8f6af-bf36-45d6-87e0-87e3905b6a41"
+  name          = "Elsa Osinski"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4f73b7e8-dc37-41ec-bee1-0511b439ed17"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_delighted" "my_source_delighted" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_delighted" "my_source_delighted" {
 
 Required:
 
-- `api_key` (String) A Delighted API key.
+- `api_key` (String, Sensitive) A Delighted API key.
 - `since` (String) The date from which you'd like to replicate the data
-- `source_type` (String) must be one of ["delighted"]
 
 

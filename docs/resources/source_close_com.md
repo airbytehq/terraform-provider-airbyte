@@ -15,13 +15,13 @@ SourceCloseCom Resource
 ```terraform
 resource "airbyte_source_close_com" "my_source_closecom" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "close-com"
-    start_date  = "2021-01-01"
+    api_key    = "...my_api_key..."
+    start_date = "2021-01-01"
   }
-  name         = "Ronnie Nikolaus"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "e0ac184c-2b9c-4247-8883-73a40e1942f3"
+  definition_id = "ba7b45cf-ea08-4abd-9a32-8f6c373e0666"
+  name          = "Miss Eva Collier"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "a3ab4d44-755b-4910-a5c9-99e89cbd0e8f"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_close_com" "my_source_closecom" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,11 +49,11 @@ resource "airbyte_source_close_com" "my_source_closecom" {
 
 Required:
 
-- `api_key` (String) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
-- `source_type` (String) must be one of ["close-com"]
+- `api_key` (String, Sensitive) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
 
 Optional:
 
-- `start_date` (String) The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
+- `start_date` (String) Default: "2021-01-01"
+The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
 
 

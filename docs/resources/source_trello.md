@@ -18,14 +18,14 @@ resource "airbyte_source_trello" "my_source_trello" {
     board_ids = [
       "...",
     ]
-    key         = "...my_key..."
-    source_type = "trello"
-    start_date  = "2021-03-01T00:00:00Z"
-    token       = "...my_token..."
+    key        = "...my_key..."
+    start_date = "2021-03-01T00:00:00Z"
+    token      = "...my_token..."
   }
-  name         = "Philip Armstrong"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "a966489d-7b78-4673-a13a-12a6b9924945"
+  definition_id = "26a8838c-f8d2-427f-b18d-4240654f4782"
+  name          = "Esther Abshire"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "b5a46242-8ebc-45c7-bead-f0c9ce16ebe8"
 }
 ```
 
@@ -35,11 +35,12 @@ resource "airbyte_source_trello" "my_source_trello" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -52,13 +53,12 @@ resource "airbyte_source_trello" "my_source_trello" {
 
 Required:
 
-- `key` (String) Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
-- `source_type` (String) must be one of ["trello"]
+- `key` (String, Sensitive) Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-- `token` (String) Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
+- `token` (String, Sensitive) Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 
 Optional:
 
-- `board_ids` (List of String) IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated.
+- `board_ids` (List of String) IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated. Please note that this is not the 8-character ID in the board's shortLink (URL of the board). Rather, what is required here is the 24-character ID usually returned by the API
 
 

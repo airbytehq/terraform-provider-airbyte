@@ -17,14 +17,14 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
     access_key_id            = "A012345678910EXAMPLE"
     endpoint                 = "https://{aws_dynamo_db_url}.com"
-    region                   = "us-gov-west-1"
+    region                   = "us-west-1"
     reserved_attribute_names = "name, field_name, field-name"
     secret_access_key        = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
-    source_type              = "dynamodb"
   }
-  name         = "Sandra Rowe Sr."
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f023b75d-2367-4fe1-a0cc-8df79f0a396d"
+  definition_id = "44c5465b-457a-42c2-a18f-e1b91dcce8e6"
+  name          = "Faye Streich"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "75fb5812-2af6-4a8a-8655-36a205f1e4d3"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,14 +52,14 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
 
 Required:
 
-- `access_key_id` (String) The access key id to access Dynamodb. Airbyte requires read permissions to the database
-- `secret_access_key` (String) The corresponding secret to the access key id.
-- `source_type` (String) must be one of ["dynamodb"]
+- `access_key_id` (String, Sensitive) The access key id to access Dynamodb. Airbyte requires read permissions to the database
+- `secret_access_key` (String, Sensitive) The corresponding secret to the access key id.
 
 Optional:
 
-- `endpoint` (String) the URL of the Dynamodb database
-- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
+- `endpoint` (String) Default: ""
+the URL of the Dynamodb database
+- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
 The region of the Dynamodb database
 - `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
 

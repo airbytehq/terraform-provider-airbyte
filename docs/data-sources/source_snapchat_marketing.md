@@ -14,7 +14,6 @@ SourceSnapchatMarketing DataSource
 
 ```terraform
 data "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,26 +25,12 @@ data "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `client_id` (String) The Client ID of your Snapchat developer application.
-- `client_secret` (String) The Client Secret of your Snapchat developer application.
-- `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
-- `source_type` (String) must be one of ["snapchat-marketing"]
-- `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated.
 
 

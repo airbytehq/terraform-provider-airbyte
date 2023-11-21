@@ -16,15 +16,16 @@ SourceYoutubeAnalytics Resource
 resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
   configuration = {
     credentials = {
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      additional_properties = "{ \"see\": \"documentation\" }"
+      client_id             = "...my_client_id..."
+      client_secret         = "...my_client_secret..."
+      refresh_token         = "...my_refresh_token..."
     }
-    source_type = "youtube-analytics"
   }
-  name         = "Tommy Rippin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "707f06b2-8ecc-4864-9238-6f62c969c4cc"
+  definition_id = "bb8c2a23-b3c0-4134-a218-66cf518dbd5e"
+  name          = "Mr. Clay Terry"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e07eadc6-f53d-4253-9b8b-1e39d437be8f"
 }
 ```
 
@@ -34,11 +35,12 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -52,7 +54,6 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["youtube-analytics"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -61,7 +62,7 @@ Required:
 
 - `client_id` (String) The Client ID of your developer application
 - `client_secret` (String) The client secret of your developer application
-- `refresh_token` (String) A refresh token generated using the above client ID and secret
+- `refresh_token` (String, Sensitive) A refresh token generated using the above client ID and secret
 
 Optional:
 

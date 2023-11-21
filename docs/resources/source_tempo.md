@@ -15,12 +15,12 @@ SourceTempo Resource
 ```terraform
 resource "airbyte_source_tempo" "my_source_tempo" {
   configuration = {
-    api_token   = "...my_api_token..."
-    source_type = "tempo"
+    api_token = "...my_api_token..."
   }
-  name         = "Edwin Haley"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7f69e2c9-e6d1-40e9-9b3a-d4c6b03108d9"
+  definition_id = "5f462d7c-8446-4197-ba1b-271a5b009f29"
+  name          = "Karen Kemmer"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6dac9959-2aae-4b21-989b-3db558d4aa17"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_tempo" "my_source_tempo" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_tempo" "my_source_tempo" {
 
 Required:
 
-- `api_token` (String) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
-- `source_type` (String) must be one of ["tempo"]
+- `api_token` (String, Sensitive) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
 
 

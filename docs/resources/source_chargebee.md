@@ -15,15 +15,15 @@ SourceChargebee Resource
 ```terraform
 resource "airbyte_source_chargebee" "my_source_chargebee" {
   configuration = {
-    product_catalog = "1.0"
+    product_catalog = "2.0"
     site            = "airbyte-test"
     site_api_key    = "...my_site_api_key..."
-    source_type     = "chargebee"
     start_date      = "2021-01-25T00:00:00Z"
   }
-  name         = "Viola Morissette"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fbbe6949-fb2b-4b4e-8ae6-c3d5db3adebd"
+  definition_id = "08691686-308e-4adb-b3c3-69be0c12ece5"
+  name          = "Jean Mann"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "aef8e474-9058-48d0-a293-9574a681eea7"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,8 +54,7 @@ Required:
 - `product_catalog` (String) must be one of ["1.0", "2.0"]
 Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
 - `site` (String) The site prefix for your Chargebee instance.
-- `site_api_key` (String) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["chargebee"]
+- `site_api_key` (String, Sensitive) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
 - `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

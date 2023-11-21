@@ -15,16 +15,16 @@ SourceBraintree Resource
 ```terraform
 resource "airbyte_source_braintree" "my_source_braintree" {
   configuration = {
-    environment = "Development"
+    environment = "Qa"
     merchant_id = "...my_merchant_id..."
     private_key = "...my_private_key..."
     public_key  = "...my_public_key..."
-    source_type = "braintree"
     start_date  = "2020-12-30"
   }
-  name         = "Henrietta Nienow"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "4f3b756c-11f6-4c37-a512-6243835bbc05"
+  definition_id = "12fcb5a7-fdd8-454e-8c39-c22fe17df57a"
+  name          = "Ms. Tommie Bins"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5ff7f1a2-7e8f-4d2f-993d-4f9ab29a2f83"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_braintree" "my_source_braintree" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -54,9 +55,8 @@ Required:
 - `environment` (String) must be one of ["Development", "Sandbox", "Qa", "Production"]
 Environment specifies where the data will come from.
 - `merchant_id` (String) The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
-- `private_key` (String) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-- `public_key` (String) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["braintree"]
+- `private_key` (String, Sensitive) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+- `public_key` (String, Sensitive) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 
 Optional:
 

@@ -17,14 +17,14 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "snaptravel"
-    requests_per_minute = 2
-    source_type         = "freshcaller"
+    requests_per_minute = 7
     start_date          = "2022-01-01T12:00:00Z"
-    sync_lag_minutes    = 9
+    sync_lag_minutes    = 2
   }
-  name         = "Kenneth Friesen IV"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "d6d364ff-d455-4906-9126-3d48e935c2c9"
+  definition_id = "c06fe5a2-e94e-4ff2-91ad-fc721dd1f802"
+  name          = "Margarita Nitzsche"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9660c93e-b114-448c-9cd3-afe5ef85381e"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,14 +52,13 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
 
 Required:
 
-- `api_key` (String) Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.
 - `domain` (String) Used to construct Base URL for the Freshcaller APIs
-- `source_type` (String) must be one of ["freshcaller"]
-- `start_date` (String) UTC date and time. Any data created after this date will be replicated.
 
 Optional:
 
 - `requests_per_minute` (Number) The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
+- `start_date` (String) UTC date and time. Any data created after this date will be replicated.
 - `sync_lag_minutes` (Number) Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 
 

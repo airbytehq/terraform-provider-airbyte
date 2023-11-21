@@ -17,12 +17,12 @@ resource "airbyte_source_clockify" "my_source_clockify" {
   configuration = {
     api_key      = "...my_api_key..."
     api_url      = "...my_api_url..."
-    source_type  = "clockify"
     workspace_id = "...my_workspace_id..."
   }
-  name         = "Angela Schaefer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "76ffb901-c6ec-4bb4-a243-cf789ffafeda"
+  definition_id = "a5ff53c6-fc10-4ca6-ba82-7c3d349f444d"
+  name          = "Julius Lockman"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9d8494dc-faea-4550-8380-1e9f446900c8"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_clockify" "my_source_clockify" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,12 +50,12 @@ resource "airbyte_source_clockify" "my_source_clockify" {
 
 Required:
 
-- `api_key` (String) You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.
-- `source_type` (String) must be one of ["clockify"]
+- `api_key` (String, Sensitive) You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.
 - `workspace_id` (String) WorkSpace Id
 
 Optional:
 
-- `api_url` (String) The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
+- `api_url` (String) Default: "https://api.clockify.me"
+The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
 
 

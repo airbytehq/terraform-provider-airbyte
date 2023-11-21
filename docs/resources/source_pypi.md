@@ -16,12 +16,12 @@ SourcePypi Resource
 resource "airbyte_source_pypi" "my_source_pypi" {
   configuration = {
     project_name = "sampleproject"
-    source_type  = "pypi"
     version      = "1.2.0"
   }
-  name         = "Antonia Wintheiser"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0fb38742-90d3-4365-a1ec-a16ef89451bd"
+  definition_id = "25cbff5b-31f2-4b93-84d3-ebf32902de61"
+  name          = "Ann Blanda"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "882924ee-80aa-4298-8d84-713ebef014dd"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_pypi" "my_source_pypi" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,7 +50,6 @@ resource "airbyte_source_pypi" "my_source_pypi" {
 Required:
 
 - `project_name` (String) Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
-- `source_type` (String) must be one of ["pypi"]
 
 Optional:
 

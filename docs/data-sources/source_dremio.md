@@ -14,7 +14,6 @@ SourceDremio DataSource
 
 ```terraform
 data "airbyte_source_dremio" "my_source_dremio" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,23 +25,12 @@ data "airbyte_source_dremio" "my_source_dremio" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key that is generated when you authenticate to Dremio API
-- `base_url` (String) URL of your Dremio instance
-- `source_type` (String) must be one of ["dremio"]
 
 

@@ -14,7 +14,6 @@ SourceLinkedinPages DataSource
 
 ```terraform
 data "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,72 +25,12 @@ data "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `org_id` (String) Specify the Organization ID
-- `source_type` (String) must be one of ["linkedin-pages"]
-
-<a id="nestedatt--configuration--credentials"></a>
-### Nested Schema for `configuration.credentials`
-
-Read-Only:
-
-- `source_linkedin_pages_authentication_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_authentication_access_token))
-- `source_linkedin_pages_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_authentication_o_auth2_0))
-- `source_linkedin_pages_update_authentication_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_access_token))
-- `source_linkedin_pages_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_o_auth2_0))
-
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_authentication_access_token"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_authentication_access_token`
-
-Read-Only:
-
-- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-- `auth_method` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_authentication_o_auth2_0`
-
-Read-Only:
-
-- `auth_method` (String) must be one of ["oAuth2.0"]
-- `client_id` (String) The client ID of the LinkedIn developer application.
-- `client_secret` (String) The client secret of the LinkedIn developer application.
-- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-
-
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_access_token"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_update_authentication_access_token`
-
-Read-Only:
-
-- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-- `auth_method` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_update_authentication_o_auth2_0`
-
-Read-Only:
-
-- `auth_method` (String) must be one of ["oAuth2.0"]
-- `client_id` (String) The client ID of the LinkedIn developer application.
-- `client_secret` (String) The client secret of the LinkedIn developer application.
-- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 

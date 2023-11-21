@@ -27,21 +27,10 @@ data "airbyte_destination_kinesis" "my_destination_kinesis" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `access_key` (String) Generate the AWS Access Key for current user.
-- `buffer_size` (Number) Buffer size for storing kinesis records before being batch streamed.
-- `destination_type` (String) must be one of ["kinesis"]
-- `endpoint` (String) AWS Kinesis endpoint.
-- `private_key` (String) The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".
-- `region` (String) AWS region. Your account determines the Regions that are available to you.
-- `shard_count` (Number) Number of shards to which the data should be streamed.
 
 

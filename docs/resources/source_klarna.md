@@ -15,15 +15,15 @@ SourceKlarna Resource
 ```terraform
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
-    password    = "...my_password..."
-    playground  = true
-    region      = "us"
-    source_type = "klarna"
-    username    = "Chase50"
+    password   = "...my_password..."
+    playground = true
+    region     = "oc"
+    username   = "Lessie_Beatty"
   }
-  name         = "Caleb Rau"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "873f5033-f19d-4bf1-a5ce-4152eab9cd7e"
+  definition_id = "ed1087b9-882d-454c-a598-cc59eb952f06"
+  name          = "Carmen Bins"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "7fd8f9d1-baac-46e0-9b1e-50c14468d231"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_klarna" "my_source_klarna" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,11 +51,14 @@ resource "airbyte_source_klarna" "my_source_klarna" {
 
 Required:
 
-- `password` (String) A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
-- `playground` (Boolean) Propertie defining if connector is used against playground or production environment
+- `password` (String, Sensitive) A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
 - `region` (String) must be one of ["eu", "us", "oc"]
 Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
-- `source_type` (String) must be one of ["klarna"]
 - `username` (String) Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
+
+Optional:
+
+- `playground` (Boolean) Default: false
+Propertie defining if connector is used against playground or production environment
 
 

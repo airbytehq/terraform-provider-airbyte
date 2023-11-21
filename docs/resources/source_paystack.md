@@ -15,14 +15,14 @@ SourcePaystack Resource
 ```terraform
 resource "airbyte_source_paystack" "my_source_paystack" {
   configuration = {
-    lookback_window_days = 6
+    lookback_window_days = 9
     secret_key           = "...my_secret_key..."
-    source_type          = "paystack"
     start_date           = "2017-01-25T00:00:00Z"
   }
-  name         = "Dr. Boyd Wilderman"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "2216cbe0-71bc-4163-a279-a3b084da9925"
+  definition_id = "5b489304-8e9c-41af-9961-b1c883a57271"
+  name          = "Kari Lemke"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "b6433cb8-2b32-4ad0-bfd9-a9d8ba9b0df8"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_paystack" "my_source_paystack" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,12 +50,12 @@ resource "airbyte_source_paystack" "my_source_paystack" {
 
 Required:
 
-- `secret_key` (String) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
-- `source_type` (String) must be one of ["paystack"]
+- `secret_key` (String, Sensitive) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `lookback_window_days` (Number) When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
+- `lookback_window_days` (Number) Default: 0
+When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
 
 

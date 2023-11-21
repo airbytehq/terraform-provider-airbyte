@@ -17,12 +17,12 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
   configuration = {
     brewed_after  = "MM-YYYY"
     brewed_before = "MM-YYYY"
-    id            = 22
-    source_type   = "punk-api"
+    id            = 1
   }
-  name         = "Darnell Turcotte"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "540ef53a-34a1-4b8f-a997-31adc05d85ae"
+  definition_id = "0c173d4d-6113-43dd-b2a9-5937ced0062e"
+  name          = "Shelia Hettinger"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4e78152c-bd26-46e4-812d-05e7f58d4a06"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,7 +52,6 @@ Required:
 
 - `brewed_after` (String) To extract specific data with Unique ID
 - `brewed_before` (String) To extract specific data with Unique ID
-- `source_type` (String) must be one of ["punk-api"]
 
 Optional:
 

@@ -15,12 +15,12 @@ SourceSmartengage Resource
 ```terraform
 resource "airbyte_source_smartengage" "my_source_smartengage" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "smartengage"
+    api_key = "...my_api_key..."
   }
-  name         = "Carmen Crist"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fbaf9476-a2ae-48dc-850c-8a3512c73784"
+  definition_id = "3d1fcf2b-6755-4110-90ec-6c18f2017e88"
+  name          = "Neil Pagac"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "64f95e84-efb6-4a93-9326-1882dc6ea377"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
 
 Required:
 
-- `api_key` (String) API Key
-- `source_type` (String) must be one of ["smartengage"]
+- `api_key` (String, Sensitive) API Key
 
 

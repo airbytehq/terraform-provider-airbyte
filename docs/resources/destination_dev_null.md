@@ -15,15 +15,13 @@ DestinationDevNull Resource
 ```terraform
 resource "airbyte_destination_dev_null" "my_destination_devnull" {
   configuration = {
-    destination_type = "dev-null"
     test_destination = {
-      destination_dev_null_test_destination_silent = {
-        test_destination_type = "SILENT"
-      }
+      silent = {}
     }
   }
-  name         = "Rene Hane"
-  workspace_id = "a0d446ce-2af7-4a73-8f3b-e453f870b326"
+  definition_id = "29d4644f-9dd3-4d54-87cf-b82ef1e01ef5"
+  name          = "Megan King"
+  workspace_id  = "9e2c85c9-04a2-403f-b157-a47112db1eec"
 }
 ```
 
@@ -33,8 +31,12 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -46,7 +48,6 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 
 Required:
 
-- `destination_type` (String) must be one of ["dev-null"]
 - `test_destination` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination))
 
 <a id="nestedatt--configuration--test_destination"></a>
@@ -54,22 +55,9 @@ Required:
 
 Optional:
 
-- `destination_dev_null_test_destination_silent` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination--destination_dev_null_test_destination_silent))
-- `destination_dev_null_update_test_destination_silent` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent))
+- `silent` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination--silent))
 
-<a id="nestedatt--configuration--test_destination--destination_dev_null_test_destination_silent"></a>
-### Nested Schema for `configuration.test_destination.destination_dev_null_test_destination_silent`
-
-Required:
-
-- `test_destination_type` (String) must be one of ["SILENT"]
-
-
-<a id="nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent"></a>
-### Nested Schema for `configuration.test_destination.destination_dev_null_update_test_destination_silent`
-
-Required:
-
-- `test_destination_type` (String) must be one of ["SILENT"]
+<a id="nestedatt--configuration--test_destination--silent"></a>
+### Nested Schema for `configuration.test_destination.silent`
 
 

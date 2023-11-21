@@ -17,18 +17,16 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
   configuration = {
     access_token = "...my_access_token..."
     region = {
-      source_survey_sparrow_base_url_eu_based_account = {
-        url_base = "https://eu-api.surveysparrow.com/v3"
-      }
+      eu_based_account = {}
     }
-    source_type = "survey-sparrow"
     survey_id = [
       "{ \"see\": \"documentation\" }",
     ]
   }
-  name         = "Hugo Kovacek"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f02449d8-6f4b-4b20-be5d-911cbfe749ca"
+  definition_id = "4b91c615-d128-4040-ba03-eb3c0afcc3c8"
+  name          = "Gerard Kerluke"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "fbbc8e3e-7db5-4a3e-846f-c1e0fa91f7ef"
 }
 ```
 
@@ -38,11 +36,12 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -55,8 +54,7 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
 
 Required:
 
-- `access_token` (String) Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["survey-sparrow"]
+- `access_token` (String, Sensitive) Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
 
 Optional:
 
@@ -68,40 +66,14 @@ Optional:
 
 Optional:
 
-- `source_survey_sparrow_base_url_eu_based_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_base_url_eu_based_account))
-- `source_survey_sparrow_base_url_global_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_base_url_global_account))
-- `source_survey_sparrow_update_base_url_eu_based_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_update_base_url_eu_based_account))
-- `source_survey_sparrow_update_base_url_global_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_update_base_url_global_account))
+- `eu_based_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--eu_based_account))
+- `global_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--global_account))
 
-<a id="nestedatt--configuration--region--source_survey_sparrow_base_url_eu_based_account"></a>
-### Nested Schema for `configuration.region.source_survey_sparrow_base_url_eu_based_account`
-
-Optional:
-
-- `url_base` (String) must be one of ["https://eu-api.surveysparrow.com/v3"]
+<a id="nestedatt--configuration--region--eu_based_account"></a>
+### Nested Schema for `configuration.region.eu_based_account`
 
 
-<a id="nestedatt--configuration--region--source_survey_sparrow_base_url_global_account"></a>
-### Nested Schema for `configuration.region.source_survey_sparrow_base_url_global_account`
-
-Optional:
-
-- `url_base` (String) must be one of ["https://api.surveysparrow.com/v3"]
-
-
-<a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_eu_based_account"></a>
-### Nested Schema for `configuration.region.source_survey_sparrow_update_base_url_eu_based_account`
-
-Optional:
-
-- `url_base` (String) must be one of ["https://eu-api.surveysparrow.com/v3"]
-
-
-<a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_global_account"></a>
-### Nested Schema for `configuration.region.source_survey_sparrow_update_base_url_global_account`
-
-Optional:
-
-- `url_base` (String) must be one of ["https://api.surveysparrow.com/v3"]
+<a id="nestedatt--configuration--region--global_account"></a>
+### Nested Schema for `configuration.region.global_account`
 
 

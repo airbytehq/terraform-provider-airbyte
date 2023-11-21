@@ -15,12 +15,13 @@ SourceGetlago Resource
 ```terraform
 resource "airbyte_source_getlago" "my_source_getlago" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "getlago"
+    api_key = "...my_api_key..."
+    api_url = "...my_api_url..."
   }
-  name         = "Irving Rohan"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0df448a4-7f93-490c-9888-0983dabf9ef3"
+  definition_id = "25b4bae6-1112-4211-be87-b490ecc6bf75"
+  name          = "Mrs. Willie Bins"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "c803c831-1a97-4a1a-a894-9629432a02ce"
 }
 ```
 
@@ -30,11 +31,12 @@ resource "airbyte_source_getlago" "my_source_getlago" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +49,11 @@ resource "airbyte_source_getlago" "my_source_getlago" {
 
 Required:
 
-- `api_key` (String) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
-- `source_type` (String) must be one of ["getlago"]
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
+
+Optional:
+
+- `api_url` (String) Default: "https://api.getlago.com/api/v1"
+Your Lago API URL
 
 

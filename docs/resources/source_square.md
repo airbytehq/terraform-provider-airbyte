@@ -16,19 +16,18 @@ SourceSquare Resource
 resource "airbyte_source_square" "my_source_square" {
   configuration = {
     credentials = {
-      source_square_authentication_api_key = {
-        api_key   = "...my_api_key..."
-        auth_type = "API Key"
+      source_square_api_key = {
+        api_key = "...my_api_key..."
       }
     }
-    include_deleted_objects = true
+    include_deleted_objects = false
     is_sandbox              = false
-    source_type             = "square"
-    start_date              = "2022-02-01"
+    start_date              = "2022-11-22"
   }
-  name         = "Miss Bruce Gibson"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "548f88f8-f1bf-40bc-8e1f-206d5d831d00"
+  definition_id = "55c9f06b-5482-4c9e-b770-03d0337f10a6"
+  name          = "Connie Homenick"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4ee32ccb-4d52-4da6-928f-2436a122e394"
 }
 ```
 
@@ -38,11 +37,12 @@ resource "airbyte_source_square" "my_source_square" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,64 +53,39 @@ resource "airbyte_source_square" "my_source_square" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `source_type` (String) must be one of ["square"]
-
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `include_deleted_objects` (Boolean) In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
-- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
+- `include_deleted_objects` (Boolean) Default: false
+In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
+- `is_sandbox` (Boolean) Default: false
+Determines whether to use the sandbox or production environment.
+- `start_date` (String) Default: "2021-01-01"
+UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_square_authentication_api_key` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_authentication_api_key))
-- `source_square_authentication_oauth_authentication` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_authentication_oauth_authentication))
-- `source_square_update_authentication_api_key` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_update_authentication_api_key))
-- `source_square_update_authentication_oauth_authentication` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication))
+- `api_key` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--api_key))
+- `oauth_authentication` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--oauth_authentication))
 
-<a id="nestedatt--configuration--credentials--source_square_authentication_api_key"></a>
-### Nested Schema for `configuration.credentials.source_square_authentication_api_key`
+<a id="nestedatt--configuration--credentials--api_key"></a>
+### Nested Schema for `configuration.credentials.api_key`
 
 Required:
 
-- `api_key` (String) The API key for a Square application
-- `auth_type` (String) must be one of ["API Key"]
+- `api_key` (String, Sensitive) The API key for a Square application
 
 
-<a id="nestedatt--configuration--credentials--source_square_authentication_oauth_authentication"></a>
-### Nested Schema for `configuration.credentials.source_square_authentication_oauth_authentication`
+<a id="nestedatt--configuration--credentials--oauth_authentication"></a>
+### Nested Schema for `configuration.credentials.oauth_authentication`
 
 Required:
 
-- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Square-issued ID of your application
 - `client_secret` (String) The Square-issued application secret for your application
-- `refresh_token` (String) A refresh token generated using the above client ID and secret
-
-
-<a id="nestedatt--configuration--credentials--source_square_update_authentication_api_key"></a>
-### Nested Schema for `configuration.credentials.source_square_update_authentication_api_key`
-
-Required:
-
-- `api_key` (String) The API key for a Square application
-- `auth_type` (String) must be one of ["API Key"]
-
-
-<a id="nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication"></a>
-### Nested Schema for `configuration.credentials.source_square_update_authentication_oauth_authentication`
-
-Required:
-
-- `auth_type` (String) must be one of ["OAuth"]
-- `client_id` (String) The Square-issued ID of your application
-- `client_secret` (String) The Square-issued application secret for your application
-- `refresh_token` (String) A refresh token generated using the above client ID and secret
+- `refresh_token` (String, Sensitive) A refresh token generated using the above client ID and secret
 
 

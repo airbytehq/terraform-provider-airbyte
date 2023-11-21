@@ -14,7 +14,6 @@ SourceTheGuardianAPI DataSource
 
 ```terraform
 data "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,27 +25,12 @@ data "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
-- `end_date` (String) (Optional) Use this to set the maximum date (YYYY-MM-DD) of the results. Results newer than the end_date will not be shown. Default is set to the current date (today) for incremental syncs.
-- `query` (String) (Optional) The query (q) parameter filters the results to only those that include that search term. The q parameter supports AND, OR and NOT operators.
-- `section` (String) (Optional) Use this to filter the results by a particular section. See <a href="https://content.guardianapis.com/sections?api-key=test">here</a> for a list of all sections, and <a href="https://open-platform.theguardian.com/documentation/section">here</a> for the sections endpoint documentation.
-- `source_type` (String) must be one of ["the-guardian-api"]
-- `start_date` (String) Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
-- `tag` (String) (Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.
 
 

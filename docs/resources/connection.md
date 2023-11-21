@@ -20,7 +20,7 @@ resource "airbyte_connection" "my_connection" {
         cursor_field = [
           "...",
         ]
-        name = "Terrence Rau"
+        name = "Cecil Johnson"
         primary_key = [
           [
             "...",
@@ -30,19 +30,19 @@ resource "airbyte_connection" "my_connection" {
       },
     ]
   }
-  data_residency                       = "us"
-  destination_id                       = "d69a674e-0f46-47cc-8796-ed151a05dfc2"
-  name                                 = "Wilfred Wolff"
-  namespace_definition                 = "custom_format"
+  data_residency                       = "auto"
+  destination_id                       = "e362083e-afc8-4559-94e0-a570f6dd427d"
+  name                                 = "Melvin O'Connell"
+  namespace_definition                 = "source"
   namespace_format                     = SOURCE_NAMESPACE
-  non_breaking_schema_updates_behavior = "disable_connection"
+  non_breaking_schema_updates_behavior = "propagate_columns"
   prefix                               = "...my_prefix..."
   schedule = {
     basic_timing    = "...my_basic_timing..."
     cron_expression = "...my_cron_expression..."
-    schedule_type   = "cron"
+    schedule_type   = "manual"
   }
-  source_id = "ca1ba928-fc81-4674-acb7-39205929396f"
+  source_id = "78358423-25b6-4c7b-bfd2-fd307d60cb97"
   status    = "deprecated"
 }
 ```
@@ -58,12 +58,13 @@ resource "airbyte_connection" "my_connection" {
 ### Optional
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String) must be one of ["auto", "us", "eu"]; Default: "auto"
 - `name` (String) Optional name of the connection
-- `namespace_definition` (String) must be one of ["source", "destination", "custom_format"]
+- `namespace_definition` (String) must be one of ["source", "destination", "custom_format"]; Default: "destination"
 Define the location where the data will be stored in the destination
-- `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
-- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
+- `namespace_format` (String) Default: null
+Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
+- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"
 Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 - `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))

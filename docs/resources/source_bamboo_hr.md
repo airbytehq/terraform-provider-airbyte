@@ -18,12 +18,12 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     api_key                               = "...my_api_key..."
     custom_reports_fields                 = "...my_custom_reports_fields..."
     custom_reports_include_default_fields = true
-    source_type                           = "bamboo-hr"
     subdomain                             = "...my_subdomain..."
   }
-  name         = "Ralph Rau"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "1b36a080-88d1-400e-bada-200ef0422eb2"
+  definition_id = "1aa37367-271c-478a-9aa9-603df323c7d7"
+  name          = "Joel Harber"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "f8882a19-738b-4218-b704-94da21b79cfd"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,13 +51,14 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 
 Required:
 
-- `api_key` (String) Api key of bamboo hr
-- `source_type` (String) must be one of ["bamboo-hr"]
+- `api_key` (String, Sensitive) Api key of bamboo hr
 - `subdomain` (String) Sub Domain of bamboo hr
 
 Optional:
 
-- `custom_reports_fields` (String) Comma-separated list of fields to include in custom reports.
-- `custom_reports_include_default_fields` (Boolean) If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
+- `custom_reports_fields` (String) Default: ""
+Comma-separated list of fields to include in custom reports.
+- `custom_reports_include_default_fields` (Boolean) Default: true
+If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
 
 

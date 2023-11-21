@@ -14,7 +14,6 @@ SourceNytimes DataSource
 
 ```terraform
 data "airbyte_source_nytimes" "my_source_nytimes" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,28 +25,12 @@ data "airbyte_source_nytimes" "my_source_nytimes" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key
-- `end_date` (String) End date to stop the article retrieval (format YYYY-MM)
-- `period` (Number) must be one of ["1", "7", "30"]
-Period of time (in days)
-- `share_type` (String) must be one of ["facebook"]
-Share Type
-- `source_type` (String) must be one of ["nytimes"]
-- `start_date` (String) Start date to begin the article retrieval (format YYYY-MM)
 
 

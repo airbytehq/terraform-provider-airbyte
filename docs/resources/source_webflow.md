@@ -15,13 +15,13 @@ SourceWebflow Resource
 ```terraform
 resource "airbyte_source_webflow" "my_source_webflow" {
   configuration = {
-    api_key     = "a very long hex sequence"
-    site_id     = "a relatively long hex sequence"
-    source_type = "webflow"
+    api_key = "a very long hex sequence"
+    site_id = "a relatively long hex sequence"
   }
-  name         = "Taylor Paucek"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fded84a3-5a41-4238-a1a7-35ac26ae33be"
+  definition_id = "9d7dd0bf-2f57-4219-978f-bbe9226a954f"
+  name          = "Cary Mitchell"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "12e392ce-90b9-4169-bb30-db2efb21ef2b"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_webflow" "my_source_webflow" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_webflow" "my_source_webflow" {
 
 Required:
 
-- `api_key` (String) The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
+- `api_key` (String, Sensitive) The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 - `site_id` (String) The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-- `source_type` (String) must be one of ["webflow"]
 
 

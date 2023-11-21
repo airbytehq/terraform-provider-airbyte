@@ -16,21 +16,21 @@ SourceOrb Resource
 resource "airbyte_source_orb" "my_source_orb" {
   configuration = {
     api_key              = "...my_api_key..."
-    lookback_window_days = 9
+    lookback_window_days = 6
     numeric_event_properties_keys = [
       "...",
     ]
-    plan_id     = "...my_plan_id..."
-    source_type = "orb"
-    start_date  = "2022-03-01T00:00:00Z"
+    plan_id    = "...my_plan_id..."
+    start_date = "2022-03-01T00:00:00Z"
     string_event_properties_keys = [
       "...",
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  name         = "Josephine Kilback"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "2f90849d-6aed-44ae-8b75-37cd9222c9ff"
+  definition_id = "f9cf17c9-c1c9-4188-a190-0dfc35041fcd"
+  name          = "Shaun Schimmel"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "262ef24d-9236-49b1-bf5a-7ba288f10a06"
 }
 ```
 
@@ -40,11 +40,12 @@ resource "airbyte_source_orb" "my_source_orb" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,16 +58,16 @@ resource "airbyte_source_orb" "my_source_orb" {
 
 Required:
 
-- `api_key` (String) Orb API Key, issued from the Orb admin console.
-- `source_type` (String) must be one of ["orb"]
+- `api_key` (String, Sensitive) Orb API Key, issued from the Orb admin console.
 - `start_date` (String) UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
 
 Optional:
 
-- `lookback_window_days` (Number) When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.
-- `numeric_event_properties_keys` (List of String) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
+- `lookback_window_days` (Number) Default: 0
+When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.
+- `numeric_event_properties_keys` (List of String, Sensitive) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
 - `plan_id` (String) Orb Plan ID to filter subscriptions that should have usage fetched.
-- `string_event_properties_keys` (List of String) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
-- `subscription_usage_grouping_key` (String) Property key name to group subscription usage by.
+- `string_event_properties_keys` (List of String, Sensitive) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
+- `subscription_usage_grouping_key` (String, Sensitive) Property key name to group subscription usage by.
 
 

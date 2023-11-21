@@ -18,12 +18,12 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    source_type      = "metabase"
-    username         = "Peyton.Green"
+    username         = "Efren_Mante15"
   }
-  name         = "Tammy Sporer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "71e7fd07-4009-4ef8-929d-e1dd7097b5da"
+  definition_id = "f283fdf1-b362-4a3e-b9ca-cc879ba7ac01"
+  name          = "Gail Kirlin"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "7c271c50-44a2-45a4-b7e4-eabe3a97768e"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_metabase" "my_source_metabase" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,12 +52,11 @@ resource "airbyte_source_metabase" "my_source_metabase" {
 Required:
 
 - `instance_api_url` (String) URL to your metabase instance API
-- `source_type` (String) must be one of ["metabase"]
 
 Optional:
 
-- `password` (String)
-- `session_token` (String) To generate your session token, you need to run the following command: ``` curl -X POST \
+- `password` (String, Sensitive)
+- `session_token` (String, Sensitive) To generate your session token, you need to run the following command: ``` curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"username": "person@metabase.com", "password": "fakepassword"}' \
   http://localhost:3000/api/session

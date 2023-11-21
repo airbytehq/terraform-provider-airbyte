@@ -14,7 +14,6 @@ SourceMailgun DataSource
 
 ```terraform
 data "airbyte_source_mailgun" "my_source_mailgun" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,24 +25,12 @@ data "airbyte_source_mailgun" "my_source_mailgun" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
-- `private_key` (String) Primary account API key to access your Mailgun data.
-- `source_type` (String) must be one of ["mailgun"]
-- `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 

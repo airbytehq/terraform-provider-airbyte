@@ -14,7 +14,6 @@ SourceBambooHr DataSource
 
 ```terraform
 data "airbyte_source_bamboo_hr" "my_source_bamboohr" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Api key of bamboo hr
-- `custom_reports_fields` (String) Comma-separated list of fields to include in custom reports.
-- `custom_reports_include_default_fields` (Boolean) If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
-- `source_type` (String) must be one of ["bamboo-hr"]
-- `subdomain` (String) Sub Domain of bamboo hr
 
 

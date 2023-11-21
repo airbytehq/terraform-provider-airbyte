@@ -16,19 +16,18 @@ SourceZendeskSunshine Resource
 resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
   configuration = {
     credentials = {
-      source_zendesk_sunshine_authorization_method_api_token = {
-        api_token   = "...my_api_token..."
-        auth_method = "api_token"
-        email       = "Leonor_Funk@hotmail.com"
+      source_zendesk_sunshine_api_token = {
+        api_token = "...my_api_token..."
+        email     = "Robbie51@hotmail.com"
       }
     }
-    source_type = "zendesk-sunshine"
-    start_date  = "2021-01-01T00:00:00Z"
-    subdomain   = "...my_subdomain..."
+    start_date = "2021-01-01T00:00:00Z"
+    subdomain  = "...my_subdomain..."
   }
-  name         = "Mrs. Edith Hermiston"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "726d1532-1b83-42a5-ad69-180ff60eb9a6"
+  definition_id = "6f099262-2de7-4b1a-93e5-915fe5844c8d"
+  name          = "Kristie Moen"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "7badf74d-23a8-47a4-aabf-6ae57802daa8"
 }
 ```
 
@@ -38,11 +37,12 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -55,7 +55,6 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
 
 Required:
 
-- `source_type` (String) must be one of ["zendesk-sunshine"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
 - `subdomain` (String) The subdomain for your Zendesk Account.
 
@@ -68,49 +67,24 @@ Optional:
 
 Optional:
 
-- `source_zendesk_sunshine_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_api_token))
-- `source_zendesk_sunshine_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0))
-- `source_zendesk_sunshine_update_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token))
-- `source_zendesk_sunshine_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0))
+- `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_authorization_method_api_token`
+<a id="nestedatt--configuration--credentials--api_token"></a>
+### Nested Schema for `configuration.credentials.api_token`
 
 Required:
 
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["api_token"]
+- `api_token` (String, Sensitive) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
 - `email` (String) The user email for your Zendesk account
 
 
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) Long-term access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_api_token`
-
-Required:
-
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["api_token"]
-- `email` (String) The user email for your Zendesk account
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Long-term access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
+- `access_token` (String, Sensitive) Long-term access Token for making authenticated requests.
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 

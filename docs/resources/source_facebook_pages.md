@@ -17,11 +17,11 @@ resource "airbyte_source_facebook_pages" "my_source_facebookpages" {
   configuration = {
     access_token = "...my_access_token..."
     page_id      = "...my_page_id..."
-    source_type  = "facebook-pages"
   }
-  name         = "Moses Wuckert"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "39a910ab-dcab-4626-b669-6e1ec00221b3"
+  definition_id = "2edfee92-bc33-473a-92c8-87f28ef975a7"
+  name          = "Scott Baumbach"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5487915a-2f44-49e5-b0b6-8d5fb4b99e2f"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_facebook_pages" "my_source_facebookpages" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_facebook_pages" "my_source_facebookpages" {
 
 Required:
 
-- `access_token` (String) Facebook Page Access Token
+- `access_token` (String, Sensitive) Facebook Page Access Token
 - `page_id` (String) Page ID
-- `source_type` (String) must be one of ["facebook-pages"]
 
 

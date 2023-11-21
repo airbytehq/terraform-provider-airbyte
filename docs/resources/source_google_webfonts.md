@@ -19,11 +19,11 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     api_key      = "...my_api_key..."
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
-    source_type  = "google-webfonts"
   }
-  name         = "Donald Hyatt"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "81d6bb33-cfaa-4348-831b-f407ee4fcf0c"
+  definition_id = "77e51fa7-73fc-4f1a-8306-e082909d97bf"
+  name          = "Kerry Reinger"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3671a9ca-1d9c-4174-bee4-145562d27576"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,8 +51,7 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
 
 Required:
 
-- `api_key` (String) API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts
-- `source_type` (String) must be one of ["google-webfonts"]
+- `api_key` (String, Sensitive) API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts
 
 Optional:
 

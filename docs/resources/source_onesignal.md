@@ -23,13 +23,13 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
       },
     ]
     outcome_names = "os__session_duration.count,os__click.count,CustomOutcomeName.sum"
-    source_type   = "onesignal"
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  name         = "Joan Schaefer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "41ffbe9c-bd79-45ee-a5e0-76cc7abf616e"
+  definition_id = "58a542d5-17fc-488b-8499-8d75efedea33"
+  name          = "Krystal Hamill"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "15598db9-2c72-4d54-9f53-8928a50561c1"
 }
 ```
 
@@ -39,11 +39,12 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -58,16 +59,15 @@ Required:
 
 - `applications` (Attributes List) Applications keys, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys">docs</a> for more information on how to obtain this data (see [below for nested schema](#nestedatt--configuration--applications))
 - `outcome_names` (String) Comma-separated list of names and the value (sum/count) for the returned outcome data. See the <a href="https://documentation.onesignal.com/reference/view-outcomes">docs</a> for more details
-- `source_type` (String) must be one of ["onesignal"]
 - `start_date` (String) The date from which you'd like to replicate data for OneSignal API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-- `user_auth_key` (String) OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
+- `user_auth_key` (String, Sensitive) OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.
 
 <a id="nestedatt--configuration--applications"></a>
 ### Nested Schema for `configuration.applications`
 
 Required:
 
-- `app_api_key` (String)
+- `app_api_key` (String, Sensitive)
 - `app_id` (String)
 
 Optional:

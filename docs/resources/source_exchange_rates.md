@@ -16,14 +16,14 @@ SourceExchangeRates Resource
 resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
   configuration = {
     access_key      = "...my_access_key..."
-    base            = "USD"
-    ignore_weekends = false
-    source_type     = "exchange-rates"
+    base            = "EUR"
+    ignore_weekends = true
     start_date      = "YYYY-MM-DD"
   }
-  name         = "Mrs. Leslie Klocko"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c0f5ae2f-3a6b-4700-8787-56143f5a6c98"
+  definition_id = "a5bbba82-d4c0-4a2c-af78-12475bca9a48"
+  name          = "Amber Osinski"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "0ddc3156-b2ff-4d5d-ac69-da5497add71f"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,13 +51,13 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
 
 Required:
 
-- `access_key` (String) Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["exchange-rates"]
+- `access_key` (String, Sensitive) Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
 - `start_date` (String) Start getting data from that date.
 
 Optional:
 
 - `base` (String) ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR
-- `ignore_weekends` (Boolean) Ignore weekends? (Exchanges don't run on weekends)
+- `ignore_weekends` (Boolean) Default: true
+Ignore weekends? (Exchanges don't run on weekends)
 
 

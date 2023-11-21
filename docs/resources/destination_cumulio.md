@@ -15,13 +15,13 @@ DestinationCumulio Resource
 ```terraform
 resource "airbyte_destination_cumulio" "my_destination_cumulio" {
   configuration = {
-    api_host         = "...my_api_host..."
-    api_key          = "...my_api_key..."
-    api_token        = "...my_api_token..."
-    destination_type = "cumulio"
+    api_host  = "...my_api_host..."
+    api_key   = "...my_api_key..."
+    api_token = "...my_api_token..."
   }
-  name         = "Ebony Predovic"
-  workspace_id = "6b0d5f0d-30c5-4fbb-a587-053202c73d5f"
+  definition_id = "c0eb8223-613d-423c-a875-293aec4aa100"
+  name          = "Felipe Champlin"
+  workspace_id  = "22581a88-452d-4e7c-b5eb-92a9e952da29"
 }
 ```
 
@@ -31,8 +31,12 @@ resource "airbyte_destination_cumulio" "my_destination_cumulio" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -44,9 +48,12 @@ resource "airbyte_destination_cumulio" "my_destination_cumulio" {
 
 Required:
 
-- `api_host` (String) URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
-- `api_key` (String) An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
-- `api_token` (String) The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
-- `destination_type` (String) must be one of ["cumulio"]
+- `api_key` (String, Sensitive) An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
+- `api_token` (String, Sensitive) The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
+
+Optional:
+
+- `api_host` (String) Default: "https://api.cumul.io"
+URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
 
 

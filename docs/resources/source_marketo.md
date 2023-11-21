@@ -18,12 +18,12 @@ resource "airbyte_source_marketo" "my_source_marketo" {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
     domain_url    = "https://000-AAA-000.mktorest.com"
-    source_type   = "marketo"
     start_date    = "2020-09-25T00:00:00Z"
   }
-  name         = "Jerome Berge"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "b4c21ccb-423a-4bcd-891f-aabdd88e71f6"
+  definition_id = "c87aaffe-b9ea-4290-b7e9-f4166b42b69c"
+  name          = "Doris Steuber"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "bbad3f0b-f8ca-4743-bfb1-506e5d6deb8b"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_marketo" "my_source_marketo" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,7 +54,6 @@ Required:
 - `client_id` (String) The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 - `client_secret` (String) The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 - `domain_url` (String) Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
-- `source_type` (String) must be one of ["marketo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

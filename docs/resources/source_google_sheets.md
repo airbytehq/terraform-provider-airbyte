@@ -16,20 +16,19 @@ SourceGoogleSheets Resource
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
     credentials = {
-      source_google_sheets_authentication_authenticate_via_google_o_auth_ = {
-        auth_type     = "Client"
+      source_google_sheets_authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
     }
     names_conversion = true
-    source_type      = "google-sheets"
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  name         = "Irene Davis"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "194db554-10ad-4c66-9af9-0a26c7cdc981"
+  definition_id = "d7698733-386b-453a-879a-0805ff1793bf"
+  name          = "Roderick Kutch"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "d63199bd-6b46-48c8-9ec2-1a9ab567f13c"
 }
 ```
 
@@ -39,11 +38,12 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,60 +57,36 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
 Required:
 
 - `credentials` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["google-sheets"]
 - `spreadsheet_id` (String) Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.
 
 Optional:
 
-- `names_conversion` (Boolean) Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.
+- `names_conversion` (Boolean) Default: false
+Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_google_sheets_authentication_authenticate_via_google_o_auth` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_authentication_authenticate_via_google_o_auth))
-- `source_google_sheets_authentication_service_account_key_authentication` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_authentication_service_account_key_authentication))
-- `source_google_sheets_update_authentication_authenticate_via_google_o_auth` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth))
-- `source_google_sheets_update_authentication_service_account_key_authentication` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_update_authentication_service_account_key_authentication))
+- `authenticate_via_google_o_auth` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_o_auth))
+- `service_account_key_authentication` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
 
-<a id="nestedatt--configuration--credentials--source_google_sheets_authentication_authenticate_via_google_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_google_sheets_authentication_authenticate_via_google_o_auth`
+<a id="nestedatt--configuration--credentials--authenticate_via_google_o_auth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_google_o_auth`
 
 Required:
 
-- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 - `client_secret` (String) Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
-- `refresh_token` (String) Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
+- `refresh_token` (String, Sensitive) Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 
 
-<a id="nestedatt--configuration--credentials--source_google_sheets_authentication_service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_google_sheets_authentication_service_account_key_authentication`
-
-Required:
-
-- `auth_type` (String) must be one of ["Service"]
-- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
-
-
-<a id="nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_google_sheets_update_authentication_authenticate_via_google_o_auth`
+<a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
+### Nested Schema for `configuration.credentials.service_account_key_authentication`
 
 Required:
 
-- `auth_type` (String) must be one of ["Client"]
-- `client_id` (String) Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
-- `client_secret` (String) Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
-- `refresh_token` (String) Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
-
-
-<a id="nestedatt--configuration--credentials--source_google_sheets_update_authentication_service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_google_sheets_update_authentication_service_account_key_authentication`
-
-Required:
-
-- `auth_type` (String) must be one of ["Service"]
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 
 

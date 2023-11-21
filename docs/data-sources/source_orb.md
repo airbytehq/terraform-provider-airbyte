@@ -14,7 +14,6 @@ SourceOrb DataSource
 
 ```terraform
 data "airbyte_source_orb" "my_source_orb" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,28 +25,12 @@ data "airbyte_source_orb" "my_source_orb" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Orb API Key, issued from the Orb admin console.
-- `lookback_window_days` (Number) When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.
-- `numeric_event_properties_keys` (List of String) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
-- `plan_id` (String) Orb Plan ID to filter subscriptions that should have usage fetched.
-- `source_type` (String) must be one of ["orb"]
-- `start_date` (String) UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
-- `string_event_properties_keys` (List of String) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
-- `subscription_usage_grouping_key` (String) Property key name to group subscription usage by.
 
 

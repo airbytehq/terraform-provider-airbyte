@@ -18,12 +18,12 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     email           = "john@doe.com"
     logs_batch_size = 30
     password        = "...my_password..."
-    source_type     = "my-hours"
-    start_date      = "2016-01-01"
+    start_date      = "%Y-%m-%d"
   }
-  name         = "Elsa Kerluke"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "922151fe-1712-4099-853e-9f543d854439"
+  definition_id = "95261555-3a71-4349-8a3f-9799a12d6e33"
+  name          = "Franklin Jerde"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "00d47724-56d0-4d26-9914-7bb3566ca647"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,12 +52,12 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
 Required:
 
 - `email` (String) Your My Hours username
-- `password` (String) The password associated to the username
-- `source_type` (String) must be one of ["my-hours"]
+- `password` (String, Sensitive) The password associated to the username
 - `start_date` (String) Start date for collecting time logs
 
 Optional:
 
-- `logs_batch_size` (Number) Pagination size used for retrieving logs in days
+- `logs_batch_size` (Number) Default: 30
+Pagination size used for retrieving logs in days
 
 

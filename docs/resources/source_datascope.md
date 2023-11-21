@@ -15,13 +15,13 @@ SourceDatascope Resource
 ```terraform
 resource "airbyte_source_datascope" "my_source_datascope" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "datascope"
-    start_date  = "dd/mm/YYYY HH:MM"
+    api_key    = "...my_api_key..."
+    start_date = "dd/mm/YYYY HH:MM"
   }
-  name         = "Danny Bahringer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fee81206-e281-43fa-8a41-c480d3f2132a"
+  definition_id = "8dbe50fc-b32a-4781-b3ab-b82e6a7189e9"
+  name          = "Erin Johns"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4638d140-9463-49cf-9dd4-a0c05f536f6b"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_datascope" "my_source_datascope" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_datascope" "my_source_datascope" {
 
 Required:
 
-- `api_key` (String) API Key
-- `source_type` (String) must be one of ["datascope"]
+- `api_key` (String, Sensitive) API Key
 - `start_date` (String) Start date for the data to be replicated
 
 

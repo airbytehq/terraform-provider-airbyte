@@ -15,12 +15,12 @@ SourceGainsightPx Resource
 ```terraform
 resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "gainsight-px"
+    api_key = "...my_api_key..."
   }
-  name         = "Hugh Goodwin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "320a319f-4bad-4f94-bc9a-867bc4242666"
+  definition_id = "32b37f6f-ec5c-4d0a-8fda-52f69543b862"
+  name          = "Cristina McKenzie"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "50480aaa-f77a-4e08-bd2c-af83f045910a"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
 
 Required:
 
-- `api_key` (String) The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
-- `source_type` (String) must be one of ["gainsight-px"]
+- `api_key` (String, Sensitive) The Aptrinsic API Key which is recieved from the dashboard settings (ref - https://app.aptrinsic.com/settings/api-keys)
 
 

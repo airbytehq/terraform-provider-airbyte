@@ -14,12 +14,11 @@ SourceWhiskyHunter Resource
 
 ```terraform
 resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
-  configuration = {
-    source_type = "whisky-hunter"
-  }
-  name         = "Miss Terrence Kulas"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f46bca11-06fe-4965-b711-d08cf88ec9f7"
+  configuration = {}
+  definition_id = "c48bf07f-2e77-4213-a664-6fa9b2db7532"
+  name          = "Jeremy Kutch"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "785b8d4a-d9bb-44c2-904c-6ceb0e440965"
 }
 ```
 
@@ -29,11 +28,12 @@ resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -43,9 +43,5 @@ resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
-
-Optional:
-
-- `source_type` (String) must be one of ["whisky-hunter"]
 
 

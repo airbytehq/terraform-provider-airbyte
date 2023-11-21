@@ -15,17 +15,17 @@ SourceTheGuardianAPI Resource
 ```terraform
 resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
   configuration = {
-    api_key     = "...my_api_key..."
-    end_date    = "YYYY-MM-DD"
-    query       = "political"
-    section     = "media"
-    source_type = "the-guardian-api"
-    start_date  = "YYYY-MM-DD"
-    tag         = "environment/recycling"
+    api_key    = "...my_api_key..."
+    end_date   = "YYYY-MM-DD"
+    query      = "environment AND political"
+    section    = "media"
+    start_date = "YYYY-MM-DD"
+    tag        = "environment/energyefficiency"
   }
-  name         = "Pauline Kozey IV"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "2b94f2ab-1fd5-4671-a9c3-26350a467143"
+  definition_id = "e21a7b03-b315-4af1-9bc4-a1418c27e2e4"
+  name          = "Toby Rempel"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4753d48e-30cc-4cb1-939d-dfc649b7a58a"
 }
 ```
 
@@ -35,11 +35,12 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -52,8 +53,7 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 
 Required:
 
-- `api_key` (String) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["the-guardian-api"]
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
 - `start_date` (String) Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 
 Optional:

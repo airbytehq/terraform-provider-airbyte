@@ -17,11 +17,11 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
   configuration = {
     account_sid = "...my_account_sid..."
     auth_token  = "...my_auth_token..."
-    source_type = "twilio-taskrouter"
   }
-  name         = "Cathy Ratke"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "6065c0ef-a6f9-43b9-8a1b-8c95be1254b7"
+  definition_id = "3a6dfd2a-6022-45b2-ac62-eb10f1a0d51f"
+  name          = "Guy Rath II"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "16cb49da-06c2-439e-baf3-ca2cc2a5392d"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,7 +50,6 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
 Required:
 
 - `account_sid` (String) Twilio Account ID
-- `auth_token` (String) Twilio Auth Token
-- `source_type` (String) must be one of ["twilio-taskrouter"]
+- `auth_token` (String, Sensitive) Twilio Auth Token
 
 

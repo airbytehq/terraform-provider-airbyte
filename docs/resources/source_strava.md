@@ -16,16 +16,15 @@ SourceStrava Resource
 resource "airbyte_source_strava" "my_source_strava" {
   configuration = {
     athlete_id    = 17831421
-    auth_type     = "Client"
     client_id     = "12345"
     client_secret = "fc6243f283e51f6ca989aab298b17da125496f50"
     refresh_token = "fc6243f283e51f6ca989aab298b17da125496f50"
-    source_type   = "strava"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Jeffrey Wintheiser"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "06673f3a-681c-4576-8dce-742409a215e0"
+  definition_id = "198a6bf6-f1cb-4db3-9a96-cd0e48f1e4b3"
+  name          = "Elaine Johnson"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6ca0b303-cf01-47cd-9783-63f1be7e9b4a"
 }
 ```
 
@@ -35,11 +34,12 @@ resource "airbyte_source_strava" "my_source_strava" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -55,12 +55,7 @@ Required:
 - `athlete_id` (Number) The Athlete ID of your Strava developer application.
 - `client_id` (String) The Client ID of your Strava developer application.
 - `client_secret` (String) The Client Secret of your Strava developer application.
-- `refresh_token` (String) The Refresh Token with the activity: read_all permissions.
-- `source_type` (String) must be one of ["strava"]
+- `refresh_token` (String, Sensitive) The Refresh Token with the activity: read_all permissions.
 - `start_date` (String) UTC date and time. Any data before this date will not be replicated.
-
-Optional:
-
-- `auth_type` (String) must be one of ["Client"]
 
 

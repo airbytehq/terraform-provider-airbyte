@@ -27,17 +27,10 @@ data "airbyte_destination_convex" "my_destination_convex" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `access_key` (String) API access key used to send data to a Convex deployment.
-- `deployment_url` (String) URL of the Convex deployment that is the destination
-- `destination_type` (String) must be one of ["convex"]
 
 

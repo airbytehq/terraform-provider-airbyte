@@ -23,14 +23,14 @@ resource "airbyte_source_pocket" "my_source_pocket" {
     favorite     = true
     search       = "...my_search..."
     since        = "2022-10-20 14:14:14"
-    sort         = "site"
-    source_type  = "pocket"
+    sort         = "newest"
     state        = "unread"
     tag          = "...my_tag..."
   }
-  name         = "Christina Bode"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "e2239e8f-25cd-40d1-9d95-9f439e39266c"
+  definition_id = "da763315-0acf-4ec2-81f7-3646e1c87958"
+  name          = "Brandi Hane"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "82553101-4017-4845-aa4c-1173de2c277a"
 }
 ```
 
@@ -40,11 +40,12 @@ resource "airbyte_source_pocket" "my_source_pocket" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,9 +58,8 @@ resource "airbyte_source_pocket" "my_source_pocket" {
 
 Required:
 
-- `access_token` (String) The user's Pocket access token.
-- `consumer_key` (String) Your application's Consumer Key.
-- `source_type` (String) must be one of ["pocket"]
+- `access_token` (String, Sensitive) The user's Pocket access token.
+- `consumer_key` (String, Sensitive) Your application's Consumer Key.
 
 Optional:
 
@@ -68,7 +68,8 @@ Select the content type of the items to retrieve.
 - `detail_type` (String) must be one of ["simple", "complete"]
 Select the granularity of the information about each item.
 - `domain` (String) Only return items from a particular `domain`.
-- `favorite` (Boolean) Retrieve only favorited items.
+- `favorite` (Boolean) Default: false
+Retrieve only favorited items.
 - `search` (String) Only return items whose title or url contain the `search` string.
 - `since` (String) Only return items modified since the given timestamp.
 - `sort` (String) must be one of ["newest", "oldest", "title", "site"]

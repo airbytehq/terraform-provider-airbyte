@@ -16,23 +16,80 @@ SourceGoogleAnalyticsDataAPI Resource
 resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
   configuration = {
     credentials = {
-      source_google_analytics_data_api_credentials_authenticate_via_google_oauth_ = {
+      authenticate_via_google_oauth = {
         access_token  = "...my_access_token..."
-        auth_type     = "Client"
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
     }
-    custom_reports         = "...my_custom_reports..."
+    custom_reports_array = [
+      {
+        dimension_filter = {
+          and_group = {
+            expressions = [
+              {
+                field_name = "...my_field_name..."
+                filter = {
+                  source_google_analytics_data_api_update_schemas_custom_reports_array_between_filter = {
+                    from_value = {
+                      source_google_analytics_data_api_schemas_custom_reports_array_dimension_filter_dimensions_filter_1_expressions_double_value = {
+                        value = 45.05
+                      }
+                    }
+                    to_value = {
+                      source_google_analytics_data_api_schemas_custom_reports_array_dimension_filter_dimensions_filter_1_expressions_filter_double_value = {
+                        value = 22.65
+                      }
+                    }
+                  }
+                }
+              },
+            ]
+          }
+        }
+        dimensions = [
+          "...",
+        ]
+        metric_filter = {
+          source_google_analytics_data_api_update_and_group = {
+            expressions = [
+              {
+                field_name = "...my_field_name..."
+                filter = {
+                  source_google_analytics_data_api_schemas_custom_reports_array_metric_filter_between_filter = {
+                    from_value = {
+                      source_google_analytics_data_api_schemas_custom_reports_array_metric_filter_metrics_filter_1_expressions_filter_double_value = {
+                        value = 8.4
+                      }
+                    }
+                    to_value = {
+                      source_google_analytics_data_api_schemas_custom_reports_array_metric_filter_metrics_filter_1_double_value = {
+                        value = 77.49
+                      }
+                    }
+                  }
+                }
+              },
+            ]
+          }
+        }
+        metrics = [
+          "...",
+        ]
+        name = "Mrs. Mercedes Herman PhD"
+      },
+    ]
     date_ranges_start_date = "2021-01-01"
-    property_id            = "5729978930"
-    source_type            = "google-analytics-data-api"
-    window_in_days         = 364
+    property_ids = [
+      "...",
+    ]
+    window_in_days = 60
   }
-  name         = "Juanita Collier"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0e9b200c-e78a-41bd-8fb7-a0a116ce723d"
+  definition_id = "d4fc0324-2ccd-4276-ba0d-30eb91c3df25"
+  name          = "Rodney Goldner"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "52dc8258-f30a-4271-83b0-0ec7045956c0"
 }
 ```
 
@@ -42,11 +99,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -59,77 +117,1228 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
 
 Required:
 
-- `date_ranges_start_date` (String) The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
-- `property_id` (String) The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
-- `source_type` (String) must be one of ["google-analytics-data-api"]
+- `property_ids` (List of String) A list of your Property IDs. The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 
 Optional:
 
 - `credentials` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials))
-- `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#custom-reports">the documentation</a> for more information about the exact format you can use to fill out this field.
-- `window_in_days` (Number) The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
+- `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
+- `date_ranges_start_date` (String) The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
+- `window_in_days` (Number) Default: 1
+The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_google_analytics_data_api_credentials_authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_data_api_credentials_authenticate_via_google_oauth))
-- `source_google_analytics_data_api_credentials_service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_data_api_credentials_service_account_key_authentication))
-- `source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth))
-- `source_google_analytics_data_api_update_credentials_service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_data_api_update_credentials_service_account_key_authentication))
+- `authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_oauth))
+- `service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_data_api_credentials_authenticate_via_google_oauth"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_data_api_credentials_authenticate_via_google_oauth`
+<a id="nestedatt--configuration--credentials--authenticate_via_google_oauth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_google_oauth`
 
 Required:
 
 - `client_id` (String) The Client ID of your Google Analytics developer application.
 - `client_secret` (String) The Client Secret of your Google Analytics developer application.
-- `refresh_token` (String) The token for obtaining a new access token.
+- `refresh_token` (String, Sensitive) The token for obtaining a new access token.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["Client"]
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_data_api_credentials_service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_data_api_credentials_service_account_key_authentication`
+<a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
+### Nested Schema for `configuration.credentials.service_account_key_authentication`
 
 Required:
 
 - `credentials_json` (String) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 
-Optional:
-
-- `auth_type` (String) must be one of ["Service"]
 
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth`
+<a id="nestedatt--configuration--custom_reports_array"></a>
+### Nested Schema for `configuration.custom_reports_array`
 
 Required:
 
-- `client_id` (String) The Client ID of your Google Analytics developer application.
-- `client_secret` (String) The Client Secret of your Google Analytics developer application.
-- `refresh_token` (String) The token for obtaining a new access token.
+- `dimensions` (List of String) A list of dimensions.
+- `metrics` (List of String) A list of metrics.
+- `name` (String) The name of the custom report, this name would be used as stream name.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["Client"]
+- `dimension_filter` (Attributes) Dimensions filter (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter))
+- `metric_filter` (Attributes) Metrics filter (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter))
 
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter`
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_data_api_update_credentials_service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_data_api_update_credentials_service_account_key_authentication`
+Optional:
+
+- `and_group` (Attributes) The FilterExpressions in andGroup have an AND relationship. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--and_group))
+- `filter` (Attributes) A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all dimensions. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--filter))
+- `not_expression` (Attributes) The FilterExpression is NOT of notExpression. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--not_expression))
+- `or_group` (Attributes) The FilterExpressions in orGroup have an OR relationship. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--and_group"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group`
 
 Required:
 
-- `credentials_json` (String) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
+- `expressions` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter`
 
 Optional:
 
-- `auth_type` (String) must be one of ["Service"]
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--not_expression"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group`
+
+Optional:
+
+- `expression` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expression--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group`
+
+Required:
+
+- `expressions` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--dimension_filter--or_group--expressions--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.dimension_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter`
+
+Optional:
+
+- `and_group` (Attributes) The FilterExpressions in andGroup have an AND relationship. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--and_group))
+- `filter` (Attributes) A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all metrics. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--filter))
+- `not_expression` (Attributes) The FilterExpression is NOT of notExpression. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--not_expression))
+- `or_group` (Attributes) The FilterExpressions in orGroup have an OR relationship. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--and_group"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group`
+
+Required:
+
+- `expressions` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--not_expression"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group`
+
+Optional:
+
+- `expression` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expression--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expression.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
+
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group`
+
+Required:
+
+- `expressions` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions`
+
+Required:
+
+- `field_name` (String)
+- `filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter`
+
+Optional:
+
+- `between_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--between_filter))
+- `in_list_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--in_list_filter))
+- `numeric_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--numeric_filter))
+- `string_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--between_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `from_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--from_value))
+- `to_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--from_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--to_value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.to_value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--in_list_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `values` (List of String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--numeric_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `operation` (List of String)
+- `value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.value`
+
+Optional:
+
+- `double_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--double_value))
+- `int64_value` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--int64_value))
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--double_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.value.double_value`
+
+Required:
+
+- `value` (Number)
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter--value--int64_value"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter.value.int64_value`
+
+Required:
+
+- `value` (String)
+
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--metric_filter--or_group--expressions--filter--string_filter"></a>
+### Nested Schema for `configuration.custom_reports_array.metric_filter.or_group.expressions.filter.string_filter`
+
+Required:
+
+- `value` (String)
+
+Optional:
+
+- `case_sensitive` (Boolean)
+- `match_type` (List of String)
 
 

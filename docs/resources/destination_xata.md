@@ -15,12 +15,12 @@ DestinationXata Resource
 ```terraform
 resource "airbyte_destination_xata" "my_destination_xata" {
   configuration = {
-    api_key          = "...my_api_key..."
-    db_url           = "https://my-workspace-abc123.us-east-1.xata.sh/db/nyc-taxi-fares:main"
-    destination_type = "xata"
+    api_key = "...my_api_key..."
+    db_url  = "https://my-workspace-abc123.us-east-1.xata.sh/db/nyc-taxi-fares:main"
   }
-  name         = "Oscar Smith"
-  workspace_id = "e68e4be0-5601-43f5-9da7-57a59ecfef66"
+  definition_id = "013842c1-01e2-465e-abc2-30b15094cc21"
+  name          = "Derrick Green"
+  workspace_id  = "b75e7d1c-9ddc-42da-b62f-af1b28fe26cb"
 }
 ```
 
@@ -30,8 +30,12 @@ resource "airbyte_destination_xata" "my_destination_xata" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -43,8 +47,7 @@ resource "airbyte_destination_xata" "my_destination_xata" {
 
 Required:
 
-- `api_key` (String) API Key to connect.
+- `api_key` (String, Sensitive) API Key to connect.
 - `db_url` (String) URL pointing to your workspace.
-- `destination_type` (String) must be one of ["xata"]
 
 

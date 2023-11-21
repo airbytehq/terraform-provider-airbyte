@@ -15,14 +15,13 @@ SourceApifyDataset Resource
 ```terraform
 resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
   configuration = {
-    clean       = true
-    dataset_id  = "...my_dataset_id..."
-    source_type = "apify-dataset"
-    token       = "Personal API tokens"
+    dataset_id = "rHuMdwm6xCFt6WiGU"
+    token      = "apify_api_PbVwb1cBbuvbfg2jRmAIHZKgx3NQyfEMG7uk"
   }
-  name         = "Dale Ferry"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "055b197c-d44e-42f5-ad82-d3513bb6f48b"
+  definition_id = "a73356f3-9bea-45e2-889f-0e8905c8543b"
+  name          = "Justin Luettgen"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "ac7dcada-d293-48da-9765-e7880f00a30d"
 }
 ```
 
@@ -32,11 +31,12 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,12 +49,7 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
 
 Required:
 
-- `source_type` (String) must be one of ["apify-dataset"]
-- `token` (String) Your application's Client Secret. You can find this value on the <a href="https://console.apify.com/account/integrations">console integrations tab</a> after you login.
-
-Optional:
-
-- `clean` (Boolean) If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.
-- `dataset_id` (String) ID of the dataset you would like to load to Airbyte.
+- `dataset_id` (String) ID of the dataset you would like to load to Airbyte. In Apify Console, you can view your datasets in the <a href="https://console.apify.com/storage/datasets">Storage section under the Datasets tab</a> after you login. See the <a href="https://docs.apify.com/platform/storage/dataset">Apify Docs</a> for more information.
+- `token` (String, Sensitive) Personal API token of your Apify account. In Apify Console, you can find your API token in the <a href="https://console.apify.com/account/integrations">Settings section under the Integrations tab</a> after you login. See the <a href="https://docs.apify.com/platform/integrations/api#api-token">Apify Docs</a> for more information.
 
 

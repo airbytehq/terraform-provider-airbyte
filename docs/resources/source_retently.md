@@ -16,18 +16,18 @@ SourceRetently Resource
 resource "airbyte_source_retently" "my_source_retently" {
   configuration = {
     credentials = {
-      source_retently_authentication_mechanism_authenticate_via_retently_o_auth_ = {
-        auth_type     = "Client"
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
+      authenticate_via_retently_o_auth = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        client_id             = "...my_client_id..."
+        client_secret         = "...my_client_secret..."
+        refresh_token         = "...my_refresh_token..."
       }
     }
-    source_type = "retently"
   }
-  name         = "Kelly Pfeffer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c9f1cc50-3f6c-439b-8d0a-6290f957f385"
+  definition_id = "2c041244-3656-49fd-a4cd-2bcf08a635d7"
+  name          = "Dave Schinner"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6ceccfae-93f7-4f0f-8c4b-4f8d4f6833e1"
 }
 ```
 
@@ -37,11 +37,12 @@ resource "airbyte_source_retently" "my_source_retently" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -55,71 +56,38 @@ resource "airbyte_source_retently" "my_source_retently" {
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["retently"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_retently_authentication_mechanism_authenticate_via_retently_o_auth` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth))
-- `source_retently_authentication_mechanism_authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token))
-- `source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth))
-- `source_retently_update_authentication_mechanism_authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token))
+- `authenticate_via_retently_o_auth` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_retently_o_auth))
+- `authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_api_token))
 
-<a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_retently_authentication_mechanism_authenticate_via_retently_o_auth`
+<a id="nestedatt--configuration--credentials--authenticate_via_retently_o_auth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_retently_o_auth`
 
 Required:
 
 - `client_id` (String) The Client ID of your Retently developer application.
 - `client_secret` (String) The Client Secret of your Retently developer application.
-- `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
+- `refresh_token` (String, Sensitive) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Client"]
 
 
-<a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token"></a>
-### Nested Schema for `configuration.credentials.source_retently_authentication_mechanism_authenticate_with_api_token`
+<a id="nestedatt--configuration--credentials--authenticate_with_api_token"></a>
+### Nested Schema for `configuration.credentials.authenticate_with_api_token`
 
 Required:
 
-- `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Token"]
-
-
-<a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth`
-
-Required:
-
-- `client_id` (String) The Client ID of your Retently developer application.
-- `client_secret` (String) The Client Secret of your Retently developer application.
-- `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Client"]
-
-
-<a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token"></a>
-### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_with_api_token`
-
-Required:
-
-- `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Token"]
 
 

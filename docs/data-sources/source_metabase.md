@@ -14,7 +14,6 @@ SourceMetabase DataSource
 
 ```terraform
 data "airbyte_source_metabase" "my_source_metabase" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,30 +25,12 @@ data "airbyte_source_metabase" "my_source_metabase" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `instance_api_url` (String) URL to your metabase instance API
-- `password` (String)
-- `session_token` (String) To generate your session token, you need to run the following command: ``` curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"username": "person@metabase.com", "password": "fakepassword"}' \
-  http://localhost:3000/api/session
-``` Then copy the value of the `id` field returned by a successful call to that API.
-Note that by default, sessions are good for 14 days and needs to be regenerated.
-- `source_type` (String) must be one of ["metabase"]
-- `username` (String)
 
 

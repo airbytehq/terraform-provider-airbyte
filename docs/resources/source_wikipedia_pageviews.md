@@ -15,18 +15,18 @@ SourceWikipediaPageviews Resource
 ```terraform
 resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
   configuration = {
-    access      = "mobile-app"
-    agent       = "spider"
-    article     = "Are_You_the_One%3F"
-    country     = "IN"
-    end         = "...my_end..."
-    project     = "www.mediawiki.org"
-    source_type = "wikipedia-pageviews"
-    start       = "...my_start..."
+    access  = "mobile-app"
+    agent   = "automated"
+    article = "Are_You_the_One%3F"
+    country = "IN"
+    end     = "...my_end..."
+    project = "www.mediawiki.org"
+    start   = "...my_start..."
   }
-  name         = "Laura Murray"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "6ed333bb-0ce8-4aa6-9432-a986eb7e14ca"
+  definition_id = "ecaf35c1-5b37-479d-be3d-ccb9fd6e1ad7"
+  name          = "Stella Balistreri"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "320ef50a-8ca7-46b0-83ea-280df1804a67"
 }
 ```
 
@@ -36,11 +36,12 @@ resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -59,7 +60,6 @@ Required:
 - `country` (String) The ISO 3166-1 alpha-2 code of a country for which to retrieve top articles.
 - `end` (String) The date of the last day to include, in YYYYMMDD or YYYYMMDDHH format.
 - `project` (String) If you want to filter by project, use the domain of any Wikimedia project.
-- `source_type` (String) must be one of ["wikipedia-pageviews"]
 - `start` (String) The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
 
 

@@ -17,9 +17,8 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
   configuration = {
     api_key = "...my_api_key..."
     categories = [
-      "pwa",
+      "seo",
     ]
-    source_type = "google-pagespeed-insights"
     strategies = [
       "desktop",
     ]
@@ -27,9 +26,10 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
       "...",
     ]
   }
-  name         = "Kristopher Dare"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "db14db6b-e5a6-4859-98e2-2ae20da16fc2"
+  definition_id = "52d3206a-fb3a-4724-a60d-40134e58876c"
+  name          = "Miss Ronald Erdman Sr."
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "8ae06a57-c7c5-477a-b1e5-baddd2747bbc"
 }
 ```
 
@@ -39,11 +39,12 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,12 +58,11 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
 Required:
 
 - `categories` (List of String) Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".
-- `source_type` (String) must be one of ["google-pagespeed-insights"]
 - `strategies` (List of String) The analyses strategy to use. Either "desktop" or "mobile".
 - `urls` (List of String) The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 
 Optional:
 
-- `api_key` (String) Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
+- `api_key` (String, Sensitive) Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
 
 

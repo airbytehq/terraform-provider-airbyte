@@ -21,15 +21,15 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
       "...",
     ]
     realm          = "...my_realm..."
-    source_type    = "netsuite"
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 7
+    window_in_days = 5
   }
-  name         = "Miss Meredith Hand"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "4bf01bad-8706-4d46-882b-fbdc41ff5d4e"
+  definition_id = "b7242137-fe2e-49e2-ac4c-104f1dbe3b1f"
+  name          = "Ramona Bahringer"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "77573847-65c7-4741-8014-d1f263651b77"
 }
 ```
 
@@ -39,11 +39,12 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -56,17 +57,17 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
 
 Required:
 
-- `consumer_key` (String) Consumer key associated with your integration
+- `consumer_key` (String, Sensitive) Consumer key associated with your integration
 - `consumer_secret` (String) Consumer secret associated with your integration
 - `realm` (String) Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
-- `source_type` (String) must be one of ["netsuite"]
 - `start_datetime` (String) Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
-- `token_key` (String) Access token key
-- `token_secret` (String) Access token secret
+- `token_key` (String, Sensitive) Access token key
+- `token_secret` (String, Sensitive) Access token secret
 
 Optional:
 
 - `object_types` (List of String) The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
-- `window_in_days` (Number) The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
+- `window_in_days` (Number) Default: 30
+The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
 
 

@@ -16,16 +16,15 @@ SourceMonday Resource
 resource "airbyte_source_monday" "my_source_monday" {
   configuration = {
     credentials = {
-      source_monday_authorization_method_api_token = {
+      api_token = {
         api_token = "...my_api_token..."
-        auth_type = "api_token"
       }
     }
-    source_type = "monday"
   }
-  name         = "Shirley Wisoky"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fd5fb6e9-1b9a-49f7-8846-e2c3309db053"
+  definition_id = "2050fdf2-ba7d-443d-a0d3-384e15ed5352"
+  name          = "Stella Lubowitz"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "aeabadeb-93c7-4728-b9b6-069b6a28df31"
 }
 ```
 
@@ -35,11 +34,12 @@ resource "airbyte_source_monday" "my_source_monday" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,10 +50,6 @@ resource "airbyte_source_monday" "my_source_monday" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["monday"]
-
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
@@ -63,56 +59,29 @@ Optional:
 
 Optional:
 
-- `source_monday_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_monday_authorization_method_api_token))
-- `source_monday_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_monday_authorization_method_o_auth2_0))
-- `source_monday_update_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_monday_update_authorization_method_api_token))
-- `source_monday_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_monday_update_authorization_method_o_auth2_0))
+- `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_monday_authorization_method_api_token"></a>
-### Nested Schema for `configuration.credentials.source_monday_authorization_method_api_token`
+<a id="nestedatt--configuration--credentials--api_token"></a>
+### Nested Schema for `configuration.credentials.api_token`
 
 Required:
 
-- `api_token` (String) API Token for making authenticated requests.
-- `auth_type` (String) must be one of ["api_token"]
+- `api_token` (String, Sensitive) API Token for making authenticated requests.
 
 
-<a id="nestedatt--configuration--credentials--source_monday_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_monday_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
 Optional:
 
-- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
-
-
-<a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_api_token"></a>
-### Nested Schema for `configuration.credentials.source_monday_update_authorization_method_api_token`
-
-Required:
-
-- `api_token` (String) API Token for making authenticated requests.
-- `auth_type` (String) must be one of ["api_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_monday_update_authorization_method_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of ["oauth2.0"]
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
-
-Optional:
-
-- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+- `subdomain` (String) Default: ""
+Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 

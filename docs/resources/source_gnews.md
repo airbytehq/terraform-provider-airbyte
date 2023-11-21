@@ -16,25 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "ie"
+    country  = "es"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "content",
-    ]
-    language = "fr"
-    nullable = [
       "description",
     ]
-    query               = "Apple AND NOT iPhone"
-    sortby              = "publishedAt"
-    source_type         = "gnews"
+    language = "ta"
+    nullable = [
+      "content",
+    ]
+    query               = "Intel AND (i7 OR i9)"
+    sortby              = "relevance"
     start_date          = "2022-08-21 16:27:09"
     top_headlines_query = "Apple AND NOT iPhone"
-    top_headlines_topic = "business"
+    top_headlines_topic = "world"
   }
-  name         = "Katrina Considine"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c3ddc5f1-11de-4a10-a6d5-41a4d190feb2"
+  definition_id = "df3c14a3-49fd-4e89-ab27-6cbad00caee1"
+  name          = "Sadie Gleichner"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5b57e54a-27b6-417a-812e-6bf68e1922df"
 }
 ```
 
@@ -44,11 +44,12 @@ resource "airbyte_source_gnews" "my_source_gnews" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -61,7 +62,7 @@ resource "airbyte_source_gnews" "my_source_gnews" {
 
 Required:
 
-- `api_key` (String) API Key
+- `api_key` (String, Sensitive) API Key
 - `query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
   quotation marks are used to search for articles with the exact same keyword sequence. 
   For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
@@ -76,7 +77,6 @@ Required:
   specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
   For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
   iPhone
-- `source_type` (String) must be one of ["gnews"]
 
 Optional:
 

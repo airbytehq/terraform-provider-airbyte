@@ -16,17 +16,16 @@ DestinationGcs Resource
 resource "airbyte_destination_gcs" "my_destination_gcs" {
   configuration = {
     credential = {
-      destination_gcs_authentication_hmac_key = {
+      hmac_key = {
         credential_type    = "HMAC_KEY"
         hmac_key_access_id = "1234567890abcdefghij1234"
         hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
       }
     }
-    destination_type = "gcs"
     format = {
-      destination_gcs_output_format_avro_apache_avro = {
+      avro_apache_avro = {
         compression_codec = {
-          destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2 = {
+          bzip2 = {
             codec = "bzip2"
           }
         }
@@ -37,8 +36,9 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     gcs_bucket_path   = "data_sync/test"
     gcs_bucket_region = "us-west1"
   }
-  name         = "Miss Dennis Friesen"
-  workspace_id = "c366c8dd-6b14-4429-8747-4778a7bd466d"
+  definition_id = "37e4a59e-7bfd-41d4-96bd-14d08d4a7d5d"
+  name          = "Opal D'Amore"
+  workspace_id  = "153b42c3-2f48-4f6e-943a-0f0f39a6c151"
 }
 ```
 
@@ -48,8 +48,12 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -62,14 +66,13 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
 Required:
 
 - `credential` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--credential))
-- `destination_type` (String) must be one of ["gcs"]
 - `format` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format))
 - `gcs_bucket_name` (String) You can find the bucket name in the App Engine Admin console Application Settings page, under the label Google Cloud Storage Bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
 - `gcs_bucket_path` (String) GCS Bucket Path string Subdirectory under the above bucket to sync the data into.
 
 Optional:
 
-- `gcs_bucket_region` (String) must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]
+- `gcs_bucket_region` (String) must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]; Default: "us"
 Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
 
 <a id="nestedatt--configuration--credential"></a>
@@ -77,27 +80,19 @@ Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/s
 
 Optional:
 
-- `destination_gcs_authentication_hmac_key` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--credential--destination_gcs_authentication_hmac_key))
-- `destination_gcs_update_authentication_hmac_key` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--credential--destination_gcs_update_authentication_hmac_key))
+- `hmac_key` (Attributes) An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>. (see [below for nested schema](#nestedatt--configuration--credential--hmac_key))
 
-<a id="nestedatt--configuration--credential--destination_gcs_authentication_hmac_key"></a>
-### Nested Schema for `configuration.credential.destination_gcs_authentication_hmac_key`
-
-Required:
-
-- `credential_type` (String) must be one of ["HMAC_KEY"]
-- `hmac_key_access_id` (String) When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.
-- `hmac_key_secret` (String) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.
-
-
-<a id="nestedatt--configuration--credential--destination_gcs_update_authentication_hmac_key"></a>
-### Nested Schema for `configuration.credential.destination_gcs_update_authentication_hmac_key`
+<a id="nestedatt--configuration--credential--hmac_key"></a>
+### Nested Schema for `configuration.credential.hmac_key`
 
 Required:
 
-- `credential_type` (String) must be one of ["HMAC_KEY"]
-- `hmac_key_access_id` (String) When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.
-- `hmac_key_secret` (String) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.
+- `hmac_key_access_id` (String, Sensitive) When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.
+- `hmac_key_secret` (String, Sensitive) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.
+
+Optional:
+
+- `credential_type` (String) must be one of ["HMAC_KEY"]; Default: "HMAC_KEY"
 
 
 
@@ -106,366 +101,179 @@ Required:
 
 Optional:
 
-- `destination_gcs_output_format_avro_apache_avro` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro))
-- `destination_gcs_output_format_csv_comma_separated_values` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values))
-- `destination_gcs_output_format_json_lines_newline_delimited_json` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json))
-- `destination_gcs_output_format_parquet_columnar_storage` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_parquet_columnar_storage))
-- `destination_gcs_update_output_format_avro_apache_avro` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro))
-- `destination_gcs_update_output_format_csv_comma_separated_values` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values))
-- `destination_gcs_update_output_format_json_lines_newline_delimited_json` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json))
-- `destination_gcs_update_output_format_parquet_columnar_storage` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_parquet_columnar_storage))
+- `avro_apache_avro` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro))
+- `csv_comma_separated_values` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values))
+- `json_lines_newline_delimited_json` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
+- `parquet_columnar_storage` (Attributes) Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format. (see [below for nested schema](#nestedatt--configuration--format--parquet_columnar_storage))
 
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro`
+<a id="nestedatt--configuration--format--avro_apache_avro"></a>
+### Nested Schema for `configuration.format.avro_apache_avro`
 
 Required:
 
-- `compression_codec` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--compression_codec))
-- `format_type` (String) must be one of ["Avro"]
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--compression_codec"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type`
+- `compression_codec` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec))
 
 Optional:
 
-- `destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2))
-- `destination_gcs_output_format_avro_apache_avro_compression_codec_deflate` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_deflate))
-- `destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression))
-- `destination_gcs_output_format_avro_apache_avro_compression_codec_snappy` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_snappy))
-- `destination_gcs_output_format_avro_apache_avro_compression_codec_xz` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_xz))
-- `destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard))
+- `format_type` (String) must be one of ["Avro"]; Default: "Avro"
 
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type.destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2`
-
-Required:
-
-- `codec` (String) must be one of ["bzip2"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_deflate"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type.destination_gcs_output_format_avro_apache_avro_compression_codec_deflate`
-
-Required:
-
-- `codec` (String) must be one of ["Deflate"]
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type`
 
 Optional:
 
-- `compression_level` (Number) 0: no compression & fastest, 9: best compression & slowest.
+- `bzip2` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--bzip2))
+- `deflate` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--deflate))
+- `no_compression` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--no_compression))
+- `snappy` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--snappy))
+- `xz` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--xz))
+- `zstandard` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--zstandard))
 
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type.destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression`
-
-Required:
-
-- `codec` (String) must be one of ["no compression"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_snappy"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type.destination_gcs_output_format_avro_apache_avro_compression_codec_snappy`
-
-Required:
-
-- `codec` (String) must be one of ["snappy"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_xz"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type.destination_gcs_output_format_avro_apache_avro_compression_codec_xz`
-
-Required:
-
-- `codec` (String) must be one of ["xz"]
+<a id="nestedatt--configuration--format--avro_apache_avro--format_type--bzip2"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type.bzip2`
 
 Optional:
 
-- `compression_level` (Number) The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
+- `codec` (String) must be one of ["bzip2"]; Default: "bzip2"
 
 
-<a id="nestedatt--configuration--format--destination_gcs_output_format_avro_apache_avro--format_type--destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_avro_apache_avro.format_type.destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard`
-
-Required:
-
-- `codec` (String) must be one of ["zstandard"]
+<a id="nestedatt--configuration--format--avro_apache_avro--format_type--deflate"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type.deflate`
 
 Optional:
 
-- `compression_level` (Number) Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
-- `include_checksum` (Boolean) If true, include a checksum with each data block.
+- `codec` (String) must be one of ["Deflate"]; Default: "Deflate"
+- `compression_level` (Number) Default: 0
+0: no compression & fastest, 9: best compression & slowest.
 
 
-
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_csv_comma_separated_values`
-
-Required:
-
-- `format_type` (String) must be one of ["CSV"]
+<a id="nestedatt--configuration--format--avro_apache_avro--format_type--no_compression"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type.no_compression`
 
 Optional:
 
-- `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values--compression))
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
+- `codec` (String) must be one of ["no compression"]; Default: "no compression"
+
+
+<a id="nestedatt--configuration--format--avro_apache_avro--format_type--snappy"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type.snappy`
+
+Optional:
+
+- `codec` (String) must be one of ["snappy"]; Default: "snappy"
+
+
+<a id="nestedatt--configuration--format--avro_apache_avro--format_type--xz"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type.xz`
+
+Optional:
+
+- `codec` (String) must be one of ["xz"]; Default: "xz"
+- `compression_level` (Number) Default: 6
+The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
+
+
+<a id="nestedatt--configuration--format--avro_apache_avro--format_type--zstandard"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.format_type.zstandard`
+
+Optional:
+
+- `codec` (String) must be one of ["zstandard"]; Default: "zstandard"
+- `compression_level` (Number) Default: 3
+Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
+- `include_checksum` (Boolean) Default: false
+If true, include a checksum with each data block.
+
+
+
+
+<a id="nestedatt--configuration--format--csv_comma_separated_values"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values`
+
+Optional:
+
+- `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--compression))
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
 Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
+- `format_type` (String) must be one of ["CSV"]; Default: "CSV"
 
-<a id="nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values--compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_csv_comma_separated_values.flattening`
-
-Optional:
-
-- `destination_gcs_output_format_csv_comma_separated_values_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values--flattening--destination_gcs_output_format_csv_comma_separated_values_compression_gzip))
-- `destination_gcs_output_format_csv_comma_separated_values_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values--flattening--destination_gcs_output_format_csv_comma_separated_values_compression_no_compression))
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values--flattening--destination_gcs_output_format_csv_comma_separated_values_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_csv_comma_separated_values.flattening.destination_gcs_output_format_csv_comma_separated_values_compression_gzip`
+<a id="nestedatt--configuration--format--csv_comma_separated_values--compression"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values.format_type`
 
 Optional:
 
-- `compression_type` (String) must be one of ["GZIP"]
+- `gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--format_type--gzip))
+- `no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--format_type--no_compression))
 
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_csv_comma_separated_values--flattening--destination_gcs_output_format_csv_comma_separated_values_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_csv_comma_separated_values.flattening.destination_gcs_output_format_csv_comma_separated_values_compression_no_compression`
-
-Optional:
-
-- `compression_type` (String) must be one of ["No Compression"]
-
-
-
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_json_lines_newline_delimited_json`
-
-Required:
-
-- `format_type` (String) must be one of ["JSONL"]
+<a id="nestedatt--configuration--format--csv_comma_separated_values--format_type--gzip"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values.format_type.gzip`
 
 Optional:
 
-- `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json--compression))
+- `compression_type` (String) must be one of ["GZIP"]; Default: "GZIP"
 
-<a id="nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json--compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_json_lines_newline_delimited_json.compression`
 
-Optional:
-
-- `destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json--compression--destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip))
-- `destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json--compression--destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression))
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json--compression--destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_json_lines_newline_delimited_json.compression.destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip`
+<a id="nestedatt--configuration--format--csv_comma_separated_values--format_type--no_compression"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values.format_type.no_compression`
 
 Optional:
 
-- `compression_type` (String) must be one of ["GZIP"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_output_format_json_lines_newline_delimited_json--compression--destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_json_lines_newline_delimited_json.compression.destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression`
-
-Optional:
-
-- `compression_type` (String) must be one of ["No Compression"]
+- `compression_type` (String) must be one of ["No Compression"]; Default: "No Compression"
 
 
 
 
-<a id="nestedatt--configuration--format--destination_gcs_output_format_parquet_columnar_storage"></a>
-### Nested Schema for `configuration.format.destination_gcs_output_format_parquet_columnar_storage`
-
-Required:
-
-- `format_type` (String) must be one of ["Parquet"]
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json`
 
 Optional:
 
-- `block_size_mb` (Number) This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
-- `compression_codec` (String) must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]
+- `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression))
+- `format_type` (String) must be one of ["JSONL"]; Default: "JSONL"
+
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type`
+
+Optional:
+
+- `gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--gzip))
+- `no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--no_compression))
+
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--gzip"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type.gzip`
+
+Optional:
+
+- `compression_type` (String) must be one of ["GZIP"]; Default: "GZIP"
+
+
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--no_compression"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type.no_compression`
+
+Optional:
+
+- `compression_type` (String) must be one of ["No Compression"]; Default: "No Compression"
+
+
+
+
+<a id="nestedatt--configuration--format--parquet_columnar_storage"></a>
+### Nested Schema for `configuration.format.parquet_columnar_storage`
+
+Optional:
+
+- `block_size_mb` (Number) Default: 128
+This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
+- `compression_codec` (String) must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"
 The compression algorithm used to compress data pages.
-- `dictionary_encoding` (Boolean) Default: true.
-- `dictionary_page_size_kb` (Number) There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-- `max_padding_size_mb` (Number) Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
-- `page_size_kb` (Number) The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro`
-
-Required:
-
-- `compression_codec` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--compression_codec))
-- `format_type` (String) must be one of ["Avro"]
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--compression_codec"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type`
-
-Optional:
-
-- `destination_gcs_update_output_format_avro_apache_avro_compression_codec_bzip2` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_bzip2))
-- `destination_gcs_update_output_format_avro_apache_avro_compression_codec_deflate` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_deflate))
-- `destination_gcs_update_output_format_avro_apache_avro_compression_codec_no_compression` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_no_compression))
-- `destination_gcs_update_output_format_avro_apache_avro_compression_codec_snappy` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_snappy))
-- `destination_gcs_update_output_format_avro_apache_avro_compression_codec_xz` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_xz))
-- `destination_gcs_update_output_format_avro_apache_avro_compression_codec_zstandard` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_zstandard))
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_bzip2"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type.destination_gcs_update_output_format_avro_apache_avro_compression_codec_bzip2`
-
-Required:
-
-- `codec` (String) must be one of ["bzip2"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_deflate"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type.destination_gcs_update_output_format_avro_apache_avro_compression_codec_deflate`
-
-Required:
-
-- `codec` (String) must be one of ["Deflate"]
-
-Optional:
-
-- `compression_level` (Number) 0: no compression & fastest, 9: best compression & slowest.
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_no_compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type.destination_gcs_update_output_format_avro_apache_avro_compression_codec_no_compression`
-
-Required:
-
-- `codec` (String) must be one of ["no compression"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_snappy"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type.destination_gcs_update_output_format_avro_apache_avro_compression_codec_snappy`
-
-Required:
-
-- `codec` (String) must be one of ["snappy"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_xz"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type.destination_gcs_update_output_format_avro_apache_avro_compression_codec_xz`
-
-Required:
-
-- `codec` (String) must be one of ["xz"]
-
-Optional:
-
-- `compression_level` (Number) The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_avro_apache_avro--format_type--destination_gcs_update_output_format_avro_apache_avro_compression_codec_zstandard"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_avro_apache_avro.format_type.destination_gcs_update_output_format_avro_apache_avro_compression_codec_zstandard`
-
-Required:
-
-- `codec` (String) must be one of ["zstandard"]
-
-Optional:
-
-- `compression_level` (Number) Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
-- `include_checksum` (Boolean) If true, include a checksum with each data block.
-
-
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_csv_comma_separated_values`
-
-Required:
-
-- `format_type` (String) must be one of ["CSV"]
-
-Optional:
-
-- `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values--compression))
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
-Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values--compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_csv_comma_separated_values.flattening`
-
-Optional:
-
-- `destination_gcs_update_output_format_csv_comma_separated_values_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values--flattening--destination_gcs_update_output_format_csv_comma_separated_values_compression_gzip))
-- `destination_gcs_update_output_format_csv_comma_separated_values_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values--flattening--destination_gcs_update_output_format_csv_comma_separated_values_compression_no_compression))
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values--flattening--destination_gcs_update_output_format_csv_comma_separated_values_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_csv_comma_separated_values.flattening.destination_gcs_update_output_format_csv_comma_separated_values_compression_gzip`
-
-Optional:
-
-- `compression_type` (String) must be one of ["GZIP"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_csv_comma_separated_values--flattening--destination_gcs_update_output_format_csv_comma_separated_values_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_csv_comma_separated_values.flattening.destination_gcs_update_output_format_csv_comma_separated_values_compression_no_compression`
-
-Optional:
-
-- `compression_type` (String) must be one of ["No Compression"]
-
-
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_json_lines_newline_delimited_json`
-
-Required:
-
-- `format_type` (String) must be one of ["JSONL"]
-
-Optional:
-
-- `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json--compression))
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json--compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_json_lines_newline_delimited_json.compression`
-
-Optional:
-
-- `destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json--compression--destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_gzip))
-- `destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json--compression--destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_no_compression))
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json--compression--destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_json_lines_newline_delimited_json.compression.destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_gzip`
-
-Optional:
-
-- `compression_type` (String) must be one of ["GZIP"]
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_json_lines_newline_delimited_json--compression--destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_json_lines_newline_delimited_json.compression.destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_no_compression`
-
-Optional:
-
-- `compression_type` (String) must be one of ["No Compression"]
-
-
-
-
-<a id="nestedatt--configuration--format--destination_gcs_update_output_format_parquet_columnar_storage"></a>
-### Nested Schema for `configuration.format.destination_gcs_update_output_format_parquet_columnar_storage`
-
-Required:
-
-- `format_type` (String) must be one of ["Parquet"]
-
-Optional:
-
-- `block_size_mb` (Number) This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
-- `compression_codec` (String) must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]
-The compression algorithm used to compress data pages.
-- `dictionary_encoding` (Boolean) Default: true.
-- `dictionary_page_size_kb` (Number) There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-- `max_padding_size_mb` (Number) Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
-- `page_size_kb` (Number) The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
+- `dictionary_encoding` (Boolean) Default: true
+Default: true.
+- `dictionary_page_size_kb` (Number) Default: 1024
+There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
+- `format_type` (String) must be one of ["Parquet"]; Default: "Parquet"
+- `max_padding_size_mb` (Number) Default: 8
+Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
+- `page_size_kb` (Number) Default: 1024
+The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
 
 

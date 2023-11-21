@@ -15,13 +15,13 @@ SourceSpacexAPI Resource
 ```terraform
 resource "airbyte_source_spacex_api" "my_source_spacexapi" {
   configuration = {
-    id          = "382bd7ed-5650-4762-9c58-f4d7396564c2"
-    options     = "...my_options..."
-    source_type = "spacex-api"
+    id      = "adad73b7-9d20-4b48-acfd-c6fb504a12b7"
+    options = "...my_options..."
   }
-  name         = "Lee Batz Jr."
-  secret_id    = "...my_secret_id..."
-  workspace_id = "a961d24a-7dbb-48f5-b2d8-92cf7812cb51"
+  definition_id = "723cbf02-23ae-4822-a532-7d8cbc0547dc"
+  name          = "Chad Swaniawski"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "7628c478-1358-42a6-b537-d9dfc7f45856"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_spacex_api" "my_source_spacexapi" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,6 +51,5 @@ Optional:
 
 - `id` (String)
 - `options` (String)
-- `source_type` (String) must be one of ["spacex-api"]
 
 

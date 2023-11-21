@@ -15,16 +15,16 @@ DestinationDatabend Resource
 ```terraform
 resource "airbyte_destination_databend" "my_destination_databend" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "databend"
-    host             = "...my_host..."
-    password         = "...my_password..."
-    port             = 443
-    table            = "default"
-    username         = "Leo.Purdy"
+    database = "...my_database..."
+    host     = "...my_host..."
+    password = "...my_password..."
+    port     = 443
+    table    = "default"
+    username = "Kira78"
   }
-  name         = "Bobby Kutch V"
-  workspace_id = "b3fe49a8-d9cb-4f48-a333-23f9b77f3a41"
+  definition_id = "006aecee-7c88-4461-9655-998ae24eec56"
+  name          = "Josefina Rosenbaum"
+  workspace_id  = "48d71917-bd77-4158-87e0-4c579843cbfb"
 }
 ```
 
@@ -34,8 +34,12 @@ resource "airbyte_destination_databend" "my_destination_databend" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -48,14 +52,15 @@ resource "airbyte_destination_databend" "my_destination_databend" {
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of ["databend"]
 - `host` (String) Hostname of the database.
 - `username` (String) Username to use to access the database.
 
 Optional:
 
-- `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
-- `table` (String) The default  table was written to.
+- `password` (String, Sensitive) Password associated with the username.
+- `port` (Number) Default: 443
+Port of the database.
+- `table` (String) Default: "default"
+The default  table was written to.
 
 

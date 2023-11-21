@@ -15,13 +15,13 @@ SourceSendgrid Resource
 ```terraform
 resource "airbyte_source_sendgrid" "my_source_sendgrid" {
   configuration = {
-    apikey      = "...my_apikey..."
-    source_type = "sendgrid"
-    start_time  = "2020-01-01T01:01:01Z"
+    apikey     = "...my_apikey..."
+    start_time = "2020-01-01T01:01:01Z"
   }
-  name         = "Shari Pfannerstill"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "41c57d1f-edc2-4050-938d-c3ce185472f9"
+  definition_id = "37ec3d2a-b419-48d2-afe5-e34c931e7a72"
+  name          = "Toby McGlynn"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "22c4d080-cde0-439d-95e8-c5778ddd1091"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
 
 Required:
 
-- `apikey` (String) API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
-- `source_type` (String) must be one of ["sendgrid"]
+- `apikey` (String, Sensitive) API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
 
 Optional:
 

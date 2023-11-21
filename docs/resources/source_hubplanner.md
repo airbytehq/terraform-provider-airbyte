@@ -15,12 +15,12 @@ SourceHubplanner Resource
 ```terraform
 resource "airbyte_source_hubplanner" "my_source_hubplanner" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "hubplanner"
+    api_key = "...my_api_key..."
   }
-  name         = "Cary Emmerich Sr."
-  secret_id    = "...my_secret_id..."
-  workspace_id = "b63c205f-da84-4077-8a68-a9a35d086b6f"
+  definition_id = "92033b17-bfcc-4526-af10-da401fb0fc52"
+  name          = "Gladys Adams"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9994a41e-4a89-485c-b8fa-7d86bdf5bf91"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
 
 Required:
 
-- `api_key` (String) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-- `source_type` (String) must be one of ["hubplanner"]
+- `api_key` (String, Sensitive) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
 
 

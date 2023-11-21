@@ -15,12 +15,12 @@ SourceZoom Resource
 ```terraform
 resource "airbyte_source_zoom" "my_source_zoom" {
   configuration = {
-    jwt_token   = "...my_jwt_token..."
-    source_type = "zoom"
+    jwt_token = "...my_jwt_token..."
   }
-  name         = "Alexis Gutmann IV"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0aa10418-6ec7-459e-82f3-702c5c8e2d30"
+  definition_id = "d6f5cf39-b34f-4958-9f42-198f32822b82"
+  name          = "Gregory Hirthe"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "bc2b7c1d-3540-4fbb-a2d8-a9d0010028d1"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_zoom" "my_source_zoom" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_zoom" "my_source_zoom" {
 
 Required:
 
-- `jwt_token` (String) JWT Token
-- `source_type` (String) must be one of ["zoom"]
+- `jwt_token` (String, Sensitive) JWT Token
 
 

@@ -15,12 +15,12 @@ SourceCoda Resource
 ```terraform
 resource "airbyte_source_coda" "my_source_coda" {
   configuration = {
-    auth_token  = "...my_auth_token..."
-    source_type = "coda"
+    auth_token = "...my_auth_token..."
   }
-  name         = "Lila Harris II"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5756f5d5-6d0b-4d0a-b2df-e13db4f62cba"
+  definition_id = "2a37cc1f-bec8-483d-a2fe-cd2cab29e0bc"
+  name          = "Lisa Barrows"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3cc123e8-783d-450d-8d2b-80c50dc344f6"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_coda" "my_source_coda" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_coda" "my_source_coda" {
 
 Required:
 
-- `auth_token` (String) Bearer token
-- `source_type` (String) must be one of ["coda"]
+- `auth_token` (String, Sensitive) Bearer token
 
 

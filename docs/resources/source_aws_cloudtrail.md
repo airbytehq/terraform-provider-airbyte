@@ -18,12 +18,12 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     aws_key_id      = "...my_aws_key_id..."
     aws_region_name = "...my_aws_region_name..."
     aws_secret_key  = "...my_aws_secret_key..."
-    source_type     = "aws-cloudtrail"
     start_date      = "2021-01-01"
   }
-  name         = "Nellie Waters"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "09e28103-31f3-4981-94c7-00b607f3c93c"
+  definition_id = "1b394b84-acdf-48db-aa4f-7e23711b260f"
+  name          = "Janis Erdman"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "1edcb36c-da3d-451c-bc15-623ec6453ce6"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,10 +51,13 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 
 Required:
 
-- `aws_key_id` (String) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
+- `aws_key_id` (String, Sensitive) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 - `aws_region_name` (String) The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
-- `aws_secret_key` (String) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["aws-cloudtrail"]
-- `start_date` (String) The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
+- `aws_secret_key` (String, Sensitive) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
+
+Optional:
+
+- `start_date` (String) Default: "1970-01-01"
+The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
 
 

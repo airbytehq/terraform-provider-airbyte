@@ -16,11 +16,11 @@ SourceLaunchdarkly Resource
 resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
   configuration = {
     access_token = "...my_access_token..."
-    source_type  = "launchdarkly"
   }
-  name         = "Darren Monahan"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "20387320-590c-4cc1-8964-00313b3e5044"
+  definition_id = "422849b5-8575-49fd-b9d7-4aa20ea69f1b"
+  name          = "Jodi Marquardt"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "dd1b5a02-95b1-497b-bb02-27d625c3155f"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 
 Required:
 
-- `access_token` (String) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
-- `source_type` (String) must be one of ["launchdarkly"]
+- `access_token` (String, Sensitive) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
 
 

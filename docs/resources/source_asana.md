@@ -16,18 +16,21 @@ SourceAsana Resource
 resource "airbyte_source_asana" "my_source_asana" {
   configuration = {
     credentials = {
-      source_asana_authentication_mechanism_authenticate_via_asana_oauth_ = {
+      authenticate_via_asana_oauth = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
-        option_title  = "OAuth Credentials"
         refresh_token = "...my_refresh_token..."
       }
     }
-    source_type = "asana"
+    organization_export_ids = [
+      "{ \"see\": \"documentation\" }",
+    ]
+    test_mode = true
   }
-  name         = "Jill Wintheiser"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "b114eeb5-2ff7-485f-8378-14d4c98e0c2b"
+  definition_id = "f5896557-ce17-4ccd-ab10-d6388d4fdfb9"
+  name          = "Ms. Irvin Anderson"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "c04191be-b057-4f07-8546-621bdba90354"
 }
 ```
 
@@ -37,11 +40,12 @@ resource "airbyte_source_asana" "my_source_asana" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -55,71 +59,32 @@ resource "airbyte_source_asana" "my_source_asana" {
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["asana"]
+- `organization_export_ids` (List of String) Globally unique identifiers for the organization exports
+- `test_mode` (Boolean) This flag is used for testing purposes for certain streams that return a lot of data. This flag is not meant to be enabled for prod.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_asana_authentication_mechanism_authenticate_via_asana_oauth` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth))
-- `source_asana_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_with_personal_access_token))
-- `source_asana_update_authentication_mechanism_authenticate_via_asana_oauth` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth))
-- `source_asana_update_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_with_personal_access_token))
+- `authenticate_via_asana_oauth` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_asana_oauth))
+- `authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_personal_access_token))
 
-<a id="nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth"></a>
-### Nested Schema for `configuration.credentials.source_asana_authentication_mechanism_authenticate_via_asana_oauth`
+<a id="nestedatt--configuration--credentials--authenticate_via_asana_oauth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_asana_oauth`
 
 Required:
 
 - `client_id` (String)
 - `client_secret` (String)
-- `refresh_token` (String)
-
-Optional:
-
-- `option_title` (String) must be one of ["OAuth Credentials"]
-OAuth Credentials
+- `refresh_token` (String, Sensitive)
 
 
-<a id="nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_with_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_asana_authentication_mechanism_authenticate_with_personal_access_token`
+<a id="nestedatt--configuration--credentials--authenticate_with_personal_access_token"></a>
+### Nested Schema for `configuration.credentials.authenticate_with_personal_access_token`
 
 Required:
 
-- `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
-
-Optional:
-
-- `option_title` (String) must be one of ["PAT Credentials"]
-PAT Credentials
-
-
-<a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth"></a>
-### Nested Schema for `configuration.credentials.source_asana_update_authentication_mechanism_authenticate_via_asana_oauth`
-
-Required:
-
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-
-Optional:
-
-- `option_title` (String) must be one of ["OAuth Credentials"]
-OAuth Credentials
-
-
-<a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_with_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_asana_update_authentication_mechanism_authenticate_with_personal_access_token`
-
-Required:
-
-- `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
-
-Optional:
-
-- `option_title` (String) must be one of ["PAT Credentials"]
-PAT Credentials
+- `personal_access_token` (String, Sensitive) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 
 

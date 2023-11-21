@@ -14,7 +14,6 @@ SourceFirebolt DataSource
 
 ```terraform
 data "airbyte_source_firebolt" "my_source_firebolt" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,27 +25,12 @@ data "airbyte_source_firebolt" "my_source_firebolt" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `account` (String) Firebolt account to login.
-- `database` (String) The database to connect to.
-- `engine` (String) Engine name or url to connect to.
-- `host` (String) The host name of your Firebolt database.
-- `password` (String) Firebolt password.
-- `source_type` (String) must be one of ["firebolt"]
-- `username` (String) Firebolt email address you use to login.
 
 

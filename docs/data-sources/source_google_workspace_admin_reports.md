@@ -14,7 +14,6 @@ SourceGoogleWorkspaceAdminReports DataSource
 
 ```terraform
 data "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspaceadminreports" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,24 +25,12 @@ data "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspacea
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.
-- `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
-- `lookback` (Number) Sets the range of time shown in the report. Reports API allows from up to 180 days ago.
-- `source_type` (String) must be one of ["google-workspace-admin-reports"]
 
 

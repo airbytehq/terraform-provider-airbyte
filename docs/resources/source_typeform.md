@@ -16,24 +16,23 @@ SourceTypeform Resource
 resource "airbyte_source_typeform" "my_source_typeform" {
   configuration = {
     credentials = {
-      source_typeform_authorization_method_o_auth2_0 = {
+      source_typeform_o_auth2_0 = {
         access_token      = "...my_access_token..."
-        auth_type         = "oauth2.0"
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2021-02-23T09:05:08.511Z"
+        token_expiry_date = "2022-10-02T21:15:25.365Z"
       }
     }
     form_ids = [
       "...",
     ]
-    source_type = "typeform"
-    start_date  = "2021-03-01T00:00:00Z"
+    start_date = "2021-03-01T00:00:00Z"
   }
-  name         = "Rosemarie Spencer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "aac9b4ca-a1cf-4e9e-95df-903907f37831"
+  definition_id = "dbbaeb9b-5c2e-42ee-8b85-f41cf2efd5ed"
+  name          = "Nancy Hansen"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e4deda30-dd3c-4fb0-aa2f-ad0584130837"
 }
 ```
 
@@ -43,11 +42,12 @@ resource "airbyte_source_typeform" "my_source_typeform" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -61,7 +61,6 @@ resource "airbyte_source_typeform" "my_source_typeform" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["typeform"]
 
 Optional:
 
@@ -73,64 +72,26 @@ Optional:
 
 Optional:
 
-- `source_typeform_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_authorization_method_o_auth2_0))
-- `source_typeform_authorization_method_private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_authorization_method_private_token))
-- `source_typeform_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_update_authorization_method_o_auth2_0))
-- `source_typeform_update_authorization_method_private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_update_authorization_method_private_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--private_token))
 
-<a id="nestedatt--configuration--credentials--source_typeform_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_typeform_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `client_id` (String) The Client ID of the Typeform developer application.
 - `client_secret` (String) The Client Secret the Typeform developer application.
-- `refresh_token` (String) The key to refresh the expired access_token.
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-Optional:
-
-- `auth_type` (String) must be one of ["oauth2.0"]
+- `refresh_token` (String, Sensitive) The key to refresh the expired access_token.
+- `token_expiry_date` (String, Sensitive) The date-time when the access token should be refreshed.
 
 
-<a id="nestedatt--configuration--credentials--source_typeform_authorization_method_private_token"></a>
-### Nested Schema for `configuration.credentials.source_typeform_authorization_method_private_token`
+<a id="nestedatt--configuration--credentials--private_token"></a>
+### Nested Schema for `configuration.credentials.private_token`
 
 Required:
 
-- `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
-
-Optional:
-
-- `auth_type` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_typeform_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_typeform_update_authorization_method_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of the Typeform developer application.
-- `client_secret` (String) The Client Secret the Typeform developer application.
-- `refresh_token` (String) The key to refresh the expired access_token.
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-Optional:
-
-- `auth_type` (String) must be one of ["oauth2.0"]
-
-
-<a id="nestedatt--configuration--credentials--source_typeform_update_authorization_method_private_token"></a>
-### Nested Schema for `configuration.credentials.source_typeform_update_authorization_method_private_token`
-
-Required:
-
-- `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
-
-Optional:
-
-- `auth_type` (String) must be one of ["access_token"]
+- `access_token` (String, Sensitive) Log into your Typeform account and then generate a personal Access Token.
 
 
