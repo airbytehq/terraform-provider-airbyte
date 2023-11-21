@@ -7,3 +7,24 @@ type SourceTodoistPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceTodoistPutRequest) GetConfiguration() SourceTodoistUpdate {
+	if o == nil {
+		return SourceTodoistUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTodoistPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTodoistPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

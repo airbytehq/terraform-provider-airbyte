@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,14 +12,18 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	productCatalog := shared.SourceChargebeeProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
-	sourceType := shared.SourceChargebeeChargebee(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChargebee{
 		ProductCatalog: productCatalog,
 		Site:           site,
 		SiteAPIKey:     siteAPIKey,
-		SourceType:     sourceType,
 		StartDate:      startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -31,6 +35,7 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceChargebeeCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -44,7 +49,7 @@ func (r *SourceChargebeeResourceModel) ToGetSDKType() *shared.SourceChargebeeCre
 }
 
 func (r *SourceChargebeeResourceModel) ToUpdateSDKType() *shared.SourceChargebeePutRequest {
-	productCatalog := shared.SourceChargebeeUpdateProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	productCatalog := shared.ProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())

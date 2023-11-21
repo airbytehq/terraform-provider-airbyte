@@ -7,3 +7,24 @@ type SourceGlassfrogPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceGlassfrogPutRequest) GetConfiguration() SourceGlassfrogUpdate {
+	if o == nil {
+		return SourceGlassfrogUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGlassfrogPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGlassfrogPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

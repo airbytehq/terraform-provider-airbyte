@@ -8,5 +8,4 @@ type SourceSmaily struct {
 	APIPassword  types.String `tfsdk:"api_password"`
 	APISubdomain types.String `tfsdk:"api_subdomain"`
 	APIUsername  types.String `tfsdk:"api_username"`
-	SourceType   types.String `tfsdk:"source_type"`
 }

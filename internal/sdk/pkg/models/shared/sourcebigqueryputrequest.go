@@ -7,3 +7,24 @@ type SourceBigqueryPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceBigqueryPutRequest) GetConfiguration() SourceBigqueryUpdate {
+	if o == nil {
+		return SourceBigqueryUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBigqueryPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBigqueryPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

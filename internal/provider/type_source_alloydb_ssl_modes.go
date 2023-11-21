@@ -3,16 +3,10 @@
 package provider
 
 type SourceAlloydbSSLModes struct {
-	SourceAlloydbSSLModesAllow            *SourceAlloydbSSLModesAllow            `tfsdk:"source_alloydb_ssl_modes_allow"`
-	SourceAlloydbSSLModesDisable          *SourceAlloydbSSLModesDisable          `tfsdk:"source_alloydb_ssl_modes_disable"`
-	SourceAlloydbSSLModesPrefer           *SourceAlloydbSSLModesPrefer           `tfsdk:"source_alloydb_ssl_modes_prefer"`
-	SourceAlloydbSSLModesRequire          *SourceAlloydbSSLModesRequire          `tfsdk:"source_alloydb_ssl_modes_require"`
-	SourceAlloydbSSLModesVerifyCa         *SourceAlloydbSSLModesVerifyCa         `tfsdk:"source_alloydb_ssl_modes_verify_ca"`
-	SourceAlloydbSSLModesVerifyFull       *SourceAlloydbSSLModesVerifyFull       `tfsdk:"source_alloydb_ssl_modes_verify_full"`
-	SourceAlloydbUpdateSSLModesAllow      *SourceAlloydbUpdateSSLModesAllow      `tfsdk:"source_alloydb_update_ssl_modes_allow"`
-	SourceAlloydbUpdateSSLModesDisable    *SourceAlloydbUpdateSSLModesDisable    `tfsdk:"source_alloydb_update_ssl_modes_disable"`
-	SourceAlloydbUpdateSSLModesPrefer     *SourceAlloydbUpdateSSLModesPrefer     `tfsdk:"source_alloydb_update_ssl_modes_prefer"`
-	SourceAlloydbUpdateSSLModesRequire    *SourceAlloydbUpdateSSLModesRequire    `tfsdk:"source_alloydb_update_ssl_modes_require"`
-	SourceAlloydbUpdateSSLModesVerifyCa   *SourceAlloydbUpdateSSLModesVerifyCa   `tfsdk:"source_alloydb_update_ssl_modes_verify_ca"`
-	SourceAlloydbUpdateSSLModesVerifyFull *SourceAlloydbUpdateSSLModesVerifyFull `tfsdk:"source_alloydb_update_ssl_modes_verify_full"`
+	Allow      *SourceAlloydbAllow    `tfsdk:"allow"`
+	Disable    *SourceAlloydbAllow    `tfsdk:"disable"`
+	Prefer     *SourceAlloydbAllow    `tfsdk:"prefer"`
+	Require    *SourceAlloydbAllow    `tfsdk:"require"`
+	VerifyCa   *SourceAlloydbVerifyCa `tfsdk:"verify_ca"`
+	VerifyFull *SourceAlloydbVerifyCa `tfsdk:"verify_full"`
 }

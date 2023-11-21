@@ -5,32 +5,48 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceWhiskyHunterWhiskyHunter string
+type WhiskyHunter string
 
 const (
-	SourceWhiskyHunterWhiskyHunterWhiskyHunter SourceWhiskyHunterWhiskyHunter = "whisky-hunter"
+	WhiskyHunterWhiskyHunter WhiskyHunter = "whisky-hunter"
 )
 
-func (e SourceWhiskyHunterWhiskyHunter) ToPointer() *SourceWhiskyHunterWhiskyHunter {
+func (e WhiskyHunter) ToPointer() *WhiskyHunter {
 	return &e
 }
 
-func (e *SourceWhiskyHunterWhiskyHunter) UnmarshalJSON(data []byte) error {
+func (e *WhiskyHunter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "whisky-hunter":
-		*e = SourceWhiskyHunterWhiskyHunter(v)
+		*e = WhiskyHunter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWhiskyHunterWhiskyHunter: %v", v)
+		return fmt.Errorf("invalid value for WhiskyHunter: %v", v)
 	}
 }
 
 type SourceWhiskyHunter struct {
-	SourceType *SourceWhiskyHunterWhiskyHunter `json:"sourceType,omitempty"`
+	sourceType *WhiskyHunter `const:"whisky-hunter" json:"sourceType,omitempty"`
+}
+
+func (s SourceWhiskyHunter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWhiskyHunter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceWhiskyHunter) GetSourceType() *WhiskyHunter {
+	return WhiskyHunterWhiskyHunter.ToPointer()
 }

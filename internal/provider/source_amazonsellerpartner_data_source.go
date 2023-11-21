@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceAmazonSellerPartnerDataSource struct {
 
 // SourceAmazonSellerPartnerDataSourceModel describes the data model.
 type SourceAmazonSellerPartnerDataSourceModel struct {
-	Configuration SourceAmazonSellerPartner `tfsdk:"configuration"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,128 +47,19 @@ func (r *SourceAmazonSellerPartnerDataSource) Schema(ctx context.Context, req da
 		MarkdownDescription: "SourceAmazonSellerPartner DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"advanced_stream_options": schema.StringAttribute{
-						Computed:    true,
-						Description: `Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.`,
-					},
-					"auth_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
-					"aws_access_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Specifies the AWS access key used as part of the credentials to authenticate the user.`,
-					},
-					"aws_environment": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"PRODUCTION",
-								"SANDBOX",
-							),
-						},
-						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]` + "\n" +
-							`Select the AWS Environment.`,
-					},
-					"aws_secret_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Specifies the AWS secret key used as part of the credentials to authenticate the user.`,
-					},
-					"lwa_app_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your Login with Amazon Client ID.`,
-					},
-					"lwa_client_secret": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your Login with Amazon Client Secret.`,
-					},
-					"max_wait_seconds": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.`,
-					},
-					"period_in_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
-					},
-					"refresh_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Refresh Token obtained via OAuth flow authorization.`,
-					},
-					"region": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"AE",
-								"AU",
-								"BE",
-								"BR",
-								"CA",
-								"DE",
-								"EG",
-								"ES",
-								"FR",
-								"GB",
-								"IN",
-								"IT",
-								"JP",
-								"MX",
-								"NL",
-								"PL",
-								"SA",
-								"SE",
-								"SG",
-								"TR",
-								"UK",
-								"US",
-							),
-						},
-						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]` + "\n" +
-							`Select the AWS Region.`,
-					},
-					"replication_end_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.`,
-					},
-					"replication_start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
-					},
-					"report_options": schema.StringAttribute{
-						Computed:    true,
-						Description: `Additional information passed to reports. This varies by report type. Must be a valid json string.`,
-					},
-					"role_arn": schema.StringAttribute{
-						Computed:    true,
-						Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-seller-partner",
-							),
-						},
-						Description: `must be one of ["amazon-seller-partner"]`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

@@ -9,6 +9,5 @@ type SourceTiktokMarketing struct {
 	Credentials       *SourceTiktokMarketingAuthenticationMethod `tfsdk:"credentials"`
 	EndDate           types.String                               `tfsdk:"end_date"`
 	IncludeDeleted    types.Bool                                 `tfsdk:"include_deleted"`
-	SourceType        types.String                               `tfsdk:"source_type"`
 	StartDate         types.String                               `tfsdk:"start_date"`
 }

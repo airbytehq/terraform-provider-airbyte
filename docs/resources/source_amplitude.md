@@ -17,14 +17,14 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
     api_key            = "...my_api_key..."
     data_region        = "Standard Server"
-    request_time_range = 1
+    request_time_range = 2
     secret_key         = "...my_secret_key..."
-    source_type        = "amplitude"
     start_date         = "2021-01-25T00:00:00Z"
   }
-  name         = "Robin Bednar"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "116db995-45fc-495f-a889-70e189dbb30f"
+  definition_id = "526ae8aa-3c4f-4287-913b-8668105e1180"
+  name          = "Dominic Dach"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "75a1ca19-0e95-4bd1-982a-17eb0af63def"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,15 +52,15 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
 
 Required:
 
-- `api_key` (String) Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
-- `secret_key` (String) Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of ["amplitude"]
+- `api_key` (String, Sensitive) Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
+- `secret_key` (String, Sensitive) Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 - `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `data_region` (String) must be one of ["Standard Server", "EU Residency Server"]
+- `data_region` (String) must be one of ["Standard Server", "EU Residency Server"]; Default: "Standard Server"
 Amplitude data region server
-- `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
+- `request_time_range` (Number) Default: 24
+According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
 
 

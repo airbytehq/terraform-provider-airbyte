@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,11 @@ type DestinationFirestoreDataSource struct {
 
 // DestinationFirestoreDataSourceModel describes the data model.
 type DestinationFirestoreDataSourceModel struct {
-	Configuration DestinationFirestore `tfsdk:"configuration"`
-	DestinationID types.String         `tfsdk:"destination_id"`
-	Name          types.String         `tfsdk:"name"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,30 +47,16 @@ func (r *DestinationFirestoreDataSource) Schema(ctx context.Context, req datasou
 		MarkdownDescription: "DestinationFirestore DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials_json": schema.StringAttribute{
-						Computed:    true,
-						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"firestore",
-							),
-						},
-						Description: `must be one of ["firestore"]`,
-					},
-					"project_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The GCP project ID for the project containing the target BigQuery dataset.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

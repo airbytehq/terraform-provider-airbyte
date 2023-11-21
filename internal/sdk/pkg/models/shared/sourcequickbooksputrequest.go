@@ -7,3 +7,24 @@ type SourceQuickbooksPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceQuickbooksPutRequest) GetConfiguration() SourceQuickbooksUpdate {
+	if o == nil {
+		return SourceQuickbooksUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceQuickbooksPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceQuickbooksPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

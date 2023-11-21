@@ -4,8 +4,46 @@ package shared
 
 type SourceStripeCreateRequest struct {
 	Configuration SourceStripe `json:"configuration"`
-	Name          string       `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceStripeCreateRequest) GetConfiguration() SourceStripe {
+	if o == nil {
+		return SourceStripe{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceStripeCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceStripeCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceStripeCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceStripeCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

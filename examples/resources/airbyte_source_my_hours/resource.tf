@@ -3,10 +3,10 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     email           = "john@doe.com"
     logs_batch_size = 30
     password        = "...my_password..."
-    source_type     = "my-hours"
-    start_date      = "2016-01-01"
+    start_date      = "%Y-%m-%d"
   }
-  name         = "Elsa Kerluke"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "922151fe-1712-4099-853e-9f543d854439"
+  definition_id = "95261555-3a71-4349-8a3f-9799a12d6e33"
+  name          = "Franklin Jerde"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "00d47724-56d0-4d26-9914-7bb3566ca647"
 }

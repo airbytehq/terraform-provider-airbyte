@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -11,13 +11,17 @@ import (
 func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCreateRequest {
 	apiID := r.Configuration.APIID.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceAircallAircall(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAircall{
-		APIID:      apiID,
-		APIToken:   apiToken,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIID:     apiID,
+		APIToken:  apiToken,
+		StartDate: startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -29,6 +33,7 @@ func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAircallCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

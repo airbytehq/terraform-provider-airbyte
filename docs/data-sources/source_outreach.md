@@ -14,7 +14,6 @@ SourceOutreach DataSource
 
 ```terraform
 data "airbyte_source_outreach" "my_source_outreach" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,26 +25,12 @@ data "airbyte_source_outreach" "my_source_outreach" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `client_id` (String) The Client ID of your Outreach developer application.
-- `client_secret` (String) The Client Secret of your Outreach developer application.
-- `redirect_uri` (String) A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
-- `refresh_token` (String) The token for obtaining the new access token.
-- `source_type` (String) must be one of ["outreach"]
-- `start_date` (String) The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

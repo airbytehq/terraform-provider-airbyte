@@ -3,6 +3,5 @@
 package provider
 
 type DestinationGcsAuthentication struct {
-	DestinationGcsAuthenticationHMACKey       *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey `tfsdk:"destination_gcs_authentication_hmac_key"`
-	DestinationGcsUpdateAuthenticationHMACKey *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey `tfsdk:"destination_gcs_update_authentication_hmac_key"`
+	HMACKey *HMACKey `tfsdk:"hmac_key"`
 }

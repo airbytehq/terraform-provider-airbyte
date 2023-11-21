@@ -1,13 +1,13 @@
 resource "airbyte_source_braintree" "my_source_braintree" {
   configuration = {
-    environment = "Development"
+    environment = "Qa"
     merchant_id = "...my_merchant_id..."
     private_key = "...my_private_key..."
     public_key  = "...my_public_key..."
-    source_type = "braintree"
     start_date  = "2020-12-30"
   }
-  name         = "Henrietta Nienow"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "4f3b756c-11f6-4c37-a512-6243835bbc05"
+  definition_id = "12fcb5a7-fdd8-454e-8c39-c22fe17df57a"
+  name          = "Ms. Tommie Bins"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5ff7f1a2-7e8f-4d2f-993d-4f9ab29a2f83"
 }

@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type SourceNetsuiteUpdate struct {
 	// Consumer key associated with your integration
 	ConsumerKey string `json:"consumer_key"`
@@ -18,5 +22,72 @@ type SourceNetsuiteUpdate struct {
 	// Access token secret
 	TokenSecret string `json:"token_secret"`
 	// The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
-	WindowInDays *int64 `json:"window_in_days,omitempty"`
+	WindowInDays *int64 `default:"30" json:"window_in_days"`
+}
+
+func (s SourceNetsuiteUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNetsuiteUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNetsuiteUpdate) GetConsumerKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerKey
+}
+
+func (o *SourceNetsuiteUpdate) GetConsumerSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerSecret
+}
+
+func (o *SourceNetsuiteUpdate) GetObjectTypes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ObjectTypes
+}
+
+func (o *SourceNetsuiteUpdate) GetRealm() string {
+	if o == nil {
+		return ""
+	}
+	return o.Realm
+}
+
+func (o *SourceNetsuiteUpdate) GetStartDatetime() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDatetime
+}
+
+func (o *SourceNetsuiteUpdate) GetTokenKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenKey
+}
+
+func (o *SourceNetsuiteUpdate) GetTokenSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenSecret
+}
+
+func (o *SourceNetsuiteUpdate) GetWindowInDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

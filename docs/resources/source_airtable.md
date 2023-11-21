@@ -16,20 +16,19 @@ SourceAirtable Resource
 resource "airbyte_source_airtable" "my_source_airtable" {
   configuration = {
     credentials = {
-      source_airtable_authentication_o_auth2_0 = {
+      source_airtable_o_auth2_0 = {
         access_token      = "...my_access_token..."
-        auth_method       = "oauth2.0"
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2021-08-01T09:41:55.270Z"
+        token_expiry_date = "2021-04-10T21:26:19.630Z"
       }
     }
-    source_type = "airtable"
   }
-  name         = "Tommie Klocko"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "eac55a97-41d3-4113-9296-5bb8a7202611"
+  definition_id = "54814afe-b93d-44bb-9e9f-2bb80cd3fe4a"
+  name          = "Todd Lockman"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "38c45275-6445-4179-b0ed-8d43c0dabba6"
 }
 ```
 
@@ -39,11 +38,12 @@ resource "airbyte_source_airtable" "my_source_airtable" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,71 +57,35 @@ resource "airbyte_source_airtable" "my_source_airtable" {
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["airtable"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_airtable_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_authentication_o_auth2_0))
-- `source_airtable_authentication_personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_authentication_personal_access_token))
-- `source_airtable_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0))
-- `source_airtable_update_authentication_personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_update_authentication_personal_access_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--personal_access_token))
 
-<a id="nestedatt--configuration--credentials--source_airtable_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_airtable_authentication_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
 - `client_id` (String) The client ID of the Airtable developer application.
 - `client_secret` (String) The client secret the Airtable developer application.
-- `refresh_token` (String) The key to refresh the expired access token.
+- `refresh_token` (String, Sensitive) The key to refresh the expired access token.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `token_expiry_date` (String, Sensitive) The date-time when the access token should be refreshed.
 
 
-<a id="nestedatt--configuration--credentials--source_airtable_authentication_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_airtable_authentication_personal_access_token`
+<a id="nestedatt--configuration--credentials--personal_access_token"></a>
+### Nested Schema for `configuration.credentials.personal_access_token`
 
 Required:
 
-- `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-
-Optional:
-
-- `auth_method` (String) must be one of ["api_key"]
-
-
-<a id="nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_airtable_update_authentication_o_auth2_0`
-
-Required:
-
-- `client_id` (String) The client ID of the Airtable developer application.
-- `client_secret` (String) The client secret the Airtable developer application.
-- `refresh_token` (String) The key to refresh the expired access token.
-
-Optional:
-
-- `access_token` (String) Access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-
-<a id="nestedatt--configuration--credentials--source_airtable_update_authentication_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_airtable_update_authentication_personal_access_token`
-
-Required:
-
-- `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-
-Optional:
-
-- `auth_method` (String) must be one of ["api_key"]
+- `api_key` (String, Sensitive) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
 
 

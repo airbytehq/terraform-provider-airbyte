@@ -11,6 +11,5 @@ type SourceZohoCrm struct {
 	Edition       types.String `tfsdk:"edition"`
 	Environment   types.String `tfsdk:"environment"`
 	RefreshToken  types.String `tfsdk:"refresh_token"`
-	SourceType    types.String `tfsdk:"source_type"`
 	StartDatetime types.String `tfsdk:"start_datetime"`
 }

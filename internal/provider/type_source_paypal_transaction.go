@@ -9,6 +9,6 @@ type SourcePaypalTransaction struct {
 	ClientSecret types.String `tfsdk:"client_secret"`
 	IsSandbox    types.Bool   `tfsdk:"is_sandbox"`
 	RefreshToken types.String `tfsdk:"refresh_token"`
-	SourceType   types.String `tfsdk:"source_type"`
 	StartDate    types.String `tfsdk:"start_date"`
+	TimeWindow   types.Int64  `tfsdk:"time_window"`
 }

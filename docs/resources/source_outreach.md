@@ -19,12 +19,12 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     client_secret = "...my_client_secret..."
     redirect_uri  = "...my_redirect_uri..."
     refresh_token = "...my_refresh_token..."
-    source_type   = "outreach"
     start_date    = "2020-11-16T00:00:00Z"
   }
-  name         = "Kim Kirlin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "8e0cc885-187e-44de-84af-28c5dddb46aa"
+  definition_id = "18021619-8723-463e-89a2-aae62d9d7702"
+  name          = "Tanya Hand"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6995c576-52df-4199-822b-3629976b741d"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_outreach" "my_source_outreach" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -54,8 +55,7 @@ Required:
 - `client_id` (String) The Client ID of your Outreach developer application.
 - `client_secret` (String) The Client Secret of your Outreach developer application.
 - `redirect_uri` (String) A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
-- `refresh_token` (String) The token for obtaining the new access token.
-- `source_type` (String) must be one of ["outreach"]
+- `refresh_token` (String, Sensitive) The token for obtaining the new access token.
 - `start_date` (String) The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

@@ -16,20 +16,20 @@ SourceZendeskSupport Resource
 resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
   configuration = {
     credentials = {
-      source_zendesk_support_authentication_api_token = {
-        api_token   = "...my_api_token..."
-        credentials = "api_token"
-        email       = "Ezequiel.Lindgren56@yahoo.com"
+      source_zendesk_support_api_token = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_token             = "...my_api_token..."
+        email                 = "Ansel_McLaughlin@gmail.com"
       }
     }
-    ignore_pagination = true
-    source_type       = "zendesk-support"
+    ignore_pagination = false
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "Alexander Friesen"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "82dbec75-c68c-4606-9946-8ce304d8849b"
+  definition_id = "7526c0e6-8d41-4f29-878b-d831a4caf6a0"
+  name          = "Linda Weissnat"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "20a84c82-feed-435f-9471-260525978122"
 }
 ```
 
@@ -39,11 +39,12 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -56,13 +57,13 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 
 Required:
 
-- `source_type` (String) must be one of ["zendesk-support"]
 - `subdomain` (String) This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
 
 Optional:
 
 - `credentials` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `ignore_pagination` (Boolean) Makes each stream read a single page of data.
+- `ignore_pagination` (Boolean) Default: false
+Makes each stream read a single page of data.
 - `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -70,66 +71,33 @@ Optional:
 
 Optional:
 
-- `source_zendesk_support_authentication_api_token` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_authentication_api_token))
-- `source_zendesk_support_authentication_o_auth2_0` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_authentication_o_auth2_0))
-- `source_zendesk_support_update_authentication_api_token` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_update_authentication_api_token))
-- `source_zendesk_support_update_authentication_o_auth2_0` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_update_authentication_o_auth2_0))
+- `api_token` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `o_auth20` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_zendesk_support_authentication_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_support_authentication_api_token`
+<a id="nestedatt--configuration--credentials--api_token"></a>
+### Nested Schema for `configuration.credentials.api_token`
 
 Required:
 
-- `api_token` (String) The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.
+- `api_token` (String, Sensitive) The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.
 - `email` (String) The user email for your Zendesk account.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of ["api_token"]
 
 
-<a id="nestedatt--configuration--credentials--source_zendesk_support_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_support_authentication_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
+- `access_token` (String, Sensitive) The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `client_id` (String) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 - `client_secret` (String) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-- `credentials` (String) must be one of ["oauth2.0"]
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_support_update_authentication_api_token`
-
-Required:
-
-- `api_token` (String) The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.
-- `email` (String) The user email for your Zendesk account.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of ["api_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_support_update_authentication_o_auth2_0`
-
-Required:
-
-- `access_token` (String) The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `client_id` (String) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-- `client_secret` (String) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-- `credentials` (String) must be one of ["oauth2.0"]
 
 

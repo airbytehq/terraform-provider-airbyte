@@ -7,3 +7,24 @@ type SourceTrelloPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceTrelloPutRequest) GetConfiguration() SourceTrelloUpdate {
+	if o == nil {
+		return SourceTrelloUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTrelloPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTrelloPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

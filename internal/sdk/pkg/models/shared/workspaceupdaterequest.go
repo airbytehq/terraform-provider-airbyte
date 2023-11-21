@@ -6,3 +6,10 @@ type WorkspaceUpdateRequest struct {
 	// Name of the workspace
 	Name string `json:"name"`
 }
+
+func (o *WorkspaceUpdateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}

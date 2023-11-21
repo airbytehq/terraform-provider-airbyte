@@ -19,12 +19,12 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     client_secret = "...my_client_secret..."
     end_date      = "2022-01-30"
     refresh_token = "...my_refresh_token..."
-    source_type   = "snapchat-marketing"
     start_date    = "2022-01-01"
   }
-  name         = "Chelsea Ortiz"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5ca8649a-70cf-4d5d-a989-b7206451077d"
+  definition_id = "8a6950f0-007e-4330-87d9-5358a56819d2"
+  name          = "Rudy Toy"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "1d7e3d24-dfd3-4d51-a342-f997d059d38a"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,12 +54,12 @@ Required:
 
 - `client_id` (String) The Client ID of your Snapchat developer application.
 - `client_secret` (String) The Client Secret of your Snapchat developer application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
-- `source_type` (String) must be one of ["snapchat-marketing"]
+- `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 Optional:
 
 - `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
-- `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated.
+- `start_date` (String) Default: "2022-01-01"
+Date in the format 2022-01-01. Any data before this date will not be replicated.
 
 

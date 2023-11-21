@@ -7,3 +7,24 @@ type DestinationMssqlPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *DestinationMssqlPutRequest) GetConfiguration() DestinationMssqlUpdate {
+	if o == nil {
+		return DestinationMssqlUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMssqlPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMssqlPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationXata struct {
-	APIKey          types.String `tfsdk:"api_key"`
-	DbURL           types.String `tfsdk:"db_url"`
-	DestinationType types.String `tfsdk:"destination_type"`
+	APIKey types.String `tfsdk:"api_key"`
+	DbURL  types.String `tfsdk:"db_url"`
 }

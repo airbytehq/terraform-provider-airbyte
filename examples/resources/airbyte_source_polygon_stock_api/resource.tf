@@ -1,17 +1,17 @@
 resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
   configuration = {
-    adjusted      = "false"
+    adjusted      = "true"
     api_key       = "...my_api_key..."
     end_date      = "2020-10-14"
-    limit         = 100
+    limit         = 120
     multiplier    = 1
-    sort          = "asc"
-    source_type   = "polygon-stock-api"
+    sort          = "desc"
     start_date    = "2020-10-14"
-    stocks_ticker = "IBM"
+    stocks_ticker = "MSFT"
     timespan      = "day"
   }
-  name         = "Mary Fisher"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fb5971e9-8190-4557-b89c-edbac7fda395"
+  definition_id = "15bf9f13-70c2-48b2-b8d2-5e4ee4a51abe"
+  name          = "Antoinette Rempel"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e8da5f86-7ba5-4cf8-9b48-a2cc4047b120"
 }

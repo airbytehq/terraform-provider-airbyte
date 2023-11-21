@@ -7,3 +7,24 @@ type SourceMarketoPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceMarketoPutRequest) GetConfiguration() SourceMarketoUpdate {
+	if o == nil {
+		return SourceMarketoUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMarketoPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMarketoPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

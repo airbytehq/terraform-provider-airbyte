@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type DestinationSftpJSONUpdate struct {
 	// Path to the directory where json files will be written.
 	DestinationPath string `json:"destination_path"`
@@ -10,7 +14,53 @@ type DestinationSftpJSONUpdate struct {
 	// Password associated with the username.
 	Password string `json:"password"`
 	// Port of the SFTP server.
-	Port *int64 `json:"port,omitempty"`
+	Port *int64 `default:"22" json:"port"`
 	// Username to use to access the SFTP server.
 	Username string `json:"username"`
+}
+
+func (d DestinationSftpJSONUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSftpJSONUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSftpJSONUpdate) GetDestinationPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationPath
+}
+
+func (o *DestinationSftpJSONUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationSftpJSONUpdate) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationSftpJSONUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationSftpJSONUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -3,8 +3,6 @@
 package provider
 
 type SourceSurveySparrowBaseURL struct {
-	SourceSurveySparrowBaseURLEUBasedAccount       *SourceSurveySparrowBaseURLEUBasedAccount `tfsdk:"source_survey_sparrow_base_url_eu_based_account"`
-	SourceSurveySparrowBaseURLGlobalAccount        *SourceSurveySparrowBaseURLGlobalAccount  `tfsdk:"source_survey_sparrow_base_url_global_account"`
-	SourceSurveySparrowUpdateBaseURLEUBasedAccount *SourceSurveySparrowBaseURLEUBasedAccount `tfsdk:"source_survey_sparrow_update_base_url_eu_based_account"`
-	SourceSurveySparrowUpdateBaseURLGlobalAccount  *SourceSurveySparrowBaseURLGlobalAccount  `tfsdk:"source_survey_sparrow_update_base_url_global_account"`
+	EUBasedAccount *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"eu_based_account"`
+	GlobalAccount  *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"global_account"`
 }

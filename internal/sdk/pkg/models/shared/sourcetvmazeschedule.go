@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceTvmazeScheduleTvmazeSchedule string
+type TvmazeSchedule string
 
 const (
-	SourceTvmazeScheduleTvmazeScheduleTvmazeSchedule SourceTvmazeScheduleTvmazeSchedule = "tvmaze-schedule"
+	TvmazeScheduleTvmazeSchedule TvmazeSchedule = "tvmaze-schedule"
 )
 
-func (e SourceTvmazeScheduleTvmazeSchedule) ToPointer() *SourceTvmazeScheduleTvmazeSchedule {
+func (e TvmazeSchedule) ToPointer() *TvmazeSchedule {
 	return &e
 }
 
-func (e *SourceTvmazeScheduleTvmazeSchedule) UnmarshalJSON(data []byte) error {
+func (e *TvmazeSchedule) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "tvmaze-schedule":
-		*e = SourceTvmazeScheduleTvmazeSchedule(v)
+		*e = TvmazeSchedule(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTvmazeScheduleTvmazeSchedule: %v", v)
+		return fmt.Errorf("invalid value for TvmazeSchedule: %v", v)
 	}
 }
 
@@ -36,8 +37,8 @@ type SourceTvmazeSchedule struct {
 	DomesticScheduleCountryCode string `json:"domestic_schedule_country_code"`
 	// End date for TV schedule retrieval. May be in the future. Optional.
 	//
-	EndDate    *string                            `json:"end_date,omitempty"`
-	SourceType SourceTvmazeScheduleTvmazeSchedule `json:"sourceType"`
+	EndDate    *string        `json:"end_date,omitempty"`
+	sourceType TvmazeSchedule `const:"tvmaze-schedule" json:"sourceType"`
 	// Start date for TV schedule retrieval. May be in the future.
 	StartDate string `json:"start_date"`
 	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for
@@ -45,4 +46,47 @@ type SourceTvmazeSchedule struct {
 	// set to 'global' for just global web channels.
 	//
 	WebScheduleCountryCode *string `json:"web_schedule_country_code,omitempty"`
+}
+
+func (s SourceTvmazeSchedule) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTvmazeSchedule) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTvmazeSchedule) GetDomesticScheduleCountryCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomesticScheduleCountryCode
+}
+
+func (o *SourceTvmazeSchedule) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTvmazeSchedule) GetSourceType() TvmazeSchedule {
+	return TvmazeScheduleTvmazeSchedule
+}
+
+func (o *SourceTvmazeSchedule) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceTvmazeSchedule) GetWebScheduleCountryCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WebScheduleCountryCode
 }

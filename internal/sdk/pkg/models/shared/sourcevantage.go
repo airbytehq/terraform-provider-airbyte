@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceVantageVantage string
+type Vantage string
 
 const (
-	SourceVantageVantageVantage SourceVantageVantage = "vantage"
+	VantageVantage Vantage = "vantage"
 )
 
-func (e SourceVantageVantage) ToPointer() *SourceVantageVantage {
+func (e Vantage) ToPointer() *Vantage {
 	return &e
 }
 
-func (e *SourceVantageVantage) UnmarshalJSON(data []byte) error {
+func (e *Vantage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "vantage":
-		*e = SourceVantageVantage(v)
+		*e = Vantage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceVantageVantage: %v", v)
+		return fmt.Errorf("invalid value for Vantage: %v", v)
 	}
 }
 
 type SourceVantage struct {
 	// Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
-	AccessToken string               `json:"access_token"`
-	SourceType  SourceVantageVantage `json:"sourceType"`
+	AccessToken string  `json:"access_token"`
+	sourceType  Vantage `const:"vantage" json:"sourceType"`
+}
+
+func (s SourceVantage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceVantage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceVantage) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceVantage) GetSourceType() Vantage {
+	return VantageVantage
 }

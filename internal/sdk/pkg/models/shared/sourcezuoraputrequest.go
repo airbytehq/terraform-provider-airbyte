@@ -7,3 +7,24 @@ type SourceZuoraPutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceZuoraPutRequest) GetConfiguration() SourceZuoraUpdate {
+	if o == nil {
+		return SourceZuoraUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZuoraPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZuoraPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

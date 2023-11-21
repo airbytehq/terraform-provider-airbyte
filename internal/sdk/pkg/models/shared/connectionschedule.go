@@ -7,3 +7,17 @@ type ConnectionSchedule struct {
 	CronExpression *string          `json:"cronExpression,omitempty"`
 	ScheduleType   ScheduleTypeEnum `json:"scheduleType"`
 }
+
+func (o *ConnectionSchedule) GetCronExpression() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CronExpression
+}
+
+func (o *ConnectionSchedule) GetScheduleType() ScheduleTypeEnum {
+	if o == nil {
+		return ScheduleTypeEnum("")
+	}
+	return o.ScheduleType
+}

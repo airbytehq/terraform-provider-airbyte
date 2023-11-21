@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourcePolygonStockAPIDataSource struct {
 
 // SourcePolygonStockAPIDataSourceModel describes the data model.
 type SourcePolygonStockAPIDataSourceModel struct {
-	Configuration SourcePolygonStockAPI `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,71 +47,19 @@ func (r *SourcePolygonStockAPIDataSource) Schema(ctx context.Context, req dataso
 		MarkdownDescription: "SourcePolygonStockAPI DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"adjusted": schema.StringAttribute{
-						Computed:    true,
-						Description: `Determines whether or not the results are adjusted for splits. By default, results are adjusted and set to true. Set this to false to get results that are NOT adjusted for splits.`,
-					},
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your API ACCESS Key`,
-					},
-					"end_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `The target date for the aggregate window.`,
-					},
-					"limit": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The target date for the aggregate window.`,
-					},
-					"multiplier": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The size of the timespan multiplier.`,
-					},
-					"sort": schema.StringAttribute{
-						Computed:    true,
-						Description: `Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"polygon-stock-api",
-							),
-						},
-						Description: `must be one of ["polygon-stock-api"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `The beginning date for the aggregate window.`,
-					},
-					"stocks_ticker": schema.StringAttribute{
-						Computed:    true,
-						Description: `The exchange symbol that this item is traded under.`,
-					},
-					"timespan": schema.StringAttribute{
-						Computed:    true,
-						Description: `The size of the time window.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

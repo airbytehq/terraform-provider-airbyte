@@ -8,3 +8,17 @@ type SourceRecruiteeUpdate struct {
 	// Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
 	CompanyID int64 `json:"company_id"`
 }
+
+func (o *SourceRecruiteeUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceRecruiteeUpdate) GetCompanyID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CompanyID
+}

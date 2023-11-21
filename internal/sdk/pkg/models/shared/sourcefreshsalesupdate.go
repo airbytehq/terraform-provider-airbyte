@@ -8,3 +8,17 @@ type SourceFreshsalesUpdate struct {
 	// The Name of your Freshsales domain
 	DomainName string `json:"domain_name"`
 }
+
+func (o *SourceFreshsalesUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshsalesUpdate) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
+}

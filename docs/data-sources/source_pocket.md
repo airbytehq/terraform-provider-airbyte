@@ -14,7 +14,6 @@ SourcePocket DataSource
 
 ```terraform
 data "airbyte_source_pocket" "my_source_pocket" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,36 +25,12 @@ data "airbyte_source_pocket" "my_source_pocket" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `access_token` (String) The user's Pocket access token.
-- `consumer_key` (String) Your application's Consumer Key.
-- `content_type` (String) must be one of ["article", "video", "image"]
-Select the content type of the items to retrieve.
-- `detail_type` (String) must be one of ["simple", "complete"]
-Select the granularity of the information about each item.
-- `domain` (String) Only return items from a particular `domain`.
-- `favorite` (Boolean) Retrieve only favorited items.
-- `search` (String) Only return items whose title or url contain the `search` string.
-- `since` (String) Only return items modified since the given timestamp.
-- `sort` (String) must be one of ["newest", "oldest", "title", "site"]
-Sort retrieved items by the given criteria.
-- `source_type` (String) must be one of ["pocket"]
-- `state` (String) must be one of ["unread", "archive", "all"]
-Select the state of the items to retrieve.
-- `tag` (String) Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 
 

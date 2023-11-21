@@ -16,20 +16,39 @@ SourcePinterest Resource
 resource "airbyte_source_pinterest" "my_source_pinterest" {
   configuration = {
     credentials = {
-      source_pinterest_authorization_method_access_token = {
-        access_token = "...my_access_token..."
-        auth_method  = "access_token"
+      source_pinterest_o_auth2_0 = {
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
       }
     }
-    source_type = "pinterest"
-    start_date  = "2022-07-28"
+    custom_reports = [
+      {
+        attribution_types = [
+          "HOUSEHOLD",
+        ]
+        click_window_days = "30"
+        columns = [
+          "TOTAL_IDEA_PIN_PRODUCT_TAG_VISIT",
+        ]
+        conversion_report_time = "TIME_OF_AD_ACTION"
+        engagement_window_days = "7"
+        granularity            = "MONTH"
+        level                  = "CAMPAIGN"
+        name                   = "Ms. Edgar Halvorson"
+        start_date             = "2022-07-28"
+        view_window_days       = "0"
+      },
+    ]
+    start_date = "2022-07-28"
     status = [
       "ACTIVE",
     ]
   }
-  name         = "Nathan Bauch"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3df5b671-9890-4f42-a4bb-438d85b26059"
+  definition_id = "66a5ec46-f2bc-4e2e-b7bb-ccef588ac548"
+  name          = "Lamar Lakin"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "a9dbf52c-7929-43e2-8aa8-1903348b38fe"
 }
 ```
 
@@ -39,11 +58,12 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -54,14 +74,11 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["pinterest"]
-- `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
-
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `custom_reports` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_reports))
+- `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 - `status` (List of String) Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -69,27 +86,14 @@ Optional:
 
 Optional:
 
-- `source_pinterest_authorization_method_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_pinterest_authorization_method_access_token))
-- `source_pinterest_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_pinterest_authorization_method_o_auth2_0))
-- `source_pinterest_update_authorization_method_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_pinterest_update_authorization_method_access_token))
-- `source_pinterest_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_pinterest_update_authorization_method_o_auth2_0))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_pinterest_authorization_method_access_token"></a>
-### Nested Schema for `configuration.credentials.source_pinterest_authorization_method_access_token`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) The Access Token to make authenticated requests.
-- `auth_method` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_pinterest_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_pinterest_authorization_method_o_auth2_0`
-
-Required:
-
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
+- `refresh_token` (String, Sensitive) Refresh Token to obtain new Access Token, when it's expired.
 
 Optional:
 
@@ -97,26 +101,30 @@ Optional:
 - `client_secret` (String) The Client Secret of your OAuth application.
 
 
-<a id="nestedatt--configuration--credentials--source_pinterest_update_authorization_method_access_token"></a>
-### Nested Schema for `configuration.credentials.source_pinterest_update_authorization_method_access_token`
+
+<a id="nestedatt--configuration--custom_reports"></a>
+### Nested Schema for `configuration.custom_reports`
 
 Required:
 
-- `access_token` (String) The Access Token to make authenticated requests.
-- `auth_method` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_pinterest_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_pinterest_update_authorization_method_o_auth2_0`
-
-Required:
-
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
+- `columns` (List of String) A list of chosen columns
+- `name` (String) The name value of report
 
 Optional:
 
-- `client_id` (String) The Client ID of your OAuth application
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `attribution_types` (List of String) List of types of attribution for the conversion report
+- `click_window_days` (Number) must be one of ["0", "1", "7", "14", "30", "60"]; Default: 30
+Number of days to use as the conversion attribution window for a pin click action.
+- `conversion_report_time` (String) must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]; Default: "TIME_OF_AD_ACTION"
+The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event..
+- `engagement_window_days` (Number) must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]
+Number of days to use as the conversion attribution window for an engagement action.
+- `granularity` (String) must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]; Default: "TOTAL"
+Chosen granularity for API
+- `level` (String) must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]; Default: "ADVERTISER"
+Chosen level for API
+- `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by report api (913 days from today).
+- `view_window_days` (Number) must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]
+Number of days to use as the conversion attribution window for a view action.
 
 

@@ -8,5 +8,4 @@ type SourceGoogleWorkspaceAdminReports struct {
 	CredentialsJSON types.String `tfsdk:"credentials_json"`
 	Email           types.String `tfsdk:"email"`
 	Lookback        types.Int64  `tfsdk:"lookback"`
-	SourceType      types.String `tfsdk:"source_type"`
 }

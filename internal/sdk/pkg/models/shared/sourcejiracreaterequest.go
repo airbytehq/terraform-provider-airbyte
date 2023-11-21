@@ -4,8 +4,46 @@ package shared
 
 type SourceJiraCreateRequest struct {
 	Configuration SourceJira `json:"configuration"`
-	Name          string     `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceJiraCreateRequest) GetConfiguration() SourceJira {
+	if o == nil {
+		return SourceJira{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceJiraCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceJiraCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceJiraCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceJiraCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

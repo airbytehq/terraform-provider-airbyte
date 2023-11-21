@@ -3,17 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -35,6 +37,7 @@ type SourceGcsResource struct {
 // SourceGcsResourceModel describes the resource data model.
 type SourceGcsResourceModel struct {
 	Configuration SourceGcs    `tfsdk:"configuration"`
+	DefinitionID  types.String `tfsdk:"definition_id"`
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
@@ -54,36 +57,206 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"gcs_bucket": schema.StringAttribute{
+					"bucket": schema.StringAttribute{
 						Required:    true,
-						Description: `GCS bucket name`,
-					},
-					"gcs_path": schema.StringAttribute{
-						Required:    true,
-						Description: `GCS path to data`,
+						Description: `Name of the GCS bucket where the file(s) exist.`,
 					},
 					"service_account": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
+					"start_date": schema.StringAttribute{
+						Optional:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.`,
 						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gcs",
-							),
+							validators.IsRFC3339(),
 						},
-						Description: `must be one of ["gcs"]`,
+					},
+					"streams": schema.ListNestedAttribute{
+						Required: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"days_to_sync_if_history_is_full": schema.Int64Attribute{
+									Optional: true,
+									MarkdownDescription: `Default: 3` + "\n" +
+										`When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.`,
+								},
+								"format": schema.SingleNestedAttribute{
+									Required: true,
+									Attributes: map[string]schema.Attribute{
+										"csv_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"delimiter": schema.StringAttribute{
+													Optional: true,
+													MarkdownDescription: `Default: ","` + "\n" +
+														`The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
+												},
+												"double_quote": schema.BoolAttribute{
+													Optional: true,
+													MarkdownDescription: `Default: true` + "\n" +
+														`Whether two quotes in a quoted CSV value denote a single quote in the data.`,
+												},
+												"encoding": schema.StringAttribute{
+													Optional: true,
+													MarkdownDescription: `Default: "utf8"` + "\n" +
+														`The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
+												},
+												"escape_char": schema.StringAttribute{
+													Optional:    true,
+													Description: `The character used for escaping special characters. To disallow escaping, leave this field blank.`,
+												},
+												"false_values": schema.ListAttribute{
+													Optional:    true,
+													ElementType: types.StringType,
+													Description: `A set of case-sensitive strings that should be interpreted as false values.`,
+												},
+												"header_definition": schema.SingleNestedAttribute{
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"autogenerated": schema.SingleNestedAttribute{
+															Optional:    true,
+															Attributes:  map[string]schema.Attribute{},
+															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
+														},
+														"from_csv": schema.SingleNestedAttribute{
+															Optional:    true,
+															Attributes:  map[string]schema.Attribute{},
+															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
+														},
+														"user_provided": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"column_names": schema.ListAttribute{
+																	Required:    true,
+																	ElementType: types.StringType,
+																	Description: `The column names that will be used while emitting the CSV records`,
+																},
+															},
+															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
+														},
+													},
+													Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
+													Validators: []validator.Object{
+														validators.ExactlyOneChild(),
+													},
+												},
+												"inference_type": schema.StringAttribute{
+													Optional: true,
+													MarkdownDescription: `must be one of ["None", "Primitive Types Only"]; Default: "None"` + "\n" +
+														`How to infer the types of the columns. If none, inference default to strings.`,
+													Validators: []validator.String{
+														stringvalidator.OneOf(
+															"None",
+															"Primitive Types Only",
+														),
+													},
+												},
+												"null_values": schema.ListAttribute{
+													Optional:    true,
+													ElementType: types.StringType,
+													Description: `A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.`,
+												},
+												"quote_char": schema.StringAttribute{
+													Optional: true,
+													MarkdownDescription: `Default: "\""` + "\n" +
+														`The character used for quoting CSV values. To disallow quoting, make this field blank.`,
+												},
+												"skip_rows_after_header": schema.Int64Attribute{
+													Optional: true,
+													MarkdownDescription: `Default: 0` + "\n" +
+														`The number of rows to skip after the header row.`,
+												},
+												"skip_rows_before_header": schema.Int64Attribute{
+													Optional: true,
+													MarkdownDescription: `Default: 0` + "\n" +
+														`The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.`,
+												},
+												"strings_can_be_null": schema.BoolAttribute{
+													Optional: true,
+													MarkdownDescription: `Default: true` + "\n" +
+														`Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.`,
+												},
+												"true_values": schema.ListAttribute{
+													Optional:    true,
+													ElementType: types.StringType,
+													Description: `A set of case-sensitive strings that should be interpreted as true values.`,
+												},
+											},
+											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
+										},
+									},
+									Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
+									Validators: []validator.Object{
+										validators.ExactlyOneChild(),
+									},
+								},
+								"globs": schema.ListAttribute{
+									Optional:    true,
+									ElementType: types.StringType,
+									Description: `The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.`,
+								},
+								"input_schema": schema.StringAttribute{
+									Optional:    true,
+									Description: `The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.`,
+								},
+								"legacy_prefix": schema.StringAttribute{
+									Optional:    true,
+									Description: `The path prefix configured in previous versions of the GCS connector. This option is deprecated in favor of a single glob.`,
+								},
+								"name": schema.StringAttribute{
+									Required:    true,
+									Description: `The name of the stream.`,
+								},
+								"primary_key": schema.StringAttribute{
+									Optional:    true,
+									Sensitive:   true,
+									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record.`,
+								},
+								"schemaless": schema.BoolAttribute{
+									Optional: true,
+									MarkdownDescription: `Default: false` + "\n" +
+										`When enabled, syncs will not validate or structure records against the stream's schema.`,
+								},
+								"validation_policy": schema.StringAttribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"` + "\n" +
+										`The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"Emit Record",
+											"Skip Record",
+											"Wait for Discover",
+										),
+									},
+								},
+							},
+						},
+						Description: `Each instance of this configuration defines a <a href=https://docs.airbyte.com/cloud/core-concepts#stream>stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.`,
 					},
 				},
+				MarkdownDescription: `NOTE: When this Spec is changed, legacy_config_transformer.py must also be` + "\n" +
+					`modified to uptake the changes because it is responsible for converting` + "\n" +
+					`legacy GCS configs into file based configs using the File-Based CDK.`,
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -147,7 +320,7 @@ func (r *SourceGcsResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGcs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -323,5 +496,5 @@ func (r *SourceGcsResource) Delete(ctx context.Context, req resource.DeleteReque
 }
 
 func (r *SourceGcsResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

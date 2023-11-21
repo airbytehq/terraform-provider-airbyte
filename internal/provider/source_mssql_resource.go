@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type SourceMssqlResource struct {
 // SourceMssqlResourceModel describes the resource data model.
 type SourceMssqlResourceModel struct {
 	Configuration SourceMssql  `tfsdk:"configuration"`
+	DefinitionID  types.String `tfsdk:"definition_id"`
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
@@ -69,6 +71,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
@@ -78,254 +81,98 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_update_method_read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
+							"read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
 										Optional: true,
+										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"` + "\n" +
+											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Existing and New",
 												"New Changes Only",
 											),
 										},
-										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]` + "\n" +
-											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
+										Optional: true,
+										MarkdownDescription: `Default: 300` + "\n" +
+											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Optional: true,
+										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"` + "\n" +
+											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Snapshot",
 												"Read Committed",
 											),
 										},
-										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]` + "\n" +
-											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
 							},
-							"source_mssql_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-										Description: `must be one of ["STANDARD"]`,
-									},
-								},
-								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
-							},
-							"source_mssql_update_update_method_read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"data_to_sync": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Existing and New",
-												"New Changes Only",
-											),
-										},
-										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]` + "\n" +
-											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
-									},
-									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional:    true,
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-										Description: `must be one of ["CDC"]`,
-									},
-									"snapshot_isolation": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Snapshot",
-												"Read Committed",
-											),
-										},
-										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]` + "\n" +
-											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
-									},
-								},
-								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
-							},
-							"source_mssql_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-										Description: `must be one of ["STANDARD"]`,
-									},
-								},
+							"scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
+						Description: `Configures how data is extracted from the database.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Configures how data is extracted from the database.`,
 					},
 					"schemas": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `The list of schemas to sync from. Defaults to user. Case sensitive.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mssql",
-							),
-						},
-						Description: `must be one of ["mssql"]`,
-					},
 					"ssl_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssl_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_trust_server_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_trust_server_certificate"]`,
-									},
-								},
+							"encrypted_trust_server_certificate": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
-							"source_mssql_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
+							"encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
 										Optional:    true,
 										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
-									},
-									"ssl_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
-									},
-								},
-								Description: `Verify and use the certificate provided by the server.`,
-							},
-							"source_mssql_update_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssl_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_trust_server_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_trust_server_certificate"]`,
-									},
-								},
-								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
-							},
-							"source_mssql_update_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"host_name_in_certificate": schema.StringAttribute{
-										Optional:    true,
-										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
-									},
-									"ssl_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"encrypted_verify_certificate",
-											),
-										},
-										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
 							},
 						},
+						Description: `The encryption method which is used when communicating with the database.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `The encryption method which is used when communicating with the database.`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+							"no_tunnel": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
-							"source_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -333,115 +180,28 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
-							"source_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level username for logging into the jump server host.`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"source_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"source_mssql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Required:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level username for logging into the jump server host`,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"source_mssql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Required:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -451,10 +211,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
@@ -462,13 +222,24 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -532,7 +303,7 @@ func (r *SourceMssqlResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMssql(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -708,5 +479,5 @@ func (r *SourceMssqlResource) Delete(ctx context.Context, req resource.DeleteReq
 }
 
 func (r *SourceMssqlResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

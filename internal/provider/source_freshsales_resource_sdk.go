@@ -3,18 +3,22 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFreshsalesResourceModel) ToCreateSDKType() *shared.SourceFreshsalesCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
-	sourceType := shared.SourceFreshsalesFreshsales(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFreshsales{
 		APIKey:     apiKey,
 		DomainName: domainName,
-		SourceType: sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -26,6 +30,7 @@ func (r *SourceFreshsalesResourceModel) ToCreateSDKType() *shared.SourceFreshsal
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceFreshsalesCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

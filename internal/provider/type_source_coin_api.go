@@ -10,7 +10,6 @@ type SourceCoinAPI struct {
 	Environment types.String `tfsdk:"environment"`
 	Limit       types.Int64  `tfsdk:"limit"`
 	Period      types.String `tfsdk:"period"`
-	SourceType  types.String `tfsdk:"source_type"`
 	StartDate   types.String `tfsdk:"start_date"`
 	SymbolID    types.String `tfsdk:"symbol_id"`
 }

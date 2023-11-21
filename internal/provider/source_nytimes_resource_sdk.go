@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -23,15 +23,19 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 	} else {
 		shareType = nil
 	}
-	sourceType := shared.SourceNytimesNytimes(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNytimes{
-		APIKey:     apiKey,
-		EndDate:    endDate,
-		Period:     period,
-		ShareType:  shareType,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Period:    period,
+		ShareType: shareType,
+		StartDate: startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -43,6 +47,7 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceNytimesCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -63,10 +68,10 @@ func (r *SourceNytimesResourceModel) ToUpdateSDKType() *shared.SourceNytimesPutR
 	} else {
 		endDate = nil
 	}
-	period := shared.SourceNytimesUpdatePeriodUsedForMostPopularStreams(r.Configuration.Period.ValueInt64())
-	shareType := new(shared.SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream)
+	period := shared.PeriodUsedForMostPopularStreams(r.Configuration.Period.ValueInt64())
+	shareType := new(shared.ShareTypeUsedForMostPopularSharedStream)
 	if !r.Configuration.ShareType.IsUnknown() && !r.Configuration.ShareType.IsNull() {
-		*shareType = shared.SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream(r.Configuration.ShareType.ValueString())
+		*shareType = shared.ShareTypeUsedForMostPopularSharedStream(r.Configuration.ShareType.ValueString())
 	} else {
 		shareType = nil
 	}

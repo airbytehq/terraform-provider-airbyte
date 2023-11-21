@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceMailchimpResource struct {
 // SourceMailchimpResourceModel describes the resource data model.
 type SourceMailchimpResourceModel struct {
 	Configuration SourceMailchimp `tfsdk:"configuration"`
+	DefinitionID  types.String    `tfsdk:"definition_id"`
 	Name          types.String    `tfsdk:"name"`
 	SecretID      types.String    `tfsdk:"secret_id"`
 	SourceID      types.String    `tfsdk:"source_id"`
@@ -61,83 +62,23 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mailchimp_authentication_api_key": schema.SingleNestedAttribute{
+							"api_key": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"apikey": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
 									},
 								},
 							},
-							"source_mailchimp_authentication_o_auth2_0": schema.SingleNestedAttribute{
+							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `An access token generated using the above client ID and secret.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client ID of your OAuth application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-								},
-							},
-							"source_mailchimp_update_authentication_api_key": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"apikey": schema.StringAttribute{
-										Required:    true,
-										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
-								},
-							},
-							"source_mailchimp_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `An access token generated using the above client ID and secret.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -154,24 +95,26 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 							validators.ExactlyOneChild(),
 						},
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mailchimp",
-							),
-						},
-						Description: `must be one of ["mailchimp"]`,
-					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -235,7 +178,7 @@ func (r *SourceMailchimpResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMailchimp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -411,5 +354,5 @@ func (r *SourceMailchimpResource) Delete(ctx context.Context, req resource.Delet
 }
 
 func (r *SourceMailchimpResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

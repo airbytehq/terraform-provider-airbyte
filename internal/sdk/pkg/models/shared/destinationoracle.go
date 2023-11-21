@@ -3,215 +3,309 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationOracleOracle string
+type Oracle string
 
 const (
-	DestinationOracleOracleOracle DestinationOracleOracle = "oracle"
+	OracleOracle Oracle = "oracle"
 )
 
-func (e DestinationOracleOracle) ToPointer() *DestinationOracleOracle {
+func (e Oracle) ToPointer() *Oracle {
 	return &e
 }
 
-func (e *DestinationOracleOracle) UnmarshalJSON(data []byte) error {
+func (e *Oracle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oracle":
-		*e = DestinationOracleOracle(v)
+		*e = Oracle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleOracle: %v", v)
+		return fmt.Errorf("invalid value for Oracle: %v", v)
 	}
 }
 
-// DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// DestinationOracleSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationOracleSchemasTunnelMethodTunnelMethod string
 
 const (
-	DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	DestinationOracleSchemasTunnelMethodTunnelMethodSSHPasswordAuth DestinationOracleSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e DestinationOracleSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationOracleSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = DestinationOracleSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// DestinationOracleSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationOracleSSHTunnelMethodPasswordAuthentication struct {
+// DestinationOraclePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationOraclePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationOracleSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (d DestinationOraclePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationOraclePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationOraclePasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationOraclePasswordAuthentication) GetTunnelMethod() DestinationOracleSchemasTunnelMethodTunnelMethod {
+	return DestinationOracleSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationOraclePasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationOraclePasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationOraclePasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// DestinationOracleSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationOracleSchemasTunnelMethod string
 
 const (
-	DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	DestinationOracleSchemasTunnelMethodSSHKeyAuth DestinationOracleSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e DestinationOracleSchemasTunnelMethod) ToPointer() *DestinationOracleSchemasTunnelMethod {
 	return &e
 }
 
-func (e *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = DestinationOracleSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleSchemasTunnelMethod: %v", v)
 	}
 }
 
-// DestinationOracleSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationOracleSSHTunnelMethodSSHKeyAuthentication struct {
+// DestinationOracleSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationOracleSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationOracleSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod string
+func (d DestinationOracleSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationOracleSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationOracleSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationOracleSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationOracleSSHKeyAuthentication) GetTunnelMethod() DestinationOracleSchemasTunnelMethod {
+	return DestinationOracleSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationOracleSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationOracleSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// DestinationOracleTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationOracleTunnelMethod string
 
 const (
-	DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	DestinationOracleTunnelMethodNoTunnel DestinationOracleTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod {
+func (e DestinationOracleTunnelMethod) ToPointer() *DestinationOracleTunnelMethod {
 	return &e
 }
 
-func (e *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = DestinationOracleTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleTunnelMethod: %v", v)
 	}
 }
 
-// DestinationOracleSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationOracleSSHTunnelMethodNoTunnel struct {
+// DestinationOracleNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationOracleNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationOracleTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationOracleNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationOracleNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationOracleNoTunnel) GetTunnelMethod() DestinationOracleTunnelMethod {
+	return DestinationOracleTunnelMethodNoTunnel
 }
 
 type DestinationOracleSSHTunnelMethodType string
 
 const (
-	DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodNoTunnel               DestinationOracleSSHTunnelMethodType = "destination-oracle_SSH Tunnel Method_No Tunnel"
-	DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodSSHKeyAuthentication   DestinationOracleSSHTunnelMethodType = "destination-oracle_SSH Tunnel Method_SSH Key Authentication"
-	DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodPasswordAuthentication DestinationOracleSSHTunnelMethodType = "destination-oracle_SSH Tunnel Method_Password Authentication"
+	DestinationOracleSSHTunnelMethodTypeDestinationOracleNoTunnel               DestinationOracleSSHTunnelMethodType = "destination-oracle_No Tunnel"
+	DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHKeyAuthentication   DestinationOracleSSHTunnelMethodType = "destination-oracle_SSH Key Authentication"
+	DestinationOracleSSHTunnelMethodTypeDestinationOraclePasswordAuthentication DestinationOracleSSHTunnelMethodType = "destination-oracle_Password Authentication"
 )
 
 type DestinationOracleSSHTunnelMethod struct {
-	DestinationOracleSSHTunnelMethodNoTunnel               *DestinationOracleSSHTunnelMethodNoTunnel
-	DestinationOracleSSHTunnelMethodSSHKeyAuthentication   *DestinationOracleSSHTunnelMethodSSHKeyAuthentication
-	DestinationOracleSSHTunnelMethodPasswordAuthentication *DestinationOracleSSHTunnelMethodPasswordAuthentication
+	DestinationOracleNoTunnel               *DestinationOracleNoTunnel
+	DestinationOracleSSHKeyAuthentication   *DestinationOracleSSHKeyAuthentication
+	DestinationOraclePasswordAuthentication *DestinationOraclePasswordAuthentication
 
 	Type DestinationOracleSSHTunnelMethodType
 }
 
-func CreateDestinationOracleSSHTunnelMethodDestinationOracleSSHTunnelMethodNoTunnel(destinationOracleSSHTunnelMethodNoTunnel DestinationOracleSSHTunnelMethodNoTunnel) DestinationOracleSSHTunnelMethod {
-	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodNoTunnel
+func CreateDestinationOracleSSHTunnelMethodDestinationOracleNoTunnel(destinationOracleNoTunnel DestinationOracleNoTunnel) DestinationOracleSSHTunnelMethod {
+	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleNoTunnel
 
 	return DestinationOracleSSHTunnelMethod{
-		DestinationOracleSSHTunnelMethodNoTunnel: &destinationOracleSSHTunnelMethodNoTunnel,
-		Type:                                     typ,
+		DestinationOracleNoTunnel: &destinationOracleNoTunnel,
+		Type:                      typ,
 	}
 }
 
-func CreateDestinationOracleSSHTunnelMethodDestinationOracleSSHTunnelMethodSSHKeyAuthentication(destinationOracleSSHTunnelMethodSSHKeyAuthentication DestinationOracleSSHTunnelMethodSSHKeyAuthentication) DestinationOracleSSHTunnelMethod {
-	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodSSHKeyAuthentication
+func CreateDestinationOracleSSHTunnelMethodDestinationOracleSSHKeyAuthentication(destinationOracleSSHKeyAuthentication DestinationOracleSSHKeyAuthentication) DestinationOracleSSHTunnelMethod {
+	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHKeyAuthentication
 
 	return DestinationOracleSSHTunnelMethod{
-		DestinationOracleSSHTunnelMethodSSHKeyAuthentication: &destinationOracleSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		DestinationOracleSSHKeyAuthentication: &destinationOracleSSHKeyAuthentication,
+		Type:                                  typ,
 	}
 }
 
-func CreateDestinationOracleSSHTunnelMethodDestinationOracleSSHTunnelMethodPasswordAuthentication(destinationOracleSSHTunnelMethodPasswordAuthentication DestinationOracleSSHTunnelMethodPasswordAuthentication) DestinationOracleSSHTunnelMethod {
-	typ := DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodPasswordAuthentication
+func CreateDestinationOracleSSHTunnelMethodDestinationOraclePasswordAuthentication(destinationOraclePasswordAuthentication DestinationOraclePasswordAuthentication) DestinationOracleSSHTunnelMethod {
+	typ := DestinationOracleSSHTunnelMethodTypeDestinationOraclePasswordAuthentication
 
 	return DestinationOracleSSHTunnelMethod{
-		DestinationOracleSSHTunnelMethodPasswordAuthentication: &destinationOracleSSHTunnelMethodPasswordAuthentication,
-		Type: typ,
+		DestinationOraclePasswordAuthentication: &destinationOraclePasswordAuthentication,
+		Type:                                    typ,
 	}
 }
 
 func (u *DestinationOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationOracleSSHTunnelMethodNoTunnel := new(DestinationOracleSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationOracleSSHTunnelMethodNoTunnel); err == nil {
-		u.DestinationOracleSSHTunnelMethodNoTunnel = destinationOracleSSHTunnelMethodNoTunnel
-		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodNoTunnel
+	destinationOracleNoTunnel := new(DestinationOracleNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationOracleNoTunnel, "", true, true); err == nil {
+		u.DestinationOracleNoTunnel = destinationOracleNoTunnel
+		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleNoTunnel
 		return nil
 	}
 
-	destinationOracleSSHTunnelMethodSSHKeyAuthentication := new(DestinationOracleSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationOracleSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.DestinationOracleSSHTunnelMethodSSHKeyAuthentication = destinationOracleSSHTunnelMethodSSHKeyAuthentication
-		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodSSHKeyAuthentication
+	destinationOracleSSHKeyAuthentication := new(DestinationOracleSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationOracleSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationOracleSSHKeyAuthentication = destinationOracleSSHKeyAuthentication
+		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHKeyAuthentication
 		return nil
 	}
 
-	destinationOracleSSHTunnelMethodPasswordAuthentication := new(DestinationOracleSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationOracleSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.DestinationOracleSSHTunnelMethodPasswordAuthentication = destinationOracleSSHTunnelMethodPasswordAuthentication
-		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOracleSSHTunnelMethodPasswordAuthentication
+	destinationOraclePasswordAuthentication := new(DestinationOraclePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationOraclePasswordAuthentication, "", true, true); err == nil {
+		u.DestinationOraclePasswordAuthentication = destinationOraclePasswordAuthentication
+		u.Type = DestinationOracleSSHTunnelMethodTypeDestinationOraclePasswordAuthentication
 		return nil
 	}
 
@@ -219,23 +313,23 @@ func (u *DestinationOracleSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationOracleSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationOracleSSHTunnelMethodNoTunnel)
+	if u.DestinationOracleNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationOracleNoTunnel, "", true)
 	}
 
-	if u.DestinationOracleSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationOracleSSHTunnelMethodSSHKeyAuthentication)
+	if u.DestinationOracleSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationOracleSSHKeyAuthentication, "", true)
 	}
 
-	if u.DestinationOracleSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationOracleSSHTunnelMethodPasswordAuthentication)
+	if u.DestinationOraclePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationOraclePasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationOracle struct {
-	DestinationType DestinationOracleOracle `json:"destinationType"`
+	destinationType Oracle `const:"oracle" json:"destinationType"`
 	// The hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -243,13 +337,84 @@ type DestinationOracle struct {
 	// The password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// The port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"1521" json:"port"`
 	// The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema.
-	Schema *string `json:"schema,omitempty"`
+	Schema *string `default:"airbyte" json:"schema"`
 	// The System Identifier uniquely distinguishes the instance from any other instance on the same computer.
 	Sid string `json:"sid"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationOracleSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username to access the database. This user must have CREATE USER privileges in the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationOracle) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationOracle) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationOracle) GetDestinationType() Oracle {
+	return OracleOracle
+}
+
+func (o *DestinationOracle) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationOracle) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationOracle) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationOracle) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationOracle) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationOracle) GetSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sid
+}
+
+func (o *DestinationOracle) GetTunnelMethod() *DestinationOracleSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationOracle) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

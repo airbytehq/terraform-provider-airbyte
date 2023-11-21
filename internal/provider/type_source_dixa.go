@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceDixa struct {
-	APIToken   types.String `tfsdk:"api_token"`
-	BatchSize  types.Int64  `tfsdk:"batch_size"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
+	APIToken  types.String `tfsdk:"api_token"`
+	BatchSize types.Int64  `tfsdk:"batch_size"`
+	StartDate types.String `tfsdk:"start_date"`
 }

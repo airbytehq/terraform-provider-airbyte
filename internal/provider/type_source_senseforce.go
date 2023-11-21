@@ -9,6 +9,5 @@ type SourceSenseforce struct {
 	BackendURL  types.String `tfsdk:"backend_url"`
 	DatasetID   types.String `tfsdk:"dataset_id"`
 	SliceRange  types.Int64  `tfsdk:"slice_range"`
-	SourceType  types.String `tfsdk:"source_type"`
 	StartDate   types.String `tfsdk:"start_date"`
 }

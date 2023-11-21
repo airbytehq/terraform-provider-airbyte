@@ -14,7 +14,6 @@ SourceNotion DataSource
 
 ```terraform
 data "airbyte_source_notion" "my_source_notion" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,72 +25,12 @@ data "airbyte_source_notion" "my_source_notion" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["notion"]
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
-
-<a id="nestedatt--configuration--credentials"></a>
-### Nested Schema for `configuration.credentials`
-
-Read-Only:
-
-- `source_notion_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_access_token))
-- `source_notion_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0))
-- `source_notion_update_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token))
-- `source_notion_update_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0))
-
-<a id="nestedatt--configuration--credentials--source_notion_authenticate_using_access_token"></a>
-### Nested Schema for `configuration.credentials.source_notion_authenticate_using_access_token`
-
-Read-Only:
-
-- `auth_type` (String) must be one of ["token"]
-- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_notion_authenticate_using_o_auth2_0`
-
-Read-Only:
-
-- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
-- `client_id` (String) The ClientID of your Notion integration.
-- `client_secret` (String) The ClientSecret of your Notion integration.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token"></a>
-### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_access_token`
-
-Read-Only:
-
-- `auth_type` (String) must be one of ["token"]
-- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_o_auth2_0`
-
-Read-Only:
-
-- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
-- `client_id` (String) The ClientID of your Notion integration.
-- `client_secret` (String) The ClientSecret of your Notion integration.
 
 

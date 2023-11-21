@@ -14,7 +14,6 @@ SourceClockify DataSource
 
 ```terraform
 data "airbyte_source_clockify" "my_source_clockify" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,24 +25,12 @@ data "airbyte_source_clockify" "my_source_clockify" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) You can get your api access_key <a href="https://app.clockify.me/user/settings">here</a> This API is Case Sensitive.
-- `api_url` (String) The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
-- `source_type` (String) must be one of ["clockify"]
-- `workspace_id` (String) WorkSpace Id
 
 

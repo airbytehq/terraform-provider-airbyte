@@ -7,3 +7,24 @@ type DestinationSnowflakePutRequest struct {
 	Name          string                     `json:"name"`
 	WorkspaceID   string                     `json:"workspaceId"`
 }
+
+func (o *DestinationSnowflakePutRequest) GetConfiguration() DestinationSnowflakeUpdate {
+	if o == nil {
+		return DestinationSnowflakeUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationSnowflakePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationSnowflakePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceWikipediaPageviewsDataSource struct {
 
 // SourceWikipediaPageviewsDataSourceModel describes the data model.
 type SourceWikipediaPageviewsDataSourceModel struct {
-	Configuration SourceWikipediaPageviews `tfsdk:"configuration"`
-	Name          types.String             `tfsdk:"name"`
-	SecretID      types.String             `tfsdk:"secret_id"`
-	SourceID      types.String             `tfsdk:"source_id"`
-	WorkspaceID   types.String             `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,57 +47,19 @@ func (r *SourceWikipediaPageviewsDataSource) Schema(ctx context.Context, req dat
 		MarkdownDescription: "SourceWikipediaPageviews DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access": schema.StringAttribute{
-						Computed:    true,
-						Description: `If you want to filter by access method, use one of desktop, mobile-app or mobile-web. If you are interested in pageviews regardless of access method, use all-access.`,
-					},
-					"agent": schema.StringAttribute{
-						Computed:    true,
-						Description: `If you want to filter by agent type, use one of user, automated or spider. If you are interested in pageviews regardless of agent type, use all-agents.`,
-					},
-					"article": schema.StringAttribute{
-						Computed:    true,
-						Description: `The title of any article in the specified project. Any spaces should be replaced with underscores. It also should be URI-encoded, so that non-URI-safe characters like %, / or ? are accepted.`,
-					},
-					"country": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ISO 3166-1 alpha-2 code of a country for which to retrieve top articles.`,
-					},
-					"end": schema.StringAttribute{
-						Computed:    true,
-						Description: `The date of the last day to include, in YYYYMMDD or YYYYMMDDHH format.`,
-					},
-					"project": schema.StringAttribute{
-						Computed:    true,
-						Description: `If you want to filter by project, use the domain of any Wikimedia project.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"wikipedia-pageviews",
-							),
-						},
-						Description: `must be one of ["wikipedia-pageviews"]`,
-					},
-					"start": schema.StringAttribute{
-						Computed:    true,
-						Description: `The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

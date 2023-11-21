@@ -7,3 +7,24 @@ type SourceGridlyPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceGridlyPutRequest) GetConfiguration() SourceGridlyUpdate {
+	if o == nil {
+		return SourceGridlyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGridlyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGridlyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

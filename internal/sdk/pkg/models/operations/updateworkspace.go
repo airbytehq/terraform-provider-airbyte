@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -12,10 +12,55 @@ type UpdateWorkspaceRequest struct {
 	WorkspaceID            string                        `pathParam:"style=simple,explode=false,name=workspaceId"`
 }
 
+func (o *UpdateWorkspaceRequest) GetWorkspaceUpdateRequest() shared.WorkspaceUpdateRequest {
+	if o == nil {
+		return shared.WorkspaceUpdateRequest{}
+	}
+	return o.WorkspaceUpdateRequest
+}
+
+func (o *UpdateWorkspaceRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}
+
 type UpdateWorkspaceResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful operation
 	WorkspaceResponse *shared.WorkspaceResponse
+}
+
+func (o *UpdateWorkspaceResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *UpdateWorkspaceResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *UpdateWorkspaceResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *UpdateWorkspaceResponse) GetWorkspaceResponse() *shared.WorkspaceResponse {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceResponse
 }

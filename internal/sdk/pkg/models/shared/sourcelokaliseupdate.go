@@ -8,3 +8,17 @@ type SourceLokaliseUpdate struct {
 	// Lokalise project ID. Available at Project Settings > General.
 	ProjectID string `json:"project_id"`
 }
+
+func (o *SourceLokaliseUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceLokaliseUpdate) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}

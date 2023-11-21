@@ -15,31 +15,43 @@ DestinationPinecone Resource
 ```terraform
 resource "airbyte_destination_pinecone" "my_destination_pinecone" {
   configuration = {
-    destination_type = "pinecone"
     embedding = {
-      destination_pinecone_embedding_cohere = {
-        cohere_key = "...my_cohere_key..."
-        mode       = "cohere"
+      destination_pinecone_azure_open_ai = {
+        api_base   = "https://your-resource-name.openai.azure.com"
+        deployment = "your-resource-name"
+        openai_key = "...my_openai_key..."
       }
     }
     indexing = {
       index                = "...my_index..."
-      pinecone_environment = "...my_pinecone_environment..."
+      pinecone_environment = "us-west1-gcp"
       pinecone_key         = "...my_pinecone_key..."
     }
     processing = {
-      chunk_overlap = 2
-      chunk_size    = 3
+      chunk_overlap = 6
+      chunk_size    = 6
+      field_name_mappings = [
+        {
+          from_field = "...my_from_field..."
+          to_field   = "...my_to_field..."
+        },
+      ]
       metadata_fields = [
         "...",
       ]
       text_fields = [
         "...",
       ]
+      text_splitter = {
+        destination_pinecone_by_markdown_header = {
+          split_level = 7
+        }
+      }
     }
   }
-  name         = "Cecelia Braun"
-  workspace_id = "8b6a89fb-e3a5-4aa8-a482-4d0ab4075088"
+  definition_id = "d49dbc4f-abbf-4199-8382-023b4de2c1a7"
+  name          = "Bobby Lemke"
+  workspace_id  = "d3cde3c9-d6fa-494b-b4b9-38f85ce1dfc1"
 }
 ```
 
@@ -49,8 +61,12 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -62,7 +78,6 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
 
 Required:
 
-- `destination_type` (String) must be one of ["pinecone"]
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
@@ -72,75 +87,55 @@ Required:
 
 Optional:
 
-- `destination_pinecone_embedding_cohere` (Attributes) Use the Cohere API to embed text. (see [below for nested schema](#nestedatt--configuration--embedding--destination_pinecone_embedding_cohere))
-- `destination_pinecone_embedding_fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--destination_pinecone_embedding_fake))
-- `destination_pinecone_embedding_open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--destination_pinecone_embedding_open_ai))
-- `destination_pinecone_update_embedding_cohere` (Attributes) Use the Cohere API to embed text. (see [below for nested schema](#nestedatt--configuration--embedding--destination_pinecone_update_embedding_cohere))
-- `destination_pinecone_update_embedding_fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--destination_pinecone_update_embedding_fake))
-- `destination_pinecone_update_embedding_open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--destination_pinecone_update_embedding_open_ai))
+- `azure_open_ai` (Attributes) Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--azure_open_ai))
+- `cohere` (Attributes) Use the Cohere API to embed text. (see [below for nested schema](#nestedatt--configuration--embedding--cohere))
+- `fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--fake))
+- `open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--open_ai))
+- `open_ai_compatible` (Attributes) Use a service that's compatible with the OpenAI API to embed text. (see [below for nested schema](#nestedatt--configuration--embedding--open_ai_compatible))
 
-<a id="nestedatt--configuration--embedding--destination_pinecone_embedding_cohere"></a>
-### Nested Schema for `configuration.embedding.destination_pinecone_embedding_cohere`
-
-Required:
-
-- `cohere_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["cohere"]
-
-
-<a id="nestedatt--configuration--embedding--destination_pinecone_embedding_fake"></a>
-### Nested Schema for `configuration.embedding.destination_pinecone_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
-
-
-<a id="nestedatt--configuration--embedding--destination_pinecone_embedding_open_ai"></a>
-### Nested Schema for `configuration.embedding.destination_pinecone_embedding_open_ai`
+<a id="nestedatt--configuration--embedding--azure_open_ai"></a>
+### Nested Schema for `configuration.embedding.azure_open_ai`
 
 Required:
 
-- `openai_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["openai"]
+- `api_base` (String) The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+- `deployment` (String) The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+- `openai_key` (String, Sensitive) The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 
 
-<a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_cohere"></a>
-### Nested Schema for `configuration.embedding.destination_pinecone_update_embedding_cohere`
+<a id="nestedatt--configuration--embedding--cohere"></a>
+### Nested Schema for `configuration.embedding.cohere`
 
 Required:
 
-- `cohere_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["cohere"]
+- `cohere_key` (String, Sensitive)
 
 
-<a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_fake"></a>
-### Nested Schema for `configuration.embedding.destination_pinecone_update_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
+<a id="nestedatt--configuration--embedding--fake"></a>
+### Nested Schema for `configuration.embedding.fake`
 
 
-<a id="nestedatt--configuration--embedding--destination_pinecone_update_embedding_open_ai"></a>
-### Nested Schema for `configuration.embedding.destination_pinecone_update_embedding_open_ai`
+<a id="nestedatt--configuration--embedding--open_ai"></a>
+### Nested Schema for `configuration.embedding.open_ai`
 
 Required:
 
-- `openai_key` (String)
+- `openai_key` (String, Sensitive)
+
+
+<a id="nestedatt--configuration--embedding--open_ai_compatible"></a>
+### Nested Schema for `configuration.embedding.open_ai_compatible`
+
+Required:
+
+- `base_url` (String) The base URL for your OpenAI-compatible service
+- `dimensions` (Number) The number of dimensions the embedding model is generating
 
 Optional:
 
-- `mode` (String) must be one of ["openai"]
+- `api_key` (String, Sensitive) Default: ""
+- `model_name` (String) Default: "text-embedding-ada-002"
+The name of the model to use for embedding
 
 
 
@@ -149,9 +144,9 @@ Optional:
 
 Required:
 
-- `index` (String) Pinecone index to use
-- `pinecone_environment` (String) Pinecone environment to use
-- `pinecone_key` (String)
+- `index` (String) Pinecone index in your project to load data into
+- `pinecone_environment` (String) Pinecone Cloud environment to use
+- `pinecone_key` (String, Sensitive) The Pinecone API key to use matching the environment (copy from Pinecone console)
 
 
 <a id="nestedatt--configuration--processing"></a>
@@ -163,8 +158,56 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Default: 0
+Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `field_name_mappings` (Attributes List) List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation. (see [below for nested schema](#nestedatt--configuration--processing--field_name_mappings))
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+- `text_splitter` (Attributes) Split text fields into chunks based on the specified method. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter))
+
+<a id="nestedatt--configuration--processing--field_name_mappings"></a>
+### Nested Schema for `configuration.processing.field_name_mappings`
+
+Required:
+
+- `from_field` (String) The field name in the source
+- `to_field` (String) The field name to use in the destination
+
+
+<a id="nestedatt--configuration--processing--text_splitter"></a>
+### Nested Schema for `configuration.processing.text_splitter`
+
+Optional:
+
+- `by_markdown_header` (Attributes) Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_markdown_header))
+- `by_programming_language` (Attributes) Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_programming_language))
+- `by_separator` (Attributes) Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_separator))
+
+<a id="nestedatt--configuration--processing--text_splitter--by_markdown_header"></a>
+### Nested Schema for `configuration.processing.text_splitter.by_separator`
+
+Optional:
+
+- `split_level` (Number) Default: 1
+Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+
+
+<a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
+### Nested Schema for `configuration.processing.text_splitter.by_separator`
+
+Required:
+
+- `language` (String) must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
+Split code in suitable places based on the programming language
+
+
+<a id="nestedatt--configuration--processing--text_splitter--by_separator"></a>
+### Nested Schema for `configuration.processing.text_splitter.by_separator`
+
+Optional:
+
+- `keep_separator` (Boolean) Default: false
+Whether to keep the separator in the resulting chunks
+- `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
 

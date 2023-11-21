@@ -16,17 +16,16 @@ SourceGoogleDirectory Resource
 resource "airbyte_source_google_directory" "my_source_googledirectory" {
   configuration = {
     credentials = {
-      source_google_directory_google_credentials_service_account_key = {
-        credentials_json  = "...my_credentials_json..."
-        credentials_title = "Service accounts"
-        email             = "Ayla.Zulauf@hotmail.com"
+      service_account_key = {
+        credentials_json = "...my_credentials_json..."
+        email            = "Sharon_Schmidt@gmail.com"
       }
     }
-    source_type = "google-directory"
   }
-  name         = "Mrs. Allen Lockman"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "dc42c876-c2c2-4dfb-8cfc-1c76230f841f"
+  definition_id = "8b68fdfc-0692-4b4f-9673-f59a8d0acc99"
+  name          = "Mr. Mattie Rau"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "1059fac1-d6c9-4b0f-8f35-d942704e93eb"
 }
 ```
 
@@ -36,11 +35,12 @@ resource "airbyte_source_google_directory" "my_source_googledirectory" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,10 +51,6 @@ resource "airbyte_source_google_directory" "my_source_googledirectory" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["google-directory"]
-
 Optional:
 
 - `credentials` (Attributes) Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios. (see [below for nested schema](#nestedatt--configuration--credentials))
@@ -64,66 +60,25 @@ Optional:
 
 Optional:
 
-- `source_google_directory_google_credentials_service_account_key` (Attributes) For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email. (see [below for nested schema](#nestedatt--configuration--credentials--source_google_directory_google_credentials_service_account_key))
-- `source_google_directory_google_credentials_sign_in_via_google_o_auth` (Attributes) For these scenario user only needs to give permission to read Google Directory data. (see [below for nested schema](#nestedatt--configuration--credentials--source_google_directory_google_credentials_sign_in_via_google_o_auth))
-- `source_google_directory_update_google_credentials_service_account_key` (Attributes) For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email. (see [below for nested schema](#nestedatt--configuration--credentials--source_google_directory_update_google_credentials_service_account_key))
-- `source_google_directory_update_google_credentials_sign_in_via_google_o_auth` (Attributes) For these scenario user only needs to give permission to read Google Directory data. (see [below for nested schema](#nestedatt--configuration--credentials--source_google_directory_update_google_credentials_sign_in_via_google_o_auth))
+- `service_account_key` (Attributes) For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email. (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key))
+- `sign_in_via_google_o_auth` (Attributes) For these scenario user only needs to give permission to read Google Directory data. (see [below for nested schema](#nestedatt--configuration--credentials--sign_in_via_google_o_auth))
 
-<a id="nestedatt--configuration--credentials--source_google_directory_google_credentials_service_account_key"></a>
-### Nested Schema for `configuration.credentials.source_google_directory_google_credentials_service_account_key`
+<a id="nestedatt--configuration--credentials--service_account_key"></a>
+### Nested Schema for `configuration.credentials.service_account_key`
 
 Required:
 
 - `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
 
-Optional:
 
-- `credentials_title` (String) must be one of ["Service accounts"]
-Authentication Scenario
-
-
-<a id="nestedatt--configuration--credentials--source_google_directory_google_credentials_sign_in_via_google_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_google_directory_google_credentials_sign_in_via_google_o_auth`
+<a id="nestedatt--configuration--credentials--sign_in_via_google_o_auth"></a>
+### Nested Schema for `configuration.credentials.sign_in_via_google_o_auth`
 
 Required:
 
 - `client_id` (String) The Client ID of the developer application.
 - `client_secret` (String) The Client Secret of the developer application.
-- `refresh_token` (String) The Token for obtaining a new access token.
-
-Optional:
-
-- `credentials_title` (String) must be one of ["Web server app"]
-Authentication Scenario
-
-
-<a id="nestedatt--configuration--credentials--source_google_directory_update_google_credentials_service_account_key"></a>
-### Nested Schema for `configuration.credentials.source_google_directory_update_google_credentials_service_account_key`
-
-Required:
-
-- `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
-- `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
-
-Optional:
-
-- `credentials_title` (String) must be one of ["Service accounts"]
-Authentication Scenario
-
-
-<a id="nestedatt--configuration--credentials--source_google_directory_update_google_credentials_sign_in_via_google_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_google_directory_update_google_credentials_sign_in_via_google_o_auth`
-
-Required:
-
-- `client_id` (String) The Client ID of the developer application.
-- `client_secret` (String) The Client Secret of the developer application.
-- `refresh_token` (String) The Token for obtaining a new access token.
-
-Optional:
-
-- `credentials_title` (String) must be one of ["Web server app"]
-Authentication Scenario
+- `refresh_token` (String, Sensitive) The Token for obtaining a new access token.
 
 

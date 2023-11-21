@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -15,11 +15,15 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 	} else {
 		queryCampsites = nil
 	}
-	sourceType := shared.SourceRecreationRecreation(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecreation{
 		Apikey:         apikey,
 		QueryCampsites: queryCampsites,
-		SourceType:     sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -31,6 +35,7 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceRecreationCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

@@ -3,153 +3,245 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod string
+type DestinationElasticsearchUpdateSchemasMethod string
 
 const (
-	DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethodBasic DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod = "basic"
+	DestinationElasticsearchUpdateSchemasMethodBasic DestinationElasticsearchUpdateSchemasMethod = "basic"
 )
 
-func (e DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod) ToPointer() *DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod {
+func (e DestinationElasticsearchUpdateSchemasMethod) ToPointer() *DestinationElasticsearchUpdateSchemasMethod {
 	return &e
 }
 
-func (e *DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationElasticsearchUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "basic":
-		*e = DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod(v)
+		*e = DestinationElasticsearchUpdateSchemasMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationElasticsearchUpdateSchemasMethod: %v", v)
 	}
 }
 
-// DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword - Basic auth header with a username and password
-type DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword struct {
-	Method DestinationElasticsearchUpdateAuthenticationMethodUsernamePasswordMethod `json:"method"`
+// UsernamePassword - Basic auth header with a username and password
+type UsernamePassword struct {
+	method DestinationElasticsearchUpdateSchemasMethod `const:"basic" json:"method"`
 	// Basic auth password to access a secure Elasticsearch server
 	Password string `json:"password"`
 	// Basic auth username to access a secure Elasticsearch server
 	Username string `json:"username"`
 }
 
-type DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod string
+func (u UsernamePassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UsernamePassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UsernamePassword) GetMethod() DestinationElasticsearchUpdateSchemasMethod {
+	return DestinationElasticsearchUpdateSchemasMethodBasic
+}
+
+func (o *UsernamePassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *UsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+type DestinationElasticsearchUpdateMethod string
 
 const (
-	DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethodSecret DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod = "secret"
+	DestinationElasticsearchUpdateMethodSecret DestinationElasticsearchUpdateMethod = "secret"
 )
 
-func (e DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod) ToPointer() *DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod {
+func (e DestinationElasticsearchUpdateMethod) ToPointer() *DestinationElasticsearchUpdateMethod {
 	return &e
 }
 
-func (e *DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationElasticsearchUpdateMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "secret":
-		*e = DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod(v)
+		*e = DestinationElasticsearchUpdateMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationElasticsearchUpdateMethod: %v", v)
 	}
 }
 
-// DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret - Use a api key and secret combination to authenticate
-type DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret struct {
+// APIKeySecret - Use a api key and secret combination to authenticate
+type APIKeySecret struct {
 	// The Key ID to used when accessing an enterprise Elasticsearch instance.
 	APIKeyID string `json:"apiKeyId"`
 	// The secret associated with the API Key ID.
-	APIKeySecret string                                                               `json:"apiKeySecret"`
-	Method       DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecretMethod `json:"method"`
+	APIKeySecret string                               `json:"apiKeySecret"`
+	method       DestinationElasticsearchUpdateMethod `const:"secret" json:"method"`
 }
 
-type DestinationElasticsearchUpdateAuthenticationMethodType string
+func (a APIKeySecret) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *APIKeySecret) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *APIKeySecret) GetAPIKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKeyID
+}
+
+func (o *APIKeySecret) GetAPIKeySecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKeySecret
+}
+
+func (o *APIKeySecret) GetMethod() DestinationElasticsearchUpdateMethod {
+	return DestinationElasticsearchUpdateMethodSecret
+}
+
+type AuthenticationMethodType string
 
 const (
-	DestinationElasticsearchUpdateAuthenticationMethodTypeDestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret     DestinationElasticsearchUpdateAuthenticationMethodType = "destination-elasticsearch-update_Authentication Method_Api Key/Secret"
-	DestinationElasticsearchUpdateAuthenticationMethodTypeDestinationElasticsearchUpdateAuthenticationMethodUsernamePassword DestinationElasticsearchUpdateAuthenticationMethodType = "destination-elasticsearch-update_Authentication Method_Username/Password"
+	AuthenticationMethodTypeAPIKeySecret     AuthenticationMethodType = "Api Key/Secret"
+	AuthenticationMethodTypeUsernamePassword AuthenticationMethodType = "Username/Password"
 )
 
-type DestinationElasticsearchUpdateAuthenticationMethod struct {
-	DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret     *DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret
-	DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword *DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword
+type AuthenticationMethod struct {
+	APIKeySecret     *APIKeySecret
+	UsernamePassword *UsernamePassword
 
-	Type DestinationElasticsearchUpdateAuthenticationMethodType
+	Type AuthenticationMethodType
 }
 
-func CreateDestinationElasticsearchUpdateAuthenticationMethodDestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret(destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret) DestinationElasticsearchUpdateAuthenticationMethod {
-	typ := DestinationElasticsearchUpdateAuthenticationMethodTypeDestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret
+func CreateAuthenticationMethodAPIKeySecret(apiKeySecret APIKeySecret) AuthenticationMethod {
+	typ := AuthenticationMethodTypeAPIKeySecret
 
-	return DestinationElasticsearchUpdateAuthenticationMethod{
-		DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret: &destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret,
-		Type: typ,
+	return AuthenticationMethod{
+		APIKeySecret: &apiKeySecret,
+		Type:         typ,
 	}
 }
 
-func CreateDestinationElasticsearchUpdateAuthenticationMethodDestinationElasticsearchUpdateAuthenticationMethodUsernamePassword(destinationElasticsearchUpdateAuthenticationMethodUsernamePassword DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword) DestinationElasticsearchUpdateAuthenticationMethod {
-	typ := DestinationElasticsearchUpdateAuthenticationMethodTypeDestinationElasticsearchUpdateAuthenticationMethodUsernamePassword
+func CreateAuthenticationMethodUsernamePassword(usernamePassword UsernamePassword) AuthenticationMethod {
+	typ := AuthenticationMethodTypeUsernamePassword
 
-	return DestinationElasticsearchUpdateAuthenticationMethod{
-		DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword: &destinationElasticsearchUpdateAuthenticationMethodUsernamePassword,
-		Type: typ,
+	return AuthenticationMethod{
+		UsernamePassword: &usernamePassword,
+		Type:             typ,
 	}
 }
 
-func (u *DestinationElasticsearchUpdateAuthenticationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *AuthenticationMethod) UnmarshalJSON(data []byte) error {
 
-	destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret := new(DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret); err == nil {
-		u.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret = destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret
-		u.Type = DestinationElasticsearchUpdateAuthenticationMethodTypeDestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret
+	apiKeySecret := new(APIKeySecret)
+	if err := utils.UnmarshalJSON(data, &apiKeySecret, "", true, true); err == nil {
+		u.APIKeySecret = apiKeySecret
+		u.Type = AuthenticationMethodTypeAPIKeySecret
 		return nil
 	}
 
-	destinationElasticsearchUpdateAuthenticationMethodUsernamePassword := new(DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationElasticsearchUpdateAuthenticationMethodUsernamePassword); err == nil {
-		u.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword = destinationElasticsearchUpdateAuthenticationMethodUsernamePassword
-		u.Type = DestinationElasticsearchUpdateAuthenticationMethodTypeDestinationElasticsearchUpdateAuthenticationMethodUsernamePassword
+	usernamePassword := new(UsernamePassword)
+	if err := utils.UnmarshalJSON(data, &usernamePassword, "", true, true); err == nil {
+		u.UsernamePassword = usernamePassword
+		u.Type = AuthenticationMethodTypeUsernamePassword
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationElasticsearchUpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret != nil {
-		return json.Marshal(u.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret)
+func (u AuthenticationMethod) MarshalJSON() ([]byte, error) {
+	if u.APIKeySecret != nil {
+		return utils.MarshalJSON(u.APIKeySecret, "", true)
 	}
 
-	if u.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword != nil {
-		return json.Marshal(u.DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword)
+	if u.UsernamePassword != nil {
+		return utils.MarshalJSON(u.UsernamePassword, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationElasticsearchUpdate struct {
 	// The type of authentication to be used
-	AuthenticationMethod *DestinationElasticsearchUpdateAuthenticationMethod `json:"authenticationMethod,omitempty"`
+	AuthenticationMethod *AuthenticationMethod `json:"authenticationMethod,omitempty"`
 	// CA certificate
 	CaCertificate *string `json:"ca_certificate,omitempty"`
 	// The full url of the Elasticsearch server
 	Endpoint string `json:"endpoint"`
 	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
-	Upsert *bool `json:"upsert,omitempty"`
+	Upsert *bool `default:"true" json:"upsert"`
+}
+
+func (d DestinationElasticsearchUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationElasticsearchUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationElasticsearchUpdate) GetAuthenticationMethod() *AuthenticationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.AuthenticationMethod
+}
+
+func (o *DestinationElasticsearchUpdate) GetCaCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CaCertificate
+}
+
+func (o *DestinationElasticsearchUpdate) GetEndpoint() string {
+	if o == nil {
+		return ""
+	}
+	return o.Endpoint
+}
+
+func (o *DestinationElasticsearchUpdate) GetUpsert() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Upsert
 }

@@ -16,19 +16,18 @@ SourceMicrosoftTeams Resource
 resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
   configuration = {
     credentials = {
-      source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft = {
-        auth_type     = "Token"
+      authenticate_via_microsoft = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         tenant_id     = "...my_tenant_id..."
       }
     }
-    period      = "D7"
-    source_type = "microsoft-teams"
+    period = "D7"
   }
-  name         = "Brandy Ryan"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fa6c78a2-16e1-49ba-beca-6191498140b6"
+  definition_id = "79345d14-4630-4331-8f29-cf10b0742b93"
+  name          = "Jesus Marquardt Sr."
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "1a320cca-d5ad-4c13-b0ef-57488395b5ae"
 }
 ```
 
@@ -38,11 +37,12 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -56,7 +56,6 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
 Required:
 
 - `period` (String) Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
-- `source_type` (String) must be one of ["microsoft-teams"]
 
 Optional:
 
@@ -67,13 +66,11 @@ Optional:
 
 Optional:
 
-- `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft))
-- `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0))
-- `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft))
-- `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0))
+- `authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_microsoft))
+- `authenticate_via_microsoft_o_auth20` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_microsoft_o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft"></a>
-### Nested Schema for `configuration.credentials.source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft`
+<a id="nestedatt--configuration--credentials--authenticate_via_microsoft"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_microsoft`
 
 Required:
 
@@ -81,52 +78,15 @@ Required:
 - `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
 - `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
-Optional:
 
-- `auth_type` (String) must be one of ["Token"]
-
-
-<a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
-### Nested Schema for `configuration.credentials.source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0`
+<a id="nestedatt--configuration--credentials--authenticate_via_microsoft_o_auth20"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_microsoft_o_auth20`
 
 Required:
 
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
 - `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
-- `refresh_token` (String) A Refresh Token to renew the expired Access Token.
+- `refresh_token` (String, Sensitive) A Refresh Token to renew the expired Access Token.
 - `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
-
-Optional:
-
-- `auth_type` (String) must be one of ["Client"]
-
-
-<a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft"></a>
-### Nested Schema for `configuration.credentials.source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft`
-
-Required:
-
-- `client_id` (String) The Client ID of your Microsoft Teams developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
-- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
-
-Optional:
-
-- `auth_type` (String) must be one of ["Token"]
-
-
-<a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
-### Nested Schema for `configuration.credentials.source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0`
-
-Required:
-
-- `client_id` (String) The Client ID of your Microsoft Teams developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
-- `refresh_token` (String) A Refresh Token to renew the expired Access Token.
-- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
-
-Optional:
-
-- `auth_type` (String) must be one of ["Client"]
 
 

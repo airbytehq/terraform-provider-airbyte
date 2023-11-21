@@ -16,24 +16,24 @@ DestinationSnowflake Resource
 resource "airbyte_destination_snowflake" "my_destination_snowflake" {
   configuration = {
     credentials = {
-      destination_snowflake_authorization_method_key_pair_authentication = {
-        auth_type            = "Key Pair Authentication"
+      key_pair_authentication = {
         private_key          = "...my_private_key..."
         private_key_password = "...my_private_key_password..."
       }
     }
-    database         = "AIRBYTE_DATABASE"
-    destination_type = "snowflake"
-    host             = "accountname.snowflakecomputing.com"
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    raw_data_schema  = "...my_raw_data_schema..."
-    role             = "AIRBYTE_ROLE"
-    schema           = "AIRBYTE_SCHEMA"
-    username         = "AIRBYTE_USER"
-    warehouse        = "AIRBYTE_WAREHOUSE"
+    database            = "AIRBYTE_DATABASE"
+    disable_type_dedupe = true
+    host                = "accountname.us-east-2.aws.snowflakecomputing.com"
+    jdbc_url_params     = "...my_jdbc_url_params..."
+    raw_data_schema     = "...my_raw_data_schema..."
+    role                = "AIRBYTE_ROLE"
+    schema              = "AIRBYTE_SCHEMA"
+    username            = "AIRBYTE_USER"
+    warehouse           = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Shaun Osinski"
-  workspace_id = "851d6c64-5b08-4b61-891b-aa0fe1ade008"
+  definition_id = "d28dce71-d7fd-4713-a64c-8ab088c248e9"
+  name          = "Robin Marvin"
+  workspace_id  = "3407545d-5006-486d-84e6-08039bc7eb07"
 }
 ```
 
@@ -43,8 +43,12 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -57,7 +61,6 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
 Required:
 
 - `database` (String) Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
-- `destination_type` (String) must be one of ["snowflake"]
 - `host` (String) Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 - `role` (String) Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 - `schema` (String) Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
@@ -67,98 +70,51 @@ Required:
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `disable_type_dedupe` (Boolean) Default: false
+Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
-- `raw_data_schema` (String) The schema to write raw tables into
+- `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `destination_snowflake_authorization_method_key_pair_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_authorization_method_key_pair_authentication))
-- `destination_snowflake_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_authorization_method_o_auth2_0))
-- `destination_snowflake_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_authorization_method_username_and_password))
-- `destination_snowflake_update_authorization_method_key_pair_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_key_pair_authentication))
-- `destination_snowflake_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_o_auth2_0))
-- `destination_snowflake_update_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_username_and_password))
+- `key_pair_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--key_pair_authentication))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--username_and_password))
 
-<a id="nestedatt--configuration--credentials--destination_snowflake_authorization_method_key_pair_authentication"></a>
-### Nested Schema for `configuration.credentials.destination_snowflake_authorization_method_key_pair_authentication`
+<a id="nestedatt--configuration--credentials--key_pair_authentication"></a>
+### Nested Schema for `configuration.credentials.key_pair_authentication`
 
 Required:
 
-- `private_key` (String) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
+- `private_key` (String, Sensitive) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 
 Optional:
 
-- `auth_type` (String) must be one of ["Key Pair Authentication"]
-- `private_key_password` (String) Passphrase for private key
+- `private_key_password` (String, Sensitive) Passphrase for private key
 
 
-<a id="nestedatt--configuration--credentials--destination_snowflake_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.destination_snowflake_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) Enter you application's Access Token
-- `refresh_token` (String) Enter your application's Refresh Token
+- `access_token` (String, Sensitive) Enter you application's Access Token
+- `refresh_token` (String, Sensitive) Enter your application's Refresh Token
 
 Optional:
 
-- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 
 
-<a id="nestedatt--configuration--credentials--destination_snowflake_authorization_method_username_and_password"></a>
-### Nested Schema for `configuration.credentials.destination_snowflake_authorization_method_username_and_password`
+<a id="nestedatt--configuration--credentials--username_and_password"></a>
+### Nested Schema for `configuration.credentials.username_and_password`
 
 Required:
 
-- `password` (String) Enter the password associated with the username.
-
-Optional:
-
-- `auth_type` (String) must be one of ["Username and Password"]
-
-
-<a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_key_pair_authentication"></a>
-### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_key_pair_authentication`
-
-Required:
-
-- `private_key` (String) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
-
-Optional:
-
-- `auth_type` (String) must be one of ["Key Pair Authentication"]
-- `private_key_password` (String) Passphrase for private key
-
-
-<a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Enter you application's Access Token
-- `refresh_token` (String) Enter your application's Refresh Token
-
-Optional:
-
-- `auth_type` (String) must be one of ["OAuth2.0"]
-- `client_id` (String) Enter your application's Client ID
-- `client_secret` (String) Enter your application's Client secret
-
-
-<a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_username_and_password"></a>
-### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_username_and_password`
-
-Required:
-
-- `password` (String) Enter the password associated with the username.
-
-Optional:
-
-- `auth_type` (String) must be one of ["Username and Password"]
+- `password` (String, Sensitive) Enter the password associated with the username.
 
 

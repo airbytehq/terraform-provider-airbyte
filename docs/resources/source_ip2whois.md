@@ -15,13 +15,13 @@ SourceIp2whois Resource
 ```terraform
 resource "airbyte_source_ip2whois" "my_source_ip2whois" {
   configuration = {
-    api_key     = "...my_api_key..."
-    domain      = "www.facebook.com"
-    source_type = "ip2whois"
+    api_key = "...my_api_key..."
+    domain  = "www.google.com"
   }
-  name         = "Leland Wisoky"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7aaf9bba-d185-4fe4-b1d6-bf5c838fbb8c"
+  definition_id = "711f25a2-8dde-404a-9ce3-be57bfa46127"
+  name          = "Monica Champlin"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5ed08074-e17a-4648-8571-1ab94fe75a51"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
 
 Optional:
 
-- `api_key` (String) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
+- `api_key` (String, Sensitive) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 - `domain` (String) Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
-- `source_type` (String) must be one of ["ip2whois"]
 
 

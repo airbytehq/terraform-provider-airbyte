@@ -14,7 +14,6 @@ SourceFreshcaller DataSource
 
 ```terraform
 data "airbyte_source_freshcaller" "my_source_freshcaller" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,26 +25,12 @@ data "airbyte_source_freshcaller" "my_source_freshcaller" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.
-- `domain` (String) Used to construct Base URL for the Freshcaller APIs
-- `requests_per_minute` (Number) The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
-- `source_type` (String) must be one of ["freshcaller"]
-- `start_date` (String) UTC date and time. Any data created after this date will be replicated.
-- `sync_lag_minutes` (Number) Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 
 

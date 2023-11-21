@@ -15,12 +15,12 @@ SourceGlassfrog Resource
 ```terraform
 resource "airbyte_source_glassfrog" "my_source_glassfrog" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "glassfrog"
+    api_key = "...my_api_key..."
   }
-  name         = "Carl Davis"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "891f82ce-1157-4172-b053-77dcfa89df97"
+  definition_id = "54ef24d0-de80-4e3d-b905-02015d2de4b8"
+  name          = "Jonathon Erdman"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "2b3a27b0-b342-4a10-bbc4-7ca706139037"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_glassfrog" "my_source_glassfrog" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_glassfrog" "my_source_glassfrog" {
 
 Required:
 
-- `api_key` (String) API key provided by Glassfrog
-- `source_type` (String) must be one of ["glassfrog"]
+- `api_key` (String, Sensitive) API key provided by Glassfrog
 
 

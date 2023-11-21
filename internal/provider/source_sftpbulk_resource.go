@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type SourceSftpBulkResource struct {
 // SourceSftpBulkResourceModel describes the resource data model.
 type SourceSftpBulkResourceModel struct {
 	Configuration SourceSftpBulk `tfsdk:"configuration"`
+	DefinitionID  types.String   `tfsdk:"definition_id"`
 	Name          types.String   `tfsdk:"name"`
 	SecretID      types.String   `tfsdk:"secret_id"`
 	SourceID      types.String   `tfsdk:"source_id"`
@@ -56,27 +58,30 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"file_most_recent": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Sync only the most recent file for the configured folder path and file pattern`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Sync only the most recent file for the configured folder path and file pattern`,
 					},
 					"file_pattern": schema.StringAttribute{
-						Optional:    true,
-						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The regular expression to specify files for sync in a chosen Folder Path`,
 					},
 					"file_type": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["csv", "json"]; Default: "csv"` + "\n" +
+							`The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"csv",
 								"json",
 							),
 						},
-						MarkdownDescription: `must be one of ["csv", "json"]` + "\n" +
-							`The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
 					},
 					"folder_path": schema.StringAttribute{
-						Required:    true,
-						Description: `The directory to search files for sync`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The directory to search files for sync`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -84,35 +89,30 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `OS-level password for logging into the jump server host`,
 					},
 					"port": schema.Int64Attribute{
-						Required:    true,
-						Description: `The server port`,
+						Optional: true,
+						MarkdownDescription: `Default: 22` + "\n" +
+							`The server port`,
 					},
 					"private_key": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The private key`,
 					},
 					"separator": schema.StringAttribute{
-						Optional:    true,
-						Description: `The separator used in the CSV files. Define None if you want to use the Sniffer functionality`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sftp-bulk",
-							),
-						},
-						Description: `must be one of ["sftp-bulk"]`,
+						Optional: true,
+						MarkdownDescription: `Default: ","` + "\n" +
+							`The separator used in the CSV files. Define None if you want to use the Sniffer functionality`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 					"stream_name": schema.StringAttribute{
 						Required:    true,
@@ -124,13 +124,24 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -194,7 +205,7 @@ func (r *SourceSftpBulkResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSftpBulk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -370,5 +381,5 @@ func (r *SourceSftpBulkResource) Delete(ctx context.Context, req resource.Delete
 }
 
 func (r *SourceSftpBulkResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

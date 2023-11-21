@@ -10,3 +10,24 @@ type SourceBigqueryUpdate struct {
 	// The GCP project ID for the project containing the target BigQuery dataset.
 	ProjectID string `json:"project_id"`
 }
+
+func (o *SourceBigqueryUpdate) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+func (o *SourceBigqueryUpdate) GetDatasetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DatasetID
+}
+
+func (o *SourceBigqueryUpdate) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}

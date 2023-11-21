@@ -3,17 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -35,6 +36,7 @@ type SourceGnewsResource struct {
 // SourceGnewsResourceModel describes the resource data model.
 type SourceGnewsResourceModel struct {
 	Configuration SourceGnews  `tfsdk:"configuration"`
+	DefinitionID  types.String `tfsdk:"definition_id"`
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
@@ -56,10 +58,13 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key`,
 					},
 					"country": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]` + "\n" +
+							`This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"au",
@@ -94,8 +99,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"us",
 							),
 						},
-						MarkdownDescription: `must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]` + "\n" +
-							`This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional:    true,
@@ -107,7 +110,8 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.`,
 					},
 					"language": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"ar",
@@ -134,7 +138,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"uk",
 							),
 						},
-						Description: `must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]`,
 					},
 					"nullable": schema.ListAttribute{
 						Optional:    true,
@@ -160,25 +163,16 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"sortby": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["publishedAt", "relevance"]` + "\n" +
+							`This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:` + "\n" +
+							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
+							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"publishedAt",
 								"relevance",
 							),
 						},
-						MarkdownDescription: `must be one of ["publishedAt", "relevance"]` + "\n" +
-							`This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:` + "\n" +
-							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
-							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gnews",
-							),
-						},
-						Description: `must be one of ["gnews"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -203,6 +197,8 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"top_headlines_topic": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]` + "\n" +
+							`This parameter allows you to change the category for the request.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"breaking-news",
@@ -216,18 +212,27 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"health",
 							),
 						},
-						MarkdownDescription: `must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]` + "\n" +
-							`This parameter allows you to change the category for the request.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -291,7 +296,7 @@ func (r *SourceGnewsResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGnews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -467,5 +472,5 @@ func (r *SourceGnewsResource) Delete(ctx context.Context, req resource.DeleteReq
 }
 
 func (r *SourceGnewsResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

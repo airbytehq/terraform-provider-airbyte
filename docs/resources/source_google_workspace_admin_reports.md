@@ -16,13 +16,13 @@ SourceGoogleWorkspaceAdminReports Resource
 resource "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspaceadminreports" {
   configuration = {
     credentials_json = "...my_credentials_json..."
-    email            = "Bridgette_Rohan@gmail.com"
-    lookback         = 10
-    source_type      = "google-workspace-admin-reports"
+    email            = "Daisha.Halvorson12@gmail.com"
+    lookback         = 8
   }
-  name         = "Samantha Huels"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "398a0dc7-6632-44cc-b06c-8ca12d025292"
+  definition_id = "b8adc8fd-2a7f-4940-9ec4-4e216dff8929"
+  name          = "Francisco Swaniawski"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "a00b494f-7d68-4d64-a810-b2959587ed0c"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_google_workspace_admin_reports" "my_source_googleworksp
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,7 +52,6 @@ Required:
 
 - `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
-- `source_type` (String) must be one of ["google-workspace-admin-reports"]
 
 Optional:
 

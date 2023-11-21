@@ -3,8 +3,6 @@
 package provider
 
 type SourceGithubAuthentication struct {
-	SourceGithubAuthenticationOAuth                     *SourceGithubAuthenticationOAuth               `tfsdk:"source_github_authentication_o_auth"`
-	SourceGithubAuthenticationPersonalAccessToken       *SourceGithubAuthenticationPersonalAccessToken `tfsdk:"source_github_authentication_personal_access_token"`
-	SourceGithubUpdateAuthenticationOAuth               *SourceGithubAuthenticationOAuth               `tfsdk:"source_github_update_authentication_o_auth"`
-	SourceGithubUpdateAuthenticationPersonalAccessToken *SourceGithubAuthenticationPersonalAccessToken `tfsdk:"source_github_update_authentication_personal_access_token"`
+	OAuth               *OAuth                               `tfsdk:"o_auth"`
+	PersonalAccessToken *AuthenticateWithPersonalAccessToken `tfsdk:"personal_access_token"`
 }

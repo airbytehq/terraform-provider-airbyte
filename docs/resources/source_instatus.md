@@ -15,12 +15,12 @@ SourceInstatus Resource
 ```terraform
 resource "airbyte_source_instatus" "my_source_instatus" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "instatus"
+    api_key = "...my_api_key..."
   }
-  name         = "Bobbie Johnston"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "1af388ce-0361-4444-8c79-77a0ef2f5360"
+  definition_id = "d842954b-d759-4bdc-8b93-f80b7f557094"
+  name          = "Enrique Kovacek"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "356d5339-1630-4fd2-b131-d4fbef253f33"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_instatus" "my_source_instatus" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_instatus" "my_source_instatus" {
 
 Required:
 
-- `api_key` (String) Instatus REST API key
-- `source_type` (String) must be one of ["instatus"]
+- `api_key` (String, Sensitive) Instatus REST API key
 
 

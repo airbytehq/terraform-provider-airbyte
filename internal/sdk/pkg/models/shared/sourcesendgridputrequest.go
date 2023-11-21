@@ -7,3 +7,24 @@ type SourceSendgridPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceSendgridPutRequest) GetConfiguration() SourceSendgridUpdate {
+	if o == nil {
+		return SourceSendgridUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSendgridPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSendgridPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

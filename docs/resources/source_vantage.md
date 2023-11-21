@@ -16,11 +16,11 @@ SourceVantage Resource
 resource "airbyte_source_vantage" "my_source_vantage" {
   configuration = {
     access_token = "...my_access_token..."
-    source_type  = "vantage"
   }
-  name         = "Corey Pacocha"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "6487c5fc-2b86-42a0-8bef-69e100157630"
+  definition_id = "5e9c61e2-0db5-4f4b-b11c-60c3a7ba3362"
+  name          = "Tracey Rippin"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5dfad932-4f6a-4b9f-8334-526eae71eb75"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_vantage" "my_source_vantage" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_vantage" "my_source_vantage" {
 
 Required:
 
-- `access_token` (String) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
-- `source_type` (String) must be one of ["vantage"]
+- `access_token` (String, Sensitive) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
 
 

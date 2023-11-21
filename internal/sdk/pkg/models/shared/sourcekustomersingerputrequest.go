@@ -7,3 +7,24 @@ type SourceKustomerSingerPutRequest struct {
 	Name          string                     `json:"name"`
 	WorkspaceID   string                     `json:"workspaceId"`
 }
+
+func (o *SourceKustomerSingerPutRequest) GetConfiguration() SourceKustomerSingerUpdate {
+	if o == nil {
+		return SourceKustomerSingerUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceKustomerSingerPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceKustomerSingerPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

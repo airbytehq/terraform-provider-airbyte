@@ -9,3 +9,24 @@ type SourceS3PutRequest struct {
 	Name          string         `json:"name"`
 	WorkspaceID   string         `json:"workspaceId"`
 }
+
+func (o *SourceS3PutRequest) GetConfiguration() SourceS3Update {
+	if o == nil {
+		return SourceS3Update{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceS3PutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceS3PutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

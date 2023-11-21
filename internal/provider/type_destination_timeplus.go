@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationTimeplus struct {
-	Apikey          types.String `tfsdk:"apikey"`
-	DestinationType types.String `tfsdk:"destination_type"`
-	Endpoint        types.String `tfsdk:"endpoint"`
+	Apikey   types.String `tfsdk:"apikey"`
+	Endpoint types.String `tfsdk:"endpoint"`
 }

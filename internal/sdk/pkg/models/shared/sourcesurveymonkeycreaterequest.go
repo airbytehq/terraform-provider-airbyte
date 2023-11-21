@@ -4,8 +4,46 @@ package shared
 
 type SourceSurveymonkeyCreateRequest struct {
 	Configuration SourceSurveymonkey `json:"configuration"`
-	Name          string             `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceSurveymonkeyCreateRequest) GetConfiguration() SourceSurveymonkey {
+	if o == nil {
+		return SourceSurveymonkey{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSurveymonkeyCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceSurveymonkeyCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSurveymonkeyCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceSurveymonkeyCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

@@ -14,7 +14,6 @@ SourceTwitter DataSource
 
 ```terraform
 data "airbyte_source_twitter" "my_source_twitter" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_twitter" "my_source_twitter" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) App only Bearer Token. See the <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens">docs</a> for more information on how to obtain this token.
-- `end_date` (String) The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
-- `query` (String) Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
-- `source_type` (String) must be one of ["twitter"]
-- `start_date` (String) The start date for retrieving tweets cannot be more than 7 days in the past.
 
 

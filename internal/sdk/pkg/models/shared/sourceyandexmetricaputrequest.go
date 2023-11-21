@@ -7,3 +7,24 @@ type SourceYandexMetricaPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *SourceYandexMetricaPutRequest) GetConfiguration() SourceYandexMetricaUpdate {
+	if o == nil {
+		return SourceYandexMetricaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceYandexMetricaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceYandexMetricaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

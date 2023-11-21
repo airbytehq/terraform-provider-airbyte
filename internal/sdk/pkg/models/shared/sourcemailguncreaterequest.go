@@ -4,8 +4,46 @@ package shared
 
 type SourceMailgunCreateRequest struct {
 	Configuration SourceMailgun `json:"configuration"`
-	Name          string        `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceMailgunCreateRequest) GetConfiguration() SourceMailgun {
+	if o == nil {
+		return SourceMailgun{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMailgunCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceMailgunCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMailgunCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceMailgunCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

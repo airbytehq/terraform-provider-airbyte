@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -12,8 +12,46 @@ type PutSourceZendeskTalkRequest struct {
 	SourceID                    string                              `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceZendeskTalkRequest) GetSourceZendeskTalkPutRequest() *shared.SourceZendeskTalkPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceZendeskTalkPutRequest
+}
+
+func (o *PutSourceZendeskTalkRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceZendeskTalkResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceZendeskTalkResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceZendeskTalkResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceZendeskTalkResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

@@ -7,3 +7,24 @@ type SourceOutbrainAmplifyPutRequest struct {
 	Name          string                      `json:"name"`
 	WorkspaceID   string                      `json:"workspaceId"`
 }
+
+func (o *SourceOutbrainAmplifyPutRequest) GetConfiguration() SourceOutbrainAmplifyUpdate {
+	if o == nil {
+		return SourceOutbrainAmplifyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOutbrainAmplifyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOutbrainAmplifyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

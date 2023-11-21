@@ -15,13 +15,13 @@ SourceConfigcat Resource
 ```terraform
 resource "airbyte_source_configcat" "my_source_configcat" {
   configuration = {
-    password    = "...my_password..."
-    source_type = "configcat"
-    username    = "Art_Wiegand"
+    password = "...my_password..."
+    username = "Estrella_Wilkinson70"
   }
-  name         = "Lowell Oberbrunner"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5a60a04c-495c-4c69-9171-b51c1bdb1cf4"
+  definition_id = "81a7466b-f78b-43b7-9ede-547fc7c1cb53"
+  name          = "Ms. Luis Harris"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9ddb3b3d-7401-439d-82cf-2cb416442d85"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_configcat" "my_source_configcat" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_configcat" "my_source_configcat" {
 
 Required:
 
-- `password` (String) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-- `source_type` (String) must be one of ["configcat"]
+- `password` (String, Sensitive) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 - `username` (String) Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 
 

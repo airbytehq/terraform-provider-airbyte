@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceTheGuardianAPIDataSource struct {
 
 // SourceTheGuardianAPIDataSourceModel describes the data model.
 type SourceTheGuardianAPIDataSourceModel struct {
-	Configuration SourceTheGuardianAPI `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,53 +47,19 @@ func (r *SourceTheGuardianAPIDataSource) Schema(ctx context.Context, req datasou
 		MarkdownDescription: "SourceTheGuardianAPI DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.`,
-					},
-					"end_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `(Optional) Use this to set the maximum date (YYYY-MM-DD) of the results. Results newer than the end_date will not be shown. Default is set to the current date (today) for incremental syncs.`,
-					},
-					"query": schema.StringAttribute{
-						Computed:    true,
-						Description: `(Optional) The query (q) parameter filters the results to only those that include that search term. The q parameter supports AND, OR and NOT operators.`,
-					},
-					"section": schema.StringAttribute{
-						Computed:    true,
-						Description: `(Optional) Use this to filter the results by a particular section. See <a href="https://content.guardianapis.com/sections?api-key=test">here</a> for a list of all sections, and <a href="https://open-platform.theguardian.com/documentation/section">here</a> for the sections endpoint documentation.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"the-guardian-api",
-							),
-						},
-						Description: `must be one of ["the-guardian-api"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.`,
-					},
-					"tag": schema.StringAttribute{
-						Computed:    true,
-						Description: `(Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

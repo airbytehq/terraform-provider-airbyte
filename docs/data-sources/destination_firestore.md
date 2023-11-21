@@ -27,17 +27,10 @@ data "airbyte_destination_firestore" "my_destination_firestore" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
-- `destination_type` (String) must be one of ["firestore"]
-- `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
 
 

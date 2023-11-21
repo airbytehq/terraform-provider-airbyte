@@ -3,8 +3,6 @@
 package provider
 
 type SourceLeverHiringAuthenticationMechanism struct {
-	SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey       *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey `tfsdk:"source_lever_hiring_authentication_mechanism_authenticate_via_lever_api_key"`
-	SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth        *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth  `tfsdk:"source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth"`
-	SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverAPIKey `tfsdk:"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_api_key"`
-	SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth  *SourceLeverHiringAuthenticationMechanismAuthenticateViaLeverOAuth  `tfsdk:"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth"`
+	AuthenticateViaLeverAPIKey *APIKeyAuth                `tfsdk:"authenticate_via_lever_api_key"`
+	AuthenticateViaLeverOAuth  *AuthenticateViaLeverOAuth `tfsdk:"authenticate_via_lever_o_auth"`
 }

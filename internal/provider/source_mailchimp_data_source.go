@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceMailchimpDataSource struct {
 
 // SourceMailchimpDataSourceModel describes the data model.
 type SourceMailchimpDataSourceModel struct {
-	Configuration SourceMailchimp `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,128 +47,19 @@ func (r *SourceMailchimpDataSource) Schema(ctx context.Context, req datasource.S
 		MarkdownDescription: "SourceMailchimp DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"campaign_id": schema.StringAttribute{
-						Computed: true,
-					},
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_mailchimp_authentication_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"apikey": schema.StringAttribute{
-										Computed:    true,
-										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
-								},
-							},
-							"source_mailchimp_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `An access token generated using the above client ID and secret.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your OAuth application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-								},
-							},
-							"source_mailchimp_update_authentication_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"apikey": schema.StringAttribute{
-										Computed:    true,
-										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
-								},
-							},
-							"source_mailchimp_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `An access token generated using the above client ID and secret.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your OAuth application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mailchimp",
-							),
-						},
-						Description: `must be one of ["mailchimp"]`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

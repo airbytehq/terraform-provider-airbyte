@@ -14,12 +14,11 @@ SourceXkcd Resource
 
 ```terraform
 resource "airbyte_source_xkcd" "my_source_xkcd" {
-  configuration = {
-    source_type = "xkcd"
-  }
-  name         = "Mr. Laurence Littel"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "18d97e15-2297-4510-9a80-312292cc61c2"
+  configuration = {}
+  definition_id = "e992c2a3-f4c8-4fc0-a6c7-cc4eafdab4c1"
+  name          = "Wilbert Ortiz"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6c12869f-984d-4613-8285-42bb37a458fa"
 }
 ```
 
@@ -29,11 +28,12 @@ resource "airbyte_source_xkcd" "my_source_xkcd" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -43,9 +43,5 @@ resource "airbyte_source_xkcd" "my_source_xkcd" {
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
-
-Optional:
-
-- `source_type` (String) must be one of ["xkcd"]
 
 

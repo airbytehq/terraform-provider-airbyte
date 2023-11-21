@@ -3,12 +3,11 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightlyCreateRequest {
-	sourceType := shared.SourceInsightlyInsightly(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -22,9 +21,14 @@ func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightly
 		token = nil
 	}
 	configuration := shared.SourceInsightly{
-		SourceType: sourceType,
-		StartDate:  startDate,
-		Token:      token,
+		StartDate: startDate,
+		Token:     token,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -36,6 +40,7 @@ func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightly
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceInsightlyCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

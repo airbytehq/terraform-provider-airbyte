@@ -4,6 +4,37 @@ package shared
 
 type DestinationS3CreateRequest struct {
 	Configuration DestinationS3 `json:"configuration"`
-	Name          string        `json:"name"`
-	WorkspaceID   string        `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationS3CreateRequest) GetConfiguration() DestinationS3 {
+	if o == nil {
+		return DestinationS3{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationS3CreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationS3CreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationS3CreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

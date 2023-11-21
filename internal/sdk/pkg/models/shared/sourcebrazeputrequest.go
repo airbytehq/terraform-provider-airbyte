@@ -7,3 +7,24 @@ type SourceBrazePutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceBrazePutRequest) GetConfiguration() SourceBrazeUpdate {
+	if o == nil {
+		return SourceBrazeUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBrazePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBrazePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

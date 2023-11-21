@@ -8,3 +8,17 @@ type SourceAhaUpdate struct {
 	// URL
 	URL string `json:"url"`
 }
+
+func (o *SourceAhaUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceAhaUpdate) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}

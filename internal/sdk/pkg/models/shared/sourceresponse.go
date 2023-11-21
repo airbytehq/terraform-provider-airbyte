@@ -11,3 +11,38 @@ type SourceResponse struct {
 	SourceType    string      `json:"sourceType"`
 	WorkspaceID   string      `json:"workspaceId"`
 }
+
+func (o *SourceResponse) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *SourceResponse) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceResponse) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
+func (o *SourceResponse) GetSourceType() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceType
+}
+
+func (o *SourceResponse) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -9,6 +9,5 @@ type SourceOutbrainAmplify struct {
 	EndDate              types.String                              `tfsdk:"end_date"`
 	GeoLocationBreakdown types.String                              `tfsdk:"geo_location_breakdown"`
 	ReportGranularity    types.String                              `tfsdk:"report_granularity"`
-	SourceType           types.String                              `tfsdk:"source_type"`
 	StartDate            types.String                              `tfsdk:"start_date"`
 }

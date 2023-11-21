@@ -7,3 +7,24 @@ type SourceAwsCloudtrailPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *SourceAwsCloudtrailPutRequest) GetConfiguration() SourceAwsCloudtrailUpdate {
+	if o == nil {
+		return SourceAwsCloudtrailUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAwsCloudtrailPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAwsCloudtrailPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

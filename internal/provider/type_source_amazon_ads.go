@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAmazonAds struct {
-	AuthType          types.String   `tfsdk:"auth_type"`
 	ClientID          types.String   `tfsdk:"client_id"`
 	ClientSecret      types.String   `tfsdk:"client_secret"`
 	LookBackWindow    types.Int64    `tfsdk:"look_back_window"`
@@ -14,7 +13,6 @@ type SourceAmazonAds struct {
 	RefreshToken      types.String   `tfsdk:"refresh_token"`
 	Region            types.String   `tfsdk:"region"`
 	ReportRecordTypes []types.String `tfsdk:"report_record_types"`
-	SourceType        types.String   `tfsdk:"source_type"`
 	StartDate         types.String   `tfsdk:"start_date"`
 	StateFilter       []types.String `tfsdk:"state_filter"`
 }

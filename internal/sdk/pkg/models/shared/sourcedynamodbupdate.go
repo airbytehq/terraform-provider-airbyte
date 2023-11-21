@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 // SourceDynamodbUpdateDynamodbRegion - The region of the Dynamodb database
@@ -111,11 +112,57 @@ type SourceDynamodbUpdate struct {
 	// The access key id to access Dynamodb. Airbyte requires read permissions to the database
 	AccessKeyID string `json:"access_key_id"`
 	// the URL of the Dynamodb database
-	Endpoint *string `json:"endpoint,omitempty"`
+	Endpoint *string `default:"" json:"endpoint"`
 	// The region of the Dynamodb database
-	Region *SourceDynamodbUpdateDynamodbRegion `json:"region,omitempty"`
+	Region *SourceDynamodbUpdateDynamodbRegion `default:"" json:"region"`
 	// Comma separated reserved attribute names present in your tables
 	ReservedAttributeNames *string `json:"reserved_attribute_names,omitempty"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey string `json:"secret_access_key"`
+}
+
+func (s SourceDynamodbUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDynamodbUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDynamodbUpdate) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
+func (o *SourceDynamodbUpdate) GetEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Endpoint
+}
+
+func (o *SourceDynamodbUpdate) GetRegion() *SourceDynamodbUpdateDynamodbRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceDynamodbUpdate) GetReservedAttributeNames() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReservedAttributeNames
+}
+
+func (o *SourceDynamodbUpdate) GetSecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretAccessKey
 }

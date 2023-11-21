@@ -3,18 +3,22 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAhaResourceModel) ToCreateSDKType() *shared.SourceAhaCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceAhaAha(r.Configuration.SourceType.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourceAha{
-		APIKey:     apiKey,
-		SourceType: sourceType,
-		URL:        url,
+		APIKey: apiKey,
+		URL:    url,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -26,6 +30,7 @@ func (r *SourceAhaResourceModel) ToCreateSDKType() *shared.SourceAhaCreateReques
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAhaCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

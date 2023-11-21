@@ -3,18 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -35,6 +34,7 @@ type DestinationKinesisResource struct {
 // DestinationKinesisResourceModel describes the resource data model.
 type DestinationKinesisResourceModel struct {
 	Configuration   DestinationKinesis `tfsdk:"configuration"`
+	DefinitionID    types.String       `tfsdk:"definition_id"`
 	DestinationID   types.String       `tfsdk:"destination_id"`
 	DestinationType types.String       `tfsdk:"destination_type"`
 	Name            types.String       `tfsdk:"name"`
@@ -58,17 +58,9 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 						Description: `Generate the AWS Access Key for current user.`,
 					},
 					"buffer_size": schema.Int64Attribute{
-						Required:    true,
-						Description: `Buffer size for storing kinesis records before being batch streamed.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kinesis",
-							),
-						},
-						Description: `must be one of ["kinesis"]`,
+						Optional: true,
+						MarkdownDescription: `Default: 100` + "\n" +
+							`Buffer size for storing kinesis records before being batch streamed.`,
 					},
 					"endpoint": schema.StringAttribute{
 						Required:    true,
@@ -83,10 +75,18 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 						Description: `AWS region. Your account determines the Regions that are available to you.`,
 					},
 					"shard_count": schema.Int64Attribute{
-						Required:    true,
-						Description: `Number of shards to which the data should be streamed.`,
+						Optional: true,
+						MarkdownDescription: `Default: 5` + "\n" +
+							`Number of shards to which the data should be streamed.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -104,7 +104,8 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -154,7 +155,7 @@ func (r *DestinationKinesisResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationKinesis(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -330,5 +331,5 @@ func (r *DestinationKinesisResource) Delete(ctx context.Context, req resource.De
 }
 
 func (r *DestinationKinesisResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

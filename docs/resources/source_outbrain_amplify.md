@@ -16,20 +16,19 @@ SourceOutbrainAmplify Resource
 resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
   configuration = {
     credentials = {
-      source_outbrain_amplify_authentication_method_access_token = {
+      source_outbrain_amplify_access_token = {
         access_token = "...my_access_token..."
-        type         = "access_token"
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "subregion"
-    report_granularity     = "daily"
-    source_type            = "outbrain-amplify"
+    geo_location_breakdown = "region"
+    report_granularity     = "monthly"
     start_date             = "...my_start_date..."
   }
-  name         = "Cynthia Boyer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "2cd55cc0-584a-4184-976d-971fc820c65b"
+  definition_id = "9d0f84cc-bad7-41da-b038-014a124b6e7b"
+  name          = "Donna Leannon"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "37b0c992-762a-438a-a73d-79a85cb72465"
 }
 ```
 
@@ -39,11 +38,12 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,7 +57,6 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
 Required:
 
 - `credentials` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["outbrain-amplify"]
 - `start_date` (String) Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
 
 Optional:
@@ -73,46 +72,23 @@ The granularity used for periodic data in reports. See <a href="https://amplifyv
 
 Optional:
 
-- `source_outbrain_amplify_authentication_method_access_token` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--source_outbrain_amplify_authentication_method_access_token))
-- `source_outbrain_amplify_authentication_method_username_password` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--source_outbrain_amplify_authentication_method_username_password))
-- `source_outbrain_amplify_update_authentication_method_access_token` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--source_outbrain_amplify_update_authentication_method_access_token))
-- `source_outbrain_amplify_update_authentication_method_username_password` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--source_outbrain_amplify_update_authentication_method_username_password))
+- `access_token` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
+- `username_password` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--username_password))
 
-<a id="nestedatt--configuration--credentials--source_outbrain_amplify_authentication_method_access_token"></a>
-### Nested Schema for `configuration.credentials.source_outbrain_amplify_authentication_method_access_token`
+<a id="nestedatt--configuration--credentials--access_token"></a>
+### Nested Schema for `configuration.credentials.access_token`
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `type` (String) must be one of ["access_token"]
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 
 
-<a id="nestedatt--configuration--credentials--source_outbrain_amplify_authentication_method_username_password"></a>
-### Nested Schema for `configuration.credentials.source_outbrain_amplify_authentication_method_username_password`
-
-Required:
-
-- `password` (String) Add Password for authentication.
-- `type` (String) must be one of ["username_password"]
-- `username` (String) Add Username for authentication.
-
-
-<a id="nestedatt--configuration--credentials--source_outbrain_amplify_update_authentication_method_access_token"></a>
-### Nested Schema for `configuration.credentials.source_outbrain_amplify_update_authentication_method_access_token`
+<a id="nestedatt--configuration--credentials--username_password"></a>
+### Nested Schema for `configuration.credentials.username_password`
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `type` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_outbrain_amplify_update_authentication_method_username_password"></a>
-### Nested Schema for `configuration.credentials.source_outbrain_amplify_update_authentication_method_username_password`
-
-Required:
-
-- `password` (String) Add Password for authentication.
-- `type` (String) must be one of ["username_password"]
+- `password` (String, Sensitive) Add Password for authentication.
 - `username` (String) Add Username for authentication.
 
 

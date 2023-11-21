@@ -17,15 +17,15 @@ resource "airbyte_source_zuora" "my_source_zuora" {
   configuration = {
     client_id       = "...my_client_id..."
     client_secret   = "...my_client_secret..."
-    data_query      = "Unlimited"
-    source_type     = "zuora"
+    data_query      = "Live"
     start_date      = "...my_start_date..."
-    tenant_endpoint = "US Performance Test"
-    window_in_days  = "200"
+    tenant_endpoint = "EU Production"
+    window_in_days  = "0.5"
   }
-  name         = "Joan Bednar"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "a44707bf-375b-4442-8282-1fdb2f69e592"
+  definition_id = "280d807c-dd8e-4b8c-b5c4-610938eb2433"
+  name          = "Anne Funk"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "c5c5aa0b-5368-4b26-a568-aa6dc340bb15"
 }
 ```
 
@@ -35,11 +35,12 @@ resource "airbyte_source_zuora" "my_source_zuora" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -54,15 +55,15 @@ Required:
 
 - `client_id` (String) Your OAuth user Client ID
 - `client_secret` (String) Your OAuth user Client Secret
-- `data_query` (String) must be one of ["Live", "Unlimited"]
-Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-- `source_type` (String) must be one of ["zuora"]
 - `start_date` (String) Start Date in format: YYYY-MM-DD
 - `tenant_endpoint` (String) must be one of ["US Production", "US Cloud Production", "US API Sandbox", "US Cloud API Sandbox", "US Central Sandbox", "US Performance Test", "EU Production", "EU API Sandbox", "EU Central Sandbox"]
 Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
 
 Optional:
 
-- `window_in_days` (String) The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
+- `data_query` (String) must be one of ["Live", "Unlimited"]; Default: "Live"
+Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
+- `window_in_days` (String) Default: "90"
+The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
 
 

@@ -15,14 +15,14 @@ SourceRecurly Resource
 ```terraform
 resource "airbyte_source_recurly" "my_source_recurly" {
   configuration = {
-    api_key     = "...my_api_key..."
-    begin_time  = "2021-12-01T00:00:00"
-    end_time    = "2021-12-01T00:00:00"
-    source_type = "recurly"
+    api_key    = "...my_api_key..."
+    begin_time = "2021-12-01T00:00:00"
+    end_time   = "2021-12-01T00:00:00"
   }
-  name         = "Josephine Dibbert"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7e1763c5-208c-423e-9802-d82f0d45eb4a"
+  definition_id = "535fff5d-1d34-4f0c-8e54-86a3a161dc53"
+  name          = "Mrs. Glen Gottlieb"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "acb8b41d-5bf9-44a0-9397-d3dfd90aff66"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_recurly" "my_source_recurly" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,8 +50,7 @@ resource "airbyte_source_recurly" "my_source_recurly" {
 
 Required:
 
-- `api_key` (String) Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.
-- `source_type` (String) must be one of ["recurly"]
+- `api_key` (String, Sensitive) Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.
 
 Optional:
 

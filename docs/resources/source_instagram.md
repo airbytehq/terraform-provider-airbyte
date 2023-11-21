@@ -18,12 +18,12 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     access_token  = "...my_access_token..."
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    source_type   = "instagram"
     start_date    = "2017-01-25T00:00:00Z"
   }
-  name         = "Mae Hoppe"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f1ad837a-e80c-41c1-9c95-ba998678fa3f"
+  definition_id = "20bd7a7e-c191-4626-87e6-80e4417c6f4b"
+  name          = "Margaret Maggio"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "206a4b04-3ef0-49e6-9b75-b726765eab1a"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_instagram" "my_source_instagram" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,13 +51,12 @@ resource "airbyte_source_instagram" "my_source_instagram" {
 
 Required:
 
-- `access_token` (String) The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
-- `source_type` (String) must be one of ["instagram"]
-- `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
+- `access_token` (String, Sensitive) The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
 
 Optional:
 
 - `client_id` (String) The Client ID for your Oauth application
 - `client_secret` (String) The Client Secret for your Oauth application
+- `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
 
 

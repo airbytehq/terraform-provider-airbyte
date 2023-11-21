@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourcePinterestDataSource struct {
 
 // SourcePinterestDataSourceModel describes the data model.
 type SourcePinterestDataSourceModel struct {
-	Configuration SourcePinterest `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,137 +47,19 @@ func (r *SourcePinterestDataSource) Schema(ctx context.Context, req datasource.S
 		MarkdownDescription: "SourcePinterest DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_pinterest_authorization_method_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Access Token to make authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
-								},
-							},
-							"source_pinterest_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your OAuth application`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
-									},
-								},
-							},
-							"source_pinterest_update_authorization_method_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Access Token to make authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
-								},
-							},
-							"source_pinterest_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your OAuth application`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pinterest",
-							),
-						},
-						Description: `must be one of ["pinterest"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).`,
-					},
-					"status": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

@@ -17,22 +17,20 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
     accept_terms = false
     data_source = {
-      destination_databricks_data_source_recommended_managed_tables = {
-        data_source_type = "MANAGED_TABLES_STORAGE"
-      }
+      recommended_managed_tables = {}
     }
     database                         = "...my_database..."
     databricks_http_path             = "sql/protocolvx/o/1234567489/0000-1111111-abcd90"
     databricks_personal_access_token = "dapi0123456789abcdefghij0123456789AB"
     databricks_port                  = "443"
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
-    destination_type                 = "databricks"
     enable_schema_evolution          = true
     purge_staging_data               = false
     schema                           = "default"
   }
-  name         = "Bertha Thompson"
-  workspace_id = "69280d1b-a77a-489e-bf73-7ae4203ce5e6"
+  definition_id = "05d7306c-fa6f-460b-bc11-e74f736d7a95"
+  name          = "Meghan Mitchell"
+  workspace_id  = "4c049945-edd6-4e95-a416-d119e802e071"
 }
 ```
 
@@ -42,8 +40,12 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -55,112 +57,67 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
 
 Required:
 
-- `accept_terms` (Boolean) You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.
 - `data_source` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source))
 - `databricks_http_path` (String) Databricks Cluster HTTP Path.
-- `databricks_personal_access_token` (String) Databricks Personal Access Token for making authenticated requests.
+- `databricks_personal_access_token` (String, Sensitive) Databricks Personal Access Token for making authenticated requests.
 - `databricks_server_hostname` (String) Databricks Cluster Server Hostname.
-- `destination_type` (String) must be one of ["databricks"]
 
 Optional:
 
+- `accept_terms` (Boolean) Default: false
+You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.
 - `database` (String) The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.
-- `databricks_port` (String) Databricks Cluster Port.
-- `enable_schema_evolution` (Boolean) Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
-- `purge_staging_data` (Boolean) Default to 'true'. Switch it to 'false' for debugging purpose.
-- `schema` (String) The default schema tables are written. If not specified otherwise, the "default" will be used.
+- `databricks_port` (String) Default: "443"
+Databricks Cluster Port.
+- `enable_schema_evolution` (Boolean) Default: false
+Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
+- `purge_staging_data` (Boolean) Default: true
+Default to 'true'. Switch it to 'false' for debugging purpose.
+- `schema` (String) Default: "default"
+The default schema tables are written. If not specified otherwise, the "default" will be used.
 
 <a id="nestedatt--configuration--data_source"></a>
 ### Nested Schema for `configuration.data_source`
 
 Optional:
 
-- `destination_databricks_data_source_amazon_s3` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_data_source_amazon_s3))
-- `destination_databricks_data_source_azure_blob_storage` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_data_source_azure_blob_storage))
-- `destination_databricks_data_source_recommended_managed_tables` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_data_source_recommended_managed_tables))
-- `destination_databricks_update_data_source_amazon_s3` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_update_data_source_amazon_s3))
-- `destination_databricks_update_data_source_azure_blob_storage` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_update_data_source_azure_blob_storage))
-- `destination_databricks_update_data_source_recommended_managed_tables` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_update_data_source_recommended_managed_tables))
+- `amazon_s3` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--amazon_s3))
+- `azure_blob_storage` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--azure_blob_storage))
+- `recommended_managed_tables` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--recommended_managed_tables))
 
-<a id="nestedatt--configuration--data_source--destination_databricks_data_source_amazon_s3"></a>
-### Nested Schema for `configuration.data_source.destination_databricks_data_source_amazon_s3`
+<a id="nestedatt--configuration--data_source--amazon_s3"></a>
+### Nested Schema for `configuration.data_source.amazon_s3`
 
 Required:
 
-- `data_source_type` (String) must be one of ["S3_STORAGE"]
-- `s3_access_key_id` (String) The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
+- `s3_access_key_id` (String, Sensitive) The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
 - `s3_bucket_name` (String) The name of the S3 bucket to use for intermittent staging of the data.
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written.
-- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
-The region of the S3 staging bucket to use if utilising a copy strategy.
-- `s3_secret_access_key` (String) The corresponding secret to the above access key id.
+- `s3_secret_access_key` (String, Sensitive) The corresponding secret to the above access key id.
 
 Optional:
 
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
+The region of the S3 staging bucket to use if utilising a copy strategy.
 
 
-<a id="nestedatt--configuration--data_source--destination_databricks_data_source_azure_blob_storage"></a>
-### Nested Schema for `configuration.data_source.destination_databricks_data_source_azure_blob_storage`
+<a id="nestedatt--configuration--data_source--azure_blob_storage"></a>
+### Nested Schema for `configuration.data_source.azure_blob_storage`
 
 Required:
 
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
-- `azure_blob_storage_sas_token` (String) Shared access signature (SAS) token to grant limited access to objects in your storage account.
-- `data_source_type` (String) must be one of ["AZURE_BLOB_STORAGE"]
+- `azure_blob_storage_sas_token` (String, Sensitive) Shared access signature (SAS) token to grant limited access to objects in your storage account.
 
 Optional:
 
-- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+- `azure_blob_storage_endpoint_domain_name` (String) Default: "blob.core.windows.net"
+This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
 
 
-<a id="nestedatt--configuration--data_source--destination_databricks_data_source_recommended_managed_tables"></a>
-### Nested Schema for `configuration.data_source.destination_databricks_data_source_recommended_managed_tables`
-
-Required:
-
-- `data_source_type` (String) must be one of ["MANAGED_TABLES_STORAGE"]
-
-
-<a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_amazon_s3"></a>
-### Nested Schema for `configuration.data_source.destination_databricks_update_data_source_amazon_s3`
-
-Required:
-
-- `data_source_type` (String) must be one of ["S3_STORAGE"]
-- `s3_access_key_id` (String) The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
-- `s3_bucket_name` (String) The name of the S3 bucket to use for intermittent staging of the data.
-- `s3_bucket_path` (String) The directory under the S3 bucket where data will be written.
-- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
-The region of the S3 staging bucket to use if utilising a copy strategy.
-- `s3_secret_access_key` (String) The corresponding secret to the above access key id.
-
-Optional:
-
-- `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-
-
-<a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_azure_blob_storage"></a>
-### Nested Schema for `configuration.data_source.destination_databricks_update_data_source_azure_blob_storage`
-
-Required:
-
-- `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
-- `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
-- `azure_blob_storage_sas_token` (String) Shared access signature (SAS) token to grant limited access to objects in your storage account.
-- `data_source_type` (String) must be one of ["AZURE_BLOB_STORAGE"]
-
-Optional:
-
-- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-
-
-<a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_recommended_managed_tables"></a>
-### Nested Schema for `configuration.data_source.destination_databricks_update_data_source_recommended_managed_tables`
-
-Required:
-
-- `data_source_type` (String) must be one of ["MANAGED_TABLES_STORAGE"]
+<a id="nestedatt--configuration--data_source--recommended_managed_tables"></a>
+### Nested Schema for `configuration.data_source.recommended_managed_tables`
 
 

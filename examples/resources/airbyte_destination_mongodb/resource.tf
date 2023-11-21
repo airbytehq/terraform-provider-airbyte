@@ -1,26 +1,23 @@
 resource "airbyte_destination_mongodb" "my_destination_mongodb" {
   configuration = {
     auth_type = {
-      destination_mongodb_authorization_type_login_password = {
-        authorization = "login/password"
-        password      = "...my_password..."
-        username      = "Lucienne.Yundt"
+      login_password = {
+        password = "...my_password..."
+        username = "Emmalee.Towne89"
       }
     }
-    database         = "...my_database..."
-    destination_type = "mongodb"
+    database = "...my_database..."
     instance_type = {
-      destination_mongodb_mongo_db_instance_type_mongo_db_atlas = {
+      mongo_db_atlas = {
         cluster_url = "...my_cluster_url..."
         instance    = "atlas"
       }
     }
     tunnel_method = {
-      destination_mongodb_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_mongodb_no_tunnel = {}
     }
   }
-  name         = "Robyn Schmitt I"
-  workspace_id = "aa63aae8-d678-464d-bb67-5fd5e60b375e"
+  definition_id = "895c9212-6184-452d-9432-f33897fec4ca"
+  name          = "Adrienne Lockman"
+  workspace_id  = "bf882725-c3c6-4bc3-9a6d-3f396b39ea0e"
 }

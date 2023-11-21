@@ -5,10 +5,9 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleAnalyticsDataAPI struct {
-	Credentials         *SourceGoogleAnalyticsDataAPICredentials `tfsdk:"credentials"`
-	CustomReports       types.String                             `tfsdk:"custom_reports"`
-	DateRangesStartDate types.String                             `tfsdk:"date_ranges_start_date"`
-	PropertyID          types.String                             `tfsdk:"property_id"`
-	SourceType          types.String                             `tfsdk:"source_type"`
-	WindowInDays        types.Int64                              `tfsdk:"window_in_days"`
+	Credentials         *SourceGoogleAnalyticsDataAPICredentials         `tfsdk:"credentials"`
+	CustomReportsArray  []SourceGoogleAnalyticsDataAPICustomReportConfig `tfsdk:"custom_reports_array"`
+	DateRangesStartDate types.String                                     `tfsdk:"date_ranges_start_date"`
+	PropertyIds         []types.String                                   `tfsdk:"property_ids"`
+	WindowInDays        types.Int64                                      `tfsdk:"window_in_days"`
 }

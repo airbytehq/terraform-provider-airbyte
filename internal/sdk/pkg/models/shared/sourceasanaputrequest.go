@@ -7,3 +7,24 @@ type SourceAsanaPutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceAsanaPutRequest) GetConfiguration() SourceAsanaUpdate {
+	if o == nil {
+		return SourceAsanaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAsanaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAsanaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

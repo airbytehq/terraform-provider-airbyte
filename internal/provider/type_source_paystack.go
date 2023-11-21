@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourcePaystack struct {
 	LookbackWindowDays types.Int64  `tfsdk:"lookback_window_days"`
 	SecretKey          types.String `tfsdk:"secret_key"`
-	SourceType         types.String `tfsdk:"source_type"`
 	StartDate          types.String `tfsdk:"start_date"`
 }

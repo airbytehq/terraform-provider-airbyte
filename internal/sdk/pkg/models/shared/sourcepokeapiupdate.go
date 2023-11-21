@@ -2,7 +2,2735 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+// PokemonName - Pokemon requested from the API.
+type PokemonName string
+
+const (
+	PokemonNameBulbasaur    PokemonName = "bulbasaur"
+	PokemonNameIvysaur      PokemonName = "ivysaur"
+	PokemonNameVenusaur     PokemonName = "venusaur"
+	PokemonNameCharmander   PokemonName = "charmander"
+	PokemonNameCharmeleon   PokemonName = "charmeleon"
+	PokemonNameCharizard    PokemonName = "charizard"
+	PokemonNameSquirtle     PokemonName = "squirtle"
+	PokemonNameWartortle    PokemonName = "wartortle"
+	PokemonNameBlastoise    PokemonName = "blastoise"
+	PokemonNameCaterpie     PokemonName = "caterpie"
+	PokemonNameMetapod      PokemonName = "metapod"
+	PokemonNameButterfree   PokemonName = "butterfree"
+	PokemonNameWeedle       PokemonName = "weedle"
+	PokemonNameKakuna       PokemonName = "kakuna"
+	PokemonNameBeedrill     PokemonName = "beedrill"
+	PokemonNamePidgey       PokemonName = "pidgey"
+	PokemonNamePidgeotto    PokemonName = "pidgeotto"
+	PokemonNamePidgeot      PokemonName = "pidgeot"
+	PokemonNameRattata      PokemonName = "rattata"
+	PokemonNameRaticate     PokemonName = "raticate"
+	PokemonNameSpearow      PokemonName = "spearow"
+	PokemonNameFearow       PokemonName = "fearow"
+	PokemonNameEkans        PokemonName = "ekans"
+	PokemonNameArbok        PokemonName = "arbok"
+	PokemonNamePikachu      PokemonName = "pikachu"
+	PokemonNameRaichu       PokemonName = "raichu"
+	PokemonNameSandshrew    PokemonName = "sandshrew"
+	PokemonNameSandslash    PokemonName = "sandslash"
+	PokemonNameNidoranf     PokemonName = "nidoranf"
+	PokemonNameNidorina     PokemonName = "nidorina"
+	PokemonNameNidoqueen    PokemonName = "nidoqueen"
+	PokemonNameNidoranm     PokemonName = "nidoranm"
+	PokemonNameNidorino     PokemonName = "nidorino"
+	PokemonNameNidoking     PokemonName = "nidoking"
+	PokemonNameClefairy     PokemonName = "clefairy"
+	PokemonNameClefable     PokemonName = "clefable"
+	PokemonNameVulpix       PokemonName = "vulpix"
+	PokemonNameNinetales    PokemonName = "ninetales"
+	PokemonNameJigglypuff   PokemonName = "jigglypuff"
+	PokemonNameWigglytuff   PokemonName = "wigglytuff"
+	PokemonNameZubat        PokemonName = "zubat"
+	PokemonNameGolbat       PokemonName = "golbat"
+	PokemonNameOddish       PokemonName = "oddish"
+	PokemonNameGloom        PokemonName = "gloom"
+	PokemonNameVileplume    PokemonName = "vileplume"
+	PokemonNameParas        PokemonName = "paras"
+	PokemonNameParasect     PokemonName = "parasect"
+	PokemonNameVenonat      PokemonName = "venonat"
+	PokemonNameVenomoth     PokemonName = "venomoth"
+	PokemonNameDiglett      PokemonName = "diglett"
+	PokemonNameDugtrio      PokemonName = "dugtrio"
+	PokemonNameMeowth       PokemonName = "meowth"
+	PokemonNamePersian      PokemonName = "persian"
+	PokemonNamePsyduck      PokemonName = "psyduck"
+	PokemonNameGolduck      PokemonName = "golduck"
+	PokemonNameMankey       PokemonName = "mankey"
+	PokemonNamePrimeape     PokemonName = "primeape"
+	PokemonNameGrowlithe    PokemonName = "growlithe"
+	PokemonNameArcanine     PokemonName = "arcanine"
+	PokemonNamePoliwag      PokemonName = "poliwag"
+	PokemonNamePoliwhirl    PokemonName = "poliwhirl"
+	PokemonNamePoliwrath    PokemonName = "poliwrath"
+	PokemonNameAbra         PokemonName = "abra"
+	PokemonNameKadabra      PokemonName = "kadabra"
+	PokemonNameAlakazam     PokemonName = "alakazam"
+	PokemonNameMachop       PokemonName = "machop"
+	PokemonNameMachoke      PokemonName = "machoke"
+	PokemonNameMachamp      PokemonName = "machamp"
+	PokemonNameBellsprout   PokemonName = "bellsprout"
+	PokemonNameWeepinbell   PokemonName = "weepinbell"
+	PokemonNameVictreebel   PokemonName = "victreebel"
+	PokemonNameTentacool    PokemonName = "tentacool"
+	PokemonNameTentacruel   PokemonName = "tentacruel"
+	PokemonNameGeodude      PokemonName = "geodude"
+	PokemonNameGraveler     PokemonName = "graveler"
+	PokemonNameGolem        PokemonName = "golem"
+	PokemonNamePonyta       PokemonName = "ponyta"
+	PokemonNameRapidash     PokemonName = "rapidash"
+	PokemonNameSlowpoke     PokemonName = "slowpoke"
+	PokemonNameSlowbro      PokemonName = "slowbro"
+	PokemonNameMagnemite    PokemonName = "magnemite"
+	PokemonNameMagneton     PokemonName = "magneton"
+	PokemonNameFarfetchd    PokemonName = "farfetchd"
+	PokemonNameDoduo        PokemonName = "doduo"
+	PokemonNameDodrio       PokemonName = "dodrio"
+	PokemonNameSeel         PokemonName = "seel"
+	PokemonNameDewgong      PokemonName = "dewgong"
+	PokemonNameGrimer       PokemonName = "grimer"
+	PokemonNameMuk          PokemonName = "muk"
+	PokemonNameShellder     PokemonName = "shellder"
+	PokemonNameCloyster     PokemonName = "cloyster"
+	PokemonNameGastly       PokemonName = "gastly"
+	PokemonNameHaunter      PokemonName = "haunter"
+	PokemonNameGengar       PokemonName = "gengar"
+	PokemonNameOnix         PokemonName = "onix"
+	PokemonNameDrowzee      PokemonName = "drowzee"
+	PokemonNameHypno        PokemonName = "hypno"
+	PokemonNameKrabby       PokemonName = "krabby"
+	PokemonNameKingler      PokemonName = "kingler"
+	PokemonNameVoltorb      PokemonName = "voltorb"
+	PokemonNameElectrode    PokemonName = "electrode"
+	PokemonNameExeggcute    PokemonName = "exeggcute"
+	PokemonNameExeggutor    PokemonName = "exeggutor"
+	PokemonNameCubone       PokemonName = "cubone"
+	PokemonNameMarowak      PokemonName = "marowak"
+	PokemonNameHitmonlee    PokemonName = "hitmonlee"
+	PokemonNameHitmonchan   PokemonName = "hitmonchan"
+	PokemonNameLickitung    PokemonName = "lickitung"
+	PokemonNameKoffing      PokemonName = "koffing"
+	PokemonNameWeezing      PokemonName = "weezing"
+	PokemonNameRhyhorn      PokemonName = "rhyhorn"
+	PokemonNameRhydon       PokemonName = "rhydon"
+	PokemonNameChansey      PokemonName = "chansey"
+	PokemonNameTangela      PokemonName = "tangela"
+	PokemonNameKangaskhan   PokemonName = "kangaskhan"
+	PokemonNameHorsea       PokemonName = "horsea"
+	PokemonNameSeadra       PokemonName = "seadra"
+	PokemonNameGoldeen      PokemonName = "goldeen"
+	PokemonNameSeaking      PokemonName = "seaking"
+	PokemonNameStaryu       PokemonName = "staryu"
+	PokemonNameStarmie      PokemonName = "starmie"
+	PokemonNameMrmime       PokemonName = "mrmime"
+	PokemonNameScyther      PokemonName = "scyther"
+	PokemonNameJynx         PokemonName = "jynx"
+	PokemonNameElectabuzz   PokemonName = "electabuzz"
+	PokemonNameMagmar       PokemonName = "magmar"
+	PokemonNamePinsir       PokemonName = "pinsir"
+	PokemonNameTauros       PokemonName = "tauros"
+	PokemonNameMagikarp     PokemonName = "magikarp"
+	PokemonNameGyarados     PokemonName = "gyarados"
+	PokemonNameLapras       PokemonName = "lapras"
+	PokemonNameDitto        PokemonName = "ditto"
+	PokemonNameEevee        PokemonName = "eevee"
+	PokemonNameVaporeon     PokemonName = "vaporeon"
+	PokemonNameJolteon      PokemonName = "jolteon"
+	PokemonNameFlareon      PokemonName = "flareon"
+	PokemonNamePorygon      PokemonName = "porygon"
+	PokemonNameOmanyte      PokemonName = "omanyte"
+	PokemonNameOmastar      PokemonName = "omastar"
+	PokemonNameKabuto       PokemonName = "kabuto"
+	PokemonNameKabutops     PokemonName = "kabutops"
+	PokemonNameAerodactyl   PokemonName = "aerodactyl"
+	PokemonNameSnorlax      PokemonName = "snorlax"
+	PokemonNameArticuno     PokemonName = "articuno"
+	PokemonNameZapdos       PokemonName = "zapdos"
+	PokemonNameMoltres      PokemonName = "moltres"
+	PokemonNameDratini      PokemonName = "dratini"
+	PokemonNameDragonair    PokemonName = "dragonair"
+	PokemonNameDragonite    PokemonName = "dragonite"
+	PokemonNameMewtwo       PokemonName = "mewtwo"
+	PokemonNameMew          PokemonName = "mew"
+	PokemonNameChikorita    PokemonName = "chikorita"
+	PokemonNameBayleef      PokemonName = "bayleef"
+	PokemonNameMeganium     PokemonName = "meganium"
+	PokemonNameCyndaquil    PokemonName = "cyndaquil"
+	PokemonNameQuilava      PokemonName = "quilava"
+	PokemonNameTyphlosion   PokemonName = "typhlosion"
+	PokemonNameTotodile     PokemonName = "totodile"
+	PokemonNameCroconaw     PokemonName = "croconaw"
+	PokemonNameFeraligatr   PokemonName = "feraligatr"
+	PokemonNameSentret      PokemonName = "sentret"
+	PokemonNameFurret       PokemonName = "furret"
+	PokemonNameHoothoot     PokemonName = "hoothoot"
+	PokemonNameNoctowl      PokemonName = "noctowl"
+	PokemonNameLedyba       PokemonName = "ledyba"
+	PokemonNameLedian       PokemonName = "ledian"
+	PokemonNameSpinarak     PokemonName = "spinarak"
+	PokemonNameAriados      PokemonName = "ariados"
+	PokemonNameCrobat       PokemonName = "crobat"
+	PokemonNameChinchou     PokemonName = "chinchou"
+	PokemonNameLanturn      PokemonName = "lanturn"
+	PokemonNamePichu        PokemonName = "pichu"
+	PokemonNameCleffa       PokemonName = "cleffa"
+	PokemonNameIgglybuff    PokemonName = "igglybuff"
+	PokemonNameTogepi       PokemonName = "togepi"
+	PokemonNameTogetic      PokemonName = "togetic"
+	PokemonNameNatu         PokemonName = "natu"
+	PokemonNameXatu         PokemonName = "xatu"
+	PokemonNameMareep       PokemonName = "mareep"
+	PokemonNameFlaaffy      PokemonName = "flaaffy"
+	PokemonNameAmpharos     PokemonName = "ampharos"
+	PokemonNameBellossom    PokemonName = "bellossom"
+	PokemonNameMarill       PokemonName = "marill"
+	PokemonNameAzumarill    PokemonName = "azumarill"
+	PokemonNameSudowoodo    PokemonName = "sudowoodo"
+	PokemonNamePolitoed     PokemonName = "politoed"
+	PokemonNameHoppip       PokemonName = "hoppip"
+	PokemonNameSkiploom     PokemonName = "skiploom"
+	PokemonNameJumpluff     PokemonName = "jumpluff"
+	PokemonNameAipom        PokemonName = "aipom"
+	PokemonNameSunkern      PokemonName = "sunkern"
+	PokemonNameSunflora     PokemonName = "sunflora"
+	PokemonNameYanma        PokemonName = "yanma"
+	PokemonNameWooper       PokemonName = "wooper"
+	PokemonNameQuagsire     PokemonName = "quagsire"
+	PokemonNameEspeon       PokemonName = "espeon"
+	PokemonNameUmbreon      PokemonName = "umbreon"
+	PokemonNameMurkrow      PokemonName = "murkrow"
+	PokemonNameSlowking     PokemonName = "slowking"
+	PokemonNameMisdreavus   PokemonName = "misdreavus"
+	PokemonNameUnown        PokemonName = "unown"
+	PokemonNameWobbuffet    PokemonName = "wobbuffet"
+	PokemonNameGirafarig    PokemonName = "girafarig"
+	PokemonNamePineco       PokemonName = "pineco"
+	PokemonNameForretress   PokemonName = "forretress"
+	PokemonNameDunsparce    PokemonName = "dunsparce"
+	PokemonNameGligar       PokemonName = "gligar"
+	PokemonNameSteelix      PokemonName = "steelix"
+	PokemonNameSnubbull     PokemonName = "snubbull"
+	PokemonNameGranbull     PokemonName = "granbull"
+	PokemonNameQwilfish     PokemonName = "qwilfish"
+	PokemonNameScizor       PokemonName = "scizor"
+	PokemonNameShuckle      PokemonName = "shuckle"
+	PokemonNameHeracross    PokemonName = "heracross"
+	PokemonNameSneasel      PokemonName = "sneasel"
+	PokemonNameTeddiursa    PokemonName = "teddiursa"
+	PokemonNameUrsaring     PokemonName = "ursaring"
+	PokemonNameSlugma       PokemonName = "slugma"
+	PokemonNameMagcargo     PokemonName = "magcargo"
+	PokemonNameSwinub       PokemonName = "swinub"
+	PokemonNamePiloswine    PokemonName = "piloswine"
+	PokemonNameCorsola      PokemonName = "corsola"
+	PokemonNameRemoraid     PokemonName = "remoraid"
+	PokemonNameOctillery    PokemonName = "octillery"
+	PokemonNameDelibird     PokemonName = "delibird"
+	PokemonNameMantine      PokemonName = "mantine"
+	PokemonNameSkarmory     PokemonName = "skarmory"
+	PokemonNameHoundour     PokemonName = "houndour"
+	PokemonNameHoundoom     PokemonName = "houndoom"
+	PokemonNameKingdra      PokemonName = "kingdra"
+	PokemonNamePhanpy       PokemonName = "phanpy"
+	PokemonNameDonphan      PokemonName = "donphan"
+	PokemonNamePorygon2     PokemonName = "porygon2"
+	PokemonNameStantler     PokemonName = "stantler"
+	PokemonNameSmeargle     PokemonName = "smeargle"
+	PokemonNameTyrogue      PokemonName = "tyrogue"
+	PokemonNameHitmontop    PokemonName = "hitmontop"
+	PokemonNameSmoochum     PokemonName = "smoochum"
+	PokemonNameElekid       PokemonName = "elekid"
+	PokemonNameMagby        PokemonName = "magby"
+	PokemonNameMiltank      PokemonName = "miltank"
+	PokemonNameBlissey      PokemonName = "blissey"
+	PokemonNameRaikou       PokemonName = "raikou"
+	PokemonNameEntei        PokemonName = "entei"
+	PokemonNameSuicune      PokemonName = "suicune"
+	PokemonNameLarvitar     PokemonName = "larvitar"
+	PokemonNamePupitar      PokemonName = "pupitar"
+	PokemonNameTyranitar    PokemonName = "tyranitar"
+	PokemonNameLugia        PokemonName = "lugia"
+	PokemonNameHoOh         PokemonName = "ho-oh"
+	PokemonNameCelebi       PokemonName = "celebi"
+	PokemonNameTreecko      PokemonName = "treecko"
+	PokemonNameGrovyle      PokemonName = "grovyle"
+	PokemonNameSceptile     PokemonName = "sceptile"
+	PokemonNameTorchic      PokemonName = "torchic"
+	PokemonNameCombusken    PokemonName = "combusken"
+	PokemonNameBlaziken     PokemonName = "blaziken"
+	PokemonNameMudkip       PokemonName = "mudkip"
+	PokemonNameMarshtomp    PokemonName = "marshtomp"
+	PokemonNameSwampert     PokemonName = "swampert"
+	PokemonNamePoochyena    PokemonName = "poochyena"
+	PokemonNameMightyena    PokemonName = "mightyena"
+	PokemonNameZigzagoon    PokemonName = "zigzagoon"
+	PokemonNameLinoone      PokemonName = "linoone"
+	PokemonNameWurmple      PokemonName = "wurmple"
+	PokemonNameSilcoon      PokemonName = "silcoon"
+	PokemonNameBeautifly    PokemonName = "beautifly"
+	PokemonNameCascoon      PokemonName = "cascoon"
+	PokemonNameDustox       PokemonName = "dustox"
+	PokemonNameLotad        PokemonName = "lotad"
+	PokemonNameLombre       PokemonName = "lombre"
+	PokemonNameLudicolo     PokemonName = "ludicolo"
+	PokemonNameSeedot       PokemonName = "seedot"
+	PokemonNameNuzleaf      PokemonName = "nuzleaf"
+	PokemonNameShiftry      PokemonName = "shiftry"
+	PokemonNameTaillow      PokemonName = "taillow"
+	PokemonNameSwellow      PokemonName = "swellow"
+	PokemonNameWingull      PokemonName = "wingull"
+	PokemonNamePelipper     PokemonName = "pelipper"
+	PokemonNameRalts        PokemonName = "ralts"
+	PokemonNameKirlia       PokemonName = "kirlia"
+	PokemonNameGardevoir    PokemonName = "gardevoir"
+	PokemonNameSurskit      PokemonName = "surskit"
+	PokemonNameMasquerain   PokemonName = "masquerain"
+	PokemonNameShroomish    PokemonName = "shroomish"
+	PokemonNameBreloom      PokemonName = "breloom"
+	PokemonNameSlakoth      PokemonName = "slakoth"
+	PokemonNameVigoroth     PokemonName = "vigoroth"
+	PokemonNameSlaking      PokemonName = "slaking"
+	PokemonNameNincada      PokemonName = "nincada"
+	PokemonNameNinjask      PokemonName = "ninjask"
+	PokemonNameShedinja     PokemonName = "shedinja"
+	PokemonNameWhismur      PokemonName = "whismur"
+	PokemonNameLoudred      PokemonName = "loudred"
+	PokemonNameExploud      PokemonName = "exploud"
+	PokemonNameMakuhita     PokemonName = "makuhita"
+	PokemonNameHariyama     PokemonName = "hariyama"
+	PokemonNameAzurill      PokemonName = "azurill"
+	PokemonNameNosepass     PokemonName = "nosepass"
+	PokemonNameSkitty       PokemonName = "skitty"
+	PokemonNameDelcatty     PokemonName = "delcatty"
+	PokemonNameSableye      PokemonName = "sableye"
+	PokemonNameMawile       PokemonName = "mawile"
+	PokemonNameAron         PokemonName = "aron"
+	PokemonNameLairon       PokemonName = "lairon"
+	PokemonNameAggron       PokemonName = "aggron"
+	PokemonNameMeditite     PokemonName = "meditite"
+	PokemonNameMedicham     PokemonName = "medicham"
+	PokemonNameElectrike    PokemonName = "electrike"
+	PokemonNameManectric    PokemonName = "manectric"
+	PokemonNamePlusle       PokemonName = "plusle"
+	PokemonNameMinun        PokemonName = "minun"
+	PokemonNameVolbeat      PokemonName = "volbeat"
+	PokemonNameIllumise     PokemonName = "illumise"
+	PokemonNameRoselia      PokemonName = "roselia"
+	PokemonNameGulpin       PokemonName = "gulpin"
+	PokemonNameSwalot       PokemonName = "swalot"
+	PokemonNameCarvanha     PokemonName = "carvanha"
+	PokemonNameSharpedo     PokemonName = "sharpedo"
+	PokemonNameWailmer      PokemonName = "wailmer"
+	PokemonNameWailord      PokemonName = "wailord"
+	PokemonNameNumel        PokemonName = "numel"
+	PokemonNameCamerupt     PokemonName = "camerupt"
+	PokemonNameTorkoal      PokemonName = "torkoal"
+	PokemonNameSpoink       PokemonName = "spoink"
+	PokemonNameGrumpig      PokemonName = "grumpig"
+	PokemonNameSpinda       PokemonName = "spinda"
+	PokemonNameTrapinch     PokemonName = "trapinch"
+	PokemonNameVibrava      PokemonName = "vibrava"
+	PokemonNameFlygon       PokemonName = "flygon"
+	PokemonNameCacnea       PokemonName = "cacnea"
+	PokemonNameCacturne     PokemonName = "cacturne"
+	PokemonNameSwablu       PokemonName = "swablu"
+	PokemonNameAltaria      PokemonName = "altaria"
+	PokemonNameZangoose     PokemonName = "zangoose"
+	PokemonNameSeviper      PokemonName = "seviper"
+	PokemonNameLunatone     PokemonName = "lunatone"
+	PokemonNameSolrock      PokemonName = "solrock"
+	PokemonNameBarboach     PokemonName = "barboach"
+	PokemonNameWhiscash     PokemonName = "whiscash"
+	PokemonNameCorphish     PokemonName = "corphish"
+	PokemonNameCrawdaunt    PokemonName = "crawdaunt"
+	PokemonNameBaltoy       PokemonName = "baltoy"
+	PokemonNameClaydol      PokemonName = "claydol"
+	PokemonNameLileep       PokemonName = "lileep"
+	PokemonNameCradily      PokemonName = "cradily"
+	PokemonNameAnorith      PokemonName = "anorith"
+	PokemonNameArmaldo      PokemonName = "armaldo"
+	PokemonNameFeebas       PokemonName = "feebas"
+	PokemonNameMilotic      PokemonName = "milotic"
+	PokemonNameCastform     PokemonName = "castform"
+	PokemonNameKecleon      PokemonName = "kecleon"
+	PokemonNameShuppet      PokemonName = "shuppet"
+	PokemonNameBanette      PokemonName = "banette"
+	PokemonNameDuskull      PokemonName = "duskull"
+	PokemonNameDusclops     PokemonName = "dusclops"
+	PokemonNameTropius      PokemonName = "tropius"
+	PokemonNameChimecho     PokemonName = "chimecho"
+	PokemonNameAbsol        PokemonName = "absol"
+	PokemonNameWynaut       PokemonName = "wynaut"
+	PokemonNameSnorunt      PokemonName = "snorunt"
+	PokemonNameGlalie       PokemonName = "glalie"
+	PokemonNameSpheal       PokemonName = "spheal"
+	PokemonNameSealeo       PokemonName = "sealeo"
+	PokemonNameWalrein      PokemonName = "walrein"
+	PokemonNameClamperl     PokemonName = "clamperl"
+	PokemonNameHuntail      PokemonName = "huntail"
+	PokemonNameGorebyss     PokemonName = "gorebyss"
+	PokemonNameRelicanth    PokemonName = "relicanth"
+	PokemonNameLuvdisc      PokemonName = "luvdisc"
+	PokemonNameBagon        PokemonName = "bagon"
+	PokemonNameShelgon      PokemonName = "shelgon"
+	PokemonNameSalamence    PokemonName = "salamence"
+	PokemonNameBeldum       PokemonName = "beldum"
+	PokemonNameMetang       PokemonName = "metang"
+	PokemonNameMetagross    PokemonName = "metagross"
+	PokemonNameRegirock     PokemonName = "regirock"
+	PokemonNameRegice       PokemonName = "regice"
+	PokemonNameRegisteel    PokemonName = "registeel"
+	PokemonNameLatias       PokemonName = "latias"
+	PokemonNameLatios       PokemonName = "latios"
+	PokemonNameKyogre       PokemonName = "kyogre"
+	PokemonNameGroudon      PokemonName = "groudon"
+	PokemonNameRayquaza     PokemonName = "rayquaza"
+	PokemonNameJirachi      PokemonName = "jirachi"
+	PokemonNameDeoxys       PokemonName = "deoxys"
+	PokemonNameTurtwig      PokemonName = "turtwig"
+	PokemonNameGrotle       PokemonName = "grotle"
+	PokemonNameTorterra     PokemonName = "torterra"
+	PokemonNameChimchar     PokemonName = "chimchar"
+	PokemonNameMonferno     PokemonName = "monferno"
+	PokemonNameInfernape    PokemonName = "infernape"
+	PokemonNamePiplup       PokemonName = "piplup"
+	PokemonNamePrinplup     PokemonName = "prinplup"
+	PokemonNameEmpoleon     PokemonName = "empoleon"
+	PokemonNameStarly       PokemonName = "starly"
+	PokemonNameStaravia     PokemonName = "staravia"
+	PokemonNameStaraptor    PokemonName = "staraptor"
+	PokemonNameBidoof       PokemonName = "bidoof"
+	PokemonNameBibarel      PokemonName = "bibarel"
+	PokemonNameKricketot    PokemonName = "kricketot"
+	PokemonNameKricketune   PokemonName = "kricketune"
+	PokemonNameShinx        PokemonName = "shinx"
+	PokemonNameLuxio        PokemonName = "luxio"
+	PokemonNameLuxray       PokemonName = "luxray"
+	PokemonNameBudew        PokemonName = "budew"
+	PokemonNameRoserade     PokemonName = "roserade"
+	PokemonNameCranidos     PokemonName = "cranidos"
+	PokemonNameRampardos    PokemonName = "rampardos"
+	PokemonNameShieldon     PokemonName = "shieldon"
+	PokemonNameBastiodon    PokemonName = "bastiodon"
+	PokemonNameBurmy        PokemonName = "burmy"
+	PokemonNameWormadam     PokemonName = "wormadam"
+	PokemonNameMothim       PokemonName = "mothim"
+	PokemonNameCombee       PokemonName = "combee"
+	PokemonNameVespiquen    PokemonName = "vespiquen"
+	PokemonNamePachirisu    PokemonName = "pachirisu"
+	PokemonNameBuizel       PokemonName = "buizel"
+	PokemonNameFloatzel     PokemonName = "floatzel"
+	PokemonNameCherubi      PokemonName = "cherubi"
+	PokemonNameCherrim      PokemonName = "cherrim"
+	PokemonNameShellos      PokemonName = "shellos"
+	PokemonNameGastrodon    PokemonName = "gastrodon"
+	PokemonNameAmbipom      PokemonName = "ambipom"
+	PokemonNameDrifloon     PokemonName = "drifloon"
+	PokemonNameDrifblim     PokemonName = "drifblim"
+	PokemonNameBuneary      PokemonName = "buneary"
+	PokemonNameLopunny      PokemonName = "lopunny"
+	PokemonNameMismagius    PokemonName = "mismagius"
+	PokemonNameHonchkrow    PokemonName = "honchkrow"
+	PokemonNameGlameow      PokemonName = "glameow"
+	PokemonNamePurugly      PokemonName = "purugly"
+	PokemonNameChingling    PokemonName = "chingling"
+	PokemonNameStunky       PokemonName = "stunky"
+	PokemonNameSkuntank     PokemonName = "skuntank"
+	PokemonNameBronzor      PokemonName = "bronzor"
+	PokemonNameBronzong     PokemonName = "bronzong"
+	PokemonNameBonsly       PokemonName = "bonsly"
+	PokemonNameMimejr       PokemonName = "mimejr"
+	PokemonNameHappiny      PokemonName = "happiny"
+	PokemonNameChatot       PokemonName = "chatot"
+	PokemonNameSpiritomb    PokemonName = "spiritomb"
+	PokemonNameGible        PokemonName = "gible"
+	PokemonNameGabite       PokemonName = "gabite"
+	PokemonNameGarchomp     PokemonName = "garchomp"
+	PokemonNameMunchlax     PokemonName = "munchlax"
+	PokemonNameRiolu        PokemonName = "riolu"
+	PokemonNameLucario      PokemonName = "lucario"
+	PokemonNameHippopotas   PokemonName = "hippopotas"
+	PokemonNameHippowdon    PokemonName = "hippowdon"
+	PokemonNameSkorupi      PokemonName = "skorupi"
+	PokemonNameDrapion      PokemonName = "drapion"
+	PokemonNameCroagunk     PokemonName = "croagunk"
+	PokemonNameToxicroak    PokemonName = "toxicroak"
+	PokemonNameCarnivine    PokemonName = "carnivine"
+	PokemonNameFinneon      PokemonName = "finneon"
+	PokemonNameLumineon     PokemonName = "lumineon"
+	PokemonNameMantyke      PokemonName = "mantyke"
+	PokemonNameSnover       PokemonName = "snover"
+	PokemonNameAbomasnow    PokemonName = "abomasnow"
+	PokemonNameWeavile      PokemonName = "weavile"
+	PokemonNameMagnezone    PokemonName = "magnezone"
+	PokemonNameLickilicky   PokemonName = "lickilicky"
+	PokemonNameRhyperior    PokemonName = "rhyperior"
+	PokemonNameTangrowth    PokemonName = "tangrowth"
+	PokemonNameElectivire   PokemonName = "electivire"
+	PokemonNameMagmortar    PokemonName = "magmortar"
+	PokemonNameTogekiss     PokemonName = "togekiss"
+	PokemonNameYanmega      PokemonName = "yanmega"
+	PokemonNameLeafeon      PokemonName = "leafeon"
+	PokemonNameGlaceon      PokemonName = "glaceon"
+	PokemonNameGliscor      PokemonName = "gliscor"
+	PokemonNameMamoswine    PokemonName = "mamoswine"
+	PokemonNamePorygonZ     PokemonName = "porygon-z"
+	PokemonNameGallade      PokemonName = "gallade"
+	PokemonNameProbopass    PokemonName = "probopass"
+	PokemonNameDusknoir     PokemonName = "dusknoir"
+	PokemonNameFroslass     PokemonName = "froslass"
+	PokemonNameRotom        PokemonName = "rotom"
+	PokemonNameUxie         PokemonName = "uxie"
+	PokemonNameMesprit      PokemonName = "mesprit"
+	PokemonNameAzelf        PokemonName = "azelf"
+	PokemonNameDialga       PokemonName = "dialga"
+	PokemonNamePalkia       PokemonName = "palkia"
+	PokemonNameHeatran      PokemonName = "heatran"
+	PokemonNameRegigigas    PokemonName = "regigigas"
+	PokemonNameGiratina     PokemonName = "giratina"
+	PokemonNameCresselia    PokemonName = "cresselia"
+	PokemonNamePhione       PokemonName = "phione"
+	PokemonNameManaphy      PokemonName = "manaphy"
+	PokemonNameDarkrai      PokemonName = "darkrai"
+	PokemonNameShaymin      PokemonName = "shaymin"
+	PokemonNameArceus       PokemonName = "arceus"
+	PokemonNameVictini      PokemonName = "victini"
+	PokemonNameSnivy        PokemonName = "snivy"
+	PokemonNameServine      PokemonName = "servine"
+	PokemonNameSerperior    PokemonName = "serperior"
+	PokemonNameTepig        PokemonName = "tepig"
+	PokemonNamePignite      PokemonName = "pignite"
+	PokemonNameEmboar       PokemonName = "emboar"
+	PokemonNameOshawott     PokemonName = "oshawott"
+	PokemonNameDewott       PokemonName = "dewott"
+	PokemonNameSamurott     PokemonName = "samurott"
+	PokemonNamePatrat       PokemonName = "patrat"
+	PokemonNameWatchog      PokemonName = "watchog"
+	PokemonNameLillipup     PokemonName = "lillipup"
+	PokemonNameHerdier      PokemonName = "herdier"
+	PokemonNameStoutland    PokemonName = "stoutland"
+	PokemonNamePurrloin     PokemonName = "purrloin"
+	PokemonNameLiepard      PokemonName = "liepard"
+	PokemonNamePansage      PokemonName = "pansage"
+	PokemonNameSimisage     PokemonName = "simisage"
+	PokemonNamePansear      PokemonName = "pansear"
+	PokemonNameSimisear     PokemonName = "simisear"
+	PokemonNamePanpour      PokemonName = "panpour"
+	PokemonNameSimipour     PokemonName = "simipour"
+	PokemonNameMunna        PokemonName = "munna"
+	PokemonNameMusharna     PokemonName = "musharna"
+	PokemonNamePidove       PokemonName = "pidove"
+	PokemonNameTranquill    PokemonName = "tranquill"
+	PokemonNameUnfezant     PokemonName = "unfezant"
+	PokemonNameBlitzle      PokemonName = "blitzle"
+	PokemonNameZebstrika    PokemonName = "zebstrika"
+	PokemonNameRoggenrola   PokemonName = "roggenrola"
+	PokemonNameBoldore      PokemonName = "boldore"
+	PokemonNameGigalith     PokemonName = "gigalith"
+	PokemonNameWoobat       PokemonName = "woobat"
+	PokemonNameSwoobat      PokemonName = "swoobat"
+	PokemonNameDrilbur      PokemonName = "drilbur"
+	PokemonNameExcadrill    PokemonName = "excadrill"
+	PokemonNameAudino       PokemonName = "audino"
+	PokemonNameTimburr      PokemonName = "timburr"
+	PokemonNameGurdurr      PokemonName = "gurdurr"
+	PokemonNameConkeldurr   PokemonName = "conkeldurr"
+	PokemonNameTympole      PokemonName = "tympole"
+	PokemonNamePalpitoad    PokemonName = "palpitoad"
+	PokemonNameSeismitoad   PokemonName = "seismitoad"
+	PokemonNameThroh        PokemonName = "throh"
+	PokemonNameSawk         PokemonName = "sawk"
+	PokemonNameSewaddle     PokemonName = "sewaddle"
+	PokemonNameSwadloon     PokemonName = "swadloon"
+	PokemonNameLeavanny     PokemonName = "leavanny"
+	PokemonNameVenipede     PokemonName = "venipede"
+	PokemonNameWhirlipede   PokemonName = "whirlipede"
+	PokemonNameScolipede    PokemonName = "scolipede"
+	PokemonNameCottonee     PokemonName = "cottonee"
+	PokemonNameWhimsicott   PokemonName = "whimsicott"
+	PokemonNamePetilil      PokemonName = "petilil"
+	PokemonNameLilligant    PokemonName = "lilligant"
+	PokemonNameBasculin     PokemonName = "basculin"
+	PokemonNameSandile      PokemonName = "sandile"
+	PokemonNameKrokorok     PokemonName = "krokorok"
+	PokemonNameKrookodile   PokemonName = "krookodile"
+	PokemonNameDarumaka     PokemonName = "darumaka"
+	PokemonNameDarmanitan   PokemonName = "darmanitan"
+	PokemonNameMaractus     PokemonName = "maractus"
+	PokemonNameDwebble      PokemonName = "dwebble"
+	PokemonNameCrustle      PokemonName = "crustle"
+	PokemonNameScraggy      PokemonName = "scraggy"
+	PokemonNameScrafty      PokemonName = "scrafty"
+	PokemonNameSigilyph     PokemonName = "sigilyph"
+	PokemonNameYamask       PokemonName = "yamask"
+	PokemonNameCofagrigus   PokemonName = "cofagrigus"
+	PokemonNameTirtouga     PokemonName = "tirtouga"
+	PokemonNameCarracosta   PokemonName = "carracosta"
+	PokemonNameArchen       PokemonName = "archen"
+	PokemonNameArcheops     PokemonName = "archeops"
+	PokemonNameTrubbish     PokemonName = "trubbish"
+	PokemonNameGarbodor     PokemonName = "garbodor"
+	PokemonNameZorua        PokemonName = "zorua"
+	PokemonNameZoroark      PokemonName = "zoroark"
+	PokemonNameMinccino     PokemonName = "minccino"
+	PokemonNameCinccino     PokemonName = "cinccino"
+	PokemonNameGothita      PokemonName = "gothita"
+	PokemonNameGothorita    PokemonName = "gothorita"
+	PokemonNameGothitelle   PokemonName = "gothitelle"
+	PokemonNameSolosis      PokemonName = "solosis"
+	PokemonNameDuosion      PokemonName = "duosion"
+	PokemonNameReuniclus    PokemonName = "reuniclus"
+	PokemonNameDucklett     PokemonName = "ducklett"
+	PokemonNameSwanna       PokemonName = "swanna"
+	PokemonNameVanillite    PokemonName = "vanillite"
+	PokemonNameVanillish    PokemonName = "vanillish"
+	PokemonNameVanilluxe    PokemonName = "vanilluxe"
+	PokemonNameDeerling     PokemonName = "deerling"
+	PokemonNameSawsbuck     PokemonName = "sawsbuck"
+	PokemonNameEmolga       PokemonName = "emolga"
+	PokemonNameKarrablast   PokemonName = "karrablast"
+	PokemonNameEscavalier   PokemonName = "escavalier"
+	PokemonNameFoongus      PokemonName = "foongus"
+	PokemonNameAmoonguss    PokemonName = "amoonguss"
+	PokemonNameFrillish     PokemonName = "frillish"
+	PokemonNameJellicent    PokemonName = "jellicent"
+	PokemonNameAlomomola    PokemonName = "alomomola"
+	PokemonNameJoltik       PokemonName = "joltik"
+	PokemonNameGalvantula   PokemonName = "galvantula"
+	PokemonNameFerroseed    PokemonName = "ferroseed"
+	PokemonNameFerrothorn   PokemonName = "ferrothorn"
+	PokemonNameKlink        PokemonName = "klink"
+	PokemonNameKlang        PokemonName = "klang"
+	PokemonNameKlinklang    PokemonName = "klinklang"
+	PokemonNameTynamo       PokemonName = "tynamo"
+	PokemonNameEelektrik    PokemonName = "eelektrik"
+	PokemonNameEelektross   PokemonName = "eelektross"
+	PokemonNameElgyem       PokemonName = "elgyem"
+	PokemonNameBeheeyem     PokemonName = "beheeyem"
+	PokemonNameLitwick      PokemonName = "litwick"
+	PokemonNameLampent      PokemonName = "lampent"
+	PokemonNameChandelure   PokemonName = "chandelure"
+	PokemonNameAxew         PokemonName = "axew"
+	PokemonNameFraxure      PokemonName = "fraxure"
+	PokemonNameHaxorus      PokemonName = "haxorus"
+	PokemonNameCubchoo      PokemonName = "cubchoo"
+	PokemonNameBeartic      PokemonName = "beartic"
+	PokemonNameCryogonal    PokemonName = "cryogonal"
+	PokemonNameShelmet      PokemonName = "shelmet"
+	PokemonNameAccelgor     PokemonName = "accelgor"
+	PokemonNameStunfisk     PokemonName = "stunfisk"
+	PokemonNameMienfoo      PokemonName = "mienfoo"
+	PokemonNameMienshao     PokemonName = "mienshao"
+	PokemonNameDruddigon    PokemonName = "druddigon"
+	PokemonNameGolett       PokemonName = "golett"
+	PokemonNameGolurk       PokemonName = "golurk"
+	PokemonNamePawniard     PokemonName = "pawniard"
+	PokemonNameBisharp      PokemonName = "bisharp"
+	PokemonNameBouffalant   PokemonName = "bouffalant"
+	PokemonNameRufflet      PokemonName = "rufflet"
+	PokemonNameBraviary     PokemonName = "braviary"
+	PokemonNameVullaby      PokemonName = "vullaby"
+	PokemonNameMandibuzz    PokemonName = "mandibuzz"
+	PokemonNameHeatmor      PokemonName = "heatmor"
+	PokemonNameDurant       PokemonName = "durant"
+	PokemonNameDeino        PokemonName = "deino"
+	PokemonNameZweilous     PokemonName = "zweilous"
+	PokemonNameHydreigon    PokemonName = "hydreigon"
+	PokemonNameLarvesta     PokemonName = "larvesta"
+	PokemonNameVolcarona    PokemonName = "volcarona"
+	PokemonNameCobalion     PokemonName = "cobalion"
+	PokemonNameTerrakion    PokemonName = "terrakion"
+	PokemonNameVirizion     PokemonName = "virizion"
+	PokemonNameTornadus     PokemonName = "tornadus"
+	PokemonNameThundurus    PokemonName = "thundurus"
+	PokemonNameReshiram     PokemonName = "reshiram"
+	PokemonNameZekrom       PokemonName = "zekrom"
+	PokemonNameLandorus     PokemonName = "landorus"
+	PokemonNameKyurem       PokemonName = "kyurem"
+	PokemonNameKeldeo       PokemonName = "keldeo"
+	PokemonNameMeloetta     PokemonName = "meloetta"
+	PokemonNameGenesect     PokemonName = "genesect"
+	PokemonNameChespin      PokemonName = "chespin"
+	PokemonNameQuilladin    PokemonName = "quilladin"
+	PokemonNameChesnaught   PokemonName = "chesnaught"
+	PokemonNameFennekin     PokemonName = "fennekin"
+	PokemonNameBraixen      PokemonName = "braixen"
+	PokemonNameDelphox      PokemonName = "delphox"
+	PokemonNameFroakie      PokemonName = "froakie"
+	PokemonNameFrogadier    PokemonName = "frogadier"
+	PokemonNameGreninja     PokemonName = "greninja"
+	PokemonNameBunnelby     PokemonName = "bunnelby"
+	PokemonNameDiggersby    PokemonName = "diggersby"
+	PokemonNameFletchling   PokemonName = "fletchling"
+	PokemonNameFletchinder  PokemonName = "fletchinder"
+	PokemonNameTalonflame   PokemonName = "talonflame"
+	PokemonNameScatterbug   PokemonName = "scatterbug"
+	PokemonNameSpewpa       PokemonName = "spewpa"
+	PokemonNameVivillon     PokemonName = "vivillon"
+	PokemonNameLitleo       PokemonName = "litleo"
+	PokemonNamePyroar       PokemonName = "pyroar"
+	PokemonNameFlabebe      PokemonName = "flabebe"
+	PokemonNameFloette      PokemonName = "floette"
+	PokemonNameFlorges      PokemonName = "florges"
+	PokemonNameSkiddo       PokemonName = "skiddo"
+	PokemonNameGogoat       PokemonName = "gogoat"
+	PokemonNamePancham      PokemonName = "pancham"
+	PokemonNamePangoro      PokemonName = "pangoro"
+	PokemonNameFurfrou      PokemonName = "furfrou"
+	PokemonNameEspurr       PokemonName = "espurr"
+	PokemonNameMeowstic     PokemonName = "meowstic"
+	PokemonNameHonedge      PokemonName = "honedge"
+	PokemonNameDoublade     PokemonName = "doublade"
+	PokemonNameAegislash    PokemonName = "aegislash"
+	PokemonNameSpritzee     PokemonName = "spritzee"
+	PokemonNameAromatisse   PokemonName = "aromatisse"
+	PokemonNameSwirlix      PokemonName = "swirlix"
+	PokemonNameSlurpuff     PokemonName = "slurpuff"
+	PokemonNameInkay        PokemonName = "inkay"
+	PokemonNameMalamar      PokemonName = "malamar"
+	PokemonNameBinacle      PokemonName = "binacle"
+	PokemonNameBarbaracle   PokemonName = "barbaracle"
+	PokemonNameSkrelp       PokemonName = "skrelp"
+	PokemonNameDragalge     PokemonName = "dragalge"
+	PokemonNameClauncher    PokemonName = "clauncher"
+	PokemonNameClawitzer    PokemonName = "clawitzer"
+	PokemonNameHelioptile   PokemonName = "helioptile"
+	PokemonNameHeliolisk    PokemonName = "heliolisk"
+	PokemonNameTyrunt       PokemonName = "tyrunt"
+	PokemonNameTyrantrum    PokemonName = "tyrantrum"
+	PokemonNameAmaura       PokemonName = "amaura"
+	PokemonNameAurorus      PokemonName = "aurorus"
+	PokemonNameSylveon      PokemonName = "sylveon"
+	PokemonNameHawlucha     PokemonName = "hawlucha"
+	PokemonNameDedenne      PokemonName = "dedenne"
+	PokemonNameCarbink      PokemonName = "carbink"
+	PokemonNameGoomy        PokemonName = "goomy"
+	PokemonNameSliggoo      PokemonName = "sliggoo"
+	PokemonNameGoodra       PokemonName = "goodra"
+	PokemonNameKlefki       PokemonName = "klefki"
+	PokemonNamePhantump     PokemonName = "phantump"
+	PokemonNameTrevenant    PokemonName = "trevenant"
+	PokemonNamePumpkaboo    PokemonName = "pumpkaboo"
+	PokemonNameGourgeist    PokemonName = "gourgeist"
+	PokemonNameBergmite     PokemonName = "bergmite"
+	PokemonNameAvalugg      PokemonName = "avalugg"
+	PokemonNameNoibat       PokemonName = "noibat"
+	PokemonNameNoivern      PokemonName = "noivern"
+	PokemonNameXerneas      PokemonName = "xerneas"
+	PokemonNameYveltal      PokemonName = "yveltal"
+	PokemonNameZygarde      PokemonName = "zygarde"
+	PokemonNameDiancie      PokemonName = "diancie"
+	PokemonNameHoopa        PokemonName = "hoopa"
+	PokemonNameVolcanion    PokemonName = "volcanion"
+	PokemonNameRowlet       PokemonName = "rowlet"
+	PokemonNameDartrix      PokemonName = "dartrix"
+	PokemonNameDecidueye    PokemonName = "decidueye"
+	PokemonNameLitten       PokemonName = "litten"
+	PokemonNameTorracat     PokemonName = "torracat"
+	PokemonNameIncineroar   PokemonName = "incineroar"
+	PokemonNamePopplio      PokemonName = "popplio"
+	PokemonNameBrionne      PokemonName = "brionne"
+	PokemonNamePrimarina    PokemonName = "primarina"
+	PokemonNamePikipek      PokemonName = "pikipek"
+	PokemonNameTrumbeak     PokemonName = "trumbeak"
+	PokemonNameToucannon    PokemonName = "toucannon"
+	PokemonNameYungoos      PokemonName = "yungoos"
+	PokemonNameGumshoos     PokemonName = "gumshoos"
+	PokemonNameGrubbin      PokemonName = "grubbin"
+	PokemonNameCharjabug    PokemonName = "charjabug"
+	PokemonNameVikavolt     PokemonName = "vikavolt"
+	PokemonNameCrabrawler   PokemonName = "crabrawler"
+	PokemonNameCrabominable PokemonName = "crabominable"
+	PokemonNameOricorio     PokemonName = "oricorio"
+	PokemonNameCutiefly     PokemonName = "cutiefly"
+	PokemonNameRibombee     PokemonName = "ribombee"
+	PokemonNameRockruff     PokemonName = "rockruff"
+	PokemonNameLycanroc     PokemonName = "lycanroc"
+	PokemonNameWishiwashi   PokemonName = "wishiwashi"
+	PokemonNameMareanie     PokemonName = "mareanie"
+	PokemonNameToxapex      PokemonName = "toxapex"
+	PokemonNameMudbray      PokemonName = "mudbray"
+	PokemonNameMudsdale     PokemonName = "mudsdale"
+	PokemonNameDewpider     PokemonName = "dewpider"
+	PokemonNameAraquanid    PokemonName = "araquanid"
+	PokemonNameFomantis     PokemonName = "fomantis"
+	PokemonNameLurantis     PokemonName = "lurantis"
+	PokemonNameMorelull     PokemonName = "morelull"
+	PokemonNameShiinotic    PokemonName = "shiinotic"
+	PokemonNameSalandit     PokemonName = "salandit"
+	PokemonNameSalazzle     PokemonName = "salazzle"
+	PokemonNameStufful      PokemonName = "stufful"
+	PokemonNameBewear       PokemonName = "bewear"
+	PokemonNameBounsweet    PokemonName = "bounsweet"
+	PokemonNameSteenee      PokemonName = "steenee"
+	PokemonNameTsareena     PokemonName = "tsareena"
+	PokemonNameComfey       PokemonName = "comfey"
+	PokemonNameOranguru     PokemonName = "oranguru"
+	PokemonNamePassimian    PokemonName = "passimian"
+	PokemonNameWimpod       PokemonName = "wimpod"
+	PokemonNameGolisopod    PokemonName = "golisopod"
+	PokemonNameSandygast    PokemonName = "sandygast"
+	PokemonNamePalossand    PokemonName = "palossand"
+	PokemonNamePyukumuku    PokemonName = "pyukumuku"
+	PokemonNameTypenull     PokemonName = "typenull"
+	PokemonNameSilvally     PokemonName = "silvally"
+	PokemonNameMinior       PokemonName = "minior"
+	PokemonNameKomala       PokemonName = "komala"
+	PokemonNameTurtonator   PokemonName = "turtonator"
+	PokemonNameTogedemaru   PokemonName = "togedemaru"
+	PokemonNameMimikyu      PokemonName = "mimikyu"
+	PokemonNameBruxish      PokemonName = "bruxish"
+	PokemonNameDrampa       PokemonName = "drampa"
+	PokemonNameDhelmise     PokemonName = "dhelmise"
+	PokemonNameJangmoO      PokemonName = "jangmo-o"
+	PokemonNameHakamoO      PokemonName = "hakamo-o"
+	PokemonNameKommoO       PokemonName = "kommo-o"
+	PokemonNameTapukoko     PokemonName = "tapukoko"
+	PokemonNameTapulele     PokemonName = "tapulele"
+	PokemonNameTapubulu     PokemonName = "tapubulu"
+	PokemonNameTapufini     PokemonName = "tapufini"
+	PokemonNameCosmog       PokemonName = "cosmog"
+	PokemonNameCosmoem      PokemonName = "cosmoem"
+	PokemonNameSolgaleo     PokemonName = "solgaleo"
+	PokemonNameLunala       PokemonName = "lunala"
+	PokemonNameNihilego     PokemonName = "nihilego"
+	PokemonNameBuzzwole     PokemonName = "buzzwole"
+	PokemonNamePheromosa    PokemonName = "pheromosa"
+	PokemonNameXurkitree    PokemonName = "xurkitree"
+	PokemonNameCelesteela   PokemonName = "celesteela"
+	PokemonNameKartana      PokemonName = "kartana"
+	PokemonNameGuzzlord     PokemonName = "guzzlord"
+	PokemonNameNecrozma     PokemonName = "necrozma"
+	PokemonNameMagearna     PokemonName = "magearna"
+	PokemonNameMarshadow    PokemonName = "marshadow"
+	PokemonNamePoipole      PokemonName = "poipole"
+	PokemonNameNaganadel    PokemonName = "naganadel"
+	PokemonNameStakataka    PokemonName = "stakataka"
+	PokemonNameBlacephalon  PokemonName = "blacephalon"
+	PokemonNameZeraora      PokemonName = "zeraora"
+	PokemonNameMeltan       PokemonName = "meltan"
+	PokemonNameMelmetal     PokemonName = "melmetal"
+	PokemonNameGrookey      PokemonName = "grookey"
+	PokemonNameThwackey     PokemonName = "thwackey"
+	PokemonNameRillaboom    PokemonName = "rillaboom"
+	PokemonNameScorbunny    PokemonName = "scorbunny"
+	PokemonNameRaboot       PokemonName = "raboot"
+	PokemonNameCinderace    PokemonName = "cinderace"
+	PokemonNameSobble       PokemonName = "sobble"
+	PokemonNameDrizzile     PokemonName = "drizzile"
+	PokemonNameInteleon     PokemonName = "inteleon"
+	PokemonNameSkwovet      PokemonName = "skwovet"
+	PokemonNameGreedent     PokemonName = "greedent"
+	PokemonNameRookidee     PokemonName = "rookidee"
+	PokemonNameCorvisquire  PokemonName = "corvisquire"
+	PokemonNameCorviknight  PokemonName = "corviknight"
+	PokemonNameBlipbug      PokemonName = "blipbug"
+	PokemonNameDottler      PokemonName = "dottler"
+	PokemonNameOrbeetle     PokemonName = "orbeetle"
+	PokemonNameNickit       PokemonName = "nickit"
+	PokemonNameThievul      PokemonName = "thievul"
+	PokemonNameGossifleur   PokemonName = "gossifleur"
+	PokemonNameEldegoss     PokemonName = "eldegoss"
+	PokemonNameWooloo       PokemonName = "wooloo"
+	PokemonNameDubwool      PokemonName = "dubwool"
+	PokemonNameChewtle      PokemonName = "chewtle"
+	PokemonNameDrednaw      PokemonName = "drednaw"
+	PokemonNameYamper       PokemonName = "yamper"
+	PokemonNameBoltund      PokemonName = "boltund"
+	PokemonNameRolycoly     PokemonName = "rolycoly"
+	PokemonNameCarkol       PokemonName = "carkol"
+	PokemonNameCoalossal    PokemonName = "coalossal"
+	PokemonNameApplin       PokemonName = "applin"
+	PokemonNameFlapple      PokemonName = "flapple"
+	PokemonNameAppletun     PokemonName = "appletun"
+	PokemonNameSilicobra    PokemonName = "silicobra"
+	PokemonNameSandaconda   PokemonName = "sandaconda"
+	PokemonNameCramorant    PokemonName = "cramorant"
+	PokemonNameArrokuda     PokemonName = "arrokuda"
+	PokemonNameBarraskewda  PokemonName = "barraskewda"
+	PokemonNameToxel        PokemonName = "toxel"
+	PokemonNameToxtricity   PokemonName = "toxtricity"
+	PokemonNameSizzlipede   PokemonName = "sizzlipede"
+	PokemonNameCentiskorch  PokemonName = "centiskorch"
+	PokemonNameClobbopus    PokemonName = "clobbopus"
+	PokemonNameGrapploct    PokemonName = "grapploct"
+	PokemonNameSinistea     PokemonName = "sinistea"
+	PokemonNamePolteageist  PokemonName = "polteageist"
+	PokemonNameHatenna      PokemonName = "hatenna"
+	PokemonNameHattrem      PokemonName = "hattrem"
+	PokemonNameHatterene    PokemonName = "hatterene"
+	PokemonNameImpidimp     PokemonName = "impidimp"
+	PokemonNameMorgrem      PokemonName = "morgrem"
+	PokemonNameGrimmsnarl   PokemonName = "grimmsnarl"
+	PokemonNameObstagoon    PokemonName = "obstagoon"
+	PokemonNamePerrserker   PokemonName = "perrserker"
+	PokemonNameCursola      PokemonName = "cursola"
+	PokemonNameSirfetchd    PokemonName = "sirfetchd"
+	PokemonNameMrrime       PokemonName = "mrrime"
+	PokemonNameRunerigus    PokemonName = "runerigus"
+	PokemonNameMilcery      PokemonName = "milcery"
+	PokemonNameAlcremie     PokemonName = "alcremie"
+	PokemonNameFalinks      PokemonName = "falinks"
+	PokemonNamePincurchin   PokemonName = "pincurchin"
+	PokemonNameSnom         PokemonName = "snom"
+	PokemonNameFrosmoth     PokemonName = "frosmoth"
+	PokemonNameStonjourner  PokemonName = "stonjourner"
+	PokemonNameEiscue       PokemonName = "eiscue"
+	PokemonNameIndeedee     PokemonName = "indeedee"
+	PokemonNameMorpeko      PokemonName = "morpeko"
+	PokemonNameCufant       PokemonName = "cufant"
+	PokemonNameCopperajah   PokemonName = "copperajah"
+	PokemonNameDracozolt    PokemonName = "dracozolt"
+	PokemonNameArctozolt    PokemonName = "arctozolt"
+	PokemonNameDracovish    PokemonName = "dracovish"
+	PokemonNameArctovish    PokemonName = "arctovish"
+	PokemonNameDuraludon    PokemonName = "duraludon"
+	PokemonNameDreepy       PokemonName = "dreepy"
+	PokemonNameDrakloak     PokemonName = "drakloak"
+	PokemonNameDragapult    PokemonName = "dragapult"
+	PokemonNameZacian       PokemonName = "zacian"
+	PokemonNameZamazenta    PokemonName = "zamazenta"
+	PokemonNameEternatus    PokemonName = "eternatus"
+	PokemonNameKubfu        PokemonName = "kubfu"
+	PokemonNameUrshifu      PokemonName = "urshifu"
+	PokemonNameZarude       PokemonName = "zarude"
+	PokemonNameRegieleki    PokemonName = "regieleki"
+	PokemonNameRegidrago    PokemonName = "regidrago"
+	PokemonNameGlastrier    PokemonName = "glastrier"
+	PokemonNameSpectrier    PokemonName = "spectrier"
+	PokemonNameCalyrex      PokemonName = "calyrex"
+)
+
+func (e PokemonName) ToPointer() *PokemonName {
+	return &e
+}
+
+func (e *PokemonName) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "bulbasaur":
+		fallthrough
+	case "ivysaur":
+		fallthrough
+	case "venusaur":
+		fallthrough
+	case "charmander":
+		fallthrough
+	case "charmeleon":
+		fallthrough
+	case "charizard":
+		fallthrough
+	case "squirtle":
+		fallthrough
+	case "wartortle":
+		fallthrough
+	case "blastoise":
+		fallthrough
+	case "caterpie":
+		fallthrough
+	case "metapod":
+		fallthrough
+	case "butterfree":
+		fallthrough
+	case "weedle":
+		fallthrough
+	case "kakuna":
+		fallthrough
+	case "beedrill":
+		fallthrough
+	case "pidgey":
+		fallthrough
+	case "pidgeotto":
+		fallthrough
+	case "pidgeot":
+		fallthrough
+	case "rattata":
+		fallthrough
+	case "raticate":
+		fallthrough
+	case "spearow":
+		fallthrough
+	case "fearow":
+		fallthrough
+	case "ekans":
+		fallthrough
+	case "arbok":
+		fallthrough
+	case "pikachu":
+		fallthrough
+	case "raichu":
+		fallthrough
+	case "sandshrew":
+		fallthrough
+	case "sandslash":
+		fallthrough
+	case "nidoranf":
+		fallthrough
+	case "nidorina":
+		fallthrough
+	case "nidoqueen":
+		fallthrough
+	case "nidoranm":
+		fallthrough
+	case "nidorino":
+		fallthrough
+	case "nidoking":
+		fallthrough
+	case "clefairy":
+		fallthrough
+	case "clefable":
+		fallthrough
+	case "vulpix":
+		fallthrough
+	case "ninetales":
+		fallthrough
+	case "jigglypuff":
+		fallthrough
+	case "wigglytuff":
+		fallthrough
+	case "zubat":
+		fallthrough
+	case "golbat":
+		fallthrough
+	case "oddish":
+		fallthrough
+	case "gloom":
+		fallthrough
+	case "vileplume":
+		fallthrough
+	case "paras":
+		fallthrough
+	case "parasect":
+		fallthrough
+	case "venonat":
+		fallthrough
+	case "venomoth":
+		fallthrough
+	case "diglett":
+		fallthrough
+	case "dugtrio":
+		fallthrough
+	case "meowth":
+		fallthrough
+	case "persian":
+		fallthrough
+	case "psyduck":
+		fallthrough
+	case "golduck":
+		fallthrough
+	case "mankey":
+		fallthrough
+	case "primeape":
+		fallthrough
+	case "growlithe":
+		fallthrough
+	case "arcanine":
+		fallthrough
+	case "poliwag":
+		fallthrough
+	case "poliwhirl":
+		fallthrough
+	case "poliwrath":
+		fallthrough
+	case "abra":
+		fallthrough
+	case "kadabra":
+		fallthrough
+	case "alakazam":
+		fallthrough
+	case "machop":
+		fallthrough
+	case "machoke":
+		fallthrough
+	case "machamp":
+		fallthrough
+	case "bellsprout":
+		fallthrough
+	case "weepinbell":
+		fallthrough
+	case "victreebel":
+		fallthrough
+	case "tentacool":
+		fallthrough
+	case "tentacruel":
+		fallthrough
+	case "geodude":
+		fallthrough
+	case "graveler":
+		fallthrough
+	case "golem":
+		fallthrough
+	case "ponyta":
+		fallthrough
+	case "rapidash":
+		fallthrough
+	case "slowpoke":
+		fallthrough
+	case "slowbro":
+		fallthrough
+	case "magnemite":
+		fallthrough
+	case "magneton":
+		fallthrough
+	case "farfetchd":
+		fallthrough
+	case "doduo":
+		fallthrough
+	case "dodrio":
+		fallthrough
+	case "seel":
+		fallthrough
+	case "dewgong":
+		fallthrough
+	case "grimer":
+		fallthrough
+	case "muk":
+		fallthrough
+	case "shellder":
+		fallthrough
+	case "cloyster":
+		fallthrough
+	case "gastly":
+		fallthrough
+	case "haunter":
+		fallthrough
+	case "gengar":
+		fallthrough
+	case "onix":
+		fallthrough
+	case "drowzee":
+		fallthrough
+	case "hypno":
+		fallthrough
+	case "krabby":
+		fallthrough
+	case "kingler":
+		fallthrough
+	case "voltorb":
+		fallthrough
+	case "electrode":
+		fallthrough
+	case "exeggcute":
+		fallthrough
+	case "exeggutor":
+		fallthrough
+	case "cubone":
+		fallthrough
+	case "marowak":
+		fallthrough
+	case "hitmonlee":
+		fallthrough
+	case "hitmonchan":
+		fallthrough
+	case "lickitung":
+		fallthrough
+	case "koffing":
+		fallthrough
+	case "weezing":
+		fallthrough
+	case "rhyhorn":
+		fallthrough
+	case "rhydon":
+		fallthrough
+	case "chansey":
+		fallthrough
+	case "tangela":
+		fallthrough
+	case "kangaskhan":
+		fallthrough
+	case "horsea":
+		fallthrough
+	case "seadra":
+		fallthrough
+	case "goldeen":
+		fallthrough
+	case "seaking":
+		fallthrough
+	case "staryu":
+		fallthrough
+	case "starmie":
+		fallthrough
+	case "mrmime":
+		fallthrough
+	case "scyther":
+		fallthrough
+	case "jynx":
+		fallthrough
+	case "electabuzz":
+		fallthrough
+	case "magmar":
+		fallthrough
+	case "pinsir":
+		fallthrough
+	case "tauros":
+		fallthrough
+	case "magikarp":
+		fallthrough
+	case "gyarados":
+		fallthrough
+	case "lapras":
+		fallthrough
+	case "ditto":
+		fallthrough
+	case "eevee":
+		fallthrough
+	case "vaporeon":
+		fallthrough
+	case "jolteon":
+		fallthrough
+	case "flareon":
+		fallthrough
+	case "porygon":
+		fallthrough
+	case "omanyte":
+		fallthrough
+	case "omastar":
+		fallthrough
+	case "kabuto":
+		fallthrough
+	case "kabutops":
+		fallthrough
+	case "aerodactyl":
+		fallthrough
+	case "snorlax":
+		fallthrough
+	case "articuno":
+		fallthrough
+	case "zapdos":
+		fallthrough
+	case "moltres":
+		fallthrough
+	case "dratini":
+		fallthrough
+	case "dragonair":
+		fallthrough
+	case "dragonite":
+		fallthrough
+	case "mewtwo":
+		fallthrough
+	case "mew":
+		fallthrough
+	case "chikorita":
+		fallthrough
+	case "bayleef":
+		fallthrough
+	case "meganium":
+		fallthrough
+	case "cyndaquil":
+		fallthrough
+	case "quilava":
+		fallthrough
+	case "typhlosion":
+		fallthrough
+	case "totodile":
+		fallthrough
+	case "croconaw":
+		fallthrough
+	case "feraligatr":
+		fallthrough
+	case "sentret":
+		fallthrough
+	case "furret":
+		fallthrough
+	case "hoothoot":
+		fallthrough
+	case "noctowl":
+		fallthrough
+	case "ledyba":
+		fallthrough
+	case "ledian":
+		fallthrough
+	case "spinarak":
+		fallthrough
+	case "ariados":
+		fallthrough
+	case "crobat":
+		fallthrough
+	case "chinchou":
+		fallthrough
+	case "lanturn":
+		fallthrough
+	case "pichu":
+		fallthrough
+	case "cleffa":
+		fallthrough
+	case "igglybuff":
+		fallthrough
+	case "togepi":
+		fallthrough
+	case "togetic":
+		fallthrough
+	case "natu":
+		fallthrough
+	case "xatu":
+		fallthrough
+	case "mareep":
+		fallthrough
+	case "flaaffy":
+		fallthrough
+	case "ampharos":
+		fallthrough
+	case "bellossom":
+		fallthrough
+	case "marill":
+		fallthrough
+	case "azumarill":
+		fallthrough
+	case "sudowoodo":
+		fallthrough
+	case "politoed":
+		fallthrough
+	case "hoppip":
+		fallthrough
+	case "skiploom":
+		fallthrough
+	case "jumpluff":
+		fallthrough
+	case "aipom":
+		fallthrough
+	case "sunkern":
+		fallthrough
+	case "sunflora":
+		fallthrough
+	case "yanma":
+		fallthrough
+	case "wooper":
+		fallthrough
+	case "quagsire":
+		fallthrough
+	case "espeon":
+		fallthrough
+	case "umbreon":
+		fallthrough
+	case "murkrow":
+		fallthrough
+	case "slowking":
+		fallthrough
+	case "misdreavus":
+		fallthrough
+	case "unown":
+		fallthrough
+	case "wobbuffet":
+		fallthrough
+	case "girafarig":
+		fallthrough
+	case "pineco":
+		fallthrough
+	case "forretress":
+		fallthrough
+	case "dunsparce":
+		fallthrough
+	case "gligar":
+		fallthrough
+	case "steelix":
+		fallthrough
+	case "snubbull":
+		fallthrough
+	case "granbull":
+		fallthrough
+	case "qwilfish":
+		fallthrough
+	case "scizor":
+		fallthrough
+	case "shuckle":
+		fallthrough
+	case "heracross":
+		fallthrough
+	case "sneasel":
+		fallthrough
+	case "teddiursa":
+		fallthrough
+	case "ursaring":
+		fallthrough
+	case "slugma":
+		fallthrough
+	case "magcargo":
+		fallthrough
+	case "swinub":
+		fallthrough
+	case "piloswine":
+		fallthrough
+	case "corsola":
+		fallthrough
+	case "remoraid":
+		fallthrough
+	case "octillery":
+		fallthrough
+	case "delibird":
+		fallthrough
+	case "mantine":
+		fallthrough
+	case "skarmory":
+		fallthrough
+	case "houndour":
+		fallthrough
+	case "houndoom":
+		fallthrough
+	case "kingdra":
+		fallthrough
+	case "phanpy":
+		fallthrough
+	case "donphan":
+		fallthrough
+	case "porygon2":
+		fallthrough
+	case "stantler":
+		fallthrough
+	case "smeargle":
+		fallthrough
+	case "tyrogue":
+		fallthrough
+	case "hitmontop":
+		fallthrough
+	case "smoochum":
+		fallthrough
+	case "elekid":
+		fallthrough
+	case "magby":
+		fallthrough
+	case "miltank":
+		fallthrough
+	case "blissey":
+		fallthrough
+	case "raikou":
+		fallthrough
+	case "entei":
+		fallthrough
+	case "suicune":
+		fallthrough
+	case "larvitar":
+		fallthrough
+	case "pupitar":
+		fallthrough
+	case "tyranitar":
+		fallthrough
+	case "lugia":
+		fallthrough
+	case "ho-oh":
+		fallthrough
+	case "celebi":
+		fallthrough
+	case "treecko":
+		fallthrough
+	case "grovyle":
+		fallthrough
+	case "sceptile":
+		fallthrough
+	case "torchic":
+		fallthrough
+	case "combusken":
+		fallthrough
+	case "blaziken":
+		fallthrough
+	case "mudkip":
+		fallthrough
+	case "marshtomp":
+		fallthrough
+	case "swampert":
+		fallthrough
+	case "poochyena":
+		fallthrough
+	case "mightyena":
+		fallthrough
+	case "zigzagoon":
+		fallthrough
+	case "linoone":
+		fallthrough
+	case "wurmple":
+		fallthrough
+	case "silcoon":
+		fallthrough
+	case "beautifly":
+		fallthrough
+	case "cascoon":
+		fallthrough
+	case "dustox":
+		fallthrough
+	case "lotad":
+		fallthrough
+	case "lombre":
+		fallthrough
+	case "ludicolo":
+		fallthrough
+	case "seedot":
+		fallthrough
+	case "nuzleaf":
+		fallthrough
+	case "shiftry":
+		fallthrough
+	case "taillow":
+		fallthrough
+	case "swellow":
+		fallthrough
+	case "wingull":
+		fallthrough
+	case "pelipper":
+		fallthrough
+	case "ralts":
+		fallthrough
+	case "kirlia":
+		fallthrough
+	case "gardevoir":
+		fallthrough
+	case "surskit":
+		fallthrough
+	case "masquerain":
+		fallthrough
+	case "shroomish":
+		fallthrough
+	case "breloom":
+		fallthrough
+	case "slakoth":
+		fallthrough
+	case "vigoroth":
+		fallthrough
+	case "slaking":
+		fallthrough
+	case "nincada":
+		fallthrough
+	case "ninjask":
+		fallthrough
+	case "shedinja":
+		fallthrough
+	case "whismur":
+		fallthrough
+	case "loudred":
+		fallthrough
+	case "exploud":
+		fallthrough
+	case "makuhita":
+		fallthrough
+	case "hariyama":
+		fallthrough
+	case "azurill":
+		fallthrough
+	case "nosepass":
+		fallthrough
+	case "skitty":
+		fallthrough
+	case "delcatty":
+		fallthrough
+	case "sableye":
+		fallthrough
+	case "mawile":
+		fallthrough
+	case "aron":
+		fallthrough
+	case "lairon":
+		fallthrough
+	case "aggron":
+		fallthrough
+	case "meditite":
+		fallthrough
+	case "medicham":
+		fallthrough
+	case "electrike":
+		fallthrough
+	case "manectric":
+		fallthrough
+	case "plusle":
+		fallthrough
+	case "minun":
+		fallthrough
+	case "volbeat":
+		fallthrough
+	case "illumise":
+		fallthrough
+	case "roselia":
+		fallthrough
+	case "gulpin":
+		fallthrough
+	case "swalot":
+		fallthrough
+	case "carvanha":
+		fallthrough
+	case "sharpedo":
+		fallthrough
+	case "wailmer":
+		fallthrough
+	case "wailord":
+		fallthrough
+	case "numel":
+		fallthrough
+	case "camerupt":
+		fallthrough
+	case "torkoal":
+		fallthrough
+	case "spoink":
+		fallthrough
+	case "grumpig":
+		fallthrough
+	case "spinda":
+		fallthrough
+	case "trapinch":
+		fallthrough
+	case "vibrava":
+		fallthrough
+	case "flygon":
+		fallthrough
+	case "cacnea":
+		fallthrough
+	case "cacturne":
+		fallthrough
+	case "swablu":
+		fallthrough
+	case "altaria":
+		fallthrough
+	case "zangoose":
+		fallthrough
+	case "seviper":
+		fallthrough
+	case "lunatone":
+		fallthrough
+	case "solrock":
+		fallthrough
+	case "barboach":
+		fallthrough
+	case "whiscash":
+		fallthrough
+	case "corphish":
+		fallthrough
+	case "crawdaunt":
+		fallthrough
+	case "baltoy":
+		fallthrough
+	case "claydol":
+		fallthrough
+	case "lileep":
+		fallthrough
+	case "cradily":
+		fallthrough
+	case "anorith":
+		fallthrough
+	case "armaldo":
+		fallthrough
+	case "feebas":
+		fallthrough
+	case "milotic":
+		fallthrough
+	case "castform":
+		fallthrough
+	case "kecleon":
+		fallthrough
+	case "shuppet":
+		fallthrough
+	case "banette":
+		fallthrough
+	case "duskull":
+		fallthrough
+	case "dusclops":
+		fallthrough
+	case "tropius":
+		fallthrough
+	case "chimecho":
+		fallthrough
+	case "absol":
+		fallthrough
+	case "wynaut":
+		fallthrough
+	case "snorunt":
+		fallthrough
+	case "glalie":
+		fallthrough
+	case "spheal":
+		fallthrough
+	case "sealeo":
+		fallthrough
+	case "walrein":
+		fallthrough
+	case "clamperl":
+		fallthrough
+	case "huntail":
+		fallthrough
+	case "gorebyss":
+		fallthrough
+	case "relicanth":
+		fallthrough
+	case "luvdisc":
+		fallthrough
+	case "bagon":
+		fallthrough
+	case "shelgon":
+		fallthrough
+	case "salamence":
+		fallthrough
+	case "beldum":
+		fallthrough
+	case "metang":
+		fallthrough
+	case "metagross":
+		fallthrough
+	case "regirock":
+		fallthrough
+	case "regice":
+		fallthrough
+	case "registeel":
+		fallthrough
+	case "latias":
+		fallthrough
+	case "latios":
+		fallthrough
+	case "kyogre":
+		fallthrough
+	case "groudon":
+		fallthrough
+	case "rayquaza":
+		fallthrough
+	case "jirachi":
+		fallthrough
+	case "deoxys":
+		fallthrough
+	case "turtwig":
+		fallthrough
+	case "grotle":
+		fallthrough
+	case "torterra":
+		fallthrough
+	case "chimchar":
+		fallthrough
+	case "monferno":
+		fallthrough
+	case "infernape":
+		fallthrough
+	case "piplup":
+		fallthrough
+	case "prinplup":
+		fallthrough
+	case "empoleon":
+		fallthrough
+	case "starly":
+		fallthrough
+	case "staravia":
+		fallthrough
+	case "staraptor":
+		fallthrough
+	case "bidoof":
+		fallthrough
+	case "bibarel":
+		fallthrough
+	case "kricketot":
+		fallthrough
+	case "kricketune":
+		fallthrough
+	case "shinx":
+		fallthrough
+	case "luxio":
+		fallthrough
+	case "luxray":
+		fallthrough
+	case "budew":
+		fallthrough
+	case "roserade":
+		fallthrough
+	case "cranidos":
+		fallthrough
+	case "rampardos":
+		fallthrough
+	case "shieldon":
+		fallthrough
+	case "bastiodon":
+		fallthrough
+	case "burmy":
+		fallthrough
+	case "wormadam":
+		fallthrough
+	case "mothim":
+		fallthrough
+	case "combee":
+		fallthrough
+	case "vespiquen":
+		fallthrough
+	case "pachirisu":
+		fallthrough
+	case "buizel":
+		fallthrough
+	case "floatzel":
+		fallthrough
+	case "cherubi":
+		fallthrough
+	case "cherrim":
+		fallthrough
+	case "shellos":
+		fallthrough
+	case "gastrodon":
+		fallthrough
+	case "ambipom":
+		fallthrough
+	case "drifloon":
+		fallthrough
+	case "drifblim":
+		fallthrough
+	case "buneary":
+		fallthrough
+	case "lopunny":
+		fallthrough
+	case "mismagius":
+		fallthrough
+	case "honchkrow":
+		fallthrough
+	case "glameow":
+		fallthrough
+	case "purugly":
+		fallthrough
+	case "chingling":
+		fallthrough
+	case "stunky":
+		fallthrough
+	case "skuntank":
+		fallthrough
+	case "bronzor":
+		fallthrough
+	case "bronzong":
+		fallthrough
+	case "bonsly":
+		fallthrough
+	case "mimejr":
+		fallthrough
+	case "happiny":
+		fallthrough
+	case "chatot":
+		fallthrough
+	case "spiritomb":
+		fallthrough
+	case "gible":
+		fallthrough
+	case "gabite":
+		fallthrough
+	case "garchomp":
+		fallthrough
+	case "munchlax":
+		fallthrough
+	case "riolu":
+		fallthrough
+	case "lucario":
+		fallthrough
+	case "hippopotas":
+		fallthrough
+	case "hippowdon":
+		fallthrough
+	case "skorupi":
+		fallthrough
+	case "drapion":
+		fallthrough
+	case "croagunk":
+		fallthrough
+	case "toxicroak":
+		fallthrough
+	case "carnivine":
+		fallthrough
+	case "finneon":
+		fallthrough
+	case "lumineon":
+		fallthrough
+	case "mantyke":
+		fallthrough
+	case "snover":
+		fallthrough
+	case "abomasnow":
+		fallthrough
+	case "weavile":
+		fallthrough
+	case "magnezone":
+		fallthrough
+	case "lickilicky":
+		fallthrough
+	case "rhyperior":
+		fallthrough
+	case "tangrowth":
+		fallthrough
+	case "electivire":
+		fallthrough
+	case "magmortar":
+		fallthrough
+	case "togekiss":
+		fallthrough
+	case "yanmega":
+		fallthrough
+	case "leafeon":
+		fallthrough
+	case "glaceon":
+		fallthrough
+	case "gliscor":
+		fallthrough
+	case "mamoswine":
+		fallthrough
+	case "porygon-z":
+		fallthrough
+	case "gallade":
+		fallthrough
+	case "probopass":
+		fallthrough
+	case "dusknoir":
+		fallthrough
+	case "froslass":
+		fallthrough
+	case "rotom":
+		fallthrough
+	case "uxie":
+		fallthrough
+	case "mesprit":
+		fallthrough
+	case "azelf":
+		fallthrough
+	case "dialga":
+		fallthrough
+	case "palkia":
+		fallthrough
+	case "heatran":
+		fallthrough
+	case "regigigas":
+		fallthrough
+	case "giratina":
+		fallthrough
+	case "cresselia":
+		fallthrough
+	case "phione":
+		fallthrough
+	case "manaphy":
+		fallthrough
+	case "darkrai":
+		fallthrough
+	case "shaymin":
+		fallthrough
+	case "arceus":
+		fallthrough
+	case "victini":
+		fallthrough
+	case "snivy":
+		fallthrough
+	case "servine":
+		fallthrough
+	case "serperior":
+		fallthrough
+	case "tepig":
+		fallthrough
+	case "pignite":
+		fallthrough
+	case "emboar":
+		fallthrough
+	case "oshawott":
+		fallthrough
+	case "dewott":
+		fallthrough
+	case "samurott":
+		fallthrough
+	case "patrat":
+		fallthrough
+	case "watchog":
+		fallthrough
+	case "lillipup":
+		fallthrough
+	case "herdier":
+		fallthrough
+	case "stoutland":
+		fallthrough
+	case "purrloin":
+		fallthrough
+	case "liepard":
+		fallthrough
+	case "pansage":
+		fallthrough
+	case "simisage":
+		fallthrough
+	case "pansear":
+		fallthrough
+	case "simisear":
+		fallthrough
+	case "panpour":
+		fallthrough
+	case "simipour":
+		fallthrough
+	case "munna":
+		fallthrough
+	case "musharna":
+		fallthrough
+	case "pidove":
+		fallthrough
+	case "tranquill":
+		fallthrough
+	case "unfezant":
+		fallthrough
+	case "blitzle":
+		fallthrough
+	case "zebstrika":
+		fallthrough
+	case "roggenrola":
+		fallthrough
+	case "boldore":
+		fallthrough
+	case "gigalith":
+		fallthrough
+	case "woobat":
+		fallthrough
+	case "swoobat":
+		fallthrough
+	case "drilbur":
+		fallthrough
+	case "excadrill":
+		fallthrough
+	case "audino":
+		fallthrough
+	case "timburr":
+		fallthrough
+	case "gurdurr":
+		fallthrough
+	case "conkeldurr":
+		fallthrough
+	case "tympole":
+		fallthrough
+	case "palpitoad":
+		fallthrough
+	case "seismitoad":
+		fallthrough
+	case "throh":
+		fallthrough
+	case "sawk":
+		fallthrough
+	case "sewaddle":
+		fallthrough
+	case "swadloon":
+		fallthrough
+	case "leavanny":
+		fallthrough
+	case "venipede":
+		fallthrough
+	case "whirlipede":
+		fallthrough
+	case "scolipede":
+		fallthrough
+	case "cottonee":
+		fallthrough
+	case "whimsicott":
+		fallthrough
+	case "petilil":
+		fallthrough
+	case "lilligant":
+		fallthrough
+	case "basculin":
+		fallthrough
+	case "sandile":
+		fallthrough
+	case "krokorok":
+		fallthrough
+	case "krookodile":
+		fallthrough
+	case "darumaka":
+		fallthrough
+	case "darmanitan":
+		fallthrough
+	case "maractus":
+		fallthrough
+	case "dwebble":
+		fallthrough
+	case "crustle":
+		fallthrough
+	case "scraggy":
+		fallthrough
+	case "scrafty":
+		fallthrough
+	case "sigilyph":
+		fallthrough
+	case "yamask":
+		fallthrough
+	case "cofagrigus":
+		fallthrough
+	case "tirtouga":
+		fallthrough
+	case "carracosta":
+		fallthrough
+	case "archen":
+		fallthrough
+	case "archeops":
+		fallthrough
+	case "trubbish":
+		fallthrough
+	case "garbodor":
+		fallthrough
+	case "zorua":
+		fallthrough
+	case "zoroark":
+		fallthrough
+	case "minccino":
+		fallthrough
+	case "cinccino":
+		fallthrough
+	case "gothita":
+		fallthrough
+	case "gothorita":
+		fallthrough
+	case "gothitelle":
+		fallthrough
+	case "solosis":
+		fallthrough
+	case "duosion":
+		fallthrough
+	case "reuniclus":
+		fallthrough
+	case "ducklett":
+		fallthrough
+	case "swanna":
+		fallthrough
+	case "vanillite":
+		fallthrough
+	case "vanillish":
+		fallthrough
+	case "vanilluxe":
+		fallthrough
+	case "deerling":
+		fallthrough
+	case "sawsbuck":
+		fallthrough
+	case "emolga":
+		fallthrough
+	case "karrablast":
+		fallthrough
+	case "escavalier":
+		fallthrough
+	case "foongus":
+		fallthrough
+	case "amoonguss":
+		fallthrough
+	case "frillish":
+		fallthrough
+	case "jellicent":
+		fallthrough
+	case "alomomola":
+		fallthrough
+	case "joltik":
+		fallthrough
+	case "galvantula":
+		fallthrough
+	case "ferroseed":
+		fallthrough
+	case "ferrothorn":
+		fallthrough
+	case "klink":
+		fallthrough
+	case "klang":
+		fallthrough
+	case "klinklang":
+		fallthrough
+	case "tynamo":
+		fallthrough
+	case "eelektrik":
+		fallthrough
+	case "eelektross":
+		fallthrough
+	case "elgyem":
+		fallthrough
+	case "beheeyem":
+		fallthrough
+	case "litwick":
+		fallthrough
+	case "lampent":
+		fallthrough
+	case "chandelure":
+		fallthrough
+	case "axew":
+		fallthrough
+	case "fraxure":
+		fallthrough
+	case "haxorus":
+		fallthrough
+	case "cubchoo":
+		fallthrough
+	case "beartic":
+		fallthrough
+	case "cryogonal":
+		fallthrough
+	case "shelmet":
+		fallthrough
+	case "accelgor":
+		fallthrough
+	case "stunfisk":
+		fallthrough
+	case "mienfoo":
+		fallthrough
+	case "mienshao":
+		fallthrough
+	case "druddigon":
+		fallthrough
+	case "golett":
+		fallthrough
+	case "golurk":
+		fallthrough
+	case "pawniard":
+		fallthrough
+	case "bisharp":
+		fallthrough
+	case "bouffalant":
+		fallthrough
+	case "rufflet":
+		fallthrough
+	case "braviary":
+		fallthrough
+	case "vullaby":
+		fallthrough
+	case "mandibuzz":
+		fallthrough
+	case "heatmor":
+		fallthrough
+	case "durant":
+		fallthrough
+	case "deino":
+		fallthrough
+	case "zweilous":
+		fallthrough
+	case "hydreigon":
+		fallthrough
+	case "larvesta":
+		fallthrough
+	case "volcarona":
+		fallthrough
+	case "cobalion":
+		fallthrough
+	case "terrakion":
+		fallthrough
+	case "virizion":
+		fallthrough
+	case "tornadus":
+		fallthrough
+	case "thundurus":
+		fallthrough
+	case "reshiram":
+		fallthrough
+	case "zekrom":
+		fallthrough
+	case "landorus":
+		fallthrough
+	case "kyurem":
+		fallthrough
+	case "keldeo":
+		fallthrough
+	case "meloetta":
+		fallthrough
+	case "genesect":
+		fallthrough
+	case "chespin":
+		fallthrough
+	case "quilladin":
+		fallthrough
+	case "chesnaught":
+		fallthrough
+	case "fennekin":
+		fallthrough
+	case "braixen":
+		fallthrough
+	case "delphox":
+		fallthrough
+	case "froakie":
+		fallthrough
+	case "frogadier":
+		fallthrough
+	case "greninja":
+		fallthrough
+	case "bunnelby":
+		fallthrough
+	case "diggersby":
+		fallthrough
+	case "fletchling":
+		fallthrough
+	case "fletchinder":
+		fallthrough
+	case "talonflame":
+		fallthrough
+	case "scatterbug":
+		fallthrough
+	case "spewpa":
+		fallthrough
+	case "vivillon":
+		fallthrough
+	case "litleo":
+		fallthrough
+	case "pyroar":
+		fallthrough
+	case "flabebe":
+		fallthrough
+	case "floette":
+		fallthrough
+	case "florges":
+		fallthrough
+	case "skiddo":
+		fallthrough
+	case "gogoat":
+		fallthrough
+	case "pancham":
+		fallthrough
+	case "pangoro":
+		fallthrough
+	case "furfrou":
+		fallthrough
+	case "espurr":
+		fallthrough
+	case "meowstic":
+		fallthrough
+	case "honedge":
+		fallthrough
+	case "doublade":
+		fallthrough
+	case "aegislash":
+		fallthrough
+	case "spritzee":
+		fallthrough
+	case "aromatisse":
+		fallthrough
+	case "swirlix":
+		fallthrough
+	case "slurpuff":
+		fallthrough
+	case "inkay":
+		fallthrough
+	case "malamar":
+		fallthrough
+	case "binacle":
+		fallthrough
+	case "barbaracle":
+		fallthrough
+	case "skrelp":
+		fallthrough
+	case "dragalge":
+		fallthrough
+	case "clauncher":
+		fallthrough
+	case "clawitzer":
+		fallthrough
+	case "helioptile":
+		fallthrough
+	case "heliolisk":
+		fallthrough
+	case "tyrunt":
+		fallthrough
+	case "tyrantrum":
+		fallthrough
+	case "amaura":
+		fallthrough
+	case "aurorus":
+		fallthrough
+	case "sylveon":
+		fallthrough
+	case "hawlucha":
+		fallthrough
+	case "dedenne":
+		fallthrough
+	case "carbink":
+		fallthrough
+	case "goomy":
+		fallthrough
+	case "sliggoo":
+		fallthrough
+	case "goodra":
+		fallthrough
+	case "klefki":
+		fallthrough
+	case "phantump":
+		fallthrough
+	case "trevenant":
+		fallthrough
+	case "pumpkaboo":
+		fallthrough
+	case "gourgeist":
+		fallthrough
+	case "bergmite":
+		fallthrough
+	case "avalugg":
+		fallthrough
+	case "noibat":
+		fallthrough
+	case "noivern":
+		fallthrough
+	case "xerneas":
+		fallthrough
+	case "yveltal":
+		fallthrough
+	case "zygarde":
+		fallthrough
+	case "diancie":
+		fallthrough
+	case "hoopa":
+		fallthrough
+	case "volcanion":
+		fallthrough
+	case "rowlet":
+		fallthrough
+	case "dartrix":
+		fallthrough
+	case "decidueye":
+		fallthrough
+	case "litten":
+		fallthrough
+	case "torracat":
+		fallthrough
+	case "incineroar":
+		fallthrough
+	case "popplio":
+		fallthrough
+	case "brionne":
+		fallthrough
+	case "primarina":
+		fallthrough
+	case "pikipek":
+		fallthrough
+	case "trumbeak":
+		fallthrough
+	case "toucannon":
+		fallthrough
+	case "yungoos":
+		fallthrough
+	case "gumshoos":
+		fallthrough
+	case "grubbin":
+		fallthrough
+	case "charjabug":
+		fallthrough
+	case "vikavolt":
+		fallthrough
+	case "crabrawler":
+		fallthrough
+	case "crabominable":
+		fallthrough
+	case "oricorio":
+		fallthrough
+	case "cutiefly":
+		fallthrough
+	case "ribombee":
+		fallthrough
+	case "rockruff":
+		fallthrough
+	case "lycanroc":
+		fallthrough
+	case "wishiwashi":
+		fallthrough
+	case "mareanie":
+		fallthrough
+	case "toxapex":
+		fallthrough
+	case "mudbray":
+		fallthrough
+	case "mudsdale":
+		fallthrough
+	case "dewpider":
+		fallthrough
+	case "araquanid":
+		fallthrough
+	case "fomantis":
+		fallthrough
+	case "lurantis":
+		fallthrough
+	case "morelull":
+		fallthrough
+	case "shiinotic":
+		fallthrough
+	case "salandit":
+		fallthrough
+	case "salazzle":
+		fallthrough
+	case "stufful":
+		fallthrough
+	case "bewear":
+		fallthrough
+	case "bounsweet":
+		fallthrough
+	case "steenee":
+		fallthrough
+	case "tsareena":
+		fallthrough
+	case "comfey":
+		fallthrough
+	case "oranguru":
+		fallthrough
+	case "passimian":
+		fallthrough
+	case "wimpod":
+		fallthrough
+	case "golisopod":
+		fallthrough
+	case "sandygast":
+		fallthrough
+	case "palossand":
+		fallthrough
+	case "pyukumuku":
+		fallthrough
+	case "typenull":
+		fallthrough
+	case "silvally":
+		fallthrough
+	case "minior":
+		fallthrough
+	case "komala":
+		fallthrough
+	case "turtonator":
+		fallthrough
+	case "togedemaru":
+		fallthrough
+	case "mimikyu":
+		fallthrough
+	case "bruxish":
+		fallthrough
+	case "drampa":
+		fallthrough
+	case "dhelmise":
+		fallthrough
+	case "jangmo-o":
+		fallthrough
+	case "hakamo-o":
+		fallthrough
+	case "kommo-o":
+		fallthrough
+	case "tapukoko":
+		fallthrough
+	case "tapulele":
+		fallthrough
+	case "tapubulu":
+		fallthrough
+	case "tapufini":
+		fallthrough
+	case "cosmog":
+		fallthrough
+	case "cosmoem":
+		fallthrough
+	case "solgaleo":
+		fallthrough
+	case "lunala":
+		fallthrough
+	case "nihilego":
+		fallthrough
+	case "buzzwole":
+		fallthrough
+	case "pheromosa":
+		fallthrough
+	case "xurkitree":
+		fallthrough
+	case "celesteela":
+		fallthrough
+	case "kartana":
+		fallthrough
+	case "guzzlord":
+		fallthrough
+	case "necrozma":
+		fallthrough
+	case "magearna":
+		fallthrough
+	case "marshadow":
+		fallthrough
+	case "poipole":
+		fallthrough
+	case "naganadel":
+		fallthrough
+	case "stakataka":
+		fallthrough
+	case "blacephalon":
+		fallthrough
+	case "zeraora":
+		fallthrough
+	case "meltan":
+		fallthrough
+	case "melmetal":
+		fallthrough
+	case "grookey":
+		fallthrough
+	case "thwackey":
+		fallthrough
+	case "rillaboom":
+		fallthrough
+	case "scorbunny":
+		fallthrough
+	case "raboot":
+		fallthrough
+	case "cinderace":
+		fallthrough
+	case "sobble":
+		fallthrough
+	case "drizzile":
+		fallthrough
+	case "inteleon":
+		fallthrough
+	case "skwovet":
+		fallthrough
+	case "greedent":
+		fallthrough
+	case "rookidee":
+		fallthrough
+	case "corvisquire":
+		fallthrough
+	case "corviknight":
+		fallthrough
+	case "blipbug":
+		fallthrough
+	case "dottler":
+		fallthrough
+	case "orbeetle":
+		fallthrough
+	case "nickit":
+		fallthrough
+	case "thievul":
+		fallthrough
+	case "gossifleur":
+		fallthrough
+	case "eldegoss":
+		fallthrough
+	case "wooloo":
+		fallthrough
+	case "dubwool":
+		fallthrough
+	case "chewtle":
+		fallthrough
+	case "drednaw":
+		fallthrough
+	case "yamper":
+		fallthrough
+	case "boltund":
+		fallthrough
+	case "rolycoly":
+		fallthrough
+	case "carkol":
+		fallthrough
+	case "coalossal":
+		fallthrough
+	case "applin":
+		fallthrough
+	case "flapple":
+		fallthrough
+	case "appletun":
+		fallthrough
+	case "silicobra":
+		fallthrough
+	case "sandaconda":
+		fallthrough
+	case "cramorant":
+		fallthrough
+	case "arrokuda":
+		fallthrough
+	case "barraskewda":
+		fallthrough
+	case "toxel":
+		fallthrough
+	case "toxtricity":
+		fallthrough
+	case "sizzlipede":
+		fallthrough
+	case "centiskorch":
+		fallthrough
+	case "clobbopus":
+		fallthrough
+	case "grapploct":
+		fallthrough
+	case "sinistea":
+		fallthrough
+	case "polteageist":
+		fallthrough
+	case "hatenna":
+		fallthrough
+	case "hattrem":
+		fallthrough
+	case "hatterene":
+		fallthrough
+	case "impidimp":
+		fallthrough
+	case "morgrem":
+		fallthrough
+	case "grimmsnarl":
+		fallthrough
+	case "obstagoon":
+		fallthrough
+	case "perrserker":
+		fallthrough
+	case "cursola":
+		fallthrough
+	case "sirfetchd":
+		fallthrough
+	case "mrrime":
+		fallthrough
+	case "runerigus":
+		fallthrough
+	case "milcery":
+		fallthrough
+	case "alcremie":
+		fallthrough
+	case "falinks":
+		fallthrough
+	case "pincurchin":
+		fallthrough
+	case "snom":
+		fallthrough
+	case "frosmoth":
+		fallthrough
+	case "stonjourner":
+		fallthrough
+	case "eiscue":
+		fallthrough
+	case "indeedee":
+		fallthrough
+	case "morpeko":
+		fallthrough
+	case "cufant":
+		fallthrough
+	case "copperajah":
+		fallthrough
+	case "dracozolt":
+		fallthrough
+	case "arctozolt":
+		fallthrough
+	case "dracovish":
+		fallthrough
+	case "arctovish":
+		fallthrough
+	case "duraludon":
+		fallthrough
+	case "dreepy":
+		fallthrough
+	case "drakloak":
+		fallthrough
+	case "dragapult":
+		fallthrough
+	case "zacian":
+		fallthrough
+	case "zamazenta":
+		fallthrough
+	case "eternatus":
+		fallthrough
+	case "kubfu":
+		fallthrough
+	case "urshifu":
+		fallthrough
+	case "zarude":
+		fallthrough
+	case "regieleki":
+		fallthrough
+	case "regidrago":
+		fallthrough
+	case "glastrier":
+		fallthrough
+	case "spectrier":
+		fallthrough
+	case "calyrex":
+		*e = PokemonName(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for PokemonName: %v", v)
+	}
+}
+
 type SourcePokeapiUpdate struct {
 	// Pokemon requested from the API.
-	PokemonName string `json:"pokemon_name"`
+	PokemonName PokemonName `json:"pokemon_name"`
+}
+
+func (o *SourcePokeapiUpdate) GetPokemonName() PokemonName {
+	if o == nil {
+		return PokemonName("")
+	}
+	return o.PokemonName
 }

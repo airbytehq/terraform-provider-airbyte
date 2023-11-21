@@ -15,13 +15,13 @@ SourceInsightly Resource
 ```terraform
 resource "airbyte_source_insightly" "my_source_insightly" {
   configuration = {
-    source_type = "insightly"
-    start_date  = "2021-03-01T00:00:00Z"
-    token       = "...my_token..."
+    start_date = "2021-03-01T00:00:00Z"
+    token      = "...my_token..."
   }
-  name         = "Dana Lindgren"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0a9eba47-f7d3-4ef0-8964-0d6a1831c87a"
+  definition_id = "d6014991-0eec-4fc7-b384-ec604057d045"
+  name          = "Geneva Bogan"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "b5cccbbb-db31-4196-8f99-d67745afb65f"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_insightly" "my_source_insightly" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_insightly" "my_source_insightly" {
 
 Required:
 
-- `source_type` (String) must be one of ["insightly"]
 - `start_date` (String) The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
-- `token` (String) Your Insightly API token.
+- `token` (String, Sensitive) Your Insightly API token.
 
 

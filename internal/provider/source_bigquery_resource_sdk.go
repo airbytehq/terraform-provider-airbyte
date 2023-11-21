@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -16,12 +16,16 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 		datasetID = nil
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
-	sourceType := shared.SourceBigqueryBigquery(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceBigquery{
 		CredentialsJSON: credentialsJSON,
 		DatasetID:       datasetID,
 		ProjectID:       projectID,
-		SourceType:      sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -33,6 +37,7 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceBigqueryCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

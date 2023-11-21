@@ -7,3 +7,24 @@ type SourceMicrosoftTeamsPutRequest struct {
 	Name          string                     `json:"name"`
 	WorkspaceID   string                     `json:"workspaceId"`
 }
+
+func (o *SourceMicrosoftTeamsPutRequest) GetConfiguration() SourceMicrosoftTeamsUpdate {
+	if o == nil {
+		return SourceMicrosoftTeamsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMicrosoftTeamsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMicrosoftTeamsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

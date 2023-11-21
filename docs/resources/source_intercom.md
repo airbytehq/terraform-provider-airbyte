@@ -18,12 +18,12 @@ resource "airbyte_source_intercom" "my_source_intercom" {
     access_token  = "...my_access_token..."
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    source_type   = "intercom"
     start_date    = "2020-11-16T00:00:00Z"
   }
-  name         = "Darnell Watsica"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "934152ed-7e25-43f4-8157-deaa7170f445"
+  definition_id = "135dc90f-6379-44a9-bd5a-cf56253a66e5"
+  name          = "Clint Douglas V"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "29314c65-ed70-4eb1-bcb4-fc24002ca0d0"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_intercom" "my_source_intercom" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,8 +51,7 @@ resource "airbyte_source_intercom" "my_source_intercom" {
 
 Required:
 
-- `access_token` (String) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
-- `source_type` (String) must be one of ["intercom"]
+- `access_token` (String, Sensitive) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

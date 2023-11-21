@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceFreshsalesFreshsales string
+type Freshsales string
 
 const (
-	SourceFreshsalesFreshsalesFreshsales SourceFreshsalesFreshsales = "freshsales"
+	FreshsalesFreshsales Freshsales = "freshsales"
 )
 
-func (e SourceFreshsalesFreshsales) ToPointer() *SourceFreshsalesFreshsales {
+func (e Freshsales) ToPointer() *Freshsales {
 	return &e
 }
 
-func (e *SourceFreshsalesFreshsales) UnmarshalJSON(data []byte) error {
+func (e *Freshsales) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "freshsales":
-		*e = SourceFreshsalesFreshsales(v)
+		*e = Freshsales(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshsalesFreshsales: %v", v)
+		return fmt.Errorf("invalid value for Freshsales: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourceFreshsales struct {
 	// Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
 	APIKey string `json:"api_key"`
 	// The Name of your Freshsales domain
-	DomainName string                     `json:"domain_name"`
-	SourceType SourceFreshsalesFreshsales `json:"sourceType"`
+	DomainName string     `json:"domain_name"`
+	sourceType Freshsales `const:"freshsales" json:"sourceType"`
+}
+
+func (s SourceFreshsales) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshsales) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshsales) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshsales) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
+}
+
+func (o *SourceFreshsales) GetSourceType() Freshsales {
+	return FreshsalesFreshsales
 }

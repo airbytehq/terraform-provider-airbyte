@@ -15,13 +15,13 @@ SourceAha Resource
 ```terraform
 resource "airbyte_source_aha" "my_source_aha" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "aha"
-    url         = "...my_url..."
+    api_key = "...my_api_key..."
+    url     = "...my_url..."
   }
-  name         = "Van Bergnaum"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "a3383c2b-eb47-4737-bc8d-72f64d1db1f2"
+  definition_id = "1bb0550b-4e34-4412-ae7f-29336e237818"
+  name          = "Samuel Hammes"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3da8d6ee-f047-4576-b0dd-bc2dbf188dfa"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_aha" "my_source_aha" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_aha" "my_source_aha" {
 
 Required:
 
-- `api_key` (String) API Key
-- `source_type` (String) must be one of ["aha"]
+- `api_key` (String, Sensitive) API Key
 - `url` (String) URL
 
 

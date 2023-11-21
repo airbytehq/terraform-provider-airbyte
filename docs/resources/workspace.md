@@ -14,7 +14,7 @@ Workspace Resource
 
 ```terraform
 resource "airbyte_workspace" "my_workspace" {
-  name = "Glenda Schiller DDS"
+  name = "Jessie Moen"
 }
 ```
 
@@ -27,7 +27,7 @@ resource "airbyte_workspace" "my_workspace" {
 
 ### Read-Only
 
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String) must be one of ["auto", "us", "eu"]; Default: "auto"
 - `workspace_id` (String)
 
 

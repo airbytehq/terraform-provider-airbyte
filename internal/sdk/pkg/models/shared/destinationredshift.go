@@ -3,215 +3,309 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationRedshiftRedshift string
+type Redshift string
 
 const (
-	DestinationRedshiftRedshiftRedshift DestinationRedshiftRedshift = "redshift"
+	RedshiftRedshift Redshift = "redshift"
 )
 
-func (e DestinationRedshiftRedshift) ToPointer() *DestinationRedshiftRedshift {
+func (e Redshift) ToPointer() *Redshift {
 	return &e
 }
 
-func (e *DestinationRedshiftRedshift) UnmarshalJSON(data []byte) error {
+func (e *Redshift) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redshift":
-		*e = DestinationRedshiftRedshift(v)
+		*e = Redshift(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftRedshift: %v", v)
+		return fmt.Errorf("invalid value for Redshift: %v", v)
 	}
 }
 
-// DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// DestinationRedshiftSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationRedshiftSchemasTunnelMethodTunnelMethod string
 
 const (
-	DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	DestinationRedshiftSchemasTunnelMethodTunnelMethodSSHPasswordAuth DestinationRedshiftSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e DestinationRedshiftSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationRedshiftSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = DestinationRedshiftSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// DestinationRedshiftSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationRedshiftSSHTunnelMethodPasswordAuthentication struct {
+// DestinationRedshiftPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationRedshiftPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationRedshiftSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (d DestinationRedshiftPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationRedshiftPasswordAuthentication) GetTunnelMethod() DestinationRedshiftSchemasTunnelMethodTunnelMethod {
+	return DestinationRedshiftSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationRedshiftPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationRedshiftPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationRedshiftPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// DestinationRedshiftSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationRedshiftSchemasTunnelMethod string
 
 const (
-	DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	DestinationRedshiftSchemasTunnelMethodSSHKeyAuth DestinationRedshiftSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e DestinationRedshiftSchemasTunnelMethod) ToPointer() *DestinationRedshiftSchemasTunnelMethod {
 	return &e
 }
 
-func (e *DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = DestinationRedshiftSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftSchemasTunnelMethod: %v", v)
 	}
 }
 
-// DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication struct {
+// DestinationRedshiftSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationRedshiftSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationRedshiftSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod string
+func (d DestinationRedshiftSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationRedshiftSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationRedshiftSSHKeyAuthentication) GetTunnelMethod() DestinationRedshiftSchemasTunnelMethod {
+	return DestinationRedshiftSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationRedshiftSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationRedshiftSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// DestinationRedshiftTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationRedshiftTunnelMethod string
 
 const (
-	DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	DestinationRedshiftTunnelMethodNoTunnel DestinationRedshiftTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod {
+func (e DestinationRedshiftTunnelMethod) ToPointer() *DestinationRedshiftTunnelMethod {
 	return &e
 }
 
-func (e *DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = DestinationRedshiftTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftTunnelMethod: %v", v)
 	}
 }
 
-// DestinationRedshiftSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationRedshiftSSHTunnelMethodNoTunnel struct {
+// DestinationRedshiftNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationRedshiftNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationRedshiftTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationRedshiftNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftNoTunnel) GetTunnelMethod() DestinationRedshiftTunnelMethod {
+	return DestinationRedshiftTunnelMethodNoTunnel
 }
 
 type DestinationRedshiftSSHTunnelMethodType string
 
 const (
-	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodNoTunnel               DestinationRedshiftSSHTunnelMethodType = "destination-redshift_SSH Tunnel Method_No Tunnel"
-	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodSSHKeyAuthentication   DestinationRedshiftSSHTunnelMethodType = "destination-redshift_SSH Tunnel Method_SSH Key Authentication"
-	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodPasswordAuthentication DestinationRedshiftSSHTunnelMethodType = "destination-redshift_SSH Tunnel Method_Password Authentication"
+	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftNoTunnel               DestinationRedshiftSSHTunnelMethodType = "destination-redshift_No Tunnel"
+	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHKeyAuthentication   DestinationRedshiftSSHTunnelMethodType = "destination-redshift_SSH Key Authentication"
+	DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftPasswordAuthentication DestinationRedshiftSSHTunnelMethodType = "destination-redshift_Password Authentication"
 )
 
 type DestinationRedshiftSSHTunnelMethod struct {
-	DestinationRedshiftSSHTunnelMethodNoTunnel               *DestinationRedshiftSSHTunnelMethodNoTunnel
-	DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication   *DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication
-	DestinationRedshiftSSHTunnelMethodPasswordAuthentication *DestinationRedshiftSSHTunnelMethodPasswordAuthentication
+	DestinationRedshiftNoTunnel               *DestinationRedshiftNoTunnel
+	DestinationRedshiftSSHKeyAuthentication   *DestinationRedshiftSSHKeyAuthentication
+	DestinationRedshiftPasswordAuthentication *DestinationRedshiftPasswordAuthentication
 
 	Type DestinationRedshiftSSHTunnelMethodType
 }
 
-func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftSSHTunnelMethodNoTunnel(destinationRedshiftSSHTunnelMethodNoTunnel DestinationRedshiftSSHTunnelMethodNoTunnel) DestinationRedshiftSSHTunnelMethod {
-	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodNoTunnel
+func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftNoTunnel(destinationRedshiftNoTunnel DestinationRedshiftNoTunnel) DestinationRedshiftSSHTunnelMethod {
+	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftNoTunnel
 
 	return DestinationRedshiftSSHTunnelMethod{
-		DestinationRedshiftSSHTunnelMethodNoTunnel: &destinationRedshiftSSHTunnelMethodNoTunnel,
-		Type: typ,
+		DestinationRedshiftNoTunnel: &destinationRedshiftNoTunnel,
+		Type:                        typ,
 	}
 }
 
-func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftSSHTunnelMethodSSHKeyAuthentication(destinationRedshiftSSHTunnelMethodSSHKeyAuthentication DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication) DestinationRedshiftSSHTunnelMethod {
-	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodSSHKeyAuthentication
+func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftSSHKeyAuthentication(destinationRedshiftSSHKeyAuthentication DestinationRedshiftSSHKeyAuthentication) DestinationRedshiftSSHTunnelMethod {
+	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHKeyAuthentication
 
 	return DestinationRedshiftSSHTunnelMethod{
-		DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication: &destinationRedshiftSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		DestinationRedshiftSSHKeyAuthentication: &destinationRedshiftSSHKeyAuthentication,
+		Type:                                    typ,
 	}
 }
 
-func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftSSHTunnelMethodPasswordAuthentication(destinationRedshiftSSHTunnelMethodPasswordAuthentication DestinationRedshiftSSHTunnelMethodPasswordAuthentication) DestinationRedshiftSSHTunnelMethod {
-	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodPasswordAuthentication
+func CreateDestinationRedshiftSSHTunnelMethodDestinationRedshiftPasswordAuthentication(destinationRedshiftPasswordAuthentication DestinationRedshiftPasswordAuthentication) DestinationRedshiftSSHTunnelMethod {
+	typ := DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftPasswordAuthentication
 
 	return DestinationRedshiftSSHTunnelMethod{
-		DestinationRedshiftSSHTunnelMethodPasswordAuthentication: &destinationRedshiftSSHTunnelMethodPasswordAuthentication,
+		DestinationRedshiftPasswordAuthentication: &destinationRedshiftPasswordAuthentication,
 		Type: typ,
 	}
 }
 
 func (u *DestinationRedshiftSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationRedshiftSSHTunnelMethodNoTunnel := new(DestinationRedshiftSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftSSHTunnelMethodNoTunnel); err == nil {
-		u.DestinationRedshiftSSHTunnelMethodNoTunnel = destinationRedshiftSSHTunnelMethodNoTunnel
-		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodNoTunnel
+	destinationRedshiftNoTunnel := new(DestinationRedshiftNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftNoTunnel, "", true, true); err == nil {
+		u.DestinationRedshiftNoTunnel = destinationRedshiftNoTunnel
+		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftNoTunnel
 		return nil
 	}
 
-	destinationRedshiftSSHTunnelMethodSSHKeyAuthentication := new(DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication = destinationRedshiftSSHTunnelMethodSSHKeyAuthentication
-		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodSSHKeyAuthentication
+	destinationRedshiftSSHKeyAuthentication := new(DestinationRedshiftSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftSSHKeyAuthentication = destinationRedshiftSSHKeyAuthentication
+		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHKeyAuthentication
 		return nil
 	}
 
-	destinationRedshiftSSHTunnelMethodPasswordAuthentication := new(DestinationRedshiftSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.DestinationRedshiftSSHTunnelMethodPasswordAuthentication = destinationRedshiftSSHTunnelMethodPasswordAuthentication
-		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftSSHTunnelMethodPasswordAuthentication
+	destinationRedshiftPasswordAuthentication := new(DestinationRedshiftPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationRedshiftPasswordAuthentication = destinationRedshiftPasswordAuthentication
+		u.Type = DestinationRedshiftSSHTunnelMethodTypeDestinationRedshiftPasswordAuthentication
 		return nil
 	}
 
@@ -219,208 +313,284 @@ func (u *DestinationRedshiftSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedshiftSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationRedshiftSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationRedshiftSSHTunnelMethodNoTunnel)
+	if u.DestinationRedshiftNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftNoTunnel, "", true)
 	}
 
-	if u.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication)
+	if u.DestinationRedshiftSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftSSHKeyAuthentication, "", true)
 	}
 
-	if u.DestinationRedshiftSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationRedshiftSSHTunnelMethodPasswordAuthentication)
+	if u.DestinationRedshiftPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType string
+type DestinationRedshiftSchemasMethod string
 
 const (
-	DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeAesCbcEnvelope DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType = "aes_cbc_envelope"
+	DestinationRedshiftSchemasMethodStandard DestinationRedshiftSchemasMethod = "Standard"
 )
 
-func (e DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType) ToPointer() *DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType {
+func (e DestinationRedshiftSchemasMethod) ToPointer() *DestinationRedshiftSchemasMethod {
 	return &e
 }
 
-func (e *DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftSchemasMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Standard":
+		*e = DestinationRedshiftSchemasMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationRedshiftSchemasMethod: %v", v)
+	}
+}
+
+// DestinationRedshiftStandard - <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use S3 uploading.
+type DestinationRedshiftStandard struct {
+	method DestinationRedshiftSchemasMethod `const:"Standard" json:"method"`
+}
+
+func (d DestinationRedshiftStandard) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftStandard) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftStandard) GetMethod() DestinationRedshiftSchemasMethod {
+	return DestinationRedshiftSchemasMethodStandard
+}
+
+type DestinationRedshiftSchemasEncryptionType string
+
+const (
+	DestinationRedshiftSchemasEncryptionTypeAesCbcEnvelope DestinationRedshiftSchemasEncryptionType = "aes_cbc_envelope"
+)
+
+func (e DestinationRedshiftSchemasEncryptionType) ToPointer() *DestinationRedshiftSchemasEncryptionType {
+	return &e
+}
+
+func (e *DestinationRedshiftSchemasEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aes_cbc_envelope":
-		*e = DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(v)
+		*e = DestinationRedshiftSchemasEncryptionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftSchemasEncryptionType: %v", v)
 	}
 }
 
-// DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption - Staging data will be encrypted using AES-CBC envelope encryption.
-type DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption struct {
-	EncryptionType DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType `json:"encryption_type"`
+// DestinationRedshiftAESCBCEnvelopeEncryption - Staging data will be encrypted using AES-CBC envelope encryption.
+type DestinationRedshiftAESCBCEnvelopeEncryption struct {
+	encryptionType *DestinationRedshiftSchemasEncryptionType `const:"aes_cbc_envelope" json:"encryption_type"`
 	// The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
 	KeyEncryptingKey *string `json:"key_encrypting_key,omitempty"`
 }
 
-type DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType string
+func (d DestinationRedshiftAESCBCEnvelopeEncryption) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftAESCBCEnvelopeEncryption) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftAESCBCEnvelopeEncryption) GetEncryptionType() *DestinationRedshiftSchemasEncryptionType {
+	return DestinationRedshiftSchemasEncryptionTypeAesCbcEnvelope.ToPointer()
+}
+
+func (o *DestinationRedshiftAESCBCEnvelopeEncryption) GetKeyEncryptingKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.KeyEncryptingKey
+}
+
+type DestinationRedshiftEncryptionType string
 
 const (
-	DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeNone DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType = "none"
+	DestinationRedshiftEncryptionTypeNone DestinationRedshiftEncryptionType = "none"
 )
 
-func (e DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType) ToPointer() *DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType {
+func (e DestinationRedshiftEncryptionType) ToPointer() *DestinationRedshiftEncryptionType {
 	return &e
 }
 
-func (e *DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "none":
-		*e = DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType(v)
+		*e = DestinationRedshiftEncryptionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftEncryptionType: %v", v)
 	}
 }
 
-// DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption - Staging data will be stored in plaintext.
-type DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption struct {
-	EncryptionType DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionType `json:"encryption_type"`
+// DestinationRedshiftNoEncryption - Staging data will be stored in plaintext.
+type DestinationRedshiftNoEncryption struct {
+	encryptionType *DestinationRedshiftEncryptionType `const:"none" json:"encryption_type"`
 }
 
-type DestinationRedshiftUploadingMethodS3StagingEncryptionType string
+func (d DestinationRedshiftNoEncryption) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshiftNoEncryption) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshiftNoEncryption) GetEncryptionType() *DestinationRedshiftEncryptionType {
+	return DestinationRedshiftEncryptionTypeNone.ToPointer()
+}
+
+type DestinationRedshiftEncryptionUnionType string
 
 const (
-	DestinationRedshiftUploadingMethodS3StagingEncryptionTypeDestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption             DestinationRedshiftUploadingMethodS3StagingEncryptionType = "destination-redshift_Uploading Method_S3 Staging_Encryption_No encryption"
-	DestinationRedshiftUploadingMethodS3StagingEncryptionTypeDestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption DestinationRedshiftUploadingMethodS3StagingEncryptionType = "destination-redshift_Uploading Method_S3 Staging_Encryption_AES-CBC envelope encryption"
+	DestinationRedshiftEncryptionUnionTypeDestinationRedshiftNoEncryption             DestinationRedshiftEncryptionUnionType = "destination-redshift_No encryption"
+	DestinationRedshiftEncryptionUnionTypeDestinationRedshiftAESCBCEnvelopeEncryption DestinationRedshiftEncryptionUnionType = "destination-redshift_AES-CBC envelope encryption"
 )
 
-type DestinationRedshiftUploadingMethodS3StagingEncryption struct {
-	DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption             *DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption
-	DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption *DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption
+type DestinationRedshiftEncryption struct {
+	DestinationRedshiftNoEncryption             *DestinationRedshiftNoEncryption
+	DestinationRedshiftAESCBCEnvelopeEncryption *DestinationRedshiftAESCBCEnvelopeEncryption
 
-	Type DestinationRedshiftUploadingMethodS3StagingEncryptionType
+	Type DestinationRedshiftEncryptionUnionType
 }
 
-func CreateDestinationRedshiftUploadingMethodS3StagingEncryptionDestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption(destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption) DestinationRedshiftUploadingMethodS3StagingEncryption {
-	typ := DestinationRedshiftUploadingMethodS3StagingEncryptionTypeDestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption
+func CreateDestinationRedshiftEncryptionDestinationRedshiftNoEncryption(destinationRedshiftNoEncryption DestinationRedshiftNoEncryption) DestinationRedshiftEncryption {
+	typ := DestinationRedshiftEncryptionUnionTypeDestinationRedshiftNoEncryption
 
-	return DestinationRedshiftUploadingMethodS3StagingEncryption{
-		DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption: &destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption,
+	return DestinationRedshiftEncryption{
+		DestinationRedshiftNoEncryption: &destinationRedshiftNoEncryption,
+		Type:                            typ,
+	}
+}
+
+func CreateDestinationRedshiftEncryptionDestinationRedshiftAESCBCEnvelopeEncryption(destinationRedshiftAESCBCEnvelopeEncryption DestinationRedshiftAESCBCEnvelopeEncryption) DestinationRedshiftEncryption {
+	typ := DestinationRedshiftEncryptionUnionTypeDestinationRedshiftAESCBCEnvelopeEncryption
+
+	return DestinationRedshiftEncryption{
+		DestinationRedshiftAESCBCEnvelopeEncryption: &destinationRedshiftAESCBCEnvelopeEncryption,
 		Type: typ,
 	}
 }
 
-func CreateDestinationRedshiftUploadingMethodS3StagingEncryptionDestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption(destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption) DestinationRedshiftUploadingMethodS3StagingEncryption {
-	typ := DestinationRedshiftUploadingMethodS3StagingEncryptionTypeDestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption
+func (u *DestinationRedshiftEncryption) UnmarshalJSON(data []byte) error {
 
-	return DestinationRedshiftUploadingMethodS3StagingEncryption{
-		DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption: &destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption,
-		Type: typ,
-	}
-}
-
-func (u *DestinationRedshiftUploadingMethodS3StagingEncryption) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption := new(DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption); err == nil {
-		u.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption = destinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption
-		u.Type = DestinationRedshiftUploadingMethodS3StagingEncryptionTypeDestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption
+	destinationRedshiftNoEncryption := new(DestinationRedshiftNoEncryption)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftNoEncryption, "", true, true); err == nil {
+		u.DestinationRedshiftNoEncryption = destinationRedshiftNoEncryption
+		u.Type = DestinationRedshiftEncryptionUnionTypeDestinationRedshiftNoEncryption
 		return nil
 	}
 
-	destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption := new(DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption); err == nil {
-		u.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption = destinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption
-		u.Type = DestinationRedshiftUploadingMethodS3StagingEncryptionTypeDestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption
+	destinationRedshiftAESCBCEnvelopeEncryption := new(DestinationRedshiftAESCBCEnvelopeEncryption)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftAESCBCEnvelopeEncryption, "", true, true); err == nil {
+		u.DestinationRedshiftAESCBCEnvelopeEncryption = destinationRedshiftAESCBCEnvelopeEncryption
+		u.Type = DestinationRedshiftEncryptionUnionTypeDestinationRedshiftAESCBCEnvelopeEncryption
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationRedshiftUploadingMethodS3StagingEncryption) MarshalJSON() ([]byte, error) {
-	if u.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption != nil {
-		return json.Marshal(u.DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryption)
+func (u DestinationRedshiftEncryption) MarshalJSON() ([]byte, error) {
+	if u.DestinationRedshiftNoEncryption != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftNoEncryption, "", true)
 	}
 
-	if u.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
-		return json.Marshal(u.DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryption)
+	if u.DestinationRedshiftAESCBCEnvelopeEncryption != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftAESCBCEnvelopeEncryption, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationRedshiftUploadingMethodS3StagingMethod string
+type DestinationRedshiftMethod string
 
 const (
-	DestinationRedshiftUploadingMethodS3StagingMethodS3Staging DestinationRedshiftUploadingMethodS3StagingMethod = "S3 Staging"
+	DestinationRedshiftMethodS3Staging DestinationRedshiftMethod = "S3 Staging"
 )
 
-func (e DestinationRedshiftUploadingMethodS3StagingMethod) ToPointer() *DestinationRedshiftUploadingMethodS3StagingMethod {
+func (e DestinationRedshiftMethod) ToPointer() *DestinationRedshiftMethod {
 	return &e
 }
 
-func (e *DestinationRedshiftUploadingMethodS3StagingMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "S3 Staging":
-		*e = DestinationRedshiftUploadingMethodS3StagingMethod(v)
+		*e = DestinationRedshiftMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftMethod: %v", v)
 	}
 }
 
-// DestinationRedshiftUploadingMethodS3StagingS3BucketRegion - The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
-type DestinationRedshiftUploadingMethodS3StagingS3BucketRegion string
+// DestinationRedshiftS3BucketRegion - The region of the S3 staging bucket.
+type DestinationRedshiftS3BucketRegion string
 
 const (
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionUnknown      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = ""
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionUsEast1      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "us-east-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionUsEast2      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "us-east-2"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionUsWest1      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "us-west-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionUsWest2      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "us-west-2"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionAfSouth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "af-south-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApEast1      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-east-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApSouth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-south-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApNortheast1 DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-northeast-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApNortheast2 DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-northeast-2"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApNortheast3 DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-northeast-3"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApSoutheast1 DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-southeast-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionApSoutheast2 DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ap-southeast-2"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionCaCentral1   DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "ca-central-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionCnNorth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "cn-north-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionCnNorthwest1 DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "cn-northwest-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEuCentral1   DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "eu-central-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEuNorth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "eu-north-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEuSouth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "eu-south-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEuWest1      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "eu-west-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEuWest2      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "eu-west-2"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEuWest3      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "eu-west-3"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionSaEast1      DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "sa-east-1"
-	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionMeSouth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegion = "me-south-1"
+	DestinationRedshiftS3BucketRegionUnknown      DestinationRedshiftS3BucketRegion = ""
+	DestinationRedshiftS3BucketRegionUsEast1      DestinationRedshiftS3BucketRegion = "us-east-1"
+	DestinationRedshiftS3BucketRegionUsEast2      DestinationRedshiftS3BucketRegion = "us-east-2"
+	DestinationRedshiftS3BucketRegionUsWest1      DestinationRedshiftS3BucketRegion = "us-west-1"
+	DestinationRedshiftS3BucketRegionUsWest2      DestinationRedshiftS3BucketRegion = "us-west-2"
+	DestinationRedshiftS3BucketRegionAfSouth1     DestinationRedshiftS3BucketRegion = "af-south-1"
+	DestinationRedshiftS3BucketRegionApEast1      DestinationRedshiftS3BucketRegion = "ap-east-1"
+	DestinationRedshiftS3BucketRegionApSouth1     DestinationRedshiftS3BucketRegion = "ap-south-1"
+	DestinationRedshiftS3BucketRegionApNortheast1 DestinationRedshiftS3BucketRegion = "ap-northeast-1"
+	DestinationRedshiftS3BucketRegionApNortheast2 DestinationRedshiftS3BucketRegion = "ap-northeast-2"
+	DestinationRedshiftS3BucketRegionApNortheast3 DestinationRedshiftS3BucketRegion = "ap-northeast-3"
+	DestinationRedshiftS3BucketRegionApSoutheast1 DestinationRedshiftS3BucketRegion = "ap-southeast-1"
+	DestinationRedshiftS3BucketRegionApSoutheast2 DestinationRedshiftS3BucketRegion = "ap-southeast-2"
+	DestinationRedshiftS3BucketRegionCaCentral1   DestinationRedshiftS3BucketRegion = "ca-central-1"
+	DestinationRedshiftS3BucketRegionCnNorth1     DestinationRedshiftS3BucketRegion = "cn-north-1"
+	DestinationRedshiftS3BucketRegionCnNorthwest1 DestinationRedshiftS3BucketRegion = "cn-northwest-1"
+	DestinationRedshiftS3BucketRegionEuCentral1   DestinationRedshiftS3BucketRegion = "eu-central-1"
+	DestinationRedshiftS3BucketRegionEuNorth1     DestinationRedshiftS3BucketRegion = "eu-north-1"
+	DestinationRedshiftS3BucketRegionEuSouth1     DestinationRedshiftS3BucketRegion = "eu-south-1"
+	DestinationRedshiftS3BucketRegionEuWest1      DestinationRedshiftS3BucketRegion = "eu-west-1"
+	DestinationRedshiftS3BucketRegionEuWest2      DestinationRedshiftS3BucketRegion = "eu-west-2"
+	DestinationRedshiftS3BucketRegionEuWest3      DestinationRedshiftS3BucketRegion = "eu-west-3"
+	DestinationRedshiftS3BucketRegionSaEast1      DestinationRedshiftS3BucketRegion = "sa-east-1"
+	DestinationRedshiftS3BucketRegionMeSouth1     DestinationRedshiftS3BucketRegion = "me-south-1"
 )
 
-func (e DestinationRedshiftUploadingMethodS3StagingS3BucketRegion) ToPointer() *DestinationRedshiftUploadingMethodS3StagingS3BucketRegion {
+func (e DestinationRedshiftS3BucketRegion) ToPointer() *DestinationRedshiftS3BucketRegion {
 	return &e
 }
 
-func (e *DestinationRedshiftUploadingMethodS3StagingS3BucketRegion) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedshiftS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -473,115 +643,159 @@ func (e *DestinationRedshiftUploadingMethodS3StagingS3BucketRegion) UnmarshalJSO
 	case "sa-east-1":
 		fallthrough
 	case "me-south-1":
-		*e = DestinationRedshiftUploadingMethodS3StagingS3BucketRegion(v)
+		*e = DestinationRedshiftS3BucketRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingS3BucketRegion: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedshiftS3BucketRegion: %v", v)
 	}
 }
 
-// DestinationRedshiftUploadingMethodS3Staging - The method how the data will be uploaded to the database.
-type DestinationRedshiftUploadingMethodS3Staging struct {
+// DestinationRedshiftS3Staging - <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
+type DestinationRedshiftS3Staging struct {
 	// This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 	AccessKeyID string `json:"access_key_id"`
 	// How to encrypt the staging data
-	Encryption *DestinationRedshiftUploadingMethodS3StagingEncryption `json:"encryption,omitempty"`
+	Encryption *DestinationRedshiftEncryption `json:"encryption,omitempty"`
 	// Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
-	FileBufferCount *int64 `json:"file_buffer_count,omitempty"`
+	FileBufferCount *int64 `default:"10" json:"file_buffer_count"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
-	FileNamePattern *string                                           `json:"file_name_pattern,omitempty"`
-	Method          DestinationRedshiftUploadingMethodS3StagingMethod `json:"method"`
+	FileNamePattern *string                   `json:"file_name_pattern,omitempty"`
+	method          DestinationRedshiftMethod `const:"S3 Staging" json:"method"`
 	// Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
-	PurgeStagingData *bool `json:"purge_staging_data,omitempty"`
-	// The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
+	PurgeStagingData *bool `default:"true" json:"purge_staging_data"`
+	// The name of the staging S3 bucket.
 	S3BucketName string `json:"s3_bucket_name"`
 	// The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
 	S3BucketPath *string `json:"s3_bucket_path,omitempty"`
-	// The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
-	S3BucketRegion DestinationRedshiftUploadingMethodS3StagingS3BucketRegion `json:"s3_bucket_region"`
+	// The region of the S3 staging bucket.
+	S3BucketRegion *DestinationRedshiftS3BucketRegion `default:"" json:"s3_bucket_region"`
 	// The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 	SecretAccessKey string `json:"secret_access_key"`
 }
 
-type DestinationRedshiftUploadingMethodStandardMethod string
-
-const (
-	DestinationRedshiftUploadingMethodStandardMethodStandard DestinationRedshiftUploadingMethodStandardMethod = "Standard"
-)
-
-func (e DestinationRedshiftUploadingMethodStandardMethod) ToPointer() *DestinationRedshiftUploadingMethodStandardMethod {
-	return &e
+func (d DestinationRedshiftS3Staging) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
 }
 
-func (e *DestinationRedshiftUploadingMethodStandardMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
+func (d *DestinationRedshiftS3Staging) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
 		return err
 	}
-	switch v {
-	case "Standard":
-		*e = DestinationRedshiftUploadingMethodStandardMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodStandardMethod: %v", v)
-	}
+	return nil
 }
 
-// DestinationRedshiftUploadingMethodStandard - The method how the data will be uploaded to the database.
-type DestinationRedshiftUploadingMethodStandard struct {
-	Method DestinationRedshiftUploadingMethodStandardMethod `json:"method"`
+func (o *DestinationRedshiftS3Staging) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationRedshiftS3Staging) GetEncryption() *DestinationRedshiftEncryption {
+	if o == nil {
+		return nil
+	}
+	return o.Encryption
+}
+
+func (o *DestinationRedshiftS3Staging) GetFileBufferCount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.FileBufferCount
+}
+
+func (o *DestinationRedshiftS3Staging) GetFileNamePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNamePattern
+}
+
+func (o *DestinationRedshiftS3Staging) GetMethod() DestinationRedshiftMethod {
+	return DestinationRedshiftMethodS3Staging
+}
+
+func (o *DestinationRedshiftS3Staging) GetPurgeStagingData() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PurgeStagingData
+}
+
+func (o *DestinationRedshiftS3Staging) GetS3BucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.S3BucketName
+}
+
+func (o *DestinationRedshiftS3Staging) GetS3BucketPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.S3BucketPath
+}
+
+func (o *DestinationRedshiftS3Staging) GetS3BucketRegion() *DestinationRedshiftS3BucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.S3BucketRegion
+}
+
+func (o *DestinationRedshiftS3Staging) GetSecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretAccessKey
 }
 
 type DestinationRedshiftUploadingMethodType string
 
 const (
-	DestinationRedshiftUploadingMethodTypeDestinationRedshiftUploadingMethodStandard  DestinationRedshiftUploadingMethodType = "destination-redshift_Uploading Method_Standard"
-	DestinationRedshiftUploadingMethodTypeDestinationRedshiftUploadingMethodS3Staging DestinationRedshiftUploadingMethodType = "destination-redshift_Uploading Method_S3 Staging"
+	DestinationRedshiftUploadingMethodTypeDestinationRedshiftS3Staging DestinationRedshiftUploadingMethodType = "destination-redshift_S3 Staging"
+	DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard  DestinationRedshiftUploadingMethodType = "destination-redshift_Standard"
 )
 
 type DestinationRedshiftUploadingMethod struct {
-	DestinationRedshiftUploadingMethodStandard  *DestinationRedshiftUploadingMethodStandard
-	DestinationRedshiftUploadingMethodS3Staging *DestinationRedshiftUploadingMethodS3Staging
+	DestinationRedshiftS3Staging *DestinationRedshiftS3Staging
+	DestinationRedshiftStandard  *DestinationRedshiftStandard
 
 	Type DestinationRedshiftUploadingMethodType
 }
 
-func CreateDestinationRedshiftUploadingMethodDestinationRedshiftUploadingMethodStandard(destinationRedshiftUploadingMethodStandard DestinationRedshiftUploadingMethodStandard) DestinationRedshiftUploadingMethod {
-	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftUploadingMethodStandard
+func CreateDestinationRedshiftUploadingMethodDestinationRedshiftS3Staging(destinationRedshiftS3Staging DestinationRedshiftS3Staging) DestinationRedshiftUploadingMethod {
+	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftS3Staging
 
 	return DestinationRedshiftUploadingMethod{
-		DestinationRedshiftUploadingMethodStandard: &destinationRedshiftUploadingMethodStandard,
-		Type: typ,
+		DestinationRedshiftS3Staging: &destinationRedshiftS3Staging,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationRedshiftUploadingMethodDestinationRedshiftUploadingMethodS3Staging(destinationRedshiftUploadingMethodS3Staging DestinationRedshiftUploadingMethodS3Staging) DestinationRedshiftUploadingMethod {
-	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftUploadingMethodS3Staging
+func CreateDestinationRedshiftUploadingMethodDestinationRedshiftStandard(destinationRedshiftStandard DestinationRedshiftStandard) DestinationRedshiftUploadingMethod {
+	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard
 
 	return DestinationRedshiftUploadingMethod{
-		DestinationRedshiftUploadingMethodS3Staging: &destinationRedshiftUploadingMethodS3Staging,
-		Type: typ,
+		DestinationRedshiftStandard: &destinationRedshiftStandard,
+		Type:                        typ,
 	}
 }
 
 func (u *DestinationRedshiftUploadingMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationRedshiftUploadingMethodStandard := new(DestinationRedshiftUploadingMethodStandard)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftUploadingMethodStandard); err == nil {
-		u.DestinationRedshiftUploadingMethodStandard = destinationRedshiftUploadingMethodStandard
-		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftUploadingMethodStandard
+	destinationRedshiftStandard := new(DestinationRedshiftStandard)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftStandard, "", true, true); err == nil {
+		u.DestinationRedshiftStandard = destinationRedshiftStandard
+		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard
 		return nil
 	}
 
-	destinationRedshiftUploadingMethodS3Staging := new(DestinationRedshiftUploadingMethodS3Staging)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationRedshiftUploadingMethodS3Staging); err == nil {
-		u.DestinationRedshiftUploadingMethodS3Staging = destinationRedshiftUploadingMethodS3Staging
-		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftUploadingMethodS3Staging
+	destinationRedshiftS3Staging := new(DestinationRedshiftS3Staging)
+	if err := utils.UnmarshalJSON(data, &destinationRedshiftS3Staging, "", true, true); err == nil {
+		u.DestinationRedshiftS3Staging = destinationRedshiftS3Staging
+		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftS3Staging
 		return nil
 	}
 
@@ -589,21 +803,21 @@ func (u *DestinationRedshiftUploadingMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationRedshiftUploadingMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationRedshiftUploadingMethodStandard != nil {
-		return json.Marshal(u.DestinationRedshiftUploadingMethodStandard)
+	if u.DestinationRedshiftS3Staging != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftS3Staging, "", true)
 	}
 
-	if u.DestinationRedshiftUploadingMethodS3Staging != nil {
-		return json.Marshal(u.DestinationRedshiftUploadingMethodS3Staging)
+	if u.DestinationRedshiftStandard != nil {
+		return utils.MarshalJSON(u.DestinationRedshiftStandard, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationRedshift struct {
 	// Name of the database.
-	Database        string                      `json:"database"`
-	DestinationType DestinationRedshiftRedshift `json:"destinationType"`
+	Database        string   `json:"database"`
+	destinationType Redshift `const:"redshift" json:"destinationType"`
 	// Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -611,13 +825,91 @@ type DestinationRedshift struct {
 	// Password associated with the username.
 	Password string `json:"password"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"5439" json:"port"`
 	// The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".
-	Schema string `json:"schema"`
+	Schema *string `default:"public" json:"schema"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationRedshiftSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	// The method how the data will be uploaded to the database.
+	// The way data will be uploaded to Redshift.
 	UploadingMethod *DestinationRedshiftUploadingMethod `json:"uploading_method,omitempty"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationRedshift) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshift) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationRedshift) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationRedshift) GetDestinationType() Redshift {
+	return RedshiftRedshift
+}
+
+func (o *DestinationRedshift) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationRedshift) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *DestinationRedshift) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationRedshift) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationRedshift) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationRedshift) GetTunnelMethod() *DestinationRedshiftSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *DestinationRedshift) GetUploadingMethod() *DestinationRedshiftUploadingMethod {
+	if o == nil {
+		return nil
+	}
+	return o.UploadingMethod
+}
+
+func (o *DestinationRedshift) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -15,15 +15,15 @@ SourceTvmazeSchedule Resource
 ```terraform
 resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
   configuration = {
-    domestic_schedule_country_code = "US"
+    domestic_schedule_country_code = "GB"
     end_date                       = "...my_end_date..."
-    source_type                    = "tvmaze-schedule"
     start_date                     = "...my_start_date..."
     web_schedule_country_code      = "global"
   }
-  name         = "Gretchen Waters"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "e78bf606-8258-494e-a763-d5c72795b785"
+  definition_id = "79666080-f3ec-4ae3-8b49-1ea7992cd63d"
+  name          = "Dr. Victoria Lemke"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e3f7d5a4-33d3-40ca-8aa9-f684d9ab345e"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,7 +52,6 @@ resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
 Required:
 
 - `domestic_schedule_country_code` (String) Country code for domestic TV schedule retrieval.
-- `source_type` (String) must be one of ["tvmaze-schedule"]
 - `start_date` (String) Start date for TV schedule retrieval. May be in the future.
 
 Optional:

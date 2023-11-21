@@ -7,3 +7,24 @@ type SourceGoogleSheetsPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *SourceGoogleSheetsPutRequest) GetConfiguration() SourceGoogleSheetsUpdate {
+	if o == nil {
+		return SourceGoogleSheetsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleSheetsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleSheetsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

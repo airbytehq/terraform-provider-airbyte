@@ -15,15 +15,15 @@ SourceYandexMetrica Resource
 ```terraform
 resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
   configuration = {
-    auth_token  = "...my_auth_token..."
-    counter_id  = "...my_counter_id..."
-    end_date    = "2022-01-01"
-    source_type = "yandex-metrica"
-    start_date  = "2022-01-01"
+    auth_token = "...my_auth_token..."
+    counter_id = "...my_counter_id..."
+    end_date   = "2022-01-01"
+    start_date = "2022-01-01"
   }
-  name         = "Dominic Marvin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "e102da2d-e35f-48e0-9bf3-3eaab45402ac"
+  definition_id = "71a16fff-1f04-4aee-bc30-6c4f3397c204"
+  name          = "June Williamson"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "deba481e-413d-4d76-8cc3-ae1d775ee978"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,9 +51,8 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
 
 Required:
 
-- `auth_token` (String) Your Yandex Metrica API access token
+- `auth_token` (String, Sensitive) Your Yandex Metrica API access token
 - `counter_id` (String) Counter ID
-- `source_type` (String) must be one of ["yandex-metrica"]
 - `start_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD".
 
 Optional:

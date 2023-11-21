@@ -8,6 +8,5 @@ type SourceSquare struct {
 	Credentials           *SourceSquareAuthentication `tfsdk:"credentials"`
 	IncludeDeletedObjects types.Bool                  `tfsdk:"include_deleted_objects"`
 	IsSandbox             types.Bool                  `tfsdk:"is_sandbox"`
-	SourceType            types.String                `tfsdk:"source_type"`
 	StartDate             types.String                `tfsdk:"start_date"`
 }

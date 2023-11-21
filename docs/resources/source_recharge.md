@@ -16,12 +16,12 @@ SourceRecharge Resource
 resource "airbyte_source_recharge" "my_source_recharge" {
   configuration = {
     access_token = "...my_access_token..."
-    source_type  = "recharge"
     start_date   = "2021-05-14T00:00:00Z"
   }
-  name         = "Angel Stokes"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7ff4711a-a1bc-474b-86ce-cc74f77b4848"
+  definition_id = "427992f6-5a71-405f-ae57-0ad372ede129"
+  name          = "Hugo Hagenes"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "1410fd6e-7ec4-4881-ab0c-62b8975147c3"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_recharge" "my_source_recharge" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_recharge" "my_source_recharge" {
 
 Required:
 
-- `access_token` (String) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
-- `source_type` (String) must be one of ["recharge"]
+- `access_token` (String, Sensitive) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
 - `start_date` (String) The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 
 

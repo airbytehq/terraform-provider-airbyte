@@ -7,3 +7,24 @@ type SourceConfigcatPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceConfigcatPutRequest) GetConfiguration() SourceConfigcatUpdate {
+	if o == nil {
+		return SourceConfigcatUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceConfigcatPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceConfigcatPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

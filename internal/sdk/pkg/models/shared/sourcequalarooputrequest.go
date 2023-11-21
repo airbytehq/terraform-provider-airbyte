@@ -7,3 +7,24 @@ type SourceQualarooPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceQualarooPutRequest) GetConfiguration() SourceQualarooUpdate {
+	if o == nil {
+		return SourceQualarooUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceQualarooPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceQualarooPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

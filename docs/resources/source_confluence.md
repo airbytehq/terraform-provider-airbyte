@@ -18,11 +18,11 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     api_token   = "...my_api_token..."
     domain_name = "...my_domain_name..."
     email       = "abc@example.com"
-    source_type = "confluence"
   }
-  name         = "Jody Will"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "ccca99bc-7fc0-4b2d-8e10-873e42b006d6"
+  definition_id = "82e70e18-a817-42f9-b227-1c9f9cbaa542"
+  name          = "Ms. Nathaniel Walter V"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "61d84c3f-bc24-4f86-8fce-85198c116e72"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_confluence" "my_source_confluence" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,9 +50,8 @@ resource "airbyte_source_confluence" "my_source_confluence" {
 
 Required:
 
-- `api_token` (String) Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
+- `api_token` (String, Sensitive) Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
 - `domain_name` (String) Your Confluence domain name
 - `email` (String) Your Confluence login email
-- `source_type` (String) must be one of ["confluence"]
 
 

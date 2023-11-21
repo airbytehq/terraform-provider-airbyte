@@ -3,8 +3,6 @@
 package provider
 
 type SourceShopifyShopifyAuthorizationMethod struct {
-	SourceShopifyShopifyAuthorizationMethodAPIPassword       *SourceShopifyShopifyAuthorizationMethodAPIPassword `tfsdk:"source_shopify_shopify_authorization_method_api_password"`
-	SourceShopifyShopifyAuthorizationMethodOAuth20           *SourceShopifyShopifyAuthorizationMethodOAuth20     `tfsdk:"source_shopify_shopify_authorization_method_o_auth2_0"`
-	SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *SourceShopifyShopifyAuthorizationMethodAPIPassword `tfsdk:"source_shopify_update_shopify_authorization_method_api_password"`
-	SourceShopifyUpdateShopifyAuthorizationMethodOAuth20     *SourceShopifyShopifyAuthorizationMethodOAuth20     `tfsdk:"source_shopify_update_shopify_authorization_method_o_auth2_0"`
+	APIPassword *APIPassword          `tfsdk:"api_password"`
+	OAuth20     *SourceShopifyOAuth20 `tfsdk:"o_auth20"`
 }

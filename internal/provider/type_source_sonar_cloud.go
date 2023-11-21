@@ -8,7 +8,6 @@ type SourceSonarCloud struct {
 	ComponentKeys []types.String `tfsdk:"component_keys"`
 	EndDate       types.String   `tfsdk:"end_date"`
 	Organization  types.String   `tfsdk:"organization"`
-	SourceType    types.String   `tfsdk:"source_type"`
 	StartDate     types.String   `tfsdk:"start_date"`
 	UserToken     types.String   `tfsdk:"user_token"`
 }

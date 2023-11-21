@@ -10,3 +10,24 @@ type SourceUsCensusUpdate struct {
 	// The path portion of the GET request
 	QueryPath string `json:"query_path"`
 }
+
+func (o *SourceUsCensusUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceUsCensusUpdate) GetQueryParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryParams
+}
+
+func (o *SourceUsCensusUpdate) GetQueryPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.QueryPath
+}

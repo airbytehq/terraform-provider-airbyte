@@ -15,12 +15,12 @@ SourceK6Cloud Resource
 ```terraform
 resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
   configuration = {
-    api_token   = "...my_api_token..."
-    source_type = "k6-cloud"
+    api_token = "...my_api_token..."
   }
-  name         = "Ella Runolfsdottir"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "8f9fdb94-10f6-43bb-b817-837b01afdd78"
+  definition_id = "2e85afcc-9acc-46e7-a95c-9a7c9f197511"
+  name          = "Franklin D'Amore"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "96585095-001a-4ad5-a5f9-cfb0d1e8d3ac"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
 
 Required:
 
-- `api_token` (String) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["k6-cloud"]
+- `api_token` (String, Sensitive) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
 
 

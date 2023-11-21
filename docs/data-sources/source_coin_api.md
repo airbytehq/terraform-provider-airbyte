@@ -14,7 +14,6 @@ SourceCoinAPI DataSource
 
 ```terraform
 data "airbyte_source_coin_api" "my_source_coinapi" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,34 +25,12 @@ data "airbyte_source_coin_api" "my_source_coinapi" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key
-- `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
-from the start date to the current time, or when the count of result
-elements reaches its limit.
-- `environment` (String) must be one of ["sandbox", "production"]
-The environment to use. Either sandbox or production.
-- `limit` (Number) The maximum number of elements to return. If not supplied, the default
-is 100. For numbers larger than 100, each 100 items is counted as one
-request for pricing purposes. Maximum value is 100000.
-- `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
-- `source_type` (String) must be one of ["coin-api"]
-- `start_date` (String) The start date in ISO 8601 format.
-- `symbol_id` (String) The symbol ID to use. See the documentation for a list.
-https://docs.coinapi.io/#list-all-symbols-get
 
 

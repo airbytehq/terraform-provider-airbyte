@@ -10,3 +10,24 @@ type SourceGoogleWorkspaceAdminReportsUpdate struct {
 	// Sets the range of time shown in the report. Reports API allows from up to 180 days ago.
 	Lookback *int64 `json:"lookback,omitempty"`
 }
+
+func (o *SourceGoogleWorkspaceAdminReportsUpdate) GetCredentialsJSON() string {
+	if o == nil {
+		return ""
+	}
+	return o.CredentialsJSON
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsUpdate) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *SourceGoogleWorkspaceAdminReportsUpdate) GetLookback() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lookback
+}

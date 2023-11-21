@@ -1,23 +1,19 @@
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
+    account_type            = "Seller"
     advanced_stream_options = "{\"GET_SALES_AND_TRAFFIC_REPORT\": {\"availability_sla_days\": 3}}"
-    auth_type               = "oauth2.0"
-    aws_access_key          = "...my_aws_access_key..."
-    aws_environment         = "PRODUCTION"
-    aws_secret_key          = "...my_aws_secret_key..."
+    aws_environment         = "SANDBOX"
     lwa_app_id              = "...my_lwa_app_id..."
     lwa_client_secret       = "...my_lwa_client_secret..."
-    max_wait_seconds        = 1980
-    period_in_days          = 5
+    period_in_days          = 2
     refresh_token           = "...my_refresh_token..."
-    region                  = "SA"
+    region                  = "AE"
     replication_end_date    = "2017-01-25T00:00:00Z"
     replication_start_date  = "2017-01-25T00:00:00Z"
-    report_options          = "{\"GET_SOME_REPORT\": {\"custom\": \"true\"}}"
-    role_arn                = "...my_role_arn..."
-    source_type             = "amazon-seller-partner"
+    report_options          = "{\"GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT\": {\"reportPeriod\": \"WEEK\"}}"
   }
-  name         = "Phyllis Quitzon"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5c537c64-54ef-4b0b-b489-6c3ca5acfbe2"
+  definition_id = "69bb26e6-b9f2-45aa-9f8c-7d4107048d9f"
+  name          = "Caleb Legros"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "9afeef69-ead1-4e5d-b690-efc6e828b1d2"
 }

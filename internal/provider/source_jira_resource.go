@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceJiraResource struct {
 // SourceJiraResourceModel describes the resource data model.
 type SourceJiraResourceModel struct {
 	Configuration SourceJira   `tfsdk:"configuration"`
+	DefinitionID  types.String `tfsdk:"definition_id"`
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
@@ -57,6 +58,7 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.`,
 					},
 					"domain": schema.StringAttribute{
@@ -68,12 +70,24 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.`,
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`(DEPRECATED) Expand the changelog when replicating issues.`,
+					},
+					"expand_issue_transition": schema.BoolAttribute{
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`(DEPRECATED) Expand the transitions when replicating issues.`,
+					},
+					"issues_stream_expand_with": schema.ListAttribute{
 						Optional:    true,
-						Description: `Expand the changelog when replicating issues.`,
+						ElementType: types.StringType,
+						Description: `Select fields to Expand the ` + "`" + `Issues` + "`" + ` stream when replicating with: `,
 					},
 					"projects": schema.ListAttribute{
 						Optional:    true,
@@ -81,34 +95,37 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.`,
 					},
 					"render_fields": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Render issue fields in HTML format in addition to Jira JSON-like format.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"jira",
-							),
-						},
-						Description: `must be one of ["jira"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`(DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.`,
 					},
 					"start_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -172,7 +189,7 @@ func (r *SourceJiraResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceJira(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -348,5 +365,5 @@ func (r *SourceJiraResource) Delete(ctx context.Context, req resource.DeleteRequ
 }
 
 func (r *SourceJiraResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceGoogleAnalyticsDataAPIDataSource struct {
 
 // SourceGoogleAnalyticsDataAPIDataSourceModel describes the data model.
 type SourceGoogleAnalyticsDataAPIDataSourceModel struct {
-	Configuration SourceGoogleAnalyticsDataAPI `tfsdk:"configuration"`
-	Name          types.String                 `tfsdk:"name"`
-	SecretID      types.String                 `tfsdk:"secret_id"`
-	SourceID      types.String                 `tfsdk:"source_id"`
-	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,157 +47,19 @@ func (r *SourceGoogleAnalyticsDataAPIDataSource) Schema(ctx context.Context, req
 		MarkdownDescription: "SourceGoogleAnalyticsDataAPI DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_google_analytics_data_api_credentials_authenticate_via_google_oauth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your Google Analytics developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your Google Analytics developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The token for obtaining a new access token.`,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_data_api_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
-									"credentials_json": schema.StringAttribute{
-										Computed:    true,
-										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your Google Analytics developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your Google Analytics developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The token for obtaining a new access token.`,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_data_api_update_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
-									"credentials_json": schema.StringAttribute{
-										Computed:    true,
-										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Credentials for the service`,
-					},
-					"custom_reports": schema.StringAttribute{
-						Computed:    true,
-						Description: `A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#custom-reports">the documentation</a> for more information about the exact format you can use to fill out this field.`,
-					},
-					"date_ranges_start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.`,
-					},
-					"property_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-analytics-data-api",
-							),
-						},
-						Description: `must be one of ["google-analytics-data-api"]`,
-					},
-					"window_in_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

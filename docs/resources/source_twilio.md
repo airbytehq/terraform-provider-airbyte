@@ -18,12 +18,12 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     account_sid     = "...my_account_sid..."
     auth_token      = "...my_auth_token..."
     lookback_window = 60
-    source_type     = "twilio"
     start_date      = "2020-10-01T00:00:00Z"
   }
-  name         = "Andre Sporer"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "9e5635b3-3bc0-4f97-8c42-fc9f4844225e"
+  definition_id = "83cb2e52-a86a-4dbb-97c5-cbe7ccff9d07"
+  name          = "Leslie Kihn"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "a4b37eb2-05dd-4b7f-9b71-195e07e10364"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_twilio" "my_source_twilio" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,12 +52,12 @@ resource "airbyte_source_twilio" "my_source_twilio" {
 Required:
 
 - `account_sid` (String) Twilio account SID
-- `auth_token` (String) Twilio Auth Token.
-- `source_type` (String) must be one of ["twilio"]
+- `auth_token` (String, Sensitive) Twilio Auth Token.
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `lookback_window` (Number) How far into the past to look for records. (in minutes)
+- `lookback_window` (Number) Default: 0
+How far into the past to look for records. (in minutes)
 
 

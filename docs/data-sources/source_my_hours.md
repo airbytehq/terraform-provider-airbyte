@@ -14,7 +14,6 @@ SourceMyHours DataSource
 
 ```terraform
 data "airbyte_source_my_hours" "my_source_myhours" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_my_hours" "my_source_myhours" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `email` (String) Your My Hours username
-- `logs_batch_size` (Number) Pagination size used for retrieving logs in days
-- `password` (String) The password associated to the username
-- `source_type` (String) must be one of ["my-hours"]
-- `start_date` (String) Start date for collecting time logs
 
 

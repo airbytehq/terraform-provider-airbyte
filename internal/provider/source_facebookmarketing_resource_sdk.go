@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -31,19 +31,19 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	}
 	var customInsights []shared.SourceFacebookMarketingInsightConfig = nil
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
-		var actionBreakdowns []shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns = nil
+		var actionBreakdowns []shared.SourceFacebookMarketingValidActionBreakdowns = nil
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
-			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
+			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingValidActionBreakdowns(actionBreakdownsItem.ValueString()))
 		}
-		actionReportTime := new(shared.SourceFacebookMarketingInsightConfigActionReportTime)
+		actionReportTime := new(shared.SourceFacebookMarketingActionReportTime)
 		if !customInsightsItem.ActionReportTime.IsUnknown() && !customInsightsItem.ActionReportTime.IsNull() {
-			*actionReportTime = shared.SourceFacebookMarketingInsightConfigActionReportTime(customInsightsItem.ActionReportTime.ValueString())
+			*actionReportTime = shared.SourceFacebookMarketingActionReportTime(customInsightsItem.ActionReportTime.ValueString())
 		} else {
 			actionReportTime = nil
 		}
-		var breakdowns []shared.SourceFacebookMarketingInsightConfigValidBreakdowns = nil
+		var breakdowns []shared.SourceFacebookMarketingValidBreakdowns = nil
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
-			breakdowns = append(breakdowns, shared.SourceFacebookMarketingInsightConfigValidBreakdowns(breakdownsItem.ValueString()))
+			breakdowns = append(breakdowns, shared.SourceFacebookMarketingValidBreakdowns(breakdownsItem.ValueString()))
 		}
 		endDate := new(time.Time)
 		if !customInsightsItem.EndDate.IsUnknown() && !customInsightsItem.EndDate.IsNull() {
@@ -51,9 +51,9 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		} else {
 			endDate = nil
 		}
-		var fields []shared.SourceFacebookMarketingInsightConfigValidEnums = nil
+		var fields []shared.SourceFacebookMarketingValidEnums = nil
 		for _, fieldsItem := range customInsightsItem.Fields {
-			fields = append(fields, shared.SourceFacebookMarketingInsightConfigValidEnums(fieldsItem.ValueString()))
+			fields = append(fields, shared.SourceFacebookMarketingValidEnums(fieldsItem.ValueString()))
 		}
 		insightsLookbackWindow := new(int64)
 		if !customInsightsItem.InsightsLookbackWindow.IsUnknown() && !customInsightsItem.InsightsLookbackWindow.IsNull() {
@@ -61,9 +61,9 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		} else {
 			insightsLookbackWindow = nil
 		}
-		level := new(shared.SourceFacebookMarketingInsightConfigLevel)
+		level := new(shared.SourceFacebookMarketingLevel)
 		if !customInsightsItem.Level.IsUnknown() && !customInsightsItem.Level.IsNull() {
-			*level = shared.SourceFacebookMarketingInsightConfigLevel(customInsightsItem.Level.ValueString())
+			*level = shared.SourceFacebookMarketingLevel(customInsightsItem.Level.ValueString())
 		} else {
 			level = nil
 		}
@@ -117,20 +117,18 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	} else {
 		insightsLookbackWindow1 = nil
 	}
-	maxBatchSize := new(int64)
-	if !r.Configuration.MaxBatchSize.IsUnknown() && !r.Configuration.MaxBatchSize.IsNull() {
-		*maxBatchSize = r.Configuration.MaxBatchSize.ValueInt64()
-	} else {
-		maxBatchSize = nil
-	}
 	pageSize := new(int64)
 	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
 		*pageSize = r.Configuration.PageSize.ValueInt64()
 	} else {
 		pageSize = nil
 	}
-	sourceType := shared.SourceFacebookMarketingFacebookMarketing(r.Configuration.SourceType.ValueString())
-	startDate1, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate1 := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate1, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate1 = nil
+	}
 	configuration := shared.SourceFacebookMarketing{
 		AccessToken:                accessToken,
 		AccountID:                  accountID,
@@ -142,10 +140,14 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		FetchThumbnailImages:       fetchThumbnailImages,
 		IncludeDeleted:             includeDeleted,
 		InsightsLookbackWindow:     insightsLookbackWindow1,
-		MaxBatchSize:               maxBatchSize,
 		PageSize:                   pageSize,
-		SourceType:                 sourceType,
 		StartDate:                  startDate1,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name1 := r.Name.ValueString()
 	secretID := new(string)
@@ -157,6 +159,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceFacebookMarketingCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -190,21 +193,21 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 	} else {
 		clientSecret = nil
 	}
-	var customInsights []shared.SourceFacebookMarketingUpdateInsightConfig = nil
+	var customInsights []shared.InsightConfig = nil
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
-		var actionBreakdowns []shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns = nil
+		var actionBreakdowns []shared.ValidActionBreakdowns = nil
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
-			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
+			actionBreakdowns = append(actionBreakdowns, shared.ValidActionBreakdowns(actionBreakdownsItem.ValueString()))
 		}
-		actionReportTime := new(shared.SourceFacebookMarketingUpdateInsightConfigActionReportTime)
+		actionReportTime := new(shared.ActionReportTime)
 		if !customInsightsItem.ActionReportTime.IsUnknown() && !customInsightsItem.ActionReportTime.IsNull() {
-			*actionReportTime = shared.SourceFacebookMarketingUpdateInsightConfigActionReportTime(customInsightsItem.ActionReportTime.ValueString())
+			*actionReportTime = shared.ActionReportTime(customInsightsItem.ActionReportTime.ValueString())
 		} else {
 			actionReportTime = nil
 		}
-		var breakdowns []shared.SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = nil
+		var breakdowns []shared.ValidBreakdowns = nil
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
-			breakdowns = append(breakdowns, shared.SourceFacebookMarketingUpdateInsightConfigValidBreakdowns(breakdownsItem.ValueString()))
+			breakdowns = append(breakdowns, shared.ValidBreakdowns(breakdownsItem.ValueString()))
 		}
 		endDate := new(time.Time)
 		if !customInsightsItem.EndDate.IsUnknown() && !customInsightsItem.EndDate.IsNull() {
@@ -212,9 +215,9 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		} else {
 			endDate = nil
 		}
-		var fields []shared.SourceFacebookMarketingUpdateInsightConfigValidEnums = nil
+		var fields []shared.SourceFacebookMarketingUpdateValidEnums = nil
 		for _, fieldsItem := range customInsightsItem.Fields {
-			fields = append(fields, shared.SourceFacebookMarketingUpdateInsightConfigValidEnums(fieldsItem.ValueString()))
+			fields = append(fields, shared.SourceFacebookMarketingUpdateValidEnums(fieldsItem.ValueString()))
 		}
 		insightsLookbackWindow := new(int64)
 		if !customInsightsItem.InsightsLookbackWindow.IsUnknown() && !customInsightsItem.InsightsLookbackWindow.IsNull() {
@@ -222,9 +225,9 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		} else {
 			insightsLookbackWindow = nil
 		}
-		level := new(shared.SourceFacebookMarketingUpdateInsightConfigLevel)
+		level := new(shared.Level)
 		if !customInsightsItem.Level.IsUnknown() && !customInsightsItem.Level.IsNull() {
-			*level = shared.SourceFacebookMarketingUpdateInsightConfigLevel(customInsightsItem.Level.ValueString())
+			*level = shared.Level(customInsightsItem.Level.ValueString())
 		} else {
 			level = nil
 		}
@@ -241,7 +244,7 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		} else {
 			timeIncrement = nil
 		}
-		customInsights = append(customInsights, shared.SourceFacebookMarketingUpdateInsightConfig{
+		customInsights = append(customInsights, shared.InsightConfig{
 			ActionBreakdowns:       actionBreakdowns,
 			ActionReportTime:       actionReportTime,
 			Breakdowns:             breakdowns,
@@ -278,19 +281,18 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 	} else {
 		insightsLookbackWindow1 = nil
 	}
-	maxBatchSize := new(int64)
-	if !r.Configuration.MaxBatchSize.IsUnknown() && !r.Configuration.MaxBatchSize.IsNull() {
-		*maxBatchSize = r.Configuration.MaxBatchSize.ValueInt64()
-	} else {
-		maxBatchSize = nil
-	}
 	pageSize := new(int64)
 	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
 		*pageSize = r.Configuration.PageSize.ValueInt64()
 	} else {
 		pageSize = nil
 	}
-	startDate1, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate1 := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate1, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate1 = nil
+	}
 	configuration := shared.SourceFacebookMarketingUpdate{
 		AccessToken:                accessToken,
 		AccountID:                  accountID,
@@ -302,7 +304,6 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		FetchThumbnailImages:       fetchThumbnailImages,
 		IncludeDeleted:             includeDeleted,
 		InsightsLookbackWindow:     insightsLookbackWindow1,
-		MaxBatchSize:               maxBatchSize,
 		PageSize:                   pageSize,
 		StartDate:                  startDate1,
 	}

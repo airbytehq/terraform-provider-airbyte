@@ -6,3 +6,10 @@ type SourceRkiCovidUpdate struct {
 	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
 }
+
+func (o *SourceRkiCovidUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}

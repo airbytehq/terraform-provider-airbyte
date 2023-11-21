@@ -1,10 +1,10 @@
 resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
   configuration = {
-    source_type              = "postmarkapp"
     x_postmark_account_token = "...my_x_postmark_account_token..."
     x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  name         = "Mr. Sharon Swift"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3deba297-be3e-490b-840d-f868fd52405c"
+  definition_id = "1bd0fb63-21f6-4b4c-a647-2a5f8aec8fed"
+  name          = "Felix Wisoky"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5367bfee-523e-436b-b4e8-f7b837d76b02"
 }

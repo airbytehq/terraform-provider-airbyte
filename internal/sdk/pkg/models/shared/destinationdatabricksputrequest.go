@@ -7,3 +7,24 @@ type DestinationDatabricksPutRequest struct {
 	Name          string                      `json:"name"`
 	WorkspaceID   string                      `json:"workspaceId"`
 }
+
+func (o *DestinationDatabricksPutRequest) GetConfiguration() DestinationDatabricksUpdate {
+	if o == nil {
+		return DestinationDatabricksUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationDatabricksPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationDatabricksPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

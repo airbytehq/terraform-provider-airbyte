@@ -14,7 +14,6 @@ SourceZendeskSunshine DataSource
 
 ```terraform
 data "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,75 +25,12 @@ data "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["zendesk-sunshine"]
-- `start_date` (String) The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
-- `subdomain` (String) The subdomain for your Zendesk Account.
-
-<a id="nestedatt--configuration--credentials"></a>
-### Nested Schema for `configuration.credentials`
-
-Read-Only:
-
-- `source_zendesk_sunshine_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_api_token))
-- `source_zendesk_sunshine_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0))
-- `source_zendesk_sunshine_update_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token))
-- `source_zendesk_sunshine_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0))
-
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_authorization_method_api_token`
-
-Read-Only:
-
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["api_token"]
-- `email` (String) The user email for your Zendesk account
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_authorization_method_o_auth2_0`
-
-Read-Only:
-
-- `access_token` (String) Long-term access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_api_token`
-
-Read-Only:
-
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-- `auth_method` (String) must be one of ["api_token"]
-- `email` (String) The user email for your Zendesk account
-
-
-<a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_o_auth2_0`
-
-Read-Only:
-
-- `access_token` (String) Long-term access Token for making authenticated requests.
-- `auth_method` (String) must be one of ["oauth2.0"]
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
 
 

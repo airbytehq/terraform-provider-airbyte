@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -15,7 +15,12 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 	} else {
 		endDate = nil
 	}
-	environment := shared.SourceCoinAPIEnvironment(r.Configuration.Environment.ValueString())
+	environment := new(shared.SourceCoinAPIEnvironment)
+	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
+		*environment = shared.SourceCoinAPIEnvironment(r.Configuration.Environment.ValueString())
+	} else {
+		environment = nil
+	}
 	limit := new(int64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueInt64()
@@ -23,7 +28,6 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 		limit = nil
 	}
 	period := r.Configuration.Period.ValueString()
-	sourceType := shared.SourceCoinAPICoinAPI(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	symbolID := r.Configuration.SymbolID.ValueString()
 	configuration := shared.SourceCoinAPI{
@@ -32,9 +36,14 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 		Environment: environment,
 		Limit:       limit,
 		Period:      period,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 		SymbolID:    symbolID,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -46,6 +55,7 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceCoinAPICreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -66,7 +76,12 @@ func (r *SourceCoinAPIResourceModel) ToUpdateSDKType() *shared.SourceCoinAPIPutR
 	} else {
 		endDate = nil
 	}
-	environment := shared.SourceCoinAPIUpdateEnvironment(r.Configuration.Environment.ValueString())
+	environment := new(shared.Environment)
+	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
+		*environment = shared.Environment(r.Configuration.Environment.ValueString())
+	} else {
+		environment = nil
+	}
 	limit := new(int64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueInt64()

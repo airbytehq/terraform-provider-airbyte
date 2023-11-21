@@ -3,8 +3,6 @@
 package provider
 
 type SourceGoogleSearchConsoleAuthenticationType struct {
-	SourceGoogleSearchConsoleAuthenticationTypeOAuth                                 *SourceGoogleSearchConsoleAuthenticationTypeOAuth                           `tfsdk:"source_google_search_console_authentication_type_o_auth"`
-	SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication       *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication `tfsdk:"source_google_search_console_authentication_type_service_account_key_authentication"`
-	SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth                           *SourceGoogleSearchConsoleAuthenticationTypeOAuth                           `tfsdk:"source_google_search_console_update_authentication_type_o_auth"`
-	SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication `tfsdk:"source_google_search_console_update_authentication_type_service_account_key_authentication"`
+	OAuth                           *AuthenticateViaGoogleOauth                               `tfsdk:"o_auth"`
+	ServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication `tfsdk:"service_account_key_authentication"`
 }

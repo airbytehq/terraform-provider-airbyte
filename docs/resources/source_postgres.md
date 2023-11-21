@@ -21,29 +21,25 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      source_postgres_update_method_detect_changes_with_xmin_system_column = {
-        method = "Xmin"
-      }
+      detect_changes_with_xmin_system_column = {}
     }
     schemas = [
       "...",
     ]
-    source_type = "postgres"
     ssl_mode = {
-      source_postgres_ssl_modes_allow = {
-        mode = "allow"
+      source_postgres_allow = {
+        additional_properties = "{ \"see\": \"documentation\" }"
       }
     }
     tunnel_method = {
-      source_postgres_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      source_postgres_no_tunnel = {}
     }
-    username = "Edwardo.Streich"
+    username = "Dagmar_Towne8"
   }
-  name         = "Roosevelt Cummings"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "480632b9-954b-46fa-a206-369828553cb1"
+  definition_id = "558e983f-33bb-4c2f-8e75-b95ee5dd11c7"
+  name          = "Brandi Gerhold"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "aa4d1c74-fcd7-4d93-9b8b-6b2c0920aa8b"
 }
 ```
 
@@ -53,11 +49,12 @@ resource "airbyte_source_postgres" "my_source_postgres" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -72,14 +69,14 @@ Required:
 
 - `database` (String) Name of the database.
 - `host` (String) Hostname of the database.
-- `port` (Number) Port of the database.
-- `source_type` (String) must be one of ["postgres"]
 - `username` (String) Username to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
-- `password` (String) Password associated with the username.
+- `password` (String, Sensitive) Password associated with the username.
+- `port` (Number) Default: 5432
+Port of the database.
 - `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas (case sensitive) to sync from. Defaults to public.
 - `ssl_mode` (Attributes) SSL connection modes. 
@@ -91,83 +88,37 @@ Optional:
 
 Optional:
 
-- `source_postgres_update_method_detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_method_detect_changes_with_xmin_system_column))
-- `source_postgres_update_method_read_changes_using_write_ahead_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_method_read_changes_using_write_ahead_log_cdc))
-- `source_postgres_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_method_scan_changes_with_user_defined_cursor))
-- `source_postgres_update_update_method_detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_update_method_detect_changes_with_xmin_system_column))
-- `source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc))
-- `source_postgres_update_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_update_method_scan_changes_with_user_defined_cursor))
+- `detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB. (see [below for nested schema](#nestedatt--configuration--replication_method--detect_changes_with_xmin_system_column))
+- `read_changes_using_write_ahead_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size. (see [below for nested schema](#nestedatt--configuration--replication_method--read_changes_using_write_ahead_log_cdc))
+- `scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--scan_changes_with_user_defined_cursor))
 
-<a id="nestedatt--configuration--replication_method--source_postgres_update_method_detect_changes_with_xmin_system_column"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_method_detect_changes_with_xmin_system_column`
-
-Required:
-
-- `method` (String) must be one of ["Xmin"]
+<a id="nestedatt--configuration--replication_method--detect_changes_with_xmin_system_column"></a>
+### Nested Schema for `configuration.replication_method.detect_changes_with_xmin_system_column`
 
 
-<a id="nestedatt--configuration--replication_method--source_postgres_update_method_read_changes_using_write_ahead_log_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_method_read_changes_using_write_ahead_log_cdc`
+<a id="nestedatt--configuration--replication_method--read_changes_using_write_ahead_log_cdc"></a>
+### Nested Schema for `configuration.replication_method.read_changes_using_write_ahead_log_cdc`
 
 Required:
 
-- `method` (String) must be one of ["CDC"]
 - `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 - `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]
-Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of ["pgoutput"]
+- `initial_waiting_seconds` (Number) Default: 300
+The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
+Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+- `plugin` (String) must be one of ["pgoutput"]; Default: "pgoutput"
 A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+- `queue_size` (Number) Default: 10000
+The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
-<a id="nestedatt--configuration--replication_method--source_postgres_update_method_scan_changes_with_user_defined_cursor"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_method_scan_changes_with_user_defined_cursor`
-
-Required:
-
-- `method` (String) must be one of ["Standard"]
-
-
-<a id="nestedatt--configuration--replication_method--source_postgres_update_update_method_detect_changes_with_xmin_system_column"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_update_method_detect_changes_with_xmin_system_column`
-
-Required:
-
-- `method` (String) must be one of ["Xmin"]
-
-
-<a id="nestedatt--configuration--replication_method--source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc`
-
-Required:
-
-- `method` (String) must be one of ["CDC"]
-- `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
-- `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]
-Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of ["pgoutput"]
-A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
-
-
-<a id="nestedatt--configuration--replication_method--source_postgres_update_update_method_scan_changes_with_user_defined_cursor"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_update_method_scan_changes_with_user_defined_cursor`
-
-Required:
-
-- `method` (String) must be one of ["Standard"]
+<a id="nestedatt--configuration--replication_method--scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.scan_changes_with_user_defined_cursor`
 
 
 
@@ -176,177 +127,73 @@ Required:
 
 Optional:
 
-- `source_postgres_ssl_modes_allow` (Attributes) Enables encryption only when required by the source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_allow))
-- `source_postgres_ssl_modes_disable` (Attributes) Disables encryption of communication between Airbyte and source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_disable))
-- `source_postgres_ssl_modes_prefer` (Attributes) Allows unencrypted connection only if the source database does not support encryption. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_prefer))
-- `source_postgres_ssl_modes_require` (Attributes) Always require encryption. If the source database server does not support encryption, connection will fail. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_require))
-- `source_postgres_ssl_modes_verify_ca` (Attributes) Always require encryption and verifies that the source database server has a valid SSL certificate. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_verify_ca))
-- `source_postgres_ssl_modes_verify_full` (Attributes) This is the most secure mode. Always require encryption and verifies the identity of the source database server. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_verify_full))
-- `source_postgres_update_ssl_modes_allow` (Attributes) Enables encryption only when required by the source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_allow))
-- `source_postgres_update_ssl_modes_disable` (Attributes) Disables encryption of communication between Airbyte and source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_disable))
-- `source_postgres_update_ssl_modes_prefer` (Attributes) Allows unencrypted connection only if the source database does not support encryption. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_prefer))
-- `source_postgres_update_ssl_modes_require` (Attributes) Always require encryption. If the source database server does not support encryption, connection will fail. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_require))
-- `source_postgres_update_ssl_modes_verify_ca` (Attributes) Always require encryption and verifies that the source database server has a valid SSL certificate. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_verify_ca))
-- `source_postgres_update_ssl_modes_verify_full` (Attributes) This is the most secure mode. Always require encryption and verifies the identity of the source database server. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_verify_full))
+- `allow` (Attributes) Enables encryption only when required by the source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--allow))
+- `disable` (Attributes) Disables encryption of communication between Airbyte and source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--disable))
+- `prefer` (Attributes) Allows unencrypted connection only if the source database does not support encryption. (see [below for nested schema](#nestedatt--configuration--ssl_mode--prefer))
+- `require` (Attributes) Always require encryption. If the source database server does not support encryption, connection will fail. (see [below for nested schema](#nestedatt--configuration--ssl_mode--require))
+- `verify_ca` (Attributes) Always require encryption and verifies that the source database server has a valid SSL certificate. (see [below for nested schema](#nestedatt--configuration--ssl_mode--verify_ca))
+- `verify_full` (Attributes) This is the most secure mode. Always require encryption and verifies the identity of the source database server. (see [below for nested schema](#nestedatt--configuration--ssl_mode--verify_full))
 
-<a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_allow"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_ssl_modes_allow`
-
-Required:
-
-- `mode` (String) must be one of ["allow"]
+<a id="nestedatt--configuration--ssl_mode--allow"></a>
+### Nested Schema for `configuration.ssl_mode.allow`
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 
 
-<a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_disable"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_ssl_modes_disable`
-
-Required:
-
-- `mode` (String) must be one of ["disable"]
+<a id="nestedatt--configuration--ssl_mode--disable"></a>
+### Nested Schema for `configuration.ssl_mode.disable`
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 
 
-<a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_prefer"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_ssl_modes_prefer`
-
-Required:
-
-- `mode` (String) must be one of ["prefer"]
+<a id="nestedatt--configuration--ssl_mode--prefer"></a>
+### Nested Schema for `configuration.ssl_mode.prefer`
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 
 
-<a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_require"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_ssl_modes_require`
-
-Required:
-
-- `mode` (String) must be one of ["require"]
+<a id="nestedatt--configuration--ssl_mode--require"></a>
+### Nested Schema for `configuration.ssl_mode.require`
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 
 
-<a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_verify_ca"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_ssl_modes_verify_ca`
+<a id="nestedatt--configuration--ssl_mode--verify_ca"></a>
+### Nested Schema for `configuration.ssl_mode.verify_ca`
 
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
+- `client_key` (String, Sensitive) Client key
+- `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
-<a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_verify_full"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_ssl_modes_verify_full`
+<a id="nestedatt--configuration--ssl_mode--verify_full"></a>
+### Nested Schema for `configuration.ssl_mode.verify_full`
 
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
-
-
-<a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_allow"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_update_ssl_modes_allow`
-
-Required:
-
-- `mode` (String) must be one of ["allow"]
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-
-<a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_disable"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_update_ssl_modes_disable`
-
-Required:
-
-- `mode` (String) must be one of ["disable"]
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-
-<a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_prefer"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_update_ssl_modes_prefer`
-
-Required:
-
-- `mode` (String) must be one of ["prefer"]
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-
-<a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_require"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_update_ssl_modes_require`
-
-Required:
-
-- `mode` (String) must be one of ["require"]
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
-
-<a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_verify_ca"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_update_ssl_modes_verify_ca`
-
-Required:
-
-- `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-ca"]
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
-
-
-<a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_verify_full"></a>
-### Nested Schema for `configuration.ssl_mode.source_postgres_update_ssl_modes_verify_full`
-
-Required:
-
-- `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of ["verify-full"]
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
+- `client_key` (String, Sensitive) Client key
+- `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 
@@ -355,80 +202,41 @@ Optional:
 
 Optional:
 
-- `source_postgres_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_no_tunnel))
-- `source_postgres_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_password_authentication))
-- `source_postgres_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_ssh_key_authentication))
-- `source_postgres_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_no_tunnel))
-- `source_postgres_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_password_authentication))
-- `source_postgres_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_ssh_key_authentication))
+- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
-<a id="nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.source_postgres_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
+<a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
+### Nested Schema for `configuration.tunnel_method.no_tunnel`
 
 
-<a id="nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_postgres_ssh_tunnel_method_password_authentication`
+<a id="nestedatt--configuration--tunnel_method--password_authentication"></a>
+### Nested Schema for `configuration.tunnel_method.password_authentication`
 
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
-<a id="nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_postgres_ssh_tunnel_method_ssh_key_authentication`
+<a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
+### Nested Schema for `configuration.tunnel_method.ssh_key_authentication`
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
+Optional:
 
-<a id="nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.source_postgres_update_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
-
-<a id="nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_postgres_update_ssh_tunnel_method_password_authentication`
-
-Required:
-
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
-- `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
-
-
-<a id="nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_postgres_update_ssh_tunnel_method_ssh_key_authentication`
-
-Required:
-
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
-- `tunnel_user` (String) OS-level username for logging into the jump server host.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 

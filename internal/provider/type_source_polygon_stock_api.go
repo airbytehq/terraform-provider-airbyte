@@ -11,7 +11,6 @@ type SourcePolygonStockAPI struct {
 	Limit        types.Int64  `tfsdk:"limit"`
 	Multiplier   types.Int64  `tfsdk:"multiplier"`
 	Sort         types.String `tfsdk:"sort"`
-	SourceType   types.String `tfsdk:"source_type"`
 	StartDate    types.String `tfsdk:"start_date"`
 	StocksTicker types.String `tfsdk:"stocks_ticker"`
 	Timespan     types.String `tfsdk:"timespan"`

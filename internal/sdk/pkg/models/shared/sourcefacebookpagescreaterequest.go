@@ -4,8 +4,46 @@ package shared
 
 type SourceFacebookPagesCreateRequest struct {
 	Configuration SourceFacebookPages `json:"configuration"`
-	Name          string              `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetConfiguration() SourceFacebookPages {
+	if o == nil {
+		return SourceFacebookPages{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceFacebookPagesCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

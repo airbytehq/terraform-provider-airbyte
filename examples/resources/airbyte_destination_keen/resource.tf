@@ -1,10 +1,10 @@
 resource "airbyte_destination_keen" "my_destination_keen" {
   configuration = {
-    api_key          = "ABCDEFGHIJKLMNOPRSTUWXYZ"
-    destination_type = "keen"
-    infer_timestamp  = false
-    project_id       = "58b4acc22ba938934e888322e"
+    api_key         = "ABCDEFGHIJKLMNOPRSTUWXYZ"
+    infer_timestamp = false
+    project_id      = "58b4acc22ba938934e888322e"
   }
-  name         = "Todd Oberbrunner DDS"
-  workspace_id = "688282aa-4825-462f-a22e-9817ee17cbe6"
+  definition_id = "23f0d76f-b78b-4f74-ba22-de12791b5f13"
+  name          = "Mr. Angelina Becker"
+  workspace_id  = "49774ae8-7c30-4892-bfb0-f41f82248d60"
 }

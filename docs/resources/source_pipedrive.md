@@ -15,16 +15,13 @@ SourcePipedrive Resource
 ```terraform
 resource "airbyte_source_pipedrive" "my_source_pipedrive" {
   configuration = {
-    authorization = {
-      api_token = "...my_api_token..."
-      auth_type = "Token"
-    }
-    replication_start_date = "2017-01-25T00:00:00Z"
-    source_type            = "pipedrive"
+    api_token              = "...my_api_token..."
+    replication_start_date = "2017-01-25 00:00:00Z"
   }
-  name         = "Rhonda Hammes"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c2059c9c-3f56-47e0-a252-765b1d62fcda"
+  definition_id = "3b520112-5b29-4252-a784-d2d0f1707475"
+  name          = "Sean Swaniawski"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "49780ba1-d6a2-48c6-aefe-59b72db22407"
 }
 ```
 
@@ -34,11 +31,12 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -51,19 +49,7 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
 
 Required:
 
+- `api_token` (String, Sensitive) The Pipedrive API Token.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-- `source_type` (String) must be one of ["pipedrive"]
-
-Optional:
-
-- `authorization` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization))
-
-<a id="nestedatt--configuration--authorization"></a>
-### Nested Schema for `configuration.authorization`
-
-Required:
-
-- `api_token` (String) The Pipedrive API Token.
-- `auth_type` (String) must be one of ["Token"]
 
 

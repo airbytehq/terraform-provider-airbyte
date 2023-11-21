@@ -15,30 +15,29 @@ SourceAmazonAds Resource
 ```terraform
 resource "airbyte_source_amazon_ads" "my_source_amazonads" {
   configuration = {
-    auth_type        = "oauth2.0"
     client_id        = "...my_client_id..."
     client_secret    = "...my_client_secret..."
-    look_back_window = 10
+    look_back_window = 3
     marketplace_ids = [
       "...",
     ]
     profiles = [
-      6,
+      2,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "EU"
+    region        = "FE"
     report_record_types = [
-      "asins_targets",
+      "adGroups",
     ]
-    source_type = "amazon-ads"
-    start_date  = "2022-10-10"
+    start_date = "2022-10-10"
     state_filter = [
-      "archived",
+      "paused",
     ]
   }
-  name         = "Dan Towne"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "d02bae0b-e2d7-4822-99e3-ea4b5197f924"
+  definition_id = "34df0d75-6d8b-40d9-8daf-9186ab63a7b2"
+  name          = "Chris Littel"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "ec566b1d-1d8b-4b57-bf00-1ddb3cf074d6"
 }
 ```
 
@@ -48,11 +47,12 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -67,16 +67,15 @@ Required:
 
 - `client_id` (String) The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 - `client_secret` (String) The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
-- `refresh_token` (String) Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
-- `source_type` (String) must be one of ["amazon-ads"]
+- `refresh_token` (String, Sensitive) Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 
 Optional:
 
-- `auth_type` (String) must be one of ["oauth2.0"]
-- `look_back_window` (Number) The amount of days to go back in time to get the updated data from Amazon Ads
+- `look_back_window` (Number) Default: 3
+The amount of days to go back in time to get the updated data from Amazon Ads
 - `marketplace_ids` (List of String) Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 - `profiles` (List of Number) Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
-- `region` (String) must be one of ["NA", "EU", "FE"]
+- `region` (String) must be one of ["NA", "EU", "FE"]; Default: "NA"
 Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
 - `report_record_types` (List of String) Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
 - `start_date` (String) The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format

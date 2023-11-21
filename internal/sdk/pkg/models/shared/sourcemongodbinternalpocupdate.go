@@ -2,9 +2,13 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type SourceMongodbInternalPocUpdate struct {
 	// The authentication source where the user information is stored.
-	AuthSource *string `json:"auth_source,omitempty"`
+	AuthSource *string `default:"admin" json:"auth_source"`
 	// The connection string of the database that you want to replicate..
 	ConnectionString *string `json:"connection_string,omitempty"`
 	// The password associated with this username.
@@ -13,4 +17,50 @@ type SourceMongodbInternalPocUpdate struct {
 	ReplicaSet *string `json:"replica_set,omitempty"`
 	// The username which is used to access the database.
 	User *string `json:"user,omitempty"`
+}
+
+func (s SourceMongodbInternalPocUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMongodbInternalPocUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMongodbInternalPocUpdate) GetAuthSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthSource
+}
+
+func (o *SourceMongodbInternalPocUpdate) GetConnectionString() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectionString
+}
+
+func (o *SourceMongodbInternalPocUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMongodbInternalPocUpdate) GetReplicaSet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicaSet
+}
+
+func (o *SourceMongodbInternalPocUpdate) GetUser() *string {
+	if o == nil {
+		return nil
+	}
+	return o.User
 }

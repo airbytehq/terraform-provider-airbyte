@@ -16,9 +16,8 @@ SourceSnowflake Resource
 resource "airbyte_source_snowflake" "my_source_snowflake" {
   configuration = {
     credentials = {
-      source_snowflake_authorization_method_o_auth2_0 = {
+      source_snowflake_o_auth2_0 = {
         access_token  = "...my_access_token..."
-        auth_type     = "OAuth"
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
@@ -29,12 +28,12 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     jdbc_url_params = "...my_jdbc_url_params..."
     role            = "AIRBYTE_ROLE"
     schema          = "AIRBYTE_SCHEMA"
-    source_type     = "snowflake"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Katrina Tillman"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3d492ed1-4b8a-42c1-9545-45e955dcc185"
+  definition_id = "2e5fcf99-c418-476f-a0cb-c1b99ee1e960"
+  name          = "Mrs. Jeanette Howell"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "0d51b311-4e9e-4d57-941c-3612b0e8c8cf"
 }
 ```
 
@@ -44,11 +43,12 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -64,7 +64,6 @@ Required:
 - `database` (String) The database you created for Airbyte to access data.
 - `host` (String) The host domain of the snowflake instance (must include the account, region, cloud environment, and end with snowflakecomputing.com).
 - `role` (String) The role you created for Airbyte to access Snowflake.
-- `source_type` (String) must be one of ["snowflake"]
 - `warehouse` (String) The warehouse you created for Airbyte to access data.
 
 Optional:
@@ -78,58 +77,29 @@ Optional:
 
 Optional:
 
-- `source_snowflake_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_authorization_method_o_auth2_0))
-- `source_snowflake_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_authorization_method_username_and_password))
-- `source_snowflake_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_update_authorization_method_o_auth2_0))
-- `source_snowflake_update_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_update_authorization_method_username_and_password))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--username_and_password))
 
-<a id="nestedatt--configuration--credentials--source_snowflake_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_snowflake_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Client ID of your Snowflake developer application.
 - `client_secret` (String) The Client Secret of your Snowflake developer application.
 
 Optional:
 
-- `access_token` (String) Access Token for making authenticated requests.
-- `refresh_token` (String) Refresh Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
+- `refresh_token` (String, Sensitive) Refresh Token for making authenticated requests.
 
 
-<a id="nestedatt--configuration--credentials--source_snowflake_authorization_method_username_and_password"></a>
-### Nested Schema for `configuration.credentials.source_snowflake_authorization_method_username_and_password`
-
-Required:
-
-- `auth_type` (String) must be one of ["username/password"]
-- `password` (String) The password associated with the username.
-- `username` (String) The username you created to allow Airbyte to access the database.
-
-
-<a id="nestedatt--configuration--credentials--source_snowflake_update_authorization_method_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_snowflake_update_authorization_method_o_auth2_0`
+<a id="nestedatt--configuration--credentials--username_and_password"></a>
+### Nested Schema for `configuration.credentials.username_and_password`
 
 Required:
 
-- `auth_type` (String) must be one of ["OAuth"]
-- `client_id` (String) The Client ID of your Snowflake developer application.
-- `client_secret` (String) The Client Secret of your Snowflake developer application.
-
-Optional:
-
-- `access_token` (String) Access Token for making authenticated requests.
-- `refresh_token` (String) Refresh Token for making authenticated requests.
-
-
-<a id="nestedatt--configuration--credentials--source_snowflake_update_authorization_method_username_and_password"></a>
-### Nested Schema for `configuration.credentials.source_snowflake_update_authorization_method_username_and_password`
-
-Required:
-
-- `auth_type` (String) must be one of ["username/password"]
-- `password` (String) The password associated with the username.
+- `password` (String, Sensitive) The password associated with the username.
 - `username` (String) The username you created to allow Airbyte to access the database.
 
 

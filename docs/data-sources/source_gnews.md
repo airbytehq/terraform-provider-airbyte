@@ -14,7 +14,6 @@ SourceGnews DataSource
 
 ```terraform
 data "airbyte_source_gnews" "my_source_gnews" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,63 +25,12 @@ data "airbyte_source_gnews" "my_source_gnews" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key
-- `country` (String) must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]
-This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
-- `end_date` (String) This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
-- `in` (List of String) This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
-- `language` (String) must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]
-- `nullable` (List of String) This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
-- `query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
-  quotation marks are used to search for articles with the exact same keyword sequence. 
-  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
-- Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
-  search. By default the space character acts as an AND operator, it is possible to replace the space character 
-  by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft
-- Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
-  It is important to note that this operator has a higher precedence than the AND operator. For example the 
-  query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching 
-  the keyword Microsoft
-- Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the
-  specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
-  For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
-  iPhone
-- `sortby` (String) must be one of ["publishedAt", "relevance"]
-This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
-  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
-  - relevance = sort by best match to keywords, the articles with the best match are returned first
-- `source_type` (String) must be one of ["gnews"]
-- `start_date` (String) This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
-- `top_headlines_query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
-  quotation marks are used to search for articles with the exact same keyword sequence. 
-  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
-- Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
-  search. By default the space character acts as an AND operator, it is possible to replace the space character 
-  by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft
-- Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
-  It is important to note that this operator has a higher precedence than the AND operator. For example the 
-  query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching 
-  the keyword Microsoft
-- Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the
-  specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
-  For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
-  iPhone
-- `top_headlines_topic` (String) must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]
-This parameter allows you to change the category for the request.
 
 

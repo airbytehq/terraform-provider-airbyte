@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceRecurlyRecurly string
+type Recurly string
 
 const (
-	SourceRecurlyRecurlyRecurly SourceRecurlyRecurly = "recurly"
+	RecurlyRecurly Recurly = "recurly"
 )
 
-func (e SourceRecurlyRecurly) ToPointer() *SourceRecurlyRecurly {
+func (e Recurly) ToPointer() *Recurly {
 	return &e
 }
 
-func (e *SourceRecurlyRecurly) UnmarshalJSON(data []byte) error {
+func (e *Recurly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "recurly":
-		*e = SourceRecurlyRecurly(v)
+		*e = Recurly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRecurlyRecurly: %v", v)
+		return fmt.Errorf("invalid value for Recurly: %v", v)
 	}
 }
 
@@ -37,6 +38,42 @@ type SourceRecurly struct {
 	// ISO8601 timestamp from which the replication from Recurly API will start from.
 	BeginTime *string `json:"begin_time,omitempty"`
 	// ISO8601 timestamp to which the replication from Recurly API will stop. Records after that date won't be imported.
-	EndTime    *string              `json:"end_time,omitempty"`
-	SourceType SourceRecurlyRecurly `json:"sourceType"`
+	EndTime    *string `json:"end_time,omitempty"`
+	sourceType Recurly `const:"recurly" json:"sourceType"`
+}
+
+func (s SourceRecurly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRecurly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRecurly) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceRecurly) GetBeginTime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BeginTime
+}
+
+func (o *SourceRecurly) GetEndTime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndTime
+}
+
+func (o *SourceRecurly) GetSourceType() Recurly {
+	return RecurlyRecurly
 }

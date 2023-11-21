@@ -11,3 +11,45 @@ type StreamProperties struct {
 	StreamName               *string                  `json:"streamName,omitempty"`
 	SyncModes                []ConnectionSyncModeEnum `json:"syncModes,omitempty"`
 }
+
+func (o *StreamProperties) GetDefaultCursorField() []string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultCursorField
+}
+
+func (o *StreamProperties) GetPropertyFields() [][]string {
+	if o == nil {
+		return nil
+	}
+	return o.PropertyFields
+}
+
+func (o *StreamProperties) GetSourceDefinedCursorField() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SourceDefinedCursorField
+}
+
+func (o *StreamProperties) GetSourceDefinedPrimaryKey() [][]string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceDefinedPrimaryKey
+}
+
+func (o *StreamProperties) GetStreamName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StreamName
+}
+
+func (o *StreamProperties) GetSyncModes() []ConnectionSyncModeEnum {
+	if o == nil {
+		return nil
+	}
+	return o.SyncModes
+}

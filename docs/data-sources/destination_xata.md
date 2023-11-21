@@ -27,17 +27,10 @@ data "airbyte_destination_xata" "my_destination_xata" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) API Key to connect.
-- `db_url` (String) URL pointing to your workspace.
-- `destination_type` (String) must be one of ["xata"]
 
 

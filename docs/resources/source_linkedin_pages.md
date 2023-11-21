@@ -16,17 +16,16 @@ SourceLinkedinPages Resource
 resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
   configuration = {
     credentials = {
-      source_linkedin_pages_authentication_access_token = {
+      source_linkedin_pages_access_token = {
         access_token = "...my_access_token..."
-        auth_method  = "access_token"
       }
     }
-    org_id      = "123456789"
-    source_type = "linkedin-pages"
+    org_id = "123456789"
   }
-  name         = "Tracey Kutch"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c66183bf-e965-49eb-80ec-16faf75b0b53"
+  definition_id = "0ebb3981-c89f-4963-b1e6-164cc8788ff7"
+  name          = "Kayla Haley"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "33f7738d-63dc-47b7-b8b1-6c6167f1e8f0"
 }
 ```
 
@@ -36,11 +35,12 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -54,7 +54,6 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
 Required:
 
 - `org_id` (String) Specify the Organization ID
-- `source_type` (String) must be one of ["linkedin-pages"]
 
 Optional:
 
@@ -65,60 +64,24 @@ Optional:
 
 Optional:
 
-- `source_linkedin_pages_authentication_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_authentication_access_token))
-- `source_linkedin_pages_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_authentication_o_auth2_0))
-- `source_linkedin_pages_update_authentication_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_access_token))
-- `source_linkedin_pages_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_o_auth2_0))
+- `access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_authentication_access_token"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_authentication_access_token`
+<a id="nestedatt--configuration--credentials--access_token"></a>
+### Nested Schema for `configuration.credentials.access_token`
 
 Required:
 
-- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-
-Optional:
-
-- `auth_method` (String) must be one of ["access_token"]
+- `access_token` (String, Sensitive) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_authentication_o_auth2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
 - `client_id` (String) The client ID of the LinkedIn developer application.
 - `client_secret` (String) The client secret of the LinkedIn developer application.
-- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-
-Optional:
-
-- `auth_method` (String) must be one of ["oAuth2.0"]
-
-
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_access_token"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_update_authentication_access_token`
-
-Required:
-
-- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-
-Optional:
-
-- `auth_method` (String) must be one of ["access_token"]
-
-
-<a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_linkedin_pages_update_authentication_o_auth2_0`
-
-Required:
-
-- `client_id` (String) The client ID of the LinkedIn developer application.
-- `client_secret` (String) The client secret of the LinkedIn developer application.
-- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-
-Optional:
-
-- `auth_method` (String) must be one of ["oAuth2.0"]
+- `refresh_token` (String, Sensitive) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 

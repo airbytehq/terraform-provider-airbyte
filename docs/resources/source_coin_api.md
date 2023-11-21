@@ -18,15 +18,15 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
     environment = "sandbox"
-    limit       = 10
+    limit       = 8
     period      = "2MTH"
-    source_type = "coin-api"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  name         = "Francis Boyle"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "bc0b80a6-924d-43b2-acfc-c8f895010f5d"
+  definition_id = "f0e9a05e-994a-4ce4-9dc5-b42f2a228e88"
+  name          = "Rhonda Kunze"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "d4275060-42c1-4c65-a61b-2485a060238e"
 }
 ```
 
@@ -36,11 +36,12 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,11 +54,8 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 
 Required:
 
-- `api_key` (String) API Key
-- `environment` (String) must be one of ["sandbox", "production"]
-The environment to use. Either sandbox or production.
+- `api_key` (String, Sensitive) API Key
 - `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
-- `source_type` (String) must be one of ["coin-api"]
 - `start_date` (String) The start date in ISO 8601 format.
 - `symbol_id` (String) The symbol ID to use. See the documentation for a list.
 https://docs.coinapi.io/#list-all-symbols-get
@@ -67,7 +65,10 @@ Optional:
 - `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
 from the start date to the current time, or when the count of result
 elements reaches its limit.
-- `limit` (Number) The maximum number of elements to return. If not supplied, the default
+- `environment` (String) must be one of ["sandbox", "production"]; Default: "sandbox"
+The environment to use. Either sandbox or production.
+- `limit` (Number) Default: 100
+The maximum number of elements to return. If not supplied, the default
 is 100. For numbers larger than 100, each 100 items is counted as one
 request for pricing purposes. Maximum value is 100000.
 

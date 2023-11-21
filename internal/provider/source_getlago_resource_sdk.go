@@ -3,16 +3,27 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGetlagoGetlago(r.Configuration.SourceType.ValueString())
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	configuration := shared.SourceGetlago{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
+		APIURL: apiURL,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -24,6 +35,7 @@ func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGetlagoCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -38,8 +50,15 @@ func (r *SourceGetlagoResourceModel) ToGetSDKType() *shared.SourceGetlagoCreateR
 
 func (r *SourceGetlagoResourceModel) ToUpdateSDKType() *shared.SourceGetlagoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	configuration := shared.SourceGetlagoUpdate{
 		APIKey: apiKey,
+		APIURL: apiURL,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

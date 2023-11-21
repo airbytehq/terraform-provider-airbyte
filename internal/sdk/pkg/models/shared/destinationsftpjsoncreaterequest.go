@@ -4,6 +4,37 @@ package shared
 
 type DestinationSftpJSONCreateRequest struct {
 	Configuration DestinationSftpJSON `json:"configuration"`
-	Name          string              `json:"name"`
-	WorkspaceID   string              `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationSftpJSONCreateRequest) GetConfiguration() DestinationSftpJSON {
+	if o == nil {
+		return DestinationSftpJSON{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationSftpJSONCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationSftpJSONCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationSftpJSONCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

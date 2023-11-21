@@ -7,3 +7,24 @@ type SourceCloseComPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceCloseComPutRequest) GetConfiguration() SourceCloseComUpdate {
+	if o == nil {
+		return SourceCloseComUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceCloseComPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceCloseComPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

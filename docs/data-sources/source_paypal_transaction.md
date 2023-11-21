@@ -14,7 +14,6 @@ SourcePaypalTransaction DataSource
 
 ```terraform
 data "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,26 +25,12 @@ data "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `client_id` (String) The Client ID of your Paypal developer application.
-- `client_secret` (String) The Client Secret of your Paypal developer application.
-- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `refresh_token` (String) The key to refresh the expired access token.
-- `source_type` (String) must be one of ["paypal-transaction"]
-- `start_date` (String) Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 
 

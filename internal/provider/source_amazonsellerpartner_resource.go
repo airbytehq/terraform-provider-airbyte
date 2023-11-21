@@ -3,17 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -35,6 +37,7 @@ type SourceAmazonSellerPartnerResource struct {
 // SourceAmazonSellerPartnerResourceModel describes the resource data model.
 type SourceAmazonSellerPartnerResourceModel struct {
 	Configuration SourceAmazonSellerPartner `tfsdk:"configuration"`
+	DefinitionID  types.String              `tfsdk:"definition_id"`
 	Name          types.String              `tfsdk:"name"`
 	SecretID      types.String              `tfsdk:"secret_id"`
 	SourceID      types.String              `tfsdk:"source_id"`
@@ -54,37 +57,31 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"account_type": schema.StringAttribute{
+						Optional: true,
+						MarkdownDescription: `must be one of ["Seller", "Vendor"]; Default: "Seller"` + "\n" +
+							`Type of the Account you're going to authorize the Airbyte application by`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"Seller",
+								"Vendor",
+							),
+						},
+					},
 					"advanced_stream_options": schema.StringAttribute{
 						Optional:    true,
 						Description: `Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.`,
 					},
-					"auth_type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
-					"aws_access_key": schema.StringAttribute{
-						Optional:    true,
-						Description: `Specifies the AWS access key used as part of the credentials to authenticate the user.`,
-					},
 					"aws_environment": schema.StringAttribute{
-						Required: true,
+						Optional: true,
+						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"` + "\n" +
+							`Select the AWS Environment.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"PRODUCTION",
 								"SANDBOX",
 							),
 						},
-						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]` + "\n" +
-							`Select the AWS Environment.`,
-					},
-					"aws_secret_key": schema.StringAttribute{
-						Optional:    true,
-						Description: `Specifies the AWS secret key used as part of the credentials to authenticate the user.`,
 					},
 					"lwa_app_id": schema.StringAttribute{
 						Required:    true,
@@ -94,20 +91,20 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Required:    true,
 						Description: `Your Login with Amazon Client Secret.`,
 					},
-					"max_wait_seconds": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Sometimes report can take up to 30 minutes to generate. This will set the limit for how long to wait for a successful report.`,
-					},
 					"period_in_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
+						Optional: true,
+						MarkdownDescription: `Default: 90` + "\n" +
+							`Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Refresh Token obtained via OAuth flow authorization.`,
 					},
 					"region": schema.StringAttribute{
-						Required: true,
+						Optional: true,
+						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"` + "\n" +
+							`Select the AWS Region.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"AE",
@@ -134,43 +131,45 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 								"US",
 							),
 						},
-						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]` + "\n" +
-							`Select the AWS Region.`,
 					},
 					"replication_end_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.`,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
 					},
 					"replication_start_date": schema.StringAttribute{
 						Required:    true,
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
 					},
 					"report_options": schema.StringAttribute{
 						Optional:    true,
 						Description: `Additional information passed to reports. This varies by report type. Must be a valid json string.`,
 					},
-					"role_arn": schema.StringAttribute{
-						Optional:    true,
-						Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-seller-partner",
-							),
-						},
-						Description: `must be one of ["amazon-seller-partner"]`,
-					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -234,7 +233,7 @@ func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req reso
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceAmazonSellerPartner(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -410,5 +409,5 @@ func (r *SourceAmazonSellerPartnerResource) Delete(ctx context.Context, req reso
 }
 
 func (r *SourceAmazonSellerPartnerResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

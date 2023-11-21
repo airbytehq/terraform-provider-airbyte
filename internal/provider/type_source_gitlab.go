@@ -5,10 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGitlab struct {
-	APIURL      types.String                    `tfsdk:"api_url"`
-	Credentials SourceGitlabAuthorizationMethod `tfsdk:"credentials"`
-	Groups      types.String                    `tfsdk:"groups"`
-	Projects    types.String                    `tfsdk:"projects"`
-	SourceType  types.String                    `tfsdk:"source_type"`
-	StartDate   types.String                    `tfsdk:"start_date"`
+	APIURL       types.String                    `tfsdk:"api_url"`
+	Credentials  SourceGitlabAuthorizationMethod `tfsdk:"credentials"`
+	Groups       types.String                    `tfsdk:"groups"`
+	GroupsList   []types.String                  `tfsdk:"groups_list"`
+	Projects     types.String                    `tfsdk:"projects"`
+	ProjectsList []types.String                  `tfsdk:"projects_list"`
+	StartDate    types.String                    `tfsdk:"start_date"`
 }

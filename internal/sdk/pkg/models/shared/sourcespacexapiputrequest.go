@@ -7,3 +7,24 @@ type SourceSpacexAPIPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceSpacexAPIPutRequest) GetConfiguration() SourceSpacexAPIUpdate {
+	if o == nil {
+		return SourceSpacexAPIUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSpacexAPIPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSpacexAPIPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

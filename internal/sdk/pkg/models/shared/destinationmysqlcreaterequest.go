@@ -4,6 +4,37 @@ package shared
 
 type DestinationMysqlCreateRequest struct {
 	Configuration DestinationMysql `json:"configuration"`
-	Name          string           `json:"name"`
-	WorkspaceID   string           `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationMysqlCreateRequest) GetConfiguration() DestinationMysql {
+	if o == nil {
+		return DestinationMysql{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMysqlCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationMysqlCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMysqlCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

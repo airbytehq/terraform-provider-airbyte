@@ -3,12 +3,16 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePinterestDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+	configurationResult, _ := json.Marshal(resp.Configuration)
+	r.Configuration = types.StringValue(string(configurationResult))
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

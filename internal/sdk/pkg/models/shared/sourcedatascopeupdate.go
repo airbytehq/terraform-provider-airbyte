@@ -8,3 +8,17 @@ type SourceDatascopeUpdate struct {
 	// Start date for the data to be replicated
 	StartDate string `json:"start_date"`
 }
+
+func (o *SourceDatascopeUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceDatascopeUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}

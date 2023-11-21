@@ -3,116 +3,79 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.DestinationLangchainCreateRequest {
-	destinationType := shared.DestinationLangchainLangchain(r.Configuration.DestinationType.ValueString())
 	var embedding shared.DestinationLangchainEmbedding
-	var destinationLangchainEmbeddingOpenAI *shared.DestinationLangchainEmbeddingOpenAI
-	if r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationLangchainEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationLangchainEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
-		openaiKey := r.Configuration.Embedding.DestinationLangchainEmbeddingOpenAI.OpenaiKey.ValueString()
-		destinationLangchainEmbeddingOpenAI = &shared.DestinationLangchainEmbeddingOpenAI{
-			Mode:      mode,
+	var destinationLangchainOpenAI *shared.DestinationLangchainOpenAI
+	if r.Configuration.Embedding.OpenAI != nil {
+		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
+		destinationLangchainOpenAI = &shared.DestinationLangchainOpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if destinationLangchainEmbeddingOpenAI != nil {
+	if destinationLangchainOpenAI != nil {
 		embedding = shared.DestinationLangchainEmbedding{
-			DestinationLangchainEmbeddingOpenAI: destinationLangchainEmbeddingOpenAI,
+			DestinationLangchainOpenAI: destinationLangchainOpenAI,
 		}
 	}
-	var destinationLangchainEmbeddingFake *shared.DestinationLangchainEmbeddingFake
-	if r.Configuration.Embedding.DestinationLangchainEmbeddingFake != nil {
-		mode1 := new(shared.DestinationLangchainEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode.IsNull() {
-			*mode1 = shared.DestinationLangchainEmbeddingFakeMode(r.Configuration.Embedding.DestinationLangchainEmbeddingFake.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
-		destinationLangchainEmbeddingFake = &shared.DestinationLangchainEmbeddingFake{
-			Mode: mode1,
-		}
+	var destinationLangchainFake *shared.DestinationLangchainFake
+	if r.Configuration.Embedding.Fake != nil {
+		destinationLangchainFake = &shared.DestinationLangchainFake{}
 	}
-	if destinationLangchainEmbeddingFake != nil {
+	if destinationLangchainFake != nil {
 		embedding = shared.DestinationLangchainEmbedding{
-			DestinationLangchainEmbeddingFake: destinationLangchainEmbeddingFake,
+			DestinationLangchainFake: destinationLangchainFake,
 		}
 	}
 	var indexing shared.DestinationLangchainIndexing
-	var destinationLangchainIndexingPinecone *shared.DestinationLangchainIndexingPinecone
-	if r.Configuration.Indexing.DestinationLangchainIndexingPinecone != nil {
-		index := r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Index.ValueString()
-		mode2 := new(shared.DestinationLangchainIndexingPineconeMode)
-		if !r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode.IsNull() {
-			*mode2 = shared.DestinationLangchainIndexingPineconeMode(r.Configuration.Indexing.DestinationLangchainIndexingPinecone.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		pineconeEnvironment := r.Configuration.Indexing.DestinationLangchainIndexingPinecone.PineconeEnvironment.ValueString()
-		pineconeKey := r.Configuration.Indexing.DestinationLangchainIndexingPinecone.PineconeKey.ValueString()
-		destinationLangchainIndexingPinecone = &shared.DestinationLangchainIndexingPinecone{
+	var destinationLangchainPinecone *shared.DestinationLangchainPinecone
+	if r.Configuration.Indexing.Pinecone != nil {
+		index := r.Configuration.Indexing.Pinecone.Index.ValueString()
+		pineconeEnvironment := r.Configuration.Indexing.Pinecone.PineconeEnvironment.ValueString()
+		pineconeKey := r.Configuration.Indexing.Pinecone.PineconeKey.ValueString()
+		destinationLangchainPinecone = &shared.DestinationLangchainPinecone{
 			Index:               index,
-			Mode:                mode2,
 			PineconeEnvironment: pineconeEnvironment,
 			PineconeKey:         pineconeKey,
 		}
 	}
-	if destinationLangchainIndexingPinecone != nil {
+	if destinationLangchainPinecone != nil {
 		indexing = shared.DestinationLangchainIndexing{
-			DestinationLangchainIndexingPinecone: destinationLangchainIndexingPinecone,
+			DestinationLangchainPinecone: destinationLangchainPinecone,
 		}
 	}
-	var destinationLangchainIndexingDocArrayHnswSearch *shared.DestinationLangchainIndexingDocArrayHnswSearch
-	if r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch != nil {
-		destinationPath := r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.DestinationPath.ValueString()
-		mode3 := new(shared.DestinationLangchainIndexingDocArrayHnswSearchMode)
-		if !r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode.IsNull() {
-			*mode3 = shared.DestinationLangchainIndexingDocArrayHnswSearchMode(r.Configuration.Indexing.DestinationLangchainIndexingDocArrayHnswSearch.Mode.ValueString())
-		} else {
-			mode3 = nil
-		}
-		destinationLangchainIndexingDocArrayHnswSearch = &shared.DestinationLangchainIndexingDocArrayHnswSearch{
+	var destinationLangchainDocArrayHnswSearch *shared.DestinationLangchainDocArrayHnswSearch
+	if r.Configuration.Indexing.DocArrayHnswSearch != nil {
+		destinationPath := r.Configuration.Indexing.DocArrayHnswSearch.DestinationPath.ValueString()
+		destinationLangchainDocArrayHnswSearch = &shared.DestinationLangchainDocArrayHnswSearch{
 			DestinationPath: destinationPath,
-			Mode:            mode3,
 		}
 	}
-	if destinationLangchainIndexingDocArrayHnswSearch != nil {
+	if destinationLangchainDocArrayHnswSearch != nil {
 		indexing = shared.DestinationLangchainIndexing{
-			DestinationLangchainIndexingDocArrayHnswSearch: destinationLangchainIndexingDocArrayHnswSearch,
+			DestinationLangchainDocArrayHnswSearch: destinationLangchainDocArrayHnswSearch,
 		}
 	}
-	var destinationLangchainIndexingChromaLocalPersistance *shared.DestinationLangchainIndexingChromaLocalPersistance
-	if r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance != nil {
+	var destinationLangchainChromaLocalPersistance *shared.DestinationLangchainChromaLocalPersistance
+	if r.Configuration.Indexing.ChromaLocalPersistance != nil {
 		collectionName := new(string)
-		if !r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName.IsNull() {
-			*collectionName = r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.CollectionName.ValueString()
+		if !r.Configuration.Indexing.ChromaLocalPersistance.CollectionName.IsUnknown() && !r.Configuration.Indexing.ChromaLocalPersistance.CollectionName.IsNull() {
+			*collectionName = r.Configuration.Indexing.ChromaLocalPersistance.CollectionName.ValueString()
 		} else {
 			collectionName = nil
 		}
-		destinationPath1 := r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.DestinationPath.ValueString()
-		mode4 := new(shared.DestinationLangchainIndexingChromaLocalPersistanceMode)
-		if !r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode.IsNull() {
-			*mode4 = shared.DestinationLangchainIndexingChromaLocalPersistanceMode(r.Configuration.Indexing.DestinationLangchainIndexingChromaLocalPersistance.Mode.ValueString())
-		} else {
-			mode4 = nil
-		}
-		destinationLangchainIndexingChromaLocalPersistance = &shared.DestinationLangchainIndexingChromaLocalPersistance{
+		destinationPath1 := r.Configuration.Indexing.ChromaLocalPersistance.DestinationPath.ValueString()
+		destinationLangchainChromaLocalPersistance = &shared.DestinationLangchainChromaLocalPersistance{
 			CollectionName:  collectionName,
 			DestinationPath: destinationPath1,
-			Mode:            mode4,
 		}
 	}
-	if destinationLangchainIndexingChromaLocalPersistance != nil {
+	if destinationLangchainChromaLocalPersistance != nil {
 		indexing = shared.DestinationLangchainIndexing{
-			DestinationLangchainIndexingChromaLocalPersistance: destinationLangchainIndexingChromaLocalPersistance,
+			DestinationLangchainChromaLocalPersistance: destinationLangchainChromaLocalPersistance,
 		}
 	}
 	chunkOverlap := new(int64)
@@ -132,15 +95,21 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 		TextFields:   textFields,
 	}
 	configuration := shared.DestinationLangchain{
-		DestinationType: destinationType,
-		Embedding:       embedding,
-		Indexing:        indexing,
-		Processing:      processing,
+		Embedding:  embedding,
+		Indexing:   indexing,
+		Processing: processing,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationLangchainCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -153,110 +122,74 @@ func (r *DestinationLangchainResourceModel) ToGetSDKType() *shared.DestinationLa
 }
 
 func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.DestinationLangchainPutRequest {
-	var embedding shared.DestinationLangchainUpdateEmbedding
-	var destinationLangchainUpdateEmbeddingOpenAI *shared.DestinationLangchainUpdateEmbeddingOpenAI
-	if r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI != nil {
-		mode := new(shared.DestinationLangchainUpdateEmbeddingOpenAIMode)
-		if !r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI.Mode.IsNull() {
-			*mode = shared.DestinationLangchainUpdateEmbeddingOpenAIMode(r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI.Mode.ValueString())
-		} else {
-			mode = nil
-		}
-		openaiKey := r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingOpenAI.OpenaiKey.ValueString()
-		destinationLangchainUpdateEmbeddingOpenAI = &shared.DestinationLangchainUpdateEmbeddingOpenAI{
-			Mode:      mode,
+	var embedding shared.Embedding
+	var openAI *shared.OpenAI
+	if r.Configuration.Embedding.OpenAI != nil {
+		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
+		openAI = &shared.OpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if destinationLangchainUpdateEmbeddingOpenAI != nil {
-		embedding = shared.DestinationLangchainUpdateEmbedding{
-			DestinationLangchainUpdateEmbeddingOpenAI: destinationLangchainUpdateEmbeddingOpenAI,
+	if openAI != nil {
+		embedding = shared.Embedding{
+			OpenAI: openAI,
 		}
 	}
-	var destinationLangchainUpdateEmbeddingFake *shared.DestinationLangchainUpdateEmbeddingFake
-	if r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingFake != nil {
-		mode1 := new(shared.DestinationLangchainUpdateEmbeddingFakeMode)
-		if !r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingFake.Mode.IsUnknown() && !r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingFake.Mode.IsNull() {
-			*mode1 = shared.DestinationLangchainUpdateEmbeddingFakeMode(r.Configuration.Embedding.DestinationLangchainUpdateEmbeddingFake.Mode.ValueString())
-		} else {
-			mode1 = nil
-		}
-		destinationLangchainUpdateEmbeddingFake = &shared.DestinationLangchainUpdateEmbeddingFake{
-			Mode: mode1,
+	var fake *shared.Fake
+	if r.Configuration.Embedding.Fake != nil {
+		fake = &shared.Fake{}
+	}
+	if fake != nil {
+		embedding = shared.Embedding{
+			Fake: fake,
 		}
 	}
-	if destinationLangchainUpdateEmbeddingFake != nil {
-		embedding = shared.DestinationLangchainUpdateEmbedding{
-			DestinationLangchainUpdateEmbeddingFake: destinationLangchainUpdateEmbeddingFake,
-		}
-	}
-	var indexing shared.DestinationLangchainUpdateIndexing
-	var destinationLangchainUpdateIndexingPinecone *shared.DestinationLangchainUpdateIndexingPinecone
-	if r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone != nil {
-		index := r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone.Index.ValueString()
-		mode2 := new(shared.DestinationLangchainUpdateIndexingPineconeMode)
-		if !r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone.Mode.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone.Mode.IsNull() {
-			*mode2 = shared.DestinationLangchainUpdateIndexingPineconeMode(r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone.Mode.ValueString())
-		} else {
-			mode2 = nil
-		}
-		pineconeEnvironment := r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone.PineconeEnvironment.ValueString()
-		pineconeKey := r.Configuration.Indexing.DestinationLangchainUpdateIndexingPinecone.PineconeKey.ValueString()
-		destinationLangchainUpdateIndexingPinecone = &shared.DestinationLangchainUpdateIndexingPinecone{
+	var indexing shared.Indexing
+	var destinationLangchainUpdatePinecone *shared.DestinationLangchainUpdatePinecone
+	if r.Configuration.Indexing.Pinecone != nil {
+		index := r.Configuration.Indexing.Pinecone.Index.ValueString()
+		pineconeEnvironment := r.Configuration.Indexing.Pinecone.PineconeEnvironment.ValueString()
+		pineconeKey := r.Configuration.Indexing.Pinecone.PineconeKey.ValueString()
+		destinationLangchainUpdatePinecone = &shared.DestinationLangchainUpdatePinecone{
 			Index:               index,
-			Mode:                mode2,
 			PineconeEnvironment: pineconeEnvironment,
 			PineconeKey:         pineconeKey,
 		}
 	}
-	if destinationLangchainUpdateIndexingPinecone != nil {
-		indexing = shared.DestinationLangchainUpdateIndexing{
-			DestinationLangchainUpdateIndexingPinecone: destinationLangchainUpdateIndexingPinecone,
+	if destinationLangchainUpdatePinecone != nil {
+		indexing = shared.Indexing{
+			DestinationLangchainUpdatePinecone: destinationLangchainUpdatePinecone,
 		}
 	}
-	var destinationLangchainUpdateIndexingDocArrayHnswSearch *shared.DestinationLangchainUpdateIndexingDocArrayHnswSearch
-	if r.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch != nil {
-		destinationPath := r.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch.DestinationPath.ValueString()
-		mode3 := new(shared.DestinationLangchainUpdateIndexingDocArrayHnswSearchMode)
-		if !r.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch.Mode.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch.Mode.IsNull() {
-			*mode3 = shared.DestinationLangchainUpdateIndexingDocArrayHnswSearchMode(r.Configuration.Indexing.DestinationLangchainUpdateIndexingDocArrayHnswSearch.Mode.ValueString())
-		} else {
-			mode3 = nil
-		}
-		destinationLangchainUpdateIndexingDocArrayHnswSearch = &shared.DestinationLangchainUpdateIndexingDocArrayHnswSearch{
+	var docArrayHnswSearch *shared.DocArrayHnswSearch
+	if r.Configuration.Indexing.DocArrayHnswSearch != nil {
+		destinationPath := r.Configuration.Indexing.DocArrayHnswSearch.DestinationPath.ValueString()
+		docArrayHnswSearch = &shared.DocArrayHnswSearch{
 			DestinationPath: destinationPath,
-			Mode:            mode3,
 		}
 	}
-	if destinationLangchainUpdateIndexingDocArrayHnswSearch != nil {
-		indexing = shared.DestinationLangchainUpdateIndexing{
-			DestinationLangchainUpdateIndexingDocArrayHnswSearch: destinationLangchainUpdateIndexingDocArrayHnswSearch,
+	if docArrayHnswSearch != nil {
+		indexing = shared.Indexing{
+			DocArrayHnswSearch: docArrayHnswSearch,
 		}
 	}
-	var destinationLangchainUpdateIndexingChromaLocalPersistance *shared.DestinationLangchainUpdateIndexingChromaLocalPersistance
-	if r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance != nil {
+	var chromaLocalPersistance *shared.ChromaLocalPersistance
+	if r.Configuration.Indexing.ChromaLocalPersistance != nil {
 		collectionName := new(string)
-		if !r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.CollectionName.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.CollectionName.IsNull() {
-			*collectionName = r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.CollectionName.ValueString()
+		if !r.Configuration.Indexing.ChromaLocalPersistance.CollectionName.IsUnknown() && !r.Configuration.Indexing.ChromaLocalPersistance.CollectionName.IsNull() {
+			*collectionName = r.Configuration.Indexing.ChromaLocalPersistance.CollectionName.ValueString()
 		} else {
 			collectionName = nil
 		}
-		destinationPath1 := r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.DestinationPath.ValueString()
-		mode4 := new(shared.DestinationLangchainUpdateIndexingChromaLocalPersistanceMode)
-		if !r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.Mode.IsUnknown() && !r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.Mode.IsNull() {
-			*mode4 = shared.DestinationLangchainUpdateIndexingChromaLocalPersistanceMode(r.Configuration.Indexing.DestinationLangchainUpdateIndexingChromaLocalPersistance.Mode.ValueString())
-		} else {
-			mode4 = nil
-		}
-		destinationLangchainUpdateIndexingChromaLocalPersistance = &shared.DestinationLangchainUpdateIndexingChromaLocalPersistance{
+		destinationPath1 := r.Configuration.Indexing.ChromaLocalPersistance.DestinationPath.ValueString()
+		chromaLocalPersistance = &shared.ChromaLocalPersistance{
 			CollectionName:  collectionName,
 			DestinationPath: destinationPath1,
-			Mode:            mode4,
 		}
 	}
-	if destinationLangchainUpdateIndexingChromaLocalPersistance != nil {
-		indexing = shared.DestinationLangchainUpdateIndexing{
-			DestinationLangchainUpdateIndexingChromaLocalPersistance: destinationLangchainUpdateIndexingChromaLocalPersistance,
+	if chromaLocalPersistance != nil {
+		indexing = shared.Indexing{
+			ChromaLocalPersistance: chromaLocalPersistance,
 		}
 	}
 	chunkOverlap := new(int64)
@@ -270,7 +203,7 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}
-	processing := shared.DestinationLangchainUpdateProcessingConfigModel{
+	processing := shared.ProcessingConfigModel{
 		ChunkOverlap: chunkOverlap,
 		ChunkSize:    chunkSize,
 		TextFields:   textFields,

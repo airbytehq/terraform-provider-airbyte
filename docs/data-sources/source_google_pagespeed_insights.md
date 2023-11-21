@@ -14,7 +14,6 @@ SourceGooglePagespeedInsights DataSource
 
 ```terraform
 data "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedinsights" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedinsigh
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
-- `categories` (List of String) Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".
-- `source_type` (String) must be one of ["google-pagespeed-insights"]
-- `strategies` (List of String) The analyses strategy to use. Either "desktop" or "mobile".
-- `urls` (List of String) The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 
 

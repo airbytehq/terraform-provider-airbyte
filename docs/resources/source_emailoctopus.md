@@ -15,12 +15,12 @@ SourceEmailoctopus Resource
 ```terraform
 resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "emailoctopus"
+    api_key = "...my_api_key..."
   }
-  name         = "Gregory Satterfield"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "bdb6eec7-4378-4ba2-9317-747dc915ad2c"
+  definition_id = "09ea5800-594f-4bd8-a631-4cace02f96b8"
+  name          = "Annie Hegmann"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "f7e4181b-36cf-41af-8f94-e3c79cbeca1c"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
 
 Required:
 
-- `api_key` (String) EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
-- `source_type` (String) must be one of ["emailoctopus"]
+- `api_key` (String, Sensitive) EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
 
 

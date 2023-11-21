@@ -5,9 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOnesignal struct {
-	Applications []SourceOnesignalApplications `tfsdk:"applications"`
-	OutcomeNames types.String                  `tfsdk:"outcome_names"`
-	SourceType   types.String                  `tfsdk:"source_type"`
-	StartDate    types.String                  `tfsdk:"start_date"`
-	UserAuthKey  types.String                  `tfsdk:"user_auth_key"`
+	Applications []Applications `tfsdk:"applications"`
+	OutcomeNames types.String   `tfsdk:"outcome_names"`
+	StartDate    types.String   `tfsdk:"start_date"`
+	UserAuthKey  types.String   `tfsdk:"user_auth_key"`
 }

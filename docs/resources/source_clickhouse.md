@@ -15,21 +15,19 @@ SourceClickhouse Resource
 ```terraform
 resource "airbyte_source_clickhouse" "my_source_clickhouse" {
   configuration = {
-    database    = "default"
-    host        = "...my_host..."
-    password    = "...my_password..."
-    port        = 8123
-    source_type = "clickhouse"
+    database = "default"
+    host     = "...my_host..."
+    password = "...my_password..."
+    port     = 8123
     tunnel_method = {
-      source_clickhouse_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      source_clickhouse_no_tunnel = {}
     }
-    username = "Gerry81"
+    username = "Maximus28"
   }
-  name         = "Mr. Simon Altenwerth"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c802e2ec-09ff-48f0-b816-ff3477c13e90"
+  definition_id = "54cb2418-93e1-4da4-ac4f-685d205011b8"
+  name          = "Milton Crooks"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3b757391-0861-48e9-9445-d83c494a849c"
 }
 ```
 
@@ -39,11 +37,12 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -58,13 +57,13 @@ Required:
 
 - `database` (String) The name of the database.
 - `host` (String) The host endpoint of the Clickhouse cluster.
-- `port` (Number) The port of the database.
-- `source_type` (String) must be one of ["clickhouse"]
 - `username` (String) The username which is used to access the database.
 
 Optional:
 
-- `password` (String) The password associated with this username.
+- `password` (String, Sensitive) The password associated with this username.
+- `port` (Number) Default: 8123
+The port of the database.
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
@@ -72,80 +71,41 @@ Optional:
 
 Optional:
 
-- `source_clickhouse_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_no_tunnel))
-- `source_clickhouse_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_password_authentication))
-- `source_clickhouse_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_ssh_key_authentication))
-- `source_clickhouse_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_no_tunnel))
-- `source_clickhouse_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_password_authentication))
-- `source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication))
+- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
-<a id="nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.source_clickhouse_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
+<a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
+### Nested Schema for `configuration.tunnel_method.no_tunnel`
 
 
-<a id="nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_clickhouse_ssh_tunnel_method_password_authentication`
+<a id="nestedatt--configuration--tunnel_method--password_authentication"></a>
+### Nested Schema for `configuration.tunnel_method.password_authentication`
 
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
-<a id="nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_clickhouse_ssh_tunnel_method_ssh_key_authentication`
+<a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
+### Nested Schema for `configuration.tunnel_method.ssh_key_authentication`
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
+Optional:
 
-<a id="nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.source_clickhouse_update_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
-
-<a id="nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_clickhouse_update_ssh_tunnel_method_password_authentication`
-
-Required:
-
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
-- `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
-
-
-<a id="nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication`
-
-Required:
-
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
-- `tunnel_user` (String) OS-level username for logging into the jump server host.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 

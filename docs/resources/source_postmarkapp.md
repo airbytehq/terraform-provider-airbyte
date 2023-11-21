@@ -15,13 +15,13 @@ SourcePostmarkapp Resource
 ```terraform
 resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
   configuration = {
-    source_type              = "postmarkapp"
     x_postmark_account_token = "...my_x_postmark_account_token..."
     x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  name         = "Mr. Sharon Swift"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3deba297-be3e-490b-840d-f868fd52405c"
+  definition_id = "1bd0fb63-21f6-4b4c-a647-2a5f8aec8fed"
+  name          = "Felix Wisoky"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5367bfee-523e-436b-b4e8-f7b837d76b02"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,7 +49,6 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
 
 Required:
 
-- `source_type` (String) must be one of ["postmarkapp"]
 - `x_postmark_account_token` (String) API Key for account
 - `x_postmark_server_token` (String) API Key for server
 

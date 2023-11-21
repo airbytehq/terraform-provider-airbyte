@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -12,8 +12,46 @@ type PutSourceWoocommerceRequest struct {
 	SourceID                    string                              `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceWoocommerceRequest) GetSourceWoocommercePutRequest() *shared.SourceWoocommercePutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceWoocommercePutRequest
+}
+
+func (o *PutSourceWoocommerceRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceWoocommerceResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceWoocommerceResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceWoocommerceResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceWoocommerceResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

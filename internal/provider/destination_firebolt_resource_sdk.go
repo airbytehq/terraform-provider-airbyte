@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -15,7 +15,6 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 		account = nil
 	}
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationFireboltFirebolt(r.Configuration.DestinationType.ValueString())
 	engine := new(string)
 	if !r.Configuration.Engine.IsUnknown() && !r.Configuration.Engine.IsNull() {
 		*engine = r.Configuration.Engine.ValueString()
@@ -30,55 +29,56 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	var loadingMethod *shared.DestinationFireboltLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
-		var destinationFireboltLoadingMethodSQLInserts *shared.DestinationFireboltLoadingMethodSQLInserts
-		if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts != nil {
-			method := shared.DestinationFireboltLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method.ValueString())
-			destinationFireboltLoadingMethodSQLInserts = &shared.DestinationFireboltLoadingMethodSQLInserts{
-				Method: method,
-			}
+		var destinationFireboltSQLInserts *shared.DestinationFireboltSQLInserts
+		if r.Configuration.LoadingMethod.SQLInserts != nil {
+			destinationFireboltSQLInserts = &shared.DestinationFireboltSQLInserts{}
 		}
-		if destinationFireboltLoadingMethodSQLInserts != nil {
+		if destinationFireboltSQLInserts != nil {
 			loadingMethod = &shared.DestinationFireboltLoadingMethod{
-				DestinationFireboltLoadingMethodSQLInserts: destinationFireboltLoadingMethodSQLInserts,
+				DestinationFireboltSQLInserts: destinationFireboltSQLInserts,
 			}
 		}
-		var destinationFireboltLoadingMethodExternalTableViaS3 *shared.DestinationFireboltLoadingMethodExternalTableViaS3
-		if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3 != nil {
-			awsKeyID := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeyID.ValueString()
-			awsKeySecret := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeySecret.ValueString()
-			method1 := shared.DestinationFireboltLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method.ValueString())
-			s3Bucket := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Bucket.ValueString()
-			s3Region := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Region.ValueString()
-			destinationFireboltLoadingMethodExternalTableViaS3 = &shared.DestinationFireboltLoadingMethodExternalTableViaS3{
+		var destinationFireboltExternalTableViaS3 *shared.DestinationFireboltExternalTableViaS3
+		if r.Configuration.LoadingMethod.ExternalTableViaS3 != nil {
+			awsKeyID := r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeyID.ValueString()
+			awsKeySecret := r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeySecret.ValueString()
+			s3Bucket := r.Configuration.LoadingMethod.ExternalTableViaS3.S3Bucket.ValueString()
+			s3Region := r.Configuration.LoadingMethod.ExternalTableViaS3.S3Region.ValueString()
+			destinationFireboltExternalTableViaS3 = &shared.DestinationFireboltExternalTableViaS3{
 				AwsKeyID:     awsKeyID,
 				AwsKeySecret: awsKeySecret,
-				Method:       method1,
 				S3Bucket:     s3Bucket,
 				S3Region:     s3Region,
 			}
 		}
-		if destinationFireboltLoadingMethodExternalTableViaS3 != nil {
+		if destinationFireboltExternalTableViaS3 != nil {
 			loadingMethod = &shared.DestinationFireboltLoadingMethod{
-				DestinationFireboltLoadingMethodExternalTableViaS3: destinationFireboltLoadingMethodExternalTableViaS3,
+				DestinationFireboltExternalTableViaS3: destinationFireboltExternalTableViaS3,
 			}
 		}
 	}
 	password := r.Configuration.Password.ValueString()
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationFirebolt{
-		Account:         account,
-		Database:        database,
-		DestinationType: destinationType,
-		Engine:          engine,
-		Host:            host,
-		LoadingMethod:   loadingMethod,
-		Password:        password,
-		Username:        username,
+		Account:       account,
+		Database:      database,
+		Engine:        engine,
+		Host:          host,
+		LoadingMethod: loadingMethod,
+		Password:      password,
+		Username:      username,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationFireboltCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -112,36 +112,31 @@ func (r *DestinationFireboltResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	var loadingMethod *shared.DestinationFireboltUpdateLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
-		var destinationFireboltUpdateLoadingMethodSQLInserts *shared.DestinationFireboltUpdateLoadingMethodSQLInserts
-		if r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts != nil {
-			method := shared.DestinationFireboltUpdateLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts.Method.ValueString())
-			destinationFireboltUpdateLoadingMethodSQLInserts = &shared.DestinationFireboltUpdateLoadingMethodSQLInserts{
-				Method: method,
-			}
+		var sqlInserts *shared.SQLInserts
+		if r.Configuration.LoadingMethod.SQLInserts != nil {
+			sqlInserts = &shared.SQLInserts{}
 		}
-		if destinationFireboltUpdateLoadingMethodSQLInserts != nil {
+		if sqlInserts != nil {
 			loadingMethod = &shared.DestinationFireboltUpdateLoadingMethod{
-				DestinationFireboltUpdateLoadingMethodSQLInserts: destinationFireboltUpdateLoadingMethodSQLInserts,
+				SQLInserts: sqlInserts,
 			}
 		}
-		var destinationFireboltUpdateLoadingMethodExternalTableViaS3 *shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3
-		if r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {
-			awsKeyID := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.AwsKeyID.ValueString()
-			awsKeySecret := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.AwsKeySecret.ValueString()
-			method1 := shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.Method.ValueString())
-			s3Bucket := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.S3Bucket.ValueString()
-			s3Region := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.S3Region.ValueString()
-			destinationFireboltUpdateLoadingMethodExternalTableViaS3 = &shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3{
+		var externalTableViaS3 *shared.ExternalTableViaS3
+		if r.Configuration.LoadingMethod.ExternalTableViaS3 != nil {
+			awsKeyID := r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeyID.ValueString()
+			awsKeySecret := r.Configuration.LoadingMethod.ExternalTableViaS3.AwsKeySecret.ValueString()
+			s3Bucket := r.Configuration.LoadingMethod.ExternalTableViaS3.S3Bucket.ValueString()
+			s3Region := r.Configuration.LoadingMethod.ExternalTableViaS3.S3Region.ValueString()
+			externalTableViaS3 = &shared.ExternalTableViaS3{
 				AwsKeyID:     awsKeyID,
 				AwsKeySecret: awsKeySecret,
-				Method:       method1,
 				S3Bucket:     s3Bucket,
 				S3Region:     s3Region,
 			}
 		}
-		if destinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {
+		if externalTableViaS3 != nil {
 			loadingMethod = &shared.DestinationFireboltUpdateLoadingMethod{
-				DestinationFireboltUpdateLoadingMethodExternalTableViaS3: destinationFireboltUpdateLoadingMethodExternalTableViaS3,
+				ExternalTableViaS3: externalTableViaS3,
 			}
 		}
 	}

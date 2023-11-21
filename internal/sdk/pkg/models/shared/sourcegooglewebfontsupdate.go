@@ -12,3 +12,31 @@ type SourceGoogleWebfontsUpdate struct {
 	// Optional, to find how to sort
 	Sort *string `json:"sort,omitempty"`
 }
+
+func (o *SourceGoogleWebfontsUpdate) GetAlt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Alt
+}
+
+func (o *SourceGoogleWebfontsUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGoogleWebfontsUpdate) GetPrettyPrint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrettyPrint
+}
+
+func (o *SourceGoogleWebfontsUpdate) GetSort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}

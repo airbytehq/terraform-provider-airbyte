@@ -7,3 +7,24 @@ type SourceSonarCloudPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceSonarCloudPutRequest) GetConfiguration() SourceSonarCloudUpdate {
+	if o == nil {
+		return SourceSonarCloudUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSonarCloudPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSonarCloudPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

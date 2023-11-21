@@ -17,13 +17,13 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
   configuration = {
     api_token       = "...my_api_token..."
     date_from       = "2021-10-24T03:30:30Z"
-    source_type     = "zenloop"
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  name         = "Ricardo Champlin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7261fb0c-58d2-47b5-9996-b5b4b50eef71"
+  definition_id = "30aace29-0d7b-43b3-98af-f5206e7c6651"
+  name          = "Colleen Hodkiewicz"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "de9cd819-ecc3-47ba-9700-ba64daf2cd7c"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,8 +51,7 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
 
 Required:
 
-- `api_token` (String) Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>
-- `source_type` (String) must be one of ["zenloop"]
+- `api_token` (String, Sensitive) Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>
 
 Optional:
 

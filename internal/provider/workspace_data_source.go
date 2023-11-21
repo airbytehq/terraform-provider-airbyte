@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -48,19 +46,11 @@ func (r *WorkspaceDataSource) Schema(ctx context.Context, req datasource.SchemaR
 
 		Attributes: map[string]schema.Attribute{
 			"data_residency": schema.StringAttribute{
-				Computed: true,
-				Validators: []validator.String{
-					stringvalidator.OneOf(
-						"auto",
-						"us",
-						"eu",
-					),
-				},
-				Description: `must be one of ["auto", "us", "eu"]`,
+				Computed:    true,
+				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
 			},
 			"name": schema.StringAttribute{
-				Computed:    true,
-				Description: `Name of the workspace`,
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

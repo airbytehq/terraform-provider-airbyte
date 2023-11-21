@@ -3,13 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreateRequest {
 	accountID := r.Configuration.AccountID.ValueString()
+	callRateLimit := new(int64)
+	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
+		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
+	} else {
+		callRateLimit = nil
+	}
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
@@ -17,13 +23,18 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	} else {
 		lookbackWindowDays = nil
 	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	sliceRange := new(int64)
 	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
 		*sliceRange = r.Configuration.SliceRange.ValueInt64()
 	} else {
 		sliceRange = nil
 	}
-	sourceType := shared.SourceStripeStripe(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -32,11 +43,18 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	}
 	configuration := shared.SourceStripe{
 		AccountID:          accountID,
+		CallRateLimit:      callRateLimit,
 		ClientSecret:       clientSecret,
 		LookbackWindowDays: lookbackWindowDays,
+		NumWorkers:         numWorkers,
 		SliceRange:         sliceRange,
-		SourceType:         sourceType,
 		StartDate:          startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -48,6 +66,7 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceStripeCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -62,12 +81,24 @@ func (r *SourceStripeResourceModel) ToGetSDKType() *shared.SourceStripeCreateReq
 
 func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutRequest {
 	accountID := r.Configuration.AccountID.ValueString()
+	callRateLimit := new(int64)
+	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
+		*callRateLimit = r.Configuration.CallRateLimit.ValueInt64()
+	} else {
+		callRateLimit = nil
+	}
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
 	} else {
 		lookbackWindowDays = nil
+	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
 	}
 	sliceRange := new(int64)
 	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
@@ -83,8 +114,10 @@ func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutReq
 	}
 	configuration := shared.SourceStripeUpdate{
 		AccountID:          accountID,
+		CallRateLimit:      callRateLimit,
 		ClientSecret:       clientSecret,
 		LookbackWindowDays: lookbackWindowDays,
+		NumWorkers:         numWorkers,
 		SliceRange:         sliceRange,
 		StartDate:          startDate,
 	}

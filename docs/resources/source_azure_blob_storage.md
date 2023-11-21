@@ -15,22 +15,35 @@ SourceAzureBlobStorage Resource
 ```terraform
 resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
   configuration = {
-    azure_blob_storage_account_key            = "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd=="
-    azure_blob_storage_account_name           = "airbyte5storage"
-    azure_blob_storage_blobs_prefix           = "FolderA/FolderB/"
-    azure_blob_storage_container_name         = "airbytetescontainername"
-    azure_blob_storage_endpoint               = "blob.core.windows.net"
-    azure_blob_storage_schema_inference_limit = 500
-    format = {
-      source_azure_blob_storage_input_format_json_lines_newline_delimited_json = {
-        format_type = "JSONL"
-      }
-    }
-    source_type = "azure-blob-storage"
+    azure_blob_storage_account_key    = "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd=="
+    azure_blob_storage_account_name   = "airbyte5storage"
+    azure_blob_storage_container_name = "airbytetescontainername"
+    azure_blob_storage_endpoint       = "blob.core.windows.net"
+    start_date                        = "2021-01-01T00:00:00.000000Z"
+    streams = [
+      {
+        days_to_sync_if_history_is_full = 8
+        format = {
+          avro_format = {
+            double_as_string = true
+          }
+        }
+        globs = [
+          "...",
+        ]
+        input_schema      = "...my_input_schema..."
+        legacy_prefix     = "...my_legacy_prefix..."
+        name              = "Angelina Armstrong"
+        primary_key       = "...my_primary_key..."
+        schemaless        = true
+        validation_policy = "Wait for Discover"
+      },
+    ]
   }
-  name         = "Patty Mraz"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3f2ceda7-e23f-4225-b411-faf4b7544e47"
+  definition_id = "e16b8da7-b814-43f8-91cf-99c7fd70e504"
+  name          = "Joy Sipes"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4f64874e-62c5-48d8-b92f-d48887cb19c4"
 }
 ```
 
@@ -39,12 +52,14 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
 
 ### Required
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `configuration` (Attributes) NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes
+because it is responsible for converting legacy Azure Blob Storage v0 configs into v1 configs using the File-Based CDK. (see [below for nested schema](#nestedatt--configuration))
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,39 +72,130 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
 
 Required:
 
-- `azure_blob_storage_account_key` (String) The Azure blob storage account key.
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key.
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
-- `format` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format))
-- `source_type` (String) must be one of ["azure-blob-storage"]
+- `streams` (Attributes List) Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table. (see [below for nested schema](#nestedatt--configuration--streams))
 
 Optional:
 
-- `azure_blob_storage_blobs_prefix` (String) The Azure blob storage prefix to be applied
 - `azure_blob_storage_endpoint` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-- `azure_blob_storage_schema_inference_limit` (Number) The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 
-<a id="nestedatt--configuration--format"></a>
-### Nested Schema for `configuration.format`
+<a id="nestedatt--configuration--streams"></a>
+### Nested Schema for `configuration.streams`
+
+Required:
+
+- `format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format))
+- `name` (String) The name of the stream.
 
 Optional:
 
-- `source_azure_blob_storage_input_format_json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json))
-- `source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json))
+- `days_to_sync_if_history_is_full` (Number) Default: 3
+When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
+- `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+- `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+- `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
+- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record.
+- `schemaless` (Boolean) Default: false
+When enabled, syncs will not validate or structure records against the stream's schema.
+- `validation_policy` (String) must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
+The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
 
-<a id="nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.source_azure_blob_storage_input_format_json_lines_newline_delimited_json`
+<a id="nestedatt--configuration--streams--format"></a>
+### Nested Schema for `configuration.streams.format`
+
+Optional:
+
+- `avro_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
+- `csv_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
+- `document_file_type_format_experimental` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental))
+- `jsonl_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
+- `parquet_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
+
+<a id="nestedatt--configuration--streams--format--avro_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
+
+Optional:
+
+- `double_as_string` (Boolean) Default: false
+Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
+
+
+<a id="nestedatt--configuration--streams--format--csv_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
+
+Optional:
+
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
+- `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
+- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition))
+- `inference_type` (String) must be one of ["None", "Primitive Types Only"]; Default: "None"
+How to infer the types of the columns. If none, inference default to strings.
+- `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `skip_rows_after_header` (Number) Default: 0
+The number of rows to skip after the header row.
+- `skip_rows_before_header` (Number) Default: 0
+The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+- `strings_can_be_null` (Boolean) Default: true
+Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+- `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
+
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition`
+
+Optional:
+
+- `autogenerated` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated))
+- `from_csv` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv))
+- `user_provided` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided))
+
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
+
+
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
+
+
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
 
 Required:
 
-- `format_type` (String) must be one of ["JSONL"]
+- `column_names` (List of String) The column names that will be used while emitting the CSV records
 
 
-<a id="nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json`
 
-Required:
 
-- `format_type` (String) must be one of ["JSONL"]
+<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
+
+Optional:
+
+- `skip_unprocessable_file_types` (Boolean) Default: true
+If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
+
+
+<a id="nestedatt--configuration--streams--format--jsonl_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
+
+
+<a id="nestedatt--configuration--streams--format--parquet_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
+
+Optional:
+
+- `decimal_as_float` (Boolean) Default: false
+Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 
 

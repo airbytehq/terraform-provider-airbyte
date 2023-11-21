@@ -3,8 +3,6 @@
 package provider
 
 type SourceGitlabAuthorizationMethod struct {
-	SourceGitlabAuthorizationMethodOAuth20            *SourceGitlabAuthorizationMethodOAuth20      `tfsdk:"source_gitlab_authorization_method_o_auth2_0"`
-	SourceGitlabAuthorizationMethodPrivateToken       *SourceGitlabAuthorizationMethodPrivateToken `tfsdk:"source_gitlab_authorization_method_private_token"`
-	SourceGitlabUpdateAuthorizationMethodOAuth20      *SourceGitlabAuthorizationMethodOAuth20      `tfsdk:"source_gitlab_update_authorization_method_o_auth2_0"`
-	SourceGitlabUpdateAuthorizationMethodPrivateToken *SourceGitlabAuthorizationMethodPrivateToken `tfsdk:"source_gitlab_update_authorization_method_private_token"`
+	OAuth20      *SourceGitlabOAuth20 `tfsdk:"o_auth20"`
+	PrivateToken *OAuth2AccessToken   `tfsdk:"private_token"`
 }

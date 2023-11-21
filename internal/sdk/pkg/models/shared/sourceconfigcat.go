@@ -5,36 +5,66 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceConfigcatConfigcat string
+type Configcat string
 
 const (
-	SourceConfigcatConfigcatConfigcat SourceConfigcatConfigcat = "configcat"
+	ConfigcatConfigcat Configcat = "configcat"
 )
 
-func (e SourceConfigcatConfigcat) ToPointer() *SourceConfigcatConfigcat {
+func (e Configcat) ToPointer() *Configcat {
 	return &e
 }
 
-func (e *SourceConfigcatConfigcat) UnmarshalJSON(data []byte) error {
+func (e *Configcat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "configcat":
-		*e = SourceConfigcatConfigcat(v)
+		*e = Configcat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceConfigcatConfigcat: %v", v)
+		return fmt.Errorf("invalid value for Configcat: %v", v)
 	}
 }
 
 type SourceConfigcat struct {
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-	Password   string                   `json:"password"`
-	SourceType SourceConfigcatConfigcat `json:"sourceType"`
+	Password   string    `json:"password"`
+	sourceType Configcat `const:"configcat" json:"sourceType"`
 	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Username string `json:"username"`
+}
+
+func (s SourceConfigcat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceConfigcat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceConfigcat) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceConfigcat) GetSourceType() Configcat {
+	return ConfigcatConfigcat
+}
+
+func (o *SourceConfigcat) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

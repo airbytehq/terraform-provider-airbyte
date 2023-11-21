@@ -16,20 +16,24 @@ SourceJira Resource
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
     api_token                   = "...my_api_token..."
-    domain                      = "<your-domain>.jira.com"
-    email                       = "Eldridge_Reichert@hotmail.com"
+    domain                      = "jira.<your-domain>.com"
+    email                       = "Benton_Tromp@hotmail.com"
     enable_experimental_streams = false
     expand_issue_changelog      = false
+    expand_issue_transition     = true
+    issues_stream_expand_with = [
+      "transitions",
+    ]
     projects = [
       "...",
     ]
-    render_fields = false
-    source_type   = "jira"
+    render_fields = true
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Olive Windler"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0a54b475-f16f-456d-b85a-3c4ac631b99e"
+  definition_id = "7e778751-26eb-4569-8431-2d5d5e6a2d83"
+  name          = "Kenneth Runte"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "8dd54122-5651-4393-a1b0-488926ab9cfe"
 }
 ```
 
@@ -39,11 +43,12 @@ resource "airbyte_source_jira" "my_source_jira" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -56,17 +61,22 @@ resource "airbyte_source_jira" "my_source_jira" {
 
 Required:
 
-- `api_token` (String) Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.
+- `api_token` (String, Sensitive) Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.
 - `domain` (String) The Domain for your Jira account, e.g. airbyteio.atlassian.net, airbyteio.jira.com, jira.your-domain.com
 - `email` (String) The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.
-- `source_type` (String) must be one of ["jira"]
 
 Optional:
 
-- `enable_experimental_streams` (Boolean) Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.
-- `expand_issue_changelog` (Boolean) Expand the changelog when replicating issues.
+- `enable_experimental_streams` (Boolean) Default: false
+Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.
+- `expand_issue_changelog` (Boolean) Default: false
+(DEPRECATED) Expand the changelog when replicating issues.
+- `expand_issue_transition` (Boolean) Default: false
+(DEPRECATED) Expand the transitions when replicating issues.
+- `issues_stream_expand_with` (List of String) Select fields to Expand the `Issues` stream when replicating with:
 - `projects` (List of String) List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
-- `render_fields` (Boolean) Render issue fields in HTML format in addition to Jira JSON-like format.
+- `render_fields` (Boolean) Default: false
+(DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.
 - `start_date` (String) The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 
 

@@ -3,9 +3,10 @@
 package sdk
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	"airbyte/internal/sdk/pkg/utils"
+	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"net/http"
 	"time"
 )
@@ -42,13 +43,15 @@ func Float64(f float64) *float64 { return &f }
 type sdkConfiguration struct {
 	DefaultClient     HTTPClient
 	SecurityClient    HTTPClient
-	Security          *shared.Security
+	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
 	ServerIndex       int
 	Language          string
 	OpenAPIDocVersion string
 	SDKVersion        string
 	GenVersion        string
+	UserAgent         string
+	RetryConfig       *utils.RetryConfig
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -61,12 +64,12 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // SDK - airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
-	Connections  *connections
-	Destinations *destinations
-	Jobs         *jobs
-	Sources      *sources
-	Streams      *streams
-	Workspaces   *workspaces
+	Connections  *Connections
+	Destinations *Destinations
+	Jobs         *Jobs
+	Sources      *Sources
+	Streams      *Streams
+	Workspaces   *Workspaces
 
 	sdkConfiguration sdkConfiguration
 }
@@ -109,10 +112,31 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
+	return func(context.Context) (interface{}, error) {
+		return &security, nil
+	}
+}
+
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *SDK) {
-		sdk.sdkConfiguration.Security = &security
+		sdk.sdkConfiguration.Security = withSecurity(security)
+	}
+}
+
+// WithSecuritySource configures the SDK to invoke the Security Source function on each method call to determine authentication
+func WithSecuritySource(security func(context.Context) (shared.Security, error)) SDKOption {
+	return func(sdk *SDK) {
+		sdk.sdkConfiguration.Security = func(ctx context.Context) (interface{}, error) {
+			return security(ctx)
+		}
+	}
+}
+
+func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+	return func(sdk *SDK) {
+		sdk.sdkConfiguration.RetryConfig = &retryConfig
 	}
 }
 
@@ -120,10 +144,11 @@ func WithSecurity(security shared.Security) SDKOption {
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
 		sdkConfiguration: sdkConfiguration{
-			Language:          "terraform",
+			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.3.4",
-			GenVersion:        "2.108.3",
+			SDKVersion:        "0.3.5",
+			GenVersion:        "2.195.2",
+			UserAgent:         "speakeasy-sdk/go 0.3.5 2.195.2 1.0.0 airbyte",
 		},
 	}
 	for _, opt := range opts {

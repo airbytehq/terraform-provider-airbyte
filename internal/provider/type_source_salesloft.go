@@ -6,6 +6,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSalesloft struct {
 	Credentials SourceSalesloftCredentials `tfsdk:"credentials"`
-	SourceType  types.String               `tfsdk:"source_type"`
 	StartDate   types.String               `tfsdk:"start_date"`
 }

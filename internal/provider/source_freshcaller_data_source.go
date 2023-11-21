@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceFreshcallerDataSource struct {
 
 // SourceFreshcallerDataSourceModel describes the data model.
 type SourceFreshcallerDataSourceModel struct {
-	Configuration SourceFreshcaller `tfsdk:"configuration"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,52 +47,19 @@ func (r *SourceFreshcallerDataSource) Schema(ctx context.Context, req datasource
 		MarkdownDescription: "SourceFreshcaller DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.`,
-					},
-					"domain": schema.StringAttribute{
-						Computed:    true,
-						Description: `Used to construct Base URL for the Freshcaller APIs`,
-					},
-					"requests_per_minute": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"freshcaller",
-							),
-						},
-						Description: `must be one of ["freshcaller"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `UTC date and time. Any data created after this date will be replicated.`,
-					},
-					"sync_lag_minutes": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

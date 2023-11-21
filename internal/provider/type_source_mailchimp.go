@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceMailchimp struct {
 	CampaignID  types.String                   `tfsdk:"campaign_id"`
 	Credentials *SourceMailchimpAuthentication `tfsdk:"credentials"`
-	SourceType  types.String                   `tfsdk:"source_type"`
 }

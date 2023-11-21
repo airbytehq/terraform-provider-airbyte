@@ -5,9 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceTwitter struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	EndDate    types.String `tfsdk:"end_date"`
-	Query      types.String `tfsdk:"query"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
+	APIKey    types.String `tfsdk:"api_key"`
+	EndDate   types.String `tfsdk:"end_date"`
+	Query     types.String `tfsdk:"query"`
+	StartDate types.String `tfsdk:"start_date"`
 }

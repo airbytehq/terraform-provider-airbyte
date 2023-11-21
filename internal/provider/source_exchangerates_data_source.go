@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceExchangeRatesDataSource struct {
 
 // SourceExchangeRatesDataSourceModel describes the data model.
 type SourceExchangeRatesDataSourceModel struct {
-	Configuration SourceExchangeRates `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,48 +47,19 @@ func (r *SourceExchangeRatesDataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "SourceExchangeRates DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.`,
-					},
-					"base": schema.StringAttribute{
-						Computed:    true,
-						Description: `ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR`,
-					},
-					"ignore_weekends": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Ignore weekends? (Exchanges don't run on weekends)`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"exchange-rates",
-							),
-						},
-						Description: `must be one of ["exchange-rates"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `Start getting data from that date.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

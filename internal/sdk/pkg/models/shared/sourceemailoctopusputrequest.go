@@ -7,3 +7,24 @@ type SourceEmailoctopusPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *SourceEmailoctopusPutRequest) GetConfiguration() SourceEmailoctopusUpdate {
+	if o == nil {
+		return SourceEmailoctopusUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceEmailoctopusPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceEmailoctopusPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

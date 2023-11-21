@@ -3,17 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -33,11 +29,11 @@ type SourceSurveySparrowDataSource struct {
 
 // SourceSurveySparrowDataSourceModel describes the data model.
 type SourceSurveySparrowDataSourceModel struct {
-	Configuration SourceSurveySparrow `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -51,110 +47,19 @@ func (r *SourceSurveySparrowDataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "SourceSurveySparrow DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.`,
-					},
-					"region": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-							"source_survey_sparrow_base_url_global_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"survey-sparrow",
-							),
-						},
-						Description: `must be one of ["survey-sparrow"]`,
-					},
-					"survey_id": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Validators: []validator.List{
-							listvalidator.ValueStringsAre(validators.IsValidJSON()),
-						},
-						Description: `A List of your survey ids for survey-specific stream`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

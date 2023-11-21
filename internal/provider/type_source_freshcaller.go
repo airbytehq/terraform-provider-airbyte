@@ -8,7 +8,6 @@ type SourceFreshcaller struct {
 	APIKey            types.String `tfsdk:"api_key"`
 	Domain            types.String `tfsdk:"domain"`
 	RequestsPerMinute types.Int64  `tfsdk:"requests_per_minute"`
-	SourceType        types.String `tfsdk:"source_type"`
 	StartDate         types.String `tfsdk:"start_date"`
 	SyncLagMinutes    types.Int64  `tfsdk:"sync_lag_minutes"`
 }

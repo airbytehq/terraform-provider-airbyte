@@ -21,16 +21,15 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_endpoint_domain_name = "blob.core.windows.net"
     azure_blob_storage_output_buffer_size   = 5
     azure_blob_storage_spill_size           = 500
-    destination_type                        = "azure-blob-storage"
     format = {
-      destination_azure_blob_storage_output_format_csv_comma_separated_values = {
-        flattening  = "No flattening"
-        format_type = "CSV"
+      csv_comma_separated_values = {
+        flattening = "No flattening"
       }
     }
   }
-  name         = "Matt Hamill"
-  workspace_id = "3f5ad019-da1f-4fe7-8f09-7b0074f15471"
+  definition_id = "b38acf3b-23ea-44e3-abf4-ba0e7ac63cda"
+  name          = "Rogelio Purdy"
+  workspace_id  = "cd76c9fd-07c9-468d-acb9-cb44c87d9163"
 }
 ```
 
@@ -40,8 +39,12 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -53,61 +56,38 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
 
 Required:
 
-- `azure_blob_storage_account_key` (String) The Azure blob storage account key.
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key.
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
-- `destination_type` (String) must be one of ["azure-blob-storage"]
 - `format` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format))
 
 Optional:
 
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp
-- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-- `azure_blob_storage_output_buffer_size` (Number) The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.
-- `azure_blob_storage_spill_size` (Number) The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable
+- `azure_blob_storage_endpoint_domain_name` (String) Default: "blob.core.windows.net"
+This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+- `azure_blob_storage_output_buffer_size` (Number) Default: 5
+The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.
+- `azure_blob_storage_spill_size` (Number) Default: 500
+The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable
 
 <a id="nestedatt--configuration--format"></a>
 ### Nested Schema for `configuration.format`
 
 Optional:
 
-- `destination_azure_blob_storage_output_format_csv_comma_separated_values` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_output_format_csv_comma_separated_values))
-- `destination_azure_blob_storage_output_format_json_lines_newline_delimited_json` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_output_format_json_lines_newline_delimited_json))
-- `destination_azure_blob_storage_update_output_format_csv_comma_separated_values` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_csv_comma_separated_values))
-- `destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json))
+- `csv_comma_separated_values` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values))
+- `json_lines_newline_delimited_json` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
 
-<a id="nestedatt--configuration--format--destination_azure_blob_storage_output_format_csv_comma_separated_values"></a>
-### Nested Schema for `configuration.format.destination_azure_blob_storage_output_format_csv_comma_separated_values`
+<a id="nestedatt--configuration--format--csv_comma_separated_values"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values`
 
-Required:
+Optional:
 
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
 Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-- `format_type` (String) must be one of ["CSV"]
 
 
-<a id="nestedatt--configuration--format--destination_azure_blob_storage_output_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.destination_azure_blob_storage_output_format_json_lines_newline_delimited_json`
-
-Required:
-
-- `format_type` (String) must be one of ["JSONL"]
-
-
-<a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_csv_comma_separated_values"></a>
-### Nested Schema for `configuration.format.destination_azure_blob_storage_update_output_format_csv_comma_separated_values`
-
-Required:
-
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
-Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-- `format_type` (String) must be one of ["CSV"]
-
-
-<a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json"></a>
-### Nested Schema for `configuration.format.destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json`
-
-Required:
-
-- `format_type` (String) must be one of ["JSONL"]
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json`
 
 

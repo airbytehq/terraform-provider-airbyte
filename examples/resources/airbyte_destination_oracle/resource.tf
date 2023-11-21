@@ -1,19 +1,17 @@
 resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
-    destination_type = "oracle"
-    host             = "...my_host..."
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    password         = "...my_password..."
-    port             = 1521
-    schema           = "airbyte"
-    sid              = "...my_sid..."
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 1521
+    schema          = "airbyte"
+    sid             = "...my_sid..."
     tunnel_method = {
-      destination_oracle_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_oracle_no_tunnel = {}
     }
-    username = "Viviane_Aufderhar"
+    username = "Abdullah_Ward15"
   }
-  name         = "Tammy Medhurst"
-  workspace_id = "3698f447-f603-4e8b-845e-80ca55efd20e"
+  definition_id = "2db6fe08-64a8-456a-8417-0ff8566dc323"
+  name          = "Brittany Mohr"
+  workspace_id  = "b07bf072-8b70-4775-98c6-7348eaa4356f"
 }

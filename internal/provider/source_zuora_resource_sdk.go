@@ -3,15 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dataQuery := shared.SourceZuoraDataQueryType(r.Configuration.DataQuery.ValueString())
-	sourceType := shared.SourceZuoraZuora(r.Configuration.SourceType.ValueString())
+	dataQuery := new(shared.SourceZuoraDataQueryType)
+	if !r.Configuration.DataQuery.IsUnknown() && !r.Configuration.DataQuery.IsNull() {
+		*dataQuery = shared.SourceZuoraDataQueryType(r.Configuration.DataQuery.ValueString())
+	} else {
+		dataQuery = nil
+	}
 	startDate := r.Configuration.StartDate.ValueString()
 	tenantEndpoint := shared.SourceZuoraTenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
 	windowInDays := new(string)
@@ -24,10 +28,15 @@ func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRe
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
 		DataQuery:      dataQuery,
-		SourceType:     sourceType,
 		StartDate:      startDate,
 		TenantEndpoint: tenantEndpoint,
 		WindowInDays:   windowInDays,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -39,6 +48,7 @@ func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRe
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceZuoraCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -54,9 +64,14 @@ func (r *SourceZuoraResourceModel) ToGetSDKType() *shared.SourceZuoraCreateReque
 func (r *SourceZuoraResourceModel) ToUpdateSDKType() *shared.SourceZuoraPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dataQuery := shared.SourceZuoraUpdateDataQueryType(r.Configuration.DataQuery.ValueString())
+	dataQuery := new(shared.DataQueryType)
+	if !r.Configuration.DataQuery.IsUnknown() && !r.Configuration.DataQuery.IsNull() {
+		*dataQuery = shared.DataQueryType(r.Configuration.DataQuery.ValueString())
+	} else {
+		dataQuery = nil
+	}
 	startDate := r.Configuration.StartDate.ValueString()
-	tenantEndpoint := shared.SourceZuoraUpdateTenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
+	tenantEndpoint := shared.TenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
 	windowInDays := new(string)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
 		*windowInDays = r.Configuration.WindowInDays.ValueString()

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,16 +20,15 @@ func (r *SourceSpacexAPIResourceModel) ToCreateSDKType() *shared.SourceSpacexAPI
 	} else {
 		options = nil
 	}
-	sourceType := new(shared.SourceSpacexAPISpacexAPI)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceSpacexAPISpacexAPI(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
 	configuration := shared.SourceSpacexAPI{
-		ID:         id,
-		Options:    options,
-		SourceType: sourceType,
+		ID:      id,
+		Options: options,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -41,6 +40,7 @@ func (r *SourceSpacexAPIResourceModel) ToCreateSDKType() *shared.SourceSpacexAPI
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceSpacexAPICreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

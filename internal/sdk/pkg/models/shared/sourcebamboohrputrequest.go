@@ -7,3 +7,24 @@ type SourceBambooHrPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceBambooHrPutRequest) GetConfiguration() SourceBambooHrUpdate {
+	if o == nil {
+		return SourceBambooHrUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceBambooHrPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBambooHrPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

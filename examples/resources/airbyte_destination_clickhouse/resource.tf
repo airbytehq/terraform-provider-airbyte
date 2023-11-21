@@ -1,18 +1,16 @@
 resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "clickhouse"
-    host             = "...my_host..."
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    password         = "...my_password..."
-    port             = 8123
+    database        = "...my_database..."
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 8123
     tunnel_method = {
-      destination_clickhouse_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      no_tunnel = {}
     }
-    username = "Magdalena_Kuvalis"
+    username = "Rhianna_Leannon"
   }
-  name         = "Sandy Huels"
-  workspace_id = "97074ba4-469b-46e2-9419-59890afa563e"
+  definition_id = "2c276398-b468-48ad-b426-53c327fa18b5"
+  name          = "Gerardo Corwin"
+  workspace_id  = "4f41e22e-39b6-461a-89af-71290b2c6d65"
 }

@@ -16,17 +16,16 @@ SourceNotion Resource
 resource "airbyte_source_notion" "my_source_notion" {
   configuration = {
     credentials = {
-      source_notion_authenticate_using_access_token = {
-        auth_type = "token"
-        token     = "...my_token..."
+      source_notion_access_token = {
+        token = "...my_token..."
       }
     }
-    source_type = "notion"
-    start_date  = "2020-11-16T00:00:00.000Z"
+    start_date = "2020-11-16T00:00:00.000Z"
   }
-  name         = "Francisco Yost"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "cb35d176-38f1-4edb-b835-9ecc5cb860f8"
+  definition_id = "fe0e5e5f-386d-40ac-9af3-c6558d9b03d2"
+  name          = "Jeannette Ward"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "dbadc477-cb62-4b59-b9f1-ee4249578a5b"
 }
 ```
 
@@ -36,11 +35,12 @@ resource "airbyte_source_notion" "my_source_notion" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -53,60 +53,35 @@ resource "airbyte_source_notion" "my_source_notion" {
 
 Required:
 
-- `source_type` (String) must be one of ["notion"]
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
+- `credentials` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials))
 
 Optional:
 
-- `credentials` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials))
+- `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:MM:SS.000Z. During incremental sync, any data generated before this date will not be replicated. If left blank, the start date will be set to 2 years before the present date.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_notion_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_access_token))
-- `source_notion_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0))
-- `source_notion_update_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token))
-- `source_notion_update_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0))
+- `access_token` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
+- `o_auth20` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_notion_authenticate_using_access_token"></a>
-### Nested Schema for `configuration.credentials.source_notion_authenticate_using_access_token`
+<a id="nestedatt--configuration--credentials--access_token"></a>
+### Nested Schema for `configuration.credentials.access_token`
 
 Required:
 
-- `auth_type` (String) must be one of ["token"]
-- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
+- `token` (String, Sensitive) The Access Token for your private Notion integration. See the <a href='https://docs.airbyte.com/integrations/sources/notion#step-1-create-an-integration-in-notion'>docs</a> for more information on how to obtain this token.
 
 
-<a id="nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_notion_authenticate_using_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
-- `client_id` (String) The ClientID of your Notion integration.
-- `client_secret` (String) The ClientSecret of your Notion integration.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token"></a>
-### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_access_token`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `auth_type` (String) must be one of ["token"]
-- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
-
-
-<a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0"></a>
-### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_o_auth2_0`
-
-Required:
-
-- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
-- `auth_type` (String) must be one of ["OAuth2.0"]
-- `client_id` (String) The ClientID of your Notion integration.
-- `client_secret` (String) The ClientSecret of your Notion integration.
+- `access_token` (String, Sensitive) The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `client_id` (String) The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `client_secret` (String) The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 
 

@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZendeskTalk struct {
-	Credentials *SourceZendeskTalkAuthentication `tfsdk:"credentials"`
-	SourceType  types.String                     `tfsdk:"source_type"`
-	StartDate   types.String                     `tfsdk:"start_date"`
-	Subdomain   types.String                     `tfsdk:"subdomain"`
+	Credentials *SourceZendeskSupportAuthentication `tfsdk:"credentials"`
+	StartDate   types.String                        `tfsdk:"start_date"`
+	Subdomain   types.String                        `tfsdk:"subdomain"`
 }

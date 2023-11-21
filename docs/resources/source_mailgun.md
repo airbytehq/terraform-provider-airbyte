@@ -17,12 +17,12 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
   configuration = {
     domain_region = "...my_domain_region..."
     private_key   = "...my_private_key..."
-    source_type   = "mailgun"
     start_date    = "2023-08-01T00:00:00Z"
   }
-  name         = "Sheri Mayert"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "8f7502bf-dc34-4508-81f1-764456379f3f"
+  definition_id = "c1488faa-411d-49d9-a226-9c9d648f0bcc"
+  name          = "Ervin Deckow"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "5af6ed3c-47c1-4416-8113-c2d3cb5eaa64"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,12 +50,12 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
 
 Required:
 
-- `private_key` (String) Primary account API key to access your Mailgun data.
-- `source_type` (String) must be one of ["mailgun"]
+- `private_key` (String, Sensitive) Primary account API key to access your Mailgun data.
 
 Optional:
 
-- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+- `domain_region` (String) Default: "US"
+Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
 - `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 

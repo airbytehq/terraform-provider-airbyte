@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type SourceLeverHiringResource struct {
 // SourceLeverHiringResourceModel describes the resource data model.
 type SourceLeverHiringResourceModel struct {
 	Configuration SourceLeverHiring `tfsdk:"configuration"`
+	DefinitionID  types.String      `tfsdk:"definition_id"`
 	Name          types.String      `tfsdk:"name"`
 	SecretID      types.String      `tfsdk:"secret_id"`
 	SourceID      types.String      `tfsdk:"source_id"`
@@ -58,37 +60,20 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_lever_hiring_authentication_mechanism_authenticate_via_lever_api_key": schema.SingleNestedAttribute{
+							"authenticate_via_lever_api_key": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Api Key of your Lever Hiring account.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Api Key",
-											),
-										},
-										Description: `must be one of ["Api Key"]`,
 									},
 								},
 								Description: `Choose how to authenticate to Lever Hiring.`,
 							},
-							"source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
+							"authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
 										Description: `The Client ID of your Lever Hiring developer application.`,
@@ -99,82 +84,28 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
-										Description: `The token for obtaining new access token.`,
-									},
-								},
-								Description: `Choose how to authenticate to Lever Hiring.`,
-							},
-							"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_api_key": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Required:    true,
-										Description: `The Api Key of your Lever Hiring account.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Api Key",
-											),
-										},
-										Description: `must be one of ["Api Key"]`,
-									},
-								},
-								Description: `Choose how to authenticate to Lever Hiring.`,
-							},
-							"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client ID of your Lever Hiring developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client Secret of your Lever Hiring developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining new access token.`,
 									},
 								},
 								Description: `Choose how to authenticate to Lever Hiring.`,
 							},
 						},
+						Description: `Choose how to authenticate to Lever Hiring.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Choose how to authenticate to Lever Hiring.`,
 					},
 					"environment": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["Production", "Sandbox"]; Default: "Sandbox"` + "\n" +
+							`The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"Production",
 								"Sandbox",
 							),
 						},
-						MarkdownDescription: `must be one of ["Production", "Sandbox"]` + "\n" +
-							`The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"lever-hiring",
-							),
-						},
-						Description: `must be one of ["lever-hiring"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -182,13 +113,24 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -252,7 +194,7 @@ func (r *SourceLeverHiringResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceLeverHiring(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -428,5 +370,5 @@ func (r *SourceLeverHiringResource) Delete(ctx context.Context, req resource.Del
 }
 
 func (r *SourceLeverHiringResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

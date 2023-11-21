@@ -3,23 +3,28 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationConvexResourceModel) ToCreateSDKType() *shared.DestinationConvexCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
-	destinationType := shared.DestinationConvexConvex(r.Configuration.DestinationType.ValueString())
 	configuration := shared.DestinationConvex{
-		AccessKey:       accessKey,
-		DeploymentURL:   deploymentURL,
-		DestinationType: destinationType,
+		AccessKey:     accessKey,
+		DeploymentURL: deploymentURL,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationConvexCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}

@@ -3,16 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmartengageCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceSmartengageSmartengage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSmartengage{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -24,6 +28,7 @@ func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmarten
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceSmartengageCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

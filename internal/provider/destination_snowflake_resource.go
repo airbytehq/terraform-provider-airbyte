@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type DestinationSnowflakeResource struct {
 // DestinationSnowflakeResourceModel describes the resource data model.
 type DestinationSnowflakeResourceModel struct {
 	Configuration   DestinationSnowflake `tfsdk:"configuration"`
+	DefinitionID    types.String         `tfsdk:"definition_id"`
 	DestinationID   types.String         `tfsdk:"destination_id"`
 	DestinationType types.String         `tfsdk:"destination_type"`
 	Name            types.String         `tfsdk:"name"`
@@ -57,43 +58,28 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
+							"key_pair_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-										Description: `must be one of ["Key Pair Authentication"]`,
-									},
 									"private_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.`,
 									},
 									"private_key_password": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Passphrase for private key`,
 									},
 								},
 							},
-							"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter you application's Access Token`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -105,94 +91,17 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your application's Refresh Token`,
 									},
 								},
 							},
-							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
+							"username_and_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Username and Password",
-											),
-										},
-										Description: `must be one of ["Username and Password"]`,
-									},
 									"password": schema.StringAttribute{
 										Required:    true,
-										Description: `Enter the password associated with the username.`,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-										Description: `must be one of ["Key Pair Authentication"]`,
-									},
-									"private_key": schema.StringAttribute{
-										Required:    true,
-										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.`,
-									},
-									"private_key_password": schema.StringAttribute{
-										Optional:    true,
-										Description: `Passphrase for private key`,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter you application's Access Token`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `Enter your application's Client ID`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `Enter your application's Client secret`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your application's Refresh Token`,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Username and Password",
-											),
-										},
-										Description: `must be one of ["Username and Password"]`,
-									},
-									"password": schema.StringAttribute{
-										Required:    true,
+										Sensitive:   true,
 										Description: `Enter the password associated with the username.`,
 									},
 								},
@@ -206,14 +115,10 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						Required:    true,
 						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snowflake",
-							),
-						},
-						Description: `must be one of ["snowflake"]`,
+					"disable_type_dedupe": schema.BoolAttribute{
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -225,7 +130,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					},
 					"raw_data_schema": schema.StringAttribute{
 						Optional:    true,
-						Description: `The schema to write raw tables into`,
+						Description: `The schema to write raw tables into (default: airbyte_internal)`,
 					},
 					"role": schema.StringAttribute{
 						Required:    true,
@@ -245,6 +150,13 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
@@ -261,7 +173,8 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -311,7 +224,7 @@ func (r *DestinationSnowflakeResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationSnowflake(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -487,5 +400,5 @@ func (r *DestinationSnowflakeResource) Delete(ctx context.Context, req resource.
 }
 
 func (r *DestinationSnowflakeResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

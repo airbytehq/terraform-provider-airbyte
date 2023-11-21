@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceStripeResource struct {
 // SourceStripeResourceModel describes the resource data model.
 type SourceStripeResourceModel struct {
 	Configuration SourceStripe `tfsdk:"configuration"`
+	DefinitionID  types.String `tfsdk:"definition_id"`
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
@@ -59,43 +60,57 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required:    true,
 						Description: `Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).`,
 					},
+					"call_rate_limit": schema.Int64Attribute{
+						Optional:    true,
+						Description: `The number of API calls per second that you allow connector to make. This value can not be bigger than real API call rate limit (https://stripe.com/docs/rate-limits). If not specified the default maximum is 25 and 100 calls per second for test and production tokens respectively.`,
+					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
 						Description: `Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).`,
 					},
 					"lookback_window_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. Applies only to streams that do not support event-based incremental syncs: CheckoutSessionLineItems,  Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>`,
+						Optional: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. The Lookback Window only applies to streams that do not support event-based incremental syncs: Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks, Refunds. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>`,
+					},
+					"num_workers": schema.Int64Attribute{
+						Optional: true,
+						MarkdownDescription: `Default: 10` + "\n" +
+							`The number of worker thread to use for the sync. The performance upper boundary depends on call_rate_limit setting and type of account.`,
 					},
 					"slice_range": schema.Int64Attribute{
-						Optional:    true,
-						Description: `The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"stripe",
-							),
-						},
-						Description: `must be one of ["stripe"]`,
+						Optional: true,
+						MarkdownDescription: `Default: 365` + "\n" +
+							`The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `Default: "2017-01-25T00:00:00Z"` + "\n" +
+							`UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -159,7 +174,7 @@ func (r *SourceStripeResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceStripe(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -335,5 +350,5 @@ func (r *SourceStripeResource) Delete(ctx context.Context, req resource.DeleteRe
 }
 
 func (r *SourceStripeResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

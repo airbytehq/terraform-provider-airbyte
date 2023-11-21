@@ -15,16 +15,16 @@ DestinationKinesis Resource
 ```terraform
 resource "airbyte_destination_kinesis" "my_destination_kinesis" {
   configuration = {
-    access_key       = "...my_access_key..."
-    buffer_size      = 1
-    destination_type = "kinesis"
-    endpoint         = "kinesis.us‑west‑1.amazonaws.com"
-    private_key      = "...my_private_key..."
-    region           = "us‑west‑1"
-    shard_count      = 9
+    access_key  = "...my_access_key..."
+    buffer_size = 1
+    endpoint    = "kinesis.us‑west‑1.amazonaws.com"
+    private_key = "...my_private_key..."
+    region      = "us‑west‑1"
+    shard_count = 1
   }
-  name         = "Opal Kozey"
-  workspace_id = "5bc0ab3c-20c4-4f37-89fd-871f99dd2efd"
+  definition_id = "83384bd8-7b5c-4ce3-a148-54333df23c5e"
+  name          = "Mary Monahan"
+  workspace_id  = "52521a04-7878-4c25-8cd1-84fd116e75f1"
 }
 ```
 
@@ -34,8 +34,12 @@ resource "airbyte_destination_kinesis" "my_destination_kinesis" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -48,11 +52,15 @@ resource "airbyte_destination_kinesis" "my_destination_kinesis" {
 Required:
 
 - `access_key` (String) Generate the AWS Access Key for current user.
-- `buffer_size` (Number) Buffer size for storing kinesis records before being batch streamed.
-- `destination_type` (String) must be one of ["kinesis"]
 - `endpoint` (String) AWS Kinesis endpoint.
 - `private_key` (String) The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".
 - `region` (String) AWS region. Your account determines the Regions that are available to you.
-- `shard_count` (Number) Number of shards to which the data should be streamed.
+
+Optional:
+
+- `buffer_size` (Number) Default: 100
+Buffer size for storing kinesis records before being batch streamed.
+- `shard_count` (Number) Default: 5
+Number of shards to which the data should be streamed.
 
 

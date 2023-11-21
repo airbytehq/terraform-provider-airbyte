@@ -1,8 +1,7 @@
 resource "airbyte_source_xkcd" "my_source_xkcd" {
-  configuration = {
-    source_type = "xkcd"
-  }
-  name         = "Mr. Laurence Littel"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "18d97e15-2297-4510-9a80-312292cc61c2"
+  configuration = {}
+  definition_id = "e992c2a3-f4c8-4fc0-a6c7-cc4eafdab4c1"
+  name          = "Wilbert Ortiz"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6c12869f-984d-4613-8285-42bb37a458fa"
 }

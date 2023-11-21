@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -15,4 +16,43 @@ type SourceTwitterUpdate struct {
 	Query string `json:"query"`
 	// The start date for retrieving tweets cannot be more than 7 days in the past.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceTwitterUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTwitterUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTwitterUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceTwitterUpdate) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTwitterUpdate) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceTwitterUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

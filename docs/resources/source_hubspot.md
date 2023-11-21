@@ -16,19 +16,18 @@ SourceHubspot Resource
 resource "airbyte_source_hubspot" "my_source_hubspot" {
   configuration = {
     credentials = {
-      source_hubspot_authentication_o_auth = {
-        client_id         = "123456789000"
-        client_secret     = "secret"
-        credentials_title = "OAuth Credentials"
-        refresh_token     = "refresh_token"
+      source_hubspot_o_auth = {
+        client_id     = "123456789000"
+        client_secret = "secret"
+        refresh_token = "refresh_token"
       }
     }
-    source_type = "hubspot"
-    start_date  = "2017-01-25T00:00:00Z"
+    start_date = "2017-01-25T00:00:00Z"
   }
-  name         = "Mr. Tomas Wisozk DVM"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "9f443b42-57b9-492c-8dbd-a6a61efa2198"
+  definition_id = "b1210837-28d8-49e3-91e8-68df1f2c5ad8"
+  name          = "Amelia Gulgowski II"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3eb240d6-26d4-4887-8caa-f58e0f5c1159"
 }
 ```
 
@@ -38,11 +37,12 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -56,7 +56,6 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
 Required:
 
 - `credentials` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["hubspot"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -64,52 +63,24 @@ Required:
 
 Optional:
 
-- `source_hubspot_authentication_o_auth` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_authentication_o_auth))
-- `source_hubspot_authentication_private_app` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_authentication_private_app))
-- `source_hubspot_update_authentication_o_auth` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_update_authentication_o_auth))
-- `source_hubspot_update_authentication_private_app` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_update_authentication_private_app))
+- `o_auth` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth))
+- `private_app` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--private_app))
 
-<a id="nestedatt--configuration--credentials--source_hubspot_authentication_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_hubspot_authentication_o_auth`
+<a id="nestedatt--configuration--credentials--o_auth"></a>
+### Nested Schema for `configuration.credentials.o_auth`
 
 Required:
 
 - `client_id` (String) The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 - `client_secret` (String) The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
-- `credentials_title` (String) must be one of ["OAuth Credentials"]
-Name of the credentials
-- `refresh_token` (String) Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
+- `refresh_token` (String, Sensitive) Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 
 
-<a id="nestedatt--configuration--credentials--source_hubspot_authentication_private_app"></a>
-### Nested Schema for `configuration.credentials.source_hubspot_authentication_private_app`
+<a id="nestedatt--configuration--credentials--private_app"></a>
+### Nested Schema for `configuration.credentials.private_app`
 
 Required:
 
-- `access_token` (String) HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
-- `credentials_title` (String) must be one of ["Private App Credentials"]
-Name of the credentials set
-
-
-<a id="nestedatt--configuration--credentials--source_hubspot_update_authentication_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_hubspot_update_authentication_o_auth`
-
-Required:
-
-- `client_id` (String) The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
-- `client_secret` (String) The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
-- `credentials_title` (String) must be one of ["OAuth Credentials"]
-Name of the credentials
-- `refresh_token` (String) Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
-
-
-<a id="nestedatt--configuration--credentials--source_hubspot_update_authentication_private_app"></a>
-### Nested Schema for `configuration.credentials.source_hubspot_update_authentication_private_app`
-
-Required:
-
-- `access_token` (String) HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
-- `credentials_title` (String) must be one of ["Private App Credentials"]
-Name of the credentials set
+- `access_token` (String, Sensitive) HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 
 

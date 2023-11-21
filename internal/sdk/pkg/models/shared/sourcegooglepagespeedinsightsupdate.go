@@ -7,21 +7,21 @@ import (
 	"fmt"
 )
 
-type SourceGooglePagespeedInsightsUpdateCategories string
+type Categories string
 
 const (
-	SourceGooglePagespeedInsightsUpdateCategoriesAccessibility SourceGooglePagespeedInsightsUpdateCategories = "accessibility"
-	SourceGooglePagespeedInsightsUpdateCategoriesBestPractices SourceGooglePagespeedInsightsUpdateCategories = "best-practices"
-	SourceGooglePagespeedInsightsUpdateCategoriesPerformance   SourceGooglePagespeedInsightsUpdateCategories = "performance"
-	SourceGooglePagespeedInsightsUpdateCategoriesPwa           SourceGooglePagespeedInsightsUpdateCategories = "pwa"
-	SourceGooglePagespeedInsightsUpdateCategoriesSeo           SourceGooglePagespeedInsightsUpdateCategories = "seo"
+	CategoriesAccessibility Categories = "accessibility"
+	CategoriesBestPractices Categories = "best-practices"
+	CategoriesPerformance   Categories = "performance"
+	CategoriesPwa           Categories = "pwa"
+	CategoriesSeo           Categories = "seo"
 )
 
-func (e SourceGooglePagespeedInsightsUpdateCategories) ToPointer() *SourceGooglePagespeedInsightsUpdateCategories {
+func (e Categories) ToPointer() *Categories {
 	return &e
 }
 
-func (e *SourceGooglePagespeedInsightsUpdateCategories) UnmarshalJSON(data []byte) error {
+func (e *Categories) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -36,25 +36,25 @@ func (e *SourceGooglePagespeedInsightsUpdateCategories) UnmarshalJSON(data []byt
 	case "pwa":
 		fallthrough
 	case "seo":
-		*e = SourceGooglePagespeedInsightsUpdateCategories(v)
+		*e = Categories(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGooglePagespeedInsightsUpdateCategories: %v", v)
+		return fmt.Errorf("invalid value for Categories: %v", v)
 	}
 }
 
-type SourceGooglePagespeedInsightsUpdateStrategies string
+type Strategies string
 
 const (
-	SourceGooglePagespeedInsightsUpdateStrategiesDesktop SourceGooglePagespeedInsightsUpdateStrategies = "desktop"
-	SourceGooglePagespeedInsightsUpdateStrategiesMobile  SourceGooglePagespeedInsightsUpdateStrategies = "mobile"
+	StrategiesDesktop Strategies = "desktop"
+	StrategiesMobile  Strategies = "mobile"
 )
 
-func (e SourceGooglePagespeedInsightsUpdateStrategies) ToPointer() *SourceGooglePagespeedInsightsUpdateStrategies {
+func (e Strategies) ToPointer() *Strategies {
 	return &e
 }
 
-func (e *SourceGooglePagespeedInsightsUpdateStrategies) UnmarshalJSON(data []byte) error {
+func (e *Strategies) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -63,10 +63,10 @@ func (e *SourceGooglePagespeedInsightsUpdateStrategies) UnmarshalJSON(data []byt
 	case "desktop":
 		fallthrough
 	case "mobile":
-		*e = SourceGooglePagespeedInsightsUpdateStrategies(v)
+		*e = Strategies(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGooglePagespeedInsightsUpdateStrategies: %v", v)
+		return fmt.Errorf("invalid value for Strategies: %v", v)
 	}
 }
 
@@ -74,9 +74,37 @@ type SourceGooglePagespeedInsightsUpdate struct {
 	// Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
 	APIKey *string `json:"api_key,omitempty"`
 	// Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".
-	Categories []SourceGooglePagespeedInsightsUpdateCategories `json:"categories"`
+	Categories []Categories `json:"categories"`
 	// The analyses strategy to use. Either "desktop" or "mobile".
-	Strategies []SourceGooglePagespeedInsightsUpdateStrategies `json:"strategies"`
+	Strategies []Strategies `json:"strategies"`
 	// The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 	Urls []string `json:"urls"`
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetCategories() []Categories {
+	if o == nil {
+		return []Categories{}
+	}
+	return o.Categories
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetStrategies() []Strategies {
+	if o == nil {
+		return []Strategies{}
+	}
+	return o.Strategies
+}
+
+func (o *SourceGooglePagespeedInsightsUpdate) GetUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Urls
 }

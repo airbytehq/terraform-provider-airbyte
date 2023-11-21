@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceCoda struct {
-	AuthToken  types.String `tfsdk:"auth_token"`
-	SourceType types.String `tfsdk:"source_type"`
+	AuthToken types.String `tfsdk:"auth_token"`
 }

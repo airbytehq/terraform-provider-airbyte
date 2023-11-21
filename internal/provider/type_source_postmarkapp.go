@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePostmarkapp struct {
-	SourceType            types.String `tfsdk:"source_type"`
 	XPostmarkAccountToken types.String `tfsdk:"x_postmark_account_token"`
 	XPostmarkServerToken  types.String `tfsdk:"x_postmark_server_token"`
 }

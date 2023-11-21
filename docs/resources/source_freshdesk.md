@@ -17,13 +17,13 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "myaccount.freshdesk.com"
-    requests_per_minute = 10
-    source_type         = "freshdesk"
+    requests_per_minute = 1
     start_date          = "2020-12-01T00:00:00Z"
   }
-  name         = "Dale Altenwerth"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3e43202d-7216-4576-9066-41870d9d21f9"
+  definition_id = "9fe1bd22-2412-41e6-b15b-e306a4e83994"
+  name          = "Frances Farrell"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "c75d4c70-b588-42c8-81a0-878bfdf7e2fa"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,9 +51,8 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
 
 Required:
 
-- `api_key` (String) Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.
+- `api_key` (String, Sensitive) Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.
 - `domain` (String) Freshdesk domain
-- `source_type` (String) must be one of ["freshdesk"]
 
 Optional:
 

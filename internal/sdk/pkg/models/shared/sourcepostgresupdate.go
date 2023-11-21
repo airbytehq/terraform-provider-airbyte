@@ -3,83 +3,113 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod string
+type SourcePostgresUpdateSchemasReplicationMethodMethod string
 
 const (
-	SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethodStandard SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod = "Standard"
+	SourcePostgresUpdateSchemasReplicationMethodMethodStandard SourcePostgresUpdateSchemasReplicationMethodMethod = "Standard"
 )
 
-func (e SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) ToPointer() *SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod {
+func (e SourcePostgresUpdateSchemasReplicationMethodMethod) ToPointer() *SourcePostgresUpdateSchemasReplicationMethodMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Standard":
-		*e = SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(v)
+		*e = SourcePostgresUpdateSchemasReplicationMethodMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasReplicationMethodMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor struct {
-	Method SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
+// SourcePostgresUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourcePostgresUpdateScanChangesWithUserDefinedCursor struct {
+	method SourcePostgresUpdateSchemasReplicationMethodMethod `const:"Standard" json:"method"`
 }
 
-type SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod string
+func (s SourcePostgresUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostgresUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostgresUpdateScanChangesWithUserDefinedCursor) GetMethod() SourcePostgresUpdateSchemasReplicationMethodMethod {
+	return SourcePostgresUpdateSchemasReplicationMethodMethodStandard
+}
+
+type SourcePostgresUpdateSchemasMethod string
 
 const (
-	SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethodXmin SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod = "Xmin"
+	SourcePostgresUpdateSchemasMethodXmin SourcePostgresUpdateSchemasMethod = "Xmin"
 )
 
-func (e SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod) ToPointer() *SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod {
+func (e SourcePostgresUpdateSchemasMethod) ToPointer() *SourcePostgresUpdateSchemasMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Xmin":
-		*e = SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod(v)
+		*e = SourcePostgresUpdateSchemasMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.
-type SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn struct {
-	Method SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod `json:"method"`
+// DetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.
+type DetectChangesWithXminSystemColumn struct {
+	method SourcePostgresUpdateSchemasMethod `const:"Xmin" json:"method"`
 }
 
-// SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour string
+func (d DetectChangesWithXminSystemColumn) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DetectChangesWithXminSystemColumn) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DetectChangesWithXminSystemColumn) GetMethod() SourcePostgresUpdateSchemasMethod {
+	return SourcePostgresUpdateSchemasMethodXmin
+}
+
+// SourcePostgresUpdateLSNCommitBehaviour - Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+type SourcePostgresUpdateLSNCommitBehaviour string
 
 const (
-	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviourWhileReadingData                 SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour = "While reading Data"
-	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviourAfterLoadingDataInTheDestination SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour = "After loading Data in the destination"
+	SourcePostgresUpdateLSNCommitBehaviourWhileReadingData                 SourcePostgresUpdateLSNCommitBehaviour = "While reading Data"
+	SourcePostgresUpdateLSNCommitBehaviourAfterLoadingDataInTheDestination SourcePostgresUpdateLSNCommitBehaviour = "After loading Data in the destination"
 )
 
-func (e SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour) ToPointer() *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour {
+func (e SourcePostgresUpdateLSNCommitBehaviour) ToPointer() *SourcePostgresUpdateLSNCommitBehaviour {
 	return &e
 }
 
-func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -88,201 +118,207 @@ func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNComm
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour(v)
+		*e = SourcePostgresUpdateLSNCommitBehaviour(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateLSNCommitBehaviour: %v", v)
 	}
 }
 
-type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod string
+type SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod string
 
 const (
-	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethodCdc SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod = "CDC"
+	SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethodCdc SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod = "CDC"
 )
 
-func (e SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod) ToPointer() *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod {
+func (e SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod) ToPointer() *SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod(v)
+		*e = SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin - A logical decoding plugin installed on the PostgreSQL server.
-type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin string
+// SourcePostgresUpdatePlugin - A logical decoding plugin installed on the PostgreSQL server.
+type SourcePostgresUpdatePlugin string
 
 const (
-	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPluginPgoutput SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin = "pgoutput"
+	SourcePostgresUpdatePluginPgoutput SourcePostgresUpdatePlugin = "pgoutput"
 )
 
-func (e SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin) ToPointer() *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin {
+func (e SourcePostgresUpdatePlugin) ToPointer() *SourcePostgresUpdatePlugin {
 	return &e
 }
 
-func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdatePlugin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pgoutput":
-		*e = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin(v)
+		*e = SourcePostgresUpdatePlugin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdatePlugin: %v", v)
 	}
 }
 
-// SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
-type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC struct {
+// ReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
+type ReadChangesUsingWriteAheadLogCDC struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
-	// Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour `json:"lsn_commit_behaviour,omitempty"`
-	Method             SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod              `json:"method"`
+	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
+	// Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+	LsnCommitBehaviour *SourcePostgresUpdateLSNCommitBehaviour                        `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
+	method             SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod `const:"CDC" json:"method"`
 	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin `json:"plugin,omitempty"`
+	Plugin *SourcePostgresUpdatePlugin `default:"pgoutput" json:"plugin"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
 	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
-	QueueSize *int64 `json:"queue_size,omitempty"`
+	QueueSize *int64 `default:"10000" json:"queue_size"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
 
-func (c *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC{}
+func (r ReadChangesUsingWriteAheadLogCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (r *ReadChangesUsingWriteAheadLogCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "initial_waiting_seconds")
-	delete(additionalFields, "lsn_commit_behaviour")
-	delete(additionalFields, "method")
-	delete(additionalFields, "plugin")
-	delete(additionalFields, "publication")
-	delete(additionalFields, "queue_size")
-	delete(additionalFields, "replication_slot")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(c))
-	if err != nil {
-		return nil, err
+func (o *ReadChangesUsingWriteAheadLogCDC) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
 	}
+	return o.InitialWaitingSeconds
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *ReadChangesUsingWriteAheadLogCDC) GetLsnCommitBehaviour() *SourcePostgresUpdateLSNCommitBehaviour {
+	if o == nil {
+		return nil
 	}
+	return o.LsnCommitBehaviour
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *ReadChangesUsingWriteAheadLogCDC) GetMethod() SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod {
+	return SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethodCdc
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetPlugin() *SourcePostgresUpdatePlugin {
+	if o == nil {
+		return nil
 	}
+	return o.Plugin
+}
 
-	return json.Marshal(out)
+func (o *ReadChangesUsingWriteAheadLogCDC) GetPublication() string {
+	if o == nil {
+		return ""
+	}
+	return o.Publication
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetQueueSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.QueueSize
+}
+
+func (o *ReadChangesUsingWriteAheadLogCDC) GetReplicationSlot() string {
+	if o == nil {
+		return ""
+	}
+	return o.ReplicationSlot
 }
 
 type SourcePostgresUpdateUpdateMethodType string
 
 const (
-	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC  SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Update Method_Read Changes using Write-Ahead Log (CDC)"
-	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Update Method_Detect Changes with Xmin System Column"
-	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor  SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Update Method_Scan Changes with User Defined Cursor"
+	SourcePostgresUpdateUpdateMethodTypeReadChangesUsingWriteAheadLogCDC                     SourcePostgresUpdateUpdateMethodType = "Read Changes using Write-Ahead Log (CDC)"
+	SourcePostgresUpdateUpdateMethodTypeDetectChangesWithXminSystemColumn                    SourcePostgresUpdateUpdateMethodType = "Detect Changes with Xmin System Column"
+	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateScanChangesWithUserDefinedCursor SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Scan Changes with User Defined Cursor"
 )
 
 type SourcePostgresUpdateUpdateMethod struct {
-	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC  *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
-	SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn *SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
-	SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor  *SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
+	ReadChangesUsingWriteAheadLogCDC                     *ReadChangesUsingWriteAheadLogCDC
+	DetectChangesWithXminSystemColumn                    *DetectChangesWithXminSystemColumn
+	SourcePostgresUpdateScanChangesWithUserDefinedCursor *SourcePostgresUpdateScanChangesWithUserDefinedCursor
 
 	Type SourcePostgresUpdateUpdateMethodType
 }
 
-func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateUpdateMethod {
-	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
+func CreateSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(readChangesUsingWriteAheadLogCDC ReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateUpdateMethod {
+	typ := SourcePostgresUpdateUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
 
 	return SourcePostgresUpdateUpdateMethod{
-		SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC: &sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC,
-		Type: typ,
+		ReadChangesUsingWriteAheadLogCDC: &readChangesUsingWriteAheadLogCDC,
+		Type:                             typ,
 	}
 }
 
-func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn(sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn) SourcePostgresUpdateUpdateMethod {
-	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
+func CreateSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn(detectChangesWithXminSystemColumn DetectChangesWithXminSystemColumn) SourcePostgresUpdateUpdateMethod {
+	typ := SourcePostgresUpdateUpdateMethodTypeDetectChangesWithXminSystemColumn
 
 	return SourcePostgresUpdateUpdateMethod{
-		SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn: &sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn,
-		Type: typ,
+		DetectChangesWithXminSystemColumn: &detectChangesWithXminSystemColumn,
+		Type:                              typ,
 	}
 }
 
-func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor(sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor) SourcePostgresUpdateUpdateMethod {
-	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
+func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateScanChangesWithUserDefinedCursor(sourcePostgresUpdateScanChangesWithUserDefinedCursor SourcePostgresUpdateScanChangesWithUserDefinedCursor) SourcePostgresUpdateUpdateMethod {
+	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateScanChangesWithUserDefinedCursor
 
 	return SourcePostgresUpdateUpdateMethod{
-		SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor: &sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor,
+		SourcePostgresUpdateScanChangesWithUserDefinedCursor: &sourcePostgresUpdateScanChangesWithUserDefinedCursor,
 		Type: typ,
 	}
 }
 
 func (u *SourcePostgresUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn := new(SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn); err == nil {
-		u.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn = sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
-		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
+	detectChangesWithXminSystemColumn := new(DetectChangesWithXminSystemColumn)
+	if err := utils.UnmarshalJSON(data, &detectChangesWithXminSystemColumn, "", true, true); err == nil {
+		u.DetectChangesWithXminSystemColumn = detectChangesWithXminSystemColumn
+		u.Type = SourcePostgresUpdateUpdateMethodTypeDetectChangesWithXminSystemColumn
 		return nil
 	}
 
-	sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor := new(SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
-		u.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor = sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
-		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
+	sourcePostgresUpdateScanChangesWithUserDefinedCursor := new(SourcePostgresUpdateScanChangesWithUserDefinedCursor)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourcePostgresUpdateScanChangesWithUserDefinedCursor = sourcePostgresUpdateScanChangesWithUserDefinedCursor
+		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateScanChangesWithUserDefinedCursor
 		return nil
 	}
 
-	sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC := new(SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC); err == nil {
-		u.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC = sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
-		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
+	readChangesUsingWriteAheadLogCDC := new(ReadChangesUsingWriteAheadLogCDC)
+	if err := utils.UnmarshalJSON(data, &readChangesUsingWriteAheadLogCDC, "", true, true); err == nil {
+		u.ReadChangesUsingWriteAheadLogCDC = readChangesUsingWriteAheadLogCDC
+		u.Type = SourcePostgresUpdateUpdateMethodTypeReadChangesUsingWriteAheadLogCDC
 		return nil
 	}
 
@@ -290,47 +326,48 @@ func (u *SourcePostgresUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePostgresUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn != nil {
-		return json.Marshal(u.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn)
+	if u.ReadChangesUsingWriteAheadLogCDC != nil {
+		return utils.MarshalJSON(u.ReadChangesUsingWriteAheadLogCDC, "", true)
 	}
 
-	if u.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
-		return json.Marshal(u.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor)
+	if u.DetectChangesWithXminSystemColumn != nil {
+		return utils.MarshalJSON(u.DetectChangesWithXminSystemColumn, "", true)
 	}
 
-	if u.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
-		return json.Marshal(u.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC)
+	if u.SourcePostgresUpdateScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateScanChangesWithUserDefinedCursor, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourcePostgresUpdateSSLModesVerifyFullMode string
+type SourcePostgresUpdateSchemasSSLModeSSLModes6Mode string
 
 const (
-	SourcePostgresUpdateSSLModesVerifyFullModeVerifyFull SourcePostgresUpdateSSLModesVerifyFullMode = "verify-full"
+	SourcePostgresUpdateSchemasSSLModeSSLModes6ModeVerifyFull SourcePostgresUpdateSchemasSSLModeSSLModes6Mode = "verify-full"
 )
 
-func (e SourcePostgresUpdateSSLModesVerifyFullMode) ToPointer() *SourcePostgresUpdateSSLModesVerifyFullMode {
+func (e SourcePostgresUpdateSchemasSSLModeSSLModes6Mode) ToPointer() *SourcePostgresUpdateSchemasSSLModeSSLModes6Mode {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSLModesVerifyFullMode) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasSSLModeSSLModes6Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-full":
-		*e = SourcePostgresUpdateSSLModesVerifyFullMode(v)
+		*e = SourcePostgresUpdateSchemasSSLModeSSLModes6Mode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSLModesVerifyFullMode: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasSSLModeSSLModes6Mode: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSLModesVerifyFull - This is the most secure mode. Always require encryption and verifies the identity of the source database server.
-type SourcePostgresUpdateSSLModesVerifyFull struct {
+// SourcePostgresUpdateVerifyFull - This is the most secure mode. Always require encryption and verifies the identity of the source database server.
+type SourcePostgresUpdateVerifyFull struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -338,86 +375,87 @@ type SourcePostgresUpdateSSLModesVerifyFull struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                    `json:"client_key_password,omitempty"`
-	Mode              SourcePostgresUpdateSSLModesVerifyFullMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	ClientKeyPassword *string                                         `json:"client_key_password,omitempty"`
+	mode              SourcePostgresUpdateSchemasSSLModeSSLModes6Mode `const:"verify-full" json:"mode"`
 }
-type _SourcePostgresUpdateSSLModesVerifyFull SourcePostgresUpdateSSLModesVerifyFull
 
-func (c *SourcePostgresUpdateSSLModesVerifyFull) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateSSLModesVerifyFull{}
+func (s SourcePostgresUpdateVerifyFull) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourcePostgresUpdateVerifyFull) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateSSLModesVerifyFull(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "ca_certificate")
-	delete(additionalFields, "client_certificate")
-	delete(additionalFields, "client_key")
-	delete(additionalFields, "client_key_password")
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateSSLModesVerifyFull(c))
-	if err != nil {
-		return nil, err
+func (o *SourcePostgresUpdateVerifyFull) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourcePostgresUpdateSSLModesVerifyCaMode string
+func (o *SourcePostgresUpdateVerifyFull) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *SourcePostgresUpdateVerifyFull) GetClientCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCertificate
+}
+
+func (o *SourcePostgresUpdateVerifyFull) GetClientKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKey
+}
+
+func (o *SourcePostgresUpdateVerifyFull) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourcePostgresUpdateVerifyFull) GetMode() SourcePostgresUpdateSchemasSSLModeSSLModes6Mode {
+	return SourcePostgresUpdateSchemasSSLModeSSLModes6ModeVerifyFull
+}
+
+type SourcePostgresUpdateSchemasSSLModeSSLModes5Mode string
 
 const (
-	SourcePostgresUpdateSSLModesVerifyCaModeVerifyCa SourcePostgresUpdateSSLModesVerifyCaMode = "verify-ca"
+	SourcePostgresUpdateSchemasSSLModeSSLModes5ModeVerifyCa SourcePostgresUpdateSchemasSSLModeSSLModes5Mode = "verify-ca"
 )
 
-func (e SourcePostgresUpdateSSLModesVerifyCaMode) ToPointer() *SourcePostgresUpdateSSLModesVerifyCaMode {
+func (e SourcePostgresUpdateSchemasSSLModeSSLModes5Mode) ToPointer() *SourcePostgresUpdateSchemasSSLModeSSLModes5Mode {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSLModesVerifyCaMode) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasSSLModeSSLModes5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-ca":
-		*e = SourcePostgresUpdateSSLModesVerifyCaMode(v)
+		*e = SourcePostgresUpdateSchemasSSLModeSSLModes5Mode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSLModesVerifyCaMode: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasSSLModeSSLModes5Mode: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSLModesVerifyCa - Always require encryption and verifies that the source database server has a valid SSL certificate.
-type SourcePostgresUpdateSSLModesVerifyCa struct {
+// SourcePostgresUpdateVerifyCa - Always require encryption and verifies that the source database server has a valid SSL certificate.
+type SourcePostgresUpdateVerifyCa struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -425,490 +463,385 @@ type SourcePostgresUpdateSSLModesVerifyCa struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                  `json:"client_key_password,omitempty"`
-	Mode              SourcePostgresUpdateSSLModesVerifyCaMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+	ClientKeyPassword *string                                         `json:"client_key_password,omitempty"`
+	mode              SourcePostgresUpdateSchemasSSLModeSSLModes5Mode `const:"verify-ca" json:"mode"`
 }
-type _SourcePostgresUpdateSSLModesVerifyCa SourcePostgresUpdateSSLModesVerifyCa
 
-func (c *SourcePostgresUpdateSSLModesVerifyCa) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateSSLModesVerifyCa{}
+func (s SourcePostgresUpdateVerifyCa) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourcePostgresUpdateVerifyCa) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateSSLModesVerifyCa(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "ca_certificate")
-	delete(additionalFields, "client_certificate")
-	delete(additionalFields, "client_key")
-	delete(additionalFields, "client_key_password")
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateSSLModesVerifyCa(c))
-	if err != nil {
-		return nil, err
+func (o *SourcePostgresUpdateVerifyCa) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourcePostgresUpdateSSLModesRequireMode string
+func (o *SourcePostgresUpdateVerifyCa) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *SourcePostgresUpdateVerifyCa) GetClientCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCertificate
+}
+
+func (o *SourcePostgresUpdateVerifyCa) GetClientKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKey
+}
+
+func (o *SourcePostgresUpdateVerifyCa) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourcePostgresUpdateVerifyCa) GetMode() SourcePostgresUpdateSchemasSSLModeSSLModes5Mode {
+	return SourcePostgresUpdateSchemasSSLModeSSLModes5ModeVerifyCa
+}
+
+type SourcePostgresUpdateSchemasSSLModeSSLModesMode string
 
 const (
-	SourcePostgresUpdateSSLModesRequireModeRequire SourcePostgresUpdateSSLModesRequireMode = "require"
+	SourcePostgresUpdateSchemasSSLModeSSLModesModeRequire SourcePostgresUpdateSchemasSSLModeSSLModesMode = "require"
 )
 
-func (e SourcePostgresUpdateSSLModesRequireMode) ToPointer() *SourcePostgresUpdateSSLModesRequireMode {
+func (e SourcePostgresUpdateSchemasSSLModeSSLModesMode) ToPointer() *SourcePostgresUpdateSchemasSSLModeSSLModesMode {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSLModesRequireMode) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "require":
-		*e = SourcePostgresUpdateSSLModesRequireMode(v)
+		*e = SourcePostgresUpdateSchemasSSLModeSSLModesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSLModesRequireMode: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasSSLModeSSLModesMode: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSLModesRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
-type SourcePostgresUpdateSSLModesRequire struct {
-	Mode SourcePostgresUpdateSSLModesRequireMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+// SourcePostgresUpdateRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
+type SourcePostgresUpdateRequire struct {
+	AdditionalProperties interface{}                                    `additionalProperties:"true" json:"-"`
+	mode                 SourcePostgresUpdateSchemasSSLModeSSLModesMode `const:"require" json:"mode"`
 }
-type _SourcePostgresUpdateSSLModesRequire SourcePostgresUpdateSSLModesRequire
 
-func (c *SourcePostgresUpdateSSLModesRequire) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateSSLModesRequire{}
+func (s SourcePostgresUpdateRequire) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourcePostgresUpdateRequire) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateSSLModesRequire(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateSSLModesRequire) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateSSLModesRequire(c))
-	if err != nil {
-		return nil, err
+func (o *SourcePostgresUpdateRequire) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourcePostgresUpdateSSLModesPreferMode string
+func (o *SourcePostgresUpdateRequire) GetMode() SourcePostgresUpdateSchemasSSLModeSSLModesMode {
+	return SourcePostgresUpdateSchemasSSLModeSSLModesModeRequire
+}
+
+type SourcePostgresUpdateSchemasSslModeMode string
 
 const (
-	SourcePostgresUpdateSSLModesPreferModePrefer SourcePostgresUpdateSSLModesPreferMode = "prefer"
+	SourcePostgresUpdateSchemasSslModeModePrefer SourcePostgresUpdateSchemasSslModeMode = "prefer"
 )
 
-func (e SourcePostgresUpdateSSLModesPreferMode) ToPointer() *SourcePostgresUpdateSSLModesPreferMode {
+func (e SourcePostgresUpdateSchemasSslModeMode) ToPointer() *SourcePostgresUpdateSchemasSslModeMode {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSLModesPreferMode) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "prefer":
-		*e = SourcePostgresUpdateSSLModesPreferMode(v)
+		*e = SourcePostgresUpdateSchemasSslModeMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSLModesPreferMode: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasSslModeMode: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSLModesPrefer - Allows unencrypted connection only if the source database does not support encryption.
-type SourcePostgresUpdateSSLModesPrefer struct {
-	Mode SourcePostgresUpdateSSLModesPreferMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+// SourcePostgresUpdatePrefer - Allows unencrypted connection only if the source database does not support encryption.
+type SourcePostgresUpdatePrefer struct {
+	AdditionalProperties interface{}                            `additionalProperties:"true" json:"-"`
+	mode                 SourcePostgresUpdateSchemasSslModeMode `const:"prefer" json:"mode"`
 }
-type _SourcePostgresUpdateSSLModesPrefer SourcePostgresUpdateSSLModesPrefer
 
-func (c *SourcePostgresUpdateSSLModesPrefer) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateSSLModesPrefer{}
+func (s SourcePostgresUpdatePrefer) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourcePostgresUpdatePrefer) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateSSLModesPrefer(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateSSLModesPrefer) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateSSLModesPrefer(c))
-	if err != nil {
-		return nil, err
+func (o *SourcePostgresUpdatePrefer) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourcePostgresUpdateSSLModesAllowMode string
+func (o *SourcePostgresUpdatePrefer) GetMode() SourcePostgresUpdateSchemasSslModeMode {
+	return SourcePostgresUpdateSchemasSslModeModePrefer
+}
+
+type SourcePostgresUpdateSchemasMode string
 
 const (
-	SourcePostgresUpdateSSLModesAllowModeAllow SourcePostgresUpdateSSLModesAllowMode = "allow"
+	SourcePostgresUpdateSchemasModeAllow SourcePostgresUpdateSchemasMode = "allow"
 )
 
-func (e SourcePostgresUpdateSSLModesAllowMode) ToPointer() *SourcePostgresUpdateSSLModesAllowMode {
+func (e SourcePostgresUpdateSchemasMode) ToPointer() *SourcePostgresUpdateSchemasMode {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSLModesAllowMode) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "allow":
-		*e = SourcePostgresUpdateSSLModesAllowMode(v)
+		*e = SourcePostgresUpdateSchemasMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSLModesAllowMode: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasMode: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSLModesAllow - Enables encryption only when required by the source database.
-type SourcePostgresUpdateSSLModesAllow struct {
-	Mode SourcePostgresUpdateSSLModesAllowMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+// SourcePostgresUpdateAllow - Enables encryption only when required by the source database.
+type SourcePostgresUpdateAllow struct {
+	AdditionalProperties interface{}                     `additionalProperties:"true" json:"-"`
+	mode                 SourcePostgresUpdateSchemasMode `const:"allow" json:"mode"`
 }
-type _SourcePostgresUpdateSSLModesAllow SourcePostgresUpdateSSLModesAllow
 
-func (c *SourcePostgresUpdateSSLModesAllow) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateSSLModesAllow{}
+func (s SourcePostgresUpdateAllow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourcePostgresUpdateAllow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateSSLModesAllow(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateSSLModesAllow) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateSSLModesAllow(c))
-	if err != nil {
-		return nil, err
+func (o *SourcePostgresUpdateAllow) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourcePostgresUpdateSSLModesDisableMode string
+func (o *SourcePostgresUpdateAllow) GetMode() SourcePostgresUpdateSchemasMode {
+	return SourcePostgresUpdateSchemasModeAllow
+}
+
+type SourcePostgresUpdateMode string
 
 const (
-	SourcePostgresUpdateSSLModesDisableModeDisable SourcePostgresUpdateSSLModesDisableMode = "disable"
+	SourcePostgresUpdateModeDisable SourcePostgresUpdateMode = "disable"
 )
 
-func (e SourcePostgresUpdateSSLModesDisableMode) ToPointer() *SourcePostgresUpdateSSLModesDisableMode {
+func (e SourcePostgresUpdateMode) ToPointer() *SourcePostgresUpdateMode {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSLModesDisableMode) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "disable":
-		*e = SourcePostgresUpdateSSLModesDisableMode(v)
+		*e = SourcePostgresUpdateMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSLModesDisableMode: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateMode: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSLModesDisable - Disables encryption of communication between Airbyte and source database.
-type SourcePostgresUpdateSSLModesDisable struct {
-	Mode SourcePostgresUpdateSSLModesDisableMode `json:"mode"`
-
-	AdditionalProperties interface{} `json:"-"`
+// SourcePostgresUpdateDisable - Disables encryption of communication between Airbyte and source database.
+type SourcePostgresUpdateDisable struct {
+	AdditionalProperties interface{}              `additionalProperties:"true" json:"-"`
+	mode                 SourcePostgresUpdateMode `const:"disable" json:"mode"`
 }
-type _SourcePostgresUpdateSSLModesDisable SourcePostgresUpdateSSLModesDisable
 
-func (c *SourcePostgresUpdateSSLModesDisable) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateSSLModesDisable{}
+func (s SourcePostgresUpdateDisable) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (s *SourcePostgresUpdateDisable) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateSSLModesDisable(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "mode")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourcePostgresUpdateSSLModesDisable) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateSSLModesDisable(c))
-	if err != nil {
-		return nil, err
+func (o *SourcePostgresUpdateDisable) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+func (o *SourcePostgresUpdateDisable) GetMode() SourcePostgresUpdateMode {
+	return SourcePostgresUpdateModeDisable
 }
 
 type SourcePostgresUpdateSSLModesType string
 
 const (
-	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesDisable    SourcePostgresUpdateSSLModesType = "source-postgres-update_SSL Modes_disable"
-	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesAllow      SourcePostgresUpdateSSLModesType = "source-postgres-update_SSL Modes_allow"
-	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesPrefer     SourcePostgresUpdateSSLModesType = "source-postgres-update_SSL Modes_prefer"
-	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesRequire    SourcePostgresUpdateSSLModesType = "source-postgres-update_SSL Modes_require"
-	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesVerifyCa   SourcePostgresUpdateSSLModesType = "source-postgres-update_SSL Modes_verify-ca"
-	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesVerifyFull SourcePostgresUpdateSSLModesType = "source-postgres-update_SSL Modes_verify-full"
+	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateDisable    SourcePostgresUpdateSSLModesType = "source-postgres-update_disable"
+	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateAllow      SourcePostgresUpdateSSLModesType = "source-postgres-update_allow"
+	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdatePrefer     SourcePostgresUpdateSSLModesType = "source-postgres-update_prefer"
+	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateRequire    SourcePostgresUpdateSSLModesType = "source-postgres-update_require"
+	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyCa   SourcePostgresUpdateSSLModesType = "source-postgres-update_verify-ca"
+	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyFull SourcePostgresUpdateSSLModesType = "source-postgres-update_verify-full"
 )
 
 type SourcePostgresUpdateSSLModes struct {
-	SourcePostgresUpdateSSLModesDisable    *SourcePostgresUpdateSSLModesDisable
-	SourcePostgresUpdateSSLModesAllow      *SourcePostgresUpdateSSLModesAllow
-	SourcePostgresUpdateSSLModesPrefer     *SourcePostgresUpdateSSLModesPrefer
-	SourcePostgresUpdateSSLModesRequire    *SourcePostgresUpdateSSLModesRequire
-	SourcePostgresUpdateSSLModesVerifyCa   *SourcePostgresUpdateSSLModesVerifyCa
-	SourcePostgresUpdateSSLModesVerifyFull *SourcePostgresUpdateSSLModesVerifyFull
+	SourcePostgresUpdateDisable    *SourcePostgresUpdateDisable
+	SourcePostgresUpdateAllow      *SourcePostgresUpdateAllow
+	SourcePostgresUpdatePrefer     *SourcePostgresUpdatePrefer
+	SourcePostgresUpdateRequire    *SourcePostgresUpdateRequire
+	SourcePostgresUpdateVerifyCa   *SourcePostgresUpdateVerifyCa
+	SourcePostgresUpdateVerifyFull *SourcePostgresUpdateVerifyFull
 
 	Type SourcePostgresUpdateSSLModesType
 }
 
-func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateSSLModesDisable(sourcePostgresUpdateSSLModesDisable SourcePostgresUpdateSSLModesDisable) SourcePostgresUpdateSSLModes {
-	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesDisable
+func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateDisable(sourcePostgresUpdateDisable SourcePostgresUpdateDisable) SourcePostgresUpdateSSLModes {
+	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateDisable
 
 	return SourcePostgresUpdateSSLModes{
-		SourcePostgresUpdateSSLModesDisable: &sourcePostgresUpdateSSLModesDisable,
-		Type:                                typ,
+		SourcePostgresUpdateDisable: &sourcePostgresUpdateDisable,
+		Type:                        typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateSSLModesAllow(sourcePostgresUpdateSSLModesAllow SourcePostgresUpdateSSLModesAllow) SourcePostgresUpdateSSLModes {
-	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesAllow
+func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateAllow(sourcePostgresUpdateAllow SourcePostgresUpdateAllow) SourcePostgresUpdateSSLModes {
+	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateAllow
 
 	return SourcePostgresUpdateSSLModes{
-		SourcePostgresUpdateSSLModesAllow: &sourcePostgresUpdateSSLModesAllow,
-		Type:                              typ,
+		SourcePostgresUpdateAllow: &sourcePostgresUpdateAllow,
+		Type:                      typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateSSLModesPrefer(sourcePostgresUpdateSSLModesPrefer SourcePostgresUpdateSSLModesPrefer) SourcePostgresUpdateSSLModes {
-	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesPrefer
+func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdatePrefer(sourcePostgresUpdatePrefer SourcePostgresUpdatePrefer) SourcePostgresUpdateSSLModes {
+	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdatePrefer
 
 	return SourcePostgresUpdateSSLModes{
-		SourcePostgresUpdateSSLModesPrefer: &sourcePostgresUpdateSSLModesPrefer,
-		Type:                               typ,
+		SourcePostgresUpdatePrefer: &sourcePostgresUpdatePrefer,
+		Type:                       typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateSSLModesRequire(sourcePostgresUpdateSSLModesRequire SourcePostgresUpdateSSLModesRequire) SourcePostgresUpdateSSLModes {
-	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesRequire
+func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateRequire(sourcePostgresUpdateRequire SourcePostgresUpdateRequire) SourcePostgresUpdateSSLModes {
+	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateRequire
 
 	return SourcePostgresUpdateSSLModes{
-		SourcePostgresUpdateSSLModesRequire: &sourcePostgresUpdateSSLModesRequire,
-		Type:                                typ,
+		SourcePostgresUpdateRequire: &sourcePostgresUpdateRequire,
+		Type:                        typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateSSLModesVerifyCa(sourcePostgresUpdateSSLModesVerifyCa SourcePostgresUpdateSSLModesVerifyCa) SourcePostgresUpdateSSLModes {
-	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesVerifyCa
+func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateVerifyCa(sourcePostgresUpdateVerifyCa SourcePostgresUpdateVerifyCa) SourcePostgresUpdateSSLModes {
+	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyCa
 
 	return SourcePostgresUpdateSSLModes{
-		SourcePostgresUpdateSSLModesVerifyCa: &sourcePostgresUpdateSSLModesVerifyCa,
-		Type:                                 typ,
+		SourcePostgresUpdateVerifyCa: &sourcePostgresUpdateVerifyCa,
+		Type:                         typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateSSLModesVerifyFull(sourcePostgresUpdateSSLModesVerifyFull SourcePostgresUpdateSSLModesVerifyFull) SourcePostgresUpdateSSLModes {
-	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesVerifyFull
+func CreateSourcePostgresUpdateSSLModesSourcePostgresUpdateVerifyFull(sourcePostgresUpdateVerifyFull SourcePostgresUpdateVerifyFull) SourcePostgresUpdateSSLModes {
+	typ := SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyFull
 
 	return SourcePostgresUpdateSSLModes{
-		SourcePostgresUpdateSSLModesVerifyFull: &sourcePostgresUpdateSSLModesVerifyFull,
-		Type:                                   typ,
+		SourcePostgresUpdateVerifyFull: &sourcePostgresUpdateVerifyFull,
+		Type:                           typ,
 	}
 }
 
 func (u *SourcePostgresUpdateSSLModes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourcePostgresUpdateSSLModesDisable := new(SourcePostgresUpdateSSLModesDisable)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSLModesDisable); err == nil {
-		u.SourcePostgresUpdateSSLModesDisable = sourcePostgresUpdateSSLModesDisable
-		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesDisable
+	sourcePostgresUpdateDisable := new(SourcePostgresUpdateDisable)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateDisable, "", true, true); err == nil {
+		u.SourcePostgresUpdateDisable = sourcePostgresUpdateDisable
+		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateDisable
 		return nil
 	}
 
-	sourcePostgresUpdateSSLModesAllow := new(SourcePostgresUpdateSSLModesAllow)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSLModesAllow); err == nil {
-		u.SourcePostgresUpdateSSLModesAllow = sourcePostgresUpdateSSLModesAllow
-		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesAllow
+	sourcePostgresUpdateAllow := new(SourcePostgresUpdateAllow)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateAllow, "", true, true); err == nil {
+		u.SourcePostgresUpdateAllow = sourcePostgresUpdateAllow
+		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateAllow
 		return nil
 	}
 
-	sourcePostgresUpdateSSLModesPrefer := new(SourcePostgresUpdateSSLModesPrefer)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSLModesPrefer); err == nil {
-		u.SourcePostgresUpdateSSLModesPrefer = sourcePostgresUpdateSSLModesPrefer
-		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesPrefer
+	sourcePostgresUpdatePrefer := new(SourcePostgresUpdatePrefer)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdatePrefer, "", true, true); err == nil {
+		u.SourcePostgresUpdatePrefer = sourcePostgresUpdatePrefer
+		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdatePrefer
 		return nil
 	}
 
-	sourcePostgresUpdateSSLModesRequire := new(SourcePostgresUpdateSSLModesRequire)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSLModesRequire); err == nil {
-		u.SourcePostgresUpdateSSLModesRequire = sourcePostgresUpdateSSLModesRequire
-		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesRequire
+	sourcePostgresUpdateRequire := new(SourcePostgresUpdateRequire)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateRequire, "", true, true); err == nil {
+		u.SourcePostgresUpdateRequire = sourcePostgresUpdateRequire
+		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateRequire
 		return nil
 	}
 
-	sourcePostgresUpdateSSLModesVerifyCa := new(SourcePostgresUpdateSSLModesVerifyCa)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSLModesVerifyCa); err == nil {
-		u.SourcePostgresUpdateSSLModesVerifyCa = sourcePostgresUpdateSSLModesVerifyCa
-		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesVerifyCa
+	sourcePostgresUpdateVerifyCa := new(SourcePostgresUpdateVerifyCa)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateVerifyCa, "", true, true); err == nil {
+		u.SourcePostgresUpdateVerifyCa = sourcePostgresUpdateVerifyCa
+		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyCa
 		return nil
 	}
 
-	sourcePostgresUpdateSSLModesVerifyFull := new(SourcePostgresUpdateSSLModesVerifyFull)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSLModesVerifyFull); err == nil {
-		u.SourcePostgresUpdateSSLModesVerifyFull = sourcePostgresUpdateSSLModesVerifyFull
-		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateSSLModesVerifyFull
+	sourcePostgresUpdateVerifyFull := new(SourcePostgresUpdateVerifyFull)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateVerifyFull, "", true, true); err == nil {
+		u.SourcePostgresUpdateVerifyFull = sourcePostgresUpdateVerifyFull
+		u.Type = SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyFull
 		return nil
 	}
 
@@ -916,212 +849,306 @@ func (u *SourcePostgresUpdateSSLModes) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePostgresUpdateSSLModes) MarshalJSON() ([]byte, error) {
-	if u.SourcePostgresUpdateSSLModesDisable != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSLModesDisable)
+	if u.SourcePostgresUpdateDisable != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateDisable, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSLModesAllow != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSLModesAllow)
+	if u.SourcePostgresUpdateAllow != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateAllow, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSLModesPrefer != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSLModesPrefer)
+	if u.SourcePostgresUpdatePrefer != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdatePrefer, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSLModesRequire != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSLModesRequire)
+	if u.SourcePostgresUpdateRequire != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateRequire, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSLModesVerifyCa != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSLModesVerifyCa)
+	if u.SourcePostgresUpdateVerifyCa != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateVerifyCa, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSLModesVerifyFull != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSLModesVerifyFull)
+	if u.SourcePostgresUpdateVerifyFull != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateVerifyFull, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// SourcePostgresUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourcePostgresUpdateSchemasTunnelMethodTunnelMethod string
 
 const (
-	SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	SourcePostgresUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth SourcePostgresUpdateSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e SourcePostgresUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *SourcePostgresUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = SourcePostgresUpdateSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication struct {
+// SourcePostgresUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourcePostgresUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourcePostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourcePostgresUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (s SourcePostgresUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostgresUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostgresUpdatePasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourcePostgresUpdatePasswordAuthentication) GetTunnelMethod() SourcePostgresUpdateSchemasTunnelMethodTunnelMethod {
+	return SourcePostgresUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourcePostgresUpdatePasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourcePostgresUpdatePasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourcePostgresUpdatePasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// SourcePostgresUpdateSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourcePostgresUpdateSchemasTunnelMethod string
 
 const (
-	SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	SourcePostgresUpdateSchemasTunnelMethodSSHKeyAuth SourcePostgresUpdateSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e SourcePostgresUpdateSchemasTunnelMethod) ToPointer() *SourcePostgresUpdateSchemasTunnelMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = SourcePostgresUpdateSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateSchemasTunnelMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication struct {
+// SourcePostgresUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourcePostgresUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourcePostgresUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod string
+func (s SourcePostgresUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostgresUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostgresUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourcePostgresUpdateSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourcePostgresUpdateSSHKeyAuthentication) GetTunnelMethod() SourcePostgresUpdateSchemasTunnelMethod {
+	return SourcePostgresUpdateSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *SourcePostgresUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourcePostgresUpdateSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// SourcePostgresUpdateTunnelMethod - No ssh tunnel needed to connect to database
+type SourcePostgresUpdateTunnelMethod string
 
 const (
-	SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	SourcePostgresUpdateTunnelMethodNoTunnel SourcePostgresUpdateTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod {
+func (e SourcePostgresUpdateTunnelMethod) ToPointer() *SourcePostgresUpdateTunnelMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = SourcePostgresUpdateTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateTunnelMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourcePostgresUpdateSSHTunnelMethodNoTunnel struct {
+// SourcePostgresUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourcePostgresUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourcePostgresUpdateSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourcePostgresUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourcePostgresUpdateNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostgresUpdateNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostgresUpdateNoTunnel) GetTunnelMethod() SourcePostgresUpdateTunnelMethod {
+	return SourcePostgresUpdateTunnelMethodNoTunnel
 }
 
 type SourcePostgresUpdateSSHTunnelMethodType string
 
 const (
-	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodNoTunnel               SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_SSH Tunnel Method_No Tunnel"
-	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication   SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_SSH Tunnel Method_SSH Key Authentication"
-	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodPasswordAuthentication SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_SSH Tunnel Method_Password Authentication"
+	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateNoTunnel               SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_No Tunnel"
+	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHKeyAuthentication   SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_SSH Key Authentication"
+	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdatePasswordAuthentication SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_Password Authentication"
 )
 
 type SourcePostgresUpdateSSHTunnelMethod struct {
-	SourcePostgresUpdateSSHTunnelMethodNoTunnel               *SourcePostgresUpdateSSHTunnelMethodNoTunnel
-	SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication   *SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication
-	SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication *SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication
+	SourcePostgresUpdateNoTunnel               *SourcePostgresUpdateNoTunnel
+	SourcePostgresUpdateSSHKeyAuthentication   *SourcePostgresUpdateSSHKeyAuthentication
+	SourcePostgresUpdatePasswordAuthentication *SourcePostgresUpdatePasswordAuthentication
 
 	Type SourcePostgresUpdateSSHTunnelMethodType
 }
 
-func CreateSourcePostgresUpdateSSHTunnelMethodSourcePostgresUpdateSSHTunnelMethodNoTunnel(sourcePostgresUpdateSSHTunnelMethodNoTunnel SourcePostgresUpdateSSHTunnelMethodNoTunnel) SourcePostgresUpdateSSHTunnelMethod {
-	typ := SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodNoTunnel
+func CreateSourcePostgresUpdateSSHTunnelMethodSourcePostgresUpdateNoTunnel(sourcePostgresUpdateNoTunnel SourcePostgresUpdateNoTunnel) SourcePostgresUpdateSSHTunnelMethod {
+	typ := SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateNoTunnel
 
 	return SourcePostgresUpdateSSHTunnelMethod{
-		SourcePostgresUpdateSSHTunnelMethodNoTunnel: &sourcePostgresUpdateSSHTunnelMethodNoTunnel,
-		Type: typ,
+		SourcePostgresUpdateNoTunnel: &sourcePostgresUpdateNoTunnel,
+		Type:                         typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSHTunnelMethodSourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication(sourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication) SourcePostgresUpdateSSHTunnelMethod {
-	typ := SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication
+func CreateSourcePostgresUpdateSSHTunnelMethodSourcePostgresUpdateSSHKeyAuthentication(sourcePostgresUpdateSSHKeyAuthentication SourcePostgresUpdateSSHKeyAuthentication) SourcePostgresUpdateSSHTunnelMethod {
+	typ := SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHKeyAuthentication
 
 	return SourcePostgresUpdateSSHTunnelMethod{
-		SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication: &sourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		SourcePostgresUpdateSSHKeyAuthentication: &sourcePostgresUpdateSSHKeyAuthentication,
+		Type:                                     typ,
 	}
 }
 
-func CreateSourcePostgresUpdateSSHTunnelMethodSourcePostgresUpdateSSHTunnelMethodPasswordAuthentication(sourcePostgresUpdateSSHTunnelMethodPasswordAuthentication SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication) SourcePostgresUpdateSSHTunnelMethod {
-	typ := SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodPasswordAuthentication
+func CreateSourcePostgresUpdateSSHTunnelMethodSourcePostgresUpdatePasswordAuthentication(sourcePostgresUpdatePasswordAuthentication SourcePostgresUpdatePasswordAuthentication) SourcePostgresUpdateSSHTunnelMethod {
+	typ := SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdatePasswordAuthentication
 
 	return SourcePostgresUpdateSSHTunnelMethod{
-		SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication: &sourcePostgresUpdateSSHTunnelMethodPasswordAuthentication,
+		SourcePostgresUpdatePasswordAuthentication: &sourcePostgresUpdatePasswordAuthentication,
 		Type: typ,
 	}
 }
 
 func (u *SourcePostgresUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourcePostgresUpdateSSHTunnelMethodNoTunnel := new(SourcePostgresUpdateSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSHTunnelMethodNoTunnel); err == nil {
-		u.SourcePostgresUpdateSSHTunnelMethodNoTunnel = sourcePostgresUpdateSSHTunnelMethodNoTunnel
-		u.Type = SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodNoTunnel
+	sourcePostgresUpdateNoTunnel := new(SourcePostgresUpdateNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateNoTunnel, "", true, true); err == nil {
+		u.SourcePostgresUpdateNoTunnel = sourcePostgresUpdateNoTunnel
+		u.Type = SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateNoTunnel
 		return nil
 	}
 
-	sourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication := new(SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication = sourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication
-		u.Type = SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication
+	sourcePostgresUpdateSSHKeyAuthentication := new(SourcePostgresUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourcePostgresUpdateSSHKeyAuthentication = sourcePostgresUpdateSSHKeyAuthentication
+		u.Type = SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHKeyAuthentication
 		return nil
 	}
 
-	sourcePostgresUpdateSSHTunnelMethodPasswordAuthentication := new(SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication = sourcePostgresUpdateSSHTunnelMethodPasswordAuthentication
-		u.Type = SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdateSSHTunnelMethodPasswordAuthentication
+	sourcePostgresUpdatePasswordAuthentication := new(SourcePostgresUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourcePostgresUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.SourcePostgresUpdatePasswordAuthentication = sourcePostgresUpdatePasswordAuthentication
+		u.Type = SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdatePasswordAuthentication
 		return nil
 	}
 
@@ -1129,19 +1156,19 @@ func (u *SourcePostgresUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourcePostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePostgresUpdateSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSHTunnelMethodNoTunnel)
+	if u.SourcePostgresUpdateNoTunnel != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateNoTunnel, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication)
+	if u.SourcePostgresUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication)
+	if u.SourcePostgresUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourcePostgresUpdatePasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourcePostgresUpdate struct {
@@ -1154,7 +1181,7 @@ type SourcePostgresUpdate struct {
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
-	Port int64 `json:"port"`
+	Port *int64 `default:"5432" json:"port"`
 	// Configures how data is extracted from the database.
 	ReplicationMethod *SourcePostgresUpdateUpdateMethod `json:"replication_method,omitempty"`
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
@@ -1166,4 +1193,85 @@ type SourcePostgresUpdate struct {
 	TunnelMethod *SourcePostgresUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourcePostgresUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostgresUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostgresUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourcePostgresUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourcePostgresUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourcePostgresUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourcePostgresUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourcePostgresUpdate) GetReplicationMethod() *SourcePostgresUpdateUpdateMethod {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicationMethod
+}
+
+func (o *SourcePostgresUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourcePostgresUpdate) GetSslMode() *SourcePostgresUpdateSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
+func (o *SourcePostgresUpdate) GetTunnelMethod() *SourcePostgresUpdateSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourcePostgresUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

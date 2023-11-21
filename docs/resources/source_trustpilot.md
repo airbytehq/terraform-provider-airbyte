@@ -19,17 +19,16 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
       "...",
     ]
     credentials = {
-      source_trustpilot_authorization_method_api_key = {
-        auth_type = "apikey"
+      source_trustpilot_api_key = {
         client_id = "...my_client_id..."
       }
     }
-    source_type = "trustpilot"
-    start_date  = "%Y-%m-%dT%H:%M:%S"
+    start_date = "%Y-%m-%dT%H:%M:%S"
   }
-  name         = "Bradley Goodwin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f5c84383-6b86-4b3c-9f64-15b0449f9df1"
+  definition_id = "5fa64aee-8d2b-4de4-8eef-ceb9e0d54b08"
+  name          = "Clifford Quigley"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "98fe3f92-c06a-49aa-b270-2875abb88c39"
 }
 ```
 
@@ -39,11 +38,12 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -58,7 +58,6 @@ Required:
 
 - `business_units` (List of String) The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of ["trustpilot"]
 - `start_date` (String) For streams with sync. method incremental the start date time to be used
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -66,64 +65,26 @@ Required:
 
 Optional:
 
-- `source_trustpilot_authorization_method_api_key` (Attributes) The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0. (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_authorization_method_api_key))
-- `source_trustpilot_authorization_method_o_auth_2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_authorization_method_o_auth_2_0))
-- `source_trustpilot_update_authorization_method_api_key` (Attributes) The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0. (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_api_key))
-- `source_trustpilot_update_authorization_method_o_auth_2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_o_auth_2_0))
+- `api_key` (Attributes) The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0. (see [below for nested schema](#nestedatt--configuration--credentials--api_key))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
-<a id="nestedatt--configuration--credentials--source_trustpilot_authorization_method_api_key"></a>
-### Nested Schema for `configuration.credentials.source_trustpilot_authorization_method_api_key`
+<a id="nestedatt--configuration--credentials--api_key"></a>
+### Nested Schema for `configuration.credentials.api_key`
 
 Required:
 
 - `client_id` (String) The API key of the Trustpilot API application.
 
-Optional:
 
-- `auth_type` (String) must be one of ["apikey"]
-
-
-<a id="nestedatt--configuration--credentials--source_trustpilot_authorization_method_o_auth_2_0"></a>
-### Nested Schema for `configuration.credentials.source_trustpilot_authorization_method_o_auth_2_0`
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
 
 Required:
 
-- `access_token` (String) Access Token for making authenticated requests.
+- `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
 - `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
-- `refresh_token` (String) The key to refresh the expired access_token.
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-Optional:
-
-- `auth_type` (String) must be one of ["oauth2.0"]
-
-
-<a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_api_key"></a>
-### Nested Schema for `configuration.credentials.source_trustpilot_update_authorization_method_api_key`
-
-Required:
-
-- `client_id` (String) The API key of the Trustpilot API application.
-
-Optional:
-
-- `auth_type` (String) must be one of ["apikey"]
-
-
-<a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_o_auth_2_0"></a>
-### Nested Schema for `configuration.credentials.source_trustpilot_update_authorization_method_o_auth_2_0`
-
-Required:
-
-- `access_token` (String) Access Token for making authenticated requests.
-- `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
-- `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
-- `refresh_token` (String) The key to refresh the expired access_token.
-- `token_expiry_date` (String) The date-time when the access token should be refreshed.
-
-Optional:
-
-- `auth_type` (String) must be one of ["oauth2.0"]
+- `refresh_token` (String, Sensitive) The key to refresh the expired access_token.
+- `token_expiry_date` (String, Sensitive) The date-time when the access token should be refreshed.
 
 

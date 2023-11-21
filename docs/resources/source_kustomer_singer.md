@@ -15,13 +15,13 @@ SourceKustomerSinger Resource
 ```terraform
 resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
   configuration = {
-    api_token   = "...my_api_token..."
-    source_type = "kustomer-singer"
-    start_date  = "2019-01-01T00:00:00Z"
+    api_token  = "...my_api_token..."
+    start_date = "2019-01-01T00:00:00Z"
   }
-  name         = "Bobbie Jacobs"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "3c574750-1357-4e44-b51f-8b084c3197e1"
+  definition_id = "de0f8a2b-57ad-4de2-8e75-111fd0612ffd"
+  name          = "Mr. Antonia Yost"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "78b38595-7e3c-4921-8c92-84a21155c549"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
 
 Required:
 
-- `api_token` (String) Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
-- `source_type` (String) must be one of ["kustomer-singer"]
+- `api_token` (String, Sensitive) Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
 - `start_date` (String) The date from which you'd like to replicate the data
 
 

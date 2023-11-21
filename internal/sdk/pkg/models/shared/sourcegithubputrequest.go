@@ -7,3 +7,24 @@ type SourceGithubPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceGithubPutRequest) GetConfiguration() SourceGithubUpdate {
+	if o == nil {
+		return SourceGithubUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGithubPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGithubPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

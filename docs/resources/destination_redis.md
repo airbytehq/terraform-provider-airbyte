@@ -15,26 +15,22 @@ DestinationRedis Resource
 ```terraform
 resource "airbyte_destination_redis" "my_destination_redis" {
   configuration = {
-    cache_type       = "hash"
-    destination_type = "redis"
-    host             = "localhost,127.0.0.1"
-    password         = "...my_password..."
-    port             = 9
-    ssl              = false
+    cache_type = "hash"
+    host       = "localhost,127.0.0.1"
+    password   = "...my_password..."
+    port       = 7
+    ssl        = false
     ssl_mode = {
-      destination_redis_ssl_modes_disable = {
-        mode = "disable"
-      }
+      destination_redis_disable = {}
     }
     tunnel_method = {
-      destination_redis_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_redis_no_tunnel = {}
     }
-    username = "Vivianne.Baumbach3"
+    username = "Keyshawn.Ledner"
   }
-  name         = "Bonnie Halvorson"
-  workspace_id = "f94e29e9-73e9-422a-97a1-5be3e060807e"
+  definition_id = "34412bc3-217a-4cbe-aad9-f3186486fc7b"
+  name          = "Shannon Stroman"
+  workspace_id  = "848f4034-6c04-4b19-bfb2-8918e382726e"
 }
 ```
 
@@ -44,8 +40,12 @@ resource "airbyte_destination_redis" "my_destination_redis" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -57,17 +57,18 @@ resource "airbyte_destination_redis" "my_destination_redis" {
 
 Required:
 
-- `cache_type` (String) must be one of ["hash"]
-Redis cache type to store data in.
-- `destination_type` (String) must be one of ["redis"]
 - `host` (String) Redis host to connect to.
-- `port` (Number) Port of Redis.
 - `username` (String) Username associated with Redis.
 
 Optional:
 
-- `password` (String) Password associated with Redis.
-- `ssl` (Boolean) Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
+- `cache_type` (String) must be one of ["hash"]; Default: "hash"
+Redis cache type to store data in.
+- `password` (String, Sensitive) Password associated with Redis.
+- `port` (Number) Default: 6379
+Port of Redis.
+- `ssl` (Boolean) Default: false
+Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
 - `ssl_mode` (Attributes) SSL connection modes. 
   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
@@ -77,55 +78,25 @@ Optional:
 
 Optional:
 
-- `destination_redis_ssl_modes_disable` (Attributes) Disable SSL. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_disable))
-- `destination_redis_ssl_modes_verify_full` (Attributes) Verify-full SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_verify_full))
-- `destination_redis_update_ssl_modes_disable` (Attributes) Disable SSL. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_disable))
-- `destination_redis_update_ssl_modes_verify_full` (Attributes) Verify-full SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_verify_full))
+- `disable` (Attributes) Disable SSL. (see [below for nested schema](#nestedatt--configuration--ssl_mode--disable))
+- `verify_full` (Attributes) Verify-full SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--verify_full))
 
-<a id="nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_disable"></a>
-### Nested Schema for `configuration.ssl_mode.destination_redis_ssl_modes_disable`
-
-Required:
-
-- `mode` (String) must be one of ["disable"]
+<a id="nestedatt--configuration--ssl_mode--disable"></a>
+### Nested Schema for `configuration.ssl_mode.disable`
 
 
-<a id="nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_verify_full"></a>
-### Nested Schema for `configuration.ssl_mode.destination_redis_ssl_modes_verify_full`
+<a id="nestedatt--configuration--ssl_mode--verify_full"></a>
+### Nested Schema for `configuration.ssl_mode.verify_full`
 
 Required:
 
 - `ca_certificate` (String) CA certificate
 - `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `mode` (String) must be one of ["verify-full"]
+- `client_key` (String, Sensitive) Client key
 
 Optional:
 
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
-
-
-<a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_disable"></a>
-### Nested Schema for `configuration.ssl_mode.destination_redis_update_ssl_modes_disable`
-
-Required:
-
-- `mode` (String) must be one of ["disable"]
-
-
-<a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_verify_full"></a>
-### Nested Schema for `configuration.ssl_mode.destination_redis_update_ssl_modes_verify_full`
-
-Required:
-
-- `ca_certificate` (String) CA certificate
-- `client_certificate` (String) Client certificate
-- `client_key` (String) Client key
-- `mode` (String) must be one of ["verify-full"]
-
-Optional:
-
-- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
+- `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 
@@ -134,80 +105,41 @@ Optional:
 
 Optional:
 
-- `destination_redis_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_no_tunnel))
-- `destination_redis_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_password_authentication))
-- `destination_redis_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_ssh_key_authentication))
-- `destination_redis_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_no_tunnel))
-- `destination_redis_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_password_authentication))
-- `destination_redis_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_ssh_key_authentication))
+- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
-<a id="nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.destination_redis_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
+<a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
+### Nested Schema for `configuration.tunnel_method.no_tunnel`
 
 
-<a id="nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.destination_redis_ssh_tunnel_method_password_authentication`
+<a id="nestedatt--configuration--tunnel_method--password_authentication"></a>
+### Nested Schema for `configuration.tunnel_method.password_authentication`
 
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
+- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
+
+Optional:
+
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 
-<a id="nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.destination_redis_ssh_tunnel_method_ssh_key_authentication`
+<a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
+### Nested Schema for `configuration.tunnel_method.ssh_key_authentication`
 
 Required:
 
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
 
+Optional:
 
-<a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_no_tunnel`
-
-Required:
-
-- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
-No ssh tunnel needed to connect to database
-
-
-<a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_password_authentication`
-
-Required:
-
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
-- `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String) OS-level password for logging into the jump server host
-
-
-<a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_ssh_key_authentication`
-
-Required:
-
-- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
-- `tunnel_user` (String) OS-level username for logging into the jump server host.
+- `tunnel_port` (Number) Default: 22
+Port on the proxy/jump server that accepts inbound ssh connections.
 
 

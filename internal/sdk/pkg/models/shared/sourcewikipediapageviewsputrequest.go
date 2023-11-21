@@ -7,3 +7,24 @@ type SourceWikipediaPageviewsPutRequest struct {
 	Name          string                         `json:"name"`
 	WorkspaceID   string                         `json:"workspaceId"`
 }
+
+func (o *SourceWikipediaPageviewsPutRequest) GetConfiguration() SourceWikipediaPageviewsUpdate {
+	if o == nil {
+		return SourceWikipediaPageviewsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceWikipediaPageviewsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceWikipediaPageviewsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

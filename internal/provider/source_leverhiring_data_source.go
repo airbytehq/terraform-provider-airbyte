@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceLeverHiringDataSource struct {
 
 // SourceLeverHiringDataSourceModel describes the data model.
 type SourceLeverHiringDataSourceModel struct {
-	Configuration SourceLeverHiring `tfsdk:"configuration"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,145 +47,19 @@ func (r *SourceLeverHiringDataSource) Schema(ctx context.Context, req datasource
 		MarkdownDescription: "SourceLeverHiring DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_lever_hiring_authentication_mechanism_authenticate_via_lever_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Api Key of your Lever Hiring account.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Api Key",
-											),
-										},
-										Description: `must be one of ["Api Key"]`,
-									},
-								},
-								Description: `Choose how to authenticate to Lever Hiring.`,
-							},
-							"source_lever_hiring_authentication_mechanism_authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your Lever Hiring developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your Lever Hiring developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The token for obtaining new access token.`,
-									},
-								},
-								Description: `Choose how to authenticate to Lever Hiring.`,
-							},
-							"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Api Key of your Lever Hiring account.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Api Key",
-											),
-										},
-										Description: `must be one of ["Api Key"]`,
-									},
-								},
-								Description: `Choose how to authenticate to Lever Hiring.`,
-							},
-							"source_lever_hiring_update_authentication_mechanism_authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client ID of your Lever Hiring developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Client Secret of your Lever Hiring developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The token for obtaining new access token.`,
-									},
-								},
-								Description: `Choose how to authenticate to Lever Hiring.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Choose how to authenticate to Lever Hiring.`,
-					},
-					"environment": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Production",
-								"Sandbox",
-							),
-						},
-						MarkdownDescription: `must be one of ["Production", "Sandbox"]` + "\n" +
-							`The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"lever-hiring",
-							),
-						},
-						Description: `must be one of ["lever-hiring"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Note that it will be used only in the following incremental streams: comments, commits, and issues.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

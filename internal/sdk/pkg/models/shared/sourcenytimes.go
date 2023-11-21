@@ -3,9 +3,10 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 // SourceNytimesPeriodUsedForMostPopularStreams - Period of time (in days)
@@ -64,27 +65,27 @@ func (e *SourceNytimesShareTypeUsedForMostPopularSharedStream) UnmarshalJSON(dat
 	}
 }
 
-type SourceNytimesNytimes string
+type Nytimes string
 
 const (
-	SourceNytimesNytimesNytimes SourceNytimesNytimes = "nytimes"
+	NytimesNytimes Nytimes = "nytimes"
 )
 
-func (e SourceNytimesNytimes) ToPointer() *SourceNytimesNytimes {
+func (e Nytimes) ToPointer() *Nytimes {
 	return &e
 }
 
-func (e *SourceNytimesNytimes) UnmarshalJSON(data []byte) error {
+func (e *Nytimes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "nytimes":
-		*e = SourceNytimesNytimes(v)
+		*e = Nytimes(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNytimesNytimes: %v", v)
+		return fmt.Errorf("invalid value for Nytimes: %v", v)
 	}
 }
 
@@ -97,7 +98,57 @@ type SourceNytimes struct {
 	Period SourceNytimesPeriodUsedForMostPopularStreams `json:"period"`
 	// Share Type
 	ShareType  *SourceNytimesShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
-	SourceType SourceNytimesNytimes                                  `json:"sourceType"`
+	sourceType Nytimes                                               `const:"nytimes" json:"sourceType"`
 	// Start date to begin the article retrieval (format YYYY-MM)
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceNytimes) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNytimes) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNytimes) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceNytimes) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceNytimes) GetPeriod() SourceNytimesPeriodUsedForMostPopularStreams {
+	if o == nil {
+		return SourceNytimesPeriodUsedForMostPopularStreams(0)
+	}
+	return o.Period
+}
+
+func (o *SourceNytimes) GetShareType() *SourceNytimesShareTypeUsedForMostPopularSharedStream {
+	if o == nil {
+		return nil
+	}
+	return o.ShareType
+}
+
+func (o *SourceNytimes) GetSourceType() Nytimes {
+	return NytimesNytimes
+}
+
+func (o *SourceNytimes) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

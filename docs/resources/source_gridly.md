@@ -15,13 +15,13 @@ SourceGridly Resource
 ```terraform
 resource "airbyte_source_gridly" "my_source_gridly" {
   configuration = {
-    api_key     = "...my_api_key..."
-    grid_id     = "...my_grid_id..."
-    source_type = "gridly"
+    api_key = "...my_api_key..."
+    grid_id = "...my_grid_id..."
   }
-  name         = "Josephine McCullough"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "d78de3b6-e938-49f5-abb7-f662550a2838"
+  definition_id = "2da80f2b-fa49-4853-a695-0935ad536c50"
+  name          = "Megan Kshlerin"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e30b46b9-59e4-4e75-8ac0-9227119b95b6"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_gridly" "my_source_gridly" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_gridly" "my_source_gridly" {
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String, Sensitive)
 - `grid_id` (String) ID of a grid, or can be ID of a branch
-- `source_type` (String) must be one of ["gridly"]
 
 

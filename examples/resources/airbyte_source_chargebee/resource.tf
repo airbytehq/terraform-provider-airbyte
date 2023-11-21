@@ -1,12 +1,12 @@
 resource "airbyte_source_chargebee" "my_source_chargebee" {
   configuration = {
-    product_catalog = "1.0"
+    product_catalog = "2.0"
     site            = "airbyte-test"
     site_api_key    = "...my_site_api_key..."
-    source_type     = "chargebee"
     start_date      = "2021-01-25T00:00:00Z"
   }
-  name         = "Viola Morissette"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fbbe6949-fb2b-4b4e-8ae6-c3d5db3adebd"
+  definition_id = "08691686-308e-4adb-b3c3-69be0c12ece5"
+  name          = "Jean Mann"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "aef8e474-9058-48d0-a293-9574a681eea7"
 }

@@ -10,8 +10,9 @@ type SourceJira struct {
 	Email                     types.String   `tfsdk:"email"`
 	EnableExperimentalStreams types.Bool     `tfsdk:"enable_experimental_streams"`
 	ExpandIssueChangelog      types.Bool     `tfsdk:"expand_issue_changelog"`
+	ExpandIssueTransition     types.Bool     `tfsdk:"expand_issue_transition"`
+	IssuesStreamExpandWith    []types.String `tfsdk:"issues_stream_expand_with"`
 	Projects                  []types.String `tfsdk:"projects"`
 	RenderFields              types.Bool     `tfsdk:"render_fields"`
-	SourceType                types.String   `tfsdk:"source_type"`
 	StartDate                 types.String   `tfsdk:"start_date"`
 }

@@ -5,38 +5,75 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationKeenKeen string
+type Keen string
 
 const (
-	DestinationKeenKeenKeen DestinationKeenKeen = "keen"
+	KeenKeen Keen = "keen"
 )
 
-func (e DestinationKeenKeen) ToPointer() *DestinationKeenKeen {
+func (e Keen) ToPointer() *Keen {
 	return &e
 }
 
-func (e *DestinationKeenKeen) UnmarshalJSON(data []byte) error {
+func (e *Keen) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "keen":
-		*e = DestinationKeenKeen(v)
+		*e = Keen(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationKeenKeen: %v", v)
+		return fmt.Errorf("invalid value for Keen: %v", v)
 	}
 }
 
 type DestinationKeen struct {
 	// To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
-	APIKey          string              `json:"api_key"`
-	DestinationType DestinationKeenKeen `json:"destinationType"`
+	APIKey          string `json:"api_key"`
+	destinationType Keen   `const:"keen" json:"destinationType"`
 	// Allow connector to guess keen.timestamp value based on the streamed data.
-	InferTimestamp *bool `json:"infer_timestamp,omitempty"`
+	InferTimestamp *bool `default:"true" json:"infer_timestamp"`
 	// To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 	ProjectID string `json:"project_id"`
+}
+
+func (d DestinationKeen) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationKeen) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationKeen) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationKeen) GetDestinationType() Keen {
+	return KeenKeen
+}
+
+func (o *DestinationKeen) GetInferTimestamp() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.InferTimestamp
+}
+
+func (o *DestinationKeen) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
 }

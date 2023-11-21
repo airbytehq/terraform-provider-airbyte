@@ -2,11 +2,47 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type DestinationKeenUpdate struct {
 	// To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 	APIKey string `json:"api_key"`
 	// Allow connector to guess keen.timestamp value based on the streamed data.
-	InferTimestamp *bool `json:"infer_timestamp,omitempty"`
+	InferTimestamp *bool `default:"true" json:"infer_timestamp"`
 	// To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 	ProjectID string `json:"project_id"`
+}
+
+func (d DestinationKeenUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationKeenUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationKeenUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationKeenUpdate) GetInferTimestamp() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.InferTimestamp
+}
+
+func (o *DestinationKeenUpdate) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
 }

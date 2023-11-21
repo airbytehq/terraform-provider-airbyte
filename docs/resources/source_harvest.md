@@ -17,20 +17,20 @@ resource "airbyte_source_harvest" "my_source_harvest" {
   configuration = {
     account_id = "...my_account_id..."
     credentials = {
-      source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_ = {
-        auth_type     = "Client"
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
+      authenticate_via_harvest_o_auth = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        client_id             = "...my_client_id..."
+        client_secret         = "...my_client_secret..."
+        refresh_token         = "...my_refresh_token..."
       }
     }
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
-    source_type            = "harvest"
   }
-  name         = "Rodney Orn"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "2315bba6-5016-44e0-af5b-f6ae591bc8bd"
+  definition_id = "bb7037ab-5561-4ce1-bb1c-adaa0e328a3b"
+  name          = "Jorge Heathcote"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e04de287-b752-465f-9ff2-deb8cbf2674a"
 }
 ```
 
@@ -40,11 +40,12 @@ resource "airbyte_source_harvest" "my_source_harvest" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -59,7 +60,6 @@ Required:
 
 - `account_id` (String) Harvest account ID. Required for all Harvest requests in pair with Personal Access Token
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-- `source_type` (String) must be one of ["harvest"]
 
 Optional:
 
@@ -71,64 +71,32 @@ Optional:
 
 Optional:
 
-- `source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth))
-- `source_harvest_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_with_personal_access_token))
-- `source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth))
-- `source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token))
+- `authenticate_via_harvest_o_auth` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_harvest_o_auth))
+- `authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_personal_access_token))
 
-<a id="nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth`
+<a id="nestedatt--configuration--credentials--authenticate_via_harvest_o_auth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_harvest_o_auth`
 
 Required:
 
 - `client_id` (String) The Client ID of your Harvest developer application.
 - `client_secret` (String) The Client Secret of your Harvest developer application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
+- `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Client"]
 
 
-<a id="nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_with_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_harvest_authentication_mechanism_authenticate_with_personal_access_token`
+<a id="nestedatt--configuration--credentials--authenticate_with_personal_access_token"></a>
+### Nested Schema for `configuration.credentials.authenticate_with_personal_access_token`
 
 Required:
 
-- `api_token` (String) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
+- `api_token` (String, Sensitive) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Token"]
-
-
-<a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth"></a>
-### Nested Schema for `configuration.credentials.source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth`
-
-Required:
-
-- `client_id` (String) The Client ID of your Harvest developer application.
-- `client_secret` (String) The Client Secret of your Harvest developer application.
-- `refresh_token` (String) Refresh Token to renew the expired Access Token.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Client"]
-
-
-<a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token"></a>
-### Nested Schema for `configuration.credentials.source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token`
-
-Required:
-
-- `api_token` (String) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of ["Token"]
 
 

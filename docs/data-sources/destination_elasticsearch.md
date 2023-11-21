@@ -27,68 +27,10 @@ data "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `authentication_method` (Attributes) The type of authentication to be used (see [below for nested schema](#nestedatt--configuration--authentication_method))
-- `ca_certificate` (String) CA certificate
-- `destination_type` (String) must be one of ["elasticsearch"]
-- `endpoint` (String) The full url of the Elasticsearch server
-- `upsert` (Boolean) If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
-
-<a id="nestedatt--configuration--authentication_method"></a>
-### Nested Schema for `configuration.authentication_method`
-
-Read-Only:
-
-- `destination_elasticsearch_authentication_method_api_key_secret` (Attributes) Use a api key and secret combination to authenticate (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_api_key_secret))
-- `destination_elasticsearch_authentication_method_username_password` (Attributes) Basic auth header with a username and password (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_username_password))
-- `destination_elasticsearch_update_authentication_method_api_key_secret` (Attributes) Use a api key and secret combination to authenticate (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_api_key_secret))
-- `destination_elasticsearch_update_authentication_method_username_password` (Attributes) Basic auth header with a username and password (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_username_password))
-
-<a id="nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_api_key_secret"></a>
-### Nested Schema for `configuration.authentication_method.destination_elasticsearch_authentication_method_api_key_secret`
-
-Read-Only:
-
-- `api_key_id` (String) The Key ID to used when accessing an enterprise Elasticsearch instance.
-- `api_key_secret` (String) The secret associated with the API Key ID.
-- `method` (String) must be one of ["secret"]
-
-
-<a id="nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_username_password"></a>
-### Nested Schema for `configuration.authentication_method.destination_elasticsearch_authentication_method_username_password`
-
-Read-Only:
-
-- `method` (String) must be one of ["basic"]
-- `password` (String) Basic auth password to access a secure Elasticsearch server
-- `username` (String) Basic auth username to access a secure Elasticsearch server
-
-
-<a id="nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_api_key_secret"></a>
-### Nested Schema for `configuration.authentication_method.destination_elasticsearch_update_authentication_method_api_key_secret`
-
-Read-Only:
-
-- `api_key_id` (String) The Key ID to used when accessing an enterprise Elasticsearch instance.
-- `api_key_secret` (String) The secret associated with the API Key ID.
-- `method` (String) must be one of ["secret"]
-
-
-<a id="nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_username_password"></a>
-### Nested Schema for `configuration.authentication_method.destination_elasticsearch_update_authentication_method_username_password`
-
-Read-Only:
-
-- `method` (String) must be one of ["basic"]
-- `password` (String) Basic auth password to access a secure Elasticsearch server
-- `username` (String) Basic auth username to access a secure Elasticsearch server
 
 

@@ -3,31 +3,46 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationKinesisCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
-	bufferSize := r.Configuration.BufferSize.ValueInt64()
-	destinationType := shared.DestinationKinesisKinesis(r.Configuration.DestinationType.ValueString())
+	bufferSize := new(int64)
+	if !r.Configuration.BufferSize.IsUnknown() && !r.Configuration.BufferSize.IsNull() {
+		*bufferSize = r.Configuration.BufferSize.ValueInt64()
+	} else {
+		bufferSize = nil
+	}
 	endpoint := r.Configuration.Endpoint.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
 	region := r.Configuration.Region.ValueString()
-	shardCount := r.Configuration.ShardCount.ValueInt64()
+	shardCount := new(int64)
+	if !r.Configuration.ShardCount.IsUnknown() && !r.Configuration.ShardCount.IsNull() {
+		*shardCount = r.Configuration.ShardCount.ValueInt64()
+	} else {
+		shardCount = nil
+	}
 	configuration := shared.DestinationKinesis{
-		AccessKey:       accessKey,
-		BufferSize:      bufferSize,
-		DestinationType: destinationType,
-		Endpoint:        endpoint,
-		PrivateKey:      privateKey,
-		Region:          region,
-		ShardCount:      shardCount,
+		AccessKey:  accessKey,
+		BufferSize: bufferSize,
+		Endpoint:   endpoint,
+		PrivateKey: privateKey,
+		Region:     region,
+		ShardCount: shardCount,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationKinesisCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -41,11 +56,21 @@ func (r *DestinationKinesisResourceModel) ToGetSDKType() *shared.DestinationKine
 
 func (r *DestinationKinesisResourceModel) ToUpdateSDKType() *shared.DestinationKinesisPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
-	bufferSize := r.Configuration.BufferSize.ValueInt64()
+	bufferSize := new(int64)
+	if !r.Configuration.BufferSize.IsUnknown() && !r.Configuration.BufferSize.IsNull() {
+		*bufferSize = r.Configuration.BufferSize.ValueInt64()
+	} else {
+		bufferSize = nil
+	}
 	endpoint := r.Configuration.Endpoint.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
 	region := r.Configuration.Region.ValueString()
-	shardCount := r.Configuration.ShardCount.ValueInt64()
+	shardCount := new(int64)
+	if !r.Configuration.ShardCount.IsUnknown() && !r.Configuration.ShardCount.IsNull() {
+		*shardCount = r.Configuration.ShardCount.ValueInt64()
+	} else {
+		shardCount = nil
+	}
 	configuration := shared.DestinationKinesisUpdate{
 		AccessKey:  accessKey,
 		BufferSize: bufferSize,

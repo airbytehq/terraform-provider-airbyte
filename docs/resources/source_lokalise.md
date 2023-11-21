@@ -15,13 +15,13 @@ SourceLokalise Resource
 ```terraform
 resource "airbyte_source_lokalise" "my_source_lokalise" {
   configuration = {
-    api_key     = "...my_api_key..."
-    project_id  = "...my_project_id..."
-    source_type = "lokalise"
+    api_key    = "...my_api_key..."
+    project_id = "...my_project_id..."
   }
-  name         = "Bernard Gottlieb"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "573fecd4-7353-4f63-8820-9379aa69cd5f"
+  definition_id = "8830aabe-ffb8-4d97-a510-59b440a5f2f6"
+  name          = "Inez Gottlieb"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "66849f7b-beaa-4ef5-a404-3cb4c473e8c7"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
 
 Required:
 
-- `api_key` (String) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
+- `api_key` (String, Sensitive) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 - `project_id` (String) Lokalise project ID. Available at Project Settings > General.
-- `source_type` (String) must be one of ["lokalise"]
 
 

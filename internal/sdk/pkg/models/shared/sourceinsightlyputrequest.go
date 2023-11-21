@@ -7,3 +7,24 @@ type SourceInsightlyPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceInsightlyPutRequest) GetConfiguration() SourceInsightlyUpdate {
+	if o == nil {
+		return SourceInsightlyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceInsightlyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceInsightlyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

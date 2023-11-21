@@ -10,3 +10,24 @@ type SourceRailzUpdate struct {
 	// Start date
 	StartDate string `json:"start_date"`
 }
+
+func (o *SourceRailzUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceRailzUpdate) GetSecretKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretKey
+}
+
+func (o *SourceRailzUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}

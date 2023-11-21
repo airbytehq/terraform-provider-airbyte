@@ -3,32 +3,33 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePolygonStockAPIPolygonStockAPI string
+type PolygonStockAPI string
 
 const (
-	SourcePolygonStockAPIPolygonStockAPIPolygonStockAPI SourcePolygonStockAPIPolygonStockAPI = "polygon-stock-api"
+	PolygonStockAPIPolygonStockAPI PolygonStockAPI = "polygon-stock-api"
 )
 
-func (e SourcePolygonStockAPIPolygonStockAPI) ToPointer() *SourcePolygonStockAPIPolygonStockAPI {
+func (e PolygonStockAPI) ToPointer() *PolygonStockAPI {
 	return &e
 }
 
-func (e *SourcePolygonStockAPIPolygonStockAPI) UnmarshalJSON(data []byte) error {
+func (e *PolygonStockAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "polygon-stock-api":
-		*e = SourcePolygonStockAPIPolygonStockAPI(v)
+		*e = PolygonStockAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePolygonStockAPIPolygonStockAPI: %v", v)
+		return fmt.Errorf("invalid value for PolygonStockAPI: %v", v)
 	}
 }
 
@@ -44,12 +45,90 @@ type SourcePolygonStockAPI struct {
 	// The size of the timespan multiplier.
 	Multiplier int64 `json:"multiplier"`
 	// Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).
-	Sort       *string                              `json:"sort,omitempty"`
-	SourceType SourcePolygonStockAPIPolygonStockAPI `json:"sourceType"`
+	Sort       *string         `json:"sort,omitempty"`
+	sourceType PolygonStockAPI `const:"polygon-stock-api" json:"sourceType"`
 	// The beginning date for the aggregate window.
 	StartDate types.Date `json:"start_date"`
 	// The exchange symbol that this item is traded under.
 	StocksTicker string `json:"stocksTicker"`
 	// The size of the time window.
 	Timespan string `json:"timespan"`
+}
+
+func (s SourcePolygonStockAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePolygonStockAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePolygonStockAPI) GetAdjusted() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Adjusted
+}
+
+func (o *SourcePolygonStockAPI) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePolygonStockAPI) GetEndDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.EndDate
+}
+
+func (o *SourcePolygonStockAPI) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *SourcePolygonStockAPI) GetMultiplier() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Multiplier
+}
+
+func (o *SourcePolygonStockAPI) GetSort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourcePolygonStockAPI) GetSourceType() PolygonStockAPI {
+	return PolygonStockAPIPolygonStockAPI
+}
+
+func (o *SourcePolygonStockAPI) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePolygonStockAPI) GetStocksTicker() string {
+	if o == nil {
+		return ""
+	}
+	return o.StocksTicker
+}
+
+func (o *SourcePolygonStockAPI) GetTimespan() string {
+	if o == nil {
+		return ""
+	}
+	return o.Timespan
 }

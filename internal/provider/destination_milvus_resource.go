@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type DestinationMilvusResource struct {
 // DestinationMilvusResourceModel describes the resource data model.
 type DestinationMilvusResourceModel struct {
 	Configuration   DestinationMilvus `tfsdk:"configuration"`
+	DefinitionID    types.String      `tfsdk:"definition_id"`
 	DestinationID   types.String      `tfsdk:"destination_id"`
 	DestinationType types.String      `tfsdk:"destination_type"`
 	Name            types.String      `tfsdk:"name"`
@@ -54,52 +56,44 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"milvus",
-							),
-						},
-						Description: `must be one of ["milvus"]`,
-					},
 					"embedding": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_milvus_embedding_cohere": schema.SingleNestedAttribute{
+							"azure_open_ai": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_base": schema.StringAttribute{
+										Required:    true,
+										Description: `The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
+									},
+									"deployment": schema.StringAttribute{
+										Required:    true,
+										Description: `The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
+									},
+									"openai_key": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource`,
+									},
+								},
+								Description: `Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
+							},
+							"cohere": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cohere_key": schema.StringAttribute{
-										Required: true,
-									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the Cohere API to embed text.`,
 							},
-							"destination_milvus_embedding_fake": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
+							"fake": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
-							"destination_milvus_embedding_from_field": schema.SingleNestedAttribute{
+							"from_field": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"dimensions": schema.Int64Attribute{
@@ -110,115 +104,48 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Required:    true,
 										Description: `Name of the field in the record that contains the embedding`,
 									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"from_field",
-											),
-										},
-										Description: `must be one of ["from_field"]`,
-									},
 								},
 								Description: `Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.`,
 							},
-							"destination_milvus_embedding_open_ai": schema.SingleNestedAttribute{
+							"open_ai": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
 									"openai_key": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
 							},
-							"destination_milvus_update_embedding_cohere": schema.SingleNestedAttribute{
+							"open_ai_compatible": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"cohere_key": schema.StringAttribute{
-										Required: true,
+									"api_key": schema.StringAttribute{
+										Optional:    true,
+										Sensitive:   true,
+										Description: `Default: ""`,
 									},
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"cohere",
-											),
-										},
-										Description: `must be one of ["cohere"]`,
+									"base_url": schema.StringAttribute{
+										Required:    true,
+										Description: `The base URL for your OpenAI-compatible service`,
 									},
-								},
-								Description: `Use the Cohere API to embed text.`,
-							},
-							"destination_milvus_update_embedding_fake": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
-								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
-							},
-							"destination_milvus_update_embedding_from_field": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
 									"dimensions": schema.Int64Attribute{
 										Required:    true,
 										Description: `The number of dimensions the embedding model is generating`,
 									},
-									"field_name": schema.StringAttribute{
-										Required:    true,
-										Description: `Name of the field in the record that contains the embedding`,
-									},
-									"mode": schema.StringAttribute{
+									"model_name": schema.StringAttribute{
 										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"from_field",
-											),
-										},
-										Description: `must be one of ["from_field"]`,
+										MarkdownDescription: `Default: "text-embedding-ada-002"` + "\n" +
+											`The name of the model to use for embedding`,
 									},
 								},
-								Description: `Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.`,
-							},
-							"destination_milvus_update_embedding_open_ai": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
-									"openai_key": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
+								Description: `Use a service that's compatible with the OpenAI API to embed text.`,
 							},
 						},
+						Description: `Embedding configuration`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Embedding configuration`,
 					},
 					"indexing": schema.SingleNestedAttribute{
 						Required: true,
@@ -226,111 +153,28 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 							"auth": schema.SingleNestedAttribute{
 								Required: true,
 								Attributes: map[string]schema.Attribute{
-									"destination_milvus_indexing_authentication_api_token": schema.SingleNestedAttribute{
+									"api_token": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Optional: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"token",
-													),
-												},
-												Description: `must be one of ["token"]`,
-											},
 											"token": schema.StringAttribute{
 												Required:    true,
+												Sensitive:   true,
 												Description: `API Token for the Milvus instance`,
 											},
 										},
 										Description: `Authenticate using an API token (suitable for Zilliz Cloud)`,
 									},
-									"destination_milvus_indexing_authentication_no_auth": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Optional: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"no_auth",
-													),
-												},
-												Description: `must be one of ["no_auth"]`,
-											},
-										},
+									"no_auth": schema.SingleNestedAttribute{
+										Optional:    true,
+										Attributes:  map[string]schema.Attribute{},
 										Description: `Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)`,
 									},
-									"destination_milvus_indexing_authentication_username_password": schema.SingleNestedAttribute{
+									"username_password": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Optional: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"username_password",
-													),
-												},
-												Description: `must be one of ["username_password"]`,
-											},
 											"password": schema.StringAttribute{
 												Required:    true,
-												Description: `Password for the Milvus instance`,
-											},
-											"username": schema.StringAttribute{
-												Required:    true,
-												Description: `Username for the Milvus instance`,
-											},
-										},
-										Description: `Authenticate using username and password (suitable for self-managed Milvus clusters)`,
-									},
-									"destination_milvus_update_indexing_authentication_api_token": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Optional: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"token",
-													),
-												},
-												Description: `must be one of ["token"]`,
-											},
-											"token": schema.StringAttribute{
-												Required:    true,
-												Description: `API Token for the Milvus instance`,
-											},
-										},
-										Description: `Authenticate using an API token (suitable for Zilliz Cloud)`,
-									},
-									"destination_milvus_update_indexing_authentication_no_auth": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Optional: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"no_auth",
-													),
-												},
-												Description: `must be one of ["no_auth"]`,
-											},
-										},
-										Description: `Do not authenticate (suitable for locally running test clusters, do not use for clusters with public IP addresses)`,
-									},
-									"destination_milvus_update_indexing_authentication_username_password": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"mode": schema.StringAttribute{
-												Optional: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"username_password",
-													),
-												},
-												Description: `must be one of ["username_password"]`,
-											},
-											"password": schema.StringAttribute{
-												Required:    true,
+												Sensitive:   true,
 												Description: `Password for the Milvus instance`,
 											},
 											"username": schema.StringAttribute{
@@ -341,30 +185,33 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Description: `Authenticate using username and password (suitable for self-managed Milvus clusters)`,
 									},
 								},
+								Description: `Authentication method`,
 								Validators: []validator.Object{
 									validators.ExactlyOneChild(),
 								},
-								Description: `Authentication method`,
 							},
 							"collection": schema.StringAttribute{
 								Required:    true,
 								Description: `The collection to load data into`,
 							},
 							"db": schema.StringAttribute{
-								Optional:    true,
-								Description: `The database to connect to`,
+								Optional: true,
+								MarkdownDescription: `Default: ""` + "\n" +
+									`The database to connect to`,
 							},
 							"host": schema.StringAttribute{
 								Required:    true,
 								Description: `The public endpoint of the Milvus instance. `,
 							},
 							"text_field": schema.StringAttribute{
-								Optional:    true,
-								Description: `The field in the entity that contains the embedded text`,
+								Optional: true,
+								MarkdownDescription: `Default: "text"` + "\n" +
+									`The field in the entity that contains the embedded text`,
 							},
 							"vector_field": schema.StringAttribute{
-								Optional:    true,
-								Description: `The field in the entity that contains the vector`,
+								Optional: true,
+								MarkdownDescription: `Default: "vector"` + "\n" +
+									`The field in the entity that contains the vector`,
 							},
 						},
 						Description: `Indexing configuration`,
@@ -373,12 +220,29 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
-								Optional:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
+								Optional: true,
+								MarkdownDescription: `Default: 0` + "\n" +
+									`Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
 							},
 							"chunk_size": schema.Int64Attribute{
 								Required:    true,
 								Description: `Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)`,
+							},
+							"field_name_mappings": schema.ListNestedAttribute{
+								Optional: true,
+								NestedObject: schema.NestedAttributeObject{
+									Attributes: map[string]schema.Attribute{
+										"from_field": schema.StringAttribute{
+											Required:    true,
+											Description: `The field name in the source`,
+										},
+										"to_field": schema.StringAttribute{
+											Required:    true,
+											Description: `The field name to use in the destination`,
+										},
+									},
+								},
+								Description: `List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.`,
 							},
 							"metadata_fields": schema.ListAttribute{
 								Optional:    true,
@@ -390,9 +254,83 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								ElementType: types.StringType,
 								Description: `List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array.`,
 							},
+							"text_splitter": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"by_markdown_header": schema.SingleNestedAttribute{
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"split_level": schema.Int64Attribute{
+												Optional: true,
+												MarkdownDescription: `Default: 1` + "\n" +
+													`Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points`,
+											},
+										},
+										Description: `Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.`,
+									},
+									"by_programming_language": schema.SingleNestedAttribute{
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"language": schema.StringAttribute{
+												Required: true,
+												MarkdownDescription: `must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]` + "\n" +
+													`Split code in suitable places based on the programming language`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"cpp",
+														"go",
+														"java",
+														"js",
+														"php",
+														"proto",
+														"python",
+														"rst",
+														"ruby",
+														"rust",
+														"scala",
+														"swift",
+														"markdown",
+														"latex",
+														"html",
+														"sol",
+													),
+												},
+											},
+										},
+										Description: `Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.`,
+									},
+									"by_separator": schema.SingleNestedAttribute{
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"keep_separator": schema.BoolAttribute{
+												Optional: true,
+												MarkdownDescription: `Default: false` + "\n" +
+													`Whether to keep the separator in the resulting chunks`,
+											},
+											"separators": schema.ListAttribute{
+												Optional:    true,
+												ElementType: types.StringType,
+												Description: `List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".`,
+											},
+										},
+										Description: `Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.`,
+									},
+								},
+								Description: `Split text fields into chunks based on the specified method.`,
+								Validators: []validator.Object{
+									validators.ExactlyOneChild(),
+								},
+							},
 						},
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -410,7 +348,8 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -460,7 +399,7 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationMilvus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -636,5 +575,5 @@ func (r *DestinationMilvusResource) Delete(ctx context.Context, req resource.Del
 }
 
 func (r *DestinationMilvusResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

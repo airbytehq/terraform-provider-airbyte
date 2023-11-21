@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -27,13 +27,17 @@ func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoog
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourceGoogleWebfontsGoogleWebfonts(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleWebfonts{
 		Alt:         alt,
 		APIKey:      apiKey,
 		PrettyPrint: prettyPrint,
 		Sort:        sort,
-		SourceType:  sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -45,6 +49,7 @@ func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoog
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleWebfontsCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

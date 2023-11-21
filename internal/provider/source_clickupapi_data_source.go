@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceClickupAPIDataSource struct {
 
 // SourceClickupAPIDataSourceModel describes the data model.
 type SourceClickupAPIDataSourceModel struct {
-	Configuration SourceClickupAPI `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,53 +47,19 @@ func (r *SourceClickupAPIDataSource) Schema(ctx context.Context, req datasource.
 		MarkdownDescription: "SourceClickupAPI DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.`,
-					},
-					"folder_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ID of your folder in your space. Retrieve it from the ` + "`" + `/space/{space_id}/folder` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.`,
-					},
-					"include_closed_tasks": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.`,
-					},
-					"list_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ID of your list in your folder. Retrieve it from the ` + "`" + `/folder/{folder_id}/list` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"clickup-api",
-							),
-						},
-						Description: `must be one of ["clickup-api"]`,
-					},
-					"space_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ID of your space in your workspace. Retrieve it from the ` + "`" + `/team/{team_id}/space` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.`,
-					},
-					"team_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ID of your team in ClickUp. Retrieve it from the ` + "`" + `/team` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

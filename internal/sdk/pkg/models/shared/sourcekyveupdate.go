@@ -2,15 +2,65 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type SourceKyveUpdate struct {
 	// The maximum amount of pages to go trough. Set to 'null' for all pages.
 	MaxPages *int64 `json:"max_pages,omitempty"`
 	// The pagesize for pagination, smaller numbers are used in integration tests.
-	PageSize *int64 `json:"page_size,omitempty"`
+	PageSize *int64 `default:"100" json:"page_size"`
 	// The IDs of the KYVE storage pool you want to archive. (Comma separated)
 	PoolIds string `json:"pool_ids"`
 	// The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)
 	StartIds string `json:"start_ids"`
 	// URL to the KYVE Chain API.
-	URLBase *string `json:"url_base,omitempty"`
+	URLBase *string `default:"https://api.korellia.kyve.network" json:"url_base"`
+}
+
+func (s SourceKyveUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceKyveUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceKyveUpdate) GetMaxPages() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxPages
+}
+
+func (o *SourceKyveUpdate) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *SourceKyveUpdate) GetPoolIds() string {
+	if o == nil {
+		return ""
+	}
+	return o.PoolIds
+}
+
+func (o *SourceKyveUpdate) GetStartIds() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartIds
+}
+
+func (o *SourceKyveUpdate) GetURLBase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.URLBase
 }

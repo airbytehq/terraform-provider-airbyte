@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceOutreachOutreach string
+type Outreach string
 
 const (
-	SourceOutreachOutreachOutreach SourceOutreachOutreach = "outreach"
+	OutreachOutreach Outreach = "outreach"
 )
 
-func (e SourceOutreachOutreach) ToPointer() *SourceOutreachOutreach {
+func (e Outreach) ToPointer() *Outreach {
 	return &e
 }
 
-func (e *SourceOutreachOutreach) UnmarshalJSON(data []byte) error {
+func (e *Outreach) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "outreach":
-		*e = SourceOutreachOutreach(v)
+		*e = Outreach(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutreachOutreach: %v", v)
+		return fmt.Errorf("invalid value for Outreach: %v", v)
 	}
 }
 
@@ -39,8 +40,58 @@ type SourceOutreach struct {
 	// A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
 	RedirectURI string `json:"redirect_uri"`
 	// The token for obtaining the new access token.
-	RefreshToken string                 `json:"refresh_token"`
-	SourceType   SourceOutreachOutreach `json:"sourceType"`
+	RefreshToken string   `json:"refresh_token"`
+	sourceType   Outreach `const:"outreach" json:"sourceType"`
 	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceOutreach) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOutreach) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOutreach) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceOutreach) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceOutreach) GetRedirectURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.RedirectURI
+}
+
+func (o *SourceOutreach) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceOutreach) GetSourceType() Outreach {
+	return OutreachOutreach
+}
+
+func (o *SourceOutreach) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

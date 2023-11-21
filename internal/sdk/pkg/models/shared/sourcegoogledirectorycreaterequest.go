@@ -4,8 +4,46 @@ package shared
 
 type SourceGoogleDirectoryCreateRequest struct {
 	Configuration SourceGoogleDirectory `json:"configuration"`
-	Name          string                `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceGoogleDirectoryCreateRequest) GetConfiguration() SourceGoogleDirectory {
+	if o == nil {
+		return SourceGoogleDirectory{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleDirectoryCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceGoogleDirectoryCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleDirectoryCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleDirectoryCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

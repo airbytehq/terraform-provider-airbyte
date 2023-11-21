@@ -15,12 +15,12 @@ SourceTodoist Resource
 ```terraform
 resource "airbyte_source_todoist" "my_source_todoist" {
   configuration = {
-    source_type = "todoist"
-    token       = "...my_token..."
+    token = "...my_token..."
   }
-  name         = "Hope Collins"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "502bafb2-cbc4-4635-95e6-5da028c3e951"
+  definition_id = "fdefbe19-9921-44f3-bfa4-8acadc06400b"
+  name          = "Kristy Hilpert"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "13a2ccf2-b1ad-4e2f-8984-bfb0e1b3d2b8"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_todoist" "my_source_todoist" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_todoist" "my_source_todoist" {
 
 Required:
 
-- `source_type` (String) must be one of ["todoist"]
-- `token` (String) Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
+- `token` (String, Sensitive) Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 
 

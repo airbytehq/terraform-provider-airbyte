@@ -15,29 +15,26 @@ DestinationLangchain Resource
 ```terraform
 resource "airbyte_destination_langchain" "my_destination_langchain" {
   configuration = {
-    destination_type = "langchain"
     embedding = {
-      destination_langchain_embedding_fake = {
-        mode = "fake"
-      }
+      fake = {}
     }
     indexing = {
-      destination_langchain_indexing_chroma_local_persistance_ = {
+      chroma_local_persistance = {
         collection_name  = "...my_collection_name..."
         destination_path = "/local/my_chroma_db"
-        mode             = "chroma_local"
       }
     }
     processing = {
-      chunk_overlap = 0
-      chunk_size    = 1
+      chunk_overlap = 8
+      chunk_size    = 3
       text_fields = [
         "...",
       ]
     }
   }
-  name         = "Hattie Nader"
-  workspace_id = "1e674bdb-04f1-4575-a082-d68ea19f1d17"
+  definition_id = "0c9ec767-47b0-46cf-86fe-4a6f8bb810ed"
+  name          = "Megan Kertzmann"
+  workspace_id  = "02e7b218-3b2b-4c4f-adb7-afdacad2c14c"
 }
 ```
 
@@ -47,8 +44,12 @@ resource "airbyte_destination_langchain" "my_destination_langchain" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -60,7 +61,6 @@ resource "airbyte_destination_langchain" "my_destination_langchain" {
 
 Required:
 
-- `destination_type` (String) must be one of ["langchain"]
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Indexing configuration (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
@@ -70,49 +70,19 @@ Required:
 
 Optional:
 
-- `destination_langchain_embedding_fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--destination_langchain_embedding_fake))
-- `destination_langchain_embedding_open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--destination_langchain_embedding_open_ai))
-- `destination_langchain_update_embedding_fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--destination_langchain_update_embedding_fake))
-- `destination_langchain_update_embedding_open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--destination_langchain_update_embedding_open_ai))
+- `fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--fake))
+- `open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--open_ai))
 
-<a id="nestedatt--configuration--embedding--destination_langchain_embedding_fake"></a>
-### Nested Schema for `configuration.embedding.destination_langchain_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
+<a id="nestedatt--configuration--embedding--fake"></a>
+### Nested Schema for `configuration.embedding.fake`
 
 
-<a id="nestedatt--configuration--embedding--destination_langchain_embedding_open_ai"></a>
-### Nested Schema for `configuration.embedding.destination_langchain_embedding_open_ai`
+<a id="nestedatt--configuration--embedding--open_ai"></a>
+### Nested Schema for `configuration.embedding.open_ai`
 
 Required:
 
-- `openai_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["openai"]
-
-
-<a id="nestedatt--configuration--embedding--destination_langchain_update_embedding_fake"></a>
-### Nested Schema for `configuration.embedding.destination_langchain_update_embedding_fake`
-
-Optional:
-
-- `mode` (String) must be one of ["fake"]
-
-
-<a id="nestedatt--configuration--embedding--destination_langchain_update_embedding_open_ai"></a>
-### Nested Schema for `configuration.embedding.destination_langchain_update_embedding_open_ai`
-
-Required:
-
-- `openai_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["openai"]
+- `openai_key` (String, Sensitive)
 
 
 
@@ -121,15 +91,12 @@ Optional:
 
 Optional:
 
-- `destination_langchain_indexing_chroma_local_persistance` (Attributes) Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync. (see [below for nested schema](#nestedatt--configuration--indexing--destination_langchain_indexing_chroma_local_persistance))
-- `destination_langchain_indexing_doc_array_hnsw_search` (Attributes) DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite. (see [below for nested schema](#nestedatt--configuration--indexing--destination_langchain_indexing_doc_array_hnsw_search))
-- `destination_langchain_indexing_pinecone` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain. (see [below for nested schema](#nestedatt--configuration--indexing--destination_langchain_indexing_pinecone))
-- `destination_langchain_update_indexing_chroma_local_persistance` (Attributes) Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync. (see [below for nested schema](#nestedatt--configuration--indexing--destination_langchain_update_indexing_chroma_local_persistance))
-- `destination_langchain_update_indexing_doc_array_hnsw_search` (Attributes) DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite. (see [below for nested schema](#nestedatt--configuration--indexing--destination_langchain_update_indexing_doc_array_hnsw_search))
-- `destination_langchain_update_indexing_pinecone` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain. (see [below for nested schema](#nestedatt--configuration--indexing--destination_langchain_update_indexing_pinecone))
+- `chroma_local_persistance` (Attributes) Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync. (see [below for nested schema](#nestedatt--configuration--indexing--chroma_local_persistance))
+- `doc_array_hnsw_search` (Attributes) DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite. (see [below for nested schema](#nestedatt--configuration--indexing--doc_array_hnsw_search))
+- `pinecone` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain. (see [below for nested schema](#nestedatt--configuration--indexing--pinecone))
 
-<a id="nestedatt--configuration--indexing--destination_langchain_indexing_chroma_local_persistance"></a>
-### Nested Schema for `configuration.indexing.destination_langchain_indexing_chroma_local_persistance`
+<a id="nestedatt--configuration--indexing--chroma_local_persistance"></a>
+### Nested Schema for `configuration.indexing.chroma_local_persistance`
 
 Required:
 
@@ -137,73 +104,26 @@ Required:
 
 Optional:
 
-- `collection_name` (String) Name of the collection to use.
-- `mode` (String) must be one of ["chroma_local"]
+- `collection_name` (String) Default: "langchain"
+Name of the collection to use.
 
 
-<a id="nestedatt--configuration--indexing--destination_langchain_indexing_doc_array_hnsw_search"></a>
-### Nested Schema for `configuration.indexing.destination_langchain_indexing_doc_array_hnsw_search`
-
-Required:
-
-- `destination_path` (String) Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.
-
-Optional:
-
-- `mode` (String) must be one of ["DocArrayHnswSearch"]
-
-
-<a id="nestedatt--configuration--indexing--destination_langchain_indexing_pinecone"></a>
-### Nested Schema for `configuration.indexing.destination_langchain_indexing_pinecone`
-
-Required:
-
-- `index` (String) Pinecone index to use
-- `pinecone_environment` (String) Pinecone environment to use
-- `pinecone_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["pinecone"]
-
-
-<a id="nestedatt--configuration--indexing--destination_langchain_update_indexing_chroma_local_persistance"></a>
-### Nested Schema for `configuration.indexing.destination_langchain_update_indexing_chroma_local_persistance`
-
-Required:
-
-- `destination_path` (String) Path to the directory where chroma files will be written. The files will be placed inside that local mount.
-
-Optional:
-
-- `collection_name` (String) Name of the collection to use.
-- `mode` (String) must be one of ["chroma_local"]
-
-
-<a id="nestedatt--configuration--indexing--destination_langchain_update_indexing_doc_array_hnsw_search"></a>
-### Nested Schema for `configuration.indexing.destination_langchain_update_indexing_doc_array_hnsw_search`
+<a id="nestedatt--configuration--indexing--doc_array_hnsw_search"></a>
+### Nested Schema for `configuration.indexing.doc_array_hnsw_search`
 
 Required:
 
 - `destination_path` (String) Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.
 
-Optional:
 
-- `mode` (String) must be one of ["DocArrayHnswSearch"]
-
-
-<a id="nestedatt--configuration--indexing--destination_langchain_update_indexing_pinecone"></a>
-### Nested Schema for `configuration.indexing.destination_langchain_update_indexing_pinecone`
+<a id="nestedatt--configuration--indexing--pinecone"></a>
+### Nested Schema for `configuration.indexing.pinecone`
 
 Required:
 
 - `index` (String) Pinecone index to use
 - `pinecone_environment` (String) Pinecone environment to use
-- `pinecone_key` (String)
-
-Optional:
-
-- `mode` (String) must be one of ["pinecone"]
+- `pinecone_key` (String, Sensitive)
 
 
 
@@ -217,6 +137,7 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Default: 0
+Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 
 

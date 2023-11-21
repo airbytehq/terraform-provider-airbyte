@@ -4,6 +4,37 @@ package shared
 
 type DestinationVerticaCreateRequest struct {
 	Configuration DestinationVertica `json:"configuration"`
-	Name          string             `json:"name"`
-	WorkspaceID   string             `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationVerticaCreateRequest) GetConfiguration() DestinationVertica {
+	if o == nil {
+		return DestinationVertica{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationVerticaCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationVerticaCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationVerticaCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

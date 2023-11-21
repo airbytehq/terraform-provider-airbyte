@@ -3,7 +3,6 @@
 package utils
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"math/big"
@@ -12,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"airbyte/internal/sdk/pkg/types"
+	"github.com/ericlagergren/decimal"
 )
 
 const (
@@ -32,12 +31,12 @@ var (
 	}
 )
 
-func UnmarshalJsonFromResponseBody(body io.Reader, out interface{}) error {
+func UnmarshalJsonFromResponseBody(body io.Reader, out interface{}, tag string) error {
 	data, err := io.ReadAll(body)
 	if err != nil {
 		return fmt.Errorf("error reading response body: %w", err)
 	}
-	if err := json.Unmarshal(data, &out); err != nil {
+	if err := UnmarshalJSON(data, out, reflect.StructTag(tag), true, false); err != nil {
 		return fmt.Errorf("error unmarshalling json response body: %w", err)
 	}
 
@@ -82,7 +81,6 @@ func parseStructTag(tagKey string, field reflect.StructField) map[string]string 
 			parts = append(parts, "true")
 		case 2:
 			// key=value option
-			break
 		default:
 			// invalid option
 			continue
@@ -127,9 +125,9 @@ func valToString(val interface{}) string {
 	switch v := val.(type) {
 	case time.Time:
 		return v.Format(time.RFC3339Nano)
-	case types.BigInt:
-		return v.String()
 	case big.Int:
+		return v.String()
+	case decimal.Big:
 		return v.String()
 	default:
 		return fmt.Sprintf("%v", v)

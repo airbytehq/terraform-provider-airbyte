@@ -4,10 +4,10 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     client_secret = "...my_client_secret..."
     end_date      = "2022-01-30"
     refresh_token = "...my_refresh_token..."
-    source_type   = "snapchat-marketing"
     start_date    = "2022-01-01"
   }
-  name         = "Chelsea Ortiz"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "5ca8649a-70cf-4d5d-a989-b7206451077d"
+  definition_id = "8a6950f0-007e-4330-87d9-5358a56819d2"
+  name          = "Rudy Toy"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "1d7e3d24-dfd3-4d51-a342-f997d059d38a"
 }

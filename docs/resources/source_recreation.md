@@ -17,11 +17,11 @@ resource "airbyte_source_recreation" "my_source_recreation" {
   configuration = {
     apikey          = "...my_apikey..."
     query_campsites = "...my_query_campsites..."
-    source_type     = "recreation"
   }
-  name         = "Taylor Kertzmann"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f0441d2c-3b80-4809-8373-e060459bebba"
+  definition_id = "e6c8bd1c-ccad-43b1-8406-5293193648ca"
+  name          = "Naomi Dietrich"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "8652384b-db82-41f9-88ef-a40dc207c50e"
 }
 ```
 
@@ -31,11 +31,12 @@ resource "airbyte_source_recreation" "my_source_recreation" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -48,8 +49,7 @@ resource "airbyte_source_recreation" "my_source_recreation" {
 
 Required:
 
-- `apikey` (String) API Key
-- `source_type` (String) must be one of ["recreation"]
+- `apikey` (String, Sensitive) API Key
 
 Optional:
 

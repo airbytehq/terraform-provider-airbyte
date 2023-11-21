@@ -17,21 +17,19 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        source_fauna_collection_deletion_mode_disabled = {
-          deletion_mode = "ignore"
-        }
+        disabled = {}
       }
-      page_size = 4
+      page_size = 0
     }
-    domain      = "...my_domain..."
-    port        = 5
-    scheme      = "...my_scheme..."
-    secret      = "...my_secret..."
-    source_type = "fauna"
+    domain = "...my_domain..."
+    port   = 10
+    scheme = "...my_scheme..."
+    secret = "...my_secret..."
   }
-  name         = "Irvin Klein"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "1ffc71dc-a163-4f2a-bc80-a97ff334cddf"
+  definition_id = "56112c1f-da02-410a-9cfb-ec287654f12b"
+  name          = "Mr. Willard Gislason"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "fbb0cddc-f802-4e3e-a016-5466352da9b0"
 }
 ```
 
@@ -41,11 +39,12 @@ resource "airbyte_source_fauna" "my_source_fauna" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -58,15 +57,17 @@ resource "airbyte_source_fauna" "my_source_fauna" {
 
 Required:
 
-- `domain` (String) Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
-- `port` (Number) Endpoint port.
-- `scheme` (String) URL scheme.
 - `secret` (String) Fauna secret, used when authenticating with the database.
-- `source_type` (String) must be one of ["fauna"]
 
 Optional:
 
 - `collection` (Attributes) Settings for the Fauna Collection. (see [below for nested schema](#nestedatt--configuration--collection))
+- `domain` (String) Default: "db.fauna.com"
+Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
+- `port` (Number) Default: 443
+Endpoint port.
+- `scheme` (String) Default: "https"
+URL scheme.
 
 <a id="nestedatt--configuration--collection"></a>
 ### Nested Schema for `configuration.collection`
@@ -77,7 +78,11 @@ Required:
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions))
-- `page_size` (Number) The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+
+Optional:
+
+- `page_size` (Number) Default: 64
+The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
 Choose your page size based on how large the documents are. <br>
 See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
 
@@ -86,54 +91,25 @@ See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page
 
 Optional:
 
-- `source_fauna_collection_deletion_mode_disabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
+- `disabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_disabled))
-- `source_fauna_collection_deletion_mode_enabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
+Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--disabled))
+- `enabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled))
-- `source_fauna_update_collection_deletion_mode_disabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
-Enabling deletion mode informs your destination of deleted documents.<br>
-Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled))
-- `source_fauna_update_collection_deletion_mode_enabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
-Enabling deletion mode informs your destination of deleted documents.<br>
-Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled))
+Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--enabled))
 
-<a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_disabled"></a>
-### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
-
-Required:
-
-- `deletion_mode` (String) must be one of ["ignore"]
+<a id="nestedatt--configuration--collection--deletions--disabled"></a>
+### Nested Schema for `configuration.collection.deletions.enabled`
 
 
-<a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled"></a>
-### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
+<a id="nestedatt--configuration--collection--deletions--enabled"></a>
+### Nested Schema for `configuration.collection.deletions.enabled`
 
-Required:
+Optional:
 
-- `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of ["deleted_field"]
-
-
-<a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled"></a>
-### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
-
-Required:
-
-- `deletion_mode` (String) must be one of ["ignore"]
-
-
-<a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled"></a>
-### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
-
-Required:
-
-- `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of ["deleted_field"]
+- `column` (String) Default: "deleted_at"
+Name of the "deleted at" column.
 
 

@@ -14,7 +14,6 @@ SourceIntercom DataSource
 
 ```terraform
 data "airbyte_source_intercom" "my_source_intercom" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_intercom" "my_source_intercom" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `access_token` (String) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
-- `client_id` (String) Client Id for your Intercom application.
-- `client_secret` (String) Client Secret for your Intercom application.
-- `source_type` (String) must be one of ["intercom"]
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

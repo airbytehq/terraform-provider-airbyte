@@ -1,10 +1,10 @@
 resource "airbyte_source_insightly" "my_source_insightly" {
   configuration = {
-    source_type = "insightly"
-    start_date  = "2021-03-01T00:00:00Z"
-    token       = "...my_token..."
+    start_date = "2021-03-01T00:00:00Z"
+    token      = "...my_token..."
   }
-  name         = "Dana Lindgren"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "0a9eba47-f7d3-4ef0-8964-0d6a1831c87a"
+  definition_id = "d6014991-0eec-4fc7-b384-ec604057d045"
+  name          = "Geneva Bogan"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "b5cccbbb-db31-4196-8f99-d67745afb65f"
 }

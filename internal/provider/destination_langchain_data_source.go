@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,10 +29,11 @@ type DestinationLangchainDataSource struct {
 
 // DestinationLangchainDataSourceModel describes the data model.
 type DestinationLangchainDataSourceModel struct {
-	Configuration DestinationLangchain `tfsdk:"configuration"`
-	DestinationID types.String         `tfsdk:"destination_id"`
-	Name          types.String         `tfsdk:"name"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,260 +47,16 @@ func (r *DestinationLangchainDataSource) Schema(ctx context.Context, req datasou
 		MarkdownDescription: "DestinationLangchain DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"langchain",
-							),
-						},
-						Description: `must be one of ["langchain"]`,
-					},
-					"embedding": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_langchain_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
-								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
-							},
-							"destination_langchain_embedding_open_ai": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
-									"openai_key": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
-							},
-							"destination_langchain_update_embedding_fake": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"fake",
-											),
-										},
-										Description: `must be one of ["fake"]`,
-									},
-								},
-								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
-							},
-							"destination_langchain_update_embedding_open_ai": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"openai",
-											),
-										},
-										Description: `must be one of ["openai"]`,
-									},
-									"openai_key": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Embedding configuration`,
-					},
-					"indexing": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_langchain_indexing_chroma_local_persistance": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"collection_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `Name of the collection to use.`,
-									},
-									"destination_path": schema.StringAttribute{
-										Computed:    true,
-										Description: `Path to the directory where chroma files will be written. The files will be placed inside that local mount.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"chroma_local",
-											),
-										},
-										Description: `must be one of ["chroma_local"]`,
-									},
-								},
-								Description: `Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.`,
-							},
-							"destination_langchain_indexing_doc_array_hnsw_search": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"destination_path": schema.StringAttribute{
-										Computed:    true,
-										Description: `Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"DocArrayHnswSearch",
-											),
-										},
-										Description: `must be one of ["DocArrayHnswSearch"]`,
-									},
-								},
-								Description: `DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.`,
-							},
-							"destination_langchain_indexing_pinecone": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"index": schema.StringAttribute{
-										Computed:    true,
-										Description: `Pinecone index to use`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"pinecone",
-											),
-										},
-										Description: `must be one of ["pinecone"]`,
-									},
-									"pinecone_environment": schema.StringAttribute{
-										Computed:    true,
-										Description: `Pinecone environment to use`,
-									},
-									"pinecone_key": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain.`,
-							},
-							"destination_langchain_update_indexing_chroma_local_persistance": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"collection_name": schema.StringAttribute{
-										Computed:    true,
-										Description: `Name of the collection to use.`,
-									},
-									"destination_path": schema.StringAttribute{
-										Computed:    true,
-										Description: `Path to the directory where chroma files will be written. The files will be placed inside that local mount.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"chroma_local",
-											),
-										},
-										Description: `must be one of ["chroma_local"]`,
-									},
-								},
-								Description: `Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.`,
-							},
-							"destination_langchain_update_indexing_doc_array_hnsw_search": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"destination_path": schema.StringAttribute{
-										Computed:    true,
-										Description: `Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"DocArrayHnswSearch",
-											),
-										},
-										Description: `must be one of ["DocArrayHnswSearch"]`,
-									},
-								},
-								Description: `DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.`,
-							},
-							"destination_langchain_update_indexing_pinecone": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"index": schema.StringAttribute{
-										Computed:    true,
-										Description: `Pinecone index to use`,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"pinecone",
-											),
-										},
-										Description: `must be one of ["pinecone"]`,
-									},
-									"pinecone_environment": schema.StringAttribute{
-										Computed:    true,
-										Description: `Pinecone environment to use`,
-									},
-									"pinecone_key": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Indexing configuration`,
-					},
-					"processing": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"chunk_overlap": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
-							},
-							"chunk_size": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)`,
-							},
-							"text_fields": schema.ListAttribute{
-								Computed:    true,
-								ElementType: types.StringType,
-								Description: `List of fields in the record that should be used to calculate the embedding. All other fields are passed along as meta fields. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array.`,
-							},
-						},
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

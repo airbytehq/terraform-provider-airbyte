@@ -15,12 +15,12 @@ DestinationTimeplus Resource
 ```terraform
 resource "airbyte_destination_timeplus" "my_destination_timeplus" {
   configuration = {
-    apikey           = "...my_apikey..."
-    destination_type = "timeplus"
-    endpoint         = "https://us.timeplus.cloud/workspace_id"
+    apikey   = "...my_apikey..."
+    endpoint = "https://us.timeplus.cloud/workspace_id"
   }
-  name         = "Ruben Williamson"
-  workspace_id = "5f350d8c-db5a-4341-8143-010421813d52"
+  definition_id = "32a47524-bb49-40aa-b53a-d11902ba1888"
+  name          = "Kimberly Cole V"
+  workspace_id  = "d193af49-1985-4c92-933c-ae7edb401c23"
 }
 ```
 
@@ -30,8 +30,12 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -43,8 +47,11 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
 
 Required:
 
-- `apikey` (String) Personal API key
-- `destination_type` (String) must be one of ["timeplus"]
-- `endpoint` (String) Timeplus workspace endpoint
+- `apikey` (String, Sensitive) Personal API key
+
+Optional:
+
+- `endpoint` (String) Default: "https://us.timeplus.cloud/<workspace_id>"
+Timeplus workspace endpoint
 
 

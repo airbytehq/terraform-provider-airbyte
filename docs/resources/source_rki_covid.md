@@ -15,12 +15,12 @@ SourceRkiCovid Resource
 ```terraform
 resource "airbyte_source_rki_covid" "my_source_rkicovid" {
   configuration = {
-    source_type = "rki-covid"
-    start_date  = "...my_start_date..."
+    start_date = "...my_start_date..."
   }
-  name         = "Penny Morissette"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7ef807aa-e03f-433c-a79f-b9de4032ba26"
+  definition_id = "f3303ab0-45c8-491f-a9c8-dcb6cc1cd73d"
+  name          = "Leticia Zieme Sr."
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "36d5989e-7dba-4ce4-805a-6307276c58b5"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
 
 Required:
 
-- `source_type` (String) must be one of ["rki-covid"]
 - `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 

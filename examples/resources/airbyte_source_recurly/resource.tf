@@ -1,11 +1,11 @@
 resource "airbyte_source_recurly" "my_source_recurly" {
   configuration = {
-    api_key     = "...my_api_key..."
-    begin_time  = "2021-12-01T00:00:00"
-    end_time    = "2021-12-01T00:00:00"
-    source_type = "recurly"
+    api_key    = "...my_api_key..."
+    begin_time = "2021-12-01T00:00:00"
+    end_time   = "2021-12-01T00:00:00"
   }
-  name         = "Josephine Dibbert"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7e1763c5-208c-423e-9802-d82f0d45eb4a"
+  definition_id = "535fff5d-1d34-4f0c-8e54-86a3a161dc53"
+  name          = "Mrs. Glen Gottlieb"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "acb8b41d-5bf9-44a0-9397-d3dfd90aff66"
 }

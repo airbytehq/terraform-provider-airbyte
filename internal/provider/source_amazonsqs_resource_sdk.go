@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,7 +20,12 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 	} else {
 		attributesToReturn = nil
 	}
-	deleteMessages := r.Configuration.DeleteMessages.ValueBool()
+	deleteMessages := new(bool)
+	if !r.Configuration.DeleteMessages.IsUnknown() && !r.Configuration.DeleteMessages.IsNull() {
+		*deleteMessages = r.Configuration.DeleteMessages.ValueBool()
+	} else {
+		deleteMessages = nil
+	}
 	maxBatchSize := new(int64)
 	if !r.Configuration.MaxBatchSize.IsUnknown() && !r.Configuration.MaxBatchSize.IsNull() {
 		*maxBatchSize = r.Configuration.MaxBatchSize.ValueInt64()
@@ -41,7 +46,6 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 	} else {
 		secretKey = nil
 	}
-	sourceType := shared.SourceAmazonSqsAmazonSqs(r.Configuration.SourceType.ValueString())
 	visibilityTimeout := new(int64)
 	if !r.Configuration.VisibilityTimeout.IsUnknown() && !r.Configuration.VisibilityTimeout.IsNull() {
 		*visibilityTimeout = r.Configuration.VisibilityTimeout.ValueInt64()
@@ -57,8 +61,13 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 		QueueURL:           queueURL,
 		Region:             region,
 		SecretKey:          secretKey,
-		SourceType:         sourceType,
 		VisibilityTimeout:  visibilityTimeout,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -70,6 +79,7 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAmazonSqsCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -95,7 +105,12 @@ func (r *SourceAmazonSqsResourceModel) ToUpdateSDKType() *shared.SourceAmazonSqs
 	} else {
 		attributesToReturn = nil
 	}
-	deleteMessages := r.Configuration.DeleteMessages.ValueBool()
+	deleteMessages := new(bool)
+	if !r.Configuration.DeleteMessages.IsUnknown() && !r.Configuration.DeleteMessages.IsNull() {
+		*deleteMessages = r.Configuration.DeleteMessages.ValueBool()
+	} else {
+		deleteMessages = nil
+	}
 	maxBatchSize := new(int64)
 	if !r.Configuration.MaxBatchSize.IsUnknown() && !r.Configuration.MaxBatchSize.IsNull() {
 		*maxBatchSize = r.Configuration.MaxBatchSize.ValueInt64()

@@ -17,13 +17,13 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
   configuration = {
     access_token = "...my_access_token..."
     app_key      = "...my_app_key..."
-    email        = "Ibrahim74@gmail.com"
-    source_type  = "yotpo"
+    email        = "Bradley96@hotmail.com"
     start_date   = "2022-03-01T00:00:00.000Z"
   }
-  name         = "Clark McGlynn"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "61aae5eb-5f0c-4492-b574-4d08a2267aae"
+  definition_id = "746ac11e-b024-4372-8c2f-a90b3fc58aed"
+  name          = "Reginald Howell"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "07de9609-725c-46d5-a5da-35039f4e4098"
 }
 ```
 
@@ -33,11 +33,12 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -50,10 +51,13 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
 
 Required:
 
-- `access_token` (String) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
-- `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
-- `email` (String) Email address registered with yotpo.
-- `source_type` (String) must be one of ["yotpo"]
+- `access_token` (String, Sensitive) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
+- `app_key` (String, Sensitive) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
+
+Optional:
+
+- `email` (String) Default: "example@gmail.com"
+Email address registered with yotpo.
 
 

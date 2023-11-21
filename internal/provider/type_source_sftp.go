@@ -11,6 +11,5 @@ type SourceSftp struct {
 	FolderPath  types.String                      `tfsdk:"folder_path"`
 	Host        types.String                      `tfsdk:"host"`
 	Port        types.Int64                       `tfsdk:"port"`
-	SourceType  types.String                      `tfsdk:"source_type"`
 	User        types.String                      `tfsdk:"user"`
 }

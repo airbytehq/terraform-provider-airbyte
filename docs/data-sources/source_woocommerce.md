@@ -14,7 +14,6 @@ SourceWoocommerce DataSource
 
 ```terraform
 data "airbyte_source_woocommerce" "my_source_woocommerce" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_woocommerce" "my_source_woocommerce" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `api_key` (String) Customer Key for API in WooCommerce shop
-- `api_secret` (String) Customer Secret for API in WooCommerce shop
-- `shop` (String) The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
-- `source_type` (String) must be one of ["woocommerce"]
-- `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD
 
 

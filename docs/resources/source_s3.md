@@ -19,11 +19,9 @@ resource "airbyte_source_s3" "my_source_s3" {
     aws_secret_access_key = "...my_aws_secret_access_key..."
     bucket                = "...my_bucket..."
     dataset               = "...my_dataset..."
-    endpoint              = "...my_endpoint..."
+    endpoint              = "https://my-s3-endpoint.com"
     format = {
-      source_s3_file_format_avro = {
-        filetype = "avro"
-      }
+      avro = {}
     }
     path_pattern = "**"
     provider = {
@@ -34,17 +32,14 @@ resource "airbyte_source_s3" "my_source_s3" {
       path_prefix           = "...my_path_prefix..."
       start_date            = "2021-01-01T00:00:00Z"
     }
-    schema      = "{\"column_1\": \"number\", \"column_2\": \"string\", \"column_3\": \"array\", \"column_4\": \"object\", \"column_5\": \"boolean\"}"
-    source_type = "s3"
-    start_date  = "2021-01-01T00:00:00.000000Z"
+    schema     = "{\"column_1\": \"number\", \"column_2\": \"string\", \"column_3\": \"array\", \"column_4\": \"object\", \"column_5\": \"boolean\"}"
+    start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 1
-        file_type                       = "...my_file_type..."
+        days_to_sync_if_history_is_full = 3
         format = {
-          source_s3_file_based_stream_config_format_avro_format = {
-            double_as_string = true
-            filetype         = "avro"
+          source_s3_avro_format = {
+            double_as_string = false
           }
         }
         globs = [
@@ -52,16 +47,17 @@ resource "airbyte_source_s3" "my_source_s3" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Flora Rempel"
+        name              = "Tyler Grimes"
         primary_key       = "...my_primary_key..."
         schemaless        = false
         validation_policy = "Skip Record"
       },
     ]
   }
-  name         = "Jacqueline Kiehn"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "2c22c553-5049-45c5-9bb3-c57c1e4981e8"
+  definition_id = "5b5a324c-6128-4aab-bad0-730782c3e822"
+  name          = "Mr. Phillip Hermann DVM"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3e25c699-48d0-4388-851e-c06fd3b8cc64"
 }
 ```
 
@@ -72,11 +68,12 @@ resource "airbyte_source_s3" "my_source_s3" {
 
 - `configuration` (Attributes) NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes
 because it is responsible for converting legacy S3 v3 configs into v4 configs using the File-Based CDK. (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -90,19 +87,20 @@ because it is responsible for converting legacy S3 v3 configs into v4 configs us
 Required:
 
 - `bucket` (String) Name of the S3 bucket where the file(s) exist.
-- `source_type` (String) must be one of ["s3"]
 - `streams` (Attributes List) Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table. (see [below for nested schema](#nestedatt--configuration--streams))
 
 Optional:
 
-- `aws_access_key_id` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `aws_secret_access_key` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `dataset` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
-- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS.
+- `endpoint` (String) Default: ""
+Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required.
 - `format` (Attributes) Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate (see [below for nested schema](#nestedatt--configuration--format))
 - `path_pattern` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.globs instead. A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.
 - `provider` (Attributes) Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services (see [below for nested schema](#nestedatt--configuration--provider))
-- `schema` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
+- `schema` (String) Default: "{}"
+Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 
 <a id="nestedatt--configuration--streams"></a>
@@ -110,19 +108,20 @@ Optional:
 
 Required:
 
-- `file_type` (String) The data file type that is being extracted for a stream.
+- `format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format))
 - `name` (String) The name of the stream.
 
 Optional:
 
-- `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
-- `format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format))
+- `days_to_sync_if_history_is_full` (Number) Default: 3
+When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 - `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record.
-- `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema.
-- `validation_policy` (String) must be one of ["Emit Record", "Skip Record", "Wait for Discover"]
+- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record.
+- `schemaless` (Boolean) Default: false
+When enabled, syncs will not validate or structure records against the stream's schema.
+- `validation_policy` (String) must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
 
 <a id="nestedatt--configuration--streams--format"></a>
@@ -130,185 +129,95 @@ The name of the validation policy that dictates sync behavior when a record does
 
 Optional:
 
-- `source_s3_file_based_stream_config_format_avro_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_avro_format))
-- `source_s3_file_based_stream_config_format_csv_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_csv_format))
-- `source_s3_file_based_stream_config_format_jsonl_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_jsonl_format))
-- `source_s3_file_based_stream_config_format_parquet_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_parquet_format))
-- `source_s3_update_file_based_stream_config_format_avro_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_avro_format))
-- `source_s3_update_file_based_stream_config_format_csv_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_csv_format))
-- `source_s3_update_file_based_stream_config_format_jsonl_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_jsonl_format))
-- `source_s3_update_file_based_stream_config_format_parquet_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format))
+- `avro_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
+- `csv_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
+- `document_file_type_format_experimental` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental))
+- `jsonl_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
+- `parquet_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
 
-<a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_avro_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
+<a id="nestedatt--configuration--streams--format--avro_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
 
 Optional:
 
-- `double_as_string` (Boolean) Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-- `filetype` (String) must be one of ["avro"]
+- `double_as_string` (Boolean) Default: false
+Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
 
 
-<a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_csv_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
+<a id="nestedatt--configuration--streams--format--csv_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
 
 Optional:
 
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
-- `filetype` (String) must be one of ["csv"]
-- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition))
-- `inference_type` (String) must be one of ["None", "Primitive Types Only"]
+- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition))
+- `inference_type` (String) must be one of ["None", "Primitive Types Only"]; Default: "None"
 How to infer the types of the columns. If none, inference default to strings.
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
-- `skip_rows_after_header` (Number) The number of rows to skip after the header row.
-- `skip_rows_before_header` (Number) The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-- `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `skip_rows_after_header` (Number) Default: 0
+The number of rows to skip after the header row.
+- `skip_rows_before_header` (Number) Default: 0
+The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+- `strings_can_be_null` (Boolean) Default: true
+Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
 - `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
 
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition`
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition`
 
 Optional:
 
-- `source_s3_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated))
-- `source_s3_file_based_stream_config_format_csv_format_csv_header_definition_from_csv` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_from_csv))
-- `source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided))
+- `autogenerated` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated))
+- `from_csv` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv))
+- `user_provided` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided))
 
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Optional:
-
-- `header_definition_type` (String) must be one of ["Autogenerated"]
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
 
 
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_from_csv"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Optional:
-
-- `header_definition_type` (String) must be one of ["From CSV"]
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
 
 
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
+<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
 
 Required:
 
 - `column_names` (List of String) The column names that will be used while emitting the CSV records
 
-Optional:
-
-- `header_definition_type` (String) must be one of ["User Provided"]
 
 
 
-
-<a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_jsonl_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
+<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
 
 Optional:
 
-- `filetype` (String) must be one of ["jsonl"]
+- `skip_unprocessable_file_types` (Boolean) Default: true
+If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
 
 
-<a id="nestedatt--configuration--streams--format--source_s3_file_based_stream_config_format_parquet_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
-
-Optional:
-
-- `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-- `filetype` (String) must be one of ["parquet"]
+<a id="nestedatt--configuration--streams--format--jsonl_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
 
 
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_avro_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
+<a id="nestedatt--configuration--streams--format--parquet_format"></a>
+### Nested Schema for `configuration.streams.format.parquet_format`
 
 Optional:
 
-- `double_as_string` (Boolean) Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-- `filetype` (String) must be one of ["avro"]
-
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_csv_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
-
-Optional:
-
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-- `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
-- `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
-- `filetype` (String) must be one of ["csv"]
-- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition))
-- `inference_type` (String) must be one of ["None", "Primitive Types Only"]
-How to infer the types of the columns. If none, inference default to strings.
-- `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
-- `skip_rows_after_header` (Number) The number of rows to skip after the header row.
-- `skip_rows_before_header` (Number) The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-- `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-- `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition`
-
-Optional:
-
-- `source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated))
-- `source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_from_csv` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_from_csv))
-- `source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided))
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Optional:
-
-- `header_definition_type` (String) must be one of ["Autogenerated"]
-
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_from_csv"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Optional:
-
-- `header_definition_type` (String) must be one of ["From CSV"]
-
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format--header_definition--source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format.header_definition.source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition_user_provided`
-
-Required:
-
-- `column_names` (List of String) The column names that will be used while emitting the CSV records
-
-Optional:
-
-- `header_definition_type` (String) must be one of ["User Provided"]
-
-
-
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_jsonl_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
-
-Optional:
-
-- `filetype` (String) must be one of ["jsonl"]
-
-
-<a id="nestedatt--configuration--streams--format--source_s3_update_file_based_stream_config_format_parquet_format"></a>
-### Nested Schema for `configuration.streams.format.source_s3_update_file_based_stream_config_format_parquet_format`
-
-Optional:
-
-- `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-- `filetype` (String) must be one of ["parquet"]
+- `decimal_as_float` (Boolean) Default: false
+Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 
 
 
@@ -318,111 +227,62 @@ Optional:
 
 Optional:
 
-- `source_s3_file_format_avro` (Attributes) This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_avro))
-- `source_s3_file_format_csv` (Attributes) This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_csv))
-- `source_s3_file_format_jsonl` (Attributes) This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_jsonl))
-- `source_s3_file_format_parquet` (Attributes) This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_parquet))
-- `source_s3_update_file_format_avro` (Attributes) This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_avro))
-- `source_s3_update_file_format_csv` (Attributes) This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_csv))
-- `source_s3_update_file_format_jsonl` (Attributes) This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_jsonl))
-- `source_s3_update_file_format_parquet` (Attributes) This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_parquet))
+- `avro` (Attributes) This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing. (see [below for nested schema](#nestedatt--configuration--format--avro))
+- `csv` (Attributes) This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing. (see [below for nested schema](#nestedatt--configuration--format--csv))
+- `jsonl` (Attributes) This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing. (see [below for nested schema](#nestedatt--configuration--format--jsonl))
+- `parquet` (Attributes) This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing. (see [below for nested schema](#nestedatt--configuration--format--parquet))
 
-<a id="nestedatt--configuration--format--source_s3_file_format_avro"></a>
-### Nested Schema for `configuration.format.source_s3_file_format_avro`
-
-Optional:
-
-- `filetype` (String) must be one of ["avro"]
+<a id="nestedatt--configuration--format--avro"></a>
+### Nested Schema for `configuration.format.avro`
 
 
-<a id="nestedatt--configuration--format--source_s3_file_format_csv"></a>
-### Nested Schema for `configuration.format.source_s3_file_format_csv`
+<a id="nestedatt--configuration--format--csv"></a>
+### Nested Schema for `configuration.format.csv`
 
 Optional:
 
 - `additional_reader_options` (String) Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
 - `advanced_options` (String) Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `block_size` (Number) Default: 10000
+The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
+- `delimiter` (String) Default: ","
+The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+- `double_quote` (Boolean) Default: true
+Whether two quotes in a quoted CSV value denote a single quote in the data.
+- `encoding` (String) Default: "utf8"
+The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
-- `filetype` (String) must be one of ["csv"]
-- `infer_datatypes` (Boolean) Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
+- `infer_datatypes` (Boolean) Default: true
+Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
+- `newlines_in_values` (Boolean) Default: false
+Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
+- `quote_char` (String) Default: "\""
+The character used for quoting CSV values. To disallow quoting, make this field blank.
 
 
-<a id="nestedatt--configuration--format--source_s3_file_format_jsonl"></a>
-### Nested Schema for `configuration.format.source_s3_file_format_jsonl`
+<a id="nestedatt--configuration--format--jsonl"></a>
+### Nested Schema for `configuration.format.jsonl`
 
 Optional:
 
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `filetype` (String) must be one of ["jsonl"]
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
-- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]
+- `block_size` (Number) Default: 0
+The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
+- `newlines_in_values` (Boolean) Default: false
+Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
+- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]; Default: "infer"
 How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
 
 
-<a id="nestedatt--configuration--format--source_s3_file_format_parquet"></a>
-### Nested Schema for `configuration.format.source_s3_file_format_parquet`
+<a id="nestedatt--configuration--format--parquet"></a>
+### Nested Schema for `configuration.format.parquet`
 
 Optional:
 
-- `batch_size` (Number) Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
-- `buffer_size` (Number) Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
+- `batch_size` (Number) Default: 65536
+Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
+- `buffer_size` (Number) Default: 2
+Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
 - `columns` (List of String) If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-- `filetype` (String) must be one of ["parquet"]
-
-
-<a id="nestedatt--configuration--format--source_s3_update_file_format_avro"></a>
-### Nested Schema for `configuration.format.source_s3_update_file_format_avro`
-
-Optional:
-
-- `filetype` (String) must be one of ["avro"]
-
-
-<a id="nestedatt--configuration--format--source_s3_update_file_format_csv"></a>
-### Nested Schema for `configuration.format.source_s3_update_file_format_csv`
-
-Optional:
-
-- `additional_reader_options` (String) Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
-- `advanced_options` (String) Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-- `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
-- `filetype` (String) must be one of ["csv"]
-- `infer_datatypes` (Boolean) Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank.
-
-
-<a id="nestedatt--configuration--format--source_s3_update_file_format_jsonl"></a>
-### Nested Schema for `configuration.format.source_s3_update_file_format_jsonl`
-
-Optional:
-
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-- `filetype` (String) must be one of ["jsonl"]
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
-- `unexpected_field_behavior` (String) must be one of ["ignore", "infer", "error"]
-How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
-
-
-<a id="nestedatt--configuration--format--source_s3_update_file_format_parquet"></a>
-### Nested Schema for `configuration.format.source_s3_update_file_format_parquet`
-
-Optional:
-
-- `batch_size` (Number) Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
-- `buffer_size` (Number) Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
-- `columns` (List of String) If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-- `filetype` (String) must be one of ["parquet"]
 
 
 
@@ -431,11 +291,13 @@ Optional:
 
 Optional:
 
-- `aws_access_key_id` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `aws_secret_access_key` (String) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `bucket` (String) Name of the S3 bucket where the file(s) exist.
-- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS.
-- `path_prefix` (String) By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
+- `endpoint` (String) Default: ""
+Endpoint to an S3 compatible service. Leave empty to use AWS.
+- `path_prefix` (String) Default: ""
+By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.
 
 

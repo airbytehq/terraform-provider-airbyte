@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -12,8 +12,46 @@ type PutSourceSmartsheetsRequest struct {
 	SourceID                    string                              `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PutSourceSmartsheetsRequest) GetSourceSmartsheetsPutRequest() *shared.SourceSmartsheetsPutRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourceSmartsheetsPutRequest
+}
+
+func (o *PutSourceSmartsheetsRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PutSourceSmartsheetsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *PutSourceSmartsheetsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PutSourceSmartsheetsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PutSourceSmartsheetsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

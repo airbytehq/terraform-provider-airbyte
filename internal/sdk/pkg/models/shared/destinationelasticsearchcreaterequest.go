@@ -4,6 +4,37 @@ package shared
 
 type DestinationElasticsearchCreateRequest struct {
 	Configuration DestinationElasticsearch `json:"configuration"`
-	Name          string                   `json:"name"`
-	WorkspaceID   string                   `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationElasticsearchCreateRequest) GetConfiguration() DestinationElasticsearch {
+	if o == nil {
+		return DestinationElasticsearch{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationElasticsearchCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationElasticsearchCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationElasticsearchCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

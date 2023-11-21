@@ -1,17 +1,17 @@
 resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
   configuration = {
     credentials = {
-      source_zendesk_talk_authentication_api_token = {
-        api_token = "...my_api_token..."
-        auth_type = "api_token"
-        email     = "Kacie27@hotmail.com"
+      source_zendesk_talk_api_token = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_token             = "...my_api_token..."
+        email                 = "Brain88@gmail.com"
       }
     }
-    source_type = "zendesk-talk"
-    start_date  = "2020-10-15T00:00:00Z"
-    subdomain   = "...my_subdomain..."
+    start_date = "2020-10-15T00:00:00Z"
+    subdomain  = "...my_subdomain..."
   }
-  name         = "Jackie Welch"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "bb0c69e3-72db-4134-8ba9-f78a5c0ed7aa"
+  definition_id = "9a97873e-c6ec-423f-8936-834bb7f256aa"
+  name          = "Gwen Towne"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "7a7ac93c-e210-41f6-92ef-f8de56504728"
 }

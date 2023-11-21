@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceLemlistLemlist string
+type Lemlist string
 
 const (
-	SourceLemlistLemlistLemlist SourceLemlistLemlist = "lemlist"
+	LemlistLemlist Lemlist = "lemlist"
 )
 
-func (e SourceLemlistLemlist) ToPointer() *SourceLemlistLemlist {
+func (e Lemlist) ToPointer() *Lemlist {
 	return &e
 }
 
-func (e *SourceLemlistLemlist) UnmarshalJSON(data []byte) error {
+func (e *Lemlist) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "lemlist":
-		*e = SourceLemlistLemlist(v)
+		*e = Lemlist(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLemlistLemlist: %v", v)
+		return fmt.Errorf("invalid value for Lemlist: %v", v)
 	}
 }
 
 type SourceLemlist struct {
 	// Lemlist API key,
-	APIKey     string               `json:"api_key"`
-	SourceType SourceLemlistLemlist `json:"sourceType"`
+	APIKey     string  `json:"api_key"`
+	sourceType Lemlist `const:"lemlist" json:"sourceType"`
+}
+
+func (s SourceLemlist) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLemlist) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLemlist) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceLemlist) GetSourceType() Lemlist {
+	return LemlistLemlist
 }

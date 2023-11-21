@@ -16,22 +16,21 @@ SourceSftp Resource
 resource "airbyte_source_sftp" "my_source_sftp" {
   configuration = {
     credentials = {
-      source_sftp_authentication_wildcard_password_authentication = {
-        auth_method        = "SSH_PASSWORD_AUTH"
+      source_sftp_password_authentication = {
         auth_user_password = "...my_auth_user_password..."
       }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
     file_types   = "csv,json"
     folder_path  = "/logs/2022"
-    host         = "www.host.com"
+    host         = "192.0.2.1"
     port         = 22
-    source_type  = "sftp"
     user         = "...my_user..."
   }
-  name         = "Miss Tommy Emard"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "665163a3-6385-412a-b252-1b9f2e072467"
+  definition_id = "8a56e1f7-b10c-46dd-9e62-eb5fcf365dcc"
+  name          = "Rogelio Schoen"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e41cbe1d-2ecd-4015-81d5-2f6c56d3cf89"
 }
 ```
 
@@ -41,11 +40,12 @@ resource "airbyte_source_sftp" "my_source_sftp" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -59,64 +59,41 @@ resource "airbyte_source_sftp" "my_source_sftp" {
 Required:
 
 - `host` (String) The server host address
-- `port` (Number) The server port
-- `source_type` (String) must be one of ["sftp"]
 - `user` (String) The server user
 
 Optional:
 
 - `credentials` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
-- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
-- `file_types` (String) Coma separated file types. Currently only 'csv' and 'json' types are supported.
-- `folder_path` (String) The directory to search files for sync
+- `file_pattern` (String) Default: ""
+The regular expression to specify files for sync in a chosen Folder Path
+- `file_types` (String) Default: "csv,json"
+Coma separated file types. Currently only 'csv' and 'json' types are supported.
+- `folder_path` (String) Default: ""
+The directory to search files for sync
+- `port` (Number) Default: 22
+The server port
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `source_sftp_authentication_wildcard_password_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_authentication_wildcard_password_authentication))
-- `source_sftp_authentication_wildcard_ssh_key_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_authentication_wildcard_ssh_key_authentication))
-- `source_sftp_update_authentication_wildcard_password_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_password_authentication))
-- `source_sftp_update_authentication_wildcard_ssh_key_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_ssh_key_authentication))
+- `password_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--password_authentication))
+- `ssh_key_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--ssh_key_authentication))
 
-<a id="nestedatt--configuration--credentials--source_sftp_authentication_wildcard_password_authentication"></a>
-### Nested Schema for `configuration.credentials.source_sftp_authentication_wildcard_password_authentication`
+<a id="nestedatt--configuration--credentials--password_authentication"></a>
+### Nested Schema for `configuration.credentials.password_authentication`
 
 Required:
 
-- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through password authentication
-- `auth_user_password` (String) OS-level password for logging into the jump server host
+- `auth_user_password` (String, Sensitive) OS-level password for logging into the jump server host
 
 
-<a id="nestedatt--configuration--credentials--source_sftp_authentication_wildcard_ssh_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_sftp_authentication_wildcard_ssh_key_authentication`
+<a id="nestedatt--configuration--credentials--ssh_key_authentication"></a>
+### Nested Schema for `configuration.credentials.ssh_key_authentication`
 
 Required:
 
-- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through ssh key
-- `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-
-
-<a id="nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_password_authentication"></a>
-### Nested Schema for `configuration.credentials.source_sftp_update_authentication_wildcard_password_authentication`
-
-Required:
-
-- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
-Connect through password authentication
-- `auth_user_password` (String) OS-level password for logging into the jump server host
-
-
-<a id="nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_ssh_key_authentication"></a>
-### Nested Schema for `configuration.credentials.source_sftp_update_authentication_wildcard_ssh_key_authentication`
-
-Required:
-
-- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
-Connect through ssh key
-- `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `auth_ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 

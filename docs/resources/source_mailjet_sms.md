@@ -15,14 +15,14 @@ SourceMailjetSms Resource
 ```terraform
 resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
   configuration = {
-    end_date    = 1666281656
-    source_type = "mailjet-sms"
-    start_date  = 1666261656
-    token       = "...my_token..."
+    end_date   = 1666281656
+    start_date = 1666261656
+    token      = "...my_token..."
   }
-  name         = "Dr. Eloise Cronin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "62657b36-fc6b-49f5-87ce-525c67641a83"
+  definition_id = "6a42dbbb-853e-4c4b-9e6a-18b0d79003de"
+  name          = "Gilberto Pagac"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3bfaadd2-9a6d-4ff6-8b6b-f32faf825bea"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,8 +50,7 @@ resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
 
 Required:
 
-- `source_type` (String) must be one of ["mailjet-sms"]
-- `token` (String) Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
+- `token` (String, Sensitive) Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
 
 Optional:
 

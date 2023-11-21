@@ -1,11 +1,11 @@
 resource "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspaceadminreports" {
   configuration = {
     credentials_json = "...my_credentials_json..."
-    email            = "Bridgette_Rohan@gmail.com"
-    lookback         = 10
-    source_type      = "google-workspace-admin-reports"
+    email            = "Daisha.Halvorson12@gmail.com"
+    lookback         = 8
   }
-  name         = "Samantha Huels"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "398a0dc7-6632-44cc-b06c-8ca12d025292"
+  definition_id = "b8adc8fd-2a7f-4940-9ec4-4e216dff8929"
+  name          = "Francisco Swaniawski"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "a00b494f-7d68-4d64-a810-b2959587ed0c"
 }

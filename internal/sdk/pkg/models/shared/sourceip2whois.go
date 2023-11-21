@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceIp2whoisIp2whois string
+type Ip2whois string
 
 const (
-	SourceIp2whoisIp2whoisIp2whois SourceIp2whoisIp2whois = "ip2whois"
+	Ip2whoisIp2whois Ip2whois = "ip2whois"
 )
 
-func (e SourceIp2whoisIp2whois) ToPointer() *SourceIp2whoisIp2whois {
+func (e Ip2whois) ToPointer() *Ip2whois {
 	return &e
 }
 
-func (e *SourceIp2whoisIp2whois) UnmarshalJSON(data []byte) error {
+func (e *Ip2whois) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ip2whois":
-		*e = SourceIp2whoisIp2whois(v)
+		*e = Ip2whois(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIp2whoisIp2whois: %v", v)
+		return fmt.Errorf("invalid value for Ip2whois: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourceIp2whois struct {
 	// Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	APIKey *string `json:"api_key,omitempty"`
 	// Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
-	Domain     *string                 `json:"domain,omitempty"`
-	SourceType *SourceIp2whoisIp2whois `json:"sourceType,omitempty"`
+	Domain     *string   `json:"domain,omitempty"`
+	sourceType *Ip2whois `const:"ip2whois" json:"sourceType,omitempty"`
+}
+
+func (s SourceIp2whois) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceIp2whois) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceIp2whois) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *SourceIp2whois) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *SourceIp2whois) GetSourceType() *Ip2whois {
+	return Ip2whoisIp2whois.ToPointer()
 }

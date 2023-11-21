@@ -15,14 +15,14 @@ SourceOrbit Resource
 ```terraform
 resource "airbyte_source_orbit" "my_source_orbit" {
   configuration = {
-    api_token   = "...my_api_token..."
-    source_type = "orbit"
-    start_date  = "...my_start_date..."
-    workspace   = "...my_workspace..."
+    api_token  = "...my_api_token..."
+    start_date = "...my_start_date..."
+    workspace  = "...my_workspace..."
   }
-  name         = "Jo Greenholt V"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "abfa2e76-1f0c-4a4d-856e-f1031e6899f0"
+  definition_id = "35ff19f3-8868-45d8-941e-7db0723f9473"
+  name          = "Salvatore Schmitt DVM"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "e5b71225-778f-47a0-a3c1-e08d80f694c4"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_orbit" "my_source_orbit" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,8 +50,7 @@ resource "airbyte_source_orbit" "my_source_orbit" {
 
 Required:
 
-- `api_token` (String) Authorizes you to work with Orbit workspaces associated with the token.
-- `source_type` (String) must be one of ["orbit"]
+- `api_token` (String, Sensitive) Authorizes you to work with Orbit workspaces associated with the token.
 - `workspace` (String) The unique name of the workspace that your API token is associated with.
 
 Optional:

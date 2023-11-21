@@ -7,3 +7,17 @@ type SourceConvexUpdate struct {
 	AccessKey     string `json:"access_key"`
 	DeploymentURL string `json:"deployment_url"`
 }
+
+func (o *SourceConvexUpdate) GetAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKey
+}
+
+func (o *SourceConvexUpdate) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
+}

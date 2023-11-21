@@ -4,12 +4,49 @@ package shared
 
 // InitiateOauthRequest - POST body for initiating OAuth via the public API
 type InitiateOauthRequest struct {
-	// The name of the source to authenticate to
-	Name string `json:"name"`
+	// The name of the source to authenticate to. Deprecated - use sourceType instead.
+	Name *string `json:"name,omitempty"`
 	// Arbitrary vars to pass for OAuth depending on what the source/destination spec requires.
 	OAuthInputConfiguration *OAuthInputConfiguration `json:"oAuthInputConfiguration,omitempty"`
 	// The URL to redirect the user to with the OAuth secret stored in the secret_id query string parameter after authentication is complete.
 	RedirectURL string `json:"redirectUrl"`
+	// The name of the source to authenticate to
+	SourceType *string `json:"sourceType,omitempty"`
 	// The workspace to create the secret and eventually the full source.
 	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *InitiateOauthRequest) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *InitiateOauthRequest) GetOAuthInputConfiguration() *OAuthInputConfiguration {
+	if o == nil {
+		return nil
+	}
+	return o.OAuthInputConfiguration
+}
+
+func (o *InitiateOauthRequest) GetRedirectURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.RedirectURL
+}
+
+func (o *InitiateOauthRequest) GetSourceType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceType
+}
+
+func (o *InitiateOauthRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

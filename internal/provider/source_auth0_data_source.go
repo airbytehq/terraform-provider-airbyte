@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,10 +29,10 @@ type SourceAuth0DataSource struct {
 
 // SourceAuth0DataSourceModel describes the data model.
 type SourceAuth0DataSourceModel struct {
-	Configuration SourceAuth0  `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -50,133 +47,19 @@ func (r *SourceAuth0DataSource) Schema(ctx context.Context, req datasource.Schem
 		MarkdownDescription: "SourceAuth0 DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"base_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base ` + "`" + `https://YOUR_DOMAIN` + "`" + ``,
-					},
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_auth0_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_access_token",
-											),
-										},
-										Description: `must be one of ["oauth2_access_token"]`,
-									},
-								},
-							},
-							"source_auth0_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"audience": schema.StringAttribute{
-										Computed:    true,
-										Description: `The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_confidential_application",
-											),
-										},
-										Description: `must be one of ["oauth2_confidential_application"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
-									},
-								},
-							},
-							"source_auth0_update_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_access_token",
-											),
-										},
-										Description: `must be one of ["oauth2_access_token"]`,
-									},
-								},
-							},
-							"source_auth0_update_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"audience": schema.StringAttribute{
-										Computed:    true,
-										Description: `The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_confidential_application",
-											),
-										},
-										Description: `must be one of ["oauth2_confidential_application"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"auth0",
-							),
-						},
-						Description: `must be one of ["auth0"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

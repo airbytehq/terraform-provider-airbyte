@@ -5,14 +5,13 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOracle struct {
-	ConnectionData *SourceOracleConnectBy       `tfsdk:"connection_data"`
-	Encryption     SourceOracleEncryption       `tfsdk:"encryption"`
-	Host           types.String                 `tfsdk:"host"`
-	JdbcURLParams  types.String                 `tfsdk:"jdbc_url_params"`
-	Password       types.String                 `tfsdk:"password"`
-	Port           types.Int64                  `tfsdk:"port"`
-	Schemas        []types.String               `tfsdk:"schemas"`
-	SourceType     types.String                 `tfsdk:"source_type"`
-	TunnelMethod   *SourceOracleSSHTunnelMethod `tfsdk:"tunnel_method"`
-	Username       types.String                 `tfsdk:"username"`
+	ConnectionData *SourceOracleConnectBy                `tfsdk:"connection_data"`
+	Encryption     SourceOracleEncryption                `tfsdk:"encryption"`
+	Host           types.String                          `tfsdk:"host"`
+	JdbcURLParams  types.String                          `tfsdk:"jdbc_url_params"`
+	Password       types.String                          `tfsdk:"password"`
+	Port           types.Int64                           `tfsdk:"port"`
+	Schemas        []types.String                        `tfsdk:"schemas"`
+	TunnelMethod   *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username       types.String                          `tfsdk:"username"`
 }

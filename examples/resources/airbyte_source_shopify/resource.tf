@@ -1,16 +1,15 @@
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
     credentials = {
-      source_shopify_shopify_authorization_method_api_password = {
+      api_password = {
         api_password = "...my_api_password..."
-        auth_method  = "api_password"
       }
     }
-    shop        = "my-store"
-    source_type = "shopify"
-    start_date  = "2022-01-02"
+    shop       = "my-store"
+    start_date = "2022-08-02"
   }
-  name         = "Randal Kris"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "df54fdd5-ea95-4433-98da-fb42a8d63388"
+  definition_id = "4e1dc4a0-1d44-4fb9-b610-a4d0de91eaa4"
+  name          = "Clinton Baumbach"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "cb870eb9-8050-4c39-a745-0657bfd1cb4d"
 }

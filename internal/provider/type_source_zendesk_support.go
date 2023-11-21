@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceZendeskSupport struct {
 	Credentials      *SourceZendeskSupportAuthentication `tfsdk:"credentials"`
 	IgnorePagination types.Bool                          `tfsdk:"ignore_pagination"`
-	SourceType       types.String                        `tfsdk:"source_type"`
 	StartDate        types.String                        `tfsdk:"start_date"`
 	Subdomain        types.String                        `tfsdk:"subdomain"`
 }

@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceOmnisendOmnisend string
+type Omnisend string
 
 const (
-	SourceOmnisendOmnisendOmnisend SourceOmnisendOmnisend = "omnisend"
+	OmnisendOmnisend Omnisend = "omnisend"
 )
 
-func (e SourceOmnisendOmnisend) ToPointer() *SourceOmnisendOmnisend {
+func (e Omnisend) ToPointer() *Omnisend {
 	return &e
 }
 
-func (e *SourceOmnisendOmnisend) UnmarshalJSON(data []byte) error {
+func (e *Omnisend) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "omnisend":
-		*e = SourceOmnisendOmnisend(v)
+		*e = Omnisend(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOmnisendOmnisend: %v", v)
+		return fmt.Errorf("invalid value for Omnisend: %v", v)
 	}
 }
 
 type SourceOmnisend struct {
 	// API Key
-	APIKey     string                 `json:"api_key"`
-	SourceType SourceOmnisendOmnisend `json:"sourceType"`
+	APIKey     string   `json:"api_key"`
+	sourceType Omnisend `const:"omnisend" json:"sourceType"`
+}
+
+func (s SourceOmnisend) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOmnisend) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOmnisend) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceOmnisend) GetSourceType() Omnisend {
+	return OmnisendOmnisend
 }

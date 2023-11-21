@@ -4,6 +4,37 @@ package shared
 
 type DestinationKeenCreateRequest struct {
 	Configuration DestinationKeen `json:"configuration"`
-	Name          string          `json:"name"`
-	WorkspaceID   string          `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationKeenCreateRequest) GetConfiguration() DestinationKeen {
+	if o == nil {
+		return DestinationKeen{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationKeenCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationKeenCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationKeenCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

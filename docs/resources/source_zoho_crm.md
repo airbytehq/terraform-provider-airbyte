@@ -17,16 +17,16 @@ resource "airbyte_source_zoho_crm" "my_source_zohocrm" {
   configuration = {
     client_id      = "...my_client_id..."
     client_secret  = "...my_client_secret..."
-    dc_region      = "US"
-    edition        = "Enterprise"
-    environment    = "Developer"
+    dc_region      = "IN"
+    edition        = "Ultimate"
+    environment    = "Sandbox"
     refresh_token  = "...my_refresh_token..."
-    source_type    = "zoho-crm"
-    start_datetime = "2000-01-01T13:00+00:00"
+    start_datetime = "2000-01-01 13:00"
   }
-  name         = "Kenneth Fisher"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "b1710688-deeb-4ef8-97f3-dd0ccd33f11b"
+  definition_id = "7a306443-a75b-4cf4-a2e1-378db01d76f7"
+  name          = "Jody Collins"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "a6e51f0c-20e4-4312-90cb-fe39df03e297"
 }
 ```
 
@@ -36,11 +36,12 @@ resource "airbyte_source_zoho_crm" "my_source_zohocrm" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,15 +58,14 @@ Required:
 - `client_secret` (String) OAuth2.0 Client Secret
 - `dc_region` (String) must be one of ["US", "AU", "EU", "IN", "CN", "JP"]
 Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
-- `edition` (String) must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]
-Choose your Edition of Zoho CRM to determine API Concurrency Limits
 - `environment` (String) must be one of ["Production", "Developer", "Sandbox"]
 Please choose the environment
-- `refresh_token` (String) OAuth2.0 Refresh Token
-- `source_type` (String) must be one of ["zoho-crm"]
+- `refresh_token` (String, Sensitive) OAuth2.0 Refresh Token
 
 Optional:
 
+- `edition` (String) must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]; Default: "Free"
+Choose your Edition of Zoho CRM to determine API Concurrency Limits
 - `start_datetime` (String) ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 
 

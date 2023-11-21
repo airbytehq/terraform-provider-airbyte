@@ -27,20 +27,10 @@ data "airbyte_destination_sftp_json" "my_destination_sftpjson" {
 
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the destination.
+- `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `destination_path` (String) Path to the directory where json files will be written.
-- `destination_type` (String) must be one of ["sftp-json"]
-- `host` (String) Hostname of the SFTP server.
-- `password` (String) Password associated with the username.
-- `port` (Number) Port of the SFTP server.
-- `username` (String) Username to use to access the SFTP server.
 
 

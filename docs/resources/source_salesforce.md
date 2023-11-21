@@ -15,24 +15,23 @@ SourceSalesforce Resource
 ```terraform
 resource "airbyte_source_salesforce" "my_source_salesforce" {
   configuration = {
-    auth_type          = "Client"
     client_id          = "...my_client_id..."
     client_secret      = "...my_client_secret..."
-    force_use_bulk_api = true
+    force_use_bulk_api = false
     is_sandbox         = false
     refresh_token      = "...my_refresh_token..."
-    source_type        = "salesforce"
     start_date         = "2021-07-25"
     streams_criteria = [
       {
-        criteria = "not contains"
+        criteria = "ends not with"
         value    = "...my_value..."
       },
     ]
   }
-  name         = "Gregg Boyer Sr."
-  secret_id    = "...my_secret_id..."
-  workspace_id = "ebde64bf-cc54-469d-8015-dfa796206bef"
+  definition_id = "3692db06-d3b4-499d-8bda-e34afcb06318"
+  name          = "Ms. Donna Krajcik"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "44d2b896-5caa-4bab-ae9d-6378e7243c02"
 }
 ```
 
@@ -42,11 +41,12 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -61,14 +61,14 @@ Required:
 
 - `client_id` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 - `client_secret` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
-- `refresh_token` (String) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
-- `source_type` (String) must be one of ["salesforce"]
+- `refresh_token` (String, Sensitive) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 
 Optional:
 
-- `auth_type` (String) must be one of ["Client"]
-- `force_use_bulk_api` (Boolean) Toggle to use Bulk API (this might cause empty fields for some streams)
-- `is_sandbox` (Boolean) Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
+- `force_use_bulk_api` (Boolean) Default: false
+Toggle to use Bulk API (this might cause empty fields for some streams)
+- `is_sandbox` (Boolean) Default: false
+Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
 - `start_date` (String) Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 - `streams_criteria` (Attributes List) Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector. (see [below for nested schema](#nestedatt--configuration--streams_criteria))
 
@@ -77,7 +77,10 @@ Optional:
 
 Required:
 
-- `criteria` (String) must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]
 - `value` (String)
+
+Optional:
+
+- `criteria` (String) must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]; Default: "contains"
 
 

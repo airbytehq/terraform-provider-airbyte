@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 // SourceZuoraDataQueryType - Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
@@ -35,27 +36,27 @@ func (e *SourceZuoraDataQueryType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceZuoraZuora string
+type Zuora string
 
 const (
-	SourceZuoraZuoraZuora SourceZuoraZuora = "zuora"
+	ZuoraZuora Zuora = "zuora"
 )
 
-func (e SourceZuoraZuora) ToPointer() *SourceZuoraZuora {
+func (e Zuora) ToPointer() *Zuora {
 	return &e
 }
 
-func (e *SourceZuoraZuora) UnmarshalJSON(data []byte) error {
+func (e *Zuora) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zuora":
-		*e = SourceZuoraZuora(v)
+		*e = Zuora(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZuoraZuora: %v", v)
+		return fmt.Errorf("invalid value for Zuora: %v", v)
 	}
 }
 
@@ -114,12 +115,69 @@ type SourceZuora struct {
 	// Your OAuth user Client Secret
 	ClientSecret string `json:"client_secret"`
 	// Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-	DataQuery  SourceZuoraDataQueryType `json:"data_query"`
-	SourceType SourceZuoraZuora         `json:"sourceType"`
+	DataQuery  *SourceZuoraDataQueryType `default:"Live" json:"data_query"`
+	sourceType Zuora                     `const:"zuora" json:"sourceType"`
 	// Start Date in format: YYYY-MM-DD
 	StartDate string `json:"start_date"`
 	// Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
 	TenantEndpoint SourceZuoraTenantEndpointLocation `json:"tenant_endpoint"`
 	// The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
-	WindowInDays *string `json:"window_in_days,omitempty"`
+	WindowInDays *string `default:"90" json:"window_in_days"`
+}
+
+func (s SourceZuora) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZuora) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZuora) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZuora) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZuora) GetDataQuery() *SourceZuoraDataQueryType {
+	if o == nil {
+		return nil
+	}
+	return o.DataQuery
+}
+
+func (o *SourceZuora) GetSourceType() Zuora {
+	return ZuoraZuora
+}
+
+func (o *SourceZuora) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceZuora) GetTenantEndpoint() SourceZuoraTenantEndpointLocation {
+	if o == nil {
+		return SourceZuoraTenantEndpointLocation("")
+	}
+	return o.TenantEndpoint
+}
+
+func (o *SourceZuora) GetWindowInDays() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

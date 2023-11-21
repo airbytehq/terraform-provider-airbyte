@@ -4,6 +4,37 @@ package shared
 
 type DestinationRedisCreateRequest struct {
 	Configuration DestinationRedis `json:"configuration"`
-	Name          string           `json:"name"`
-	WorkspaceID   string           `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationRedisCreateRequest) GetConfiguration() DestinationRedis {
+	if o == nil {
+		return DestinationRedis{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationRedisCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationRedisCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationRedisCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

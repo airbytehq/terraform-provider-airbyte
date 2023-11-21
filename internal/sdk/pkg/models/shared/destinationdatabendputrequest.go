@@ -7,3 +7,24 @@ type DestinationDatabendPutRequest struct {
 	Name          string                    `json:"name"`
 	WorkspaceID   string                    `json:"workspaceId"`
 }
+
+func (o *DestinationDatabendPutRequest) GetConfiguration() DestinationDatabendUpdate {
+	if o == nil {
+		return DestinationDatabendUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationDatabendPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationDatabendPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -6,5 +6,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceDockerhub struct {
 	DockerUsername types.String `tfsdk:"docker_username"`
-	SourceType     types.String `tfsdk:"source_type"`
 }

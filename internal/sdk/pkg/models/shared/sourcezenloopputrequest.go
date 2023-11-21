@@ -7,3 +7,24 @@ type SourceZenloopPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceZenloopPutRequest) GetConfiguration() SourceZenloopUpdate {
+	if o == nil {
+		return SourceZenloopUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZenloopPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZenloopPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

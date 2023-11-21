@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceMetabaseDataSource struct {
 
 // SourceMetabaseDataSourceModel describes the data model.
 type SourceMetabaseDataSourceModel struct {
-	Configuration SourceMetabase `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,48 +47,19 @@ func (r *SourceMetabaseDataSource) Schema(ctx context.Context, req datasource.Sc
 		MarkdownDescription: "SourceMetabase DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"instance_api_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL to your metabase instance API`,
-					},
-					"password": schema.StringAttribute{
-						Computed: true,
-					},
-					"session_token": schema.StringAttribute{
-						Computed: true,
-						MarkdownDescription: `To generate your session token, you need to run the following command: ` + "```" + ` curl -X POST \` + "\n" +
-							`  -H "Content-Type: application/json" \` + "\n" +
-							`  -d '{"username": "person@metabase.com", "password": "fakepassword"}' \` + "\n" +
-							`  http://localhost:3000/api/session` + "\n" +
-							`` + "```" + ` Then copy the value of the ` + "`" + `id` + "`" + ` field returned by a successful call to that API.` + "\n" +
-							`Note that by default, sessions are good for 14 days and needs to be regenerated.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"metabase",
-							),
-						},
-						Description: `must be one of ["metabase"]`,
-					},
-					"username": schema.StringAttribute{
-						Computed: true,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

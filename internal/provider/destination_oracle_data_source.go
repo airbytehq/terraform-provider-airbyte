@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,10 +29,11 @@ type DestinationOracleDataSource struct {
 
 // DestinationOracleDataSourceModel describes the data model.
 type DestinationOracleDataSourceModel struct {
-	Configuration DestinationOracle `tfsdk:"configuration"`
-	DestinationID types.String      `tfsdk:"destination_id"`
-	Name          types.String      `tfsdk:"name"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,219 +47,16 @@ func (r *DestinationOracleDataSource) Schema(ctx context.Context, req datasource
 		MarkdownDescription: "DestinationOracle DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oracle",
-							),
-						},
-						Description: `must be one of ["oracle"]`,
-					},
-					"host": schema.StringAttribute{
-						Computed:    true,
-						Description: `The hostname of the database.`,
-					},
-					"jdbc_url_params": schema.StringAttribute{
-						Computed:    true,
-						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
-					},
-					"password": schema.StringAttribute{
-						Computed:    true,
-						Description: `The password associated with the username.`,
-					},
-					"port": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The port of the database.`,
-					},
-					"schema": schema.StringAttribute{
-						Computed:    true,
-						Description: `The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema.`,
-					},
-					"sid": schema.StringAttribute{
-						Computed:    true,
-						Description: `The System Identifier uniquely distinguishes the instance from any other instance on the same computer.`,
-					},
-					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_oracle_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Computed:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level username for logging into the jump server host`,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_oracle_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Computed:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level username for logging into the jump server host.`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_oracle_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_oracle_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Computed:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level username for logging into the jump server host`,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_oracle_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Computed:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed:    true,
-										Description: `OS-level username for logging into the jump server host.`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-					},
-					"username": schema.StringAttribute{
-						Computed:    true,
-						Description: `The username to access the database. This user must have CREATE USER privileges in the database.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

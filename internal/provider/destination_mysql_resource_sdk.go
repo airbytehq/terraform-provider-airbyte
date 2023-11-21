@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMysqlResourceModel) ToCreateSDKType() *shared.DestinationMysqlCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationMysqlMysql(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -23,77 +22,91 @@ func (r *DestinationMysqlResourceModel) ToCreateSDKType() *shared.DestinationMys
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	var tunnelMethod *shared.DestinationMysqlSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var destinationMysqlSSHTunnelMethodNoTunnel *shared.DestinationMysqlSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationMysqlSSHTunnelMethodNoTunnel = &shared.DestinationMysqlSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var destinationMysqlNoTunnel *shared.DestinationMysqlNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			destinationMysqlNoTunnel = &shared.DestinationMysqlNoTunnel{}
 		}
-		if destinationMysqlSSHTunnelMethodNoTunnel != nil {
+		if destinationMysqlNoTunnel != nil {
 			tunnelMethod = &shared.DestinationMysqlSSHTunnelMethod{
-				DestinationMysqlSSHTunnelMethodNoTunnel: destinationMysqlSSHTunnelMethodNoTunnel,
+				DestinationMysqlNoTunnel: destinationMysqlNoTunnel,
 			}
 		}
-		var destinationMysqlSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			destinationMysqlSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMysqlSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var destinationMysqlSSHKeyAuthentication *shared.DestinationMysqlSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			destinationMysqlSSHKeyAuthentication = &shared.DestinationMysqlSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if destinationMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
+		if destinationMysqlSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlSSHTunnelMethod{
-				DestinationMysqlSSHTunnelMethodSSHKeyAuthentication: destinationMysqlSSHTunnelMethodSSHKeyAuthentication,
+				DestinationMysqlSSHKeyAuthentication: destinationMysqlSSHKeyAuthentication,
 			}
 		}
-		var destinationMysqlSSHTunnelMethodPasswordAuthentication *shared.DestinationMysqlSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			destinationMysqlSSHTunnelMethodPasswordAuthentication = &shared.DestinationMysqlSSHTunnelMethodPasswordAuthentication{
+		var destinationMysqlPasswordAuthentication *shared.DestinationMysqlPasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationMysqlPasswordAuthentication = &shared.DestinationMysqlPasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if destinationMysqlSSHTunnelMethodPasswordAuthentication != nil {
+		if destinationMysqlPasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlSSHTunnelMethod{
-				DestinationMysqlSSHTunnelMethodPasswordAuthentication: destinationMysqlSSHTunnelMethodPasswordAuthentication,
+				DestinationMysqlPasswordAuthentication: destinationMysqlPasswordAuthentication,
 			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationMysql{
-		Database:        database,
-		DestinationType: destinationType,
-		Host:            host,
-		JdbcURLParams:   jdbcURLParams,
-		Password:        password,
-		Port:            port,
-		TunnelMethod:    tunnelMethod,
-		Username:        username,
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
+		TunnelMethod:  tunnelMethod,
+		Username:      username,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationMysqlCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -120,59 +133,67 @@ func (r *DestinationMysqlResourceModel) ToUpdateSDKType() *shared.DestinationMys
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	var tunnelMethod *shared.DestinationMysqlUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var destinationMysqlUpdateSSHTunnelMethodNoTunnel *shared.DestinationMysqlUpdateSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationMysqlUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationMysqlUpdateSSHTunnelMethodNoTunnel = &shared.DestinationMysqlUpdateSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var destinationMysqlUpdateNoTunnel *shared.DestinationMysqlUpdateNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			destinationMysqlUpdateNoTunnel = &shared.DestinationMysqlUpdateNoTunnel{}
 		}
-		if destinationMysqlUpdateSSHTunnelMethodNoTunnel != nil {
+		if destinationMysqlUpdateNoTunnel != nil {
 			tunnelMethod = &shared.DestinationMysqlUpdateSSHTunnelMethod{
-				DestinationMysqlUpdateSSHTunnelMethodNoTunnel: destinationMysqlUpdateSSHTunnelMethodNoTunnel,
+				DestinationMysqlUpdateNoTunnel: destinationMysqlUpdateNoTunnel,
 			}
 		}
-		var destinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			destinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var destinationMysqlUpdateSSHKeyAuthentication *shared.DestinationMysqlUpdateSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			destinationMysqlUpdateSSHKeyAuthentication = &shared.DestinationMysqlUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if destinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		if destinationMysqlUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlUpdateSSHTunnelMethod{
-				DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication: destinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication,
+				DestinationMysqlUpdateSSHKeyAuthentication: destinationMysqlUpdateSSHKeyAuthentication,
 			}
 		}
-		var destinationMysqlUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			destinationMysqlUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication{
+		var destinationMysqlUpdatePasswordAuthentication *shared.DestinationMysqlUpdatePasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationMysqlUpdatePasswordAuthentication = &shared.DestinationMysqlUpdatePasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if destinationMysqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		if destinationMysqlUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.DestinationMysqlUpdateSSHTunnelMethod{
-				DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication: destinationMysqlUpdateSSHTunnelMethodPasswordAuthentication,
+				DestinationMysqlUpdatePasswordAuthentication: destinationMysqlUpdatePasswordAuthentication,
 			}
 		}
 	}

@@ -3,8 +3,6 @@
 package provider
 
 type DestinationFireboltLoadingMethod struct {
-	DestinationFireboltLoadingMethodExternalTableViaS3       *DestinationFireboltLoadingMethodExternalTableViaS3 `tfsdk:"destination_firebolt_loading_method_external_table_via_s3"`
-	DestinationFireboltLoadingMethodSQLInserts               *DestinationFireboltLoadingMethodSQLInserts         `tfsdk:"destination_firebolt_loading_method_sql_inserts"`
-	DestinationFireboltUpdateLoadingMethodExternalTableViaS3 *DestinationFireboltLoadingMethodExternalTableViaS3 `tfsdk:"destination_firebolt_update_loading_method_external_table_via_s3"`
-	DestinationFireboltUpdateLoadingMethodSQLInserts         *DestinationFireboltLoadingMethodSQLInserts         `tfsdk:"destination_firebolt_update_loading_method_sql_inserts"`
+	ExternalTableViaS3 *ExternalTableViaS3                                       `tfsdk:"external_table_via_s3"`
+	SQLInserts         *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"sql_inserts"`
 }

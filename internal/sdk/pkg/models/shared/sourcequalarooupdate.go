@@ -12,3 +12,31 @@ type SourceQualarooUpdate struct {
 	// A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 	Token string `json:"token"`
 }
+
+func (o *SourceQualarooUpdate) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *SourceQualarooUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceQualarooUpdate) GetSurveyIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.SurveyIds
+}
+
+func (o *SourceQualarooUpdate) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}

@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGoogleWebfontsGoogleWebfonts string
+type GoogleWebfonts string
 
 const (
-	SourceGoogleWebfontsGoogleWebfontsGoogleWebfonts SourceGoogleWebfontsGoogleWebfonts = "google-webfonts"
+	GoogleWebfontsGoogleWebfonts GoogleWebfonts = "google-webfonts"
 )
 
-func (e SourceGoogleWebfontsGoogleWebfonts) ToPointer() *SourceGoogleWebfontsGoogleWebfonts {
+func (e GoogleWebfonts) ToPointer() *GoogleWebfonts {
 	return &e
 }
 
-func (e *SourceGoogleWebfontsGoogleWebfonts) UnmarshalJSON(data []byte) error {
+func (e *GoogleWebfonts) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-webfonts":
-		*e = SourceGoogleWebfontsGoogleWebfonts(v)
+		*e = GoogleWebfonts(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleWebfontsGoogleWebfonts: %v", v)
+		return fmt.Errorf("invalid value for GoogleWebfonts: %v", v)
 	}
 }
 
@@ -39,6 +40,49 @@ type SourceGoogleWebfonts struct {
 	// Optional, boolean type
 	PrettyPrint *string `json:"prettyPrint,omitempty"`
 	// Optional, to find how to sort
-	Sort       *string                            `json:"sort,omitempty"`
-	SourceType SourceGoogleWebfontsGoogleWebfonts `json:"sourceType"`
+	Sort       *string        `json:"sort,omitempty"`
+	sourceType GoogleWebfonts `const:"google-webfonts" json:"sourceType"`
+}
+
+func (s SourceGoogleWebfonts) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleWebfonts) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleWebfonts) GetAlt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Alt
+}
+
+func (o *SourceGoogleWebfonts) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGoogleWebfonts) GetPrettyPrint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrettyPrint
+}
+
+func (o *SourceGoogleWebfonts) GetSort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
+}
+
+func (o *SourceGoogleWebfonts) GetSourceType() GoogleWebfonts {
+	return GoogleWebfontsGoogleWebfonts
 }

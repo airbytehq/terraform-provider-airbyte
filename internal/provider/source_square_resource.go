@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceSquareResource struct {
 // SourceSquareResourceModel describes the resource data model.
 type SourceSquareResourceModel struct {
 	Configuration SourceSquare `tfsdk:"configuration"`
+	DefinitionID  types.String `tfsdk:"definition_id"`
 	Name          types.String `tfsdk:"name"`
 	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
@@ -58,37 +59,20 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_square_authentication_api_key": schema.SingleNestedAttribute{
+							"api_key": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API key for a Square application`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Key",
-											),
-										},
-										Description: `must be one of ["API Key"]`,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
 							},
-							"source_square_authentication_oauth_authentication": schema.SingleNestedAttribute{
+							"oauth_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
 										Description: `The Square-issued ID of your application`,
@@ -99,96 +83,56 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
-										Description: `A refresh token generated using the above client ID and secret`,
-									},
-								},
-								Description: `Choose how to authenticate to Square.`,
-							},
-							"source_square_update_authentication_api_key": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Required:    true,
-										Description: `The API key for a Square application`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Key",
-											),
-										},
-										Description: `must be one of ["API Key"]`,
-									},
-								},
-								Description: `Choose how to authenticate to Square.`,
-							},
-							"source_square_update_authentication_oauth_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-										Description: `must be one of ["OAuth"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Square-issued ID of your application`,
-									},
-									"client_secret": schema.StringAttribute{
-										Required:    true,
-										Description: `The Square-issued application secret for your application`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
+										Sensitive:   true,
 										Description: `A refresh token generated using the above client ID and secret`,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
 							},
 						},
+						Description: `Choose how to authenticate to Square.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Choose how to authenticate to Square.`,
 					},
 					"include_deleted_objects": schema.BoolAttribute{
-						Optional:    true,
-						Description: `In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Required:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"square",
-							),
-						},
-						Description: `must be one of ["square"]`,
+						Optional: true,
+						MarkdownDescription: `Default: false` + "\n" +
+							`Determines whether to use the sandbox or production environment.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `Default: "2021-01-01"` + "\n" +
+							`UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -252,7 +196,7 @@ func (r *SourceSquareResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSquare(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -428,5 +372,5 @@ func (r *SourceSquareResource) Delete(ctx context.Context, req resource.DeleteRe
 }
 
 func (r *SourceSquareResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

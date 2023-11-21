@@ -6,3 +6,10 @@ package shared
 type StreamConfigurations struct {
 	Streams []StreamConfiguration `json:"streams,omitempty"`
 }
+
+func (o *StreamConfigurations) GetStreams() []StreamConfiguration {
+	if o == nil {
+		return nil
+	}
+	return o.Streams
+}

@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type DestinationRedshiftResource struct {
 // DestinationRedshiftResourceModel describes the resource data model.
 type DestinationRedshiftResourceModel struct {
 	Configuration   DestinationRedshift `tfsdk:"configuration"`
+	DefinitionID    types.String        `tfsdk:"definition_id"`
 	DestinationID   types.String        `tfsdk:"destination_id"`
 	DestinationType types.String        `tfsdk:"destination_type"`
 	Name            types.String        `tfsdk:"name"`
@@ -58,15 +60,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Required:    true,
 						Description: `Name of the database.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"redshift",
-							),
-						},
-						Description: `must be one of ["redshift"]`,
-					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)`,
@@ -77,55 +70,38 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					},
 					"password": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Required:    true,
-						Description: `Port of the database.`,
+						Optional: true,
+						MarkdownDescription: `Default: 5439` + "\n" +
+							`Port of the database.`,
 					},
 					"schema": schema.StringAttribute{
-						Required:    true,
-						Description: `The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".`,
+						Optional: true,
+						MarkdownDescription: `Default: "public"` + "\n" +
+							`The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_redshift_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
+							"no_tunnel": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
-							"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -133,115 +109,28 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"tunnel_user_password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
-							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
 										Required:    true,
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
 									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level username for logging into the jump server host.`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_redshift_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
-											`No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_redshift_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Required:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and password authentication`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level username for logging into the jump server host`,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level password for logging into the jump server host`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Required:    true,
-										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Required:    true,
-										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
-											`Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required:    true,
-										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Optional: true,
+										MarkdownDescription: `Default: 22` + "\n" +
+											`Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -251,95 +140,73 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"uploading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
+							"s3_staging": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
+											"aescbc_envelope_encryption": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"aes_cbc_envelope",
-															),
-														},
-														Description: `must be one of ["aes_cbc_envelope"]`,
-													},
 													"key_encrypting_key": schema.StringAttribute{
 														Optional:    true,
+														Sensitive:   true,
 														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
 											},
-											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"none",
-															),
-														},
-														Description: `must be one of ["none"]`,
-													},
-												},
+											"no_encryption": schema.SingleNestedAttribute{
+												Optional:    true,
+												Attributes:  map[string]schema.Attribute{},
 												Description: `Staging data will be stored in plaintext.`,
 											},
 										},
+										Description: `How to encrypt the staging data`,
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
-										Description: `How to encrypt the staging data`,
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Optional:    true,
-										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
+										Optional: true,
+										MarkdownDescription: `Default: 10` + "\n" +
+											`Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
 										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
 									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3 Staging",
-											),
-										},
-										Description: `must be one of ["S3 Staging"]`,
-									},
 									"purge_staging_data": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.`,
+										Optional: true,
+										MarkdownDescription: `Default: true` + "\n" +
+											`Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.`,
 									},
 									"s3_bucket_name": schema.StringAttribute{
 										Required:    true,
-										Description: `The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.`,
+										Description: `The name of the staging S3 bucket.`,
 									},
 									"s3_bucket_path": schema.StringAttribute{
 										Optional:    true,
 										Description: `The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Required: true,
+										Optional: true,
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]; Default: ""` + "\n" +
+											`The region of the S3 staging bucket.`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -368,176 +235,38 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"me-south-1",
 											),
 										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]` + "\n" +
-											`The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 								},
-								Description: `The method how the data will be uploaded to the database.`,
+								Description: `<i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.`,
 							},
-							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
-								Description: `The method how the data will be uploaded to the database.`,
-							},
-							"destination_redshift_update_uploading_method_s3_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_key_id": schema.StringAttribute{
-										Required:    true,
-										Description: `This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
-									},
-									"encryption": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"none",
-															),
-														},
-														Description: `must be one of ["none"]`,
-													},
-												},
-												Description: `Staging data will be stored in plaintext.`,
-											},
-											"destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"aes_cbc_envelope",
-															),
-														},
-														Description: `must be one of ["aes_cbc_envelope"]`,
-													},
-													"key_encrypting_key": schema.StringAttribute{
-														Optional:    true,
-														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
-													},
-												},
-												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `How to encrypt the staging data`,
-									},
-									"file_buffer_count": schema.Int64Attribute{
-										Optional:    true,
-										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
-									},
-									"file_name_pattern": schema.StringAttribute{
-										Optional:    true,
-										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3 Staging",
-											),
-										},
-										Description: `must be one of ["S3 Staging"]`,
-									},
-									"purge_staging_data": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.`,
-									},
-									"s3_bucket_name": schema.StringAttribute{
-										Required:    true,
-										Description: `The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.`,
-									},
-									"s3_bucket_path": schema.StringAttribute{
-										Optional:    true,
-										Description: `The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.`,
-									},
-									"s3_bucket_region": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
-												"af-south-1",
-												"ap-east-1",
-												"ap-south-1",
-												"ap-northeast-1",
-												"ap-northeast-2",
-												"ap-northeast-3",
-												"ap-southeast-1",
-												"ap-southeast-2",
-												"ca-central-1",
-												"cn-north-1",
-												"cn-northwest-1",
-												"eu-central-1",
-												"eu-north-1",
-												"eu-south-1",
-												"eu-west-1",
-												"eu-west-2",
-												"eu-west-3",
-												"sa-east-1",
-												"me-south-1",
-											),
-										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]` + "\n" +
-											`The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
-									},
-									"secret_access_key": schema.StringAttribute{
-										Required:    true,
-										Description: `The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
-									},
-								},
-								Description: `The method how the data will be uploaded to the database.`,
-							},
-							"destination_redshift_update_uploading_method_standard": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
-								Description: `The method how the data will be uploaded to the database.`,
+							"standard": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
+								Description: `<i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use S3 uploading.`,
 							},
 						},
+						Description: `The way data will be uploaded to Redshift.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `The method how the data will be uploaded to the database.`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
 						Description: `Username to use to access the database.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -555,7 +284,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -605,7 +335,7 @@ func (r *DestinationRedshiftResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationRedshift(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -781,5 +511,5 @@ func (r *DestinationRedshiftResource) Delete(ctx context.Context, req resource.D
 }
 
 func (r *DestinationRedshiftResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

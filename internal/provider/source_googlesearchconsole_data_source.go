@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceGoogleSearchConsoleDataSource struct {
 
 // SourceGoogleSearchConsoleDataSourceModel describes the data model.
 type SourceGoogleSearchConsoleDataSourceModel struct {
-	Configuration SourceGoogleSearchConsole `tfsdk:"configuration"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,192 +47,19 @@ func (r *SourceGoogleSearchConsoleDataSource) Schema(ctx context.Context, req da
 		MarkdownDescription: "SourceGoogleSearchConsole DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"authorization": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-								},
-							},
-							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
-									"email": schema.StringAttribute{
-										Computed:    true,
-										Description: `The email of the user which has permissions to access the Google Workspace Admin APIs.`,
-									},
-									"service_account_info": schema.StringAttribute{
-										Computed:    true,
-										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.`,
-									},
-								},
-							},
-							"source_google_search_console_update_authentication_type_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
-									},
-								},
-							},
-							"source_google_search_console_update_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
-									"email": schema.StringAttribute{
-										Computed:    true,
-										Description: `The email of the user which has permissions to access the Google Workspace Admin APIs.`,
-									},
-									"service_account_info": schema.StringAttribute{
-										Computed:    true,
-										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"custom_reports": schema.StringAttribute{
-						Computed:    true,
-						Description: `(DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.`,
-					},
-					"custom_reports_array": schema.ListNestedAttribute{
-						Computed: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"dimensions": schema.ListAttribute{
-									Computed:    true,
-									ElementType: types.StringType,
-									Description: `A list of dimensions (country, date, device, page, query)`,
-								},
-								"name": schema.StringAttribute{
-									Computed:    true,
-									Description: `The name of the custom report, this name would be used as stream name`,
-								},
-							},
-						},
-						Description: `You can add your Custom Analytics report by creating one.`,
-					},
-					"data_state": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"final",
-								"all",
-							),
-						},
-						MarkdownDescription: `must be one of ["final", "all"]` + "\n" +
-							`If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.`,
-					},
-					"end_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.`,
-					},
-					"site_urls": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-search-console",
-							),
-						},
-						Description: `must be one of ["google-search-console"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

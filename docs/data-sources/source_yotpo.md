@@ -14,7 +14,6 @@ SourceYotpo DataSource
 
 ```terraform
 data "airbyte_source_yotpo" "my_source_yotpo" {
-  secret_id = "...my_secret_id..."
   source_id = "...my_source_id..."
 }
 ```
@@ -26,25 +25,12 @@ data "airbyte_source_yotpo" "my_source_yotpo" {
 
 - `source_id` (String)
 
-### Optional
-
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
-
 ### Read-Only
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (String) Parsed as JSON.
+The values required to configure the source.
 - `name` (String)
+- `source_type` (String)
 - `workspace_id` (String)
-
-<a id="nestedatt--configuration"></a>
-### Nested Schema for `configuration`
-
-Read-Only:
-
-- `access_token` (String) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
-- `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
-- `email` (String) Email address registered with yotpo.
-- `source_type` (String) must be one of ["yotpo"]
-- `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 

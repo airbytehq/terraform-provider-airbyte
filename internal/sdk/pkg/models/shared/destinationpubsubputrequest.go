@@ -7,3 +7,24 @@ type DestinationPubsubPutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *DestinationPubsubPutRequest) GetConfiguration() DestinationPubsubUpdate {
+	if o == nil {
+		return DestinationPubsubUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationPubsubPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationPubsubPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

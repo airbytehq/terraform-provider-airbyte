@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationConvex struct {
-	AccessKey       types.String `tfsdk:"access_key"`
-	DeploymentURL   types.String `tfsdk:"deployment_url"`
-	DestinationType types.String `tfsdk:"destination_type"`
+	AccessKey     types.String `tfsdk:"access_key"`
+	DeploymentURL types.String `tfsdk:"deployment_url"`
 }

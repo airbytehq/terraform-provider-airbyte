@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceSalesloftResource struct {
 // SourceSalesloftResourceModel describes the resource data model.
 type SourceSalesloftResourceModel struct {
 	Configuration SourceSalesloft `tfsdk:"configuration"`
+	DefinitionID  types.String    `tfsdk:"definition_id"`
 	Name          types.String    `tfsdk:"name"`
 	SecretID      types.String    `tfsdk:"secret_id"`
 	SourceID      types.String    `tfsdk:"source_id"`
@@ -58,39 +59,23 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_salesloft_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
+							"authenticate_via_api_key": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-										Description: `must be one of ["api_key"]`,
 									},
 								},
 							},
-							"source_salesloft_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
+							"authenticate_via_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -102,69 +87,16 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining a new access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Sensitive:   true,
+										Description: `The date-time when the access token should be refreshed.`,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
-										Description: `The date-time when the access token should be refreshed.`,
-									},
-								},
-							},
-							"source_salesloft_update_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Required:    true,
-										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-										Description: `must be one of ["api_key"]`,
-									},
-								},
-							},
-							"source_salesloft_update_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Client ID of your Salesloft developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Required:    true,
-										Description: `The Client Secret of your Salesloft developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The token for obtaining a new access token.`,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -173,31 +105,33 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 							validators.ExactlyOneChild(),
 						},
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"salesloft",
-							),
-						},
-						Description: `must be one of ["salesloft"]`,
-					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -261,7 +195,7 @@ func (r *SourceSalesloftResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSalesloft(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -437,5 +371,5 @@ func (r *SourceSalesloftResource) Delete(ctx context.Context, req resource.Delet
 }
 
 func (r *SourceSalesloftResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

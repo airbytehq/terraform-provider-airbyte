@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceClickupAPIClickupAPI string
+type ClickupAPI string
 
 const (
-	SourceClickupAPIClickupAPIClickupAPI SourceClickupAPIClickupAPI = "clickup-api"
+	ClickupAPIClickupAPI ClickupAPI = "clickup-api"
 )
 
-func (e SourceClickupAPIClickupAPI) ToPointer() *SourceClickupAPIClickupAPI {
+func (e ClickupAPI) ToPointer() *ClickupAPI {
 	return &e
 }
 
-func (e *SourceClickupAPIClickupAPI) UnmarshalJSON(data []byte) error {
+func (e *ClickupAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "clickup-api":
-		*e = SourceClickupAPIClickupAPI(v)
+		*e = ClickupAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickupAPIClickupAPI: %v", v)
+		return fmt.Errorf("invalid value for ClickupAPI: %v", v)
 	}
 }
 
@@ -37,12 +38,69 @@ type SourceClickupAPI struct {
 	// The ID of your folder in your space. Retrieve it from the `/space/{space_id}/folder` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.
 	FolderID *string `json:"folder_id,omitempty"`
 	// Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.
-	IncludeClosedTasks *bool `json:"include_closed_tasks,omitempty"`
+	IncludeClosedTasks *bool `default:"false" json:"include_closed_tasks"`
 	// The ID of your list in your folder. Retrieve it from the `/folder/{folder_id}/list` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.
-	ListID     *string                    `json:"list_id,omitempty"`
-	SourceType SourceClickupAPIClickupAPI `json:"sourceType"`
+	ListID     *string    `json:"list_id,omitempty"`
+	sourceType ClickupAPI `const:"clickup-api" json:"sourceType"`
 	// The ID of your space in your workspace. Retrieve it from the `/team/{team_id}/space` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.
 	SpaceID *string `json:"space_id,omitempty"`
 	// The ID of your team in ClickUp. Retrieve it from the `/team` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.
 	TeamID *string `json:"team_id,omitempty"`
+}
+
+func (s SourceClickupAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceClickupAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceClickupAPI) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceClickupAPI) GetFolderID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderID
+}
+
+func (o *SourceClickupAPI) GetIncludeClosedTasks() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeClosedTasks
+}
+
+func (o *SourceClickupAPI) GetListID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ListID
+}
+
+func (o *SourceClickupAPI) GetSourceType() ClickupAPI {
+	return ClickupAPIClickupAPI
+}
+
+func (o *SourceClickupAPI) GetSpaceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SpaceID
+}
+
+func (o *SourceClickupAPI) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }

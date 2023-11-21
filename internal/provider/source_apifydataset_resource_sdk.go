@@ -3,30 +3,22 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyDatasetCreateRequest {
-	clean := new(bool)
-	if !r.Configuration.Clean.IsUnknown() && !r.Configuration.Clean.IsNull() {
-		*clean = r.Configuration.Clean.ValueBool()
-	} else {
-		clean = nil
-	}
-	datasetID := new(string)
-	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
-		*datasetID = r.Configuration.DatasetID.ValueString()
-	} else {
-		datasetID = nil
-	}
-	sourceType := shared.SourceApifyDatasetApifyDataset(r.Configuration.SourceType.ValueString())
+	datasetID := r.Configuration.DatasetID.ValueString()
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDataset{
-		Clean:      clean,
-		DatasetID:  datasetID,
-		SourceType: sourceType,
-		Token:      token,
+		DatasetID: datasetID,
+		Token:     token,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -38,6 +30,7 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceApifyDatasetCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -51,21 +44,9 @@ func (r *SourceApifyDatasetResourceModel) ToGetSDKType() *shared.SourceApifyData
 }
 
 func (r *SourceApifyDatasetResourceModel) ToUpdateSDKType() *shared.SourceApifyDatasetPutRequest {
-	clean := new(bool)
-	if !r.Configuration.Clean.IsUnknown() && !r.Configuration.Clean.IsNull() {
-		*clean = r.Configuration.Clean.ValueBool()
-	} else {
-		clean = nil
-	}
-	datasetID := new(string)
-	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
-		*datasetID = r.Configuration.DatasetID.ValueString()
-	} else {
-		datasetID = nil
-	}
+	datasetID := r.Configuration.DatasetID.ValueString()
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDatasetUpdate{
-		Clean:     clean,
 		DatasetID: datasetID,
 		Token:     token,
 	}

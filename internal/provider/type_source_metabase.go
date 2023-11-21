@@ -8,6 +8,5 @@ type SourceMetabase struct {
 	InstanceAPIURL types.String `tfsdk:"instance_api_url"`
 	Password       types.String `tfsdk:"password"`
 	SessionToken   types.String `tfsdk:"session_token"`
-	SourceType     types.String `tfsdk:"source_type"`
 	Username       types.String `tfsdk:"username"`
 }

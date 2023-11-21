@@ -2,13 +2,13 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
     color       = "orange"
-    locale      = "en-US"
+    locale      = "pt-BR"
     orientation = "landscape"
-    query       = "oceans"
+    query       = "people"
     size        = "small"
-    source_type = "pexels-api"
   }
-  name         = "Arnold Dooley"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "63457150-9a8e-4870-93c5-a1f9c242c7b6"
+  definition_id = "f68e00dc-dadd-4479-a116-8b4fa7262d2a"
+  name          = "Brandy Weimann"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6dd11df0-9849-4375-b622-7890d41f1391"
 }

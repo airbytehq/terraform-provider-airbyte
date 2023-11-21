@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -34,32 +34,31 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 	} else {
 		azureBlobStorageSpillSize = nil
 	}
-	destinationType := shared.DestinationAzureBlobStorageAzureBlobStorage(r.Configuration.DestinationType.ValueString())
 	var format shared.DestinationAzureBlobStorageOutputFormat
-	var destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues *shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues
-	if r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues != nil {
-		flattening := shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlattening(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
-		formatType := shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
-		destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues = &shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues{
+	var destinationAzureBlobStorageCSVCommaSeparatedValues *shared.DestinationAzureBlobStorageCSVCommaSeparatedValues
+	if r.Configuration.Format.CSVCommaSeparatedValues != nil {
+		flattening := new(shared.DestinationAzureBlobStorageNormalizationFlattening)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.DestinationAzureBlobStorageNormalizationFlattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+		} else {
+			flattening = nil
+		}
+		destinationAzureBlobStorageCSVCommaSeparatedValues = &shared.DestinationAzureBlobStorageCSVCommaSeparatedValues{
 			Flattening: flattening,
-			FormatType: formatType,
 		}
 	}
-	if destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues != nil {
+	if destinationAzureBlobStorageCSVCommaSeparatedValues != nil {
 		format = shared.DestinationAzureBlobStorageOutputFormat{
-			DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues: destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues,
+			DestinationAzureBlobStorageCSVCommaSeparatedValues: destinationAzureBlobStorageCSVCommaSeparatedValues,
 		}
 	}
-	var destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType1 := shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON{
-			FormatType: formatType1,
-		}
+	var destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
+		destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON{}
 	}
-	if destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+	if destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON != nil {
 		format = shared.DestinationAzureBlobStorageOutputFormat{
-			DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON,
+			DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.DestinationAzureBlobStorage{
@@ -69,13 +68,19 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 		AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
 		AzureBlobStorageOutputBufferSize:   azureBlobStorageOutputBufferSize,
 		AzureBlobStorageSpillSize:          azureBlobStorageSpillSize,
-		DestinationType:                    destinationType,
 		Format:                             format,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationAzureBlobStorageCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -114,31 +119,31 @@ func (r *DestinationAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.Des
 	} else {
 		azureBlobStorageSpillSize = nil
 	}
-	var format shared.DestinationAzureBlobStorageUpdateOutputFormat
-	var destinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues *shared.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues
-	if r.Configuration.Format.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues != nil {
-		flattening := shared.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValuesNormalizationFlattening(r.Configuration.Format.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
-		formatType := shared.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
-		destinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues = &shared.DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues{
+	var format shared.OutputFormat
+	var csvCommaSeparatedValues *shared.CSVCommaSeparatedValues
+	if r.Configuration.Format.CSVCommaSeparatedValues != nil {
+		flattening := new(shared.NormalizationFlattening)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.NormalizationFlattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+		} else {
+			flattening = nil
+		}
+		csvCommaSeparatedValues = &shared.CSVCommaSeparatedValues{
 			Flattening: flattening,
-			FormatType: formatType,
 		}
 	}
-	if destinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues != nil {
-		format = shared.DestinationAzureBlobStorageUpdateOutputFormat{
-			DestinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues: destinationAzureBlobStorageUpdateOutputFormatCSVCommaSeparatedValues,
+	if csvCommaSeparatedValues != nil {
+		format = shared.OutputFormat{
+			CSVCommaSeparatedValues: csvCommaSeparatedValues,
 		}
 	}
-	var destinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.DestinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType1 := shared.DestinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		destinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON{
-			FormatType: formatType1,
-		}
+	var destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
+		destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON{}
 	}
-	if destinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		format = shared.DestinationAzureBlobStorageUpdateOutputFormat{
-			DestinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageUpdateOutputFormatJSONLinesNewlineDelimitedJSON,
+	if destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON != nil {
+		format = shared.OutputFormat{
+			DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON: destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON,
 		}
 	}
 	configuration := shared.DestinationAzureBlobStorageUpdate{

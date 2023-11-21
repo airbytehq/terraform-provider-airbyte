@@ -15,12 +15,12 @@ SourceSecoda Resource
 ```terraform
 resource "airbyte_source_secoda" "my_source_secoda" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "secoda"
+    api_key = "...my_api_key..."
   }
-  name         = "Brett Leannon I"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "ad421bd4-3d1f-40cb-8a00-03eb22d9b3a7"
+  definition_id = "544a65a7-d2b4-4609-94ec-6467c968cce9"
+  name          = "Edna Mitchell"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "8a35db32-f900-4f8c-be73-78a587702297"
 }
 ```
 
@@ -30,11 +30,12 @@ resource "airbyte_source_secoda" "my_source_secoda" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -47,7 +48,6 @@ resource "airbyte_source_secoda" "my_source_secoda" {
 
 Required:
 
-- `api_key` (String) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of ["secoda"]
+- `api_key` (String, Sensitive) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
 
 

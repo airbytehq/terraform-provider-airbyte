@@ -10,3 +10,31 @@ type SourcePatchRequest struct {
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID *string `json:"workspaceId,omitempty"`
 }
+
+func (o *SourcePatchRequest) GetConfiguration() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
+func (o *SourcePatchRequest) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *SourcePatchRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourcePatchRequest) GetWorkspaceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceID
+}

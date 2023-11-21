@@ -15,14 +15,13 @@ SourceChartmogul Resource
 ```terraform
 resource "airbyte_source_chartmogul" "my_source_chartmogul" {
   configuration = {
-    api_key     = "...my_api_key..."
-    interval    = "week"
-    source_type = "chartmogul"
-    start_date  = "2017-01-25T00:00:00Z"
+    api_key    = "...my_api_key..."
+    start_date = "2017-01-25T00:00:00Z"
   }
-  name         = "Neal Gorczany"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "06a8aa94-c026-444c-b5e9-d9a4578adc1a"
+  definition_id = "87a1fb18-7d33-4223-980b-b99362d2f459"
+  name          = "Monica Pagac"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "bc3680ab-b376-4bce-a6a7-c0ce20da3e9a"
 }
 ```
 
@@ -32,11 +31,12 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,10 +49,7 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
 
 Required:
 
-- `api_key` (String) Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
-- `interval` (String) must be one of ["day", "week", "month", "quarter"]
-Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-- `source_type` (String) must be one of ["chartmogul"]
+- `api_key` (String, Sensitive) Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
 
 

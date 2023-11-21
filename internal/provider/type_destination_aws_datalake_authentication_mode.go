@@ -3,8 +3,6 @@
 package provider
 
 type DestinationAwsDatalakeAuthenticationMode struct {
-	DestinationAwsDatalakeAuthenticationModeIAMRole       *DestinationAwsDatalakeAuthenticationModeIAMRole `tfsdk:"destination_aws_datalake_authentication_mode_iam_role"`
-	DestinationAwsDatalakeAuthenticationModeIAMUser       *DestinationAwsDatalakeAuthenticationModeIAMUser `tfsdk:"destination_aws_datalake_authentication_mode_iam_user"`
-	DestinationAwsDatalakeUpdateAuthenticationModeIAMRole *DestinationAwsDatalakeAuthenticationModeIAMRole `tfsdk:"destination_aws_datalake_update_authentication_mode_iam_role"`
-	DestinationAwsDatalakeUpdateAuthenticationModeIAMUser *DestinationAwsDatalakeAuthenticationModeIAMUser `tfsdk:"destination_aws_datalake_update_authentication_mode_iam_user"`
+	IAMRole *IAMRole `tfsdk:"iam_role"`
+	IAMUser *IAMUser `tfsdk:"iam_user"`
 }

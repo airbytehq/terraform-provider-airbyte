@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceAmazonSqsDataSource struct {
 
 // SourceAmazonSqsDataSourceModel describes the data model.
 type SourceAmazonSqsDataSourceModel struct {
-	Configuration SourceAmazonSqs `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,95 +47,19 @@ func (r *SourceAmazonSqsDataSource) Schema(ctx context.Context, req datasource.S
 		MarkdownDescription: "SourceAmazonSqs DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Access Key ID of the AWS IAM Role to use for pulling messages`,
-					},
-					"attributes_to_return": schema.StringAttribute{
-						Computed:    true,
-						Description: `Comma separated list of Mesage Attribute names to return`,
-					},
-					"delete_messages": schema.BoolAttribute{
-						Computed:    true,
-						Description: `If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. `,
-					},
-					"max_batch_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Max amount of messages to get in one batch (10 max)`,
-					},
-					"max_wait_time": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Max amount of time in seconds to wait for messages in a single poll (20 max)`,
-					},
-					"queue_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL of the SQS Queue`,
-					},
-					"region": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"us-east-1",
-								"us-east-2",
-								"us-west-1",
-								"us-west-2",
-								"af-south-1",
-								"ap-east-1",
-								"ap-south-1",
-								"ap-northeast-1",
-								"ap-northeast-2",
-								"ap-northeast-3",
-								"ap-southeast-1",
-								"ap-southeast-2",
-								"ca-central-1",
-								"cn-north-1",
-								"cn-northwest-1",
-								"eu-central-1",
-								"eu-north-1",
-								"eu-south-1",
-								"eu-west-1",
-								"eu-west-2",
-								"eu-west-3",
-								"sa-east-1",
-								"me-south-1",
-								"us-gov-east-1",
-								"us-gov-west-1",
-							),
-						},
-						MarkdownDescription: `must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-							`AWS Region of the SQS Queue`,
-					},
-					"secret_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The Secret Key of the AWS IAM Role to use for pulling messages`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"amazon-sqs",
-							),
-						},
-						Description: `must be one of ["amazon-sqs"]`,
-					},
-					"visibility_timeout": schema.Int64Attribute{
-						Computed:    true,
-						Description: `Modify the Visibility Timeout of the individual message from the Queue's default (seconds).`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

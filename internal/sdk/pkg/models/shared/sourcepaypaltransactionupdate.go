@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -12,9 +13,64 @@ type SourcePaypalTransactionUpdate struct {
 	// The Client Secret of your Paypal developer application.
 	ClientSecret string `json:"client_secret"`
 	// Determines whether to use the sandbox or production environment.
-	IsSandbox bool `json:"is_sandbox"`
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// The key to refresh the expired access token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
-	// Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
+	// Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 	StartDate time.Time `json:"start_date"`
+	// The number of days per request. Must be a number between 1 and 31.
+	TimeWindow *int64 `default:"7" json:"time_window"`
+}
+
+func (s SourcePaypalTransactionUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePaypalTransactionUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePaypalTransactionUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourcePaypalTransactionUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourcePaypalTransactionUpdate) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *SourcePaypalTransactionUpdate) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
+}
+
+func (o *SourcePaypalTransactionUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePaypalTransactionUpdate) GetTimeWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TimeWindow
 }

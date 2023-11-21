@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,10 +14,14 @@ func (r *SourceAppfollowResourceModel) ToCreateSDKType() *shared.SourceAppfollow
 	} else {
 		apiSecret = nil
 	}
-	sourceType := shared.SourceAppfollowAppfollow(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAppfollow{
-		APISecret:  apiSecret,
-		SourceType: sourceType,
+		APISecret: apiSecret,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -29,6 +33,7 @@ func (r *SourceAppfollowResourceModel) ToCreateSDKType() *shared.SourceAppfollow
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAppfollowCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

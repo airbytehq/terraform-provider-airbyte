@@ -2,17 +2,74 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+)
+
 type SourceClickupAPIUpdate struct {
 	// Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
 	APIToken string `json:"api_token"`
 	// The ID of your folder in your space. Retrieve it from the `/space/{space_id}/folder` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.
 	FolderID *string `json:"folder_id,omitempty"`
 	// Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.
-	IncludeClosedTasks *bool `json:"include_closed_tasks,omitempty"`
+	IncludeClosedTasks *bool `default:"false" json:"include_closed_tasks"`
 	// The ID of your list in your folder. Retrieve it from the `/folder/{folder_id}/list` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.
 	ListID *string `json:"list_id,omitempty"`
 	// The ID of your space in your workspace. Retrieve it from the `/team/{team_id}/space` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.
 	SpaceID *string `json:"space_id,omitempty"`
 	// The ID of your team in ClickUp. Retrieve it from the `/team` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.
 	TeamID *string `json:"team_id,omitempty"`
+}
+
+func (s SourceClickupAPIUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceClickupAPIUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceClickupAPIUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceClickupAPIUpdate) GetFolderID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderID
+}
+
+func (o *SourceClickupAPIUpdate) GetIncludeClosedTasks() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeClosedTasks
+}
+
+func (o *SourceClickupAPIUpdate) GetListID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ListID
+}
+
+func (o *SourceClickupAPIUpdate) GetSpaceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SpaceID
+}
+
+func (o *SourceClickupAPIUpdate) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }

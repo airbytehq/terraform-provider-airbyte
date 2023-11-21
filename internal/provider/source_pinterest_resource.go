@@ -3,18 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +38,7 @@ type SourcePinterestResource struct {
 // SourcePinterestResourceModel describes the resource data model.
 type SourcePinterestResourceModel struct {
 	Configuration SourcePinterest `tfsdk:"configuration"`
+	DefinitionID  types.String    `tfsdk:"definition_id"`
 	Name          types.String    `tfsdk:"name"`
 	SecretID      types.String    `tfsdk:"secret_id"`
 	SourceID      types.String    `tfsdk:"source_id"`
@@ -58,36 +61,9 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_pinterest_authorization_method_access_token": schema.SingleNestedAttribute{
+							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The Access Token to make authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
-								},
-							},
-							"source_pinterest_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
 										Description: `The Client ID of your OAuth application`,
@@ -98,50 +74,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
-										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
-									},
-								},
-							},
-							"source_pinterest_update_authorization_method_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The Access Token to make authenticated requests.`,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
-								},
-							},
-							"source_pinterest_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client ID of your OAuth application`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
+										Sensitive:   true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
@@ -151,21 +84,138 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 							validators.ExactlyOneChild(),
 						},
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pinterest",
-							),
+					"custom_reports": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"attribution_types": schema.ListAttribute{
+									Optional:    true,
+									ElementType: types.StringType,
+									Description: `List of types of attribution for the conversion report`,
+								},
+								"click_window_days": schema.Int64Attribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["0", "1", "7", "14", "30", "60"]; Default: 30` + "\n" +
+										`Number of days to use as the conversion attribution window for a pin click action.`,
+									Validators: []validator.Int64{
+										int64validator.OneOf(
+											[]int64{
+												0,
+												1,
+												7,
+												14,
+												30,
+												60,
+											}...,
+										),
+									},
+								},
+								"columns": schema.ListAttribute{
+									Required:    true,
+									ElementType: types.StringType,
+									Description: `A list of chosen columns`,
+								},
+								"conversion_report_time": schema.StringAttribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]; Default: "TIME_OF_AD_ACTION"` + "\n" +
+										`The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event..`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"TIME_OF_AD_ACTION",
+											"TIME_OF_CONVERSION",
+										),
+									},
+								},
+								"engagement_window_days": schema.Int64Attribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]` + "\n" +
+										`Number of days to use as the conversion attribution window for an engagement action.`,
+									Validators: []validator.Int64{
+										int64validator.OneOf(
+											[]int64{
+												0,
+												1,
+												7,
+												14,
+												30,
+												60,
+											}...,
+										),
+									},
+								},
+								"granularity": schema.StringAttribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]; Default: "TOTAL"` + "\n" +
+										`Chosen granularity for API`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"TOTAL",
+											"DAY",
+											"HOUR",
+											"WEEK",
+											"MONTH",
+										),
+									},
+								},
+								"level": schema.StringAttribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]; Default: "ADVERTISER"` + "\n" +
+										`Chosen level for API`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"ADVERTISER",
+											"ADVERTISER_TARGETING",
+											"CAMPAIGN",
+											"CAMPAIGN_TARGETING",
+											"AD_GROUP",
+											"AD_GROUP_TARGETING",
+											"PIN_PROMOTION",
+											"PIN_PROMOTION_TARGETING",
+											"KEYWORD",
+											"PRODUCT_GROUP",
+											"PRODUCT_GROUP_TARGETING",
+											"PRODUCT_ITEM",
+										),
+									},
+								},
+								"name": schema.StringAttribute{
+									Required:    true,
+									Description: `The name value of report`,
+								},
+								"start_date": schema.StringAttribute{
+									Optional:    true,
+									Description: `A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by report api (913 days from today).`,
+									Validators: []validator.String{
+										validators.IsValidDate(),
+									},
+								},
+								"view_window_days": schema.Int64Attribute{
+									Optional: true,
+									MarkdownDescription: `must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]` + "\n" +
+										`Number of days to use as the conversion attribution window for a view action.`,
+									Validators: []validator.Int64{
+										int64validator.OneOf(
+											[]int64{
+												0,
+												1,
+												7,
+												14,
+												30,
+												60,
+											}...,
+										),
+									},
+								},
+							},
 						},
-						Description: `must be one of ["pinterest"]`,
+						Description: `A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Optional:    true,
+						Description: `A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).`,
 					},
 					"status": schema.ListAttribute{
 						Optional:    true,
@@ -174,13 +224,24 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -244,7 +305,7 @@ func (r *SourcePinterestResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourcePinterest(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -420,5 +481,5 @@ func (r *SourcePinterestResource) Delete(ctx context.Context, req resource.Delet
 }
 
 func (r *SourcePinterestResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

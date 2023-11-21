@@ -19,12 +19,12 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
     connection_string = "mongodb://example1.host.com:27017,example2.host.com:27017,example3.host.com:27017"
     password          = "...my_password..."
     replica_set       = "...my_replica_set..."
-    source_type       = "mongodb-internal-poc"
     user              = "...my_user..."
   }
-  name         = "Eduardo Weissnat"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "f8221125-359d-4983-87f7-a79cd72cd248"
+  definition_id = "6ea9203c-b787-46e7-9a53-1f3b4802a3b9"
+  name          = "Hector Kuhic"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "76dbe116-c781-416c-b0bf-b32667c47d50"
 }
 ```
 
@@ -34,11 +34,12 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,15 +50,12 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String) must be one of ["mongodb-internal-poc"]
-
 Optional:
 
-- `auth_source` (String) The authentication source where the user information is stored.
+- `auth_source` (String) Default: "admin"
+The authentication source where the user information is stored.
 - `connection_string` (String) The connection string of the database that you want to replicate..
-- `password` (String) The password associated with this username.
+- `password` (String, Sensitive) The password associated with this username.
 - `replica_set` (String) The name of the replica set to be replicated.
 - `user` (String) The username which is used to access the database.
 

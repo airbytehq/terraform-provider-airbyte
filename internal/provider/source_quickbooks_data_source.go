@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceQuickbooksDataSource struct {
 
 // SourceQuickbooksDataSourceModel describes the data model.
 type SourceQuickbooksDataSourceModel struct {
-	Configuration SourceQuickbooks `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,130 +47,19 @@ func (r *SourceQuickbooksDataSource) Schema(ctx context.Context, req datasource.
 		MarkdownDescription: "SourceQuickbooks DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_quickbooks_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access token fot making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: ` Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
-									},
-									"realm_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `A token used when refreshing the access token.`,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-										Description: `The date-time when the access token should be refreshed.`,
-									},
-								},
-							},
-							"source_quickbooks_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access token fot making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: ` Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
-									},
-									"realm_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `A token used when refreshing the access token.`,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-										Description: `The date-time when the access token should be refreshed.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"sandbox": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Determines whether to use the sandbox or production environment.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"quickbooks",
-							),
-						},
-						Description: `must be one of ["quickbooks"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

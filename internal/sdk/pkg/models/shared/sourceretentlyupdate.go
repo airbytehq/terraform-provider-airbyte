@@ -3,224 +3,197 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType string
+type SourceRetentlyUpdateSchemasAuthType string
 
 const (
-	SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthTypeToken SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType = "Token"
+	SourceRetentlyUpdateSchemasAuthTypeToken SourceRetentlyUpdateSchemasAuthType = "Token"
 )
 
-func (e SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType) ToPointer() *SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType {
+func (e SourceRetentlyUpdateSchemasAuthType) ToPointer() *SourceRetentlyUpdateSchemasAuthType {
 	return &e
 }
 
-func (e *SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceRetentlyUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Token":
-		*e = SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType(v)
+		*e = SourceRetentlyUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceRetentlyUpdateSchemasAuthType: %v", v)
 	}
 }
 
-// SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken - Choose how to authenticate to Retently
-type SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken struct {
+// AuthenticateWithAPIToken - Choose how to authenticate to Retently
+type AuthenticateWithAPIToken struct {
+	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
-	APIKey   string                                                                       `json:"api_key"`
-	AuthType *SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType `json:"auth_type,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
+	APIKey   string                               `json:"api_key"`
+	authType *SourceRetentlyUpdateSchemasAuthType `const:"Token" json:"auth_type,omitempty"`
 }
-type _SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
 
-func (c *SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken) UnmarshalJSON(bs []byte) error {
-	data := _SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken{}
+func (a AuthenticateWithAPIToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (a *AuthenticateWithAPIToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "api_key")
-	delete(additionalFields, "auth_type")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken(c))
-	if err != nil {
-		return nil, err
+func (o *AuthenticateWithAPIToken) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
+	return o.AdditionalProperties
 }
 
-type SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType string
+func (o *AuthenticateWithAPIToken) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *AuthenticateWithAPIToken) GetAuthType() *SourceRetentlyUpdateSchemasAuthType {
+	return SourceRetentlyUpdateSchemasAuthTypeToken.ToPointer()
+}
+
+type SourceRetentlyUpdateAuthType string
 
 const (
-	SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeClient SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType = "Client"
+	SourceRetentlyUpdateAuthTypeClient SourceRetentlyUpdateAuthType = "Client"
 )
 
-func (e SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType) ToPointer() *SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType {
+func (e SourceRetentlyUpdateAuthType) ToPointer() *SourceRetentlyUpdateAuthType {
 	return &e
 }
 
-func (e *SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceRetentlyUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType(v)
+		*e = SourceRetentlyUpdateAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceRetentlyUpdateAuthType: %v", v)
 	}
 }
 
-// SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth - Choose how to authenticate to Retently
-type SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth struct {
-	AuthType *SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType `json:"auth_type,omitempty"`
+// AuthenticateViaRetentlyOAuth - Choose how to authenticate to Retently
+type AuthenticateViaRetentlyOAuth struct {
+	AdditionalProperties interface{}                   `additionalProperties:"true" json:"-"`
+	authType             *SourceRetentlyUpdateAuthType `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Retently developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Retently developer application.
 	ClientSecret string `json:"client_secret"`
 	// Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
 	RefreshToken string `json:"refresh_token"`
-
-	AdditionalProperties interface{} `json:"-"`
 }
-type _SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
 
-func (c *SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth) UnmarshalJSON(bs []byte) error {
-	data := _SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth{}
+func (a AuthenticateViaRetentlyOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
 
-	if err := json.Unmarshal(bs, &data); err != nil {
+func (a *AuthenticateViaRetentlyOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
 		return err
 	}
-	*c = SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "auth_type")
-	delete(additionalFields, "client_id")
-	delete(additionalFields, "client_secret")
-	delete(additionalFields, "refresh_token")
-
-	c.AdditionalProperties = additionalFields
-
 	return nil
 }
 
-func (c SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth(c))
-	if err != nil {
-		return nil, err
+func (o *AuthenticateViaRetentlyOAuth) GetAdditionalProperties() interface{} {
+	if o == nil {
+		return nil
 	}
+	return o.AdditionalProperties
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *AuthenticateViaRetentlyOAuth) GetAuthType() *SourceRetentlyUpdateAuthType {
+	return SourceRetentlyUpdateAuthTypeClient.ToPointer()
+}
+
+func (o *AuthenticateViaRetentlyOAuth) GetClientID() string {
+	if o == nil {
+		return ""
 	}
+	return o.ClientID
+}
 
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
+func (o *AuthenticateViaRetentlyOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
 	}
+	return o.ClientSecret
+}
 
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
+func (o *AuthenticateViaRetentlyOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
 	}
-
-	return json.Marshal(out)
+	return o.RefreshToken
 }
 
 type SourceRetentlyUpdateAuthenticationMechanismType string
 
 const (
-	SourceRetentlyUpdateAuthenticationMechanismTypeSourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth SourceRetentlyUpdateAuthenticationMechanismType = "source-retently-update_Authentication Mechanism_Authenticate via Retently (OAuth)"
-	SourceRetentlyUpdateAuthenticationMechanismTypeSourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken     SourceRetentlyUpdateAuthenticationMechanismType = "source-retently-update_Authentication Mechanism_Authenticate with API Token"
+	SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth SourceRetentlyUpdateAuthenticationMechanismType = "Authenticate via Retently (OAuth)"
+	SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateWithAPIToken     SourceRetentlyUpdateAuthenticationMechanismType = "Authenticate with API Token"
 )
 
 type SourceRetentlyUpdateAuthenticationMechanism struct {
-	SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth *SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
-	SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken     *SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
+	AuthenticateViaRetentlyOAuth *AuthenticateViaRetentlyOAuth
+	AuthenticateWithAPIToken     *AuthenticateWithAPIToken
 
 	Type SourceRetentlyUpdateAuthenticationMechanismType
 }
 
-func CreateSourceRetentlyUpdateAuthenticationMechanismSourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth(sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth) SourceRetentlyUpdateAuthenticationMechanism {
-	typ := SourceRetentlyUpdateAuthenticationMechanismTypeSourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
+func CreateSourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth(authenticateViaRetentlyOAuth AuthenticateViaRetentlyOAuth) SourceRetentlyUpdateAuthenticationMechanism {
+	typ := SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth
 
 	return SourceRetentlyUpdateAuthenticationMechanism{
-		SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth: &sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth,
-		Type: typ,
+		AuthenticateViaRetentlyOAuth: &authenticateViaRetentlyOAuth,
+		Type:                         typ,
 	}
 }
 
-func CreateSourceRetentlyUpdateAuthenticationMechanismSourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken(sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken) SourceRetentlyUpdateAuthenticationMechanism {
-	typ := SourceRetentlyUpdateAuthenticationMechanismTypeSourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
+func CreateSourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken(authenticateWithAPIToken AuthenticateWithAPIToken) SourceRetentlyUpdateAuthenticationMechanism {
+	typ := SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateWithAPIToken
 
 	return SourceRetentlyUpdateAuthenticationMechanism{
-		SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken: &sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken,
-		Type: typ,
+		AuthenticateWithAPIToken: &authenticateWithAPIToken,
+		Type:                     typ,
 	}
 }
 
 func (u *SourceRetentlyUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken := new(SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken); err == nil {
-		u.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken = sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
-		u.Type = SourceRetentlyUpdateAuthenticationMechanismTypeSourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
+	authenticateWithAPIToken := new(AuthenticateWithAPIToken)
+	if err := utils.UnmarshalJSON(data, &authenticateWithAPIToken, "", true, true); err == nil {
+		u.AuthenticateWithAPIToken = authenticateWithAPIToken
+		u.Type = SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateWithAPIToken
 		return nil
 	}
 
-	sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth := new(SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth); err == nil {
-		u.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth = sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
-		u.Type = SourceRetentlyUpdateAuthenticationMechanismTypeSourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
+	authenticateViaRetentlyOAuth := new(AuthenticateViaRetentlyOAuth)
+	if err := utils.UnmarshalJSON(data, &authenticateViaRetentlyOAuth, "", true, true); err == nil {
+		u.AuthenticateViaRetentlyOAuth = authenticateViaRetentlyOAuth
+		u.Type = SourceRetentlyUpdateAuthenticationMechanismTypeAuthenticateViaRetentlyOAuth
 		return nil
 	}
 
@@ -228,18 +201,25 @@ func (u *SourceRetentlyUpdateAuthenticationMechanism) UnmarshalJSON(data []byte)
 }
 
 func (u SourceRetentlyUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken != nil {
-		return json.Marshal(u.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken)
+	if u.AuthenticateViaRetentlyOAuth != nil {
+		return utils.MarshalJSON(u.AuthenticateViaRetentlyOAuth, "", true)
 	}
 
-	if u.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-		return json.Marshal(u.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth)
+	if u.AuthenticateWithAPIToken != nil {
+		return utils.MarshalJSON(u.AuthenticateWithAPIToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceRetentlyUpdate struct {
 	// Choose how to authenticate to Retently
 	Credentials *SourceRetentlyUpdateAuthenticationMechanism `json:"credentials,omitempty"`
+}
+
+func (o *SourceRetentlyUpdate) GetCredentials() *SourceRetentlyUpdateAuthenticationMechanism {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }

@@ -1,15 +1,29 @@
 configVersion: 1.0.0
 generation:
+  comments: {}
   sdkClassName: SDK
-  singleTagPerOp: false
+  usageSnippets:
+    optionalPropertyRendering: withExample
   telemetryEnabled: true
 features:
   terraform:
-    core: 2.88.0
+    additionalProperties: 0.1.1
+    constsAndDefaults: 0.1.1
+    core: 3.5.0
     globalSecurity: 2.81.1
-    globalServerURLs: 2.82.0
-    includes: 2.81.1
+    globalServerURLs: 2.82.1
+    unions: 2.81.5
 terraform:
-  version: 0.3.4
+  version: 0.3.5
   author: airbytehq
+  imports:
+    option: openapi
+    paths:
+      callbacks: callbacks
+      errors: sdkerrors
+      operations: operations
+      shared: shared
+      webhooks: webhooks
+  inputModelSuffix: input
+  outputModelSuffix: output
   packageName: airbyte

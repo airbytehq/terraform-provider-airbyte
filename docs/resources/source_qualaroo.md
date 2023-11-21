@@ -15,17 +15,17 @@ SourceQualaroo Resource
 ```terraform
 resource "airbyte_source_qualaroo" "my_source_qualaroo" {
   configuration = {
-    key         = "...my_key..."
-    source_type = "qualaroo"
-    start_date  = "2021-03-01T00:00:00.000Z"
+    key        = "...my_key..."
+    start_date = "2021-03-01T00:00:00.000Z"
     survey_ids = [
       "...",
     ]
     token = "...my_token..."
   }
-  name         = "Sue Thompson"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "b518c4da-1fad-4355-92f0-6d4e5b72f0f5"
+  definition_id = "9af7c7e9-c462-409e-a52c-707cb05c4a8d"
+  name          = "Cheryl Schmitt"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "4658e520-f854-4a56-b309-cc0ee4bba7fa"
 }
 ```
 
@@ -35,11 +35,12 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -52,10 +53,9 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
 
 Required:
 
-- `key` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
-- `source_type` (String) must be one of ["qualaroo"]
+- `key` (String, Sensitive) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-- `token` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
+- `token` (String, Sensitive) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 
 Optional:
 

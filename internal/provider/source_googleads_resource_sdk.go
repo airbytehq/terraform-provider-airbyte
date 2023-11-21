@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -54,7 +54,6 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 	} else {
 		loginCustomerID = nil
 	}
-	sourceType := shared.SourceGoogleAdsGoogleAds(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -68,8 +67,13 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 		CustomerID:           customerID,
 		EndDate:              endDate,
 		LoginCustomerID:      loginCustomerID,
-		SourceType:           sourceType,
 		StartDate:            startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -81,6 +85,7 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleAdsCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -110,18 +115,18 @@ func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAds
 	clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
 	developerToken := r.Configuration.Credentials.DeveloperToken.ValueString()
 	refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
-	credentials := shared.SourceGoogleAdsUpdateGoogleCredentials{
+	credentials := shared.GoogleCredentials{
 		AccessToken:    accessToken,
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueries []shared.SourceGoogleAdsUpdateCustomQueries = nil
+	var customQueries []shared.CustomQueries = nil
 	for _, customQueriesItem := range r.Configuration.CustomQueries {
 		query := customQueriesItem.Query.ValueString()
 		tableName := customQueriesItem.TableName.ValueString()
-		customQueries = append(customQueries, shared.SourceGoogleAdsUpdateCustomQueries{
+		customQueries = append(customQueries, shared.CustomQueries{
 			Query:     query,
 			TableName: tableName,
 		})

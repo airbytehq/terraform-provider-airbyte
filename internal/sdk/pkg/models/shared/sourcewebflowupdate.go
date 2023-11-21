@@ -8,3 +8,17 @@ type SourceWebflowUpdate struct {
 	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
 	SiteID string `json:"site_id"`
 }
+
+func (o *SourceWebflowUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceWebflowUpdate) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
+}

@@ -3,7 +3,31 @@
 package shared
 
 type SourceGcsPutRequest struct {
+	// NOTE: When this Spec is changed, legacy_config_transformer.py must also be
+	// modified to uptake the changes because it is responsible for converting
+	// legacy GCS configs into file based configs using the File-Based CDK.
 	Configuration SourceGcsUpdate `json:"configuration"`
 	Name          string          `json:"name"`
 	WorkspaceID   string          `json:"workspaceId"`
+}
+
+func (o *SourceGcsPutRequest) GetConfiguration() SourceGcsUpdate {
+	if o == nil {
+		return SourceGcsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGcsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGcsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

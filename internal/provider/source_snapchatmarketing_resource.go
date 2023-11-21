@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceSnapchatMarketingResource struct {
 // SourceSnapchatMarketingResourceModel describes the resource data model.
 type SourceSnapchatMarketingResourceModel struct {
 	Configuration SourceSnapchatMarketing `tfsdk:"configuration"`
+	DefinitionID  types.String            `tfsdk:"definition_id"`
 	Name          types.String            `tfsdk:"name"`
 	SecretID      types.String            `tfsdk:"secret_id"`
 	SourceID      types.String            `tfsdk:"source_id"`
@@ -64,41 +65,45 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 						Description: `The Client Secret of your Snapchat developer application.`,
 					},
 					"end_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Date in the format 2017-01-25. Any data after this date will not be replicated.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `Date in the format 2017-01-25. Any data after this date will not be replicated.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Refresh Token to renew the expired Access Token.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snapchat-marketing",
-							),
-						},
-						Description: `must be one of ["snapchat-marketing"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `Default: "2022-01-01"` + "\n" +
+							`Date in the format 2022-01-01. Any data before this date will not be replicated.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `Date in the format 2022-01-01. Any data before this date will not be replicated.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -162,7 +167,7 @@ func (r *SourceSnapchatMarketingResource) Create(ctx context.Context, req resour
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSnapchatMarketing(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -338,5 +343,5 @@ func (r *SourceSnapchatMarketingResource) Delete(ctx context.Context, req resour
 }
 
 func (r *SourceSnapchatMarketingResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

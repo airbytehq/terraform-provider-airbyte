@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceTrustpilotDataSource struct {
 
 // SourceTrustpilotDataSourceModel describes the data model.
 type SourceTrustpilotDataSourceModel struct {
-	Configuration SourceTrustpilot `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,158 +47,19 @@ func (r *SourceTrustpilotDataSource) Schema(ctx context.Context, req datasource.
 		MarkdownDescription: "SourceTrustpilot DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"business_units": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.`,
-					},
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"source_trustpilot_authorization_method_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The API key of the Trustpilot API application.`,
-									},
-								},
-								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
-							},
-							"source_trustpilot_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The API key of the Trustpilot API application. (represents the OAuth Client ID)`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Secret of the Trustpilot API application. (represents the OAuth Client Secret)`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The key to refresh the expired access_token.`,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-										Description: `The date-time when the access token should be refreshed.`,
-									},
-								},
-							},
-							"source_trustpilot_update_authorization_method_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-										Description: `must be one of ["apikey"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The API key of the Trustpilot API application.`,
-									},
-								},
-								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
-							},
-							"source_trustpilot_update_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-										Description: `must be one of ["oauth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The API key of the Trustpilot API application. (represents the OAuth Client ID)`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Secret of the Trustpilot API application. (represents the OAuth Client Secret)`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `The key to refresh the expired access_token.`,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-										Description: `The date-time when the access token should be refreshed.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"trustpilot",
-							),
-						},
-						Description: `must be one of ["trustpilot"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `For streams with sync. method incremental the start date time to be used`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

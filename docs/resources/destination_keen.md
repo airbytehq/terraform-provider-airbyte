@@ -15,13 +15,13 @@ DestinationKeen Resource
 ```terraform
 resource "airbyte_destination_keen" "my_destination_keen" {
   configuration = {
-    api_key          = "ABCDEFGHIJKLMNOPRSTUWXYZ"
-    destination_type = "keen"
-    infer_timestamp  = false
-    project_id       = "58b4acc22ba938934e888322e"
+    api_key         = "ABCDEFGHIJKLMNOPRSTUWXYZ"
+    infer_timestamp = false
+    project_id      = "58b4acc22ba938934e888322e"
   }
-  name         = "Todd Oberbrunner DDS"
-  workspace_id = "688282aa-4825-462f-a22e-9817ee17cbe6"
+  definition_id = "23f0d76f-b78b-4f74-ba22-de12791b5f13"
+  name          = "Mr. Angelina Becker"
+  workspace_id  = "49774ae8-7c30-4892-bfb0-f41f82248d60"
 }
 ```
 
@@ -31,8 +31,12 @@ resource "airbyte_destination_keen" "my_destination_keen" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
+
+### Optional
+
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
 
 ### Read-Only
 
@@ -44,12 +48,12 @@ resource "airbyte_destination_keen" "my_destination_keen" {
 
 Required:
 
-- `api_key` (String) To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
-- `destination_type` (String) must be one of ["keen"]
+- `api_key` (String, Sensitive) To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 - `project_id` (String) To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 
 Optional:
 
-- `infer_timestamp` (Boolean) Allow connector to guess keen.timestamp value based on the streamed data.
+- `infer_timestamp` (Boolean) Default: true
+Allow connector to guess keen.timestamp value based on the streamed data.
 
 

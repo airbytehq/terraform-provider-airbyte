@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,10 +29,11 @@ type DestinationSnowflakeDataSource struct {
 
 // DestinationSnowflakeDataSourceModel describes the data model.
 type DestinationSnowflakeDataSourceModel struct {
-	Configuration DestinationSnowflake `tfsdk:"configuration"`
-	DestinationID types.String         `tfsdk:"destination_id"`
-	Name          types.String         `tfsdk:"name"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,202 +47,16 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 		MarkdownDescription: "DestinationSnowflake DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-										Description: `must be one of ["Key Pair Authentication"]`,
-									},
-									"private_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.`,
-									},
-									"private_key_password": schema.StringAttribute{
-										Computed:    true,
-										Description: `Passphrase for private key`,
-									},
-								},
-							},
-							"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter you application's Access Token`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter your application's Client ID`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter your application's Client secret`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter your application's Refresh Token`,
-									},
-								},
-							},
-							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Username and Password",
-											),
-										},
-										Description: `must be one of ["Username and Password"]`,
-									},
-									"password": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter the password associated with the username.`,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-										Description: `must be one of ["Key Pair Authentication"]`,
-									},
-									"private_key": schema.StringAttribute{
-										Computed:    true,
-										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.`,
-									},
-									"private_key_password": schema.StringAttribute{
-										Computed:    true,
-										Description: `Passphrase for private key`,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter you application's Access Token`,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-										Description: `must be one of ["OAuth2.0"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter your application's Client ID`,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter your application's Client secret`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter your application's Refresh Token`,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Username and Password",
-											),
-										},
-										Description: `must be one of ["Username and Password"]`,
-									},
-									"password": schema.StringAttribute{
-										Computed:    true,
-										Description: `Enter the password associated with the username.`,
-									},
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"database": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"snowflake",
-							),
-						},
-						Description: `must be one of ["snowflake"]`,
-					},
-					"host": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)`,
-					},
-					"jdbc_url_params": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3`,
-					},
-					"raw_data_schema": schema.StringAttribute{
-						Computed:    true,
-						Description: `The schema to write raw tables into`,
-					},
-					"role": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake`,
-					},
-					"schema": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>`,
-					},
-					"username": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter the name of the user you want to use to access the database`,
-					},
-					"warehouse": schema.StringAttribute{
-						Computed:    true,
-						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -11,10 +11,48 @@ type GetDestinationPineconeRequest struct {
 	DestinationID string `pathParam:"style=simple,explode=false,name=destinationId"`
 }
 
+func (o *GetDestinationPineconeRequest) GetDestinationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationID
+}
+
 type GetDestinationPineconeResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// Get a Destination by the id in the path.
 	DestinationResponse *shared.DestinationResponse
-	StatusCode          int
-	RawResponse         *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *GetDestinationPineconeResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDestinationPineconeResponse) GetDestinationResponse() *shared.DestinationResponse {
+	if o == nil {
+		return nil
+	}
+	return o.DestinationResponse
+}
+
+func (o *GetDestinationPineconeResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDestinationPineconeResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

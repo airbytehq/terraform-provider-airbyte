@@ -3,16 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceLemlistLemlist(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLemlist{
-		APIKey:     apiKey,
-		SourceType: sourceType,
+		APIKey: apiKey,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -24,6 +28,7 @@ func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceLemlistCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

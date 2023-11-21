@@ -4,17 +4,16 @@ resource "airbyte_source_slack" "my_source_slack" {
       "...",
     ]
     credentials = {
-      source_slack_authentication_mechanism_api_token = {
-        api_token    = "...my_api_token..."
-        option_title = "API Token Credentials"
+      source_slack_api_token = {
+        api_token = "...my_api_token..."
       }
     }
-    join_channels   = false
-    lookback_window = 7
-    source_type     = "slack"
+    join_channels   = true
+    lookback_window = 14
     start_date      = "2017-01-25T00:00:00Z"
   }
-  name         = "Dr. Jamie Wintheiser"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "af15920c-90d1-4b49-81f2-bd89c8a32639"
+  definition_id = "dd581ac6-4878-476f-8ad6-15bcace687b3"
+  name          = "Ms. Marian Bergstrom"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "986a7b02-fd25-4c77-a7b3-6354281d3e7f"
 }

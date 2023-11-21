@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceDremio struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	BaseURL    types.String `tfsdk:"base_url"`
-	SourceType types.String `tfsdk:"source_type"`
+	APIKey  types.String `tfsdk:"api_key"`
+	BaseURL types.String `tfsdk:"base_url"`
 }

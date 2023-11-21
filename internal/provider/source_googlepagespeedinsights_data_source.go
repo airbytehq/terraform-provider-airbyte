@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceGooglePagespeedInsightsDataSource struct {
 
 // SourceGooglePagespeedInsightsDataSourceModel describes the data model.
 type SourceGooglePagespeedInsightsDataSourceModel struct {
-	Configuration SourceGooglePagespeedInsights `tfsdk:"configuration"`
-	Name          types.String                  `tfsdk:"name"`
-	SecretID      types.String                  `tfsdk:"secret_id"`
-	SourceID      types.String                  `tfsdk:"source_id"`
-	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,48 +47,19 @@ func (r *SourceGooglePagespeedInsightsDataSource) Schema(ctx context.Context, re
 		MarkdownDescription: "SourceGooglePagespeedInsights DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.`,
-					},
-					"categories": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-pagespeed-insights",
-							),
-						},
-						Description: `must be one of ["google-pagespeed-insights"]`,
-					},
-					"strategies": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `The analyses strategy to use. Either "desktop" or "mobile".`,
-					},
-					"urls": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

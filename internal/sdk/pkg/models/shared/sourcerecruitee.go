@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceRecruiteeRecruitee string
+type Recruitee string
 
 const (
-	SourceRecruiteeRecruiteeRecruitee SourceRecruiteeRecruitee = "recruitee"
+	RecruiteeRecruitee Recruitee = "recruitee"
 )
 
-func (e SourceRecruiteeRecruitee) ToPointer() *SourceRecruiteeRecruitee {
+func (e Recruitee) ToPointer() *Recruitee {
 	return &e
 }
 
-func (e *SourceRecruiteeRecruitee) UnmarshalJSON(data []byte) error {
+func (e *Recruitee) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "recruitee":
-		*e = SourceRecruiteeRecruitee(v)
+		*e = Recruitee(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRecruiteeRecruitee: %v", v)
+		return fmt.Errorf("invalid value for Recruitee: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourceRecruitee struct {
 	// Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
 	APIKey string `json:"api_key"`
 	// Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
-	CompanyID  int64                    `json:"company_id"`
-	SourceType SourceRecruiteeRecruitee `json:"sourceType"`
+	CompanyID  int64     `json:"company_id"`
+	sourceType Recruitee `const:"recruitee" json:"sourceType"`
+}
+
+func (s SourceRecruitee) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRecruitee) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRecruitee) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceRecruitee) GetCompanyID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CompanyID
+}
+
+func (o *SourceRecruitee) GetSourceType() Recruitee {
+	return RecruiteeRecruitee
 }

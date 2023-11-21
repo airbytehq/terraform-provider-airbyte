@@ -3,19 +3,14 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAzureBlobStorageCreateRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
-	azureBlobStorageBlobsPrefix := new(string)
-	if !r.Configuration.AzureBlobStorageBlobsPrefix.IsUnknown() && !r.Configuration.AzureBlobStorageBlobsPrefix.IsNull() {
-		*azureBlobStorageBlobsPrefix = r.Configuration.AzureBlobStorageBlobsPrefix.ValueString()
-	} else {
-		azureBlobStorageBlobsPrefix = nil
-	}
 	azureBlobStorageContainerName := r.Configuration.AzureBlobStorageContainerName.ValueString()
 	azureBlobStorageEndpoint := new(string)
 	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
@@ -23,37 +18,268 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	} else {
 		azureBlobStorageEndpoint = nil
 	}
-	azureBlobStorageSchemaInferenceLimit := new(int64)
-	if !r.Configuration.AzureBlobStorageSchemaInferenceLimit.IsUnknown() && !r.Configuration.AzureBlobStorageSchemaInferenceLimit.IsNull() {
-		*azureBlobStorageSchemaInferenceLimit = r.Configuration.AzureBlobStorageSchemaInferenceLimit.ValueInt64()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
-		azureBlobStorageSchemaInferenceLimit = nil
+		startDate = nil
 	}
-	var format shared.SourceAzureBlobStorageInputFormat
-	var sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType := shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON{
-			FormatType: formatType,
+	var streams []shared.SourceAzureBlobStorageFileBasedStreamConfig = nil
+	for _, streamsItem := range r.Configuration.Streams {
+		daysToSyncIfHistoryIsFull := new(int64)
+		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
+			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
+		} else {
+			daysToSyncIfHistoryIsFull = nil
 		}
-	}
-	if sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		format = shared.SourceAzureBlobStorageInputFormat{
-			SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON,
+		var format shared.SourceAzureBlobStorageFormat
+		var sourceAzureBlobStorageAvroFormat *shared.SourceAzureBlobStorageAvroFormat
+		if streamsItem.Format.AvroFormat != nil {
+			doubleAsString := new(bool)
+			if !streamsItem.Format.AvroFormat.DoubleAsString.IsUnknown() && !streamsItem.Format.AvroFormat.DoubleAsString.IsNull() {
+				*doubleAsString = streamsItem.Format.AvroFormat.DoubleAsString.ValueBool()
+			} else {
+				doubleAsString = nil
+			}
+			sourceAzureBlobStorageAvroFormat = &shared.SourceAzureBlobStorageAvroFormat{
+				DoubleAsString: doubleAsString,
+			}
 		}
+		if sourceAzureBlobStorageAvroFormat != nil {
+			format = shared.SourceAzureBlobStorageFormat{
+				SourceAzureBlobStorageAvroFormat: sourceAzureBlobStorageAvroFormat,
+			}
+		}
+		var sourceAzureBlobStorageCSVFormat *shared.SourceAzureBlobStorageCSVFormat
+		if streamsItem.Format.CSVFormat != nil {
+			delimiter := new(string)
+			if !streamsItem.Format.CSVFormat.Delimiter.IsUnknown() && !streamsItem.Format.CSVFormat.Delimiter.IsNull() {
+				*delimiter = streamsItem.Format.CSVFormat.Delimiter.ValueString()
+			} else {
+				delimiter = nil
+			}
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			} else {
+				doubleQuote = nil
+			}
+			encoding := new(string)
+			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
+				*encoding = streamsItem.Format.CSVFormat.Encoding.ValueString()
+			} else {
+				encoding = nil
+			}
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
+			} else {
+				escapeChar = nil
+			}
+			var falseValues []string = nil
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
+			}
+			var headerDefinition *shared.SourceAzureBlobStorageCSVHeaderDefinition
+			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
+				var sourceAzureBlobStorageFromCSV *shared.SourceAzureBlobStorageFromCSV
+				if streamsItem.Format.CSVFormat.HeaderDefinition.FromCSV != nil {
+					sourceAzureBlobStorageFromCSV = &shared.SourceAzureBlobStorageFromCSV{}
+				}
+				if sourceAzureBlobStorageFromCSV != nil {
+					headerDefinition = &shared.SourceAzureBlobStorageCSVHeaderDefinition{
+						SourceAzureBlobStorageFromCSV: sourceAzureBlobStorageFromCSV,
+					}
+				}
+				var sourceAzureBlobStorageAutogenerated *shared.SourceAzureBlobStorageAutogenerated
+				if streamsItem.Format.CSVFormat.HeaderDefinition.Autogenerated != nil {
+					sourceAzureBlobStorageAutogenerated = &shared.SourceAzureBlobStorageAutogenerated{}
+				}
+				if sourceAzureBlobStorageAutogenerated != nil {
+					headerDefinition = &shared.SourceAzureBlobStorageCSVHeaderDefinition{
+						SourceAzureBlobStorageAutogenerated: sourceAzureBlobStorageAutogenerated,
+					}
+				}
+				var sourceAzureBlobStorageUserProvided *shared.SourceAzureBlobStorageUserProvided
+				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
+					var columnNames []string = nil
+					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
+						columnNames = append(columnNames, columnNamesItem.ValueString())
+					}
+					sourceAzureBlobStorageUserProvided = &shared.SourceAzureBlobStorageUserProvided{
+						ColumnNames: columnNames,
+					}
+				}
+				if sourceAzureBlobStorageUserProvided != nil {
+					headerDefinition = &shared.SourceAzureBlobStorageCSVHeaderDefinition{
+						SourceAzureBlobStorageUserProvided: sourceAzureBlobStorageUserProvided,
+					}
+				}
+			}
+			inferenceType := new(shared.SourceAzureBlobStorageInferenceType)
+			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
+				*inferenceType = shared.SourceAzureBlobStorageInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
+			} else {
+				inferenceType = nil
+			}
+			var nullValues []string = nil
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = nil
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
+			sourceAzureBlobStorageCSVFormat = &shared.SourceAzureBlobStorageCSVFormat{
+				Delimiter:            delimiter,
+				DoubleQuote:          doubleQuote,
+				Encoding:             encoding,
+				EscapeChar:           escapeChar,
+				FalseValues:          falseValues,
+				HeaderDefinition:     headerDefinition,
+				InferenceType:        inferenceType,
+				NullValues:           nullValues,
+				QuoteChar:            quoteChar,
+				SkipRowsAfterHeader:  skipRowsAfterHeader,
+				SkipRowsBeforeHeader: skipRowsBeforeHeader,
+				StringsCanBeNull:     stringsCanBeNull,
+				TrueValues:           trueValues,
+			}
+		}
+		if sourceAzureBlobStorageCSVFormat != nil {
+			format = shared.SourceAzureBlobStorageFormat{
+				SourceAzureBlobStorageCSVFormat: sourceAzureBlobStorageCSVFormat,
+			}
+		}
+		var sourceAzureBlobStorageJsonlFormat *shared.SourceAzureBlobStorageJsonlFormat
+		if streamsItem.Format.JsonlFormat != nil {
+			sourceAzureBlobStorageJsonlFormat = &shared.SourceAzureBlobStorageJsonlFormat{}
+		}
+		if sourceAzureBlobStorageJsonlFormat != nil {
+			format = shared.SourceAzureBlobStorageFormat{
+				SourceAzureBlobStorageJsonlFormat: sourceAzureBlobStorageJsonlFormat,
+			}
+		}
+		var sourceAzureBlobStorageParquetFormat *shared.SourceAzureBlobStorageParquetFormat
+		if streamsItem.Format.ParquetFormat != nil {
+			decimalAsFloat := new(bool)
+			if !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsUnknown() && !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsNull() {
+				*decimalAsFloat = streamsItem.Format.ParquetFormat.DecimalAsFloat.ValueBool()
+			} else {
+				decimalAsFloat = nil
+			}
+			sourceAzureBlobStorageParquetFormat = &shared.SourceAzureBlobStorageParquetFormat{
+				DecimalAsFloat: decimalAsFloat,
+			}
+		}
+		if sourceAzureBlobStorageParquetFormat != nil {
+			format = shared.SourceAzureBlobStorageFormat{
+				SourceAzureBlobStorageParquetFormat: sourceAzureBlobStorageParquetFormat,
+			}
+		}
+		var sourceAzureBlobStorageDocumentFileTypeFormatExperimental *shared.SourceAzureBlobStorageDocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+			skipUnprocessableFileTypes := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
+				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			} else {
+				skipUnprocessableFileTypes = nil
+			}
+			sourceAzureBlobStorageDocumentFileTypeFormatExperimental = &shared.SourceAzureBlobStorageDocumentFileTypeFormatExperimental{
+				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+			}
+		}
+		if sourceAzureBlobStorageDocumentFileTypeFormatExperimental != nil {
+			format = shared.SourceAzureBlobStorageFormat{
+				SourceAzureBlobStorageDocumentFileTypeFormatExperimental: sourceAzureBlobStorageDocumentFileTypeFormatExperimental,
+			}
+		}
+		var globs []string = nil
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
+		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		legacyPrefix := new(string)
+		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
+			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
+		} else {
+			legacyPrefix = nil
+		}
+		name := streamsItem.Name.ValueString()
+		primaryKey := new(string)
+		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
+			*primaryKey = streamsItem.PrimaryKey.ValueString()
+		} else {
+			primaryKey = nil
+		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceAzureBlobStorageValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceAzureBlobStorageValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
+		streams = append(streams, shared.SourceAzureBlobStorageFileBasedStreamConfig{
+			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
+			Format:                    format,
+			Globs:                     globs,
+			InputSchema:               inputSchema,
+			LegacyPrefix:              legacyPrefix,
+			Name:                      name,
+			PrimaryKey:                primaryKey,
+			Schemaless:                schemaless,
+			ValidationPolicy:          validationPolicy,
+		})
 	}
-	sourceType := shared.SourceAzureBlobStorageAzureBlobStorage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAzureBlobStorage{
-		AzureBlobStorageAccountKey:           azureBlobStorageAccountKey,
-		AzureBlobStorageAccountName:          azureBlobStorageAccountName,
-		AzureBlobStorageBlobsPrefix:          azureBlobStorageBlobsPrefix,
-		AzureBlobStorageContainerName:        azureBlobStorageContainerName,
-		AzureBlobStorageEndpoint:             azureBlobStorageEndpoint,
-		AzureBlobStorageSchemaInferenceLimit: azureBlobStorageSchemaInferenceLimit,
-		Format:                               format,
-		SourceType:                           sourceType,
+		AzureBlobStorageAccountKey:    azureBlobStorageAccountKey,
+		AzureBlobStorageAccountName:   azureBlobStorageAccountName,
+		AzureBlobStorageContainerName: azureBlobStorageContainerName,
+		AzureBlobStorageEndpoint:      azureBlobStorageEndpoint,
+		StartDate:                     startDate,
+		Streams:                       streams,
 	}
-	name := r.Name.ValueString()
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
+	}
+	name1 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -63,7 +289,8 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAzureBlobStorageCreateRequest{
 		Configuration: configuration,
-		Name:          name,
+		DefinitionID:  definitionID,
+		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
@@ -78,12 +305,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToGetSDKType() *shared.SourceAzure
 func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAzureBlobStoragePutRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
-	azureBlobStorageBlobsPrefix := new(string)
-	if !r.Configuration.AzureBlobStorageBlobsPrefix.IsUnknown() && !r.Configuration.AzureBlobStorageBlobsPrefix.IsNull() {
-		*azureBlobStorageBlobsPrefix = r.Configuration.AzureBlobStorageBlobsPrefix.ValueString()
-	} else {
-		azureBlobStorageBlobsPrefix = nil
-	}
 	azureBlobStorageContainerName := r.Configuration.AzureBlobStorageContainerName.ValueString()
 	azureBlobStorageEndpoint := new(string)
 	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
@@ -91,39 +312,266 @@ func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAz
 	} else {
 		azureBlobStorageEndpoint = nil
 	}
-	azureBlobStorageSchemaInferenceLimit := new(int64)
-	if !r.Configuration.AzureBlobStorageSchemaInferenceLimit.IsUnknown() && !r.Configuration.AzureBlobStorageSchemaInferenceLimit.IsNull() {
-		*azureBlobStorageSchemaInferenceLimit = r.Configuration.AzureBlobStorageSchemaInferenceLimit.ValueInt64()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
-		azureBlobStorageSchemaInferenceLimit = nil
+		startDate = nil
 	}
-	var format shared.SourceAzureBlobStorageUpdateInputFormat
-	var sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType := shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON{
-			FormatType: formatType,
+	var streams []shared.FileBasedStreamConfig = nil
+	for _, streamsItem := range r.Configuration.Streams {
+		daysToSyncIfHistoryIsFull := new(int64)
+		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
+			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
+		} else {
+			daysToSyncIfHistoryIsFull = nil
 		}
-	}
-	if sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		format = shared.SourceAzureBlobStorageUpdateInputFormat{
-			SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON,
+		var format shared.Format
+		var avroFormat *shared.AvroFormat
+		if streamsItem.Format.AvroFormat != nil {
+			doubleAsString := new(bool)
+			if !streamsItem.Format.AvroFormat.DoubleAsString.IsUnknown() && !streamsItem.Format.AvroFormat.DoubleAsString.IsNull() {
+				*doubleAsString = streamsItem.Format.AvroFormat.DoubleAsString.ValueBool()
+			} else {
+				doubleAsString = nil
+			}
+			avroFormat = &shared.AvroFormat{
+				DoubleAsString: doubleAsString,
+			}
 		}
+		if avroFormat != nil {
+			format = shared.Format{
+				AvroFormat: avroFormat,
+			}
+		}
+		var csvFormat *shared.CSVFormat
+		if streamsItem.Format.CSVFormat != nil {
+			delimiter := new(string)
+			if !streamsItem.Format.CSVFormat.Delimiter.IsUnknown() && !streamsItem.Format.CSVFormat.Delimiter.IsNull() {
+				*delimiter = streamsItem.Format.CSVFormat.Delimiter.ValueString()
+			} else {
+				delimiter = nil
+			}
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			} else {
+				doubleQuote = nil
+			}
+			encoding := new(string)
+			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
+				*encoding = streamsItem.Format.CSVFormat.Encoding.ValueString()
+			} else {
+				encoding = nil
+			}
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
+			} else {
+				escapeChar = nil
+			}
+			var falseValues []string = nil
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
+			}
+			var headerDefinition *shared.CSVHeaderDefinition
+			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
+				var fromCSV *shared.FromCSV
+				if streamsItem.Format.CSVFormat.HeaderDefinition.FromCSV != nil {
+					fromCSV = &shared.FromCSV{}
+				}
+				if fromCSV != nil {
+					headerDefinition = &shared.CSVHeaderDefinition{
+						FromCSV: fromCSV,
+					}
+				}
+				var autogenerated *shared.Autogenerated
+				if streamsItem.Format.CSVFormat.HeaderDefinition.Autogenerated != nil {
+					autogenerated = &shared.Autogenerated{}
+				}
+				if autogenerated != nil {
+					headerDefinition = &shared.CSVHeaderDefinition{
+						Autogenerated: autogenerated,
+					}
+				}
+				var userProvided *shared.UserProvided
+				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
+					var columnNames []string = nil
+					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
+						columnNames = append(columnNames, columnNamesItem.ValueString())
+					}
+					userProvided = &shared.UserProvided{
+						ColumnNames: columnNames,
+					}
+				}
+				if userProvided != nil {
+					headerDefinition = &shared.CSVHeaderDefinition{
+						UserProvided: userProvided,
+					}
+				}
+			}
+			inferenceType := new(shared.InferenceType)
+			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
+				*inferenceType = shared.InferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
+			} else {
+				inferenceType = nil
+			}
+			var nullValues []string = nil
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = nil
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
+			csvFormat = &shared.CSVFormat{
+				Delimiter:            delimiter,
+				DoubleQuote:          doubleQuote,
+				Encoding:             encoding,
+				EscapeChar:           escapeChar,
+				FalseValues:          falseValues,
+				HeaderDefinition:     headerDefinition,
+				InferenceType:        inferenceType,
+				NullValues:           nullValues,
+				QuoteChar:            quoteChar,
+				SkipRowsAfterHeader:  skipRowsAfterHeader,
+				SkipRowsBeforeHeader: skipRowsBeforeHeader,
+				StringsCanBeNull:     stringsCanBeNull,
+				TrueValues:           trueValues,
+			}
+		}
+		if csvFormat != nil {
+			format = shared.Format{
+				CSVFormat: csvFormat,
+			}
+		}
+		var jsonlFormat *shared.JsonlFormat
+		if streamsItem.Format.JsonlFormat != nil {
+			jsonlFormat = &shared.JsonlFormat{}
+		}
+		if jsonlFormat != nil {
+			format = shared.Format{
+				JsonlFormat: jsonlFormat,
+			}
+		}
+		var parquetFormat *shared.ParquetFormat
+		if streamsItem.Format.ParquetFormat != nil {
+			decimalAsFloat := new(bool)
+			if !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsUnknown() && !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsNull() {
+				*decimalAsFloat = streamsItem.Format.ParquetFormat.DecimalAsFloat.ValueBool()
+			} else {
+				decimalAsFloat = nil
+			}
+			parquetFormat = &shared.ParquetFormat{
+				DecimalAsFloat: decimalAsFloat,
+			}
+		}
+		if parquetFormat != nil {
+			format = shared.Format{
+				ParquetFormat: parquetFormat,
+			}
+		}
+		var documentFileTypeFormatExperimental *shared.DocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+			skipUnprocessableFileTypes := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
+				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			} else {
+				skipUnprocessableFileTypes = nil
+			}
+			documentFileTypeFormatExperimental = &shared.DocumentFileTypeFormatExperimental{
+				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+			}
+		}
+		if documentFileTypeFormatExperimental != nil {
+			format = shared.Format{
+				DocumentFileTypeFormatExperimental: documentFileTypeFormatExperimental,
+			}
+		}
+		var globs []string = nil
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
+		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		legacyPrefix := new(string)
+		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
+			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
+		} else {
+			legacyPrefix = nil
+		}
+		name := streamsItem.Name.ValueString()
+		primaryKey := new(string)
+		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
+			*primaryKey = streamsItem.PrimaryKey.ValueString()
+		} else {
+			primaryKey = nil
+		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.ValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.ValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
+		streams = append(streams, shared.FileBasedStreamConfig{
+			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
+			Format:                    format,
+			Globs:                     globs,
+			InputSchema:               inputSchema,
+			LegacyPrefix:              legacyPrefix,
+			Name:                      name,
+			PrimaryKey:                primaryKey,
+			Schemaless:                schemaless,
+			ValidationPolicy:          validationPolicy,
+		})
 	}
 	configuration := shared.SourceAzureBlobStorageUpdate{
-		AzureBlobStorageAccountKey:           azureBlobStorageAccountKey,
-		AzureBlobStorageAccountName:          azureBlobStorageAccountName,
-		AzureBlobStorageBlobsPrefix:          azureBlobStorageBlobsPrefix,
-		AzureBlobStorageContainerName:        azureBlobStorageContainerName,
-		AzureBlobStorageEndpoint:             azureBlobStorageEndpoint,
-		AzureBlobStorageSchemaInferenceLimit: azureBlobStorageSchemaInferenceLimit,
-		Format:                               format,
+		AzureBlobStorageAccountKey:    azureBlobStorageAccountKey,
+		AzureBlobStorageAccountName:   azureBlobStorageAccountName,
+		AzureBlobStorageContainerName: azureBlobStorageContainerName,
+		AzureBlobStorageEndpoint:      azureBlobStorageEndpoint,
+		StartDate:                     startDate,
+		Streams:                       streams,
 	}
-	name := r.Name.ValueString()
+	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAzureBlobStoragePutRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

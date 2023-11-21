@@ -7,3 +7,24 @@ type SourceTiktokMarketingPutRequest struct {
 	Name          string                      `json:"name"`
 	WorkspaceID   string                      `json:"workspaceId"`
 }
+
+func (o *SourceTiktokMarketingPutRequest) GetConfiguration() SourceTiktokMarketingUpdate {
+	if o == nil {
+		return SourceTiktokMarketingUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTiktokMarketingPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTiktokMarketingPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

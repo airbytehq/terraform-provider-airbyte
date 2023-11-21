@@ -3,34 +3,44 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationDynamodbResourceModel) ToCreateSDKType() *shared.DestinationDynamodbCreateRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
-	destinationType := shared.DestinationDynamodbDynamodb(r.Configuration.DestinationType.ValueString())
 	dynamodbEndpoint := new(string)
 	if !r.Configuration.DynamodbEndpoint.IsUnknown() && !r.Configuration.DynamodbEndpoint.IsNull() {
 		*dynamodbEndpoint = r.Configuration.DynamodbEndpoint.ValueString()
 	} else {
 		dynamodbEndpoint = nil
 	}
-	dynamodbRegion := shared.DestinationDynamodbDynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
+	dynamodbRegion := new(shared.DestinationDynamodbDynamoDBRegion)
+	if !r.Configuration.DynamodbRegion.IsUnknown() && !r.Configuration.DynamodbRegion.IsNull() {
+		*dynamodbRegion = shared.DestinationDynamodbDynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
+	} else {
+		dynamodbRegion = nil
+	}
 	dynamodbTableNamePrefix := r.Configuration.DynamodbTableNamePrefix.ValueString()
 	secretAccessKey := r.Configuration.SecretAccessKey.ValueString()
 	configuration := shared.DestinationDynamodb{
 		AccessKeyID:             accessKeyID,
-		DestinationType:         destinationType,
 		DynamodbEndpoint:        dynamodbEndpoint,
 		DynamodbRegion:          dynamodbRegion,
 		DynamodbTableNamePrefix: dynamodbTableNamePrefix,
 		SecretAccessKey:         secretAccessKey,
 	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
+	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationDynamodbCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -50,7 +60,12 @@ func (r *DestinationDynamodbResourceModel) ToUpdateSDKType() *shared.Destination
 	} else {
 		dynamodbEndpoint = nil
 	}
-	dynamodbRegion := shared.DestinationDynamodbUpdateDynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
+	dynamodbRegion := new(shared.DynamoDBRegion)
+	if !r.Configuration.DynamodbRegion.IsUnknown() && !r.Configuration.DynamodbRegion.IsNull() {
+		*dynamodbRegion = shared.DynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
+	} else {
+		dynamodbRegion = nil
+	}
 	dynamodbTableNamePrefix := r.Configuration.DynamodbTableNamePrefix.ValueString()
 	secretAccessKey := r.Configuration.SecretAccessKey.ValueString()
 	configuration := shared.DestinationDynamodbUpdate{

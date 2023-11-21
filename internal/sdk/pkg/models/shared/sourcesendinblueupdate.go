@@ -6,3 +6,10 @@ type SourceSendinblueUpdate struct {
 	// Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
 	APIKey string `json:"api_key"`
 }
+
+func (o *SourceSendinblueUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}

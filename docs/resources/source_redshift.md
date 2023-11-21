@@ -23,12 +23,12 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     schemas = [
       "...",
     ]
-    source_type = "redshift"
-    username    = "Nelda.Jaskolski"
+    username = "Elton_Morissette"
   }
-  name         = "Clay Hintz"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c18edc7f-787e-432e-84b3-d3ed0c5670ef"
+  definition_id = "b974a7d8-001c-4be4-b7da-a2d7b021550a"
+  name          = "Jake Ondricka"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "f01cf56e-e294-4adb-85bd-340789cf0b8d"
 }
 ```
 
@@ -38,11 +38,12 @@ resource "airbyte_source_redshift" "my_source_redshift" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -57,14 +58,14 @@ Required:
 
 - `database` (String) Name of the database.
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com).
-- `password` (String) Password associated with the username.
-- `port` (Number) Port of the database.
-- `source_type` (String) must be one of ["redshift"]
+- `password` (String, Sensitive) Password associated with the username.
 - `username` (String) Username to use to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `port` (Number) Default: 5439
+Port of the database.
 - `schemas` (List of String) The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
 
 

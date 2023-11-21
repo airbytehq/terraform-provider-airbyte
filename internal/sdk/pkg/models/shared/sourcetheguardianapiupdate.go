@@ -16,3 +16,45 @@ type SourceTheGuardianAPIUpdate struct {
 	// (Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.
 	Tag *string `json:"tag,omitempty"`
 }
+
+func (o *SourceTheGuardianAPIUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceTheGuardianAPIUpdate) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTheGuardianAPIUpdate) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *SourceTheGuardianAPIUpdate) GetSection() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Section
+}
+
+func (o *SourceTheGuardianAPIUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceTheGuardianAPIUpdate) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
+}

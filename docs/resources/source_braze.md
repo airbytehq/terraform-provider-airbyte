@@ -15,14 +15,14 @@ SourceBraze Resource
 ```terraform
 resource "airbyte_source_braze" "my_source_braze" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "braze"
-    start_date  = "2022-09-06"
-    url         = "...my_url..."
+    api_key    = "...my_api_key..."
+    start_date = "2022-07-08"
+    url        = "...my_url..."
   }
-  name         = "Rosie Glover"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "efc5fde1-0a0c-4e21-a9e5-10019c6dc5e3"
+  definition_id = "dec4e3ea-b02c-4cb9-8852-3df16a0cc499"
+  name          = "Margarita Leuschke"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "682b0a70-74f0-416f-b212-7f33f8652b25"
 }
 ```
 
@@ -32,11 +32,12 @@ resource "airbyte_source_braze" "my_source_braze" {
 ### Required
 
 - `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
-- `name` (String)
+- `name` (String) Name of the source e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
 - `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
@@ -49,8 +50,7 @@ resource "airbyte_source_braze" "my_source_braze" {
 
 Required:
 
-- `api_key` (String) Braze REST API key
-- `source_type` (String) must be one of ["braze"]
+- `api_key` (String, Sensitive) Braze REST API key
 - `start_date` (String) Rows after this date will be synced
 - `url` (String) Braze REST API endpoint
 
