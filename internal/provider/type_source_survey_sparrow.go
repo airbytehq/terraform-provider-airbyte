@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceSurveySparrow struct {
 	AccessToken types.String                `tfsdk:"access_token"`
 	Region      *SourceSurveySparrowBaseURL `tfsdk:"region"`
-	SourceType  types.String                `tfsdk:"source_type"`
 	SurveyID    []types.String              `tfsdk:"survey_id"`
 }

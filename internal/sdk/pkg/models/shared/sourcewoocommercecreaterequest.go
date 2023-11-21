@@ -4,8 +4,46 @@ package shared
 
 type SourceWoocommerceCreateRequest struct {
 	Configuration SourceWoocommerce `json:"configuration"`
-	Name          string            `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceWoocommerceCreateRequest) GetConfiguration() SourceWoocommerce {
+	if o == nil {
+		return SourceWoocommerce{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceWoocommerceCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceWoocommerceCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceWoocommerceCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceWoocommerceCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

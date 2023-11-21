@@ -6,3 +6,10 @@ type SourceDockerhubUpdate struct {
 	// Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
 	DockerUsername string `json:"docker_username"`
 }
+
+func (o *SourceDockerhubUpdate) GetDockerUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.DockerUsername
+}

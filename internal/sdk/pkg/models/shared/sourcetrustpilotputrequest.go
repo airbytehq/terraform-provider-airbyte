@@ -7,3 +7,24 @@ type SourceTrustpilotPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceTrustpilotPutRequest) GetConfiguration() SourceTrustpilotUpdate {
+	if o == nil {
+		return SourceTrustpilotUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTrustpilotPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTrustpilotPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -13,6 +13,5 @@ type SourceAmazonSqs struct {
 	QueueURL           types.String `tfsdk:"queue_url"`
 	Region             types.String `tfsdk:"region"`
 	SecretKey          types.String `tfsdk:"secret_key"`
-	SourceType         types.String `tfsdk:"source_type"`
 	VisibilityTimeout  types.Int64  `tfsdk:"visibility_timeout"`
 }

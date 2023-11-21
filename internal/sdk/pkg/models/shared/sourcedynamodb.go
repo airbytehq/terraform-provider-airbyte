@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 // SourceDynamodbDynamodbRegion - The region of the Dynamodb database
@@ -135,12 +136,62 @@ type SourceDynamodb struct {
 	// The access key id to access Dynamodb. Airbyte requires read permissions to the database
 	AccessKeyID string `json:"access_key_id"`
 	// the URL of the Dynamodb database
-	Endpoint *string `json:"endpoint,omitempty"`
+	Endpoint *string `default:"" json:"endpoint"`
 	// The region of the Dynamodb database
-	Region *SourceDynamodbDynamodbRegion `json:"region,omitempty"`
+	Region *SourceDynamodbDynamodbRegion `default:"" json:"region"`
 	// Comma separated reserved attribute names present in your tables
 	ReservedAttributeNames *string `json:"reserved_attribute_names,omitempty"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey string                 `json:"secret_access_key"`
-	SourceType      SourceDynamodbDynamodb `json:"sourceType"`
+	sourceType      SourceDynamodbDynamodb `const:"dynamodb" json:"sourceType"`
+}
+
+func (s SourceDynamodb) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceDynamodb) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceDynamodb) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
+func (o *SourceDynamodb) GetEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Endpoint
+}
+
+func (o *SourceDynamodb) GetRegion() *SourceDynamodbDynamodbRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
+}
+
+func (o *SourceDynamodb) GetReservedAttributeNames() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReservedAttributeNames
+}
+
+func (o *SourceDynamodb) GetSecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretAccessKey
+}
+
+func (o *SourceDynamodb) GetSourceType() SourceDynamodbDynamodb {
+	return SourceDynamodbDynamodbDynamodb
 }

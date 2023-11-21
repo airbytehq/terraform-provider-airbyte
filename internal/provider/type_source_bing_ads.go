@@ -5,13 +5,12 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceBingAds struct {
-	AuthMethod       types.String `tfsdk:"auth_method"`
-	ClientID         types.String `tfsdk:"client_id"`
-	ClientSecret     types.String `tfsdk:"client_secret"`
-	DeveloperToken   types.String `tfsdk:"developer_token"`
-	LookbackWindow   types.Int64  `tfsdk:"lookback_window"`
-	RefreshToken     types.String `tfsdk:"refresh_token"`
-	ReportsStartDate types.String `tfsdk:"reports_start_date"`
-	SourceType       types.String `tfsdk:"source_type"`
-	TenantID         types.String `tfsdk:"tenant_id"`
+	ClientID         types.String         `tfsdk:"client_id"`
+	ClientSecret     types.String         `tfsdk:"client_secret"`
+	CustomReports    []CustomReportConfig `tfsdk:"custom_reports"`
+	DeveloperToken   types.String         `tfsdk:"developer_token"`
+	LookbackWindow   types.Int64          `tfsdk:"lookback_window"`
+	RefreshToken     types.String         `tfsdk:"refresh_token"`
+	ReportsStartDate types.String         `tfsdk:"reports_start_date"`
+	TenantID         types.String         `tfsdk:"tenant_id"`
 }

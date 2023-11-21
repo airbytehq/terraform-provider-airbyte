@@ -5,8 +5,10 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationMilvusProcessingConfigModel struct {
-	ChunkOverlap   types.Int64    `tfsdk:"chunk_overlap"`
-	ChunkSize      types.Int64    `tfsdk:"chunk_size"`
-	MetadataFields []types.String `tfsdk:"metadata_fields"`
-	TextFields     []types.String `tfsdk:"text_fields"`
+	ChunkOverlap      types.Int64                    `tfsdk:"chunk_overlap"`
+	ChunkSize         types.Int64                    `tfsdk:"chunk_size"`
+	FieldNameMappings []FieldNameMappingConfigModel  `tfsdk:"field_name_mappings"`
+	MetadataFields    []types.String                 `tfsdk:"metadata_fields"`
+	TextFields        []types.String                 `tfsdk:"text_fields"`
+	TextSplitter      *DestinationMilvusTextSplitter `tfsdk:"text_splitter"`
 }

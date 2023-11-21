@@ -6,6 +6,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePypi struct {
 	ProjectName types.String `tfsdk:"project_name"`
-	SourceType  types.String `tfsdk:"source_type"`
 	Version     types.String `tfsdk:"version"`
 }

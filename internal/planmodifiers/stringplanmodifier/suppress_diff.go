@@ -3,8 +3,8 @@
 package stringplanmodifier
 
 import (
-	"airbyte/internal/planmodifiers/utils"
 	"context"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/utils"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )

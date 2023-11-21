@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceSurveymonkeyDataSource struct {
 
 // SourceSurveymonkeyDataSourceModel describes the data model.
 type SourceSurveymonkeyDataSourceModel struct {
-	Configuration SourceSurveymonkey `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,80 +47,19 @@ func (r *SourceSurveymonkeyDataSource) Schema(ctx context.Context, req datasourc
 		MarkdownDescription: "SourceSurveymonkey DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"access_token": schema.StringAttribute{
-								Computed:    true,
-								Description: `Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.`,
-							},
-							"auth_method": schema.StringAttribute{
-								Computed: true,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"oauth2.0",
-									),
-								},
-								Description: `must be one of ["oauth2.0"]`,
-							},
-							"client_id": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Client ID of the SurveyMonkey developer application.`,
-							},
-							"client_secret": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Client Secret of the SurveyMonkey developer application.`,
-							},
-						},
-						Description: `The authorization method to use to retrieve data from SurveyMonkey`,
-					},
-					"origin": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"USA",
-								"Europe",
-								"Canada",
-							),
-						},
-						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]` + "\n" +
-							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"surveymonkey",
-							),
-						},
-						Description: `must be one of ["surveymonkey"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
-					},
-					"survey_ids": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

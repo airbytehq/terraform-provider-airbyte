@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
 // SourceAmazonSqsAWSRegion - AWS Region of the SQS Queue
@@ -104,27 +105,27 @@ func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceAmazonSqsAmazonSqs string
+type AmazonSqs string
 
 const (
-	SourceAmazonSqsAmazonSqsAmazonSqs SourceAmazonSqsAmazonSqs = "amazon-sqs"
+	AmazonSqsAmazonSqs AmazonSqs = "amazon-sqs"
 )
 
-func (e SourceAmazonSqsAmazonSqs) ToPointer() *SourceAmazonSqsAmazonSqs {
+func (e AmazonSqs) ToPointer() *AmazonSqs {
 	return &e
 }
 
-func (e *SourceAmazonSqsAmazonSqs) UnmarshalJSON(data []byte) error {
+func (e *AmazonSqs) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "amazon-sqs":
-		*e = SourceAmazonSqsAmazonSqs(v)
+		*e = AmazonSqs(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSqsAmazonSqs: %v", v)
+		return fmt.Errorf("invalid value for AmazonSqs: %v", v)
 	}
 }
 
@@ -134,7 +135,7 @@ type SourceAmazonSqs struct {
 	// Comma separated list of Mesage Attribute names to return
 	AttributesToReturn *string `json:"attributes_to_return,omitempty"`
 	// If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail.
-	DeleteMessages bool `json:"delete_messages"`
+	DeleteMessages *bool `default:"false" json:"delete_messages"`
 	// Max amount of messages to get in one batch (10 max)
 	MaxBatchSize *int64 `json:"max_batch_size,omitempty"`
 	// Max amount of time in seconds to wait for messages in a single poll (20 max)
@@ -144,8 +145,86 @@ type SourceAmazonSqs struct {
 	// AWS Region of the SQS Queue
 	Region SourceAmazonSqsAWSRegion `json:"region"`
 	// The Secret Key of the AWS IAM Role to use for pulling messages
-	SecretKey  *string                  `json:"secret_key,omitempty"`
-	SourceType SourceAmazonSqsAmazonSqs `json:"sourceType"`
+	SecretKey  *string   `json:"secret_key,omitempty"`
+	sourceType AmazonSqs `const:"amazon-sqs" json:"sourceType"`
 	// Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
 	VisibilityTimeout *int64 `json:"visibility_timeout,omitempty"`
+}
+
+func (s SourceAmazonSqs) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAmazonSqs) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAmazonSqs) GetAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessKey
+}
+
+func (o *SourceAmazonSqs) GetAttributesToReturn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AttributesToReturn
+}
+
+func (o *SourceAmazonSqs) GetDeleteMessages() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteMessages
+}
+
+func (o *SourceAmazonSqs) GetMaxBatchSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxBatchSize
+}
+
+func (o *SourceAmazonSqs) GetMaxWaitTime() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxWaitTime
+}
+
+func (o *SourceAmazonSqs) GetQueueURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.QueueURL
+}
+
+func (o *SourceAmazonSqs) GetRegion() SourceAmazonSqsAWSRegion {
+	if o == nil {
+		return SourceAmazonSqsAWSRegion("")
+	}
+	return o.Region
+}
+
+func (o *SourceAmazonSqs) GetSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretKey
+}
+
+func (o *SourceAmazonSqs) GetSourceType() AmazonSqs {
+	return AmazonSqsAmazonSqs
+}
+
+func (o *SourceAmazonSqs) GetVisibilityTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.VisibilityTimeout
 }

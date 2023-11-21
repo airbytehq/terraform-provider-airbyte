@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -23,80 +23,77 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
 	var replicationMethod *shared.SourceAlloydbReplicationMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourceAlloydbReplicationMethodStandardXmin *shared.SourceAlloydbReplicationMethodStandardXmin
-		if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin != nil {
-			method := shared.SourceAlloydbReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin.Method.ValueString())
-			sourceAlloydbReplicationMethodStandardXmin = &shared.SourceAlloydbReplicationMethodStandardXmin{
-				Method: method,
-			}
+		var sourceAlloydbStandardXmin *shared.SourceAlloydbStandardXmin
+		if r.Configuration.ReplicationMethod.StandardXmin != nil {
+			sourceAlloydbStandardXmin = &shared.SourceAlloydbStandardXmin{}
 		}
-		if sourceAlloydbReplicationMethodStandardXmin != nil {
+		if sourceAlloydbStandardXmin != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				SourceAlloydbReplicationMethodStandardXmin: sourceAlloydbReplicationMethodStandardXmin,
+				SourceAlloydbStandardXmin: sourceAlloydbStandardXmin,
 			}
 		}
-		var sourceAlloydbReplicationMethodLogicalReplicationCDC *shared.SourceAlloydbReplicationMethodLogicalReplicationCDC
-		if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
+		var sourceAlloydbLogicalReplicationCDC *shared.SourceAlloydbLogicalReplicationCDC
+		if r.Configuration.ReplicationMethod.LogicalReplicationCDC != nil {
+			var additionalProperties interface{}
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.LogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
+			}
 			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.LogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			lsnCommitBehaviour := new(shared.SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
+			lsnCommitBehaviour := new(shared.SourceAlloydbLSNCommitBehaviour)
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
+				*lsnCommitBehaviour = shared.SourceAlloydbLSNCommitBehaviour(r.Configuration.ReplicationMethod.LogicalReplicationCDC.LsnCommitBehaviour.ValueString())
 			} else {
 				lsnCommitBehaviour = nil
 			}
-			method1 := shared.SourceAlloydbReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method.ValueString())
-			plugin := new(shared.SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.IsNull() {
-				*plugin = shared.SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
+			plugin := new(shared.SourceAlloydbPlugin)
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.Plugin.IsNull() {
+				*plugin = shared.SourceAlloydbPlugin(r.Configuration.ReplicationMethod.LogicalReplicationCDC.Plugin.ValueString())
 			} else {
 				plugin = nil
 			}
-			publication := r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication.ValueString()
+			publication := r.Configuration.ReplicationMethod.LogicalReplicationCDC.Publication.ValueString()
 			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize.ValueInt64()
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.LogicalReplicationCDC.QueueSize.ValueInt64()
 			} else {
 				queueSize = nil
 			}
-			replicationSlot := r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
-			var additionalProperties interface{}
-			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
-			}
-			sourceAlloydbReplicationMethodLogicalReplicationCDC = &shared.SourceAlloydbReplicationMethodLogicalReplicationCDC{
+			replicationSlot := r.Configuration.ReplicationMethod.LogicalReplicationCDC.ReplicationSlot.ValueString()
+			sourceAlloydbLogicalReplicationCDC = &shared.SourceAlloydbLogicalReplicationCDC{
+				AdditionalProperties:  additionalProperties,
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
-				Method:                method1,
 				Plugin:                plugin,
 				Publication:           publication,
 				QueueSize:             queueSize,
 				ReplicationSlot:       replicationSlot,
-				AdditionalProperties:  additionalProperties,
 			}
 		}
-		if sourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
+		if sourceAlloydbLogicalReplicationCDC != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				SourceAlloydbReplicationMethodLogicalReplicationCDC: sourceAlloydbReplicationMethodLogicalReplicationCDC,
+				SourceAlloydbLogicalReplicationCDC: sourceAlloydbLogicalReplicationCDC,
 			}
 		}
-		var sourceAlloydbReplicationMethodStandard *shared.SourceAlloydbReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard != nil {
-			method2 := shared.SourceAlloydbReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method.ValueString())
-			sourceAlloydbReplicationMethodStandard = &shared.SourceAlloydbReplicationMethodStandard{
-				Method: method2,
-			}
+		var sourceAlloydbStandard *shared.SourceAlloydbStandard
+		if r.Configuration.ReplicationMethod.Standard != nil {
+			sourceAlloydbStandard = &shared.SourceAlloydbStandard{}
 		}
-		if sourceAlloydbReplicationMethodStandard != nil {
+		if sourceAlloydbStandard != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				SourceAlloydbReplicationMethodStandard: sourceAlloydbReplicationMethodStandard,
+				SourceAlloydbStandard: sourceAlloydbStandard,
 			}
 		}
 	}
@@ -104,210 +101,200 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
-	sourceType := shared.SourceAlloydbAlloydb(r.Configuration.SourceType.ValueString())
 	var sslMode *shared.SourceAlloydbSSLModes
 	if r.Configuration.SslMode != nil {
-		var sourceAlloydbSSLModesDisable *shared.SourceAlloydbSSLModesDisable
-		if r.Configuration.SslMode.SourceAlloydbSSLModesDisable != nil {
-			mode := shared.SourceAlloydbSSLModesDisableMode(r.Configuration.SslMode.SourceAlloydbSSLModesDisable.Mode.ValueString())
+		var sourceAlloydbDisable *shared.SourceAlloydbDisable
+		if r.Configuration.SslMode.Disable != nil {
 			var additionalProperties1 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.ValueString()), &additionalProperties1)
+			if !r.Configuration.SslMode.Disable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Disable.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Disable.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
-			sourceAlloydbSSLModesDisable = &shared.SourceAlloydbSSLModesDisable{
-				Mode:                 mode,
+			sourceAlloydbDisable = &shared.SourceAlloydbDisable{
 				AdditionalProperties: additionalProperties1,
 			}
 		}
-		if sourceAlloydbSSLModesDisable != nil {
+		if sourceAlloydbDisable != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				SourceAlloydbSSLModesDisable: sourceAlloydbSSLModesDisable,
+				SourceAlloydbDisable: sourceAlloydbDisable,
 			}
 		}
-		var sourceAlloydbSSLModesAllow *shared.SourceAlloydbSSLModesAllow
-		if r.Configuration.SslMode.SourceAlloydbSSLModesAllow != nil {
-			mode1 := shared.SourceAlloydbSSLModesAllowMode(r.Configuration.SslMode.SourceAlloydbSSLModesAllow.Mode.ValueString())
+		var sourceAlloydbAllow *shared.SourceAlloydbAllow
+		if r.Configuration.SslMode.Allow != nil {
 			var additionalProperties2 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.ValueString()), &additionalProperties2)
+			if !r.Configuration.SslMode.Allow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Allow.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Allow.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
-			sourceAlloydbSSLModesAllow = &shared.SourceAlloydbSSLModesAllow{
-				Mode:                 mode1,
+			sourceAlloydbAllow = &shared.SourceAlloydbAllow{
 				AdditionalProperties: additionalProperties2,
 			}
 		}
-		if sourceAlloydbSSLModesAllow != nil {
+		if sourceAlloydbAllow != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				SourceAlloydbSSLModesAllow: sourceAlloydbSSLModesAllow,
+				SourceAlloydbAllow: sourceAlloydbAllow,
 			}
 		}
-		var sourceAlloydbSSLModesPrefer *shared.SourceAlloydbSSLModesPrefer
-		if r.Configuration.SslMode.SourceAlloydbSSLModesPrefer != nil {
-			mode2 := shared.SourceAlloydbSSLModesPreferMode(r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.Mode.ValueString())
+		var sourceAlloydbPrefer *shared.SourceAlloydbPrefer
+		if r.Configuration.SslMode.Prefer != nil {
 			var additionalProperties3 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.ValueString()), &additionalProperties3)
+			if !r.Configuration.SslMode.Prefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Prefer.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Prefer.AdditionalProperties.ValueString()), &additionalProperties3)
 			}
-			sourceAlloydbSSLModesPrefer = &shared.SourceAlloydbSSLModesPrefer{
-				Mode:                 mode2,
+			sourceAlloydbPrefer = &shared.SourceAlloydbPrefer{
 				AdditionalProperties: additionalProperties3,
 			}
 		}
-		if sourceAlloydbSSLModesPrefer != nil {
+		if sourceAlloydbPrefer != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				SourceAlloydbSSLModesPrefer: sourceAlloydbSSLModesPrefer,
+				SourceAlloydbPrefer: sourceAlloydbPrefer,
 			}
 		}
-		var sourceAlloydbSSLModesRequire *shared.SourceAlloydbSSLModesRequire
-		if r.Configuration.SslMode.SourceAlloydbSSLModesRequire != nil {
-			mode3 := shared.SourceAlloydbSSLModesRequireMode(r.Configuration.SslMode.SourceAlloydbSSLModesRequire.Mode.ValueString())
+		var sourceAlloydbRequire *shared.SourceAlloydbRequire
+		if r.Configuration.SslMode.Require != nil {
 			var additionalProperties4 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.ValueString()), &additionalProperties4)
+			if !r.Configuration.SslMode.Require.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Require.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Require.AdditionalProperties.ValueString()), &additionalProperties4)
 			}
-			sourceAlloydbSSLModesRequire = &shared.SourceAlloydbSSLModesRequire{
-				Mode:                 mode3,
+			sourceAlloydbRequire = &shared.SourceAlloydbRequire{
 				AdditionalProperties: additionalProperties4,
 			}
 		}
-		if sourceAlloydbSSLModesRequire != nil {
+		if sourceAlloydbRequire != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				SourceAlloydbSSLModesRequire: sourceAlloydbSSLModesRequire,
+				SourceAlloydbRequire: sourceAlloydbRequire,
 			}
 		}
-		var sourceAlloydbSSLModesVerifyCa *shared.SourceAlloydbSSLModesVerifyCa
-		if r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa != nil {
-			caCertificate := r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.CaCertificate.ValueString()
+		var sourceAlloydbVerifyCa *shared.SourceAlloydbVerifyCa
+		if r.Configuration.SslMode.VerifyCa != nil {
+			var additionalProperties5 interface{}
+			if !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
+			}
+			caCertificate := r.Configuration.SslMode.VerifyCa.CaCertificate.ValueString()
 			clientCertificate := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate.IsNull() {
-				*clientCertificate = r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientCertificate.IsNull() {
+				*clientCertificate = r.Configuration.SslMode.VerifyCa.ClientCertificate.ValueString()
 			} else {
 				clientCertificate = nil
 			}
 			clientKey := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey.IsNull() {
-				*clientKey = r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientKey.IsNull() {
+				*clientKey = r.Configuration.SslMode.VerifyCa.ClientKey.ValueString()
 			} else {
 				clientKey = nil
 			}
 			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsNull() {
+				*clientKeyPassword = r.Configuration.SslMode.VerifyCa.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword = nil
 			}
-			mode4 := shared.SourceAlloydbSSLModesVerifyCaMode(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.Mode.ValueString())
-			var additionalProperties5 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
-			}
-			sourceAlloydbSSLModesVerifyCa = &shared.SourceAlloydbSSLModesVerifyCa{
+			sourceAlloydbVerifyCa = &shared.SourceAlloydbVerifyCa{
+				AdditionalProperties: additionalProperties5,
 				CaCertificate:        caCertificate,
 				ClientCertificate:    clientCertificate,
 				ClientKey:            clientKey,
 				ClientKeyPassword:    clientKeyPassword,
-				Mode:                 mode4,
-				AdditionalProperties: additionalProperties5,
 			}
 		}
-		if sourceAlloydbSSLModesVerifyCa != nil {
+		if sourceAlloydbVerifyCa != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				SourceAlloydbSSLModesVerifyCa: sourceAlloydbSSLModesVerifyCa,
+				SourceAlloydbVerifyCa: sourceAlloydbVerifyCa,
 			}
 		}
-		var sourceAlloydbSSLModesVerifyFull *shared.SourceAlloydbSSLModesVerifyFull
-		if r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull != nil {
-			caCertificate1 := r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.CaCertificate.ValueString()
+		var sourceAlloydbVerifyFull *shared.SourceAlloydbVerifyFull
+		if r.Configuration.SslMode.VerifyFull != nil {
+			var additionalProperties6 interface{}
+			if !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
+			}
+			caCertificate1 := r.Configuration.SslMode.VerifyFull.CaCertificate.ValueString()
 			clientCertificate1 := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate.IsNull() {
-				*clientCertificate1 = r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientCertificate.IsNull() {
+				*clientCertificate1 = r.Configuration.SslMode.VerifyFull.ClientCertificate.ValueString()
 			} else {
 				clientCertificate1 = nil
 			}
 			clientKey1 := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey.IsNull() {
-				*clientKey1 = r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientKey.IsNull() {
+				*clientKey1 = r.Configuration.SslMode.VerifyFull.ClientKey.ValueString()
 			} else {
 				clientKey1 = nil
 			}
 			clientKeyPassword1 := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword.IsNull() {
-				*clientKeyPassword1 = r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsNull() {
+				*clientKeyPassword1 = r.Configuration.SslMode.VerifyFull.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode5 := shared.SourceAlloydbSSLModesVerifyFullMode(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.Mode.ValueString())
-			var additionalProperties6 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
-			}
-			sourceAlloydbSSLModesVerifyFull = &shared.SourceAlloydbSSLModesVerifyFull{
+			sourceAlloydbVerifyFull = &shared.SourceAlloydbVerifyFull{
+				AdditionalProperties: additionalProperties6,
 				CaCertificate:        caCertificate1,
 				ClientCertificate:    clientCertificate1,
 				ClientKey:            clientKey1,
 				ClientKeyPassword:    clientKeyPassword1,
-				Mode:                 mode5,
-				AdditionalProperties: additionalProperties6,
 			}
 		}
-		if sourceAlloydbSSLModesVerifyFull != nil {
+		if sourceAlloydbVerifyFull != nil {
 			sslMode = &shared.SourceAlloydbSSLModes{
-				SourceAlloydbSSLModesVerifyFull: sourceAlloydbSSLModesVerifyFull,
+				SourceAlloydbVerifyFull: sourceAlloydbVerifyFull,
 			}
 		}
 	}
 	var tunnelMethod *shared.SourceAlloydbSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var sourceAlloydbSSHTunnelMethodNoTunnel *shared.SourceAlloydbSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			sourceAlloydbSSHTunnelMethodNoTunnel = &shared.SourceAlloydbSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var sourceAlloydbNoTunnel *shared.SourceAlloydbNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			sourceAlloydbNoTunnel = &shared.SourceAlloydbNoTunnel{}
 		}
-		if sourceAlloydbSSHTunnelMethodNoTunnel != nil {
+		if sourceAlloydbNoTunnel != nil {
 			tunnelMethod = &shared.SourceAlloydbSSHTunnelMethod{
-				SourceAlloydbSSHTunnelMethodNoTunnel: sourceAlloydbSSHTunnelMethodNoTunnel,
+				SourceAlloydbNoTunnel: sourceAlloydbNoTunnel,
 			}
 		}
-		var sourceAlloydbSSHTunnelMethodSSHKeyAuthentication *shared.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			sourceAlloydbSSHTunnelMethodSSHKeyAuthentication = &shared.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var sourceAlloydbSSHKeyAuthentication *shared.SourceAlloydbSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			sourceAlloydbSSHKeyAuthentication = &shared.SourceAlloydbSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if sourceAlloydbSSHTunnelMethodSSHKeyAuthentication != nil {
+		if sourceAlloydbSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbSSHTunnelMethod{
-				SourceAlloydbSSHTunnelMethodSSHKeyAuthentication: sourceAlloydbSSHTunnelMethodSSHKeyAuthentication,
+				SourceAlloydbSSHKeyAuthentication: sourceAlloydbSSHKeyAuthentication,
 			}
 		}
-		var sourceAlloydbSSHTunnelMethodPasswordAuthentication *shared.SourceAlloydbSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			sourceAlloydbSSHTunnelMethodPasswordAuthentication = &shared.SourceAlloydbSSHTunnelMethodPasswordAuthentication{
+		var sourceAlloydbPasswordAuthentication *shared.SourceAlloydbPasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			sourceAlloydbPasswordAuthentication = &shared.SourceAlloydbPasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if sourceAlloydbSSHTunnelMethodPasswordAuthentication != nil {
+		if sourceAlloydbPasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbSSHTunnelMethod{
-				SourceAlloydbSSHTunnelMethodPasswordAuthentication: sourceAlloydbSSHTunnelMethodPasswordAuthentication,
+				SourceAlloydbPasswordAuthentication: sourceAlloydbPasswordAuthentication,
 			}
 		}
 	}
@@ -320,10 +307,15 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		Port:              port,
 		ReplicationMethod: replicationMethod,
 		Schemas:           schemas,
-		SourceType:        sourceType,
 		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -335,6 +327,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAlloydbCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -362,80 +355,77 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 	} else {
 		password = nil
 	}
-	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod *shared.SourceAlloydbUpdateReplicationMethod
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var replicationMethod *shared.ReplicationMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourceAlloydbUpdateReplicationMethodStandardXmin *shared.SourceAlloydbUpdateReplicationMethodStandardXmin
-		if r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandardXmin != nil {
-			method := shared.SourceAlloydbUpdateReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandardXmin.Method.ValueString())
-			sourceAlloydbUpdateReplicationMethodStandardXmin = &shared.SourceAlloydbUpdateReplicationMethodStandardXmin{
-				Method: method,
+		var standardXmin *shared.StandardXmin
+		if r.Configuration.ReplicationMethod.StandardXmin != nil {
+			standardXmin = &shared.StandardXmin{}
+		}
+		if standardXmin != nil {
+			replicationMethod = &shared.ReplicationMethod{
+				StandardXmin: standardXmin,
 			}
 		}
-		if sourceAlloydbUpdateReplicationMethodStandardXmin != nil {
-			replicationMethod = &shared.SourceAlloydbUpdateReplicationMethod{
-				SourceAlloydbUpdateReplicationMethodStandardXmin: sourceAlloydbUpdateReplicationMethodStandardXmin,
+		var logicalReplicationCDC *shared.LogicalReplicationCDC
+		if r.Configuration.ReplicationMethod.LogicalReplicationCDC != nil {
+			var additionalProperties interface{}
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.LogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
 			}
-		}
-		var sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
-		if r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
 			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.LogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			lsnCommitBehaviour := new(shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
+			lsnCommitBehaviour := new(shared.LSNCommitBehaviour)
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
+				*lsnCommitBehaviour = shared.LSNCommitBehaviour(r.Configuration.ReplicationMethod.LogicalReplicationCDC.LsnCommitBehaviour.ValueString())
 			} else {
 				lsnCommitBehaviour = nil
 			}
-			method1 := shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.Method.ValueString())
-			plugin := new(shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.Plugin.IsNull() {
-				*plugin = shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
+			plugin := new(shared.Plugin)
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.Plugin.IsNull() {
+				*plugin = shared.Plugin(r.Configuration.ReplicationMethod.LogicalReplicationCDC.Plugin.ValueString())
 			} else {
 				plugin = nil
 			}
-			publication := r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.Publication.ValueString()
+			publication := r.Configuration.ReplicationMethod.LogicalReplicationCDC.Publication.ValueString()
 			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.QueueSize.ValueInt64()
+			if !r.Configuration.ReplicationMethod.LogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.LogicalReplicationCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.LogicalReplicationCDC.QueueSize.ValueInt64()
 			} else {
 				queueSize = nil
 			}
-			replicationSlot := r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
-			var additionalProperties interface{}
-			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
-			}
-			sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC = &shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC{
+			replicationSlot := r.Configuration.ReplicationMethod.LogicalReplicationCDC.ReplicationSlot.ValueString()
+			logicalReplicationCDC = &shared.LogicalReplicationCDC{
+				AdditionalProperties:  additionalProperties,
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
-				Method:                method1,
 				Plugin:                plugin,
 				Publication:           publication,
 				QueueSize:             queueSize,
 				ReplicationSlot:       replicationSlot,
-				AdditionalProperties:  additionalProperties,
 			}
 		}
-		if sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
-			replicationMethod = &shared.SourceAlloydbUpdateReplicationMethod{
-				SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC: sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC,
+		if logicalReplicationCDC != nil {
+			replicationMethod = &shared.ReplicationMethod{
+				LogicalReplicationCDC: logicalReplicationCDC,
 			}
 		}
-		var sourceAlloydbUpdateReplicationMethodStandard *shared.SourceAlloydbUpdateReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard != nil {
-			method2 := shared.SourceAlloydbUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard.Method.ValueString())
-			sourceAlloydbUpdateReplicationMethodStandard = &shared.SourceAlloydbUpdateReplicationMethodStandard{
-				Method: method2,
-			}
+		var sourceAlloydbUpdateStandard *shared.SourceAlloydbUpdateStandard
+		if r.Configuration.ReplicationMethod.Standard != nil {
+			sourceAlloydbUpdateStandard = &shared.SourceAlloydbUpdateStandard{}
 		}
-		if sourceAlloydbUpdateReplicationMethodStandard != nil {
-			replicationMethod = &shared.SourceAlloydbUpdateReplicationMethod{
-				SourceAlloydbUpdateReplicationMethodStandard: sourceAlloydbUpdateReplicationMethodStandard,
+		if sourceAlloydbUpdateStandard != nil {
+			replicationMethod = &shared.ReplicationMethod{
+				SourceAlloydbUpdateStandard: sourceAlloydbUpdateStandard,
 			}
 		}
 	}
@@ -445,207 +435,198 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 	}
 	var sslMode *shared.SourceAlloydbUpdateSSLModes
 	if r.Configuration.SslMode != nil {
-		var sourceAlloydbUpdateSSLModesDisable *shared.SourceAlloydbUpdateSSLModesDisable
-		if r.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable != nil {
-			mode := shared.SourceAlloydbUpdateSSLModesDisableMode(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable.Mode.ValueString())
+		var sourceAlloydbUpdateDisable *shared.SourceAlloydbUpdateDisable
+		if r.Configuration.SslMode.Disable != nil {
 			var additionalProperties1 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesDisable.AdditionalProperties.ValueString()), &additionalProperties1)
+			if !r.Configuration.SslMode.Disable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Disable.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Disable.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
-			sourceAlloydbUpdateSSLModesDisable = &shared.SourceAlloydbUpdateSSLModesDisable{
-				Mode:                 mode,
+			sourceAlloydbUpdateDisable = &shared.SourceAlloydbUpdateDisable{
 				AdditionalProperties: additionalProperties1,
 			}
 		}
-		if sourceAlloydbUpdateSSLModesDisable != nil {
+		if sourceAlloydbUpdateDisable != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				SourceAlloydbUpdateSSLModesDisable: sourceAlloydbUpdateSSLModesDisable,
+				SourceAlloydbUpdateDisable: sourceAlloydbUpdateDisable,
 			}
 		}
-		var sourceAlloydbUpdateSSLModesAllow *shared.SourceAlloydbUpdateSSLModesAllow
-		if r.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow != nil {
-			mode1 := shared.SourceAlloydbUpdateSSLModesAllowMode(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow.Mode.ValueString())
+		var sourceAlloydbUpdateAllow *shared.SourceAlloydbUpdateAllow
+		if r.Configuration.SslMode.Allow != nil {
 			var additionalProperties2 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesAllow.AdditionalProperties.ValueString()), &additionalProperties2)
+			if !r.Configuration.SslMode.Allow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Allow.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Allow.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
-			sourceAlloydbUpdateSSLModesAllow = &shared.SourceAlloydbUpdateSSLModesAllow{
-				Mode:                 mode1,
+			sourceAlloydbUpdateAllow = &shared.SourceAlloydbUpdateAllow{
 				AdditionalProperties: additionalProperties2,
 			}
 		}
-		if sourceAlloydbUpdateSSLModesAllow != nil {
+		if sourceAlloydbUpdateAllow != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				SourceAlloydbUpdateSSLModesAllow: sourceAlloydbUpdateSSLModesAllow,
+				SourceAlloydbUpdateAllow: sourceAlloydbUpdateAllow,
 			}
 		}
-		var sourceAlloydbUpdateSSLModesPrefer *shared.SourceAlloydbUpdateSSLModesPrefer
-		if r.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer != nil {
-			mode2 := shared.SourceAlloydbUpdateSSLModesPreferMode(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer.Mode.ValueString())
+		var sourceAlloydbUpdatePrefer *shared.SourceAlloydbUpdatePrefer
+		if r.Configuration.SslMode.Prefer != nil {
 			var additionalProperties3 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesPrefer.AdditionalProperties.ValueString()), &additionalProperties3)
+			if !r.Configuration.SslMode.Prefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Prefer.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Prefer.AdditionalProperties.ValueString()), &additionalProperties3)
 			}
-			sourceAlloydbUpdateSSLModesPrefer = &shared.SourceAlloydbUpdateSSLModesPrefer{
-				Mode:                 mode2,
+			sourceAlloydbUpdatePrefer = &shared.SourceAlloydbUpdatePrefer{
 				AdditionalProperties: additionalProperties3,
 			}
 		}
-		if sourceAlloydbUpdateSSLModesPrefer != nil {
+		if sourceAlloydbUpdatePrefer != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				SourceAlloydbUpdateSSLModesPrefer: sourceAlloydbUpdateSSLModesPrefer,
+				SourceAlloydbUpdatePrefer: sourceAlloydbUpdatePrefer,
 			}
 		}
-		var sourceAlloydbUpdateSSLModesRequire *shared.SourceAlloydbUpdateSSLModesRequire
-		if r.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire != nil {
-			mode3 := shared.SourceAlloydbUpdateSSLModesRequireMode(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire.Mode.ValueString())
+		var sourceAlloydbUpdateRequire *shared.SourceAlloydbUpdateRequire
+		if r.Configuration.SslMode.Require != nil {
 			var additionalProperties4 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesRequire.AdditionalProperties.ValueString()), &additionalProperties4)
+			if !r.Configuration.SslMode.Require.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Require.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Require.AdditionalProperties.ValueString()), &additionalProperties4)
 			}
-			sourceAlloydbUpdateSSLModesRequire = &shared.SourceAlloydbUpdateSSLModesRequire{
-				Mode:                 mode3,
+			sourceAlloydbUpdateRequire = &shared.SourceAlloydbUpdateRequire{
 				AdditionalProperties: additionalProperties4,
 			}
 		}
-		if sourceAlloydbUpdateSSLModesRequire != nil {
+		if sourceAlloydbUpdateRequire != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				SourceAlloydbUpdateSSLModesRequire: sourceAlloydbUpdateSSLModesRequire,
+				SourceAlloydbUpdateRequire: sourceAlloydbUpdateRequire,
 			}
 		}
-		var sourceAlloydbUpdateSSLModesVerifyCa *shared.SourceAlloydbUpdateSSLModesVerifyCa
-		if r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa != nil {
-			caCertificate := r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.CaCertificate.ValueString()
+		var sourceAlloydbUpdateVerifyCa *shared.SourceAlloydbUpdateVerifyCa
+		if r.Configuration.SslMode.VerifyCa != nil {
+			var additionalProperties5 interface{}
+			if !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
+			}
+			caCertificate := r.Configuration.SslMode.VerifyCa.CaCertificate.ValueString()
 			clientCertificate := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientCertificate.IsNull() {
-				*clientCertificate = r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientCertificate.IsNull() {
+				*clientCertificate = r.Configuration.SslMode.VerifyCa.ClientCertificate.ValueString()
 			} else {
 				clientCertificate = nil
 			}
 			clientKey := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientKey.IsNull() {
-				*clientKey = r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientKey.IsNull() {
+				*clientKey = r.Configuration.SslMode.VerifyCa.ClientKey.ValueString()
 			} else {
 				clientKey = nil
 			}
 			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyCa.ClientKeyPassword.IsNull() {
+				*clientKeyPassword = r.Configuration.SslMode.VerifyCa.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword = nil
 			}
-			mode4 := shared.SourceAlloydbUpdateSSLModesVerifyCaMode(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.Mode.ValueString())
-			var additionalProperties5 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
-			}
-			sourceAlloydbUpdateSSLModesVerifyCa = &shared.SourceAlloydbUpdateSSLModesVerifyCa{
+			sourceAlloydbUpdateVerifyCa = &shared.SourceAlloydbUpdateVerifyCa{
+				AdditionalProperties: additionalProperties5,
 				CaCertificate:        caCertificate,
 				ClientCertificate:    clientCertificate,
 				ClientKey:            clientKey,
 				ClientKeyPassword:    clientKeyPassword,
-				Mode:                 mode4,
-				AdditionalProperties: additionalProperties5,
 			}
 		}
-		if sourceAlloydbUpdateSSLModesVerifyCa != nil {
+		if sourceAlloydbUpdateVerifyCa != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				SourceAlloydbUpdateSSLModesVerifyCa: sourceAlloydbUpdateSSLModesVerifyCa,
+				SourceAlloydbUpdateVerifyCa: sourceAlloydbUpdateVerifyCa,
 			}
 		}
-		var sourceAlloydbUpdateSSLModesVerifyFull *shared.SourceAlloydbUpdateSSLModesVerifyFull
-		if r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull != nil {
-			caCertificate1 := r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.CaCertificate.ValueString()
+		var sourceAlloydbUpdateVerifyFull *shared.SourceAlloydbUpdateVerifyFull
+		if r.Configuration.SslMode.VerifyFull != nil {
+			var additionalProperties6 interface{}
+			if !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
+			}
+			caCertificate1 := r.Configuration.SslMode.VerifyFull.CaCertificate.ValueString()
 			clientCertificate1 := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientCertificate.IsNull() {
-				*clientCertificate1 = r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientCertificate.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientCertificate.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientCertificate.IsNull() {
+				*clientCertificate1 = r.Configuration.SslMode.VerifyFull.ClientCertificate.ValueString()
 			} else {
 				clientCertificate1 = nil
 			}
 			clientKey1 := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientKey.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientKey.IsNull() {
-				*clientKey1 = r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientKey.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientKey.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientKey.IsNull() {
+				*clientKey1 = r.Configuration.SslMode.VerifyFull.ClientKey.ValueString()
 			} else {
 				clientKey1 = nil
 			}
 			clientKeyPassword1 := new(string)
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientKeyPassword.IsNull() {
-				*clientKeyPassword1 = r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.ClientKeyPassword.ValueString()
+			if !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.VerifyFull.ClientKeyPassword.IsNull() {
+				*clientKeyPassword1 = r.Configuration.SslMode.VerifyFull.ClientKeyPassword.ValueString()
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode5 := shared.SourceAlloydbUpdateSSLModesVerifyFullMode(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.Mode.ValueString())
-			var additionalProperties6 interface{}
-			if !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbUpdateSSLModesVerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
-			}
-			sourceAlloydbUpdateSSLModesVerifyFull = &shared.SourceAlloydbUpdateSSLModesVerifyFull{
+			sourceAlloydbUpdateVerifyFull = &shared.SourceAlloydbUpdateVerifyFull{
+				AdditionalProperties: additionalProperties6,
 				CaCertificate:        caCertificate1,
 				ClientCertificate:    clientCertificate1,
 				ClientKey:            clientKey1,
 				ClientKeyPassword:    clientKeyPassword1,
-				Mode:                 mode5,
-				AdditionalProperties: additionalProperties6,
 			}
 		}
-		if sourceAlloydbUpdateSSLModesVerifyFull != nil {
+		if sourceAlloydbUpdateVerifyFull != nil {
 			sslMode = &shared.SourceAlloydbUpdateSSLModes{
-				SourceAlloydbUpdateSSLModesVerifyFull: sourceAlloydbUpdateSSLModesVerifyFull,
+				SourceAlloydbUpdateVerifyFull: sourceAlloydbUpdateVerifyFull,
 			}
 		}
 	}
 	var tunnelMethod *shared.SourceAlloydbUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
-		var sourceAlloydbUpdateSSHTunnelMethodNoTunnel *shared.SourceAlloydbUpdateSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.SourceAlloydbUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			sourceAlloydbUpdateSSHTunnelMethodNoTunnel = &shared.SourceAlloydbUpdateSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+		var sourceAlloydbUpdateNoTunnel *shared.SourceAlloydbUpdateNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			sourceAlloydbUpdateNoTunnel = &shared.SourceAlloydbUpdateNoTunnel{}
 		}
-		if sourceAlloydbUpdateSSHTunnelMethodNoTunnel != nil {
+		if sourceAlloydbUpdateNoTunnel != nil {
 			tunnelMethod = &shared.SourceAlloydbUpdateSSHTunnelMethod{
-				SourceAlloydbUpdateSSHTunnelMethodNoTunnel: sourceAlloydbUpdateSSHTunnelMethodNoTunnel,
+				SourceAlloydbUpdateNoTunnel: sourceAlloydbUpdateNoTunnel,
 			}
 		}
-		var sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication *shared.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-			sshKey := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-			tunnelHost := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication{
-				SSHKey:       sshKey,
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
+		var sourceAlloydbUpdateSSHKeyAuthentication *shared.SourceAlloydbUpdateSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			sourceAlloydbUpdateSSHKeyAuthentication = &shared.SourceAlloydbUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
 			}
 		}
-		if sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		if sourceAlloydbUpdateSSHKeyAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbUpdateSSHTunnelMethod{
-				SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication: sourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication,
+				SourceAlloydbUpdateSSHKeyAuthentication: sourceAlloydbUpdateSSHKeyAuthentication,
 			}
 		}
-		var sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication *shared.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			tunnelUserPassword := r.Configuration.TunnelMethod.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
-			sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication = &shared.SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication{
+		var sourceAlloydbUpdatePasswordAuthentication *shared.SourceAlloydbUpdatePasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			sourceAlloydbUpdatePasswordAuthentication = &shared.SourceAlloydbUpdatePasswordAuthentication{
 				TunnelHost:         tunnelHost1,
-				TunnelMethod:       tunnelMethod3,
 				TunnelPort:         tunnelPort1,
 				TunnelUser:         tunnelUser1,
 				TunnelUserPassword: tunnelUserPassword,
 			}
 		}
-		if sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		if sourceAlloydbUpdatePasswordAuthentication != nil {
 			tunnelMethod = &shared.SourceAlloydbUpdateSSHTunnelMethod{
-				SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication: sourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication,
+				SourceAlloydbUpdatePasswordAuthentication: sourceAlloydbUpdatePasswordAuthentication,
 			}
 		}
 	}

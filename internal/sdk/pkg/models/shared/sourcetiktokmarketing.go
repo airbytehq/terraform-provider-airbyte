@@ -3,133 +3,200 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType string
+type SourceTiktokMarketingSchemasAuthType string
 
 const (
-	SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeSandboxAccessToken SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType = "sandbox_access_token"
+	SourceTiktokMarketingSchemasAuthTypeSandboxAccessToken SourceTiktokMarketingSchemasAuthType = "sandbox_access_token"
 )
 
-func (e SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType) ToPointer() *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType {
+func (e SourceTiktokMarketingSchemasAuthType) ToPointer() *SourceTiktokMarketingSchemasAuthType {
 	return &e
 }
 
-func (e *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceTiktokMarketingSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sandbox_access_token":
-		*e = SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType(v)
+		*e = SourceTiktokMarketingSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingSchemasAuthType: %v", v)
 	}
 }
 
-// SourceTiktokMarketingAuthenticationMethodSandboxAccessToken - Authentication method
-type SourceTiktokMarketingAuthenticationMethodSandboxAccessToken struct {
+// SourceTiktokMarketingSandboxAccessToken - Authentication method
+type SourceTiktokMarketingSandboxAccessToken struct {
 	// The long-term authorized access token.
 	AccessToken string `json:"access_token"`
 	// The Advertiser ID which generated for the developer's Sandbox application.
-	AdvertiserID string                                                               `json:"advertiser_id"`
-	AuthType     *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType `json:"auth_type,omitempty"`
+	AdvertiserID string                                `json:"advertiser_id"`
+	authType     *SourceTiktokMarketingSchemasAuthType `const:"sandbox_access_token" json:"auth_type,omitempty"`
 }
 
-type SourceTiktokMarketingAuthenticationMethodOAuth20AuthType string
+func (s SourceTiktokMarketingSandboxAccessToken) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTiktokMarketingSandboxAccessToken) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTiktokMarketingSandboxAccessToken) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceTiktokMarketingSandboxAccessToken) GetAdvertiserID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AdvertiserID
+}
+
+func (o *SourceTiktokMarketingSandboxAccessToken) GetAuthType() *SourceTiktokMarketingSchemasAuthType {
+	return SourceTiktokMarketingSchemasAuthTypeSandboxAccessToken.ToPointer()
+}
+
+type SourceTiktokMarketingAuthType string
 
 const (
-	SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeOauth20 SourceTiktokMarketingAuthenticationMethodOAuth20AuthType = "oauth2.0"
+	SourceTiktokMarketingAuthTypeOauth20 SourceTiktokMarketingAuthType = "oauth2.0"
 )
 
-func (e SourceTiktokMarketingAuthenticationMethodOAuth20AuthType) ToPointer() *SourceTiktokMarketingAuthenticationMethodOAuth20AuthType {
+func (e SourceTiktokMarketingAuthType) ToPointer() *SourceTiktokMarketingAuthType {
 	return &e
 }
 
-func (e *SourceTiktokMarketingAuthenticationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceTiktokMarketingAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceTiktokMarketingAuthenticationMethodOAuth20AuthType(v)
+		*e = SourceTiktokMarketingAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodOAuth20AuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthType: %v", v)
 	}
 }
 
-// SourceTiktokMarketingAuthenticationMethodOAuth20 - Authentication method
-type SourceTiktokMarketingAuthenticationMethodOAuth20 struct {
+// SourceTiktokMarketingOAuth20 - Authentication method
+type SourceTiktokMarketingOAuth20 struct {
 	// Long-term Authorized Access Token.
 	AccessToken string `json:"access_token"`
 	// The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
 	AdvertiserID *string `json:"advertiser_id,omitempty"`
 	// The Developer Application App ID.
-	AppID    string                                                    `json:"app_id"`
-	AuthType *SourceTiktokMarketingAuthenticationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	AppID    string                         `json:"app_id"`
+	authType *SourceTiktokMarketingAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Developer Application Secret.
 	Secret string `json:"secret"`
+}
+
+func (s SourceTiktokMarketingOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTiktokMarketingOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetAdvertiserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AdvertiserID
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppID
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetAuthType() *SourceTiktokMarketingAuthType {
+	return SourceTiktokMarketingAuthTypeOauth20.ToPointer()
+}
+
+func (o *SourceTiktokMarketingOAuth20) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
 }
 
 type SourceTiktokMarketingAuthenticationMethodType string
 
 const (
-	SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodOAuth20            SourceTiktokMarketingAuthenticationMethodType = "source-tiktok-marketing_Authentication Method_OAuth2.0"
-	SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodSandboxAccessToken SourceTiktokMarketingAuthenticationMethodType = "source-tiktok-marketing_Authentication Method_Sandbox Access Token"
+	SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingOAuth20            SourceTiktokMarketingAuthenticationMethodType = "source-tiktok-marketing_OAuth2.0"
+	SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingSandboxAccessToken SourceTiktokMarketingAuthenticationMethodType = "source-tiktok-marketing_Sandbox Access Token"
 )
 
 type SourceTiktokMarketingAuthenticationMethod struct {
-	SourceTiktokMarketingAuthenticationMethodOAuth20            *SourceTiktokMarketingAuthenticationMethodOAuth20
-	SourceTiktokMarketingAuthenticationMethodSandboxAccessToken *SourceTiktokMarketingAuthenticationMethodSandboxAccessToken
+	SourceTiktokMarketingOAuth20            *SourceTiktokMarketingOAuth20
+	SourceTiktokMarketingSandboxAccessToken *SourceTiktokMarketingSandboxAccessToken
 
 	Type SourceTiktokMarketingAuthenticationMethodType
 }
 
-func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingAuthenticationMethodOAuth20(sourceTiktokMarketingAuthenticationMethodOAuth20 SourceTiktokMarketingAuthenticationMethodOAuth20) SourceTiktokMarketingAuthenticationMethod {
-	typ := SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodOAuth20
+func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingOAuth20(sourceTiktokMarketingOAuth20 SourceTiktokMarketingOAuth20) SourceTiktokMarketingAuthenticationMethod {
+	typ := SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingOAuth20
 
 	return SourceTiktokMarketingAuthenticationMethod{
-		SourceTiktokMarketingAuthenticationMethodOAuth20: &sourceTiktokMarketingAuthenticationMethodOAuth20,
-		Type: typ,
+		SourceTiktokMarketingOAuth20: &sourceTiktokMarketingOAuth20,
+		Type:                         typ,
 	}
 }
 
-func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingAuthenticationMethodSandboxAccessToken(sourceTiktokMarketingAuthenticationMethodSandboxAccessToken SourceTiktokMarketingAuthenticationMethodSandboxAccessToken) SourceTiktokMarketingAuthenticationMethod {
-	typ := SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodSandboxAccessToken
+func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingSandboxAccessToken(sourceTiktokMarketingSandboxAccessToken SourceTiktokMarketingSandboxAccessToken) SourceTiktokMarketingAuthenticationMethod {
+	typ := SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingSandboxAccessToken
 
 	return SourceTiktokMarketingAuthenticationMethod{
-		SourceTiktokMarketingAuthenticationMethodSandboxAccessToken: &sourceTiktokMarketingAuthenticationMethodSandboxAccessToken,
-		Type: typ,
+		SourceTiktokMarketingSandboxAccessToken: &sourceTiktokMarketingSandboxAccessToken,
+		Type:                                    typ,
 	}
 }
 
 func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceTiktokMarketingAuthenticationMethodSandboxAccessToken := new(SourceTiktokMarketingAuthenticationMethodSandboxAccessToken)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTiktokMarketingAuthenticationMethodSandboxAccessToken); err == nil {
-		u.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken = sourceTiktokMarketingAuthenticationMethodSandboxAccessToken
-		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodSandboxAccessToken
+	sourceTiktokMarketingSandboxAccessToken := new(SourceTiktokMarketingSandboxAccessToken)
+	if err := utils.UnmarshalJSON(data, &sourceTiktokMarketingSandboxAccessToken, "", true, true); err == nil {
+		u.SourceTiktokMarketingSandboxAccessToken = sourceTiktokMarketingSandboxAccessToken
+		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingSandboxAccessToken
 		return nil
 	}
 
-	sourceTiktokMarketingAuthenticationMethodOAuth20 := new(SourceTiktokMarketingAuthenticationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTiktokMarketingAuthenticationMethodOAuth20); err == nil {
-		u.SourceTiktokMarketingAuthenticationMethodOAuth20 = sourceTiktokMarketingAuthenticationMethodOAuth20
-		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodOAuth20
+	sourceTiktokMarketingOAuth20 := new(SourceTiktokMarketingOAuth20)
+	if err := utils.UnmarshalJSON(data, &sourceTiktokMarketingOAuth20, "", true, true); err == nil {
+		u.SourceTiktokMarketingOAuth20 = sourceTiktokMarketingOAuth20
+		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingOAuth20
 		return nil
 	}
 
@@ -137,51 +204,101 @@ func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) e
 }
 
 func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
-		return json.Marshal(u.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken)
+	if u.SourceTiktokMarketingOAuth20 != nil {
+		return utils.MarshalJSON(u.SourceTiktokMarketingOAuth20, "", true)
 	}
 
-	if u.SourceTiktokMarketingAuthenticationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTiktokMarketingAuthenticationMethodOAuth20)
+	if u.SourceTiktokMarketingSandboxAccessToken != nil {
+		return utils.MarshalJSON(u.SourceTiktokMarketingSandboxAccessToken, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceTiktokMarketingTiktokMarketing string
+type TiktokMarketing string
 
 const (
-	SourceTiktokMarketingTiktokMarketingTiktokMarketing SourceTiktokMarketingTiktokMarketing = "tiktok-marketing"
+	TiktokMarketingTiktokMarketing TiktokMarketing = "tiktok-marketing"
 )
 
-func (e SourceTiktokMarketingTiktokMarketing) ToPointer() *SourceTiktokMarketingTiktokMarketing {
+func (e TiktokMarketing) ToPointer() *TiktokMarketing {
 	return &e
 }
 
-func (e *SourceTiktokMarketingTiktokMarketing) UnmarshalJSON(data []byte) error {
+func (e *TiktokMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "tiktok-marketing":
-		*e = SourceTiktokMarketingTiktokMarketing(v)
+		*e = TiktokMarketing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingTiktokMarketing: %v", v)
+		return fmt.Errorf("invalid value for TiktokMarketing: %v", v)
 	}
 }
 
 type SourceTiktokMarketing struct {
 	// The attribution window in days.
-	AttributionWindow *int64 `json:"attribution_window,omitempty"`
+	AttributionWindow *int64 `default:"3" json:"attribution_window"`
 	// Authentication method
 	Credentials *SourceTiktokMarketingAuthenticationMethod `json:"credentials,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Set to active if you want to include deleted data in reports.
-	IncludeDeleted *bool                                 `json:"include_deleted,omitempty"`
-	SourceType     *SourceTiktokMarketingTiktokMarketing `json:"sourceType,omitempty"`
+	IncludeDeleted *bool            `default:"false" json:"include_deleted"`
+	sourceType     *TiktokMarketing `const:"tiktok-marketing" json:"sourceType,omitempty"`
 	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2016-09-01" json:"start_date"`
+}
+
+func (s SourceTiktokMarketing) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTiktokMarketing) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTiktokMarketing) GetAttributionWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AttributionWindow
+}
+
+func (o *SourceTiktokMarketing) GetCredentials() *SourceTiktokMarketingAuthenticationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceTiktokMarketing) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTiktokMarketing) GetIncludeDeleted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeDeleted
+}
+
+func (o *SourceTiktokMarketing) GetSourceType() *TiktokMarketing {
+	return TiktokMarketingTiktokMarketing.ToPointer()
+}
+
+func (o *SourceTiktokMarketing) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

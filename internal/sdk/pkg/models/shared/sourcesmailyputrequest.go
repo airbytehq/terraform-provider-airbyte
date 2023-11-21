@@ -7,3 +7,24 @@ type SourceSmailyPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceSmailyPutRequest) GetConfiguration() SourceSmailyUpdate {
+	if o == nil {
+		return SourceSmailyUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceSmailyPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceSmailyPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

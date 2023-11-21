@@ -3,32 +3,29 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreateRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
-	authType := new(shared.SourceStravaAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceStravaAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceStravaStrava(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStrava{
 		AthleteID:    athleteID,
-		AuthType:     authType,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
-		SourceType:   sourceType,
 		StartDate:    startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -40,6 +37,7 @@ func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceStravaCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -54,19 +52,12 @@ func (r *SourceStravaResourceModel) ToGetSDKType() *shared.SourceStravaCreateReq
 
 func (r *SourceStravaResourceModel) ToUpdateSDKType() *shared.SourceStravaPutRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
-	authType := new(shared.SourceStravaUpdateAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceStravaUpdateAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStravaUpdate{
 		AthleteID:    athleteID,
-		AuthType:     authType,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,

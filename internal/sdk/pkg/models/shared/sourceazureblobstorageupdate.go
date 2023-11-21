@@ -3,98 +3,952 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+	"time"
 )
 
-type SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType string
+type SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype string
 
 const (
-	SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType = "JSONL"
+	SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletypeUnstructured SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype = "unstructured"
 )
 
-func (e SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType) ToPointer() *SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType {
+func (e SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype {
 	return &e
 }
 
-func (e *SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType) UnmarshalJSON(data []byte) error {
+func (e *SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "JSONL":
-		*e = SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType(v)
+	case "unstructured":
+		*e = SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType: %v", v)
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype: %v", v)
 	}
 }
 
-// SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON - Input data format
-type SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON struct {
-	FormatType SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType `json:"format_type"`
+// DocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type DocumentFileTypeFormatExperimental struct {
+	filetype *SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype `const:"unstructured" json:"filetype"`
+	// If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
+	SkipUnprocessableFileTypes *bool `default:"true" json:"skip_unprocessable_file_types"`
 }
 
-type SourceAzureBlobStorageUpdateInputFormatType string
+func (d DocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DocumentFileTypeFormatExperimental) GetFiletype() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype {
+	return SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletypeUnstructured.ToPointer()
+}
+
+func (o *DocumentFileTypeFormatExperimental) GetSkipUnprocessableFileTypes() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipUnprocessableFileTypes
+}
+
+type SourceAzureBlobStorageUpdateSchemasStreamsFiletype string
 
 const (
-	SourceAzureBlobStorageUpdateInputFormatTypeSourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON SourceAzureBlobStorageUpdateInputFormatType = "source-azure-blob-storage-update_Input Format_JSON Lines: newline-delimited JSON"
+	SourceAzureBlobStorageUpdateSchemasStreamsFiletypeParquet SourceAzureBlobStorageUpdateSchemasStreamsFiletype = "parquet"
 )
 
-type SourceAzureBlobStorageUpdateInputFormat struct {
-	SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON *SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
-
-	Type SourceAzureBlobStorageUpdateInputFormatType
+func (e SourceAzureBlobStorageUpdateSchemasStreamsFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFiletype {
+	return &e
 }
 
-func CreateSourceAzureBlobStorageUpdateInputFormatSourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON(sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON) SourceAzureBlobStorageUpdateInputFormat {
-	typ := SourceAzureBlobStorageUpdateInputFormatTypeSourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
-
-	return SourceAzureBlobStorageUpdateInputFormat{
-		SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON: &sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON,
-		Type: typ,
+func (e *SourceAzureBlobStorageUpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "parquet":
+		*e = SourceAzureBlobStorageUpdateSchemasStreamsFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateSchemasStreamsFiletype: %v", v)
 	}
 }
 
-func (u *SourceAzureBlobStorageUpdateInputFormat) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+// ParquetFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type ParquetFormat struct {
+	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
+	DecimalAsFloat *bool                                               `default:"false" json:"decimal_as_float"`
+	filetype       *SourceAzureBlobStorageUpdateSchemasStreamsFiletype `const:"parquet" json:"filetype"`
+}
 
-	sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON := new(SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON); err == nil {
-		u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON = sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
-		u.Type = SourceAzureBlobStorageUpdateInputFormatTypeSourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
+func (p ParquetFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *ParquetFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ParquetFormat) GetDecimalAsFloat() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DecimalAsFloat
+}
+
+func (o *ParquetFormat) GetFiletype() *SourceAzureBlobStorageUpdateSchemasStreamsFiletype {
+	return SourceAzureBlobStorageUpdateSchemasStreamsFiletypeParquet.ToPointer()
+}
+
+type SourceAzureBlobStorageUpdateSchemasFiletype string
+
+const (
+	SourceAzureBlobStorageUpdateSchemasFiletypeJsonl SourceAzureBlobStorageUpdateSchemasFiletype = "jsonl"
+)
+
+func (e SourceAzureBlobStorageUpdateSchemasFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasFiletype {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageUpdateSchemasFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "jsonl":
+		*e = SourceAzureBlobStorageUpdateSchemasFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateSchemasFiletype: %v", v)
+	}
+}
+
+// JsonlFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type JsonlFormat struct {
+	filetype *SourceAzureBlobStorageUpdateSchemasFiletype `const:"jsonl" json:"filetype"`
+}
+
+func (j JsonlFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(j, "", false)
+}
+
+func (j *JsonlFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &j, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *JsonlFormat) GetFiletype() *SourceAzureBlobStorageUpdateSchemasFiletype {
+	return SourceAzureBlobStorageUpdateSchemasFiletypeJsonl.ToPointer()
+}
+
+type SourceAzureBlobStorageUpdateFiletype string
+
+const (
+	SourceAzureBlobStorageUpdateFiletypeCsv SourceAzureBlobStorageUpdateFiletype = "csv"
+)
+
+func (e SourceAzureBlobStorageUpdateFiletype) ToPointer() *SourceAzureBlobStorageUpdateFiletype {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageUpdateFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "csv":
+		*e = SourceAzureBlobStorageUpdateFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateFiletype: %v", v)
+	}
+}
+
+type SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType string
+
+const (
+	SourceAzureBlobStorageUpdateSchemasHeaderDefinitionTypeUserProvided SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType = "User Provided"
+)
+
+func (e SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "User Provided":
+		*e = SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType: %v", v)
+	}
+}
+
+// UserProvided - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type UserProvided struct {
+	// The column names that will be used while emitting the CSV records
+	ColumnNames          []string                                                 `json:"column_names"`
+	headerDefinitionType *SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
+}
+
+func (u UserProvided) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UserProvided) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UserProvided) GetColumnNames() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.ColumnNames
+}
+
+func (o *UserProvided) GetHeaderDefinitionType() *SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType {
+	return SourceAzureBlobStorageUpdateSchemasHeaderDefinitionTypeUserProvided.ToPointer()
+}
+
+type SourceAzureBlobStorageUpdateHeaderDefinitionType string
+
+const (
+	SourceAzureBlobStorageUpdateHeaderDefinitionTypeAutogenerated SourceAzureBlobStorageUpdateHeaderDefinitionType = "Autogenerated"
+)
+
+func (e SourceAzureBlobStorageUpdateHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageUpdateHeaderDefinitionType {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageUpdateHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Autogenerated":
+		*e = SourceAzureBlobStorageUpdateHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateHeaderDefinitionType: %v", v)
+	}
+}
+
+// Autogenerated - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type Autogenerated struct {
+	headerDefinitionType *SourceAzureBlobStorageUpdateHeaderDefinitionType `const:"Autogenerated" json:"header_definition_type"`
+}
+
+func (a Autogenerated) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *Autogenerated) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Autogenerated) GetHeaderDefinitionType() *SourceAzureBlobStorageUpdateHeaderDefinitionType {
+	return SourceAzureBlobStorageUpdateHeaderDefinitionTypeAutogenerated.ToPointer()
+}
+
+type HeaderDefinitionType string
+
+const (
+	HeaderDefinitionTypeFromCsv HeaderDefinitionType = "From CSV"
+)
+
+func (e HeaderDefinitionType) ToPointer() *HeaderDefinitionType {
+	return &e
+}
+
+func (e *HeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "From CSV":
+		*e = HeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for HeaderDefinitionType: %v", v)
+	}
+}
+
+// FromCSV - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type FromCSV struct {
+	headerDefinitionType *HeaderDefinitionType `const:"From CSV" json:"header_definition_type"`
+}
+
+func (f FromCSV) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FromCSV) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *FromCSV) GetHeaderDefinitionType() *HeaderDefinitionType {
+	return HeaderDefinitionTypeFromCsv.ToPointer()
+}
+
+type CSVHeaderDefinitionType string
+
+const (
+	CSVHeaderDefinitionTypeFromCSV       CSVHeaderDefinitionType = "From CSV"
+	CSVHeaderDefinitionTypeAutogenerated CSVHeaderDefinitionType = "Autogenerated"
+	CSVHeaderDefinitionTypeUserProvided  CSVHeaderDefinitionType = "User Provided"
+)
+
+type CSVHeaderDefinition struct {
+	FromCSV       *FromCSV
+	Autogenerated *Autogenerated
+	UserProvided  *UserProvided
+
+	Type CSVHeaderDefinitionType
+}
+
+func CreateCSVHeaderDefinitionFromCSV(fromCSV FromCSV) CSVHeaderDefinition {
+	typ := CSVHeaderDefinitionTypeFromCSV
+
+	return CSVHeaderDefinition{
+		FromCSV: &fromCSV,
+		Type:    typ,
+	}
+}
+
+func CreateCSVHeaderDefinitionAutogenerated(autogenerated Autogenerated) CSVHeaderDefinition {
+	typ := CSVHeaderDefinitionTypeAutogenerated
+
+	return CSVHeaderDefinition{
+		Autogenerated: &autogenerated,
+		Type:          typ,
+	}
+}
+
+func CreateCSVHeaderDefinitionUserProvided(userProvided UserProvided) CSVHeaderDefinition {
+	typ := CSVHeaderDefinitionTypeUserProvided
+
+	return CSVHeaderDefinition{
+		UserProvided: &userProvided,
+		Type:         typ,
+	}
+}
+
+func (u *CSVHeaderDefinition) UnmarshalJSON(data []byte) error {
+
+	fromCSV := new(FromCSV)
+	if err := utils.UnmarshalJSON(data, &fromCSV, "", true, true); err == nil {
+		u.FromCSV = fromCSV
+		u.Type = CSVHeaderDefinitionTypeFromCSV
+		return nil
+	}
+
+	autogenerated := new(Autogenerated)
+	if err := utils.UnmarshalJSON(data, &autogenerated, "", true, true); err == nil {
+		u.Autogenerated = autogenerated
+		u.Type = CSVHeaderDefinitionTypeAutogenerated
+		return nil
+	}
+
+	userProvided := new(UserProvided)
+	if err := utils.UnmarshalJSON(data, &userProvided, "", true, true); err == nil {
+		u.UserProvided = userProvided
+		u.Type = CSVHeaderDefinitionTypeUserProvided
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceAzureBlobStorageUpdateInputFormat) MarshalJSON() ([]byte, error) {
-	if u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON)
+func (u CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
+	if u.FromCSV != nil {
+		return utils.MarshalJSON(u.FromCSV, "", true)
 	}
 
-	return nil, nil
+	if u.Autogenerated != nil {
+		return utils.MarshalJSON(u.Autogenerated, "", true)
+	}
+
+	if u.UserProvided != nil {
+		return utils.MarshalJSON(u.UserProvided, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
+// InferenceType - How to infer the types of the columns. If none, inference default to strings.
+type InferenceType string
+
+const (
+	InferenceTypeNone               InferenceType = "None"
+	InferenceTypePrimitiveTypesOnly InferenceType = "Primitive Types Only"
+)
+
+func (e InferenceType) ToPointer() *InferenceType {
+	return &e
+}
+
+func (e *InferenceType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "None":
+		fallthrough
+	case "Primitive Types Only":
+		*e = InferenceType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for InferenceType: %v", v)
+	}
+}
+
+// CSVFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type CSVFormat struct {
+	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+	Delimiter *string `default:"," json:"delimiter"`
+	// Whether two quotes in a quoted CSV value denote a single quote in the data.
+	DoubleQuote *bool `default:"true" json:"double_quote"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                              `json:"false_values,omitempty"`
+	filetype    *SourceAzureBlobStorageUpdateFiletype `const:"csv" json:"filetype"`
+	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+	HeaderDefinition *CSVHeaderDefinition `json:"header_definition,omitempty"`
+	// How to infer the types of the columns. If none, inference default to strings.
+	InferenceType *InferenceType `default:"None" json:"inference_type"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:""" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
+}
+
+func (c CSVFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CSVFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CSVFormat) GetDelimiter() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Delimiter
+}
+
+func (o *CSVFormat) GetDoubleQuote() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DoubleQuote
+}
+
+func (o *CSVFormat) GetEncoding() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Encoding
+}
+
+func (o *CSVFormat) GetEscapeChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EscapeChar
+}
+
+func (o *CSVFormat) GetFalseValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.FalseValues
+}
+
+func (o *CSVFormat) GetFiletype() *SourceAzureBlobStorageUpdateFiletype {
+	return SourceAzureBlobStorageUpdateFiletypeCsv.ToPointer()
+}
+
+func (o *CSVFormat) GetHeaderDefinition() *CSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
+func (o *CSVFormat) GetInferenceType() *InferenceType {
+	if o == nil {
+		return nil
+	}
+	return o.InferenceType
+}
+
+func (o *CSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *CSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *CSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *CSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *CSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *CSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
+}
+
+type SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype string
+
+const (
+	SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletypeAvro SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype = "avro"
+)
+
+func (e SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "avro":
+		*e = SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype: %v", v)
+	}
+}
+
+// AvroFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type AvroFormat struct {
+	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
+	DoubleAsString *bool                                                           `default:"false" json:"double_as_string"`
+	filetype       *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype `const:"avro" json:"filetype"`
+}
+
+func (a AvroFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AvroFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AvroFormat) GetDoubleAsString() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DoubleAsString
+}
+
+func (o *AvroFormat) GetFiletype() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
+	return SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletypeAvro.ToPointer()
+}
+
+type FormatUnionType string
+
+const (
+	FormatUnionTypeAvroFormat                         FormatUnionType = "Avro Format"
+	FormatUnionTypeCSVFormat                          FormatUnionType = "CSV Format"
+	FormatUnionTypeJsonlFormat                        FormatUnionType = "Jsonl Format"
+	FormatUnionTypeParquetFormat                      FormatUnionType = "Parquet Format"
+	FormatUnionTypeDocumentFileTypeFormatExperimental FormatUnionType = "Document File Type Format (Experimental)"
+)
+
+type Format struct {
+	AvroFormat                         *AvroFormat
+	CSVFormat                          *CSVFormat
+	JsonlFormat                        *JsonlFormat
+	ParquetFormat                      *ParquetFormat
+	DocumentFileTypeFormatExperimental *DocumentFileTypeFormatExperimental
+
+	Type FormatUnionType
+}
+
+func CreateFormatAvroFormat(avroFormat AvroFormat) Format {
+	typ := FormatUnionTypeAvroFormat
+
+	return Format{
+		AvroFormat: &avroFormat,
+		Type:       typ,
+	}
+}
+
+func CreateFormatCSVFormat(csvFormat CSVFormat) Format {
+	typ := FormatUnionTypeCSVFormat
+
+	return Format{
+		CSVFormat: &csvFormat,
+		Type:      typ,
+	}
+}
+
+func CreateFormatJsonlFormat(jsonlFormat JsonlFormat) Format {
+	typ := FormatUnionTypeJsonlFormat
+
+	return Format{
+		JsonlFormat: &jsonlFormat,
+		Type:        typ,
+	}
+}
+
+func CreateFormatParquetFormat(parquetFormat ParquetFormat) Format {
+	typ := FormatUnionTypeParquetFormat
+
+	return Format{
+		ParquetFormat: &parquetFormat,
+		Type:          typ,
+	}
+}
+
+func CreateFormatDocumentFileTypeFormatExperimental(documentFileTypeFormatExperimental DocumentFileTypeFormatExperimental) Format {
+	typ := FormatUnionTypeDocumentFileTypeFormatExperimental
+
+	return Format{
+		DocumentFileTypeFormatExperimental: &documentFileTypeFormatExperimental,
+		Type:                               typ,
+	}
+}
+
+func (u *Format) UnmarshalJSON(data []byte) error {
+
+	jsonlFormat := new(JsonlFormat)
+	if err := utils.UnmarshalJSON(data, &jsonlFormat, "", true, true); err == nil {
+		u.JsonlFormat = jsonlFormat
+		u.Type = FormatUnionTypeJsonlFormat
+		return nil
+	}
+
+	avroFormat := new(AvroFormat)
+	if err := utils.UnmarshalJSON(data, &avroFormat, "", true, true); err == nil {
+		u.AvroFormat = avroFormat
+		u.Type = FormatUnionTypeAvroFormat
+		return nil
+	}
+
+	parquetFormat := new(ParquetFormat)
+	if err := utils.UnmarshalJSON(data, &parquetFormat, "", true, true); err == nil {
+		u.ParquetFormat = parquetFormat
+		u.Type = FormatUnionTypeParquetFormat
+		return nil
+	}
+
+	documentFileTypeFormatExperimental := new(DocumentFileTypeFormatExperimental)
+	if err := utils.UnmarshalJSON(data, &documentFileTypeFormatExperimental, "", true, true); err == nil {
+		u.DocumentFileTypeFormatExperimental = documentFileTypeFormatExperimental
+		u.Type = FormatUnionTypeDocumentFileTypeFormatExperimental
+		return nil
+	}
+
+	csvFormat := new(CSVFormat)
+	if err := utils.UnmarshalJSON(data, &csvFormat, "", true, true); err == nil {
+		u.CSVFormat = csvFormat
+		u.Type = FormatUnionTypeCSVFormat
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u Format) MarshalJSON() ([]byte, error) {
+	if u.AvroFormat != nil {
+		return utils.MarshalJSON(u.AvroFormat, "", true)
+	}
+
+	if u.CSVFormat != nil {
+		return utils.MarshalJSON(u.CSVFormat, "", true)
+	}
+
+	if u.JsonlFormat != nil {
+		return utils.MarshalJSON(u.JsonlFormat, "", true)
+	}
+
+	if u.ParquetFormat != nil {
+		return utils.MarshalJSON(u.ParquetFormat, "", true)
+	}
+
+	if u.DocumentFileTypeFormatExperimental != nil {
+		return utils.MarshalJSON(u.DocumentFileTypeFormatExperimental, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+// ValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type ValidationPolicy string
+
+const (
+	ValidationPolicyEmitRecord      ValidationPolicy = "Emit Record"
+	ValidationPolicySkipRecord      ValidationPolicy = "Skip Record"
+	ValidationPolicyWaitForDiscover ValidationPolicy = "Wait for Discover"
+)
+
+func (e ValidationPolicy) ToPointer() *ValidationPolicy {
+	return &e
+}
+
+func (e *ValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = ValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ValidationPolicy: %v", v)
+	}
+}
+
+type FileBasedStreamConfig struct {
+	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
+	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
+	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+	Format Format `json:"format"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
+	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
+	// The column or columns (for a composite key) that serves as the unique identifier of a record.
+	PrimaryKey *string `json:"primary_key,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *ValidationPolicy `default:"Emit Record" json:"validation_policy"`
+}
+
+func (f FileBasedStreamConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FileBasedStreamConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *FileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DaysToSyncIfHistoryIsFull
+}
+
+func (o *FileBasedStreamConfig) GetFormat() Format {
+	if o == nil {
+		return Format{}
+	}
+	return o.Format
+}
+
+func (o *FileBasedStreamConfig) GetGlobs() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Globs
+}
+
+func (o *FileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *FileBasedStreamConfig) GetLegacyPrefix() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LegacyPrefix
+}
+
+func (o *FileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *FileBasedStreamConfig) GetPrimaryKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrimaryKey
+}
+
+func (o *FileBasedStreamConfig) GetSchemaless() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Schemaless
+}
+
+func (o *FileBasedStreamConfig) GetValidationPolicy() *ValidationPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.ValidationPolicy
+}
+
+// SourceAzureBlobStorageUpdate - NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes
+// because it is responsible for converting legacy Azure Blob Storage v0 configs into v1 configs using the File-Based CDK.
 type SourceAzureBlobStorageUpdate struct {
 	// The Azure blob storage account key.
 	AzureBlobStorageAccountKey string `json:"azure_blob_storage_account_key"`
 	// The account's name of the Azure Blob Storage.
 	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
-	// The Azure blob storage prefix to be applied
-	AzureBlobStorageBlobsPrefix *string `json:"azure_blob_storage_blobs_prefix,omitempty"`
 	// The name of the Azure blob storage container.
 	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
 	// This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
 	AzureBlobStorageEndpoint *string `json:"azure_blob_storage_endpoint,omitempty"`
-	// The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure
-	AzureBlobStorageSchemaInferenceLimit *int64 `json:"azure_blob_storage_schema_inference_limit,omitempty"`
-	// Input data format
-	Format SourceAzureBlobStorageUpdateInputFormat `json:"format"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
+	Streams []FileBasedStreamConfig `json:"streams"`
+}
+
+func (s SourceAzureBlobStorageUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAzureBlobStorageUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageAccountKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountKey
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageAccountName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageAccountName
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageContainerName() string {
+	if o == nil {
+		return ""
+	}
+	return o.AzureBlobStorageContainerName
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetAzureBlobStorageEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AzureBlobStorageEndpoint
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceAzureBlobStorageUpdate) GetStreams() []FileBasedStreamConfig {
+	if o == nil {
+		return []FileBasedStreamConfig{}
+	}
+	return o.Streams
 }

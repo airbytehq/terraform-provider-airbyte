@@ -7,3 +7,24 @@ type SourceTypeformPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceTypeformPutRequest) GetConfiguration() SourceTypeformUpdate {
+	if o == nil {
+		return SourceTypeformUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTypeformPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTypeformPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

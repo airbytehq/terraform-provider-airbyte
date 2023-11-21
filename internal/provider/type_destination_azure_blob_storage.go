@@ -11,6 +11,5 @@ type DestinationAzureBlobStorage struct {
 	AzureBlobStorageEndpointDomainName types.String                            `tfsdk:"azure_blob_storage_endpoint_domain_name"`
 	AzureBlobStorageOutputBufferSize   types.Int64                             `tfsdk:"azure_blob_storage_output_buffer_size"`
 	AzureBlobStorageSpillSize          types.Int64                             `tfsdk:"azure_blob_storage_spill_size"`
-	DestinationType                    types.String                            `tfsdk:"destination_type"`
 	Format                             DestinationAzureBlobStorageOutputFormat `tfsdk:"format"`
 }

@@ -5,45 +5,46 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// DestinationDynamodbUpdateDynamoDBRegion - The region of the DynamoDB.
-type DestinationDynamodbUpdateDynamoDBRegion string
+// DynamoDBRegion - The region of the DynamoDB.
+type DynamoDBRegion string
 
 const (
-	DestinationDynamodbUpdateDynamoDBRegionUnknown      DestinationDynamodbUpdateDynamoDBRegion = ""
-	DestinationDynamodbUpdateDynamoDBRegionUsEast1      DestinationDynamodbUpdateDynamoDBRegion = "us-east-1"
-	DestinationDynamodbUpdateDynamoDBRegionUsEast2      DestinationDynamodbUpdateDynamoDBRegion = "us-east-2"
-	DestinationDynamodbUpdateDynamoDBRegionUsWest1      DestinationDynamodbUpdateDynamoDBRegion = "us-west-1"
-	DestinationDynamodbUpdateDynamoDBRegionUsWest2      DestinationDynamodbUpdateDynamoDBRegion = "us-west-2"
-	DestinationDynamodbUpdateDynamoDBRegionAfSouth1     DestinationDynamodbUpdateDynamoDBRegion = "af-south-1"
-	DestinationDynamodbUpdateDynamoDBRegionApEast1      DestinationDynamodbUpdateDynamoDBRegion = "ap-east-1"
-	DestinationDynamodbUpdateDynamoDBRegionApSouth1     DestinationDynamodbUpdateDynamoDBRegion = "ap-south-1"
-	DestinationDynamodbUpdateDynamoDBRegionApNortheast1 DestinationDynamodbUpdateDynamoDBRegion = "ap-northeast-1"
-	DestinationDynamodbUpdateDynamoDBRegionApNortheast2 DestinationDynamodbUpdateDynamoDBRegion = "ap-northeast-2"
-	DestinationDynamodbUpdateDynamoDBRegionApNortheast3 DestinationDynamodbUpdateDynamoDBRegion = "ap-northeast-3"
-	DestinationDynamodbUpdateDynamoDBRegionApSoutheast1 DestinationDynamodbUpdateDynamoDBRegion = "ap-southeast-1"
-	DestinationDynamodbUpdateDynamoDBRegionApSoutheast2 DestinationDynamodbUpdateDynamoDBRegion = "ap-southeast-2"
-	DestinationDynamodbUpdateDynamoDBRegionCaCentral1   DestinationDynamodbUpdateDynamoDBRegion = "ca-central-1"
-	DestinationDynamodbUpdateDynamoDBRegionCnNorth1     DestinationDynamodbUpdateDynamoDBRegion = "cn-north-1"
-	DestinationDynamodbUpdateDynamoDBRegionCnNorthwest1 DestinationDynamodbUpdateDynamoDBRegion = "cn-northwest-1"
-	DestinationDynamodbUpdateDynamoDBRegionEuCentral1   DestinationDynamodbUpdateDynamoDBRegion = "eu-central-1"
-	DestinationDynamodbUpdateDynamoDBRegionEuNorth1     DestinationDynamodbUpdateDynamoDBRegion = "eu-north-1"
-	DestinationDynamodbUpdateDynamoDBRegionEuSouth1     DestinationDynamodbUpdateDynamoDBRegion = "eu-south-1"
-	DestinationDynamodbUpdateDynamoDBRegionEuWest1      DestinationDynamodbUpdateDynamoDBRegion = "eu-west-1"
-	DestinationDynamodbUpdateDynamoDBRegionEuWest2      DestinationDynamodbUpdateDynamoDBRegion = "eu-west-2"
-	DestinationDynamodbUpdateDynamoDBRegionEuWest3      DestinationDynamodbUpdateDynamoDBRegion = "eu-west-3"
-	DestinationDynamodbUpdateDynamoDBRegionSaEast1      DestinationDynamodbUpdateDynamoDBRegion = "sa-east-1"
-	DestinationDynamodbUpdateDynamoDBRegionMeSouth1     DestinationDynamodbUpdateDynamoDBRegion = "me-south-1"
-	DestinationDynamodbUpdateDynamoDBRegionUsGovEast1   DestinationDynamodbUpdateDynamoDBRegion = "us-gov-east-1"
-	DestinationDynamodbUpdateDynamoDBRegionUsGovWest1   DestinationDynamodbUpdateDynamoDBRegion = "us-gov-west-1"
+	DynamoDBRegionUnknown      DynamoDBRegion = ""
+	DynamoDBRegionUsEast1      DynamoDBRegion = "us-east-1"
+	DynamoDBRegionUsEast2      DynamoDBRegion = "us-east-2"
+	DynamoDBRegionUsWest1      DynamoDBRegion = "us-west-1"
+	DynamoDBRegionUsWest2      DynamoDBRegion = "us-west-2"
+	DynamoDBRegionAfSouth1     DynamoDBRegion = "af-south-1"
+	DynamoDBRegionApEast1      DynamoDBRegion = "ap-east-1"
+	DynamoDBRegionApSouth1     DynamoDBRegion = "ap-south-1"
+	DynamoDBRegionApNortheast1 DynamoDBRegion = "ap-northeast-1"
+	DynamoDBRegionApNortheast2 DynamoDBRegion = "ap-northeast-2"
+	DynamoDBRegionApNortheast3 DynamoDBRegion = "ap-northeast-3"
+	DynamoDBRegionApSoutheast1 DynamoDBRegion = "ap-southeast-1"
+	DynamoDBRegionApSoutheast2 DynamoDBRegion = "ap-southeast-2"
+	DynamoDBRegionCaCentral1   DynamoDBRegion = "ca-central-1"
+	DynamoDBRegionCnNorth1     DynamoDBRegion = "cn-north-1"
+	DynamoDBRegionCnNorthwest1 DynamoDBRegion = "cn-northwest-1"
+	DynamoDBRegionEuCentral1   DynamoDBRegion = "eu-central-1"
+	DynamoDBRegionEuNorth1     DynamoDBRegion = "eu-north-1"
+	DynamoDBRegionEuSouth1     DynamoDBRegion = "eu-south-1"
+	DynamoDBRegionEuWest1      DynamoDBRegion = "eu-west-1"
+	DynamoDBRegionEuWest2      DynamoDBRegion = "eu-west-2"
+	DynamoDBRegionEuWest3      DynamoDBRegion = "eu-west-3"
+	DynamoDBRegionSaEast1      DynamoDBRegion = "sa-east-1"
+	DynamoDBRegionMeSouth1     DynamoDBRegion = "me-south-1"
+	DynamoDBRegionUsGovEast1   DynamoDBRegion = "us-gov-east-1"
+	DynamoDBRegionUsGovWest1   DynamoDBRegion = "us-gov-west-1"
 )
 
-func (e DestinationDynamodbUpdateDynamoDBRegion) ToPointer() *DestinationDynamodbUpdateDynamoDBRegion {
+func (e DynamoDBRegion) ToPointer() *DynamoDBRegion {
 	return &e
 }
 
-func (e *DestinationDynamodbUpdateDynamoDBRegion) UnmarshalJSON(data []byte) error {
+func (e *DynamoDBRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -100,10 +101,10 @@ func (e *DestinationDynamodbUpdateDynamoDBRegion) UnmarshalJSON(data []byte) err
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationDynamodbUpdateDynamoDBRegion(v)
+		*e = DynamoDBRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDynamodbUpdateDynamoDBRegion: %v", v)
+		return fmt.Errorf("invalid value for DynamoDBRegion: %v", v)
 	}
 }
 
@@ -111,11 +112,57 @@ type DestinationDynamodbUpdate struct {
 	// The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
 	AccessKeyID string `json:"access_key_id"`
 	// This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
-	DynamodbEndpoint *string `json:"dynamodb_endpoint,omitempty"`
+	DynamodbEndpoint *string `default:"" json:"dynamodb_endpoint"`
 	// The region of the DynamoDB.
-	DynamodbRegion DestinationDynamodbUpdateDynamoDBRegion `json:"dynamodb_region"`
+	DynamodbRegion *DynamoDBRegion `default:"" json:"dynamodb_region"`
 	// The prefix to use when naming DynamoDB tables.
 	DynamodbTableNamePrefix string `json:"dynamodb_table_name_prefix"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey string `json:"secret_access_key"`
+}
+
+func (d DestinationDynamodbUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDynamodbUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDynamodbUpdate) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
+func (o *DestinationDynamodbUpdate) GetDynamodbEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DynamodbEndpoint
+}
+
+func (o *DestinationDynamodbUpdate) GetDynamodbRegion() *DynamoDBRegion {
+	if o == nil {
+		return nil
+	}
+	return o.DynamodbRegion
+}
+
+func (o *DestinationDynamodbUpdate) GetDynamodbTableNamePrefix() string {
+	if o == nil {
+		return ""
+	}
+	return o.DynamodbTableNamePrefix
+}
+
+func (o *DestinationDynamodbUpdate) GetSecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretAccessKey
 }

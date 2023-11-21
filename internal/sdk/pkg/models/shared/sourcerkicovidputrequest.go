@@ -7,3 +7,24 @@ type SourceRkiCovidPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceRkiCovidPutRequest) GetConfiguration() SourceRkiCovidUpdate {
+	if o == nil {
+		return SourceRkiCovidUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRkiCovidPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRkiCovidPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

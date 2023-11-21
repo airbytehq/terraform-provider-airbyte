@@ -7,3 +7,24 @@ type SourceTwilioTaskrouterPutRequest struct {
 	Name          string                       `json:"name"`
 	WorkspaceID   string                       `json:"workspaceId"`
 }
+
+func (o *SourceTwilioTaskrouterPutRequest) GetConfiguration() SourceTwilioTaskrouterUpdate {
+	if o == nil {
+		return SourceTwilioTaskrouterUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTwilioTaskrouterPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTwilioTaskrouterPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

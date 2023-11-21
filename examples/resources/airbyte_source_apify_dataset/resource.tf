@@ -1,11 +1,10 @@
 resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
   configuration = {
-    clean       = true
-    dataset_id  = "...my_dataset_id..."
-    source_type = "apify-dataset"
-    token       = "Personal API tokens"
+    dataset_id = "rHuMdwm6xCFt6WiGU"
+    token      = "apify_api_PbVwb1cBbuvbfg2jRmAIHZKgx3NQyfEMG7uk"
   }
-  name         = "Dale Ferry"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "055b197c-d44e-42f5-ad82-d3513bb6f48b"
+  definition_id = "a73356f3-9bea-45e2-889f-0e8905c8543b"
+  name          = "Justin Luettgen"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "ac7dcada-d293-48da-9765-e7880f00a30d"
 }

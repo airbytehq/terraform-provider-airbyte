@@ -9,6 +9,5 @@ type SourceBraintree struct {
 	MerchantID  types.String `tfsdk:"merchant_id"`
 	PrivateKey  types.String `tfsdk:"private_key"`
 	PublicKey   types.String `tfsdk:"public_key"`
-	SourceType  types.String `tfsdk:"source_type"`
 	StartDate   types.String `tfsdk:"start_date"`
 }

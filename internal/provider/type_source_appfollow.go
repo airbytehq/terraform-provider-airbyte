@@ -5,6 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAppfollow struct {
-	APISecret  types.String `tfsdk:"api_secret"`
-	SourceType types.String `tfsdk:"source_type"`
+	APISecret types.String `tfsdk:"api_secret"`
 }

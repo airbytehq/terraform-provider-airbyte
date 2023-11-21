@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceClockify struct {
 	APIKey      types.String `tfsdk:"api_key"`
 	APIURL      types.String `tfsdk:"api_url"`
-	SourceType  types.String `tfsdk:"source_type"`
 	WorkspaceID types.String `tfsdk:"workspace_id"`
 }

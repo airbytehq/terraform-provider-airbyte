@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -14,15 +14,19 @@ func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreate
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}
 	key := r.Configuration.Key.ValueString()
-	sourceType := shared.SourceTrelloTrello(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceTrello{
-		BoardIds:   boardIds,
-		Key:        key,
-		SourceType: sourceType,
-		StartDate:  startDate,
-		Token:      token,
+		BoardIds:  boardIds,
+		Key:       key,
+		StartDate: startDate,
+		Token:     token,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -34,6 +38,7 @@ func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceTrelloCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

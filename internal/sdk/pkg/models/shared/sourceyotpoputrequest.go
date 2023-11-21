@@ -7,3 +7,24 @@ type SourceYotpoPutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceYotpoPutRequest) GetConfiguration() SourceYotpoUpdate {
+	if o == nil {
+		return SourceYotpoUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceYotpoPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceYotpoPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

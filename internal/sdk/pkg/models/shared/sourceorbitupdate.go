@@ -10,3 +10,24 @@ type SourceOrbitUpdate struct {
 	// The unique name of the workspace that your API token is associated with.
 	Workspace string `json:"workspace"`
 }
+
+func (o *SourceOrbitUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourceOrbitUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceOrbitUpdate) GetWorkspace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Workspace
+}

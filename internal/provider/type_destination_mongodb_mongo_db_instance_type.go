@@ -3,10 +3,7 @@
 package provider
 
 type DestinationMongodbMongoDbInstanceType struct {
-	DestinationMongodbMongoDBInstanceTypeMongoDBAtlas                    *DestinationMongodbMongoDBInstanceTypeMongoDBAtlas              `tfsdk:"destination_mongodb_mongo_db_instance_type_mongo_db_atlas"`
-	DestinationMongodbMongoDbInstanceTypeReplicaSet                      *DestinationMongodbMongoDbInstanceTypeReplicaSet                `tfsdk:"destination_mongodb_mongo_db_instance_type_replica_set"`
-	DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance       *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance `tfsdk:"destination_mongodb_mongo_db_instance_type_standalone_mongo_db_instance"`
-	DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas              *DestinationMongodbMongoDBInstanceTypeMongoDBAtlas              `tfsdk:"destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas"`
-	DestinationMongodbUpdateMongoDbInstanceTypeReplicaSet                *DestinationMongodbMongoDbInstanceTypeReplicaSet                `tfsdk:"destination_mongodb_update_mongo_db_instance_type_replica_set"`
-	DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance `tfsdk:"destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance"`
+	MongoDBAtlas              *MongoDBAtlas              `tfsdk:"mongo_db_atlas"`
+	ReplicaSet                *ReplicaSet                `tfsdk:"replica_set"`
+	StandaloneMongoDbInstance *StandaloneMongoDbInstance `tfsdk:"standalone_mongo_db_instance"`
 }

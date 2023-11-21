@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,11 @@ type DestinationTypesenseDataSource struct {
 
 // DestinationTypesenseDataSourceModel describes the data model.
 type DestinationTypesenseDataSourceModel struct {
-	Configuration DestinationTypesense `tfsdk:"configuration"`
-	DestinationID types.String         `tfsdk:"destination_id"`
-	Name          types.String         `tfsdk:"name"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,42 +47,16 @@ func (r *DestinationTypesenseDataSource) Schema(ctx context.Context, req datasou
 		MarkdownDescription: "DestinationTypesense DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Typesense API Key`,
-					},
-					"batch_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How many documents should be imported together. Default 1000`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"typesense",
-							),
-						},
-						Description: `must be one of ["typesense"]`,
-					},
-					"host": schema.StringAttribute{
-						Computed:    true,
-						Description: `Hostname of the Typesense instance without protocol.`,
-					},
-					"port": schema.StringAttribute{
-						Computed:    true,
-						Description: `Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443`,
-					},
-					"protocol": schema.StringAttribute{
-						Computed:    true,
-						Description: `Protocol of the Typesense instance. Ex: http or https. Default is https`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

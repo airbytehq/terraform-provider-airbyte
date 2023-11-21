@@ -7,3 +7,24 @@ type SourceNetsuitePutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceNetsuitePutRequest) GetConfiguration() SourceNetsuiteUpdate {
+	if o == nil {
+		return SourceNetsuiteUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceNetsuitePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceNetsuitePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

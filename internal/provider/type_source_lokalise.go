@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceLokalise struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	ProjectID  types.String `tfsdk:"project_id"`
-	SourceType types.String `tfsdk:"source_type"`
+	APIKey    types.String `tfsdk:"api_key"`
+	ProjectID types.String `tfsdk:"project_id"`
 }

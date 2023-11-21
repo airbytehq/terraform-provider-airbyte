@@ -3,8 +3,6 @@
 package provider
 
 type SourceHubspotAuthentication struct {
-	SourceHubspotAuthenticationOAuth            *SourceHubspotAuthenticationOAuth      `tfsdk:"source_hubspot_authentication_o_auth"`
-	SourceHubspotAuthenticationPrivateApp       *SourceHubspotAuthenticationPrivateApp `tfsdk:"source_hubspot_authentication_private_app"`
-	SourceHubspotUpdateAuthenticationOAuth      *SourceHubspotAuthenticationOAuth      `tfsdk:"source_hubspot_update_authentication_o_auth"`
-	SourceHubspotUpdateAuthenticationPrivateApp *SourceHubspotAuthenticationPrivateApp `tfsdk:"source_hubspot_update_authentication_private_app"`
+	OAuth      *DestinationGoogleSheetsAuthenticationViaGoogleOAuth `tfsdk:"o_auth"`
+	PrivateApp *OAuth2AccessToken                                   `tfsdk:"private_app"`
 }

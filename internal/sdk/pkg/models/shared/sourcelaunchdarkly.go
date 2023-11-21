@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceLaunchdarklyLaunchdarkly string
+type Launchdarkly string
 
 const (
-	SourceLaunchdarklyLaunchdarklyLaunchdarkly SourceLaunchdarklyLaunchdarkly = "launchdarkly"
+	LaunchdarklyLaunchdarkly Launchdarkly = "launchdarkly"
 )
 
-func (e SourceLaunchdarklyLaunchdarkly) ToPointer() *SourceLaunchdarklyLaunchdarkly {
+func (e Launchdarkly) ToPointer() *Launchdarkly {
 	return &e
 }
 
-func (e *SourceLaunchdarklyLaunchdarkly) UnmarshalJSON(data []byte) error {
+func (e *Launchdarkly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "launchdarkly":
-		*e = SourceLaunchdarklyLaunchdarkly(v)
+		*e = Launchdarkly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLaunchdarklyLaunchdarkly: %v", v)
+		return fmt.Errorf("invalid value for Launchdarkly: %v", v)
 	}
 }
 
 type SourceLaunchdarkly struct {
 	// Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
-	AccessToken string                         `json:"access_token"`
-	SourceType  SourceLaunchdarklyLaunchdarkly `json:"sourceType"`
+	AccessToken string       `json:"access_token"`
+	sourceType  Launchdarkly `const:"launchdarkly" json:"sourceType"`
+}
+
+func (s SourceLaunchdarkly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLaunchdarkly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceLaunchdarkly) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceLaunchdarkly) GetSourceType() Launchdarkly {
+	return LaunchdarklyLaunchdarkly
 }

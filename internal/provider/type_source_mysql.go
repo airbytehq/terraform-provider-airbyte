@@ -5,14 +5,13 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMysql struct {
-	Database          types.String                `tfsdk:"database"`
-	Host              types.String                `tfsdk:"host"`
-	JdbcURLParams     types.String                `tfsdk:"jdbc_url_params"`
-	Password          types.String                `tfsdk:"password"`
-	Port              types.Int64                 `tfsdk:"port"`
-	ReplicationMethod SourceMysqlUpdateMethod     `tfsdk:"replication_method"`
-	SourceType        types.String                `tfsdk:"source_type"`
-	SslMode           *SourceMysqlSSLModes        `tfsdk:"ssl_mode"`
-	TunnelMethod      *SourceMysqlSSHTunnelMethod `tfsdk:"tunnel_method"`
-	Username          types.String                `tfsdk:"username"`
+	Database          types.String                          `tfsdk:"database"`
+	Host              types.String                          `tfsdk:"host"`
+	JdbcURLParams     types.String                          `tfsdk:"jdbc_url_params"`
+	Password          types.String                          `tfsdk:"password"`
+	Port              types.Int64                           `tfsdk:"port"`
+	ReplicationMethod SourceMysqlUpdateMethod               `tfsdk:"replication_method"`
+	SslMode           *SourceMysqlSSLModes                  `tfsdk:"ssl_mode"`
+	TunnelMethod      *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username          types.String                          `tfsdk:"username"`
 }

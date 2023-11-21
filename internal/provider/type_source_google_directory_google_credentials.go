@@ -3,8 +3,6 @@
 package provider
 
 type SourceGoogleDirectoryGoogleCredentials struct {
-	SourceGoogleDirectoryGoogleCredentialsServiceAccountKey          *SourceGoogleDirectoryGoogleCredentialsServiceAccountKey    `tfsdk:"source_google_directory_google_credentials_service_account_key"`
-	SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth       *SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth `tfsdk:"source_google_directory_google_credentials_sign_in_via_google_o_auth"`
-	SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey    *SourceGoogleDirectoryGoogleCredentialsServiceAccountKey    `tfsdk:"source_google_directory_update_google_credentials_service_account_key"`
-	SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth *SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth `tfsdk:"source_google_directory_update_google_credentials_sign_in_via_google_o_auth"`
+	ServiceAccountKey    *ServiceAccountKey                                   `tfsdk:"service_account_key"`
+	SignInViaGoogleOAuth *DestinationGoogleSheetsAuthenticationViaGoogleOAuth `tfsdk:"sign_in_via_google_o_auth"`
 }

@@ -3,124 +3,163 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod string
+type SourceMysqlSchemasMethod string
 
 const (
-	SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethodStandard SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod = "STANDARD"
+	SourceMysqlSchemasMethodStandard SourceMysqlSchemasMethod = "STANDARD"
 )
 
-func (e SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod) ToPointer() *SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod {
+func (e SourceMysqlSchemasMethod) ToPointer() *SourceMysqlSchemasMethod {
 	return &e
 }
 
-func (e *SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "STANDARD":
-		*e = SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod(v)
+		*e = SourceMysqlSchemasMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSchemasMethod: %v", v)
 	}
 }
 
-// SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor struct {
-	Method SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
+// SourceMysqlScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourceMysqlScanChangesWithUserDefinedCursor struct {
+	method SourceMysqlSchemasMethod `const:"STANDARD" json:"method"`
 }
 
-type SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod string
+func (s SourceMysqlScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlScanChangesWithUserDefinedCursor) GetMethod() SourceMysqlSchemasMethod {
+	return SourceMysqlSchemasMethodStandard
+}
+
+type SourceMysqlMethod string
 
 const (
-	SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethodCdc SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod = "CDC"
+	SourceMysqlMethodCdc SourceMysqlMethod = "CDC"
 )
 
-func (e SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod) ToPointer() *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod {
+func (e SourceMysqlMethod) ToPointer() *SourceMysqlMethod {
 	return &e
 }
 
-func (e *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod(v)
+		*e = SourceMysqlMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlMethod: %v", v)
 	}
 }
 
-// SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.
-type SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC struct {
+// SourceMysqlReadChangesUsingBinaryLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.
+type SourceMysqlReadChangesUsingBinaryLogCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                    `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod `json:"method"`
+	InitialWaitingSeconds *int64            `default:"300" json:"initial_waiting_seconds"`
+	method                SourceMysqlMethod `const:"CDC" json:"method"`
 	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 	ServerTimeZone *string `json:"server_time_zone,omitempty"`
+}
+
+func (s SourceMysqlReadChangesUsingBinaryLogCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlReadChangesUsingBinaryLogCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlReadChangesUsingBinaryLogCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialWaitingSeconds
+}
+
+func (o *SourceMysqlReadChangesUsingBinaryLogCDC) GetMethod() SourceMysqlMethod {
+	return SourceMysqlMethodCdc
+}
+
+func (o *SourceMysqlReadChangesUsingBinaryLogCDC) GetServerTimeZone() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ServerTimeZone
 }
 
 type SourceMysqlUpdateMethodType string
 
 const (
-	SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC     SourceMysqlUpdateMethodType = "source-mysql_Update Method_Read Changes using Binary Log (CDC)"
-	SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodScanChangesWithUserDefinedCursor SourceMysqlUpdateMethodType = "source-mysql_Update Method_Scan Changes with User Defined Cursor"
+	SourceMysqlUpdateMethodTypeSourceMysqlReadChangesUsingBinaryLogCDC     SourceMysqlUpdateMethodType = "source-mysql_Read Changes using Binary Log (CDC)"
+	SourceMysqlUpdateMethodTypeSourceMysqlScanChangesWithUserDefinedCursor SourceMysqlUpdateMethodType = "source-mysql_Scan Changes with User Defined Cursor"
 )
 
 type SourceMysqlUpdateMethod struct {
-	SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC     *SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
-	SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor *SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor
+	SourceMysqlReadChangesUsingBinaryLogCDC     *SourceMysqlReadChangesUsingBinaryLogCDC
+	SourceMysqlScanChangesWithUserDefinedCursor *SourceMysqlScanChangesWithUserDefinedCursor
 
 	Type SourceMysqlUpdateMethodType
 }
 
-func CreateSourceMysqlUpdateMethodSourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC(sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC) SourceMysqlUpdateMethod {
-	typ := SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
+func CreateSourceMysqlUpdateMethodSourceMysqlReadChangesUsingBinaryLogCDC(sourceMysqlReadChangesUsingBinaryLogCDC SourceMysqlReadChangesUsingBinaryLogCDC) SourceMysqlUpdateMethod {
+	typ := SourceMysqlUpdateMethodTypeSourceMysqlReadChangesUsingBinaryLogCDC
 
 	return SourceMysqlUpdateMethod{
-		SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC: &sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC,
-		Type: typ,
+		SourceMysqlReadChangesUsingBinaryLogCDC: &sourceMysqlReadChangesUsingBinaryLogCDC,
+		Type:                                    typ,
 	}
 }
 
-func CreateSourceMysqlUpdateMethodSourceMysqlUpdateMethodScanChangesWithUserDefinedCursor(sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor) SourceMysqlUpdateMethod {
-	typ := SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodScanChangesWithUserDefinedCursor
+func CreateSourceMysqlUpdateMethodSourceMysqlScanChangesWithUserDefinedCursor(sourceMysqlScanChangesWithUserDefinedCursor SourceMysqlScanChangesWithUserDefinedCursor) SourceMysqlUpdateMethod {
+	typ := SourceMysqlUpdateMethodTypeSourceMysqlScanChangesWithUserDefinedCursor
 
 	return SourceMysqlUpdateMethod{
-		SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor: &sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor,
+		SourceMysqlScanChangesWithUserDefinedCursor: &sourceMysqlScanChangesWithUserDefinedCursor,
 		Type: typ,
 	}
 }
 
 func (u *SourceMysqlUpdateMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
-		u.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor = sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor
-		u.Type = SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodScanChangesWithUserDefinedCursor
+	sourceMysqlScanChangesWithUserDefinedCursor := new(SourceMysqlScanChangesWithUserDefinedCursor)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourceMysqlScanChangesWithUserDefinedCursor = sourceMysqlScanChangesWithUserDefinedCursor
+		u.Type = SourceMysqlUpdateMethodTypeSourceMysqlScanChangesWithUserDefinedCursor
 		return nil
 	}
 
-	sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
-		u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
-		u.Type = SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
+	sourceMysqlReadChangesUsingBinaryLogCDC := new(SourceMysqlReadChangesUsingBinaryLogCDC)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlReadChangesUsingBinaryLogCDC, "", true, true); err == nil {
+		u.SourceMysqlReadChangesUsingBinaryLogCDC = sourceMysqlReadChangesUsingBinaryLogCDC
+		u.Type = SourceMysqlUpdateMethodTypeSourceMysqlReadChangesUsingBinaryLogCDC
 		return nil
 	}
 
@@ -128,15 +167,15 @@ func (u *SourceMysqlUpdateMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMysqlUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
-		return json.Marshal(u.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor)
+	if u.SourceMysqlReadChangesUsingBinaryLogCDC != nil {
+		return utils.MarshalJSON(u.SourceMysqlReadChangesUsingBinaryLogCDC, "", true)
 	}
 
-	if u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
-		return json.Marshal(u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC)
+	if u.SourceMysqlScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceMysqlScanChangesWithUserDefinedCursor, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMysqlMysql string
@@ -163,32 +202,32 @@ func (e *SourceMysqlMysql) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceMysqlSSLModesVerifyIdentityMode string
+type SourceMysqlSchemasSSLModeSSLModesMode string
 
 const (
-	SourceMysqlSSLModesVerifyIdentityModeVerifyIdentity SourceMysqlSSLModesVerifyIdentityMode = "verify_identity"
+	SourceMysqlSchemasSSLModeSSLModesModeVerifyIdentity SourceMysqlSchemasSSLModeSSLModesMode = "verify_identity"
 )
 
-func (e SourceMysqlSSLModesVerifyIdentityMode) ToPointer() *SourceMysqlSSLModesVerifyIdentityMode {
+func (e SourceMysqlSchemasSSLModeSSLModesMode) ToPointer() *SourceMysqlSchemasSSLModeSSLModesMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesVerifyIdentityMode) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify_identity":
-		*e = SourceMysqlSSLModesVerifyIdentityMode(v)
+		*e = SourceMysqlSchemasSSLModeSSLModesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyIdentityMode: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSchemasSSLModeSSLModesMode: %v", v)
 	}
 }
 
-// SourceMysqlSSLModesVerifyIdentity - Always connect with SSL. Verify both CA and Hostname.
-type SourceMysqlSSLModesVerifyIdentity struct {
+// SourceMysqlVerifyIdentity - Always connect with SSL. Verify both CA and Hostname.
+type SourceMysqlVerifyIdentity struct {
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)
@@ -197,35 +236,78 @@ type SourceMysqlSSLModesVerifyIdentity struct {
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                               `json:"client_key_password,omitempty"`
-	Mode              SourceMysqlSSLModesVerifyIdentityMode `json:"mode"`
+	mode              SourceMysqlSchemasSSLModeSSLModesMode `const:"verify_identity" json:"mode"`
 }
 
-type SourceMysqlSSLModesVerifyCAMode string
+func (s SourceMysqlVerifyIdentity) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlVerifyIdentity) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlVerifyIdentity) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *SourceMysqlVerifyIdentity) GetClientCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCertificate
+}
+
+func (o *SourceMysqlVerifyIdentity) GetClientKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKey
+}
+
+func (o *SourceMysqlVerifyIdentity) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourceMysqlVerifyIdentity) GetMode() SourceMysqlSchemasSSLModeSSLModesMode {
+	return SourceMysqlSchemasSSLModeSSLModesModeVerifyIdentity
+}
+
+type SourceMysqlSchemasSslModeMode string
 
 const (
-	SourceMysqlSSLModesVerifyCAModeVerifyCa SourceMysqlSSLModesVerifyCAMode = "verify_ca"
+	SourceMysqlSchemasSslModeModeVerifyCa SourceMysqlSchemasSslModeMode = "verify_ca"
 )
 
-func (e SourceMysqlSSLModesVerifyCAMode) ToPointer() *SourceMysqlSSLModesVerifyCAMode {
+func (e SourceMysqlSchemasSslModeMode) ToPointer() *SourceMysqlSchemasSslModeMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesVerifyCAMode) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify_ca":
-		*e = SourceMysqlSSLModesVerifyCAMode(v)
+		*e = SourceMysqlSchemasSslModeMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyCAMode: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSchemasSslModeMode: %v", v)
 	}
 }
 
-// SourceMysqlSSLModesVerifyCA - Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.
-type SourceMysqlSSLModesVerifyCA struct {
+// SourceMysqlVerifyCA - Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.
+type SourceMysqlVerifyCA struct {
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)
@@ -233,158 +315,222 @@ type SourceMysqlSSLModesVerifyCA struct {
 	// Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                         `json:"client_key_password,omitempty"`
-	Mode              SourceMysqlSSLModesVerifyCAMode `json:"mode"`
+	ClientKeyPassword *string                       `json:"client_key_password,omitempty"`
+	mode              SourceMysqlSchemasSslModeMode `const:"verify_ca" json:"mode"`
 }
 
-type SourceMysqlSSLModesRequiredMode string
+func (s SourceMysqlVerifyCA) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlVerifyCA) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlVerifyCA) GetCaCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.CaCertificate
+}
+
+func (o *SourceMysqlVerifyCA) GetClientCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCertificate
+}
+
+func (o *SourceMysqlVerifyCA) GetClientKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKey
+}
+
+func (o *SourceMysqlVerifyCA) GetClientKeyPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientKeyPassword
+}
+
+func (o *SourceMysqlVerifyCA) GetMode() SourceMysqlSchemasSslModeMode {
+	return SourceMysqlSchemasSslModeModeVerifyCa
+}
+
+type SourceMysqlSchemasMode string
 
 const (
-	SourceMysqlSSLModesRequiredModeRequired SourceMysqlSSLModesRequiredMode = "required"
+	SourceMysqlSchemasModeRequired SourceMysqlSchemasMode = "required"
 )
 
-func (e SourceMysqlSSLModesRequiredMode) ToPointer() *SourceMysqlSSLModesRequiredMode {
+func (e SourceMysqlSchemasMode) ToPointer() *SourceMysqlSchemasMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesRequiredMode) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "required":
-		*e = SourceMysqlSSLModesRequiredMode(v)
+		*e = SourceMysqlSchemasMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesRequiredMode: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSchemasMode: %v", v)
 	}
 }
 
-// SourceMysqlSSLModesRequired - Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.
-type SourceMysqlSSLModesRequired struct {
-	Mode SourceMysqlSSLModesRequiredMode `json:"mode"`
+// SourceMysqlRequired - Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.
+type SourceMysqlRequired struct {
+	mode SourceMysqlSchemasMode `const:"required" json:"mode"`
 }
 
-type SourceMysqlSSLModesPreferredMode string
+func (s SourceMysqlRequired) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlRequired) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlRequired) GetMode() SourceMysqlSchemasMode {
+	return SourceMysqlSchemasModeRequired
+}
+
+type SourceMysqlMode string
 
 const (
-	SourceMysqlSSLModesPreferredModePreferred SourceMysqlSSLModesPreferredMode = "preferred"
+	SourceMysqlModePreferred SourceMysqlMode = "preferred"
 )
 
-func (e SourceMysqlSSLModesPreferredMode) ToPointer() *SourceMysqlSSLModesPreferredMode {
+func (e SourceMysqlMode) ToPointer() *SourceMysqlMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesPreferredMode) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "preferred":
-		*e = SourceMysqlSSLModesPreferredMode(v)
+		*e = SourceMysqlMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesPreferredMode: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlMode: %v", v)
 	}
 }
 
-// SourceMysqlSSLModesPreferred - Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.
-type SourceMysqlSSLModesPreferred struct {
-	Mode SourceMysqlSSLModesPreferredMode `json:"mode"`
+// SourceMysqlPreferred - Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.
+type SourceMysqlPreferred struct {
+	mode SourceMysqlMode `const:"preferred" json:"mode"`
+}
+
+func (s SourceMysqlPreferred) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlPreferred) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlPreferred) GetMode() SourceMysqlMode {
+	return SourceMysqlModePreferred
 }
 
 type SourceMysqlSSLModesType string
 
 const (
-	SourceMysqlSSLModesTypeSourceMysqlSSLModesPreferred      SourceMysqlSSLModesType = "source-mysql_SSL modes_preferred"
-	SourceMysqlSSLModesTypeSourceMysqlSSLModesRequired       SourceMysqlSSLModesType = "source-mysql_SSL modes_required"
-	SourceMysqlSSLModesTypeSourceMysqlSSLModesVerifyCA       SourceMysqlSSLModesType = "source-mysql_SSL modes_Verify CA"
-	SourceMysqlSSLModesTypeSourceMysqlSSLModesVerifyIdentity SourceMysqlSSLModesType = "source-mysql_SSL modes_Verify Identity"
+	SourceMysqlSSLModesTypeSourceMysqlPreferred      SourceMysqlSSLModesType = "source-mysql_preferred"
+	SourceMysqlSSLModesTypeSourceMysqlRequired       SourceMysqlSSLModesType = "source-mysql_required"
+	SourceMysqlSSLModesTypeSourceMysqlVerifyCA       SourceMysqlSSLModesType = "source-mysql_Verify CA"
+	SourceMysqlSSLModesTypeSourceMysqlVerifyIdentity SourceMysqlSSLModesType = "source-mysql_Verify Identity"
 )
 
 type SourceMysqlSSLModes struct {
-	SourceMysqlSSLModesPreferred      *SourceMysqlSSLModesPreferred
-	SourceMysqlSSLModesRequired       *SourceMysqlSSLModesRequired
-	SourceMysqlSSLModesVerifyCA       *SourceMysqlSSLModesVerifyCA
-	SourceMysqlSSLModesVerifyIdentity *SourceMysqlSSLModesVerifyIdentity
+	SourceMysqlPreferred      *SourceMysqlPreferred
+	SourceMysqlRequired       *SourceMysqlRequired
+	SourceMysqlVerifyCA       *SourceMysqlVerifyCA
+	SourceMysqlVerifyIdentity *SourceMysqlVerifyIdentity
 
 	Type SourceMysqlSSLModesType
 }
 
-func CreateSourceMysqlSSLModesSourceMysqlSSLModesPreferred(sourceMysqlSSLModesPreferred SourceMysqlSSLModesPreferred) SourceMysqlSSLModes {
-	typ := SourceMysqlSSLModesTypeSourceMysqlSSLModesPreferred
+func CreateSourceMysqlSSLModesSourceMysqlPreferred(sourceMysqlPreferred SourceMysqlPreferred) SourceMysqlSSLModes {
+	typ := SourceMysqlSSLModesTypeSourceMysqlPreferred
 
 	return SourceMysqlSSLModes{
-		SourceMysqlSSLModesPreferred: &sourceMysqlSSLModesPreferred,
-		Type:                         typ,
+		SourceMysqlPreferred: &sourceMysqlPreferred,
+		Type:                 typ,
 	}
 }
 
-func CreateSourceMysqlSSLModesSourceMysqlSSLModesRequired(sourceMysqlSSLModesRequired SourceMysqlSSLModesRequired) SourceMysqlSSLModes {
-	typ := SourceMysqlSSLModesTypeSourceMysqlSSLModesRequired
+func CreateSourceMysqlSSLModesSourceMysqlRequired(sourceMysqlRequired SourceMysqlRequired) SourceMysqlSSLModes {
+	typ := SourceMysqlSSLModesTypeSourceMysqlRequired
 
 	return SourceMysqlSSLModes{
-		SourceMysqlSSLModesRequired: &sourceMysqlSSLModesRequired,
-		Type:                        typ,
+		SourceMysqlRequired: &sourceMysqlRequired,
+		Type:                typ,
 	}
 }
 
-func CreateSourceMysqlSSLModesSourceMysqlSSLModesVerifyCA(sourceMysqlSSLModesVerifyCA SourceMysqlSSLModesVerifyCA) SourceMysqlSSLModes {
-	typ := SourceMysqlSSLModesTypeSourceMysqlSSLModesVerifyCA
+func CreateSourceMysqlSSLModesSourceMysqlVerifyCA(sourceMysqlVerifyCA SourceMysqlVerifyCA) SourceMysqlSSLModes {
+	typ := SourceMysqlSSLModesTypeSourceMysqlVerifyCA
 
 	return SourceMysqlSSLModes{
-		SourceMysqlSSLModesVerifyCA: &sourceMysqlSSLModesVerifyCA,
-		Type:                        typ,
+		SourceMysqlVerifyCA: &sourceMysqlVerifyCA,
+		Type:                typ,
 	}
 }
 
-func CreateSourceMysqlSSLModesSourceMysqlSSLModesVerifyIdentity(sourceMysqlSSLModesVerifyIdentity SourceMysqlSSLModesVerifyIdentity) SourceMysqlSSLModes {
-	typ := SourceMysqlSSLModesTypeSourceMysqlSSLModesVerifyIdentity
+func CreateSourceMysqlSSLModesSourceMysqlVerifyIdentity(sourceMysqlVerifyIdentity SourceMysqlVerifyIdentity) SourceMysqlSSLModes {
+	typ := SourceMysqlSSLModesTypeSourceMysqlVerifyIdentity
 
 	return SourceMysqlSSLModes{
-		SourceMysqlSSLModesVerifyIdentity: &sourceMysqlSSLModesVerifyIdentity,
-		Type:                              typ,
+		SourceMysqlVerifyIdentity: &sourceMysqlVerifyIdentity,
+		Type:                      typ,
 	}
 }
 
 func (u *SourceMysqlSSLModes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceMysqlSSLModesPreferred := new(SourceMysqlSSLModesPreferred)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSLModesPreferred); err == nil {
-		u.SourceMysqlSSLModesPreferred = sourceMysqlSSLModesPreferred
-		u.Type = SourceMysqlSSLModesTypeSourceMysqlSSLModesPreferred
+	sourceMysqlPreferred := new(SourceMysqlPreferred)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlPreferred, "", true, true); err == nil {
+		u.SourceMysqlPreferred = sourceMysqlPreferred
+		u.Type = SourceMysqlSSLModesTypeSourceMysqlPreferred
 		return nil
 	}
 
-	sourceMysqlSSLModesRequired := new(SourceMysqlSSLModesRequired)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSLModesRequired); err == nil {
-		u.SourceMysqlSSLModesRequired = sourceMysqlSSLModesRequired
-		u.Type = SourceMysqlSSLModesTypeSourceMysqlSSLModesRequired
+	sourceMysqlRequired := new(SourceMysqlRequired)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlRequired, "", true, true); err == nil {
+		u.SourceMysqlRequired = sourceMysqlRequired
+		u.Type = SourceMysqlSSLModesTypeSourceMysqlRequired
 		return nil
 	}
 
-	sourceMysqlSSLModesVerifyCA := new(SourceMysqlSSLModesVerifyCA)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSLModesVerifyCA); err == nil {
-		u.SourceMysqlSSLModesVerifyCA = sourceMysqlSSLModesVerifyCA
-		u.Type = SourceMysqlSSLModesTypeSourceMysqlSSLModesVerifyCA
+	sourceMysqlVerifyCA := new(SourceMysqlVerifyCA)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlVerifyCA, "", true, true); err == nil {
+		u.SourceMysqlVerifyCA = sourceMysqlVerifyCA
+		u.Type = SourceMysqlSSLModesTypeSourceMysqlVerifyCA
 		return nil
 	}
 
-	sourceMysqlSSLModesVerifyIdentity := new(SourceMysqlSSLModesVerifyIdentity)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSLModesVerifyIdentity); err == nil {
-		u.SourceMysqlSSLModesVerifyIdentity = sourceMysqlSSLModesVerifyIdentity
-		u.Type = SourceMysqlSSLModesTypeSourceMysqlSSLModesVerifyIdentity
+	sourceMysqlVerifyIdentity := new(SourceMysqlVerifyIdentity)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlVerifyIdentity, "", true, true); err == nil {
+		u.SourceMysqlVerifyIdentity = sourceMysqlVerifyIdentity
+		u.Type = SourceMysqlSSLModesTypeSourceMysqlVerifyIdentity
 		return nil
 	}
 
@@ -392,204 +538,298 @@ func (u *SourceMysqlSSLModes) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMysqlSSLModes) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlSSLModesPreferred != nil {
-		return json.Marshal(u.SourceMysqlSSLModesPreferred)
+	if u.SourceMysqlPreferred != nil {
+		return utils.MarshalJSON(u.SourceMysqlPreferred, "", true)
 	}
 
-	if u.SourceMysqlSSLModesRequired != nil {
-		return json.Marshal(u.SourceMysqlSSLModesRequired)
+	if u.SourceMysqlRequired != nil {
+		return utils.MarshalJSON(u.SourceMysqlRequired, "", true)
 	}
 
-	if u.SourceMysqlSSLModesVerifyCA != nil {
-		return json.Marshal(u.SourceMysqlSSLModesVerifyCA)
+	if u.SourceMysqlVerifyCA != nil {
+		return utils.MarshalJSON(u.SourceMysqlVerifyCA, "", true)
 	}
 
-	if u.SourceMysqlSSLModesVerifyIdentity != nil {
-		return json.Marshal(u.SourceMysqlSSLModesVerifyIdentity)
+	if u.SourceMysqlVerifyIdentity != nil {
+		return utils.MarshalJSON(u.SourceMysqlVerifyIdentity, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// SourceMysqlSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceMysqlSchemasTunnelMethodTunnelMethod string
 
 const (
-	SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	SourceMysqlSchemasTunnelMethodTunnelMethodSSHPasswordAuth SourceMysqlSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e SourceMysqlSchemasTunnelMethodTunnelMethod) ToPointer() *SourceMysqlSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = SourceMysqlSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// SourceMysqlSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceMysqlSSHTunnelMethodPasswordAuthentication struct {
+// SourceMysqlPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceMysqlPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMysqlSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (s SourceMysqlPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceMysqlPasswordAuthentication) GetTunnelMethod() SourceMysqlSchemasTunnelMethodTunnelMethod {
+	return SourceMysqlSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *SourceMysqlPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceMysqlPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *SourceMysqlPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// SourceMysqlSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceMysqlSchemasTunnelMethod string
 
 const (
-	SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	SourceMysqlSchemasTunnelMethodSSHKeyAuth SourceMysqlSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e SourceMysqlSchemasTunnelMethod) ToPointer() *SourceMysqlSchemasTunnelMethod {
 	return &e
 }
 
-func (e *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = SourceMysqlSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSchemasTunnelMethod: %v", v)
 	}
 }
 
-// SourceMysqlSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceMysqlSSHTunnelMethodSSHKeyAuthentication struct {
+// SourceMysqlSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceMysqlSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMysqlSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod string
+func (s SourceMysqlSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *SourceMysqlSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *SourceMysqlSSHKeyAuthentication) GetTunnelMethod() SourceMysqlSchemasTunnelMethod {
+	return SourceMysqlSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *SourceMysqlSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *SourceMysqlSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// SourceMysqlTunnelMethod - No ssh tunnel needed to connect to database
+type SourceMysqlTunnelMethod string
 
 const (
-	SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	SourceMysqlTunnelMethodNoTunnel SourceMysqlTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod {
+func (e SourceMysqlTunnelMethod) ToPointer() *SourceMysqlTunnelMethod {
 	return &e
 }
 
-func (e *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = SourceMysqlTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlTunnelMethod: %v", v)
 	}
 }
 
-// SourceMysqlSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type SourceMysqlSSHTunnelMethodNoTunnel struct {
+// SourceMysqlNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type SourceMysqlNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod SourceMysqlTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (s SourceMysqlNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysqlNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysqlNoTunnel) GetTunnelMethod() SourceMysqlTunnelMethod {
+	return SourceMysqlTunnelMethodNoTunnel
 }
 
 type SourceMysqlSSHTunnelMethodType string
 
 const (
-	SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodNoTunnel               SourceMysqlSSHTunnelMethodType = "source-mysql_SSH Tunnel Method_No Tunnel"
-	SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodSSHKeyAuthentication   SourceMysqlSSHTunnelMethodType = "source-mysql_SSH Tunnel Method_SSH Key Authentication"
-	SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodPasswordAuthentication SourceMysqlSSHTunnelMethodType = "source-mysql_SSH Tunnel Method_Password Authentication"
+	SourceMysqlSSHTunnelMethodTypeSourceMysqlNoTunnel               SourceMysqlSSHTunnelMethodType = "source-mysql_No Tunnel"
+	SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHKeyAuthentication   SourceMysqlSSHTunnelMethodType = "source-mysql_SSH Key Authentication"
+	SourceMysqlSSHTunnelMethodTypeSourceMysqlPasswordAuthentication SourceMysqlSSHTunnelMethodType = "source-mysql_Password Authentication"
 )
 
 type SourceMysqlSSHTunnelMethod struct {
-	SourceMysqlSSHTunnelMethodNoTunnel               *SourceMysqlSSHTunnelMethodNoTunnel
-	SourceMysqlSSHTunnelMethodSSHKeyAuthentication   *SourceMysqlSSHTunnelMethodSSHKeyAuthentication
-	SourceMysqlSSHTunnelMethodPasswordAuthentication *SourceMysqlSSHTunnelMethodPasswordAuthentication
+	SourceMysqlNoTunnel               *SourceMysqlNoTunnel
+	SourceMysqlSSHKeyAuthentication   *SourceMysqlSSHKeyAuthentication
+	SourceMysqlPasswordAuthentication *SourceMysqlPasswordAuthentication
 
 	Type SourceMysqlSSHTunnelMethodType
 }
 
-func CreateSourceMysqlSSHTunnelMethodSourceMysqlSSHTunnelMethodNoTunnel(sourceMysqlSSHTunnelMethodNoTunnel SourceMysqlSSHTunnelMethodNoTunnel) SourceMysqlSSHTunnelMethod {
-	typ := SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodNoTunnel
+func CreateSourceMysqlSSHTunnelMethodSourceMysqlNoTunnel(sourceMysqlNoTunnel SourceMysqlNoTunnel) SourceMysqlSSHTunnelMethod {
+	typ := SourceMysqlSSHTunnelMethodTypeSourceMysqlNoTunnel
 
 	return SourceMysqlSSHTunnelMethod{
-		SourceMysqlSSHTunnelMethodNoTunnel: &sourceMysqlSSHTunnelMethodNoTunnel,
-		Type:                               typ,
+		SourceMysqlNoTunnel: &sourceMysqlNoTunnel,
+		Type:                typ,
 	}
 }
 
-func CreateSourceMysqlSSHTunnelMethodSourceMysqlSSHTunnelMethodSSHKeyAuthentication(sourceMysqlSSHTunnelMethodSSHKeyAuthentication SourceMysqlSSHTunnelMethodSSHKeyAuthentication) SourceMysqlSSHTunnelMethod {
-	typ := SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodSSHKeyAuthentication
+func CreateSourceMysqlSSHTunnelMethodSourceMysqlSSHKeyAuthentication(sourceMysqlSSHKeyAuthentication SourceMysqlSSHKeyAuthentication) SourceMysqlSSHTunnelMethod {
+	typ := SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHKeyAuthentication
 
 	return SourceMysqlSSHTunnelMethod{
-		SourceMysqlSSHTunnelMethodSSHKeyAuthentication: &sourceMysqlSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		SourceMysqlSSHKeyAuthentication: &sourceMysqlSSHKeyAuthentication,
+		Type:                            typ,
 	}
 }
 
-func CreateSourceMysqlSSHTunnelMethodSourceMysqlSSHTunnelMethodPasswordAuthentication(sourceMysqlSSHTunnelMethodPasswordAuthentication SourceMysqlSSHTunnelMethodPasswordAuthentication) SourceMysqlSSHTunnelMethod {
-	typ := SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodPasswordAuthentication
+func CreateSourceMysqlSSHTunnelMethodSourceMysqlPasswordAuthentication(sourceMysqlPasswordAuthentication SourceMysqlPasswordAuthentication) SourceMysqlSSHTunnelMethod {
+	typ := SourceMysqlSSHTunnelMethodTypeSourceMysqlPasswordAuthentication
 
 	return SourceMysqlSSHTunnelMethod{
-		SourceMysqlSSHTunnelMethodPasswordAuthentication: &sourceMysqlSSHTunnelMethodPasswordAuthentication,
-		Type: typ,
+		SourceMysqlPasswordAuthentication: &sourceMysqlPasswordAuthentication,
+		Type:                              typ,
 	}
 }
 
 func (u *SourceMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceMysqlSSHTunnelMethodNoTunnel := new(SourceMysqlSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSHTunnelMethodNoTunnel); err == nil {
-		u.SourceMysqlSSHTunnelMethodNoTunnel = sourceMysqlSSHTunnelMethodNoTunnel
-		u.Type = SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodNoTunnel
+	sourceMysqlNoTunnel := new(SourceMysqlNoTunnel)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlNoTunnel, "", true, true); err == nil {
+		u.SourceMysqlNoTunnel = sourceMysqlNoTunnel
+		u.Type = SourceMysqlSSHTunnelMethodTypeSourceMysqlNoTunnel
 		return nil
 	}
 
-	sourceMysqlSSHTunnelMethodSSHKeyAuthentication := new(SourceMysqlSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.SourceMysqlSSHTunnelMethodSSHKeyAuthentication = sourceMysqlSSHTunnelMethodSSHKeyAuthentication
-		u.Type = SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodSSHKeyAuthentication
+	sourceMysqlSSHKeyAuthentication := new(SourceMysqlSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceMysqlSSHKeyAuthentication = sourceMysqlSSHKeyAuthentication
+		u.Type = SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHKeyAuthentication
 		return nil
 	}
 
-	sourceMysqlSSHTunnelMethodPasswordAuthentication := new(SourceMysqlSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.SourceMysqlSSHTunnelMethodPasswordAuthentication = sourceMysqlSSHTunnelMethodPasswordAuthentication
-		u.Type = SourceMysqlSSHTunnelMethodTypeSourceMysqlSSHTunnelMethodPasswordAuthentication
+	sourceMysqlPasswordAuthentication := new(SourceMysqlPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceMysqlPasswordAuthentication, "", true, true); err == nil {
+		u.SourceMysqlPasswordAuthentication = sourceMysqlPasswordAuthentication
+		u.Type = SourceMysqlSSHTunnelMethodTypeSourceMysqlPasswordAuthentication
 		return nil
 	}
 
@@ -597,19 +837,19 @@ func (u *SourceMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.SourceMysqlSSHTunnelMethodNoTunnel)
+	if u.SourceMysqlNoTunnel != nil {
+		return utils.MarshalJSON(u.SourceMysqlNoTunnel, "", true)
 	}
 
-	if u.SourceMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceMysqlSSHTunnelMethodSSHKeyAuthentication)
+	if u.SourceMysqlSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMysqlSSHKeyAuthentication, "", true)
 	}
 
-	if u.SourceMysqlSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.SourceMysqlSSHTunnelMethodPasswordAuthentication)
+	if u.SourceMysqlPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceMysqlPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceMysql struct {
@@ -622,14 +862,92 @@ type SourceMysql struct {
 	// The password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// The port to connect to.
-	Port int64 `json:"port"`
+	Port *int64 `default:"3306" json:"port"`
 	// Configures how data is extracted from the database.
 	ReplicationMethod SourceMysqlUpdateMethod `json:"replication_method"`
-	SourceType        SourceMysqlMysql        `json:"sourceType"`
+	sourceType        SourceMysqlMysql        `const:"mysql" json:"sourceType"`
 	// SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
 	SslMode *SourceMysqlSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceMysqlSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
+}
+
+func (s SourceMysql) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMysql) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMysql) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SourceMysql) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceMysql) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceMysql) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceMysql) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceMysql) GetReplicationMethod() SourceMysqlUpdateMethod {
+	if o == nil {
+		return SourceMysqlUpdateMethod{}
+	}
+	return o.ReplicationMethod
+}
+
+func (o *SourceMysql) GetSourceType() SourceMysqlMysql {
+	return SourceMysqlMysqlMysql
+}
+
+func (o *SourceMysql) GetSslMode() *SourceMysqlSSLModes {
+	if o == nil {
+		return nil
+	}
+	return o.SslMode
+}
+
+func (o *SourceMysql) GetTunnelMethod() *SourceMysqlSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceMysql) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

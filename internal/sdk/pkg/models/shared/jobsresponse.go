@@ -7,3 +7,24 @@ type JobsResponse struct {
 	Next     *string       `json:"next,omitempty"`
 	Previous *string       `json:"previous,omitempty"`
 }
+
+func (o *JobsResponse) GetData() []JobResponse {
+	if o == nil {
+		return []JobResponse{}
+	}
+	return o.Data
+}
+
+func (o *JobsResponse) GetNext() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}
+
+func (o *JobsResponse) GetPrevious() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Previous
+}

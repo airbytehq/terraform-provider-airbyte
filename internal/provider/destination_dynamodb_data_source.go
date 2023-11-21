@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,11 @@ type DestinationDynamodbDataSource struct {
 
 // DestinationDynamodbDataSourceModel describes the data model.
 type DestinationDynamodbDataSourceModel struct {
-	Configuration DestinationDynamodb1 `tfsdk:"configuration"`
-	DestinationID types.String         `tfsdk:"destination_id"`
-	Name          types.String         `tfsdk:"name"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,73 +47,16 @@ func (r *DestinationDynamodbDataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "DestinationDynamodb DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_key_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dynamodb",
-							),
-						},
-						Description: `must be one of ["dynamodb"]`,
-					},
-					"dynamodb_endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).`,
-					},
-					"dynamodb_region": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"",
-								"us-east-1",
-								"us-east-2",
-								"us-west-1",
-								"us-west-2",
-								"af-south-1",
-								"ap-east-1",
-								"ap-south-1",
-								"ap-northeast-1",
-								"ap-northeast-2",
-								"ap-northeast-3",
-								"ap-southeast-1",
-								"ap-southeast-2",
-								"ca-central-1",
-								"cn-north-1",
-								"cn-northwest-1",
-								"eu-central-1",
-								"eu-north-1",
-								"eu-south-1",
-								"eu-west-1",
-								"eu-west-2",
-								"eu-west-3",
-								"sa-east-1",
-								"me-south-1",
-								"us-gov-east-1",
-								"us-gov-west-1",
-							),
-						},
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-							`The region of the DynamoDB.`,
-					},
-					"dynamodb_table_name_prefix": schema.StringAttribute{
-						Computed:    true,
-						Description: `The prefix to use when naming DynamoDB tables.`,
-					},
-					"secret_access_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The corresponding secret to the access key id.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

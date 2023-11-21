@@ -7,3 +7,24 @@ type DestinationMysqlPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *DestinationMysqlPutRequest) GetConfiguration() DestinationMysqlUpdate {
+	if o == nil {
+		return DestinationMysqlUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationMysqlPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationMysqlPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

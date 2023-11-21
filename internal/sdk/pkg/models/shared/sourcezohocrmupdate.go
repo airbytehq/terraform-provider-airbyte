@@ -5,26 +5,27 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-// SourceZohoCrmUpdateDataCenterLocation - Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
-type SourceZohoCrmUpdateDataCenterLocation string
+// DataCenterLocation - Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
+type DataCenterLocation string
 
 const (
-	SourceZohoCrmUpdateDataCenterLocationUs SourceZohoCrmUpdateDataCenterLocation = "US"
-	SourceZohoCrmUpdateDataCenterLocationAu SourceZohoCrmUpdateDataCenterLocation = "AU"
-	SourceZohoCrmUpdateDataCenterLocationEu SourceZohoCrmUpdateDataCenterLocation = "EU"
-	SourceZohoCrmUpdateDataCenterLocationIn SourceZohoCrmUpdateDataCenterLocation = "IN"
-	SourceZohoCrmUpdateDataCenterLocationCn SourceZohoCrmUpdateDataCenterLocation = "CN"
-	SourceZohoCrmUpdateDataCenterLocationJp SourceZohoCrmUpdateDataCenterLocation = "JP"
+	DataCenterLocationUs DataCenterLocation = "US"
+	DataCenterLocationAu DataCenterLocation = "AU"
+	DataCenterLocationEu DataCenterLocation = "EU"
+	DataCenterLocationIn DataCenterLocation = "IN"
+	DataCenterLocationCn DataCenterLocation = "CN"
+	DataCenterLocationJp DataCenterLocation = "JP"
 )
 
-func (e SourceZohoCrmUpdateDataCenterLocation) ToPointer() *SourceZohoCrmUpdateDataCenterLocation {
+func (e DataCenterLocation) ToPointer() *DataCenterLocation {
 	return &e
 }
 
-func (e *SourceZohoCrmUpdateDataCenterLocation) UnmarshalJSON(data []byte) error {
+func (e *DataCenterLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -41,29 +42,29 @@ func (e *SourceZohoCrmUpdateDataCenterLocation) UnmarshalJSON(data []byte) error
 	case "CN":
 		fallthrough
 	case "JP":
-		*e = SourceZohoCrmUpdateDataCenterLocation(v)
+		*e = DataCenterLocation(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmUpdateDataCenterLocation: %v", v)
+		return fmt.Errorf("invalid value for DataCenterLocation: %v", v)
 	}
 }
 
-// SourceZohoCRMUpdateZohoCRMEdition - Choose your Edition of Zoho CRM to determine API Concurrency Limits
-type SourceZohoCRMUpdateZohoCRMEdition string
+// ZohoCRMEdition - Choose your Edition of Zoho CRM to determine API Concurrency Limits
+type ZohoCRMEdition string
 
 const (
-	SourceZohoCRMUpdateZohoCRMEditionFree         SourceZohoCRMUpdateZohoCRMEdition = "Free"
-	SourceZohoCRMUpdateZohoCRMEditionStandard     SourceZohoCRMUpdateZohoCRMEdition = "Standard"
-	SourceZohoCRMUpdateZohoCRMEditionProfessional SourceZohoCRMUpdateZohoCRMEdition = "Professional"
-	SourceZohoCRMUpdateZohoCRMEditionEnterprise   SourceZohoCRMUpdateZohoCRMEdition = "Enterprise"
-	SourceZohoCRMUpdateZohoCRMEditionUltimate     SourceZohoCRMUpdateZohoCRMEdition = "Ultimate"
+	ZohoCRMEditionFree         ZohoCRMEdition = "Free"
+	ZohoCRMEditionStandard     ZohoCRMEdition = "Standard"
+	ZohoCRMEditionProfessional ZohoCRMEdition = "Professional"
+	ZohoCRMEditionEnterprise   ZohoCRMEdition = "Enterprise"
+	ZohoCRMEditionUltimate     ZohoCRMEdition = "Ultimate"
 )
 
-func (e SourceZohoCRMUpdateZohoCRMEdition) ToPointer() *SourceZohoCRMUpdateZohoCRMEdition {
+func (e ZohoCRMEdition) ToPointer() *ZohoCRMEdition {
 	return &e
 }
 
-func (e *SourceZohoCRMUpdateZohoCRMEdition) UnmarshalJSON(data []byte) error {
+func (e *ZohoCRMEdition) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -78,10 +79,10 @@ func (e *SourceZohoCRMUpdateZohoCRMEdition) UnmarshalJSON(data []byte) error {
 	case "Enterprise":
 		fallthrough
 	case "Ultimate":
-		*e = SourceZohoCRMUpdateZohoCRMEdition(v)
+		*e = ZohoCRMEdition(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCRMUpdateZohoCRMEdition: %v", v)
+		return fmt.Errorf("invalid value for ZohoCRMEdition: %v", v)
 	}
 }
 
@@ -122,13 +123,73 @@ type SourceZohoCrmUpdate struct {
 	// OAuth2.0 Client Secret
 	ClientSecret string `json:"client_secret"`
 	// Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
-	DcRegion SourceZohoCrmUpdateDataCenterLocation `json:"dc_region"`
+	DcRegion DataCenterLocation `json:"dc_region"`
 	// Choose your Edition of Zoho CRM to determine API Concurrency Limits
-	Edition SourceZohoCRMUpdateZohoCRMEdition `json:"edition"`
+	Edition *ZohoCRMEdition `default:"Free" json:"edition"`
 	// Please choose the environment
 	Environment SourceZohoCrmUpdateEnvironment `json:"environment"`
 	// OAuth2.0 Refresh Token
 	RefreshToken string `json:"refresh_token"`
 	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 	StartDatetime *time.Time `json:"start_datetime,omitempty"`
+}
+
+func (s SourceZohoCrmUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZohoCrmUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZohoCrmUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZohoCrmUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZohoCrmUpdate) GetDcRegion() DataCenterLocation {
+	if o == nil {
+		return DataCenterLocation("")
+	}
+	return o.DcRegion
+}
+
+func (o *SourceZohoCrmUpdate) GetEdition() *ZohoCRMEdition {
+	if o == nil {
+		return nil
+	}
+	return o.Edition
+}
+
+func (o *SourceZohoCrmUpdate) GetEnvironment() SourceZohoCrmUpdateEnvironment {
+	if o == nil {
+		return SourceZohoCrmUpdateEnvironment("")
+	}
+	return o.Environment
+}
+
+func (o *SourceZohoCrmUpdate) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceZohoCrmUpdate) GetStartDatetime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDatetime
 }

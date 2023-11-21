@@ -10,5 +10,4 @@ type SourceSentry struct {
 	Hostname       types.String   `tfsdk:"hostname"`
 	Organization   types.String   `tfsdk:"organization"`
 	Project        types.String   `tfsdk:"project"`
-	SourceType     types.String   `tfsdk:"source_type"`
 }

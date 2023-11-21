@@ -3,13 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.DestinationDatabendCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationDatabendDatabend(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -31,18 +30,24 @@ func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationDatabend{
-		Database:        database,
-		DestinationType: destinationType,
-		Host:            host,
-		Password:        password,
-		Port:            port,
-		Table:           table,
-		Username:        username,
+		Database: database,
+		Host:     host,
+		Password: password,
+		Port:     port,
+		Table:    table,
+		Username: username,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationDatabendCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}

@@ -3,10 +3,22 @@
 package shared
 
 type SourceApifyDatasetUpdate struct {
-	// If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.
-	Clean *bool `json:"clean,omitempty"`
-	// ID of the dataset you would like to load to Airbyte.
-	DatasetID *string `json:"datasetId,omitempty"`
-	// Your application's Client Secret. You can find this value on the <a href="https://console.apify.com/account/integrations">console integrations tab</a> after you login.
+	// ID of the dataset you would like to load to Airbyte. In Apify Console, you can view your datasets in the <a href="https://console.apify.com/storage/datasets">Storage section under the Datasets tab</a> after you login. See the <a href="https://docs.apify.com/platform/storage/dataset">Apify Docs</a> for more information.
+	DatasetID string `json:"dataset_id"`
+	// Personal API token of your Apify account. In Apify Console, you can find your API token in the <a href="https://console.apify.com/account/integrations">Settings section under the Integrations tab</a> after you login. See the <a href="https://docs.apify.com/platform/integrations/api#api-token">Apify Docs</a> for more information.
 	Token string `json:"token"`
+}
+
+func (o *SourceApifyDatasetUpdate) GetDatasetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatasetID
+}
+
+func (o *SourceApifyDatasetUpdate) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

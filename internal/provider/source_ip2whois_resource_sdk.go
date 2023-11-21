@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,16 +20,15 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 	} else {
 		domain = nil
 	}
-	sourceType := new(shared.SourceIp2whoisIp2whois)
-	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
-		*sourceType = shared.SourceIp2whoisIp2whois(r.Configuration.SourceType.ValueString())
-	} else {
-		sourceType = nil
-	}
 	configuration := shared.SourceIp2whois{
-		APIKey:     apiKey,
-		Domain:     domain,
-		SourceType: sourceType,
+		APIKey: apiKey,
+		Domain: domain,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -41,6 +40,7 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceIp2whoisCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

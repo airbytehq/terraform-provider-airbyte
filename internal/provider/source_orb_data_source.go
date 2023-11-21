@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,10 @@ type SourceOrbDataSource struct {
 
 // SourceOrbDataSourceModel describes the data model.
 type SourceOrbDataSourceModel struct {
-	Configuration SourceOrb    `tfsdk:"configuration"`
+	Configuration types.String `tfsdk:"configuration"`
 	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
 	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
 	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
@@ -49,59 +47,19 @@ func (r *SourceOrbDataSource) Schema(ctx context.Context, req datasource.SchemaR
 		MarkdownDescription: "SourceOrb DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Orb API Key, issued from the Orb admin console.`,
-					},
-					"lookback_window_days": schema.Int64Attribute{
-						Computed:    true,
-						Description: `When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.`,
-					},
-					"numeric_event_properties_keys": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.`,
-					},
-					"plan_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `Orb Plan ID to filter subscriptions that should have usage fetched.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"orb",
-							),
-						},
-						Description: `must be one of ["orb"]`,
-					},
-					"start_date": schema.StringAttribute{
-						Computed:    true,
-						Description: `UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the ` + "`" + `timeframe_start` + "`" + ` API parameter.`,
-					},
-					"string_event_properties_keys": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.`,
-					},
-					"subscription_usage_grouping_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `Property key name to group subscription usage by.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

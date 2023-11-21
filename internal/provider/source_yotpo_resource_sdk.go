@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -11,15 +11,24 @@ import (
 func (r *SourceYotpoResourceModel) ToCreateSDKType() *shared.SourceYotpoCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	appKey := r.Configuration.AppKey.ValueString()
-	email := r.Configuration.Email.ValueString()
-	sourceType := shared.SourceYotpoYotpo(r.Configuration.SourceType.ValueString())
+	email := new(string)
+	if !r.Configuration.Email.IsUnknown() && !r.Configuration.Email.IsNull() {
+		*email = r.Configuration.Email.ValueString()
+	} else {
+		email = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYotpo{
 		AccessToken: accessToken,
 		AppKey:      appKey,
 		Email:       email,
-		SourceType:  sourceType,
 		StartDate:   startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -31,6 +40,7 @@ func (r *SourceYotpoResourceModel) ToCreateSDKType() *shared.SourceYotpoCreateRe
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceYotpoCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -46,7 +56,12 @@ func (r *SourceYotpoResourceModel) ToGetSDKType() *shared.SourceYotpoCreateReque
 func (r *SourceYotpoResourceModel) ToUpdateSDKType() *shared.SourceYotpoPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	appKey := r.Configuration.AppKey.ValueString()
-	email := r.Configuration.Email.ValueString()
+	email := new(string)
+	if !r.Configuration.Email.IsUnknown() && !r.Configuration.Email.IsNull() {
+		*email = r.Configuration.Email.ValueString()
+	} else {
+		email = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYotpoUpdate{
 		AccessToken: accessToken,

@@ -3,27 +3,22 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"time"
 )
 
 func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedriveCreateRequest {
-	var authorization *shared.SourcePipedriveAPIKeyAuthentication
-	if r.Configuration.Authorization != nil {
-		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
-		authorization = &shared.SourcePipedriveAPIKeyAuthentication{
-			APIToken: apiToken,
-			AuthType: authType,
-		}
-	}
-	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	sourceType := shared.SourcePipedrivePipedrive(r.Configuration.SourceType.ValueString())
+	apiToken := r.Configuration.APIToken.ValueString()
+	replicationStartDate := r.Configuration.ReplicationStartDate.ValueString()
 	configuration := shared.SourcePipedrive{
-		Authorization:        authorization,
+		APIToken:             apiToken,
 		ReplicationStartDate: replicationStartDate,
-		SourceType:           sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -35,6 +30,7 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePipedriveCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -48,18 +44,10 @@ func (r *SourcePipedriveResourceModel) ToGetSDKType() *shared.SourcePipedriveCre
 }
 
 func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrivePutRequest {
-	var authorization *shared.SourcePipedriveUpdateAPIKeyAuthentication
-	if r.Configuration.Authorization != nil {
-		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveUpdateAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
-		authorization = &shared.SourcePipedriveUpdateAPIKeyAuthentication{
-			APIToken: apiToken,
-			AuthType: authType,
-		}
-	}
-	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
+	apiToken := r.Configuration.APIToken.ValueString()
+	replicationStartDate := r.Configuration.ReplicationStartDate.ValueString()
 	configuration := shared.SourcePipedriveUpdate{
-		Authorization:        authorization,
+		APIToken:             apiToken,
 		ReplicationStartDate: replicationStartDate,
 	}
 	name := r.Name.ValueString()

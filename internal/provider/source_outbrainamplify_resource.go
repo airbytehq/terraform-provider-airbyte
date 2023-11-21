@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type SourceOutbrainAmplifyResource struct {
 // SourceOutbrainAmplifyResourceModel describes the resource data model.
 type SourceOutbrainAmplifyResourceModel struct {
 	Configuration SourceOutbrainAmplify `tfsdk:"configuration"`
+	DefinitionID  types.String          `tfsdk:"definition_id"`
 	Name          types.String          `tfsdk:"name"`
 	SecretID      types.String          `tfsdk:"secret_id"`
 	SourceID      types.String          `tfsdk:"source_id"`
@@ -58,82 +60,24 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_outbrain_amplify_authentication_method_access_token": schema.SingleNestedAttribute{
+							"access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
 									},
 								},
 								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 							},
-							"source_outbrain_amplify_authentication_method_username_password": schema.SingleNestedAttribute{
+							"username_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"password": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Add Password for authentication.`,
-									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username_password",
-											),
-										},
-										Description: `must be one of ["username_password"]`,
-									},
-									"username": schema.StringAttribute{
-										Required:    true,
-										Description: `Add Username for authentication.`,
-									},
-								},
-								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
-							},
-							"source_outbrain_amplify_update_authentication_method_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-										Description: `must be one of ["access_token"]`,
-									},
-								},
-								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
-							},
-							"source_outbrain_amplify_update_authentication_method_username_password": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"password": schema.StringAttribute{
-										Required:    true,
-										Description: `Add Password for authentication.`,
-									},
-									"type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username_password",
-											),
-										},
-										Description: `must be one of ["username_password"]`,
 									},
 									"username": schema.StringAttribute{
 										Required:    true,
@@ -143,10 +87,10 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 								Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 							},
 						},
+						Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Credentials for making authenticated requests requires either username/password or access_token.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional:    true,
@@ -154,6 +98,8 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 					},
 					"geo_location_breakdown": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["country", "region", "subregion"]` + "\n" +
+							`The granularity used for geo location data in reports.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"country",
@@ -161,11 +107,11 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 								"subregion",
 							),
 						},
-						MarkdownDescription: `must be one of ["country", "region", "subregion"]` + "\n" +
-							`The granularity used for geo location data in reports.`,
 					},
 					"report_granularity": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["daily", "weekly", "monthly"]` + "\n" +
+							`The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"daily",
@@ -173,17 +119,6 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 								"monthly",
 							),
 						},
-						MarkdownDescription: `must be one of ["daily", "weekly", "monthly"]` + "\n" +
-							`The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"outbrain-amplify",
-							),
-						},
-						Description: `must be one of ["outbrain-amplify"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -191,13 +126,24 @@ func (r *SourceOutbrainAmplifyResource) Schema(ctx context.Context, req resource
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -261,7 +207,7 @@ func (r *SourceOutbrainAmplifyResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceOutbrainAmplify(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -437,5 +383,5 @@ func (r *SourceOutbrainAmplifyResource) Delete(ctx context.Context, req resource
 }
 
 func (r *SourceOutbrainAmplifyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

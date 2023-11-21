@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
@@ -36,54 +37,153 @@ func (e *SourceSftpBulkFileType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceSftpBulkSftpBulk string
+type SftpBulk string
 
 const (
-	SourceSftpBulkSftpBulkSftpBulk SourceSftpBulkSftpBulk = "sftp-bulk"
+	SftpBulkSftpBulk SftpBulk = "sftp-bulk"
 )
 
-func (e SourceSftpBulkSftpBulk) ToPointer() *SourceSftpBulkSftpBulk {
+func (e SftpBulk) ToPointer() *SftpBulk {
 	return &e
 }
 
-func (e *SourceSftpBulkSftpBulk) UnmarshalJSON(data []byte) error {
+func (e *SftpBulk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sftp-bulk":
-		*e = SourceSftpBulkSftpBulk(v)
+		*e = SftpBulk(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpBulkSftpBulk: %v", v)
+		return fmt.Errorf("invalid value for SftpBulk: %v", v)
 	}
 }
 
 type SourceSftpBulk struct {
 	// Sync only the most recent file for the configured folder path and file pattern
-	FileMostRecent *bool `json:"file_most_recent,omitempty"`
+	FileMostRecent *bool `default:"false" json:"file_most_recent"`
 	// The regular expression to specify files for sync in a chosen Folder Path
-	FilePattern *string `json:"file_pattern,omitempty"`
+	FilePattern *string `default:"" json:"file_pattern"`
 	// The file type you want to sync. Currently only 'csv' and 'json' files are supported.
-	FileType *SourceSftpBulkFileType `json:"file_type,omitempty"`
+	FileType *SourceSftpBulkFileType `default:"csv" json:"file_type"`
 	// The directory to search files for sync
-	FolderPath string `json:"folder_path"`
+	FolderPath *string `default:"" json:"folder_path"`
 	// The server host address
 	Host string `json:"host"`
 	// OS-level password for logging into the jump server host
 	Password *string `json:"password,omitempty"`
 	// The server port
-	Port int64 `json:"port"`
+	Port *int64 `default:"22" json:"port"`
 	// The private key
 	PrivateKey *string `json:"private_key,omitempty"`
 	// The separator used in the CSV files. Define None if you want to use the Sniffer functionality
-	Separator  *string                `json:"separator,omitempty"`
-	SourceType SourceSftpBulkSftpBulk `json:"sourceType"`
+	Separator  *string  `default:"," json:"separator"`
+	sourceType SftpBulk `const:"sftp-bulk" json:"sourceType"`
 	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// The name of the stream or table you want to create
 	StreamName string `json:"stream_name"`
 	// The server user
 	Username string `json:"username"`
+}
+
+func (s SourceSftpBulk) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSftpBulk) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSftpBulk) GetFileMostRecent() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FileMostRecent
+}
+
+func (o *SourceSftpBulk) GetFilePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FilePattern
+}
+
+func (o *SourceSftpBulk) GetFileType() *SourceSftpBulkFileType {
+	if o == nil {
+		return nil
+	}
+	return o.FileType
+}
+
+func (o *SourceSftpBulk) GetFolderPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderPath
+}
+
+func (o *SourceSftpBulk) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceSftpBulk) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceSftpBulk) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceSftpBulk) GetPrivateKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrivateKey
+}
+
+func (o *SourceSftpBulk) GetSeparator() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Separator
+}
+
+func (o *SourceSftpBulk) GetSourceType() SftpBulk {
+	return SftpBulkSftpBulk
+}
+
+func (o *SourceSftpBulk) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceSftpBulk) GetStreamName() string {
+	if o == nil {
+		return ""
+	}
+	return o.StreamName
+}
+
+func (o *SourceSftpBulk) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

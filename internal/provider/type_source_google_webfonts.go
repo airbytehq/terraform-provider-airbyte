@@ -9,5 +9,4 @@ type SourceGoogleWebfonts struct {
 	APIKey      types.String `tfsdk:"api_key"`
 	PrettyPrint types.String `tfsdk:"pretty_print"`
 	Sort        types.String `tfsdk:"sort"`
-	SourceType  types.String `tfsdk:"source_type"`
 }

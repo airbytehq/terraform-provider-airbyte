@@ -3,17 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -35,6 +36,7 @@ type DestinationDynamodbResource struct {
 // DestinationDynamodbResourceModel describes the resource data model.
 type DestinationDynamodbResourceModel struct {
 	Configuration   DestinationDynamodb `tfsdk:"configuration"`
+	DefinitionID    types.String        `tfsdk:"definition_id"`
 	DestinationID   types.String        `tfsdk:"destination_id"`
 	DestinationType types.String        `tfsdk:"destination_type"`
 	Name            types.String        `tfsdk:"name"`
@@ -55,23 +57,18 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dynamodb",
-							),
-						},
-						Description: `must be one of ["dynamodb"]`,
-					},
 					"dynamodb_endpoint": schema.StringAttribute{
-						Optional:    true,
-						Description: `This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).`,
 					},
 					"dynamodb_region": schema.StringAttribute{
-						Required: true,
+						Optional: true,
+						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
+							`The region of the DynamoDB.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"",
@@ -102,8 +99,6 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 								"us-gov-west-1",
 							),
 						},
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-							`The region of the DynamoDB.`,
 					},
 					"dynamodb_table_name_prefix": schema.StringAttribute{
 						Required:    true,
@@ -111,9 +106,17 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 					},
 					"secret_access_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The corresponding secret to the access key id.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -131,7 +134,8 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -181,7 +185,7 @@ func (r *DestinationDynamodbResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationDynamodb(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -357,5 +361,5 @@ func (r *DestinationDynamodbResource) Delete(ctx context.Context, req resource.D
 }
 
 func (r *DestinationDynamodbResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

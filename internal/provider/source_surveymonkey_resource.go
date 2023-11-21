@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type SourceSurveymonkeyResource struct {
 // SourceSurveymonkeyResourceModel describes the resource data model.
 type SourceSurveymonkeyResourceModel struct {
 	Configuration SourceSurveymonkey `tfsdk:"configuration"`
+	DefinitionID  types.String       `tfsdk:"definition_id"`
 	Name          types.String       `tfsdk:"name"`
 	SecretID      types.String       `tfsdk:"secret_id"`
 	SourceID      types.String       `tfsdk:"source_id"`
@@ -60,16 +62,8 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.`,
-							},
-							"auth_method": schema.StringAttribute{
-								Required: true,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"oauth2.0",
-									),
-								},
-								Description: `must be one of ["oauth2.0"]`,
 							},
 							"client_id": schema.StringAttribute{
 								Optional:    true,
@@ -84,6 +78,8 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"origin": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]; Default: "USA"` + "\n" +
+							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"USA",
@@ -91,24 +87,13 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								"Canada",
 							),
 						},
-						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]` + "\n" +
-							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"surveymonkey",
-							),
-						},
-						Description: `must be one of ["surveymonkey"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 					"survey_ids": schema.ListAttribute{
 						Optional:    true,
@@ -117,13 +102,24 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -187,7 +183,7 @@ func (r *SourceSurveymonkeyResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSurveymonkey(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -363,5 +359,5 @@ func (r *SourceSurveymonkeyResource) Delete(ctx context.Context, req resource.De
 }
 
 func (r *SourceSurveymonkeyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

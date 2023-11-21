@@ -7,3 +7,24 @@ type SourceFaunaPutRequest struct {
 	Name          string            `json:"name"`
 	WorkspaceID   string            `json:"workspaceId"`
 }
+
+func (o *SourceFaunaPutRequest) GetConfiguration() SourceFaunaUpdate {
+	if o == nil {
+		return SourceFaunaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFaunaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFaunaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

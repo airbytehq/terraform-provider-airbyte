@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourcePaypalTransactionPaypalTransaction string
+type PaypalTransaction string
 
 const (
-	SourcePaypalTransactionPaypalTransactionPaypalTransaction SourcePaypalTransactionPaypalTransaction = "paypal-transaction"
+	PaypalTransactionPaypalTransaction PaypalTransaction = "paypal-transaction"
 )
 
-func (e SourcePaypalTransactionPaypalTransaction) ToPointer() *SourcePaypalTransactionPaypalTransaction {
+func (e PaypalTransaction) ToPointer() *PaypalTransaction {
 	return &e
 }
 
-func (e *SourcePaypalTransactionPaypalTransaction) UnmarshalJSON(data []byte) error {
+func (e *PaypalTransaction) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "paypal-transaction":
-		*e = SourcePaypalTransactionPaypalTransaction(v)
+		*e = PaypalTransaction(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePaypalTransactionPaypalTransaction: %v", v)
+		return fmt.Errorf("invalid value for PaypalTransaction: %v", v)
 	}
 }
 
@@ -38,10 +39,69 @@ type SourcePaypalTransaction struct {
 	// The Client Secret of your Paypal developer application.
 	ClientSecret string `json:"client_secret"`
 	// Determines whether to use the sandbox or production environment.
-	IsSandbox bool `json:"is_sandbox"`
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// The key to refresh the expired access token.
-	RefreshToken *string                                  `json:"refresh_token,omitempty"`
-	SourceType   SourcePaypalTransactionPaypalTransaction `json:"sourceType"`
-	// Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
+	RefreshToken *string           `json:"refresh_token,omitempty"`
+	sourceType   PaypalTransaction `const:"paypal-transaction" json:"sourceType"`
+	// Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 	StartDate time.Time `json:"start_date"`
+	// The number of days per request. Must be a number between 1 and 31.
+	TimeWindow *int64 `default:"7" json:"time_window"`
+}
+
+func (s SourcePaypalTransaction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePaypalTransaction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePaypalTransaction) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourcePaypalTransaction) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourcePaypalTransaction) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *SourcePaypalTransaction) GetRefreshToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
+}
+
+func (o *SourcePaypalTransaction) GetSourceType() PaypalTransaction {
+	return PaypalTransactionPaypalTransaction
+}
+
+func (o *SourcePaypalTransaction) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
+func (o *SourcePaypalTransaction) GetTimeWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TimeWindow
 }

@@ -3,24 +3,39 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCreateRequest {
-	authMethod := new(shared.SourceBingAdsAuthMethod)
-	if !r.Configuration.AuthMethod.IsUnknown() && !r.Configuration.AuthMethod.IsNull() {
-		*authMethod = shared.SourceBingAdsAuthMethod(r.Configuration.AuthMethod.ValueString())
-	} else {
-		authMethod = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := new(string)
 	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
 		*clientSecret = r.Configuration.ClientSecret.ValueString()
 	} else {
 		clientSecret = nil
+	}
+	var customReports []shared.SourceBingAdsCustomReportConfig = nil
+	for _, customReportsItem := range r.Configuration.CustomReports {
+		name := customReportsItem.Name.ValueString()
+		reportAggregation := new(string)
+		if !customReportsItem.ReportAggregation.IsUnknown() && !customReportsItem.ReportAggregation.IsNull() {
+			*reportAggregation = customReportsItem.ReportAggregation.ValueString()
+		} else {
+			reportAggregation = nil
+		}
+		var reportColumns []string = nil
+		for _, reportColumnsItem := range customReportsItem.ReportColumns {
+			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
+		}
+		reportingObject := shared.SourceBingAdsReportingDataObject(customReportsItem.ReportingObject.ValueString())
+		customReports = append(customReports, shared.SourceBingAdsCustomReportConfig{
+			Name:              name,
+			ReportAggregation: reportAggregation,
+			ReportColumns:     reportColumns,
+			ReportingObject:   reportingObject,
+		})
 	}
 	developerToken := r.Configuration.DeveloperToken.ValueString()
 	lookbackWindow := new(int64)
@@ -30,8 +45,12 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 		lookbackWindow = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	reportsStartDate := customTypes.MustDateFromString(r.Configuration.ReportsStartDate.ValueString())
-	sourceType := shared.SourceBingAdsBingAds(r.Configuration.SourceType.ValueString())
+	reportsStartDate := new(customTypes.Date)
+	if !r.Configuration.ReportsStartDate.IsUnknown() && !r.Configuration.ReportsStartDate.IsNull() {
+		reportsStartDate = customTypes.MustNewDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	} else {
+		reportsStartDate = nil
+	}
 	tenantID := new(string)
 	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
 		*tenantID = r.Configuration.TenantID.ValueString()
@@ -39,17 +58,22 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 		tenantID = nil
 	}
 	configuration := shared.SourceBingAds{
-		AuthMethod:       authMethod,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
+		CustomReports:    customReports,
 		DeveloperToken:   developerToken,
 		LookbackWindow:   lookbackWindow,
 		RefreshToken:     refreshToken,
 		ReportsStartDate: reportsStartDate,
-		SourceType:       sourceType,
 		TenantID:         tenantID,
 	}
-	name := r.Name.ValueString()
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
+	}
+	name1 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -59,7 +83,8 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceBingAdsCreateRequest{
 		Configuration: configuration,
-		Name:          name,
+		DefinitionID:  definitionID,
+		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
@@ -72,18 +97,33 @@ func (r *SourceBingAdsResourceModel) ToGetSDKType() *shared.SourceBingAdsCreateR
 }
 
 func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutRequest {
-	authMethod := new(shared.SourceBingAdsUpdateAuthMethod)
-	if !r.Configuration.AuthMethod.IsUnknown() && !r.Configuration.AuthMethod.IsNull() {
-		*authMethod = shared.SourceBingAdsUpdateAuthMethod(r.Configuration.AuthMethod.ValueString())
-	} else {
-		authMethod = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := new(string)
 	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
 		*clientSecret = r.Configuration.ClientSecret.ValueString()
 	} else {
 		clientSecret = nil
+	}
+	var customReports []shared.CustomReportConfig = nil
+	for _, customReportsItem := range r.Configuration.CustomReports {
+		name := customReportsItem.Name.ValueString()
+		reportAggregation := new(string)
+		if !customReportsItem.ReportAggregation.IsUnknown() && !customReportsItem.ReportAggregation.IsNull() {
+			*reportAggregation = customReportsItem.ReportAggregation.ValueString()
+		} else {
+			reportAggregation = nil
+		}
+		var reportColumns []string = nil
+		for _, reportColumnsItem := range customReportsItem.ReportColumns {
+			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
+		}
+		reportingObject := shared.ReportingDataObject(customReportsItem.ReportingObject.ValueString())
+		customReports = append(customReports, shared.CustomReportConfig{
+			Name:              name,
+			ReportAggregation: reportAggregation,
+			ReportColumns:     reportColumns,
+			ReportingObject:   reportingObject,
+		})
 	}
 	developerToken := r.Configuration.DeveloperToken.ValueString()
 	lookbackWindow := new(int64)
@@ -93,7 +133,12 @@ func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutR
 		lookbackWindow = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	reportsStartDate := customTypes.MustDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	reportsStartDate := new(customTypes.Date)
+	if !r.Configuration.ReportsStartDate.IsUnknown() && !r.Configuration.ReportsStartDate.IsNull() {
+		reportsStartDate = customTypes.MustNewDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	} else {
+		reportsStartDate = nil
+	}
 	tenantID := new(string)
 	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
 		*tenantID = r.Configuration.TenantID.ValueString()
@@ -101,20 +146,20 @@ func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutR
 		tenantID = nil
 	}
 	configuration := shared.SourceBingAdsUpdate{
-		AuthMethod:       authMethod,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
+		CustomReports:    customReports,
 		DeveloperToken:   developerToken,
 		LookbackWindow:   lookbackWindow,
 		RefreshToken:     refreshToken,
 		ReportsStartDate: reportsStartDate,
 		TenantID:         tenantID,
 	}
-	name := r.Name.ValueString()
+	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceBingAdsPutRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

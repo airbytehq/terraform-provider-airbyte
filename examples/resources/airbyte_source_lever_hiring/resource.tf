@@ -1,16 +1,15 @@
 resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
   configuration = {
     credentials = {
-      source_lever_hiring_authentication_mechanism_authenticate_via_lever_api_key_ = {
-        api_key   = "...my_api_key..."
-        auth_type = "Api Key"
+      authenticate_via_lever_api_key = {
+        api_key = "...my_api_key..."
       }
     }
-    environment = "Sandbox"
-    source_type = "lever-hiring"
+    environment = "Production"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  name         = "Donald Wuckert"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "aedf2aca-b58b-4991-8926-ddb589461e74"
+  definition_id = "3d75c669-3a6b-492e-b166-50e4c3120d77"
+  name          = "Bill Howell"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "c796fdac-1f48-4b8f-8670-1054c1db1ce4"
 }

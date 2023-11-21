@@ -9,7 +9,7 @@ type DestinationBigquery struct {
 	CredentialsJSON            types.String                      `tfsdk:"credentials_json"`
 	DatasetID                  types.String                      `tfsdk:"dataset_id"`
 	DatasetLocation            types.String                      `tfsdk:"dataset_location"`
-	DestinationType            types.String                      `tfsdk:"destination_type"`
+	DisableTypeDedupe          types.Bool                        `tfsdk:"disable_type_dedupe"`
 	LoadingMethod              *DestinationBigqueryLoadingMethod `tfsdk:"loading_method"`
 	ProjectID                  types.String                      `tfsdk:"project_id"`
 	RawDataDataset             types.String                      `tfsdk:"raw_data_dataset"`

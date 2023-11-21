@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,11 @@ type DestinationKeenDataSource struct {
 
 // DestinationKeenDataSourceModel describes the data model.
 type DestinationKeenDataSourceModel struct {
-	Configuration DestinationKeen `tfsdk:"configuration"`
-	DestinationID types.String    `tfsdk:"destination_id"`
-	Name          types.String    `tfsdk:"name"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,34 +47,16 @@ func (r *DestinationKeenDataSource) Schema(ctx context.Context, req datasource.S
 		MarkdownDescription: "DestinationKeen DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"keen",
-							),
-						},
-						Description: `must be one of ["keen"]`,
-					},
-					"infer_timestamp": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Allow connector to guess keen.timestamp value based on the streamed data.`,
-					},
-					"project_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

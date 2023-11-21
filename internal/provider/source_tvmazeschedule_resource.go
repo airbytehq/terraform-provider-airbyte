@@ -3,18 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -35,6 +34,7 @@ type SourceTvmazeScheduleResource struct {
 // SourceTvmazeScheduleResourceModel describes the resource data model.
 type SourceTvmazeScheduleResourceModel struct {
 	Configuration SourceTvmazeSchedule `tfsdk:"configuration"`
+	DefinitionID  types.String         `tfsdk:"definition_id"`
 	Name          types.String         `tfsdk:"name"`
 	SecretID      types.String         `tfsdk:"secret_id"`
 	SourceID      types.String         `tfsdk:"source_id"`
@@ -63,15 +63,6 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 						MarkdownDescription: `End date for TV schedule retrieval. May be in the future. Optional.` + "\n" +
 							``,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"tvmaze-schedule",
-							),
-						},
-						Description: `must be one of ["tvmaze-schedule"]`,
-					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
 						Description: `Start date for TV schedule retrieval. May be in the future.`,
@@ -85,13 +76,24 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -155,7 +157,7 @@ func (r *SourceTvmazeScheduleResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceTvmazeSchedule(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -331,5 +333,5 @@ func (r *SourceTvmazeScheduleResource) Delete(ctx context.Context, req resource.
 }
 
 func (r *SourceTvmazeScheduleResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

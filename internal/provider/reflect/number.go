@@ -206,7 +206,7 @@ func Number(ctx context.Context, typ attr.Type, val tftypes.Value, target reflec
 		} else if acc == big.Below {
 			if floatResult == math.Inf(-1) || floatResult == -math.MaxFloat64 {
 				floatResult = -math.MaxFloat64
-			} else if floatResult == -0.0 || floatResult == -math.SmallestNonzeroFloat64 { //nolint:staticcheck
+			} else if floatResult == 0.0 || floatResult == -math.SmallestNonzeroFloat64 {
 				floatResult = math.SmallestNonzeroFloat64
 			} else {
 				err := fmt.Errorf("not sure how to round %s and %f", acc, floatResult)

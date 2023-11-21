@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceInstagramInstagram string
+type Instagram string
 
 const (
-	SourceInstagramInstagramInstagram SourceInstagramInstagram = "instagram"
+	InstagramInstagram Instagram = "instagram"
 )
 
-func (e SourceInstagramInstagram) ToPointer() *SourceInstagramInstagram {
+func (e Instagram) ToPointer() *Instagram {
 	return &e
 }
 
-func (e *SourceInstagramInstagram) UnmarshalJSON(data []byte) error {
+func (e *Instagram) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "instagram":
-		*e = SourceInstagramInstagram(v)
+		*e = Instagram(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceInstagramInstagram: %v", v)
+		return fmt.Errorf("invalid value for Instagram: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceInstagram struct {
 	// The Client ID for your Oauth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret for your Oauth application
-	ClientSecret *string                  `json:"client_secret,omitempty"`
-	SourceType   SourceInstagramInstagram `json:"sourceType"`
-	// The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate time.Time `json:"start_date"`
+	ClientSecret *string   `json:"client_secret,omitempty"`
+	sourceType   Instagram `const:"instagram" json:"sourceType"`
+	// The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
+	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceInstagram) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInstagram) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInstagram) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceInstagram) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *SourceInstagram) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceInstagram) GetSourceType() Instagram {
+	return InstagramInstagram
+}
+
+func (o *SourceInstagram) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

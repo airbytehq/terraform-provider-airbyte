@@ -6,14 +6,13 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_endpoint_domain_name = "blob.core.windows.net"
     azure_blob_storage_output_buffer_size   = 5
     azure_blob_storage_spill_size           = 500
-    destination_type                        = "azure-blob-storage"
     format = {
-      destination_azure_blob_storage_output_format_csv_comma_separated_values = {
-        flattening  = "No flattening"
-        format_type = "CSV"
+      csv_comma_separated_values = {
+        flattening = "No flattening"
       }
     }
   }
-  name         = "Matt Hamill"
-  workspace_id = "3f5ad019-da1f-4fe7-8f09-7b0074f15471"
+  definition_id = "b38acf3b-23ea-44e3-abf4-ba0e7ac63cda"
+  name          = "Rogelio Purdy"
+  workspace_id  = "cd76c9fd-07c9-468d-acb9-cb44c87d9163"
 }

@@ -3,10 +3,7 @@
 package provider
 
 type DestinationClickhouseSSHTunnelMethod struct {
-	DestinationClickhouseSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_clickhouse_ssh_tunnel_method_no_tunnel"`
-	DestinationClickhouseSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_clickhouse_ssh_tunnel_method_password_authentication"`
-	DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_clickhouse_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_no_tunnel"`
-	DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_password_authentication"`
-	DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_clickhouse_update_ssh_tunnel_method_ssh_key_authentication"`
+	NoTunnel               *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"no_tunnel"`
+	PasswordAuthentication *PasswordAuthentication                                   `tfsdk:"password_authentication"`
+	SSHKeyAuthentication   *SSHKeyAuthentication                                     `tfsdk:"ssh_key_authentication"`
 }

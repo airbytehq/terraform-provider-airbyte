@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -11,15 +11,19 @@ import (
 func (r *SourceLinnworksResourceModel) ToCreateSDKType() *shared.SourceLinnworksCreateRequest {
 	applicationID := r.Configuration.ApplicationID.ValueString()
 	applicationSecret := r.Configuration.ApplicationSecret.ValueString()
-	sourceType := shared.SourceLinnworksLinnworks(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceLinnworks{
 		ApplicationID:     applicationID,
 		ApplicationSecret: applicationSecret,
-		SourceType:        sourceType,
 		StartDate:         startDate,
 		Token:             token,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -31,6 +35,7 @@ func (r *SourceLinnworksResourceModel) ToCreateSDKType() *shared.SourceLinnworks
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceLinnworksCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

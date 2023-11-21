@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,7 +14,12 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	} else {
 		alwaysUpdated = nil
 	}
-	count := r.Configuration.Count.ValueInt64()
+	count := new(int64)
+	if !r.Configuration.Count.IsUnknown() && !r.Configuration.Count.IsNull() {
+		*count = r.Configuration.Count.ValueInt64()
+	} else {
+		count = nil
+	}
 	parallelism := new(int64)
 	if !r.Configuration.Parallelism.IsUnknown() && !r.Configuration.Parallelism.IsNull() {
 		*parallelism = r.Configuration.Parallelism.ValueInt64()
@@ -33,14 +38,18 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	} else {
 		seed = nil
 	}
-	sourceType := shared.SourceFakerFaker(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFaker{
 		AlwaysUpdated:   alwaysUpdated,
 		Count:           count,
 		Parallelism:     parallelism,
 		RecordsPerSlice: recordsPerSlice,
 		Seed:            seed,
-		SourceType:      sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -52,6 +61,7 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceFakerCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -71,7 +81,12 @@ func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutReque
 	} else {
 		alwaysUpdated = nil
 	}
-	count := r.Configuration.Count.ValueInt64()
+	count := new(int64)
+	if !r.Configuration.Count.IsUnknown() && !r.Configuration.Count.IsNull() {
+		*count = r.Configuration.Count.ValueInt64()
+	} else {
+		count = nil
+	}
 	parallelism := new(int64)
 	if !r.Configuration.Parallelism.IsUnknown() && !r.Configuration.Parallelism.IsNull() {
 		*parallelism = r.Configuration.Parallelism.ValueInt64()

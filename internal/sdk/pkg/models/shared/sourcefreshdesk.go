@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceFreshdeskFreshdesk string
+type Freshdesk string
 
 const (
-	SourceFreshdeskFreshdeskFreshdesk SourceFreshdeskFreshdesk = "freshdesk"
+	FreshdeskFreshdesk Freshdesk = "freshdesk"
 )
 
-func (e SourceFreshdeskFreshdesk) ToPointer() *SourceFreshdeskFreshdesk {
+func (e Freshdesk) ToPointer() *Freshdesk {
 	return &e
 }
 
-func (e *SourceFreshdeskFreshdesk) UnmarshalJSON(data []byte) error {
+func (e *Freshdesk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "freshdesk":
-		*e = SourceFreshdeskFreshdesk(v)
+		*e = Freshdesk(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshdeskFreshdesk: %v", v)
+		return fmt.Errorf("invalid value for Freshdesk: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceFreshdesk struct {
 	// Freshdesk domain
 	Domain string `json:"domain"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
-	RequestsPerMinute *int64                   `json:"requests_per_minute,omitempty"`
-	SourceType        SourceFreshdeskFreshdesk `json:"sourceType"`
+	RequestsPerMinute *int64    `json:"requests_per_minute,omitempty"`
+	sourceType        Freshdesk `const:"freshdesk" json:"sourceType"`
 	// UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceFreshdesk) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFreshdesk) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFreshdesk) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceFreshdesk) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *SourceFreshdesk) GetRequestsPerMinute() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RequestsPerMinute
+}
+
+func (o *SourceFreshdesk) GetSourceType() Freshdesk {
+	return FreshdeskFreshdesk
+}
+
+func (o *SourceFreshdesk) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

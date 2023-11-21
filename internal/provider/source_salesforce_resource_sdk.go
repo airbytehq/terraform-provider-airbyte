@@ -3,18 +3,12 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesforceCreateRequest {
-	authType := new(shared.SourceSalesforceAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceSalesforceAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	forceUseBulkAPI := new(bool)
@@ -30,7 +24,6 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 		isSandbox = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceSalesforceSalesforce(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -39,7 +32,12 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	}
 	var streamsCriteria []shared.SourceSalesforceStreamsCriteria = nil
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
-		criteria := shared.SourceSalesforceStreamsCriteriaSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
+		criteria := new(shared.SourceSalesforceSearchCriteria)
+		if !streamsCriteriaItem.Criteria.IsUnknown() && !streamsCriteriaItem.Criteria.IsNull() {
+			*criteria = shared.SourceSalesforceSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
+		} else {
+			criteria = nil
+		}
 		value := streamsCriteriaItem.Value.ValueString()
 		streamsCriteria = append(streamsCriteria, shared.SourceSalesforceStreamsCriteria{
 			Criteria: criteria,
@@ -47,15 +45,19 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 		})
 	}
 	configuration := shared.SourceSalesforce{
-		AuthType:        authType,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
 		ForceUseBulkAPI: forceUseBulkAPI,
 		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
-		SourceType:      sourceType,
 		StartDate:       startDate,
 		StreamsCriteria: streamsCriteria,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -67,6 +69,7 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceSalesforceCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -80,12 +83,6 @@ func (r *SourceSalesforceResourceModel) ToGetSDKType() *shared.SourceSalesforceC
 }
 
 func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesforcePutRequest {
-	authType := new(shared.SourceSalesforceUpdateAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceSalesforceUpdateAuthType(r.Configuration.AuthType.ValueString())
-	} else {
-		authType = nil
-	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	forceUseBulkAPI := new(bool)
@@ -107,17 +104,21 @@ func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesfor
 	} else {
 		startDate = nil
 	}
-	var streamsCriteria []shared.SourceSalesforceUpdateStreamsCriteria = nil
+	var streamsCriteria []shared.StreamsCriteria = nil
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
-		criteria := shared.SourceSalesforceUpdateStreamsCriteriaSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
+		criteria := new(shared.SearchCriteria)
+		if !streamsCriteriaItem.Criteria.IsUnknown() && !streamsCriteriaItem.Criteria.IsNull() {
+			*criteria = shared.SearchCriteria(streamsCriteriaItem.Criteria.ValueString())
+		} else {
+			criteria = nil
+		}
 		value := streamsCriteriaItem.Value.ValueString()
-		streamsCriteria = append(streamsCriteria, shared.SourceSalesforceUpdateStreamsCriteria{
+		streamsCriteria = append(streamsCriteria, shared.StreamsCriteria{
 			Criteria: criteria,
 			Value:    value,
 		})
 	}
 	configuration := shared.SourceSalesforceUpdate{
-		AuthType:        authType,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
 		ForceUseBulkAPI: forceUseBulkAPI,

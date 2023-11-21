@@ -7,3 +7,24 @@ type SourceZendeskTalkPutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *SourceZendeskTalkPutRequest) GetConfiguration() SourceZendeskTalkUpdate {
+	if o == nil {
+		return SourceZendeskTalkUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZendeskTalkPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZendeskTalkPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

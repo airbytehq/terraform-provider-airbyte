@@ -3,8 +3,6 @@
 package provider
 
 type SourceRetentlyAuthenticationMechanism struct {
-	SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth       *SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth       `tfsdk:"source_retently_authentication_mechanism_authenticate_via_retently_o_auth"`
-	SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken           *SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken           `tfsdk:"source_retently_authentication_mechanism_authenticate_with_api_token"`
-	SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth *SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth `tfsdk:"source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth"`
-	SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken     *SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken     `tfsdk:"source_retently_update_authentication_mechanism_authenticate_with_api_token"`
+	AuthenticateViaRetentlyOAuth *AuthenticateViaHarvestOAuth `tfsdk:"authenticate_via_retently_o_auth"`
+	AuthenticateWithAPIToken     *AuthenticateWithAPIToken    `tfsdk:"authenticate_with_api_token"`
 }

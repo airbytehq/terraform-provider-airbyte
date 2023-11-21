@@ -3,9 +3,9 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     credentials_json = "...my_credentials_json..."
     dataset_id       = "...my_dataset_id..."
     project_id       = "...my_project_id..."
-    source_type      = "bigquery"
   }
-  name         = "Joe Bradtke"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "80bff918-544e-4c42-9efc-ce8f1977773e"
+  definition_id = "9baf3821-deb7-4264-9ad9-e5fb53126691"
+  name          = "Darrin Rogahn"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "b9ea24da-51fb-473f-872f-2e8bbfe18227"
 }

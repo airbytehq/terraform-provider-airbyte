@@ -7,3 +7,24 @@ type SourceOutreachPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceOutreachPutRequest) GetConfiguration() SourceOutreachUpdate {
+	if o == nil {
+		return SourceOutreachUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOutreachPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOutreachPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

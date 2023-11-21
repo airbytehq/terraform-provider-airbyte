@@ -5,9 +5,9 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
       client_secret = "...my_client_secret..."
       refresh_token = "...my_refresh_token..."
     }
-    destination_type = "google-sheets"
-    spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
+    spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  name         = "Mr. Irma Schaefer"
-  workspace_id = "b3cdca42-5190-44e5-a3c7-e0bc7178e479"
+  definition_id = "a78cf13c-3589-4bc3-aaba-63d3987f09ed"
+  name          = "Manuel Cronin IV"
+  workspace_id  = "dddbef1f-87bb-4506-9e16-a5a735a4e180"
 }

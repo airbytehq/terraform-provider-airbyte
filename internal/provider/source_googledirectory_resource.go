@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceGoogleDirectoryResource struct {
 // SourceGoogleDirectoryResourceModel describes the resource data model.
 type SourceGoogleDirectoryResourceModel struct {
 	Configuration SourceGoogleDirectory `tfsdk:"configuration"`
+	DefinitionID  types.String          `tfsdk:"definition_id"`
 	Name          types.String          `tfsdk:"name"`
 	SecretID      types.String          `tfsdk:"secret_id"`
 	SourceID      types.String          `tfsdk:"source_id"`
@@ -58,22 +59,12 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_directory_google_credentials_service_account_key": schema.SingleNestedAttribute{
+							"service_account_key": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
 										Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
-									},
-									"credentials_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service accounts",
-											),
-										},
-										MarkdownDescription: `must be one of ["Service accounts"]` + "\n" +
-											`Authentication Scenario`,
 									},
 									"email": schema.StringAttribute{
 										Required:    true,
@@ -82,7 +73,7 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 								},
 								Description: `For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.`,
 							},
-							"source_google_directory_google_credentials_sign_in_via_google_o_auth": schema.SingleNestedAttribute{
+							"sign_in_via_google_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -93,99 +84,40 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The Client Secret of the developer application.`,
 									},
-									"credentials_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Web server app",
-											),
-										},
-										MarkdownDescription: `must be one of ["Web server app"]` + "\n" +
-											`Authentication Scenario`,
-									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
-										Description: `The Token for obtaining a new access token.`,
-									},
-								},
-								Description: `For these scenario user only needs to give permission to read Google Directory data.`,
-							},
-							"source_google_directory_update_google_credentials_service_account_key": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"credentials_json": schema.StringAttribute{
-										Required:    true,
-										Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
-									},
-									"credentials_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service accounts",
-											),
-										},
-										MarkdownDescription: `must be one of ["Service accounts"]` + "\n" +
-											`Authentication Scenario`,
-									},
-									"email": schema.StringAttribute{
-										Required:    true,
-										Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
-									},
-								},
-								Description: `For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.`,
-							},
-							"source_google_directory_update_google_credentials_sign_in_via_google_o_auth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"client_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Client ID of the developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Required:    true,
-										Description: `The Client Secret of the developer application.`,
-									},
-									"credentials_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Web server app",
-											),
-										},
-										MarkdownDescription: `must be one of ["Web server app"]` + "\n" +
-											`Authentication Scenario`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
+										Sensitive:   true,
 										Description: `The Token for obtaining a new access token.`,
 									},
 								},
 								Description: `For these scenario user only needs to give permission to read Google Directory data.`,
 							},
 						},
+						Description: `Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-directory",
-							),
-						},
-						Description: `must be one of ["google-directory"]`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -249,7 +181,7 @@ func (r *SourceGoogleDirectoryResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGoogleDirectory(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -425,5 +357,5 @@ func (r *SourceGoogleDirectoryResource) Delete(ctx context.Context, req resource
 }
 
 func (r *SourceGoogleDirectoryResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

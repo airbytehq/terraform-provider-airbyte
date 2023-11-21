@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -16,13 +16,17 @@ func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCr
 		lookbackWindowDays = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourcePaystackPaystack(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePaystack{
 		LookbackWindowDays: lookbackWindowDays,
 		SecretKey:          secretKey,
-		SourceType:         sourceType,
 		StartDate:          startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -34,6 +38,7 @@ func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCr
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePaystackCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

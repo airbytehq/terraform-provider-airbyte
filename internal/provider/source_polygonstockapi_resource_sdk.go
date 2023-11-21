@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -30,7 +30,6 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourcePolygonStockAPIPolygonStockAPI(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	stocksTicker := r.Configuration.StocksTicker.ValueString()
 	timespan := r.Configuration.Timespan.ValueString()
@@ -41,10 +40,15 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 		Limit:        limit,
 		Multiplier:   multiplier,
 		Sort:         sort,
-		SourceType:   sourceType,
 		StartDate:    startDate,
 		StocksTicker: stocksTicker,
 		Timespan:     timespan,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -56,6 +60,7 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePolygonStockAPICreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

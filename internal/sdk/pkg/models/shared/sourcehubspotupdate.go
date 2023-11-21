@@ -3,133 +3,186 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-// SourceHubspotUpdateAuthenticationPrivateAppAuthType - Name of the credentials set
-type SourceHubspotUpdateAuthenticationPrivateAppAuthType string
+// SourceHubspotUpdateSchemasAuthType - Name of the credentials set
+type SourceHubspotUpdateSchemasAuthType string
 
 const (
-	SourceHubspotUpdateAuthenticationPrivateAppAuthTypePrivateAppCredentials SourceHubspotUpdateAuthenticationPrivateAppAuthType = "Private App Credentials"
+	SourceHubspotUpdateSchemasAuthTypePrivateAppCredentials SourceHubspotUpdateSchemasAuthType = "Private App Credentials"
 )
 
-func (e SourceHubspotUpdateAuthenticationPrivateAppAuthType) ToPointer() *SourceHubspotUpdateAuthenticationPrivateAppAuthType {
+func (e SourceHubspotUpdateSchemasAuthType) ToPointer() *SourceHubspotUpdateSchemasAuthType {
 	return &e
 }
 
-func (e *SourceHubspotUpdateAuthenticationPrivateAppAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceHubspotUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Private App Credentials":
-		*e = SourceHubspotUpdateAuthenticationPrivateAppAuthType(v)
+		*e = SourceHubspotUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotUpdateAuthenticationPrivateAppAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceHubspotUpdateSchemasAuthType: %v", v)
 	}
 }
 
-// SourceHubspotUpdateAuthenticationPrivateApp - Choose how to authenticate to HubSpot.
-type SourceHubspotUpdateAuthenticationPrivateApp struct {
+// PrivateApp - Choose how to authenticate to HubSpot.
+type PrivateApp struct {
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
 	// Name of the credentials set
-	CredentialsTitle SourceHubspotUpdateAuthenticationPrivateAppAuthType `json:"credentials_title"`
+	credentialsTitle SourceHubspotUpdateSchemasAuthType `const:"Private App Credentials" json:"credentials_title"`
 }
 
-// SourceHubspotUpdateAuthenticationOAuthAuthType - Name of the credentials
-type SourceHubspotUpdateAuthenticationOAuthAuthType string
+func (p PrivateApp) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PrivateApp) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *PrivateApp) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *PrivateApp) GetCredentialsTitle() SourceHubspotUpdateSchemasAuthType {
+	return SourceHubspotUpdateSchemasAuthTypePrivateAppCredentials
+}
+
+// SourceHubspotUpdateAuthType - Name of the credentials
+type SourceHubspotUpdateAuthType string
 
 const (
-	SourceHubspotUpdateAuthenticationOAuthAuthTypeOAuthCredentials SourceHubspotUpdateAuthenticationOAuthAuthType = "OAuth Credentials"
+	SourceHubspotUpdateAuthTypeOAuthCredentials SourceHubspotUpdateAuthType = "OAuth Credentials"
 )
 
-func (e SourceHubspotUpdateAuthenticationOAuthAuthType) ToPointer() *SourceHubspotUpdateAuthenticationOAuthAuthType {
+func (e SourceHubspotUpdateAuthType) ToPointer() *SourceHubspotUpdateAuthType {
 	return &e
 }
 
-func (e *SourceHubspotUpdateAuthenticationOAuthAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceHubspotUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth Credentials":
-		*e = SourceHubspotUpdateAuthenticationOAuthAuthType(v)
+		*e = SourceHubspotUpdateAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotUpdateAuthenticationOAuthAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceHubspotUpdateAuthType: %v", v)
 	}
 }
 
-// SourceHubspotUpdateAuthenticationOAuth - Choose how to authenticate to HubSpot.
-type SourceHubspotUpdateAuthenticationOAuth struct {
+// SourceHubspotUpdateOAuth - Choose how to authenticate to HubSpot.
+type SourceHubspotUpdateOAuth struct {
 	// The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 	ClientID string `json:"client_id"`
 	// The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
 	ClientSecret string `json:"client_secret"`
 	// Name of the credentials
-	CredentialsTitle SourceHubspotUpdateAuthenticationOAuthAuthType `json:"credentials_title"`
+	credentialsTitle SourceHubspotUpdateAuthType `const:"OAuth Credentials" json:"credentials_title"`
 	// Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 	RefreshToken string `json:"refresh_token"`
+}
+
+func (s SourceHubspotUpdateOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubspotUpdateOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubspotUpdateOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceHubspotUpdateOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceHubspotUpdateOAuth) GetCredentialsTitle() SourceHubspotUpdateAuthType {
+	return SourceHubspotUpdateAuthTypeOAuthCredentials
+}
+
+func (o *SourceHubspotUpdateOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
 }
 
 type SourceHubspotUpdateAuthenticationType string
 
 const (
-	SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateAuthenticationOAuth      SourceHubspotUpdateAuthenticationType = "source-hubspot-update_Authentication_OAuth"
-	SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateAuthenticationPrivateApp SourceHubspotUpdateAuthenticationType = "source-hubspot-update_Authentication_Private App"
+	SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateOAuth SourceHubspotUpdateAuthenticationType = "source-hubspot-update_OAuth"
+	SourceHubspotUpdateAuthenticationTypePrivateApp               SourceHubspotUpdateAuthenticationType = "Private App"
 )
 
 type SourceHubspotUpdateAuthentication struct {
-	SourceHubspotUpdateAuthenticationOAuth      *SourceHubspotUpdateAuthenticationOAuth
-	SourceHubspotUpdateAuthenticationPrivateApp *SourceHubspotUpdateAuthenticationPrivateApp
+	SourceHubspotUpdateOAuth *SourceHubspotUpdateOAuth
+	PrivateApp               *PrivateApp
 
 	Type SourceHubspotUpdateAuthenticationType
 }
 
-func CreateSourceHubspotUpdateAuthenticationSourceHubspotUpdateAuthenticationOAuth(sourceHubspotUpdateAuthenticationOAuth SourceHubspotUpdateAuthenticationOAuth) SourceHubspotUpdateAuthentication {
-	typ := SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateAuthenticationOAuth
+func CreateSourceHubspotUpdateAuthenticationSourceHubspotUpdateOAuth(sourceHubspotUpdateOAuth SourceHubspotUpdateOAuth) SourceHubspotUpdateAuthentication {
+	typ := SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateOAuth
 
 	return SourceHubspotUpdateAuthentication{
-		SourceHubspotUpdateAuthenticationOAuth: &sourceHubspotUpdateAuthenticationOAuth,
-		Type:                                   typ,
+		SourceHubspotUpdateOAuth: &sourceHubspotUpdateOAuth,
+		Type:                     typ,
 	}
 }
 
-func CreateSourceHubspotUpdateAuthenticationSourceHubspotUpdateAuthenticationPrivateApp(sourceHubspotUpdateAuthenticationPrivateApp SourceHubspotUpdateAuthenticationPrivateApp) SourceHubspotUpdateAuthentication {
-	typ := SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateAuthenticationPrivateApp
+func CreateSourceHubspotUpdateAuthenticationPrivateApp(privateApp PrivateApp) SourceHubspotUpdateAuthentication {
+	typ := SourceHubspotUpdateAuthenticationTypePrivateApp
 
 	return SourceHubspotUpdateAuthentication{
-		SourceHubspotUpdateAuthenticationPrivateApp: &sourceHubspotUpdateAuthenticationPrivateApp,
-		Type: typ,
+		PrivateApp: &privateApp,
+		Type:       typ,
 	}
 }
 
 func (u *SourceHubspotUpdateAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceHubspotUpdateAuthenticationPrivateApp := new(SourceHubspotUpdateAuthenticationPrivateApp)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceHubspotUpdateAuthenticationPrivateApp); err == nil {
-		u.SourceHubspotUpdateAuthenticationPrivateApp = sourceHubspotUpdateAuthenticationPrivateApp
-		u.Type = SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateAuthenticationPrivateApp
+	privateApp := new(PrivateApp)
+	if err := utils.UnmarshalJSON(data, &privateApp, "", true, true); err == nil {
+		u.PrivateApp = privateApp
+		u.Type = SourceHubspotUpdateAuthenticationTypePrivateApp
 		return nil
 	}
 
-	sourceHubspotUpdateAuthenticationOAuth := new(SourceHubspotUpdateAuthenticationOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceHubspotUpdateAuthenticationOAuth); err == nil {
-		u.SourceHubspotUpdateAuthenticationOAuth = sourceHubspotUpdateAuthenticationOAuth
-		u.Type = SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateAuthenticationOAuth
+	sourceHubspotUpdateOAuth := new(SourceHubspotUpdateOAuth)
+	if err := utils.UnmarshalJSON(data, &sourceHubspotUpdateOAuth, "", true, true); err == nil {
+		u.SourceHubspotUpdateOAuth = sourceHubspotUpdateOAuth
+		u.Type = SourceHubspotUpdateAuthenticationTypeSourceHubspotUpdateOAuth
 		return nil
 	}
 
@@ -137,15 +190,15 @@ func (u *SourceHubspotUpdateAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceHubspotUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceHubspotUpdateAuthenticationPrivateApp != nil {
-		return json.Marshal(u.SourceHubspotUpdateAuthenticationPrivateApp)
+	if u.SourceHubspotUpdateOAuth != nil {
+		return utils.MarshalJSON(u.SourceHubspotUpdateOAuth, "", true)
 	}
 
-	if u.SourceHubspotUpdateAuthenticationOAuth != nil {
-		return json.Marshal(u.SourceHubspotUpdateAuthenticationOAuth)
+	if u.PrivateApp != nil {
+		return utils.MarshalJSON(u.PrivateApp, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceHubspotUpdate struct {
@@ -153,4 +206,29 @@ type SourceHubspotUpdate struct {
 	Credentials SourceHubspotUpdateAuthentication `json:"credentials"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceHubspotUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubspotUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubspotUpdate) GetCredentials() SourceHubspotUpdateAuthentication {
+	if o == nil {
+		return SourceHubspotUpdateAuthentication{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceHubspotUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

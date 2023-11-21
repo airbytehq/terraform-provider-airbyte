@@ -3,32 +3,33 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceYandexMetricaYandexMetrica string
+type YandexMetrica string
 
 const (
-	SourceYandexMetricaYandexMetricaYandexMetrica SourceYandexMetricaYandexMetrica = "yandex-metrica"
+	YandexMetricaYandexMetrica YandexMetrica = "yandex-metrica"
 )
 
-func (e SourceYandexMetricaYandexMetrica) ToPointer() *SourceYandexMetricaYandexMetrica {
+func (e YandexMetrica) ToPointer() *YandexMetrica {
 	return &e
 }
 
-func (e *SourceYandexMetricaYandexMetrica) UnmarshalJSON(data []byte) error {
+func (e *YandexMetrica) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "yandex-metrica":
-		*e = SourceYandexMetricaYandexMetrica(v)
+		*e = YandexMetrica(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYandexMetricaYandexMetrica: %v", v)
+		return fmt.Errorf("invalid value for YandexMetrica: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceYandexMetrica struct {
 	// Counter ID
 	CounterID string `json:"counter_id"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
-	EndDate    *types.Date                      `json:"end_date,omitempty"`
-	SourceType SourceYandexMetricaYandexMetrica `json:"sourceType"`
+	EndDate    *types.Date   `json:"end_date,omitempty"`
+	sourceType YandexMetrica `const:"yandex-metrica" json:"sourceType"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD".
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceYandexMetrica) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceYandexMetrica) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceYandexMetrica) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
+func (o *SourceYandexMetrica) GetCounterID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CounterID
+}
+
+func (o *SourceYandexMetrica) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceYandexMetrica) GetSourceType() YandexMetrica {
+	return YandexMetricaYandexMetrica
+}
+
+func (o *SourceYandexMetrica) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

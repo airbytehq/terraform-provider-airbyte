@@ -3,8 +3,9 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequest {
@@ -15,13 +16,17 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 	} else {
 		batchSize = nil
 	}
-	sourceType := shared.SourceDixaDixa(r.Configuration.SourceType.ValueString())
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceDixa{
-		APIToken:   apiToken,
-		BatchSize:  batchSize,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		APIToken:  apiToken,
+		BatchSize: batchSize,
+		StartDate: startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -33,6 +38,7 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceDixaCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -53,7 +59,7 @@ func (r *SourceDixaResourceModel) ToUpdateSDKType() *shared.SourceDixaPutRequest
 	} else {
 		batchSize = nil
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceDixaUpdate{
 		APIToken:  apiToken,
 		BatchSize: batchSize,

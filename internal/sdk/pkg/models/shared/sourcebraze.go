@@ -3,41 +3,78 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceBrazeBraze string
+type Braze string
 
 const (
-	SourceBrazeBrazeBraze SourceBrazeBraze = "braze"
+	BrazeBraze Braze = "braze"
 )
 
-func (e SourceBrazeBraze) ToPointer() *SourceBrazeBraze {
+func (e Braze) ToPointer() *Braze {
 	return &e
 }
 
-func (e *SourceBrazeBraze) UnmarshalJSON(data []byte) error {
+func (e *Braze) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "braze":
-		*e = SourceBrazeBraze(v)
+		*e = Braze(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBrazeBraze: %v", v)
+		return fmt.Errorf("invalid value for Braze: %v", v)
 	}
 }
 
 type SourceBraze struct {
 	// Braze REST API key
-	APIKey     string           `json:"api_key"`
-	SourceType SourceBrazeBraze `json:"sourceType"`
+	APIKey     string `json:"api_key"`
+	sourceType Braze  `const:"braze" json:"sourceType"`
 	// Rows after this date will be synced
 	StartDate types.Date `json:"start_date"`
 	// Braze REST API endpoint
 	URL string `json:"url"`
+}
+
+func (s SourceBraze) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceBraze) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceBraze) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceBraze) GetSourceType() Braze {
+	return BrazeBraze
+}
+
+func (o *SourceBraze) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+func (o *SourceBraze) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

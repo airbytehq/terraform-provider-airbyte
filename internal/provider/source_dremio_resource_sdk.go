@@ -3,18 +3,27 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceDremioResourceModel) ToCreateSDKType() *shared.SourceDremioCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	baseURL := r.Configuration.BaseURL.ValueString()
-	sourceType := shared.SourceDremioDremio(r.Configuration.SourceType.ValueString())
+	baseURL := new(string)
+	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
+		*baseURL = r.Configuration.BaseURL.ValueString()
+	} else {
+		baseURL = nil
+	}
 	configuration := shared.SourceDremio{
-		APIKey:     apiKey,
-		BaseURL:    baseURL,
-		SourceType: sourceType,
+		APIKey:  apiKey,
+		BaseURL: baseURL,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -26,6 +35,7 @@ func (r *SourceDremioResourceModel) ToCreateSDKType() *shared.SourceDremioCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceDremioCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -40,7 +50,12 @@ func (r *SourceDremioResourceModel) ToGetSDKType() *shared.SourceDremioCreateReq
 
 func (r *SourceDremioResourceModel) ToUpdateSDKType() *shared.SourceDremioPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	baseURL := r.Configuration.BaseURL.ValueString()
+	baseURL := new(string)
+	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
+		*baseURL = r.Configuration.BaseURL.ValueString()
+	} else {
+		baseURL = nil
+	}
 	configuration := shared.SourceDremioUpdate{
 		APIKey:  apiKey,
 		BaseURL: baseURL,

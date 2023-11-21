@@ -7,3 +7,24 @@ type SourceCodaPutRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *SourceCodaPutRequest) GetConfiguration() SourceCodaUpdate {
+	if o == nil {
+		return SourceCodaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceCodaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceCodaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePersistiqPersistiq string
+type Persistiq string
 
 const (
-	SourcePersistiqPersistiqPersistiq SourcePersistiqPersistiq = "persistiq"
+	PersistiqPersistiq Persistiq = "persistiq"
 )
 
-func (e SourcePersistiqPersistiq) ToPointer() *SourcePersistiqPersistiq {
+func (e Persistiq) ToPointer() *Persistiq {
 	return &e
 }
 
-func (e *SourcePersistiqPersistiq) UnmarshalJSON(data []byte) error {
+func (e *Persistiq) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "persistiq":
-		*e = SourcePersistiqPersistiq(v)
+		*e = Persistiq(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePersistiqPersistiq: %v", v)
+		return fmt.Errorf("invalid value for Persistiq: %v", v)
 	}
 }
 
 type SourcePersistiq struct {
 	// PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
-	APIKey     string                   `json:"api_key"`
-	SourceType SourcePersistiqPersistiq `json:"sourceType"`
+	APIKey     string    `json:"api_key"`
+	sourceType Persistiq `const:"persistiq" json:"sourceType"`
+}
+
+func (s SourcePersistiq) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePersistiq) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePersistiq) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourcePersistiq) GetSourceType() Persistiq {
+	return PersistiqPersistiq
 }

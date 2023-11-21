@@ -5,30 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"time"
 )
 
-type SourceTwitterTwitter string
+type Twitter string
 
 const (
-	SourceTwitterTwitterTwitter SourceTwitterTwitter = "twitter"
+	TwitterTwitter Twitter = "twitter"
 )
 
-func (e SourceTwitterTwitter) ToPointer() *SourceTwitterTwitter {
+func (e Twitter) ToPointer() *Twitter {
 	return &e
 }
 
-func (e *SourceTwitterTwitter) UnmarshalJSON(data []byte) error {
+func (e *Twitter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "twitter":
-		*e = SourceTwitterTwitter(v)
+		*e = Twitter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTwitterTwitter: %v", v)
+		return fmt.Errorf("invalid value for Twitter: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceTwitter struct {
 	// The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
-	Query      string               `json:"query"`
-	SourceType SourceTwitterTwitter `json:"sourceType"`
+	Query      string  `json:"query"`
+	sourceType Twitter `const:"twitter" json:"sourceType"`
 	// The start date for retrieving tweets cannot be more than 7 days in the past.
 	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceTwitter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTwitter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTwitter) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceTwitter) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTwitter) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
+func (o *SourceTwitter) GetSourceType() Twitter {
+	return TwitterTwitter
+}
+
+func (o *SourceTwitter) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

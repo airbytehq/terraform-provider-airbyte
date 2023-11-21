@@ -2,9 +2,6 @@
 
 package provider
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
-
 type SourceRetently struct {
 	Credentials *SourceRetentlyAuthenticationMechanism `tfsdk:"credentials"`
-	SourceType  types.String                           `tfsdk:"source_type"`
 }

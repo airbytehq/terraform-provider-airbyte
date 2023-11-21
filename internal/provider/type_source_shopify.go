@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceShopify struct {
 	Credentials *SourceShopifyShopifyAuthorizationMethod `tfsdk:"credentials"`
 	Shop        types.String                             `tfsdk:"shop"`
-	SourceType  types.String                             `tfsdk:"source_type"`
 	StartDate   types.String                             `tfsdk:"start_date"`
 }

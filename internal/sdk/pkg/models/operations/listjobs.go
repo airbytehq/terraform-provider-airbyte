@@ -3,7 +3,8 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 	"net/http"
 	"time"
 )
@@ -18,9 +19,9 @@ type ListJobsRequest struct {
 	// Filter the Jobs by jobType.
 	JobType *shared.JobTypeEnum `queryParam:"style=form,explode=true,name=jobType"`
 	// Set the limit on the number of Jobs returned. The default is 20 Jobs.
-	Limit *int `queryParam:"style=form,explode=true,name=limit"`
+	Limit *int `default:"20" queryParam:"style=form,explode=true,name=limit"`
 	// Set the offset to start at when returning Jobs. The default is 0.
-	Offset *int `queryParam:"style=form,explode=true,name=offset"`
+	Offset *int `default:"0" queryParam:"style=form,explode=true,name=offset"`
 	// The field and method to use for ordering. Currently allowed are createdAt and updatedAt.
 	OrderBy *string `queryParam:"style=form,explode=true,name=orderBy"`
 	// The Job status you want to filter by
@@ -33,10 +34,129 @@ type ListJobsRequest struct {
 	WorkspaceIds []string `queryParam:"style=form,explode=true,name=workspaceIds"`
 }
 
+func (l ListJobsRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(l, "", false)
+}
+
+func (l *ListJobsRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ListJobsRequest) GetConnectionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectionID
+}
+
+func (o *ListJobsRequest) GetCreatedAtEnd() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAtEnd
+}
+
+func (o *ListJobsRequest) GetCreatedAtStart() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAtStart
+}
+
+func (o *ListJobsRequest) GetJobType() *shared.JobTypeEnum {
+	if o == nil {
+		return nil
+	}
+	return o.JobType
+}
+
+func (o *ListJobsRequest) GetLimit() *int {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *ListJobsRequest) GetOffset() *int {
+	if o == nil {
+		return nil
+	}
+	return o.Offset
+}
+
+func (o *ListJobsRequest) GetOrderBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OrderBy
+}
+
+func (o *ListJobsRequest) GetStatus() *shared.JobStatusEnum {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *ListJobsRequest) GetUpdatedAtEnd() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAtEnd
+}
+
+func (o *ListJobsRequest) GetUpdatedAtStart() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAtStart
+}
+
+func (o *ListJobsRequest) GetWorkspaceIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceIds
+}
+
 type ListJobsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// List all the Jobs by connectionId.
 	JobsResponse *shared.JobsResponse
-	StatusCode   int
-	RawResponse  *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *ListJobsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *ListJobsResponse) GetJobsResponse() *shared.JobsResponse {
+	if o == nil {
+		return nil
+	}
+	return o.JobsResponse
+}
+
+func (o *ListJobsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *ListJobsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

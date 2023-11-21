@@ -8,3 +8,17 @@ type SourcePostmarkappUpdate struct {
 	// API Key for server
 	XPostmarkServerToken string `json:"X-Postmark-Server-Token"`
 }
+
+func (o *SourcePostmarkappUpdate) GetXPostmarkAccountToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkAccountToken
+}
+
+func (o *SourcePostmarkappUpdate) GetXPostmarkServerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkServerToken
+}

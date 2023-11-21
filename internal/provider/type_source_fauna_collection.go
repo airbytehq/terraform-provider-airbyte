@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFaunaCollection struct {
-	Deletions SourceFaunaCollectionDeletionMode `tfsdk:"deletions"`
-	PageSize  types.Int64                       `tfsdk:"page_size"`
+	Deletions SourceFaunaDeletionMode `tfsdk:"deletions"`
+	PageSize  types.Int64             `tfsdk:"page_size"`
 }

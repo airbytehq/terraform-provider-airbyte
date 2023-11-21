@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,14 +12,18 @@ func (r *SourceMarketoResourceModel) ToCreateSDKType() *shared.SourceMarketoCrea
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	domainURL := r.Configuration.DomainURL.ValueString()
-	sourceType := shared.SourceMarketoMarketo(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceMarketo{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		DomainURL:    domainURL,
-		SourceType:   sourceType,
 		StartDate:    startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -31,6 +35,7 @@ func (r *SourceMarketoResourceModel) ToCreateSDKType() *shared.SourceMarketoCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceMarketoCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

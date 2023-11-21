@@ -5,14 +5,13 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationRedshift struct {
-	Database        types.String                        `tfsdk:"database"`
-	DestinationType types.String                        `tfsdk:"destination_type"`
-	Host            types.String                        `tfsdk:"host"`
-	JdbcURLParams   types.String                        `tfsdk:"jdbc_url_params"`
-	Password        types.String                        `tfsdk:"password"`
-	Port            types.Int64                         `tfsdk:"port"`
-	Schema          types.String                        `tfsdk:"schema"`
-	TunnelMethod    *DestinationRedshiftSSHTunnelMethod `tfsdk:"tunnel_method"`
-	UploadingMethod *DestinationRedshiftUploadingMethod `tfsdk:"uploading_method"`
-	Username        types.String                        `tfsdk:"username"`
+	Database        types.String                          `tfsdk:"database"`
+	Host            types.String                          `tfsdk:"host"`
+	JdbcURLParams   types.String                          `tfsdk:"jdbc_url_params"`
+	Password        types.String                          `tfsdk:"password"`
+	Port            types.Int64                           `tfsdk:"port"`
+	Schema          types.String                          `tfsdk:"schema"`
+	TunnelMethod    *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
+	UploadingMethod *DestinationRedshiftUploadingMethod   `tfsdk:"uploading_method"`
+	Username        types.String                          `tfsdk:"username"`
 }

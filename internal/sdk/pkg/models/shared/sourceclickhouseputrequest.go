@@ -7,3 +7,24 @@ type SourceClickhousePutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceClickhousePutRequest) GetConfiguration() SourceClickhouseUpdate {
+	if o == nil {
+		return SourceClickhouseUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceClickhousePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceClickhousePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

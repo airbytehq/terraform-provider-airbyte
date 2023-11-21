@@ -7,3 +7,24 @@ type SourceRechargePutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceRechargePutRequest) GetConfiguration() SourceRechargeUpdate {
+	if o == nil {
+		return SourceRechargeUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceRechargePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceRechargePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

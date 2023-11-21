@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,10 +29,11 @@ type DestinationElasticsearchDataSource struct {
 
 // DestinationElasticsearchDataSourceModel describes the data model.
 type DestinationElasticsearchDataSourceModel struct {
-	Configuration DestinationElasticsearch `tfsdk:"configuration"`
-	DestinationID types.String             `tfsdk:"destination_id"`
-	Name          types.String             `tfsdk:"name"`
-	WorkspaceID   types.String             `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,135 +47,16 @@ func (r *DestinationElasticsearchDataSource) Schema(ctx context.Context, req dat
 		MarkdownDescription: "DestinationElasticsearch DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"authentication_method": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Key ID to used when accessing an enterprise Elasticsearch instance.`,
-									},
-									"api_key_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The secret associated with the API Key ID.`,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-										Description: `must be one of ["secret"]`,
-									},
-								},
-								Description: `Use a api key and secret combination to authenticate`,
-							},
-							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-										Description: `must be one of ["basic"]`,
-									},
-									"password": schema.StringAttribute{
-										Computed:    true,
-										Description: `Basic auth password to access a secure Elasticsearch server`,
-									},
-									"username": schema.StringAttribute{
-										Computed:    true,
-										Description: `Basic auth username to access a secure Elasticsearch server`,
-									},
-								},
-								Description: `Basic auth header with a username and password`,
-							},
-							"destination_elasticsearch_update_authentication_method_api_key_secret": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key_id": schema.StringAttribute{
-										Computed:    true,
-										Description: `The Key ID to used when accessing an enterprise Elasticsearch instance.`,
-									},
-									"api_key_secret": schema.StringAttribute{
-										Computed:    true,
-										Description: `The secret associated with the API Key ID.`,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-										Description: `must be one of ["secret"]`,
-									},
-								},
-								Description: `Use a api key and secret combination to authenticate`,
-							},
-							"destination_elasticsearch_update_authentication_method_username_password": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-										Description: `must be one of ["basic"]`,
-									},
-									"password": schema.StringAttribute{
-										Computed:    true,
-										Description: `Basic auth password to access a secure Elasticsearch server`,
-									},
-									"username": schema.StringAttribute{
-										Computed:    true,
-										Description: `Basic auth username to access a secure Elasticsearch server`,
-									},
-								},
-								Description: `Basic auth header with a username and password`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `The type of authentication to be used`,
-					},
-					"ca_certificate": schema.StringAttribute{
-						Computed:    true,
-						Description: `CA certificate`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"elasticsearch",
-							),
-						},
-						Description: `must be one of ["elasticsearch"]`,
-					},
-					"endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `The full url of the Elasticsearch server`,
-					},
-					"upsert": schema.BoolAttribute{
-						Computed:    true,
-						Description: `If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

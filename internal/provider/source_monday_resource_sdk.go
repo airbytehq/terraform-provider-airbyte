@@ -3,57 +3,57 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreateRequest {
 	var credentials *shared.SourceMondayAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourceMondayAuthorizationMethodOAuth20 *shared.SourceMondayAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
-			accessToken := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType := shared.SourceMondayAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
-			clientID := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret.ValueString()
+		var sourceMondayOAuth20 *shared.SourceMondayOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			subdomain := new(string)
-			if !r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain.IsNull() {
-				*subdomain = r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain.ValueString()
+			if !r.Configuration.Credentials.OAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.OAuth20.Subdomain.IsNull() {
+				*subdomain = r.Configuration.Credentials.OAuth20.Subdomain.ValueString()
 			} else {
 				subdomain = nil
 			}
-			sourceMondayAuthorizationMethodOAuth20 = &shared.SourceMondayAuthorizationMethodOAuth20{
+			sourceMondayOAuth20 = &shared.SourceMondayOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				Subdomain:    subdomain,
 			}
 		}
-		if sourceMondayAuthorizationMethodOAuth20 != nil {
+		if sourceMondayOAuth20 != nil {
 			credentials = &shared.SourceMondayAuthorizationMethod{
-				SourceMondayAuthorizationMethodOAuth20: sourceMondayAuthorizationMethodOAuth20,
+				SourceMondayOAuth20: sourceMondayOAuth20,
 			}
 		}
-		var sourceMondayAuthorizationMethodAPIToken *shared.SourceMondayAuthorizationMethodAPIToken
-		if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
-			apiToken := r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken.ValueString()
-			authType1 := shared.SourceMondayAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
-			sourceMondayAuthorizationMethodAPIToken = &shared.SourceMondayAuthorizationMethodAPIToken{
+		var sourceMondayAPIToken *shared.SourceMondayAPIToken
+		if r.Configuration.Credentials.APIToken != nil {
+			apiToken := r.Configuration.Credentials.APIToken.APIToken.ValueString()
+			sourceMondayAPIToken = &shared.SourceMondayAPIToken{
 				APIToken: apiToken,
-				AuthType: authType1,
 			}
 		}
-		if sourceMondayAuthorizationMethodAPIToken != nil {
+		if sourceMondayAPIToken != nil {
 			credentials = &shared.SourceMondayAuthorizationMethod{
-				SourceMondayAuthorizationMethodAPIToken: sourceMondayAuthorizationMethodAPIToken,
+				SourceMondayAPIToken: sourceMondayAPIToken,
 			}
 		}
 	}
-	sourceType := shared.SourceMondayMonday(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceMonday{
 		Credentials: credentials,
-		SourceType:  sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -65,6 +65,7 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceMondayCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -80,43 +81,39 @@ func (r *SourceMondayResourceModel) ToGetSDKType() *shared.SourceMondayCreateReq
 func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutRequest {
 	var credentials *shared.SourceMondayUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourceMondayUpdateAuthorizationMethodOAuth20 *shared.SourceMondayUpdateAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20 != nil {
-			accessToken := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType := shared.SourceMondayUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-			clientID := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+		var sourceMondayUpdateOAuth20 *shared.SourceMondayUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			subdomain := new(string)
-			if !r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.Subdomain.IsNull() {
-				*subdomain = r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodOAuth20.Subdomain.ValueString()
+			if !r.Configuration.Credentials.OAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.OAuth20.Subdomain.IsNull() {
+				*subdomain = r.Configuration.Credentials.OAuth20.Subdomain.ValueString()
 			} else {
 				subdomain = nil
 			}
-			sourceMondayUpdateAuthorizationMethodOAuth20 = &shared.SourceMondayUpdateAuthorizationMethodOAuth20{
+			sourceMondayUpdateOAuth20 = &shared.SourceMondayUpdateOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				Subdomain:    subdomain,
 			}
 		}
-		if sourceMondayUpdateAuthorizationMethodOAuth20 != nil {
+		if sourceMondayUpdateOAuth20 != nil {
 			credentials = &shared.SourceMondayUpdateAuthorizationMethod{
-				SourceMondayUpdateAuthorizationMethodOAuth20: sourceMondayUpdateAuthorizationMethodOAuth20,
+				SourceMondayUpdateOAuth20: sourceMondayUpdateOAuth20,
 			}
 		}
-		var sourceMondayUpdateAuthorizationMethodAPIToken *shared.SourceMondayUpdateAuthorizationMethodAPIToken
-		if r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken != nil {
-			apiToken := r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken.APIToken.ValueString()
-			authType1 := shared.SourceMondayUpdateAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayUpdateAuthorizationMethodAPIToken.AuthType.ValueString())
-			sourceMondayUpdateAuthorizationMethodAPIToken = &shared.SourceMondayUpdateAuthorizationMethodAPIToken{
+		var apiToken *shared.APIToken
+		if r.Configuration.Credentials.APIToken != nil {
+			apiToken1 := r.Configuration.Credentials.APIToken.APIToken.ValueString()
+			apiToken = &shared.APIToken{
+				APIToken: apiToken1,
+			}
+		}
+		if apiToken != nil {
+			credentials = &shared.SourceMondayUpdateAuthorizationMethod{
 				APIToken: apiToken,
-				AuthType: authType1,
-			}
-		}
-		if sourceMondayUpdateAuthorizationMethodAPIToken != nil {
-			credentials = &shared.SourceMondayUpdateAuthorizationMethod{
-				SourceMondayUpdateAuthorizationMethodAPIToken: sourceMondayUpdateAuthorizationMethodAPIToken,
 			}
 		}
 	}

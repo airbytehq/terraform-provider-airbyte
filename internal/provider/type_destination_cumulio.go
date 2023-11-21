@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationCumulio struct {
-	APIHost         types.String `tfsdk:"api_host"`
-	APIKey          types.String `tfsdk:"api_key"`
-	APIToken        types.String `tfsdk:"api_token"`
-	DestinationType types.String `tfsdk:"destination_type"`
+	APIHost  types.String `tfsdk:"api_host"`
+	APIKey   types.String `tfsdk:"api_key"`
+	APIToken types.String `tfsdk:"api_token"`
 }

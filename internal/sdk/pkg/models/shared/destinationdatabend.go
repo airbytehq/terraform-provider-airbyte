@@ -5,44 +5,102 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationDatabendDatabend string
+type Databend string
 
 const (
-	DestinationDatabendDatabendDatabend DestinationDatabendDatabend = "databend"
+	DatabendDatabend Databend = "databend"
 )
 
-func (e DestinationDatabendDatabend) ToPointer() *DestinationDatabendDatabend {
+func (e Databend) ToPointer() *Databend {
 	return &e
 }
 
-func (e *DestinationDatabendDatabend) UnmarshalJSON(data []byte) error {
+func (e *Databend) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "databend":
-		*e = DestinationDatabendDatabend(v)
+		*e = Databend(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabendDatabend: %v", v)
+		return fmt.Errorf("invalid value for Databend: %v", v)
 	}
 }
 
 type DestinationDatabend struct {
 	// Name of the database.
-	Database        string                      `json:"database"`
-	DestinationType DestinationDatabendDatabend `json:"destinationType"`
+	Database        string   `json:"database"`
+	destinationType Databend `const:"databend" json:"destinationType"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Password associated with the username.
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
-	Port *int64 `json:"port,omitempty"`
+	Port *int64 `default:"443" json:"port"`
 	// The default  table was written to.
-	Table *string `json:"table,omitempty"`
+	Table *string `default:"default" json:"table"`
 	// Username to use to access the database.
 	Username string `json:"username"`
+}
+
+func (d DestinationDatabend) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationDatabend) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationDatabend) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationDatabend) GetDestinationType() Databend {
+	return DatabendDatabend
+}
+
+func (o *DestinationDatabend) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationDatabend) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *DestinationDatabend) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationDatabend) GetTable() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Table
+}
+
+func (o *DestinationDatabend) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

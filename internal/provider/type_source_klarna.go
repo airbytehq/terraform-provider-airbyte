@@ -8,6 +8,5 @@ type SourceKlarna struct {
 	Password   types.String `tfsdk:"password"`
 	Playground types.Bool   `tfsdk:"playground"`
 	Region     types.String `tfsdk:"region"`
-	SourceType types.String `tfsdk:"source_type"`
 	Username   types.String `tfsdk:"username"`
 }

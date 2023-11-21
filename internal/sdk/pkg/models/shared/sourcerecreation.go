@@ -5,35 +5,65 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceRecreationRecreation string
+type Recreation string
 
 const (
-	SourceRecreationRecreationRecreation SourceRecreationRecreation = "recreation"
+	RecreationRecreation Recreation = "recreation"
 )
 
-func (e SourceRecreationRecreation) ToPointer() *SourceRecreationRecreation {
+func (e Recreation) ToPointer() *Recreation {
 	return &e
 }
 
-func (e *SourceRecreationRecreation) UnmarshalJSON(data []byte) error {
+func (e *Recreation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "recreation":
-		*e = SourceRecreationRecreation(v)
+		*e = Recreation(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRecreationRecreation: %v", v)
+		return fmt.Errorf("invalid value for Recreation: %v", v)
 	}
 }
 
 type SourceRecreation struct {
 	// API Key
-	Apikey         string                     `json:"apikey"`
-	QueryCampsites *string                    `json:"query_campsites,omitempty"`
-	SourceType     SourceRecreationRecreation `json:"sourceType"`
+	Apikey         string     `json:"apikey"`
+	QueryCampsites *string    `json:"query_campsites,omitempty"`
+	sourceType     Recreation `const:"recreation" json:"sourceType"`
+}
+
+func (s SourceRecreation) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRecreation) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRecreation) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *SourceRecreation) GetQueryCampsites() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryCampsites
+}
+
+func (o *SourceRecreation) GetSourceType() Recreation {
+	return RecreationRecreation
 }

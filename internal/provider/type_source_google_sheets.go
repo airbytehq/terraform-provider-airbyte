@@ -5,8 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleSheets struct {
-	Credentials     SourceGoogleSheetsAuthentication `tfsdk:"credentials"`
-	NamesConversion types.Bool                       `tfsdk:"names_conversion"`
-	SourceType      types.String                     `tfsdk:"source_type"`
-	SpreadsheetID   types.String                     `tfsdk:"spreadsheet_id"`
+	Credentials     SourceGoogleDriveAuthentication `tfsdk:"credentials"`
+	NamesConversion types.Bool                      `tfsdk:"names_conversion"`
+	SpreadsheetID   types.String                    `tfsdk:"spreadsheet_id"`
 }

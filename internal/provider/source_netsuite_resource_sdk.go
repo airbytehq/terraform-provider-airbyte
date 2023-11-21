@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -15,7 +15,6 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}
 	realm := r.Configuration.Realm.ValueString()
-	sourceType := shared.SourceNetsuiteNetsuite(r.Configuration.SourceType.ValueString())
 	startDatetime := r.Configuration.StartDatetime.ValueString()
 	tokenKey := r.Configuration.TokenKey.ValueString()
 	tokenSecret := r.Configuration.TokenSecret.ValueString()
@@ -30,11 +29,16 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 		ConsumerSecret: consumerSecret,
 		ObjectTypes:    objectTypes,
 		Realm:          realm,
-		SourceType:     sourceType,
 		StartDatetime:  startDatetime,
 		TokenKey:       tokenKey,
 		TokenSecret:    tokenSecret,
 		WindowInDays:   windowInDays,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -46,6 +50,7 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceNetsuiteCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

@@ -7,3 +7,24 @@ type SourceWoocommercePutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *SourceWoocommercePutRequest) GetConfiguration() SourceWoocommerceUpdate {
+	if o == nil {
+		return SourceWoocommerceUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceWoocommercePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceWoocommercePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

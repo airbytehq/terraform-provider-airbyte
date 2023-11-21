@@ -2,12 +2,12 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
     api_key            = "...my_api_key..."
     data_region        = "Standard Server"
-    request_time_range = 1
+    request_time_range = 2
     secret_key         = "...my_secret_key..."
-    source_type        = "amplitude"
     start_date         = "2021-01-25T00:00:00Z"
   }
-  name         = "Robin Bednar"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "116db995-45fc-495f-a889-70e189dbb30f"
+  definition_id = "526ae8aa-3c4f-4287-913b-8668105e1180"
+  name          = "Dominic Dach"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "75a1ca19-0e95-4bd1-982a-17eb0af63def"
 }

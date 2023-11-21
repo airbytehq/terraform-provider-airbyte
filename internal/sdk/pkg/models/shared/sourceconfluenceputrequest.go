@@ -7,3 +7,24 @@ type SourceConfluencePutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceConfluencePutRequest) GetConfiguration() SourceConfluenceUpdate {
+	if o == nil {
+		return SourceConfluenceUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceConfluencePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceConfluencePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

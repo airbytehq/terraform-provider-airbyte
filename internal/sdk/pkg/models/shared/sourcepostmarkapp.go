@@ -5,29 +5,30 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourcePostmarkappPostmarkapp string
+type Postmarkapp string
 
 const (
-	SourcePostmarkappPostmarkappPostmarkapp SourcePostmarkappPostmarkapp = "postmarkapp"
+	PostmarkappPostmarkapp Postmarkapp = "postmarkapp"
 )
 
-func (e SourcePostmarkappPostmarkapp) ToPointer() *SourcePostmarkappPostmarkapp {
+func (e Postmarkapp) ToPointer() *Postmarkapp {
 	return &e
 }
 
-func (e *SourcePostmarkappPostmarkapp) UnmarshalJSON(data []byte) error {
+func (e *Postmarkapp) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postmarkapp":
-		*e = SourcePostmarkappPostmarkapp(v)
+		*e = Postmarkapp(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostmarkappPostmarkapp: %v", v)
+		return fmt.Errorf("invalid value for Postmarkapp: %v", v)
 	}
 }
 
@@ -35,6 +36,35 @@ type SourcePostmarkapp struct {
 	// API Key for account
 	XPostmarkAccountToken string `json:"X-Postmark-Account-Token"`
 	// API Key for server
-	XPostmarkServerToken string                       `json:"X-Postmark-Server-Token"`
-	SourceType           SourcePostmarkappPostmarkapp `json:"sourceType"`
+	XPostmarkServerToken string      `json:"X-Postmark-Server-Token"`
+	sourceType           Postmarkapp `const:"postmarkapp" json:"sourceType"`
+}
+
+func (s SourcePostmarkapp) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourcePostmarkapp) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourcePostmarkapp) GetXPostmarkAccountToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkAccountToken
+}
+
+func (o *SourcePostmarkapp) GetXPostmarkServerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.XPostmarkServerToken
+}
+
+func (o *SourcePostmarkapp) GetSourceType() Postmarkapp {
+	return PostmarkappPostmarkapp
 }

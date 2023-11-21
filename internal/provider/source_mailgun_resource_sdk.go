@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -16,7 +16,6 @@ func (r *SourceMailgunResourceModel) ToCreateSDKType() *shared.SourceMailgunCrea
 		domainRegion = nil
 	}
 	privateKey := r.Configuration.PrivateKey.ValueString()
-	sourceType := shared.SourceMailgunMailgun(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -26,8 +25,13 @@ func (r *SourceMailgunResourceModel) ToCreateSDKType() *shared.SourceMailgunCrea
 	configuration := shared.SourceMailgun{
 		DomainRegion: domainRegion,
 		PrivateKey:   privateKey,
-		SourceType:   sourceType,
 		StartDate:    startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -39,6 +43,7 @@ func (r *SourceMailgunResourceModel) ToCreateSDKType() *shared.SourceMailgunCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceMailgunCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

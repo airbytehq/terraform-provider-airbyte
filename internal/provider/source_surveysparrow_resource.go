@@ -3,19 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -37,6 +37,7 @@ type SourceSurveySparrowResource struct {
 // SourceSurveySparrowResourceModel describes the resource data model.
 type SourceSurveySparrowResourceModel struct {
 	Configuration SourceSurveySparrow `tfsdk:"configuration"`
+	DefinitionID  types.String        `tfsdk:"definition_id"`
 	Name          types.String        `tfsdk:"name"`
 	SecretID      types.String        `tfsdk:"secret_id"`
 	SourceID      types.String        `tfsdk:"source_id"`
@@ -58,103 +59,56 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.`,
 					},
 					"region": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
+							"eu_based_account": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
-							"source_survey_sparrow_base_url_global_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://eu-api.surveysparrow.com/v3"]`,
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-										Description: `must be one of ["https://api.surveysparrow.com/v3"]`,
-									},
-								},
+							"global_account": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 						},
+						Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"survey-sparrow",
-							),
-						},
-						Description: `must be one of ["survey-sparrow"]`,
 					},
 					"survey_id": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `A List of your survey ids for survey-specific stream`,
 						Validators: []validator.List{
 							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
-						Description: `A List of your survey ids for survey-specific stream`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -218,7 +172,7 @@ func (r *SourceSurveySparrowResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSurveySparrow(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -394,5 +348,5 @@ func (r *SourceSurveySparrowResource) Delete(ctx context.Context, req resource.D
 }
 
 func (r *SourceSurveySparrowResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

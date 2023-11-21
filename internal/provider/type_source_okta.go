@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceOkta struct {
 	Credentials *SourceOktaAuthorizationMethod `tfsdk:"credentials"`
 	Domain      types.String                   `tfsdk:"domain"`
-	SourceType  types.String                   `tfsdk:"source_type"`
 	StartDate   types.String                   `tfsdk:"start_date"`
 }

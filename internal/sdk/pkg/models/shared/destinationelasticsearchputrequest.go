@@ -7,3 +7,24 @@ type DestinationElasticsearchPutRequest struct {
 	Name          string                         `json:"name"`
 	WorkspaceID   string                         `json:"workspaceId"`
 }
+
+func (o *DestinationElasticsearchPutRequest) GetConfiguration() DestinationElasticsearchUpdate {
+	if o == nil {
+		return DestinationElasticsearchUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationElasticsearchPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationElasticsearchPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,16 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunchdarklyCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceLaunchdarklyLaunchdarkly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLaunchdarkly{
 		AccessToken: accessToken,
-		SourceType:  sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -24,6 +28,7 @@ func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunch
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceLaunchdarklyCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

@@ -1,13 +1,13 @@
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
     always_updated    = false
-    count             = 3
-    parallelism       = 9
-    records_per_slice = 5
-    seed              = 6
-    source_type       = "faker"
+    count             = 9
+    parallelism       = 8
+    records_per_slice = 1
+    seed              = 5
   }
-  name         = "Delbert Reynolds"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "cfda8d0c-549e-4f03-8049-78a61fa1cf20"
+  definition_id = "33c76bbd-55f5-466b-8ade-0498ec40fd8a"
+  name          = "Kirk Braun MD"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "05c5e889-977e-4ae0-86e3-c2d33082ab84"
 }

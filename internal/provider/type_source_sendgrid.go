@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSendgrid struct {
-	Apikey     types.String `tfsdk:"apikey"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartTime  types.String `tfsdk:"start_time"`
+	Apikey    types.String `tfsdk:"apikey"`
+	StartTime types.String `tfsdk:"start_time"`
 }

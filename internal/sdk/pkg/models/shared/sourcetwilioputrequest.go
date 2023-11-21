@@ -7,3 +7,24 @@ type SourceTwilioPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceTwilioPutRequest) GetConfiguration() SourceTwilioUpdate {
+	if o == nil {
+		return SourceTwilioUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceTwilioPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceTwilioPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

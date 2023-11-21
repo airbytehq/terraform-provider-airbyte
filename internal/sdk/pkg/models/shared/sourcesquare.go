@@ -3,71 +3,93 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceSquareAuthenticationAPIKeyAuthType string
+type SourceSquareSchemasAuthType string
 
 const (
-	SourceSquareAuthenticationAPIKeyAuthTypeAPIKey SourceSquareAuthenticationAPIKeyAuthType = "API Key"
+	SourceSquareSchemasAuthTypeAPIKey SourceSquareSchemasAuthType = "API Key"
 )
 
-func (e SourceSquareAuthenticationAPIKeyAuthType) ToPointer() *SourceSquareAuthenticationAPIKeyAuthType {
+func (e SourceSquareSchemasAuthType) ToPointer() *SourceSquareSchemasAuthType {
 	return &e
 }
 
-func (e *SourceSquareAuthenticationAPIKeyAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "API Key":
-		*e = SourceSquareAuthenticationAPIKeyAuthType(v)
+		*e = SourceSquareSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareSchemasAuthType: %v", v)
 	}
 }
 
-// SourceSquareAuthenticationAPIKey - Choose how to authenticate to Square.
-type SourceSquareAuthenticationAPIKey struct {
+// SourceSquareAPIKey - Choose how to authenticate to Square.
+type SourceSquareAPIKey struct {
 	// The API key for a Square application
-	APIKey   string                                   `json:"api_key"`
-	AuthType SourceSquareAuthenticationAPIKeyAuthType `json:"auth_type"`
+	APIKey   string                      `json:"api_key"`
+	authType SourceSquareSchemasAuthType `const:"API Key" json:"auth_type"`
 }
 
-type SourceSquareAuthenticationOauthAuthenticationAuthType string
+func (s SourceSquareAPIKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSquareAPIKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSquareAPIKey) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSquareAPIKey) GetAuthType() SourceSquareSchemasAuthType {
+	return SourceSquareSchemasAuthTypeAPIKey
+}
+
+type SourceSquareAuthType string
 
 const (
-	SourceSquareAuthenticationOauthAuthenticationAuthTypeOAuth SourceSquareAuthenticationOauthAuthenticationAuthType = "OAuth"
+	SourceSquareAuthTypeOAuth SourceSquareAuthType = "OAuth"
 )
 
-func (e SourceSquareAuthenticationOauthAuthenticationAuthType) ToPointer() *SourceSquareAuthenticationOauthAuthenticationAuthType {
+func (e SourceSquareAuthType) ToPointer() *SourceSquareAuthType {
 	return &e
 }
 
-func (e *SourceSquareAuthenticationOauthAuthenticationAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth":
-		*e = SourceSquareAuthenticationOauthAuthenticationAuthType(v)
+		*e = SourceSquareAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareAuthType: %v", v)
 	}
 }
 
-// SourceSquareAuthenticationOauthAuthentication - Choose how to authenticate to Square.
-type SourceSquareAuthenticationOauthAuthentication struct {
-	AuthType SourceSquareAuthenticationOauthAuthenticationAuthType `json:"auth_type"`
+// SourceSquareOauthAuthentication - Choose how to authenticate to Square.
+type SourceSquareOauthAuthentication struct {
+	authType SourceSquareAuthType `const:"OAuth" json:"auth_type"`
 	// The Square-issued ID of your application
 	ClientID string `json:"client_id"`
 	// The Square-issued application secret for your application
@@ -76,56 +98,87 @@ type SourceSquareAuthenticationOauthAuthentication struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+func (s SourceSquareOauthAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSquareOauthAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSquareOauthAuthentication) GetAuthType() SourceSquareAuthType {
+	return SourceSquareAuthTypeOAuth
+}
+
+func (o *SourceSquareOauthAuthentication) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSquareOauthAuthentication) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSquareOauthAuthentication) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
 type SourceSquareAuthenticationType string
 
 const (
-	SourceSquareAuthenticationTypeSourceSquareAuthenticationOauthAuthentication SourceSquareAuthenticationType = "source-square_Authentication_Oauth authentication"
-	SourceSquareAuthenticationTypeSourceSquareAuthenticationAPIKey              SourceSquareAuthenticationType = "source-square_Authentication_API key"
+	SourceSquareAuthenticationTypeSourceSquareOauthAuthentication SourceSquareAuthenticationType = "source-square_Oauth authentication"
+	SourceSquareAuthenticationTypeSourceSquareAPIKey              SourceSquareAuthenticationType = "source-square_API key"
 )
 
 type SourceSquareAuthentication struct {
-	SourceSquareAuthenticationOauthAuthentication *SourceSquareAuthenticationOauthAuthentication
-	SourceSquareAuthenticationAPIKey              *SourceSquareAuthenticationAPIKey
+	SourceSquareOauthAuthentication *SourceSquareOauthAuthentication
+	SourceSquareAPIKey              *SourceSquareAPIKey
 
 	Type SourceSquareAuthenticationType
 }
 
-func CreateSourceSquareAuthenticationSourceSquareAuthenticationOauthAuthentication(sourceSquareAuthenticationOauthAuthentication SourceSquareAuthenticationOauthAuthentication) SourceSquareAuthentication {
-	typ := SourceSquareAuthenticationTypeSourceSquareAuthenticationOauthAuthentication
+func CreateSourceSquareAuthenticationSourceSquareOauthAuthentication(sourceSquareOauthAuthentication SourceSquareOauthAuthentication) SourceSquareAuthentication {
+	typ := SourceSquareAuthenticationTypeSourceSquareOauthAuthentication
 
 	return SourceSquareAuthentication{
-		SourceSquareAuthenticationOauthAuthentication: &sourceSquareAuthenticationOauthAuthentication,
-		Type: typ,
+		SourceSquareOauthAuthentication: &sourceSquareOauthAuthentication,
+		Type:                            typ,
 	}
 }
 
-func CreateSourceSquareAuthenticationSourceSquareAuthenticationAPIKey(sourceSquareAuthenticationAPIKey SourceSquareAuthenticationAPIKey) SourceSquareAuthentication {
-	typ := SourceSquareAuthenticationTypeSourceSquareAuthenticationAPIKey
+func CreateSourceSquareAuthenticationSourceSquareAPIKey(sourceSquareAPIKey SourceSquareAPIKey) SourceSquareAuthentication {
+	typ := SourceSquareAuthenticationTypeSourceSquareAPIKey
 
 	return SourceSquareAuthentication{
-		SourceSquareAuthenticationAPIKey: &sourceSquareAuthenticationAPIKey,
-		Type:                             typ,
+		SourceSquareAPIKey: &sourceSquareAPIKey,
+		Type:               typ,
 	}
 }
 
 func (u *SourceSquareAuthentication) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceSquareAuthenticationAPIKey := new(SourceSquareAuthenticationAPIKey)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSquareAuthenticationAPIKey); err == nil {
-		u.SourceSquareAuthenticationAPIKey = sourceSquareAuthenticationAPIKey
-		u.Type = SourceSquareAuthenticationTypeSourceSquareAuthenticationAPIKey
+	sourceSquareAPIKey := new(SourceSquareAPIKey)
+	if err := utils.UnmarshalJSON(data, &sourceSquareAPIKey, "", true, true); err == nil {
+		u.SourceSquareAPIKey = sourceSquareAPIKey
+		u.Type = SourceSquareAuthenticationTypeSourceSquareAPIKey
 		return nil
 	}
 
-	sourceSquareAuthenticationOauthAuthentication := new(SourceSquareAuthenticationOauthAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSquareAuthenticationOauthAuthentication); err == nil {
-		u.SourceSquareAuthenticationOauthAuthentication = sourceSquareAuthenticationOauthAuthentication
-		u.Type = SourceSquareAuthenticationTypeSourceSquareAuthenticationOauthAuthentication
+	sourceSquareOauthAuthentication := new(SourceSquareOauthAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceSquareOauthAuthentication, "", true, true); err == nil {
+		u.SourceSquareOauthAuthentication = sourceSquareOauthAuthentication
+		u.Type = SourceSquareAuthenticationTypeSourceSquareOauthAuthentication
 		return nil
 	}
 
@@ -133,38 +186,38 @@ func (u *SourceSquareAuthentication) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceSquareAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceSquareAuthenticationAPIKey != nil {
-		return json.Marshal(u.SourceSquareAuthenticationAPIKey)
+	if u.SourceSquareOauthAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSquareOauthAuthentication, "", true)
 	}
 
-	if u.SourceSquareAuthenticationOauthAuthentication != nil {
-		return json.Marshal(u.SourceSquareAuthenticationOauthAuthentication)
+	if u.SourceSquareAPIKey != nil {
+		return utils.MarshalJSON(u.SourceSquareAPIKey, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type SourceSquareSquare string
+type Square string
 
 const (
-	SourceSquareSquareSquare SourceSquareSquare = "square"
+	SquareSquare Square = "square"
 )
 
-func (e SourceSquareSquare) ToPointer() *SourceSquareSquare {
+func (e Square) ToPointer() *Square {
 	return &e
 }
 
-func (e *SourceSquareSquare) UnmarshalJSON(data []byte) error {
+func (e *Square) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "square":
-		*e = SourceSquareSquare(v)
+		*e = Square(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareSquare: %v", v)
+		return fmt.Errorf("invalid value for Square: %v", v)
 	}
 }
 
@@ -172,10 +225,53 @@ type SourceSquare struct {
 	// Choose how to authenticate to Square.
 	Credentials *SourceSquareAuthentication `json:"credentials,omitempty"`
 	// In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
-	IncludeDeletedObjects *bool `json:"include_deleted_objects,omitempty"`
+	IncludeDeletedObjects *bool `default:"false" json:"include_deleted_objects"`
 	// Determines whether to use the sandbox or production environment.
-	IsSandbox  bool               `json:"is_sandbox"`
-	SourceType SourceSquareSquare `json:"sourceType"`
+	IsSandbox  *bool  `default:"false" json:"is_sandbox"`
+	sourceType Square `const:"square" json:"sourceType"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
+}
+
+func (s SourceSquare) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSquare) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSquare) GetCredentials() *SourceSquareAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceSquare) GetIncludeDeletedObjects() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeDeletedObjects
+}
+
+func (o *SourceSquare) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *SourceSquare) GetSourceType() Square {
+	return SquareSquare
+}
+
+func (o *SourceSquare) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

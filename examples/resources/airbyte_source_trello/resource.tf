@@ -3,12 +3,12 @@ resource "airbyte_source_trello" "my_source_trello" {
     board_ids = [
       "...",
     ]
-    key         = "...my_key..."
-    source_type = "trello"
-    start_date  = "2021-03-01T00:00:00Z"
-    token       = "...my_token..."
+    key        = "...my_key..."
+    start_date = "2021-03-01T00:00:00Z"
+    token      = "...my_token..."
   }
-  name         = "Philip Armstrong"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "a966489d-7b78-4673-a13a-12a6b9924945"
+  definition_id = "26a8838c-f8d2-427f-b18d-4240654f4782"
+  name          = "Esther Abshire"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "b5a46242-8ebc-45c7-bead-f0c9ce16ebe8"
 }

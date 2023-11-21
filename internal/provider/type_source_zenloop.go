@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceZenloop struct {
 	APIToken      types.String `tfsdk:"api_token"`
 	DateFrom      types.String `tfsdk:"date_from"`
-	SourceType    types.String `tfsdk:"source_type"`
 	SurveyGroupID types.String `tfsdk:"survey_group_id"`
 	SurveyID      types.String `tfsdk:"survey_id"`
 }

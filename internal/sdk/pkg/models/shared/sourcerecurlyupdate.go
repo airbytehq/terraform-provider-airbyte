@@ -10,3 +10,24 @@ type SourceRecurlyUpdate struct {
 	// ISO8601 timestamp to which the replication from Recurly API will stop. Records after that date won't be imported.
 	EndTime *string `json:"end_time,omitempty"`
 }
+
+func (o *SourceRecurlyUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceRecurlyUpdate) GetBeginTime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BeginTime
+}
+
+func (o *SourceRecurlyUpdate) GetEndTime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndTime
+}

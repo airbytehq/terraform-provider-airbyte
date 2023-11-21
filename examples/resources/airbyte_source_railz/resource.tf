@@ -1,11 +1,11 @@
 resource "airbyte_source_railz" "my_source_railz" {
   configuration = {
-    client_id   = "...my_client_id..."
-    secret_key  = "...my_secret_key..."
-    source_type = "railz"
-    start_date  = "...my_start_date..."
+    client_id  = "...my_client_id..."
+    secret_key = "...my_secret_key..."
+    start_date = "...my_start_date..."
   }
-  name         = "Clyde Schmeler Jr."
-  secret_id    = "...my_secret_id..."
-  workspace_id = "fe51e528-a45a-4c82-b85f-8bc2caba8da4"
+  definition_id = "ae1d217c-0fcb-4e7d-ad34-33ea862799ca"
+  name          = "Alvin Roob"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "833469d3-410e-4395-a0aa-c55dc9d09788"
 }

@@ -3,8 +3,6 @@
 package provider
 
 type DestinationAwsDatalakeOutputFormatWildcard struct {
-	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON       *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON `tfsdk:"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json"`
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage              *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage        `tfsdk:"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage"`
-	DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON `tfsdk:"destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json"`
-	DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage        *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage        `tfsdk:"destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage"`
+	JSONLinesNewlineDelimitedJSON *JSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json"`
+	ParquetColumnarStorage        *ParquetColumnarStorage        `tfsdk:"parquet_columnar_storage"`
 }

@@ -1,9 +1,9 @@
 resource "airbyte_destination_timeplus" "my_destination_timeplus" {
   configuration = {
-    apikey           = "...my_apikey..."
-    destination_type = "timeplus"
-    endpoint         = "https://us.timeplus.cloud/workspace_id"
+    apikey   = "...my_apikey..."
+    endpoint = "https://us.timeplus.cloud/workspace_id"
   }
-  name         = "Ruben Williamson"
-  workspace_id = "5f350d8c-db5a-4341-8143-010421813d52"
+  definition_id = "32a47524-bb49-40aa-b53a-d11902ba1888"
+  name          = "Kimberly Cole V"
+  workspace_id  = "d193af49-1985-4c92-933c-ae7edb401c23"
 }

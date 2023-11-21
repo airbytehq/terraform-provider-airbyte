@@ -3,124 +3,163 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationMongodbAuthorizationTypeLoginPasswordAuthorization string
+type DestinationMongodbSchemasAuthorization string
 
 const (
-	DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationLoginPassword DestinationMongodbAuthorizationTypeLoginPasswordAuthorization = "login/password"
+	DestinationMongodbSchemasAuthorizationLoginPassword DestinationMongodbSchemasAuthorization = "login/password"
 )
 
-func (e DestinationMongodbAuthorizationTypeLoginPasswordAuthorization) ToPointer() *DestinationMongodbAuthorizationTypeLoginPasswordAuthorization {
+func (e DestinationMongodbSchemasAuthorization) ToPointer() *DestinationMongodbSchemasAuthorization {
 	return &e
 }
 
-func (e *DestinationMongodbAuthorizationTypeLoginPasswordAuthorization) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbSchemasAuthorization) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "login/password":
-		*e = DestinationMongodbAuthorizationTypeLoginPasswordAuthorization(v)
+		*e = DestinationMongodbSchemasAuthorization(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbAuthorizationTypeLoginPasswordAuthorization: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbSchemasAuthorization: %v", v)
 	}
 }
 
-// DestinationMongodbAuthorizationTypeLoginPassword - Login/Password.
-type DestinationMongodbAuthorizationTypeLoginPassword struct {
-	Authorization DestinationMongodbAuthorizationTypeLoginPasswordAuthorization `json:"authorization"`
+// DestinationMongodbLoginPassword - Login/Password.
+type DestinationMongodbLoginPassword struct {
+	authorization DestinationMongodbSchemasAuthorization `const:"login/password" json:"authorization"`
 	// Password associated with the username.
 	Password string `json:"password"`
 	// Username to use to access the database.
 	Username string `json:"username"`
 }
 
-type DestinationMongodbAuthorizationTypeNoneAuthorization string
+func (d DestinationMongodbLoginPassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbLoginPassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbLoginPassword) GetAuthorization() DestinationMongodbSchemasAuthorization {
+	return DestinationMongodbSchemasAuthorizationLoginPassword
+}
+
+func (o *DestinationMongodbLoginPassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *DestinationMongodbLoginPassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+type DestinationMongodbAuthorization string
 
 const (
-	DestinationMongodbAuthorizationTypeNoneAuthorizationNone DestinationMongodbAuthorizationTypeNoneAuthorization = "none"
+	DestinationMongodbAuthorizationNone DestinationMongodbAuthorization = "none"
 )
 
-func (e DestinationMongodbAuthorizationTypeNoneAuthorization) ToPointer() *DestinationMongodbAuthorizationTypeNoneAuthorization {
+func (e DestinationMongodbAuthorization) ToPointer() *DestinationMongodbAuthorization {
 	return &e
 }
 
-func (e *DestinationMongodbAuthorizationTypeNoneAuthorization) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbAuthorization) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "none":
-		*e = DestinationMongodbAuthorizationTypeNoneAuthorization(v)
+		*e = DestinationMongodbAuthorization(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbAuthorizationTypeNoneAuthorization: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbAuthorization: %v", v)
 	}
 }
 
-// DestinationMongodbAuthorizationTypeNone - None.
-type DestinationMongodbAuthorizationTypeNone struct {
-	Authorization DestinationMongodbAuthorizationTypeNoneAuthorization `json:"authorization"`
+// DestinationMongodbNone - None.
+type DestinationMongodbNone struct {
+	authorization DestinationMongodbAuthorization `const:"none" json:"authorization"`
+}
+
+func (d DestinationMongodbNone) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbNone) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbNone) GetAuthorization() DestinationMongodbAuthorization {
+	return DestinationMongodbAuthorizationNone
 }
 
 type DestinationMongodbAuthorizationTypeType string
 
 const (
-	DestinationMongodbAuthorizationTypeTypeDestinationMongodbAuthorizationTypeNone          DestinationMongodbAuthorizationTypeType = "destination-mongodb_Authorization type_None"
-	DestinationMongodbAuthorizationTypeTypeDestinationMongodbAuthorizationTypeLoginPassword DestinationMongodbAuthorizationTypeType = "destination-mongodb_Authorization type_Login/Password"
+	DestinationMongodbAuthorizationTypeTypeDestinationMongodbNone          DestinationMongodbAuthorizationTypeType = "destination-mongodb_None"
+	DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword DestinationMongodbAuthorizationTypeType = "destination-mongodb_Login/Password"
 )
 
 type DestinationMongodbAuthorizationType struct {
-	DestinationMongodbAuthorizationTypeNone          *DestinationMongodbAuthorizationTypeNone
-	DestinationMongodbAuthorizationTypeLoginPassword *DestinationMongodbAuthorizationTypeLoginPassword
+	DestinationMongodbNone          *DestinationMongodbNone
+	DestinationMongodbLoginPassword *DestinationMongodbLoginPassword
 
 	Type DestinationMongodbAuthorizationTypeType
 }
 
-func CreateDestinationMongodbAuthorizationTypeDestinationMongodbAuthorizationTypeNone(destinationMongodbAuthorizationTypeNone DestinationMongodbAuthorizationTypeNone) DestinationMongodbAuthorizationType {
-	typ := DestinationMongodbAuthorizationTypeTypeDestinationMongodbAuthorizationTypeNone
+func CreateDestinationMongodbAuthorizationTypeDestinationMongodbNone(destinationMongodbNone DestinationMongodbNone) DestinationMongodbAuthorizationType {
+	typ := DestinationMongodbAuthorizationTypeTypeDestinationMongodbNone
 
 	return DestinationMongodbAuthorizationType{
-		DestinationMongodbAuthorizationTypeNone: &destinationMongodbAuthorizationTypeNone,
-		Type:                                    typ,
+		DestinationMongodbNone: &destinationMongodbNone,
+		Type:                   typ,
 	}
 }
 
-func CreateDestinationMongodbAuthorizationTypeDestinationMongodbAuthorizationTypeLoginPassword(destinationMongodbAuthorizationTypeLoginPassword DestinationMongodbAuthorizationTypeLoginPassword) DestinationMongodbAuthorizationType {
-	typ := DestinationMongodbAuthorizationTypeTypeDestinationMongodbAuthorizationTypeLoginPassword
+func CreateDestinationMongodbAuthorizationTypeDestinationMongodbLoginPassword(destinationMongodbLoginPassword DestinationMongodbLoginPassword) DestinationMongodbAuthorizationType {
+	typ := DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword
 
 	return DestinationMongodbAuthorizationType{
-		DestinationMongodbAuthorizationTypeLoginPassword: &destinationMongodbAuthorizationTypeLoginPassword,
-		Type: typ,
+		DestinationMongodbLoginPassword: &destinationMongodbLoginPassword,
+		Type:                            typ,
 	}
 }
 
 func (u *DestinationMongodbAuthorizationType) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationMongodbAuthorizationTypeNone := new(DestinationMongodbAuthorizationTypeNone)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbAuthorizationTypeNone); err == nil {
-		u.DestinationMongodbAuthorizationTypeNone = destinationMongodbAuthorizationTypeNone
-		u.Type = DestinationMongodbAuthorizationTypeTypeDestinationMongodbAuthorizationTypeNone
+	destinationMongodbNone := new(DestinationMongodbNone)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbNone, "", true, true); err == nil {
+		u.DestinationMongodbNone = destinationMongodbNone
+		u.Type = DestinationMongodbAuthorizationTypeTypeDestinationMongodbNone
 		return nil
 	}
 
-	destinationMongodbAuthorizationTypeLoginPassword := new(DestinationMongodbAuthorizationTypeLoginPassword)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbAuthorizationTypeLoginPassword); err == nil {
-		u.DestinationMongodbAuthorizationTypeLoginPassword = destinationMongodbAuthorizationTypeLoginPassword
-		u.Type = DestinationMongodbAuthorizationTypeTypeDestinationMongodbAuthorizationTypeLoginPassword
+	destinationMongodbLoginPassword := new(DestinationMongodbLoginPassword)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbLoginPassword, "", true, true); err == nil {
+		u.DestinationMongodbLoginPassword = destinationMongodbLoginPassword
+		u.Type = DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword
 		return nil
 	}
 
@@ -128,208 +167,290 @@ func (u *DestinationMongodbAuthorizationType) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMongodbAuthorizationType) MarshalJSON() ([]byte, error) {
-	if u.DestinationMongodbAuthorizationTypeNone != nil {
-		return json.Marshal(u.DestinationMongodbAuthorizationTypeNone)
+	if u.DestinationMongodbNone != nil {
+		return utils.MarshalJSON(u.DestinationMongodbNone, "", true)
 	}
 
-	if u.DestinationMongodbAuthorizationTypeLoginPassword != nil {
-		return json.Marshal(u.DestinationMongodbAuthorizationTypeLoginPassword)
+	if u.DestinationMongodbLoginPassword != nil {
+		return utils.MarshalJSON(u.DestinationMongodbLoginPassword, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationMongodbMongodb string
+type Mongodb string
 
 const (
-	DestinationMongodbMongodbMongodb DestinationMongodbMongodb = "mongodb"
+	MongodbMongodb Mongodb = "mongodb"
 )
 
-func (e DestinationMongodbMongodb) ToPointer() *DestinationMongodbMongodb {
+func (e Mongodb) ToPointer() *Mongodb {
 	return &e
 }
 
-func (e *DestinationMongodbMongodb) UnmarshalJSON(data []byte) error {
+func (e *Mongodb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mongodb":
-		*e = DestinationMongodbMongodb(v)
+		*e = Mongodb(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongodb: %v", v)
+		return fmt.Errorf("invalid value for Mongodb: %v", v)
 	}
 }
 
-type DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance string
+type DestinationMongodbSchemasInstanceTypeInstance string
 
 const (
-	DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceAtlas DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance = "atlas"
+	DestinationMongodbSchemasInstanceTypeInstanceAtlas DestinationMongodbSchemasInstanceTypeInstance = "atlas"
 )
 
-func (e DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance) ToPointer() *DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance {
+func (e DestinationMongodbSchemasInstanceTypeInstance) ToPointer() *DestinationMongodbSchemasInstanceTypeInstance {
 	return &e
 }
 
-func (e *DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbSchemasInstanceTypeInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "atlas":
-		*e = DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance(v)
+		*e = DestinationMongodbSchemasInstanceTypeInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbSchemasInstanceTypeInstance: %v", v)
 	}
 }
 
-// DestinationMongodbMongoDBInstanceTypeMongoDBAtlas - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type DestinationMongodbMongoDBInstanceTypeMongoDBAtlas struct {
+// DestinationMongodbMongoDBAtlas - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type DestinationMongodbMongoDBAtlas struct {
 	// URL of a cluster to connect to.
-	ClusterURL string                                                    `json:"cluster_url"`
-	Instance   DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance `json:"instance"`
+	ClusterURL string                                         `json:"cluster_url"`
+	Instance   *DestinationMongodbSchemasInstanceTypeInstance `default:"atlas" json:"instance"`
 }
 
-type DestinationMongodbMongoDbInstanceTypeReplicaSetInstance string
+func (d DestinationMongodbMongoDBAtlas) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbMongoDBAtlas) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbMongoDBAtlas) GetClusterURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClusterURL
+}
+
+func (o *DestinationMongodbMongoDBAtlas) GetInstance() *DestinationMongodbSchemasInstanceTypeInstance {
+	if o == nil {
+		return nil
+	}
+	return o.Instance
+}
+
+type DestinationMongodbSchemasInstance string
 
 const (
-	DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceReplica DestinationMongodbMongoDbInstanceTypeReplicaSetInstance = "replica"
+	DestinationMongodbSchemasInstanceReplica DestinationMongodbSchemasInstance = "replica"
 )
 
-func (e DestinationMongodbMongoDbInstanceTypeReplicaSetInstance) ToPointer() *DestinationMongodbMongoDbInstanceTypeReplicaSetInstance {
+func (e DestinationMongodbSchemasInstance) ToPointer() *DestinationMongodbSchemasInstance {
 	return &e
 }
 
-func (e *DestinationMongodbMongoDbInstanceTypeReplicaSetInstance) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbSchemasInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "replica":
-		*e = DestinationMongodbMongoDbInstanceTypeReplicaSetInstance(v)
+		*e = DestinationMongodbSchemasInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongoDbInstanceTypeReplicaSetInstance: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbSchemasInstance: %v", v)
 	}
 }
 
-// DestinationMongodbMongoDbInstanceTypeReplicaSet - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type DestinationMongodbMongoDbInstanceTypeReplicaSet struct {
-	Instance DestinationMongodbMongoDbInstanceTypeReplicaSetInstance `json:"instance"`
+// DestinationMongodbReplicaSet - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type DestinationMongodbReplicaSet struct {
+	Instance *DestinationMongodbSchemasInstance `default:"replica" json:"instance"`
 	// A replica set name.
 	ReplicaSet *string `json:"replica_set,omitempty"`
 	// The members of a replica set. Please specify `host`:`port` of each member seperated by comma.
 	ServerAddresses string `json:"server_addresses"`
 }
 
-type DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance string
+func (d DestinationMongodbReplicaSet) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbReplicaSet) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbReplicaSet) GetInstance() *DestinationMongodbSchemasInstance {
+	if o == nil {
+		return nil
+	}
+	return o.Instance
+}
+
+func (o *DestinationMongodbReplicaSet) GetReplicaSet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReplicaSet
+}
+
+func (o *DestinationMongodbReplicaSet) GetServerAddresses() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerAddresses
+}
+
+type DestinationMongodbInstance string
 
 const (
-	DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceStandalone DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance = "standalone"
+	DestinationMongodbInstanceStandalone DestinationMongodbInstance = "standalone"
 )
 
-func (e DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance) ToPointer() *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance {
+func (e DestinationMongodbInstance) ToPointer() *DestinationMongodbInstance {
 	return &e
 }
 
-func (e *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "standalone":
-		*e = DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(v)
+		*e = DestinationMongodbInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbInstance: %v", v)
 	}
 }
 
-// DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
-type DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance struct {
+// DestinationMongodbStandaloneMongoDbInstance - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
+type DestinationMongodbStandaloneMongoDbInstance struct {
 	// The Host of a Mongo database to be replicated.
-	Host     string                                                                 `json:"host"`
-	Instance DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance `json:"instance"`
+	Host     string                      `json:"host"`
+	Instance *DestinationMongodbInstance `default:"standalone" json:"instance"`
 	// The Port of a Mongo database to be replicated.
-	Port int64 `json:"port"`
+	Port *int64 `default:"27017" json:"port"`
+}
+
+func (d DestinationMongodbStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbStandaloneMongoDbInstance) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbStandaloneMongoDbInstance) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMongodbStandaloneMongoDbInstance) GetInstance() *DestinationMongodbInstance {
+	if o == nil {
+		return nil
+	}
+	return o.Instance
+}
+
+func (o *DestinationMongodbStandaloneMongoDbInstance) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 type DestinationMongodbMongoDbInstanceTypeType string
 
 const (
-	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_MongoDb Instance Type_Standalone MongoDb Instance"
-	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDbInstanceTypeReplicaSet                DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_MongoDb Instance Type_Replica Set"
-	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBInstanceTypeMongoDBAtlas              DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_MongoDb Instance Type_MongoDB Atlas"
+	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_Standalone MongoDb Instance"
+	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet                DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_Replica Set"
+	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas              DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_MongoDB Atlas"
 )
 
 type DestinationMongodbMongoDbInstanceType struct {
-	DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
-	DestinationMongodbMongoDbInstanceTypeReplicaSet                *DestinationMongodbMongoDbInstanceTypeReplicaSet
-	DestinationMongodbMongoDBInstanceTypeMongoDBAtlas              *DestinationMongodbMongoDBInstanceTypeMongoDBAtlas
+	DestinationMongodbStandaloneMongoDbInstance *DestinationMongodbStandaloneMongoDbInstance
+	DestinationMongodbReplicaSet                *DestinationMongodbReplicaSet
+	DestinationMongodbMongoDBAtlas              *DestinationMongodbMongoDBAtlas
 
 	Type DestinationMongodbMongoDbInstanceTypeType
 }
 
-func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance(destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance) DestinationMongodbMongoDbInstanceType {
-	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
+func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbStandaloneMongoDbInstance(destinationMongodbStandaloneMongoDbInstance DestinationMongodbStandaloneMongoDbInstance) DestinationMongodbMongoDbInstanceType {
+	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance
 
 	return DestinationMongodbMongoDbInstanceType{
-		DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance: &destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance,
+		DestinationMongodbStandaloneMongoDbInstance: &destinationMongodbStandaloneMongoDbInstance,
 		Type: typ,
 	}
 }
 
-func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbMongoDbInstanceTypeReplicaSet(destinationMongodbMongoDbInstanceTypeReplicaSet DestinationMongodbMongoDbInstanceTypeReplicaSet) DestinationMongodbMongoDbInstanceType {
-	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDbInstanceTypeReplicaSet
+func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbReplicaSet(destinationMongodbReplicaSet DestinationMongodbReplicaSet) DestinationMongodbMongoDbInstanceType {
+	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet
 
 	return DestinationMongodbMongoDbInstanceType{
-		DestinationMongodbMongoDbInstanceTypeReplicaSet: &destinationMongodbMongoDbInstanceTypeReplicaSet,
-		Type: typ,
+		DestinationMongodbReplicaSet: &destinationMongodbReplicaSet,
+		Type:                         typ,
 	}
 }
 
-func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbMongoDBInstanceTypeMongoDBAtlas(destinationMongodbMongoDBInstanceTypeMongoDBAtlas DestinationMongodbMongoDBInstanceTypeMongoDBAtlas) DestinationMongodbMongoDbInstanceType {
-	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBInstanceTypeMongoDBAtlas
+func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbMongoDBAtlas(destinationMongodbMongoDBAtlas DestinationMongodbMongoDBAtlas) DestinationMongodbMongoDbInstanceType {
+	typ := DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas
 
 	return DestinationMongodbMongoDbInstanceType{
-		DestinationMongodbMongoDBInstanceTypeMongoDBAtlas: &destinationMongodbMongoDBInstanceTypeMongoDBAtlas,
-		Type: typ,
+		DestinationMongodbMongoDBAtlas: &destinationMongodbMongoDBAtlas,
+		Type:                           typ,
 	}
 }
 
 func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationMongodbMongoDBInstanceTypeMongoDBAtlas := new(DestinationMongodbMongoDBInstanceTypeMongoDBAtlas)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbMongoDBInstanceTypeMongoDBAtlas); err == nil {
-		u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas = destinationMongodbMongoDBInstanceTypeMongoDBAtlas
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBInstanceTypeMongoDBAtlas
+	destinationMongodbMongoDBAtlas := new(DestinationMongodbMongoDBAtlas)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbMongoDBAtlas, "", true, true); err == nil {
+		u.DestinationMongodbMongoDBAtlas = destinationMongodbMongoDBAtlas
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas
 		return nil
 	}
 
-	destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance := new(DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance); err == nil {
-		u.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
+	destinationMongodbStandaloneMongoDbInstance := new(DestinationMongodbStandaloneMongoDbInstance)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbStandaloneMongoDbInstance, "", true, true); err == nil {
+		u.DestinationMongodbStandaloneMongoDbInstance = destinationMongodbStandaloneMongoDbInstance
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance
 		return nil
 	}
 
-	destinationMongodbMongoDbInstanceTypeReplicaSet := new(DestinationMongodbMongoDbInstanceTypeReplicaSet)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbMongoDbInstanceTypeReplicaSet); err == nil {
-		u.DestinationMongodbMongoDbInstanceTypeReplicaSet = destinationMongodbMongoDbInstanceTypeReplicaSet
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDbInstanceTypeReplicaSet
+	destinationMongodbReplicaSet := new(DestinationMongodbReplicaSet)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbReplicaSet, "", true, true); err == nil {
+		u.DestinationMongodbReplicaSet = destinationMongodbReplicaSet
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet
 		return nil
 	}
 
@@ -337,200 +458,294 @@ func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error
 }
 
 func (u DestinationMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
-	if u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-		return json.Marshal(u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas)
+	if u.DestinationMongodbStandaloneMongoDbInstance != nil {
+		return utils.MarshalJSON(u.DestinationMongodbStandaloneMongoDbInstance, "", true)
 	}
 
-	if u.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
-		return json.Marshal(u.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
+	if u.DestinationMongodbReplicaSet != nil {
+		return utils.MarshalJSON(u.DestinationMongodbReplicaSet, "", true)
 	}
 
-	if u.DestinationMongodbMongoDbInstanceTypeReplicaSet != nil {
-		return json.Marshal(u.DestinationMongodbMongoDbInstanceTypeReplicaSet)
+	if u.DestinationMongodbMongoDBAtlas != nil {
+		return utils.MarshalJSON(u.DestinationMongodbMongoDBAtlas, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
-type DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod string
+// DestinationMongodbSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationMongodbSchemasTunnelMethodTunnelMethod string
 
 const (
-	DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
+	DestinationMongodbSchemasTunnelMethodTunnelMethodSSHPasswordAuth DestinationMongodbSchemasTunnelMethodTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod {
+func (e DestinationMongodbSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationMongodbSchemasTunnelMethodTunnelMethod {
 	return &e
 }
 
-func (e *DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
+		*e = DestinationMongodbSchemasTunnelMethodTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbSchemasTunnelMethodTunnelMethod: %v", v)
 	}
 }
 
-// DestinationMongodbSSHTunnelMethodPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationMongodbSSHTunnelMethodPasswordAuthentication struct {
+// DestinationMongodbPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationMongodbPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMongodbSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
 	TunnelUser string `json:"tunnel_user"`
 	// OS-level password for logging into the jump server host
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
-type DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
+func (d DestinationMongodbPasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbPasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbPasswordAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationMongodbPasswordAuthentication) GetTunnelMethod() DestinationMongodbSchemasTunnelMethodTunnelMethod {
+	return DestinationMongodbSchemasTunnelMethodTunnelMethodSSHPasswordAuth
+}
+
+func (o *DestinationMongodbPasswordAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationMongodbPasswordAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+func (o *DestinationMongodbPasswordAuthentication) GetTunnelUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUserPassword
+}
+
+// DestinationMongodbSchemasTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationMongodbSchemasTunnelMethod string
 
 const (
-	DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
+	DestinationMongodbSchemasTunnelMethodSSHKeyAuth DestinationMongodbSchemasTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
+func (e DestinationMongodbSchemasTunnelMethod) ToPointer() *DestinationMongodbSchemasTunnelMethod {
 	return &e
 }
 
-func (e *DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
+		*e = DestinationMongodbSchemasTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbSchemasTunnelMethod: %v", v)
 	}
 }
 
-// DestinationMongodbSSHTunnelMethodSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationMongodbSSHTunnelMethodSSHKeyAuthentication struct {
+// DestinationMongodbSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationMongodbSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMongodbSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
-	TunnelPort int64 `json:"tunnel_port"`
+	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
-type DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod string
+func (d DestinationMongodbSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
+}
+
+func (o *DestinationMongodbSSHKeyAuthentication) GetTunnelHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelHost
+}
+
+func (o *DestinationMongodbSSHKeyAuthentication) GetTunnelMethod() DestinationMongodbSchemasTunnelMethod {
+	return DestinationMongodbSchemasTunnelMethodSSHKeyAuth
+}
+
+func (o *DestinationMongodbSSHKeyAuthentication) GetTunnelPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelPort
+}
+
+func (o *DestinationMongodbSSHKeyAuthentication) GetTunnelUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.TunnelUser
+}
+
+// DestinationMongodbTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationMongodbTunnelMethod string
 
 const (
-	DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
+	DestinationMongodbTunnelMethodNoTunnel DestinationMongodbTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod {
+func (e DestinationMongodbTunnelMethod) ToPointer() *DestinationMongodbTunnelMethod {
 	return &e
 }
 
-func (e *DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationMongodbTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod(v)
+		*e = DestinationMongodbTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationMongodbTunnelMethod: %v", v)
 	}
 }
 
-// DestinationMongodbSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-type DestinationMongodbSSHTunnelMethodNoTunnel struct {
+// DestinationMongodbNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+type DestinationMongodbNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
+	tunnelMethod DestinationMongodbTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
+}
+
+func (d DestinationMongodbNoTunnel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodbNoTunnel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodbNoTunnel) GetTunnelMethod() DestinationMongodbTunnelMethod {
+	return DestinationMongodbTunnelMethodNoTunnel
 }
 
 type DestinationMongodbSSHTunnelMethodType string
 
 const (
-	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodNoTunnel               DestinationMongodbSSHTunnelMethodType = "destination-mongodb_SSH Tunnel Method_No Tunnel"
-	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodSSHKeyAuthentication   DestinationMongodbSSHTunnelMethodType = "destination-mongodb_SSH Tunnel Method_SSH Key Authentication"
-	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodPasswordAuthentication DestinationMongodbSSHTunnelMethodType = "destination-mongodb_SSH Tunnel Method_Password Authentication"
+	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbNoTunnel               DestinationMongodbSSHTunnelMethodType = "destination-mongodb_No Tunnel"
+	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHKeyAuthentication   DestinationMongodbSSHTunnelMethodType = "destination-mongodb_SSH Key Authentication"
+	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication DestinationMongodbSSHTunnelMethodType = "destination-mongodb_Password Authentication"
 )
 
 type DestinationMongodbSSHTunnelMethod struct {
-	DestinationMongodbSSHTunnelMethodNoTunnel               *DestinationMongodbSSHTunnelMethodNoTunnel
-	DestinationMongodbSSHTunnelMethodSSHKeyAuthentication   *DestinationMongodbSSHTunnelMethodSSHKeyAuthentication
-	DestinationMongodbSSHTunnelMethodPasswordAuthentication *DestinationMongodbSSHTunnelMethodPasswordAuthentication
+	DestinationMongodbNoTunnel               *DestinationMongodbNoTunnel
+	DestinationMongodbSSHKeyAuthentication   *DestinationMongodbSSHKeyAuthentication
+	DestinationMongodbPasswordAuthentication *DestinationMongodbPasswordAuthentication
 
 	Type DestinationMongodbSSHTunnelMethodType
 }
 
-func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbSSHTunnelMethodNoTunnel(destinationMongodbSSHTunnelMethodNoTunnel DestinationMongodbSSHTunnelMethodNoTunnel) DestinationMongodbSSHTunnelMethod {
-	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodNoTunnel
+func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbNoTunnel(destinationMongodbNoTunnel DestinationMongodbNoTunnel) DestinationMongodbSSHTunnelMethod {
+	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbNoTunnel
 
 	return DestinationMongodbSSHTunnelMethod{
-		DestinationMongodbSSHTunnelMethodNoTunnel: &destinationMongodbSSHTunnelMethodNoTunnel,
-		Type: typ,
+		DestinationMongodbNoTunnel: &destinationMongodbNoTunnel,
+		Type:                       typ,
 	}
 }
 
-func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbSSHTunnelMethodSSHKeyAuthentication(destinationMongodbSSHTunnelMethodSSHKeyAuthentication DestinationMongodbSSHTunnelMethodSSHKeyAuthentication) DestinationMongodbSSHTunnelMethod {
-	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodSSHKeyAuthentication
+func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbSSHKeyAuthentication(destinationMongodbSSHKeyAuthentication DestinationMongodbSSHKeyAuthentication) DestinationMongodbSSHTunnelMethod {
+	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHKeyAuthentication
 
 	return DestinationMongodbSSHTunnelMethod{
-		DestinationMongodbSSHTunnelMethodSSHKeyAuthentication: &destinationMongodbSSHTunnelMethodSSHKeyAuthentication,
-		Type: typ,
+		DestinationMongodbSSHKeyAuthentication: &destinationMongodbSSHKeyAuthentication,
+		Type:                                   typ,
 	}
 }
 
-func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbSSHTunnelMethodPasswordAuthentication(destinationMongodbSSHTunnelMethodPasswordAuthentication DestinationMongodbSSHTunnelMethodPasswordAuthentication) DestinationMongodbSSHTunnelMethod {
-	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodPasswordAuthentication
+func CreateDestinationMongodbSSHTunnelMethodDestinationMongodbPasswordAuthentication(destinationMongodbPasswordAuthentication DestinationMongodbPasswordAuthentication) DestinationMongodbSSHTunnelMethod {
+	typ := DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication
 
 	return DestinationMongodbSSHTunnelMethod{
-		DestinationMongodbSSHTunnelMethodPasswordAuthentication: &destinationMongodbSSHTunnelMethodPasswordAuthentication,
-		Type: typ,
+		DestinationMongodbPasswordAuthentication: &destinationMongodbPasswordAuthentication,
+		Type:                                     typ,
 	}
 }
 
 func (u *DestinationMongodbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationMongodbSSHTunnelMethodNoTunnel := new(DestinationMongodbSSHTunnelMethodNoTunnel)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbSSHTunnelMethodNoTunnel); err == nil {
-		u.DestinationMongodbSSHTunnelMethodNoTunnel = destinationMongodbSSHTunnelMethodNoTunnel
-		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodNoTunnel
+	destinationMongodbNoTunnel := new(DestinationMongodbNoTunnel)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbNoTunnel, "", true, true); err == nil {
+		u.DestinationMongodbNoTunnel = destinationMongodbNoTunnel
+		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbNoTunnel
 		return nil
 	}
 
-	destinationMongodbSSHTunnelMethodSSHKeyAuthentication := new(DestinationMongodbSSHTunnelMethodSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbSSHTunnelMethodSSHKeyAuthentication); err == nil {
-		u.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication = destinationMongodbSSHTunnelMethodSSHKeyAuthentication
-		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodSSHKeyAuthentication
+	destinationMongodbSSHKeyAuthentication := new(DestinationMongodbSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbSSHKeyAuthentication, "", true, true); err == nil {
+		u.DestinationMongodbSSHKeyAuthentication = destinationMongodbSSHKeyAuthentication
+		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHKeyAuthentication
 		return nil
 	}
 
-	destinationMongodbSSHTunnelMethodPasswordAuthentication := new(DestinationMongodbSSHTunnelMethodPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbSSHTunnelMethodPasswordAuthentication); err == nil {
-		u.DestinationMongodbSSHTunnelMethodPasswordAuthentication = destinationMongodbSSHTunnelMethodPasswordAuthentication
-		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbSSHTunnelMethodPasswordAuthentication
+	destinationMongodbPasswordAuthentication := new(DestinationMongodbPasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &destinationMongodbPasswordAuthentication, "", true, true); err == nil {
+		u.DestinationMongodbPasswordAuthentication = destinationMongodbPasswordAuthentication
+		u.Type = DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication
 		return nil
 	}
 
@@ -538,29 +753,72 @@ func (u *DestinationMongodbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMongodbSSHTunnelMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationMongodbSSHTunnelMethodNoTunnel != nil {
-		return json.Marshal(u.DestinationMongodbSSHTunnelMethodNoTunnel)
+	if u.DestinationMongodbNoTunnel != nil {
+		return utils.MarshalJSON(u.DestinationMongodbNoTunnel, "", true)
 	}
 
-	if u.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
-		return json.Marshal(u.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication)
+	if u.DestinationMongodbSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMongodbSSHKeyAuthentication, "", true)
 	}
 
-	if u.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
-		return json.Marshal(u.DestinationMongodbSSHTunnelMethodPasswordAuthentication)
+	if u.DestinationMongodbPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationMongodbPasswordAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type DestinationMongodb struct {
 	// Authorization type.
 	AuthType DestinationMongodbAuthorizationType `json:"auth_type"`
 	// Name of the database.
-	Database        string                    `json:"database"`
-	DestinationType DestinationMongodbMongodb `json:"destinationType"`
+	Database        string  `json:"database"`
+	destinationType Mongodb `const:"mongodb" json:"destinationType"`
 	// MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 	InstanceType *DestinationMongodbMongoDbInstanceType `json:"instance_type,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMongodbSSHTunnelMethod `json:"tunnel_method,omitempty"`
+}
+
+func (d DestinationMongodb) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMongodb) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMongodb) GetAuthType() DestinationMongodbAuthorizationType {
+	if o == nil {
+		return DestinationMongodbAuthorizationType{}
+	}
+	return o.AuthType
+}
+
+func (o *DestinationMongodb) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationMongodb) GetDestinationType() Mongodb {
+	return MongodbMongodb
+}
+
+func (o *DestinationMongodb) GetInstanceType() *DestinationMongodbMongoDbInstanceType {
+	if o == nil {
+		return nil
+	}
+	return o.InstanceType
+}
+
+func (o *DestinationMongodb) GetTunnelMethod() *DestinationMongodbSSHTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }

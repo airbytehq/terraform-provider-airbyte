@@ -7,3 +7,24 @@ type SourceAmazonSqsPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceAmazonSqsPutRequest) GetConfiguration() SourceAmazonSqsUpdate {
+	if o == nil {
+		return SourceAmazonSqsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAmazonSqsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAmazonSqsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -235,8 +235,10 @@ func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.Connection
 	if r.Configurations == nil {
 		r.Configurations = &StreamConfigurations{}
 	}
-	r.Configurations.Streams = nil
-	for _, streamsItem := range resp.Configurations.Streams {
+	if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
+		r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
+	}
+	for streamsCount, streamsItem := range resp.Configurations.Streams {
 		var streams1 StreamConfiguration
 		streams1.CursorField = nil
 		for _, v := range streamsItem.CursorField {
@@ -257,10 +259,21 @@ func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.Connection
 		} else {
 			streams1.SyncMode = types.StringNull()
 		}
-		r.Configurations.Streams = append(r.Configurations.Streams, streams1)
+		if streamsCount+1 > len(r.Configurations.Streams) {
+			r.Configurations.Streams = append(r.Configurations.Streams, streams1)
+		} else {
+			r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
+			r.Configurations.Streams[streamsCount].Name = streams1.Name
+			r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
+			r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
+		}
 	}
 	r.ConnectionID = types.StringValue(resp.ConnectionID)
-	r.DataResidency = types.StringValue(string(resp.DataResidency))
+	if resp.DataResidency != nil {
+		r.DataResidency = types.StringValue(string(*resp.DataResidency))
+	} else {
+		r.DataResidency = types.StringNull()
+	}
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.Name = types.StringValue(resp.Name)
 	if resp.NamespaceDefinition != nil {

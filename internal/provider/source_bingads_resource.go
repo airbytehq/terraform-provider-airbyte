@@ -3,18 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +37,7 @@ type SourceBingAdsResource struct {
 // SourceBingAdsResourceModel describes the resource data model.
 type SourceBingAdsResourceModel struct {
 	Configuration SourceBingAds `tfsdk:"configuration"`
+	DefinitionID  types.String  `tfsdk:"definition_id"`
 	Name          types.String  `tfsdk:"name"`
 	SecretID      types.String  `tfsdk:"secret_id"`
 	SourceID      types.String  `tfsdk:"source_id"`
@@ -55,64 +57,127 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"auth_method": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oauth2.0",
-							),
-						},
-						Description: `must be one of ["oauth2.0"]`,
-					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
 						Description: `The Client ID of your Microsoft Advertising developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Optional:    true,
-						Description: `The Client Secret of your Microsoft Advertising developer application.`,
+						Optional: true,
+						MarkdownDescription: `Default: ""` + "\n" +
+							`The Client Secret of your Microsoft Advertising developer application.`,
+					},
+					"custom_reports": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"name": schema.StringAttribute{
+									Required:    true,
+									Description: `The name of the custom report, this name would be used as stream name`,
+								},
+								"report_aggregation": schema.StringAttribute{
+									Optional: true,
+									MarkdownDescription: `Default: "[Hourly]"` + "\n" +
+										`A list of available aggregations.`,
+								},
+								"report_columns": schema.ListAttribute{
+									Required:    true,
+									ElementType: types.StringType,
+									Description: `A list of available report object columns. You can find it in description of reporting object that you want to add to custom report.`,
+								},
+								"reporting_object": schema.StringAttribute{
+									Required: true,
+									MarkdownDescription: `must be one of ["AccountPerformanceReportRequest", "AdDynamicTextPerformanceReportRequest", "AdExtensionByAdReportRequest", "AdExtensionByKeywordReportRequest", "AdExtensionDetailReportRequest", "AdGroupPerformanceReportRequest", "AdPerformanceReportRequest", "AgeGenderAudienceReportRequest", "AudiencePerformanceReportRequest", "CallDetailReportRequest", "CampaignPerformanceReportRequest", "ConversionPerformanceReportRequest", "DestinationUrlPerformanceReportRequest", "DSAAutoTargetPerformanceReportRequest", "DSACategoryPerformanceReportRequest", "DSASearchQueryPerformanceReportRequest", "GeographicPerformanceReportRequest", "GoalsAndFunnelsReportRequest", "HotelDimensionPerformanceReportRequest", "HotelGroupPerformanceReportRequest", "KeywordPerformanceReportRequest", "NegativeKeywordConflictReportRequest", "ProductDimensionPerformanceReportRequest", "ProductMatchCountReportRequest", "ProductNegativeKeywordConflictReportRequest", "ProductPartitionPerformanceReportRequest", "ProductPartitionUnitPerformanceReportRequest", "ProductSearchQueryPerformanceReportRequest", "ProfessionalDemographicsAudienceReportRequest", "PublisherUsagePerformanceReportRequest", "SearchCampaignChangeHistoryReportRequest", "SearchQueryPerformanceReportRequest", "ShareOfVoiceReportRequest", "UserLocationPerformanceReportRequest"]` + "\n" +
+										`The name of the the object derives from the ReportRequest object. You can find it in Bing Ads Api docs - Reporting API - Reporting Data Objects.`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"AccountPerformanceReportRequest",
+											"AdDynamicTextPerformanceReportRequest",
+											"AdExtensionByAdReportRequest",
+											"AdExtensionByKeywordReportRequest",
+											"AdExtensionDetailReportRequest",
+											"AdGroupPerformanceReportRequest",
+											"AdPerformanceReportRequest",
+											"AgeGenderAudienceReportRequest",
+											"AudiencePerformanceReportRequest",
+											"CallDetailReportRequest",
+											"CampaignPerformanceReportRequest",
+											"ConversionPerformanceReportRequest",
+											"DestinationUrlPerformanceReportRequest",
+											"DSAAutoTargetPerformanceReportRequest",
+											"DSACategoryPerformanceReportRequest",
+											"DSASearchQueryPerformanceReportRequest",
+											"GeographicPerformanceReportRequest",
+											"GoalsAndFunnelsReportRequest",
+											"HotelDimensionPerformanceReportRequest",
+											"HotelGroupPerformanceReportRequest",
+											"KeywordPerformanceReportRequest",
+											"NegativeKeywordConflictReportRequest",
+											"ProductDimensionPerformanceReportRequest",
+											"ProductMatchCountReportRequest",
+											"ProductNegativeKeywordConflictReportRequest",
+											"ProductPartitionPerformanceReportRequest",
+											"ProductPartitionUnitPerformanceReportRequest",
+											"ProductSearchQueryPerformanceReportRequest",
+											"ProfessionalDemographicsAudienceReportRequest",
+											"PublisherUsagePerformanceReportRequest",
+											"SearchCampaignChangeHistoryReportRequest",
+											"SearchQueryPerformanceReportRequest",
+											"ShareOfVoiceReportRequest",
+											"UserLocationPerformanceReportRequest",
+										),
+									},
+								},
+							},
+						},
+						Description: `You can add your Custom Bing Ads report by creating one.`,
 					},
 					"developer_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.`,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.`,
+						Optional: true,
+						MarkdownDescription: `Default: 0` + "\n" +
+							`Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode without specified Reports Start Date.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Refresh Token to renew the expired Access Token.`,
 					},
 					"reports_start_date": schema.StringAttribute{
-						Required: true,
+						Optional:    true,
+						Description: `The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format. If not set, data from previous and current calendar year will be replicated.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bing-ads",
-							),
-						},
-						Description: `must be one of ["bing-ads"]`,
 					},
 					"tenant_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.`,
+						Optional: true,
+						MarkdownDescription: `Default: "common"` + "\n" +
+							`The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -176,7 +241,7 @@ func (r *SourceBingAdsResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceBingAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -352,5 +417,5 @@ func (r *SourceBingAdsResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *SourceBingAdsResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

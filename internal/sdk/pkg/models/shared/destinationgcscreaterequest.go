@@ -4,6 +4,37 @@ package shared
 
 type DestinationGcsCreateRequest struct {
 	Configuration DestinationGcs `json:"configuration"`
-	Name          string         `json:"name"`
-	WorkspaceID   string         `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationGcsCreateRequest) GetConfiguration() DestinationGcs {
+	if o == nil {
+		return DestinationGcs{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationGcsCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationGcsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationGcsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

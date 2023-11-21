@@ -3,16 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceTodoistResourceModel) ToCreateSDKType() *shared.SourceTodoistCreateRequest {
-	sourceType := shared.SourceTodoistTodoist(r.Configuration.SourceType.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceTodoist{
-		SourceType: sourceType,
-		Token:      token,
+		Token: token,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -24,6 +28,7 @@ func (r *SourceTodoistResourceModel) ToCreateSDKType() *shared.SourceTodoistCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceTodoistCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

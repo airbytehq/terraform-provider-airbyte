@@ -7,3 +7,24 @@ type SourceOmnisendPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceOmnisendPutRequest) GetConfiguration() SourceOmnisendUpdate {
+	if o == nil {
+		return SourceOmnisendUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOmnisendPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOmnisendPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

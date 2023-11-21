@@ -3,16 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -32,11 +29,11 @@ type SourceZohoCrmDataSource struct {
 
 // SourceZohoCrmDataSourceModel describes the data model.
 type SourceZohoCrmDataSourceModel struct {
-	Configuration SourceZohoCrm `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,89 +47,19 @@ func (r *SourceZohoCrmDataSource) Schema(ctx context.Context, req datasource.Sch
 		MarkdownDescription: "SourceZohoCrm DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"client_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `OAuth2.0 Client ID`,
-					},
-					"client_secret": schema.StringAttribute{
-						Computed:    true,
-						Description: `OAuth2.0 Client Secret`,
-					},
-					"dc_region": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"US",
-								"AU",
-								"EU",
-								"IN",
-								"CN",
-								"JP",
-							),
-						},
-						MarkdownDescription: `must be one of ["US", "AU", "EU", "IN", "CN", "JP"]` + "\n" +
-							`Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>`,
-					},
-					"edition": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Free",
-								"Standard",
-								"Professional",
-								"Enterprise",
-								"Ultimate",
-							),
-						},
-						MarkdownDescription: `must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]` + "\n" +
-							`Choose your Edition of Zoho CRM to determine API Concurrency Limits`,
-					},
-					"environment": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"Production",
-								"Developer",
-								"Sandbox",
-							),
-						},
-						MarkdownDescription: `must be one of ["Production", "Developer", "Sandbox"]` + "\n" +
-							`Please choose the environment`,
-					},
-					"refresh_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `OAuth2.0 Refresh Token`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zoho-crm",
-							),
-						},
-						Description: `must be one of ["zoho-crm"]`,
-					},
-					"start_datetime": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-						Description: `ISO 8601, for instance: ` + "`" + `YYYY-MM-DD` + "`" + `, ` + "`" + `YYYY-MM-DD HH:MM:SS+HH:MM` + "`" + ``,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

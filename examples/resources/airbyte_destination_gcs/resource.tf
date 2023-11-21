@@ -1,17 +1,16 @@
 resource "airbyte_destination_gcs" "my_destination_gcs" {
   configuration = {
     credential = {
-      destination_gcs_authentication_hmac_key = {
+      hmac_key = {
         credential_type    = "HMAC_KEY"
         hmac_key_access_id = "1234567890abcdefghij1234"
         hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
       }
     }
-    destination_type = "gcs"
     format = {
-      destination_gcs_output_format_avro_apache_avro = {
+      avro_apache_avro = {
         compression_codec = {
-          destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2 = {
+          bzip2 = {
             codec = "bzip2"
           }
         }
@@ -22,6 +21,7 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     gcs_bucket_path   = "data_sync/test"
     gcs_bucket_region = "us-west1"
   }
-  name         = "Miss Dennis Friesen"
-  workspace_id = "c366c8dd-6b14-4429-8747-4778a7bd466d"
+  definition_id = "37e4a59e-7bfd-41d4-96bd-14d08d4a7d5d"
+  name          = "Opal D'Amore"
+  workspace_id  = "153b42c3-2f48-4f6e-943a-0f0f39a6c151"
 }

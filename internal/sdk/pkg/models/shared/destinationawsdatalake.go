@@ -3,130 +3,176 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle - Name of the credentials
-type DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle string
+// DestinationAwsDatalakeSchemasCredentialsTitle - Name of the credentials
+type DestinationAwsDatalakeSchemasCredentialsTitle string
 
 const (
-	DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleIamUser DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle = "IAM User"
+	DestinationAwsDatalakeSchemasCredentialsTitleIamUser DestinationAwsDatalakeSchemasCredentialsTitle = "IAM User"
 )
 
-func (e DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle) ToPointer() *DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle {
+func (e DestinationAwsDatalakeSchemasCredentialsTitle) ToPointer() *DestinationAwsDatalakeSchemasCredentialsTitle {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle) UnmarshalJSON(data []byte) error {
+func (e *DestinationAwsDatalakeSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "IAM User":
-		*e = DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle(v)
+		*e = DestinationAwsDatalakeSchemasCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle: %v", v)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeSchemasCredentialsTitle: %v", v)
 	}
 }
 
-// DestinationAwsDatalakeAuthenticationModeIAMUser - Choose How to Authenticate to AWS.
-type DestinationAwsDatalakeAuthenticationModeIAMUser struct {
+// DestinationAwsDatalakeIAMUser - Choose How to Authenticate to AWS.
+type DestinationAwsDatalakeIAMUser struct {
 	// AWS User Access Key Id
 	AwsAccessKeyID string `json:"aws_access_key_id"`
 	// Secret Access Key
 	AwsSecretAccessKey string `json:"aws_secret_access_key"`
 	// Name of the credentials
-	CredentialsTitle DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle `json:"credentials_title"`
+	credentialsTitle *DestinationAwsDatalakeSchemasCredentialsTitle `const:"IAM User" json:"credentials_title"`
 }
 
-// DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle - Name of the credentials
-type DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle string
+func (d DestinationAwsDatalakeIAMUser) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationAwsDatalakeIAMUser) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationAwsDatalakeIAMUser) GetAwsAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsAccessKeyID
+}
+
+func (o *DestinationAwsDatalakeIAMUser) GetAwsSecretAccessKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsSecretAccessKey
+}
+
+func (o *DestinationAwsDatalakeIAMUser) GetCredentialsTitle() *DestinationAwsDatalakeSchemasCredentialsTitle {
+	return DestinationAwsDatalakeSchemasCredentialsTitleIamUser.ToPointer()
+}
+
+// DestinationAwsDatalakeCredentialsTitle - Name of the credentials
+type DestinationAwsDatalakeCredentialsTitle string
 
 const (
-	DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleIamRole DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle = "IAM Role"
+	DestinationAwsDatalakeCredentialsTitleIamRole DestinationAwsDatalakeCredentialsTitle = "IAM Role"
 )
 
-func (e DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle) ToPointer() *DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle {
+func (e DestinationAwsDatalakeCredentialsTitle) ToPointer() *DestinationAwsDatalakeCredentialsTitle {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle) UnmarshalJSON(data []byte) error {
+func (e *DestinationAwsDatalakeCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "IAM Role":
-		*e = DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle(v)
+		*e = DestinationAwsDatalakeCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle: %v", v)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeCredentialsTitle: %v", v)
 	}
 }
 
-// DestinationAwsDatalakeAuthenticationModeIAMRole - Choose How to Authenticate to AWS.
-type DestinationAwsDatalakeAuthenticationModeIAMRole struct {
+// DestinationAwsDatalakeIAMRole - Choose How to Authenticate to AWS.
+type DestinationAwsDatalakeIAMRole struct {
 	// Name of the credentials
-	CredentialsTitle DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle `json:"credentials_title"`
+	credentialsTitle *DestinationAwsDatalakeCredentialsTitle `const:"IAM Role" json:"credentials_title"`
 	// Will assume this role to write data to s3
 	RoleArn string `json:"role_arn"`
+}
+
+func (d DestinationAwsDatalakeIAMRole) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationAwsDatalakeIAMRole) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationAwsDatalakeIAMRole) GetCredentialsTitle() *DestinationAwsDatalakeCredentialsTitle {
+	return DestinationAwsDatalakeCredentialsTitleIamRole.ToPointer()
+}
+
+func (o *DestinationAwsDatalakeIAMRole) GetRoleArn() string {
+	if o == nil {
+		return ""
+	}
+	return o.RoleArn
 }
 
 type DestinationAwsDatalakeAuthenticationModeType string
 
 const (
-	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeAuthenticationModeIAMRole DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_Authentication mode_IAM Role"
-	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeAuthenticationModeIAMUser DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_Authentication mode_IAM User"
+	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMRole DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_IAM Role"
+	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_IAM User"
 )
 
 type DestinationAwsDatalakeAuthenticationMode struct {
-	DestinationAwsDatalakeAuthenticationModeIAMRole *DestinationAwsDatalakeAuthenticationModeIAMRole
-	DestinationAwsDatalakeAuthenticationModeIAMUser *DestinationAwsDatalakeAuthenticationModeIAMUser
+	DestinationAwsDatalakeIAMRole *DestinationAwsDatalakeIAMRole
+	DestinationAwsDatalakeIAMUser *DestinationAwsDatalakeIAMUser
 
 	Type DestinationAwsDatalakeAuthenticationModeType
 }
 
-func CreateDestinationAwsDatalakeAuthenticationModeDestinationAwsDatalakeAuthenticationModeIAMRole(destinationAwsDatalakeAuthenticationModeIAMRole DestinationAwsDatalakeAuthenticationModeIAMRole) DestinationAwsDatalakeAuthenticationMode {
-	typ := DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeAuthenticationModeIAMRole
+func CreateDestinationAwsDatalakeAuthenticationModeDestinationAwsDatalakeIAMRole(destinationAwsDatalakeIAMRole DestinationAwsDatalakeIAMRole) DestinationAwsDatalakeAuthenticationMode {
+	typ := DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMRole
 
 	return DestinationAwsDatalakeAuthenticationMode{
-		DestinationAwsDatalakeAuthenticationModeIAMRole: &destinationAwsDatalakeAuthenticationModeIAMRole,
-		Type: typ,
+		DestinationAwsDatalakeIAMRole: &destinationAwsDatalakeIAMRole,
+		Type:                          typ,
 	}
 }
 
-func CreateDestinationAwsDatalakeAuthenticationModeDestinationAwsDatalakeAuthenticationModeIAMUser(destinationAwsDatalakeAuthenticationModeIAMUser DestinationAwsDatalakeAuthenticationModeIAMUser) DestinationAwsDatalakeAuthenticationMode {
-	typ := DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeAuthenticationModeIAMUser
+func CreateDestinationAwsDatalakeAuthenticationModeDestinationAwsDatalakeIAMUser(destinationAwsDatalakeIAMUser DestinationAwsDatalakeIAMUser) DestinationAwsDatalakeAuthenticationMode {
+	typ := DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser
 
 	return DestinationAwsDatalakeAuthenticationMode{
-		DestinationAwsDatalakeAuthenticationModeIAMUser: &destinationAwsDatalakeAuthenticationModeIAMUser,
-		Type: typ,
+		DestinationAwsDatalakeIAMUser: &destinationAwsDatalakeIAMUser,
+		Type:                          typ,
 	}
 }
 
 func (u *DestinationAwsDatalakeAuthenticationMode) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationAwsDatalakeAuthenticationModeIAMRole := new(DestinationAwsDatalakeAuthenticationModeIAMRole)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationAwsDatalakeAuthenticationModeIAMRole); err == nil {
-		u.DestinationAwsDatalakeAuthenticationModeIAMRole = destinationAwsDatalakeAuthenticationModeIAMRole
-		u.Type = DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeAuthenticationModeIAMRole
+	destinationAwsDatalakeIAMRole := new(DestinationAwsDatalakeIAMRole)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeIAMRole, "", true, true); err == nil {
+		u.DestinationAwsDatalakeIAMRole = destinationAwsDatalakeIAMRole
+		u.Type = DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMRole
 		return nil
 	}
 
-	destinationAwsDatalakeAuthenticationModeIAMUser := new(DestinationAwsDatalakeAuthenticationModeIAMUser)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationAwsDatalakeAuthenticationModeIAMUser); err == nil {
-		u.DestinationAwsDatalakeAuthenticationModeIAMUser = destinationAwsDatalakeAuthenticationModeIAMUser
-		u.Type = DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeAuthenticationModeIAMUser
+	destinationAwsDatalakeIAMUser := new(DestinationAwsDatalakeIAMUser)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeIAMUser, "", true, true); err == nil {
+		u.DestinationAwsDatalakeIAMUser = destinationAwsDatalakeIAMUser
+		u.Type = DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser
 		return nil
 	}
 
@@ -134,56 +180,56 @@ func (u *DestinationAwsDatalakeAuthenticationMode) UnmarshalJSON(data []byte) er
 }
 
 func (u DestinationAwsDatalakeAuthenticationMode) MarshalJSON() ([]byte, error) {
-	if u.DestinationAwsDatalakeAuthenticationModeIAMRole != nil {
-		return json.Marshal(u.DestinationAwsDatalakeAuthenticationModeIAMRole)
+	if u.DestinationAwsDatalakeIAMRole != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeIAMRole, "", true)
 	}
 
-	if u.DestinationAwsDatalakeAuthenticationModeIAMUser != nil {
-		return json.Marshal(u.DestinationAwsDatalakeAuthenticationModeIAMUser)
+	if u.DestinationAwsDatalakeIAMUser != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeIAMUser, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationAwsDatalakeAwsDatalake string
+type AwsDatalake string
 
 const (
-	DestinationAwsDatalakeAwsDatalakeAwsDatalake DestinationAwsDatalakeAwsDatalake = "aws-datalake"
+	AwsDatalakeAwsDatalake AwsDatalake = "aws-datalake"
 )
 
-func (e DestinationAwsDatalakeAwsDatalake) ToPointer() *DestinationAwsDatalakeAwsDatalake {
+func (e AwsDatalake) ToPointer() *AwsDatalake {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeAwsDatalake) UnmarshalJSON(data []byte) error {
+func (e *AwsDatalake) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aws-datalake":
-		*e = DestinationAwsDatalakeAwsDatalake(v)
+		*e = AwsDatalake(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeAwsDatalake: %v", v)
+		return fmt.Errorf("invalid value for AwsDatalake: %v", v)
 	}
 }
 
-// DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional - The compression algorithm used to compress data.
-type DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional string
+// DestinationAwsDatalakeSchemasCompressionCodecOptional - The compression algorithm used to compress data.
+type DestinationAwsDatalakeSchemasCompressionCodecOptional string
 
 const (
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalUncompressed DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional = "UNCOMPRESSED"
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalSnappy       DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional = "SNAPPY"
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalGzip         DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional = "GZIP"
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalZstd         DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional = "ZSTD"
+	DestinationAwsDatalakeSchemasCompressionCodecOptionalUncompressed DestinationAwsDatalakeSchemasCompressionCodecOptional = "UNCOMPRESSED"
+	DestinationAwsDatalakeSchemasCompressionCodecOptionalSnappy       DestinationAwsDatalakeSchemasCompressionCodecOptional = "SNAPPY"
+	DestinationAwsDatalakeSchemasCompressionCodecOptionalGzip         DestinationAwsDatalakeSchemasCompressionCodecOptional = "GZIP"
+	DestinationAwsDatalakeSchemasCompressionCodecOptionalZstd         DestinationAwsDatalakeSchemasCompressionCodecOptional = "ZSTD"
 )
 
-func (e DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional {
+func (e DestinationAwsDatalakeSchemasCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeSchemasCompressionCodecOptional {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional) UnmarshalJSON(data []byte) error {
+func (e *DestinationAwsDatalakeSchemasCompressionCodecOptional) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -196,57 +242,82 @@ func (e *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompres
 	case "GZIP":
 		fallthrough
 	case "ZSTD":
-		*e = DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(v)
+		*e = DestinationAwsDatalakeSchemasCompressionCodecOptional(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional: %v", v)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeSchemasCompressionCodecOptional: %v", v)
 	}
 }
 
-type DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard string
+type DestinationAwsDatalakeSchemasFormatTypeWildcard string
 
 const (
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardParquet DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard = "Parquet"
+	DestinationAwsDatalakeSchemasFormatTypeWildcardParquet DestinationAwsDatalakeSchemasFormatTypeWildcard = "Parquet"
 )
 
-func (e DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard {
+func (e DestinationAwsDatalakeSchemasFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeSchemasFormatTypeWildcard {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard) UnmarshalJSON(data []byte) error {
+func (e *DestinationAwsDatalakeSchemasFormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Parquet":
-		*e = DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(v)
+		*e = DestinationAwsDatalakeSchemasFormatTypeWildcard(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard: %v", v)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeSchemasFormatTypeWildcard: %v", v)
 	}
 }
 
-// DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage - Format of the data output.
-type DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage struct {
+// DestinationAwsDatalakeParquetColumnarStorage - Format of the data output.
+type DestinationAwsDatalakeParquetColumnarStorage struct {
 	// The compression algorithm used to compress data.
-	CompressionCodec *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional `json:"compression_codec,omitempty"`
-	FormatType       DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard        `json:"format_type"`
+	CompressionCodec *DestinationAwsDatalakeSchemasCompressionCodecOptional `default:"SNAPPY" json:"compression_codec"`
+	FormatType       *DestinationAwsDatalakeSchemasFormatTypeWildcard       `default:"Parquet" json:"format_type"`
 }
 
-// DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional - The compression algorithm used to compress data.
-type DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional string
+func (d DestinationAwsDatalakeParquetColumnarStorage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationAwsDatalakeParquetColumnarStorage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationAwsDatalakeParquetColumnarStorage) GetCompressionCodec() *DestinationAwsDatalakeSchemasCompressionCodecOptional {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionCodec
+}
+
+func (o *DestinationAwsDatalakeParquetColumnarStorage) GetFormatType() *DestinationAwsDatalakeSchemasFormatTypeWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
+// DestinationAwsDatalakeCompressionCodecOptional - The compression algorithm used to compress data.
+type DestinationAwsDatalakeCompressionCodecOptional string
 
 const (
-	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalUncompressed DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional = "UNCOMPRESSED"
-	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalGzip         DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional = "GZIP"
+	DestinationAwsDatalakeCompressionCodecOptionalUncompressed DestinationAwsDatalakeCompressionCodecOptional = "UNCOMPRESSED"
+	DestinationAwsDatalakeCompressionCodecOptionalGzip         DestinationAwsDatalakeCompressionCodecOptional = "GZIP"
 )
 
-func (e DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional {
+func (e DestinationAwsDatalakeCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeCompressionCodecOptional {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional) UnmarshalJSON(data []byte) error {
+func (e *DestinationAwsDatalakeCompressionCodecOptional) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -255,94 +326,114 @@ func (e *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
 	case "UNCOMPRESSED":
 		fallthrough
 	case "GZIP":
-		*e = DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(v)
+		*e = DestinationAwsDatalakeCompressionCodecOptional(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional: %v", v)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeCompressionCodecOptional: %v", v)
 	}
 }
 
-type DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard string
+type DestinationAwsDatalakeFormatTypeWildcard string
 
 const (
-	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardJsonl DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard = "JSONL"
+	DestinationAwsDatalakeFormatTypeWildcardJsonl DestinationAwsDatalakeFormatTypeWildcard = "JSONL"
 )
 
-func (e DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard {
+func (e DestinationAwsDatalakeFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeFormatTypeWildcard {
 	return &e
 }
 
-func (e *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard) UnmarshalJSON(data []byte) error {
+func (e *DestinationAwsDatalakeFormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "JSONL":
-		*e = DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(v)
+		*e = DestinationAwsDatalakeFormatTypeWildcard(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard: %v", v)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeFormatTypeWildcard: %v", v)
 	}
 }
 
-// DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON - Format of the data output.
-type DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON struct {
+// DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON - Format of the data output.
+type DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON struct {
 	// The compression algorithm used to compress data.
-	CompressionCodec *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional `json:"compression_codec,omitempty"`
-	FormatType       DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard        `json:"format_type"`
+	CompressionCodec *DestinationAwsDatalakeCompressionCodecOptional `default:"UNCOMPRESSED" json:"compression_codec"`
+	FormatType       *DestinationAwsDatalakeFormatTypeWildcard       `default:"JSONL" json:"format_type"`
+}
+
+func (d DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) GetCompressionCodec() *DestinationAwsDatalakeCompressionCodecOptional {
+	if o == nil {
+		return nil
+	}
+	return o.CompressionCodec
+}
+
+func (o *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationAwsDatalakeFormatTypeWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 type DestinationAwsDatalakeOutputFormatWildcardType string
 
 const (
-	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_Output Format *_JSON Lines: Newline-delimited JSON"
-	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage        DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_Output Format *_Parquet: Columnar Storage"
+	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_JSON Lines: Newline-delimited JSON"
+	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage        DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_Parquet: Columnar Storage"
 )
 
 type DestinationAwsDatalakeOutputFormatWildcard struct {
-	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
-	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage        *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
+	DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
+	DestinationAwsDatalakeParquetColumnarStorage        *DestinationAwsDatalakeParquetColumnarStorage
 
 	Type DestinationAwsDatalakeOutputFormatWildcardType
 }
 
-func CreateDestinationAwsDatalakeOutputFormatWildcardDestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON(destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON) DestinationAwsDatalakeOutputFormatWildcard {
-	typ := DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
+func CreateDestinationAwsDatalakeOutputFormatWildcardDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON(destinationAwsDatalakeJSONLinesNewlineDelimitedJSON DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON) DestinationAwsDatalakeOutputFormatWildcard {
+	typ := DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
 
 	return DestinationAwsDatalakeOutputFormatWildcard{
-		DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON: &destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON,
+		DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON: &destinationAwsDatalakeJSONLinesNewlineDelimitedJSON,
 		Type: typ,
 	}
 }
 
-func CreateDestinationAwsDatalakeOutputFormatWildcardDestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage(destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage) DestinationAwsDatalakeOutputFormatWildcard {
-	typ := DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
+func CreateDestinationAwsDatalakeOutputFormatWildcardDestinationAwsDatalakeParquetColumnarStorage(destinationAwsDatalakeParquetColumnarStorage DestinationAwsDatalakeParquetColumnarStorage) DestinationAwsDatalakeOutputFormatWildcard {
+	typ := DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage
 
 	return DestinationAwsDatalakeOutputFormatWildcard{
-		DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage: &destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage,
+		DestinationAwsDatalakeParquetColumnarStorage: &destinationAwsDatalakeParquetColumnarStorage,
 		Type: typ,
 	}
 }
 
 func (u *DestinationAwsDatalakeOutputFormatWildcard) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON := new(DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON); err == nil {
-		u.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON = destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
-		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
+	destinationAwsDatalakeJSONLinesNewlineDelimitedJSON := new(DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeJSONLinesNewlineDelimitedJSON, "", true, true); err == nil {
+		u.DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON = destinationAwsDatalakeJSONLinesNewlineDelimitedJSON
+		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
 		return nil
 	}
 
-	destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage := new(DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage); err == nil {
-		u.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage = destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
-		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
+	destinationAwsDatalakeParquetColumnarStorage := new(DestinationAwsDatalakeParquetColumnarStorage)
+	if err := utils.UnmarshalJSON(data, &destinationAwsDatalakeParquetColumnarStorage, "", true, true); err == nil {
+		u.DestinationAwsDatalakeParquetColumnarStorage = destinationAwsDatalakeParquetColumnarStorage
+		u.Type = DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage
 		return nil
 	}
 
@@ -350,15 +441,15 @@ func (u *DestinationAwsDatalakeOutputFormatWildcard) UnmarshalJSON(data []byte) 
 }
 
 func (u DestinationAwsDatalakeOutputFormatWildcard) MarshalJSON() ([]byte, error) {
-	if u.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
-		return json.Marshal(u.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON)
+	if u.DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	if u.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
-		return json.Marshal(u.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage)
+	if u.DestinationAwsDatalakeParquetColumnarStorage != nil {
+		return utils.MarshalJSON(u.DestinationAwsDatalakeParquetColumnarStorage, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationAwsDatalakeChooseHowToPartitionData - Partition data by cursor fields when a cursor field is a date
@@ -513,11 +604,11 @@ type DestinationAwsDatalake struct {
 	BucketPrefix *string `json:"bucket_prefix,omitempty"`
 	// Choose How to Authenticate to AWS.
 	Credentials     DestinationAwsDatalakeAuthenticationMode `json:"credentials"`
-	DestinationType DestinationAwsDatalakeAwsDatalake        `json:"destinationType"`
+	destinationType AwsDatalake                              `const:"aws-datalake" json:"destinationType"`
 	// Format of the data output.
 	Format *DestinationAwsDatalakeOutputFormatWildcard `json:"format,omitempty"`
 	// Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.
-	GlueCatalogFloatAsDecimal *bool `json:"glue_catalog_float_as_decimal,omitempty"`
+	GlueCatalogFloatAsDecimal *bool `default:"false" json:"glue_catalog_float_as_decimal"`
 	// Add a default tag key to databases created by this destination
 	LakeformationDatabaseDefaultTagKey *string `json:"lakeformation_database_default_tag_key,omitempty"`
 	// Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
@@ -525,9 +616,108 @@ type DestinationAwsDatalake struct {
 	// The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.
 	LakeformationDatabaseName string `json:"lakeformation_database_name"`
 	// Whether to create tables as LF governed tables.
-	LakeformationGovernedTables *bool `json:"lakeformation_governed_tables,omitempty"`
+	LakeformationGovernedTables *bool `default:"false" json:"lakeformation_governed_tables"`
 	// Partition data by cursor fields when a cursor field is a date
-	Partitioning *DestinationAwsDatalakeChooseHowToPartitionData `json:"partitioning,omitempty"`
+	Partitioning *DestinationAwsDatalakeChooseHowToPartitionData `default:"NO PARTITIONING" json:"partitioning"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	Region DestinationAwsDatalakeS3BucketRegion `json:"region"`
+	Region *DestinationAwsDatalakeS3BucketRegion `default:"" json:"region"`
+}
+
+func (d DestinationAwsDatalake) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationAwsDatalake) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationAwsDatalake) GetAwsAccountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsAccountID
+}
+
+func (o *DestinationAwsDatalake) GetBucketName() string {
+	if o == nil {
+		return ""
+	}
+	return o.BucketName
+}
+
+func (o *DestinationAwsDatalake) GetBucketPrefix() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BucketPrefix
+}
+
+func (o *DestinationAwsDatalake) GetCredentials() DestinationAwsDatalakeAuthenticationMode {
+	if o == nil {
+		return DestinationAwsDatalakeAuthenticationMode{}
+	}
+	return o.Credentials
+}
+
+func (o *DestinationAwsDatalake) GetDestinationType() AwsDatalake {
+	return AwsDatalakeAwsDatalake
+}
+
+func (o *DestinationAwsDatalake) GetFormat() *DestinationAwsDatalakeOutputFormatWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.Format
+}
+
+func (o *DestinationAwsDatalake) GetGlueCatalogFloatAsDecimal() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.GlueCatalogFloatAsDecimal
+}
+
+func (o *DestinationAwsDatalake) GetLakeformationDatabaseDefaultTagKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LakeformationDatabaseDefaultTagKey
+}
+
+func (o *DestinationAwsDatalake) GetLakeformationDatabaseDefaultTagValues() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LakeformationDatabaseDefaultTagValues
+}
+
+func (o *DestinationAwsDatalake) GetLakeformationDatabaseName() string {
+	if o == nil {
+		return ""
+	}
+	return o.LakeformationDatabaseName
+}
+
+func (o *DestinationAwsDatalake) GetLakeformationGovernedTables() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.LakeformationGovernedTables
+}
+
+func (o *DestinationAwsDatalake) GetPartitioning() *DestinationAwsDatalakeChooseHowToPartitionData {
+	if o == nil {
+		return nil
+	}
+	return o.Partitioning
+}
+
+func (o *DestinationAwsDatalake) GetRegion() *DestinationAwsDatalakeS3BucketRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
 }

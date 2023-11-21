@@ -6,3 +6,10 @@ type SourceTempoUpdate struct {
 	// Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
 	APIToken string `json:"api_token"`
 }
+
+func (o *SourceTempoUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}

@@ -4,8 +4,46 @@ package shared
 
 type SourceGoogleSheetsCreateRequest struct {
 	Configuration SourceGoogleSheets `json:"configuration"`
-	Name          string             `json:"name"`
+	// The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the source e.g. dev-mysql-instance.
+	Name string `json:"name"`
 	// Optional secretID obtained through the public API OAuth redirect flow.
 	SecretID    *string `json:"secretId,omitempty"`
 	WorkspaceID string  `json:"workspaceId"`
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetConfiguration() SourceGoogleSheets {
+	if o == nil {
+		return SourceGoogleSheets{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetSecretID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretID
+}
+
+func (o *SourceGoogleSheetsCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

@@ -8,6 +8,5 @@ type SourceMarketo struct {
 	ClientID     types.String `tfsdk:"client_id"`
 	ClientSecret types.String `tfsdk:"client_secret"`
 	DomainURL    types.String `tfsdk:"domain_url"`
-	SourceType   types.String `tfsdk:"source_type"`
 	StartDate    types.String `tfsdk:"start_date"`
 }

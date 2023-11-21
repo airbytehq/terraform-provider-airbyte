@@ -8,3 +8,17 @@ type JobCreateRequest struct {
 	// Enum that describes the different types of jobs that the platform runs.
 	JobType JobTypeEnum `json:"jobType"`
 }
+
+func (o *JobCreateRequest) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
+}
+
+func (o *JobCreateRequest) GetJobType() JobTypeEnum {
+	if o == nil {
+		return JobTypeEnum("")
+	}
+	return o.JobType
+}

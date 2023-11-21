@@ -5,21 +5,22 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceZuoraUpdateDataQueryType - Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-type SourceZuoraUpdateDataQueryType string
+// DataQueryType - Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
+type DataQueryType string
 
 const (
-	SourceZuoraUpdateDataQueryTypeLive      SourceZuoraUpdateDataQueryType = "Live"
-	SourceZuoraUpdateDataQueryTypeUnlimited SourceZuoraUpdateDataQueryType = "Unlimited"
+	DataQueryTypeLive      DataQueryType = "Live"
+	DataQueryTypeUnlimited DataQueryType = "Unlimited"
 )
 
-func (e SourceZuoraUpdateDataQueryType) ToPointer() *SourceZuoraUpdateDataQueryType {
+func (e DataQueryType) ToPointer() *DataQueryType {
 	return &e
 }
 
-func (e *SourceZuoraUpdateDataQueryType) UnmarshalJSON(data []byte) error {
+func (e *DataQueryType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -28,33 +29,33 @@ func (e *SourceZuoraUpdateDataQueryType) UnmarshalJSON(data []byte) error {
 	case "Live":
 		fallthrough
 	case "Unlimited":
-		*e = SourceZuoraUpdateDataQueryType(v)
+		*e = DataQueryType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZuoraUpdateDataQueryType: %v", v)
+		return fmt.Errorf("invalid value for DataQueryType: %v", v)
 	}
 }
 
-// SourceZuoraUpdateTenantEndpointLocation - Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
-type SourceZuoraUpdateTenantEndpointLocation string
+// TenantEndpointLocation - Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
+type TenantEndpointLocation string
 
 const (
-	SourceZuoraUpdateTenantEndpointLocationUsProduction      SourceZuoraUpdateTenantEndpointLocation = "US Production"
-	SourceZuoraUpdateTenantEndpointLocationUsCloudProduction SourceZuoraUpdateTenantEndpointLocation = "US Cloud Production"
-	SourceZuoraUpdateTenantEndpointLocationUsAPISandbox      SourceZuoraUpdateTenantEndpointLocation = "US API Sandbox"
-	SourceZuoraUpdateTenantEndpointLocationUsCloudAPISandbox SourceZuoraUpdateTenantEndpointLocation = "US Cloud API Sandbox"
-	SourceZuoraUpdateTenantEndpointLocationUsCentralSandbox  SourceZuoraUpdateTenantEndpointLocation = "US Central Sandbox"
-	SourceZuoraUpdateTenantEndpointLocationUsPerformanceTest SourceZuoraUpdateTenantEndpointLocation = "US Performance Test"
-	SourceZuoraUpdateTenantEndpointLocationEuProduction      SourceZuoraUpdateTenantEndpointLocation = "EU Production"
-	SourceZuoraUpdateTenantEndpointLocationEuAPISandbox      SourceZuoraUpdateTenantEndpointLocation = "EU API Sandbox"
-	SourceZuoraUpdateTenantEndpointLocationEuCentralSandbox  SourceZuoraUpdateTenantEndpointLocation = "EU Central Sandbox"
+	TenantEndpointLocationUsProduction      TenantEndpointLocation = "US Production"
+	TenantEndpointLocationUsCloudProduction TenantEndpointLocation = "US Cloud Production"
+	TenantEndpointLocationUsAPISandbox      TenantEndpointLocation = "US API Sandbox"
+	TenantEndpointLocationUsCloudAPISandbox TenantEndpointLocation = "US Cloud API Sandbox"
+	TenantEndpointLocationUsCentralSandbox  TenantEndpointLocation = "US Central Sandbox"
+	TenantEndpointLocationUsPerformanceTest TenantEndpointLocation = "US Performance Test"
+	TenantEndpointLocationEuProduction      TenantEndpointLocation = "EU Production"
+	TenantEndpointLocationEuAPISandbox      TenantEndpointLocation = "EU API Sandbox"
+	TenantEndpointLocationEuCentralSandbox  TenantEndpointLocation = "EU Central Sandbox"
 )
 
-func (e SourceZuoraUpdateTenantEndpointLocation) ToPointer() *SourceZuoraUpdateTenantEndpointLocation {
+func (e TenantEndpointLocation) ToPointer() *TenantEndpointLocation {
 	return &e
 }
 
-func (e *SourceZuoraUpdateTenantEndpointLocation) UnmarshalJSON(data []byte) error {
+func (e *TenantEndpointLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -77,10 +78,10 @@ func (e *SourceZuoraUpdateTenantEndpointLocation) UnmarshalJSON(data []byte) err
 	case "EU API Sandbox":
 		fallthrough
 	case "EU Central Sandbox":
-		*e = SourceZuoraUpdateTenantEndpointLocation(v)
+		*e = TenantEndpointLocation(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZuoraUpdateTenantEndpointLocation: %v", v)
+		return fmt.Errorf("invalid value for TenantEndpointLocation: %v", v)
 	}
 }
 
@@ -90,11 +91,64 @@ type SourceZuoraUpdate struct {
 	// Your OAuth user Client Secret
 	ClientSecret string `json:"client_secret"`
 	// Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-	DataQuery SourceZuoraUpdateDataQueryType `json:"data_query"`
+	DataQuery *DataQueryType `default:"Live" json:"data_query"`
 	// Start Date in format: YYYY-MM-DD
 	StartDate string `json:"start_date"`
 	// Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
-	TenantEndpoint SourceZuoraUpdateTenantEndpointLocation `json:"tenant_endpoint"`
+	TenantEndpoint TenantEndpointLocation `json:"tenant_endpoint"`
 	// The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
-	WindowInDays *string `json:"window_in_days,omitempty"`
+	WindowInDays *string `default:"90" json:"window_in_days"`
+}
+
+func (s SourceZuoraUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceZuoraUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceZuoraUpdate) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceZuoraUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceZuoraUpdate) GetDataQuery() *DataQueryType {
+	if o == nil {
+		return nil
+	}
+	return o.DataQuery
+}
+
+func (o *SourceZuoraUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceZuoraUpdate) GetTenantEndpoint() TenantEndpointLocation {
+	if o == nil {
+		return TenantEndpointLocation("")
+	}
+	return o.TenantEndpoint
+}
+
+func (o *SourceZuoraUpdate) GetWindowInDays() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WindowInDays
 }

@@ -1,9 +1,9 @@
 resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
   configuration = {
-    api_key     = "...my_api_key..."
-    source_type = "gainsight-px"
+    api_key = "...my_api_key..."
   }
-  name         = "Hugh Goodwin"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "320a319f-4bad-4f94-bc9a-867bc4242666"
+  definition_id = "32b37f6f-ec5c-4d0a-8fda-52f69543b862"
+  name          = "Cristina McKenzie"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "50480aaa-f77a-4e08-bd2c-af83f045910a"
 }

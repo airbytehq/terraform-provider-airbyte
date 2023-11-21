@@ -3,44 +3,32 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.SourceAmazonSellerPartnerCreateRequest {
+	accountType := new(shared.SourceAmazonSellerPartnerAWSSellerPartnerAccountType)
+	if !r.Configuration.AccountType.IsUnknown() && !r.Configuration.AccountType.IsNull() {
+		*accountType = shared.SourceAmazonSellerPartnerAWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
+	} else {
+		accountType = nil
+	}
 	advancedStreamOptions := new(string)
 	if !r.Configuration.AdvancedStreamOptions.IsUnknown() && !r.Configuration.AdvancedStreamOptions.IsNull() {
 		*advancedStreamOptions = r.Configuration.AdvancedStreamOptions.ValueString()
 	} else {
 		advancedStreamOptions = nil
 	}
-	authType := new(shared.SourceAmazonSellerPartnerAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonSellerPartnerAuthType(r.Configuration.AuthType.ValueString())
+	awsEnvironment := new(shared.SourceAmazonSellerPartnerAWSEnvironment)
+	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
+		*awsEnvironment = shared.SourceAmazonSellerPartnerAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
 	} else {
-		authType = nil
-	}
-	awsAccessKey := new(string)
-	if !r.Configuration.AwsAccessKey.IsUnknown() && !r.Configuration.AwsAccessKey.IsNull() {
-		*awsAccessKey = r.Configuration.AwsAccessKey.ValueString()
-	} else {
-		awsAccessKey = nil
-	}
-	awsEnvironment := shared.SourceAmazonSellerPartnerAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
-	awsSecretKey := new(string)
-	if !r.Configuration.AwsSecretKey.IsUnknown() && !r.Configuration.AwsSecretKey.IsNull() {
-		*awsSecretKey = r.Configuration.AwsSecretKey.ValueString()
-	} else {
-		awsSecretKey = nil
+		awsEnvironment = nil
 	}
 	lwaAppID := r.Configuration.LwaAppID.ValueString()
 	lwaClientSecret := r.Configuration.LwaClientSecret.ValueString()
-	maxWaitSeconds := new(int64)
-	if !r.Configuration.MaxWaitSeconds.IsUnknown() && !r.Configuration.MaxWaitSeconds.IsNull() {
-		*maxWaitSeconds = r.Configuration.MaxWaitSeconds.ValueInt64()
-	} else {
-		maxWaitSeconds = nil
-	}
 	periodInDays := new(int64)
 	if !r.Configuration.PeriodInDays.IsUnknown() && !r.Configuration.PeriodInDays.IsNull() {
 		*periodInDays = r.Configuration.PeriodInDays.ValueInt64()
@@ -48,44 +36,43 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 		periodInDays = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	region := shared.SourceAmazonSellerPartnerAWSRegion(r.Configuration.Region.ValueString())
-	replicationEndDate := new(string)
+	region := new(shared.SourceAmazonSellerPartnerAWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceAmazonSellerPartnerAWSRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
+	replicationEndDate := new(time.Time)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
-		*replicationEndDate = r.Configuration.ReplicationEndDate.ValueString()
+		*replicationEndDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationEndDate.ValueString())
 	} else {
 		replicationEndDate = nil
 	}
-	replicationStartDate := r.Configuration.ReplicationStartDate.ValueString()
+	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	reportOptions := new(string)
 	if !r.Configuration.ReportOptions.IsUnknown() && !r.Configuration.ReportOptions.IsNull() {
 		*reportOptions = r.Configuration.ReportOptions.ValueString()
 	} else {
 		reportOptions = nil
 	}
-	roleArn := new(string)
-	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
-		*roleArn = r.Configuration.RoleArn.ValueString()
-	} else {
-		roleArn = nil
-	}
-	sourceType := shared.SourceAmazonSellerPartnerAmazonSellerPartner(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAmazonSellerPartner{
+		AccountType:           accountType,
 		AdvancedStreamOptions: advancedStreamOptions,
-		AuthType:              authType,
-		AwsAccessKey:          awsAccessKey,
 		AwsEnvironment:        awsEnvironment,
-		AwsSecretKey:          awsSecretKey,
 		LwaAppID:              lwaAppID,
 		LwaClientSecret:       lwaClientSecret,
-		MaxWaitSeconds:        maxWaitSeconds,
 		PeriodInDays:          periodInDays,
 		RefreshToken:          refreshToken,
 		Region:                region,
 		ReplicationEndDate:    replicationEndDate,
 		ReplicationStartDate:  replicationStartDate,
 		ReportOptions:         reportOptions,
-		RoleArn:               roleArn,
-		SourceType:            sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -97,6 +84,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAmazonSellerPartnerCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -110,39 +98,26 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToGetSDKType() *shared.SourceAm
 }
 
 func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.SourceAmazonSellerPartnerPutRequest {
+	accountType := new(shared.AWSSellerPartnerAccountType)
+	if !r.Configuration.AccountType.IsUnknown() && !r.Configuration.AccountType.IsNull() {
+		*accountType = shared.AWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
+	} else {
+		accountType = nil
+	}
 	advancedStreamOptions := new(string)
 	if !r.Configuration.AdvancedStreamOptions.IsUnknown() && !r.Configuration.AdvancedStreamOptions.IsNull() {
 		*advancedStreamOptions = r.Configuration.AdvancedStreamOptions.ValueString()
 	} else {
 		advancedStreamOptions = nil
 	}
-	authType := new(shared.SourceAmazonSellerPartnerUpdateAuthType)
-	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonSellerPartnerUpdateAuthType(r.Configuration.AuthType.ValueString())
+	awsEnvironment := new(shared.AWSEnvironment)
+	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
+		*awsEnvironment = shared.AWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
 	} else {
-		authType = nil
-	}
-	awsAccessKey := new(string)
-	if !r.Configuration.AwsAccessKey.IsUnknown() && !r.Configuration.AwsAccessKey.IsNull() {
-		*awsAccessKey = r.Configuration.AwsAccessKey.ValueString()
-	} else {
-		awsAccessKey = nil
-	}
-	awsEnvironment := shared.SourceAmazonSellerPartnerUpdateAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
-	awsSecretKey := new(string)
-	if !r.Configuration.AwsSecretKey.IsUnknown() && !r.Configuration.AwsSecretKey.IsNull() {
-		*awsSecretKey = r.Configuration.AwsSecretKey.ValueString()
-	} else {
-		awsSecretKey = nil
+		awsEnvironment = nil
 	}
 	lwaAppID := r.Configuration.LwaAppID.ValueString()
 	lwaClientSecret := r.Configuration.LwaClientSecret.ValueString()
-	maxWaitSeconds := new(int64)
-	if !r.Configuration.MaxWaitSeconds.IsUnknown() && !r.Configuration.MaxWaitSeconds.IsNull() {
-		*maxWaitSeconds = r.Configuration.MaxWaitSeconds.ValueInt64()
-	} else {
-		maxWaitSeconds = nil
-	}
 	periodInDays := new(int64)
 	if !r.Configuration.PeriodInDays.IsUnknown() && !r.Configuration.PeriodInDays.IsNull() {
 		*periodInDays = r.Configuration.PeriodInDays.ValueInt64()
@@ -150,42 +125,37 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.Sourc
 		periodInDays = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	region := shared.SourceAmazonSellerPartnerUpdateAWSRegion(r.Configuration.Region.ValueString())
-	replicationEndDate := new(string)
+	region := new(shared.AWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.AWSRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
+	replicationEndDate := new(time.Time)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
-		*replicationEndDate = r.Configuration.ReplicationEndDate.ValueString()
+		*replicationEndDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationEndDate.ValueString())
 	} else {
 		replicationEndDate = nil
 	}
-	replicationStartDate := r.Configuration.ReplicationStartDate.ValueString()
+	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	reportOptions := new(string)
 	if !r.Configuration.ReportOptions.IsUnknown() && !r.Configuration.ReportOptions.IsNull() {
 		*reportOptions = r.Configuration.ReportOptions.ValueString()
 	} else {
 		reportOptions = nil
 	}
-	roleArn := new(string)
-	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
-		*roleArn = r.Configuration.RoleArn.ValueString()
-	} else {
-		roleArn = nil
-	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
+		AccountType:           accountType,
 		AdvancedStreamOptions: advancedStreamOptions,
-		AuthType:              authType,
-		AwsAccessKey:          awsAccessKey,
 		AwsEnvironment:        awsEnvironment,
-		AwsSecretKey:          awsSecretKey,
 		LwaAppID:              lwaAppID,
 		LwaClientSecret:       lwaClientSecret,
-		MaxWaitSeconds:        maxWaitSeconds,
 		PeriodInDays:          periodInDays,
 		RefreshToken:          refreshToken,
 		Region:                region,
 		ReplicationEndDate:    replicationEndDate,
 		ReplicationStartDate:  replicationStartDate,
 		ReportOptions:         reportOptions,
-		RoleArn:               roleArn,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

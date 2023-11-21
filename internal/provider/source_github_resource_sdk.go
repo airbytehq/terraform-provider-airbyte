@@ -3,89 +3,104 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreateRequest {
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	branch := new(string)
 	if !r.Configuration.Branch.IsUnknown() && !r.Configuration.Branch.IsNull() {
 		*branch = r.Configuration.Branch.ValueString()
 	} else {
 		branch = nil
 	}
-	var credentials *shared.SourceGithubAuthentication
-	if r.Configuration.Credentials != nil {
-		var sourceGithubAuthenticationOAuth *shared.SourceGithubAuthenticationOAuth
-		if r.Configuration.Credentials.SourceGithubAuthenticationOAuth != nil {
-			accessToken := r.Configuration.Credentials.SourceGithubAuthenticationOAuth.AccessToken.ValueString()
-			clientID := new(string)
-			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID.ValueString()
-			} else {
-				clientID = nil
-			}
-			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret.ValueString()
-			} else {
-				clientSecret = nil
-			}
-			optionTitle := new(shared.SourceGithubAuthenticationOAuthOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsNull() {
-				*optionTitle = shared.SourceGithubAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.ValueString())
-			} else {
-				optionTitle = nil
-			}
-			sourceGithubAuthenticationOAuth = &shared.SourceGithubAuthenticationOAuth{
-				AccessToken:  accessToken,
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
-			}
+	var branches []string = nil
+	for _, branchesItem := range r.Configuration.Branches {
+		branches = append(branches, branchesItem.ValueString())
+	}
+	var credentials shared.SourceGithubAuthentication
+	var sourceGithubOAuth *shared.SourceGithubOAuth
+	if r.Configuration.Credentials.OAuth != nil {
+		accessToken := r.Configuration.Credentials.OAuth.AccessToken.ValueString()
+		clientID := new(string)
+		if !r.Configuration.Credentials.OAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth.ClientID.IsNull() {
+			*clientID = r.Configuration.Credentials.OAuth.ClientID.ValueString()
+		} else {
+			clientID = nil
 		}
-		if sourceGithubAuthenticationOAuth != nil {
-			credentials = &shared.SourceGithubAuthentication{
-				SourceGithubAuthenticationOAuth: sourceGithubAuthenticationOAuth,
-			}
+		clientSecret := new(string)
+		if !r.Configuration.Credentials.OAuth.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth.ClientSecret.IsNull() {
+			*clientSecret = r.Configuration.Credentials.OAuth.ClientSecret.ValueString()
+		} else {
+			clientSecret = nil
 		}
-		var sourceGithubAuthenticationPersonalAccessToken *shared.SourceGithubAuthenticationPersonalAccessToken
-		if r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken != nil {
-			optionTitle1 := new(shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.IsNull() {
-				*optionTitle1 = shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.ValueString())
-			} else {
-				optionTitle1 = nil
-			}
-			personalAccessToken := r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.PersonalAccessToken.ValueString()
-			sourceGithubAuthenticationPersonalAccessToken = &shared.SourceGithubAuthenticationPersonalAccessToken{
-				OptionTitle:         optionTitle1,
-				PersonalAccessToken: personalAccessToken,
-			}
-		}
-		if sourceGithubAuthenticationPersonalAccessToken != nil {
-			credentials = &shared.SourceGithubAuthentication{
-				SourceGithubAuthenticationPersonalAccessToken: sourceGithubAuthenticationPersonalAccessToken,
-			}
+		sourceGithubOAuth = &shared.SourceGithubOAuth{
+			AccessToken:  accessToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 		}
 	}
-	repository := r.Configuration.Repository.ValueString()
+	if sourceGithubOAuth != nil {
+		credentials = shared.SourceGithubAuthentication{
+			SourceGithubOAuth: sourceGithubOAuth,
+		}
+	}
+	var sourceGithubPersonalAccessToken *shared.SourceGithubPersonalAccessToken
+	if r.Configuration.Credentials.PersonalAccessToken != nil {
+		personalAccessToken := r.Configuration.Credentials.PersonalAccessToken.PersonalAccessToken.ValueString()
+		sourceGithubPersonalAccessToken = &shared.SourceGithubPersonalAccessToken{
+			PersonalAccessToken: personalAccessToken,
+		}
+	}
+	if sourceGithubPersonalAccessToken != nil {
+		credentials = shared.SourceGithubAuthentication{
+			SourceGithubPersonalAccessToken: sourceGithubPersonalAccessToken,
+		}
+	}
+	var repositories []string = nil
+	for _, repositoriesItem := range r.Configuration.Repositories {
+		repositories = append(repositories, repositoriesItem.ValueString())
+	}
+	repository := new(string)
+	if !r.Configuration.Repository.IsUnknown() && !r.Configuration.Repository.IsNull() {
+		*repository = r.Configuration.Repository.ValueString()
+	} else {
+		repository = nil
+	}
 	requestsPerHour := new(int64)
 	if !r.Configuration.RequestsPerHour.IsUnknown() && !r.Configuration.RequestsPerHour.IsNull() {
 		*requestsPerHour = r.Configuration.RequestsPerHour.ValueInt64()
 	} else {
 		requestsPerHour = nil
 	}
-	sourceType := shared.SourceGithubGithub(r.Configuration.SourceType.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGithub{
+		APIURL:          apiURL,
 		Branch:          branch,
+		Branches:        branches,
 		Credentials:     credentials,
+		Repositories:    repositories,
 		Repository:      repository,
 		RequestsPerHour: requestsPerHour,
-		SourceType:      sourceType,
 		StartDate:       startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -97,6 +112,7 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGithubCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -110,78 +126,89 @@ func (r *SourceGithubResourceModel) ToGetSDKType() *shared.SourceGithubCreateReq
 }
 
 func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutRequest {
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	branch := new(string)
 	if !r.Configuration.Branch.IsUnknown() && !r.Configuration.Branch.IsNull() {
 		*branch = r.Configuration.Branch.ValueString()
 	} else {
 		branch = nil
 	}
-	var credentials *shared.SourceGithubUpdateAuthentication
-	if r.Configuration.Credentials != nil {
-		var sourceGithubUpdateAuthenticationOAuth *shared.SourceGithubUpdateAuthenticationOAuth
-		if r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth != nil {
-			accessToken := r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.AccessToken.ValueString()
-			clientID := new(string)
-			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientID.ValueString()
-			} else {
-				clientID = nil
-			}
-			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientSecret.ValueString()
-			} else {
-				clientSecret = nil
-			}
-			optionTitle := new(shared.SourceGithubUpdateAuthenticationOAuthOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.IsNull() {
-				*optionTitle = shared.SourceGithubUpdateAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.ValueString())
-			} else {
-				optionTitle = nil
-			}
-			sourceGithubUpdateAuthenticationOAuth = &shared.SourceGithubUpdateAuthenticationOAuth{
-				AccessToken:  accessToken,
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
-				OptionTitle:  optionTitle,
-			}
+	var branches []string = nil
+	for _, branchesItem := range r.Configuration.Branches {
+		branches = append(branches, branchesItem.ValueString())
+	}
+	var credentials shared.SourceGithubUpdateAuthentication
+	var oAuth *shared.OAuth
+	if r.Configuration.Credentials.OAuth != nil {
+		accessToken := r.Configuration.Credentials.OAuth.AccessToken.ValueString()
+		clientID := new(string)
+		if !r.Configuration.Credentials.OAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth.ClientID.IsNull() {
+			*clientID = r.Configuration.Credentials.OAuth.ClientID.ValueString()
+		} else {
+			clientID = nil
 		}
-		if sourceGithubUpdateAuthenticationOAuth != nil {
-			credentials = &shared.SourceGithubUpdateAuthentication{
-				SourceGithubUpdateAuthenticationOAuth: sourceGithubUpdateAuthenticationOAuth,
-			}
+		clientSecret := new(string)
+		if !r.Configuration.Credentials.OAuth.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth.ClientSecret.IsNull() {
+			*clientSecret = r.Configuration.Credentials.OAuth.ClientSecret.ValueString()
+		} else {
+			clientSecret = nil
 		}
-		var sourceGithubUpdateAuthenticationPersonalAccessToken *shared.SourceGithubUpdateAuthenticationPersonalAccessToken
-		if r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken != nil {
-			optionTitle1 := new(shared.SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle)
-			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.OptionTitle.IsNull() {
-				*optionTitle1 = shared.SourceGithubUpdateAuthenticationPersonalAccessTokenOptionTitle(r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.OptionTitle.ValueString())
-			} else {
-				optionTitle1 = nil
-			}
-			personalAccessToken := r.Configuration.Credentials.SourceGithubUpdateAuthenticationPersonalAccessToken.PersonalAccessToken.ValueString()
-			sourceGithubUpdateAuthenticationPersonalAccessToken = &shared.SourceGithubUpdateAuthenticationPersonalAccessToken{
-				OptionTitle:         optionTitle1,
-				PersonalAccessToken: personalAccessToken,
-			}
-		}
-		if sourceGithubUpdateAuthenticationPersonalAccessToken != nil {
-			credentials = &shared.SourceGithubUpdateAuthentication{
-				SourceGithubUpdateAuthenticationPersonalAccessToken: sourceGithubUpdateAuthenticationPersonalAccessToken,
-			}
+		oAuth = &shared.OAuth{
+			AccessToken:  accessToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 		}
 	}
-	repository := r.Configuration.Repository.ValueString()
+	if oAuth != nil {
+		credentials = shared.SourceGithubUpdateAuthentication{
+			OAuth: oAuth,
+		}
+	}
+	var sourceGithubUpdatePersonalAccessToken *shared.SourceGithubUpdatePersonalAccessToken
+	if r.Configuration.Credentials.PersonalAccessToken != nil {
+		personalAccessToken := r.Configuration.Credentials.PersonalAccessToken.PersonalAccessToken.ValueString()
+		sourceGithubUpdatePersonalAccessToken = &shared.SourceGithubUpdatePersonalAccessToken{
+			PersonalAccessToken: personalAccessToken,
+		}
+	}
+	if sourceGithubUpdatePersonalAccessToken != nil {
+		credentials = shared.SourceGithubUpdateAuthentication{
+			SourceGithubUpdatePersonalAccessToken: sourceGithubUpdatePersonalAccessToken,
+		}
+	}
+	var repositories []string = nil
+	for _, repositoriesItem := range r.Configuration.Repositories {
+		repositories = append(repositories, repositoriesItem.ValueString())
+	}
+	repository := new(string)
+	if !r.Configuration.Repository.IsUnknown() && !r.Configuration.Repository.IsNull() {
+		*repository = r.Configuration.Repository.ValueString()
+	} else {
+		repository = nil
+	}
 	requestsPerHour := new(int64)
 	if !r.Configuration.RequestsPerHour.IsUnknown() && !r.Configuration.RequestsPerHour.IsNull() {
 		*requestsPerHour = r.Configuration.RequestsPerHour.ValueInt64()
 	} else {
 		requestsPerHour = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGithubUpdate{
+		APIURL:          apiURL,
 		Branch:          branch,
+		Branches:        branches,
 		Credentials:     credentials,
+		Repositories:    repositories,
 		Repository:      repository,
 		RequestsPerHour: requestsPerHour,
 		StartDate:       startDate,

@@ -7,3 +7,24 @@ type WorkspacesResponse struct {
 	Next     *string             `json:"next,omitempty"`
 	Previous *string             `json:"previous,omitempty"`
 }
+
+func (o *WorkspacesResponse) GetData() []WorkspaceResponse {
+	if o == nil {
+		return []WorkspaceResponse{}
+	}
+	return o.Data
+}
+
+func (o *WorkspacesResponse) GetNext() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}
+
+func (o *WorkspacesResponse) GetPrevious() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Previous
+}

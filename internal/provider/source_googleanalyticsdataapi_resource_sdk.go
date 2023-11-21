@@ -3,73 +3,1425 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
 	var credentials *shared.SourceGoogleAnalyticsDataAPICredentials
 	if r.Configuration.Credentials != nil {
-		var sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
+		var sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth
+		if r.Configuration.Credentials.AuthenticateViaGoogleOauth != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken.ValueString()
+			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authType := new(shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.IsNull() {
-				*authType = shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.RefreshToken.ValueString()
-			sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth{
+			clientID := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaGoogleOauth.RefreshToken.ValueString()
+			sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
+		if sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPICredentials{
-				SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth,
+				SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth,
 			}
 		}
-		var sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
-			authType1 := new(shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.IsNull() {
-				*authType1 = shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
-			credentialsJSON := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
-			sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication{
-				AuthType:        authType1,
+		var sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication
+		if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
+			credentialsJSON := r.Configuration.Credentials.ServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
+			sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication{
 				CredentialsJSON: credentialsJSON,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
+		if sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPICredentials{
-				SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication,
+				SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication,
 			}
 		}
 	}
-	customReports := new(string)
-	if !r.Configuration.CustomReports.IsUnknown() && !r.Configuration.CustomReports.IsNull() {
-		*customReports = r.Configuration.CustomReports.ValueString()
-	} else {
-		customReports = nil
+	var customReportsArray []shared.SourceGoogleAnalyticsDataAPICustomReportConfig = nil
+	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
+		var dimensionFilter *shared.SourceGoogleAnalyticsDataAPIDimensionsFilter
+		if customReportsArrayItem.DimensionFilter != nil {
+			var sourceGoogleAnalyticsDataAPIAndGroup *shared.SourceGoogleAnalyticsDataAPIAndGroup
+			if customReportsArrayItem.DimensionFilter.AndGroup != nil {
+				var expressions []shared.SourceGoogleAnalyticsDataAPIExpression = nil
+				for _, expressionsItem := range customReportsArrayItem.DimensionFilter.AndGroup.Expressions {
+					fieldName := expressionsItem.FieldName.ValueString()
+					var filter shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter
+					if expressionsItem.Filter.StringFilter != nil {
+						caseSensitive := new(bool)
+						if !expressionsItem.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive = expressionsItem.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive = nil
+						}
+						var matchType []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums = nil
+						for _, matchTypeItem := range expressionsItem.Filter.StringFilter.MatchType {
+							matchType = append(matchType, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums(matchTypeItem.ValueString()))
+						}
+						value := expressionsItem.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter{
+							CaseSensitive: caseSensitive,
+							MatchType:     matchType,
+							Value:         value,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter
+					if expressionsItem.Filter.InListFilter != nil {
+						caseSensitive1 := new(bool)
+						if !expressionsItem.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive1 = expressionsItem.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive1 = nil
+						}
+						var values []string = nil
+						for _, valuesItem := range expressionsItem.Filter.InListFilter.Values {
+							values = append(values, valuesItem.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter{
+							CaseSensitive: caseSensitive1,
+							Values:        values,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter
+					if expressionsItem.Filter.NumericFilter != nil {
+						var operation []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums = nil
+						for _, operationItem := range expressionsItem.Filter.NumericFilter.Operation {
+							operation = append(operation, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums(operationItem.ValueString()))
+						}
+						var value1 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value
+						if expressionsItem.Filter.NumericFilter.Value.Int64Value != nil {
+							value2 := expressionsItem.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value{
+								Value: value2,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value != nil {
+							value1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue
+						if expressionsItem.Filter.NumericFilter.Value.DoubleValue != nil {
+							value3, _ := expressionsItem.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue{
+								Value: value3,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue != nil {
+							value1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter{
+							Operation: operation,
+							Value:     value1,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter
+					if expressionsItem.Filter.BetweenFilter != nil {
+						var fromValue shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value
+						if expressionsItem.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value4 := expressionsItem.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value{
+								Value: value4,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value != nil {
+							fromValue = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue
+						if expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value5, _ := expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue{
+								Value: value5,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue != nil {
+							fromValue = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue,
+							}
+						}
+						var toValue shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value
+						if expressionsItem.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value6 := expressionsItem.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value{
+								Value: value6,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value != nil {
+							toValue = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue
+						if expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value7, _ := expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue{
+								Value: value7,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue != nil {
+							toValue = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter{
+							FromValue: fromValue,
+							ToValue:   toValue,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter,
+						}
+					}
+					expressions = append(expressions, shared.SourceGoogleAnalyticsDataAPIExpression{
+						FieldName: fieldName,
+						Filter:    filter,
+					})
+				}
+				sourceGoogleAnalyticsDataAPIAndGroup = &shared.SourceGoogleAnalyticsDataAPIAndGroup{
+					Expressions: expressions,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIAndGroup != nil {
+				dimensionFilter = &shared.SourceGoogleAnalyticsDataAPIDimensionsFilter{
+					SourceGoogleAnalyticsDataAPIAndGroup: sourceGoogleAnalyticsDataAPIAndGroup,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIOrGroup *shared.SourceGoogleAnalyticsDataAPIOrGroup
+			if customReportsArrayItem.DimensionFilter.OrGroup != nil {
+				var expressions1 []shared.SourceGoogleAnalyticsDataAPISchemasExpression = nil
+				for _, expressionsItem1 := range customReportsArrayItem.DimensionFilter.OrGroup.Expressions {
+					fieldName1 := expressionsItem1.FieldName.ValueString()
+					var filter1 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter
+					if expressionsItem1.Filter.StringFilter != nil {
+						caseSensitive2 := new(bool)
+						if !expressionsItem1.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive2 = expressionsItem1.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive2 = nil
+						}
+						var matchType1 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums = nil
+						for _, matchTypeItem1 := range expressionsItem1.Filter.StringFilter.MatchType {
+							matchType1 = append(matchType1, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums(matchTypeItem1.ValueString()))
+						}
+						value8 := expressionsItem1.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter{
+							CaseSensitive: caseSensitive2,
+							MatchType:     matchType1,
+							Value:         value8,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter
+					if expressionsItem1.Filter.InListFilter != nil {
+						caseSensitive3 := new(bool)
+						if !expressionsItem1.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive3 = expressionsItem1.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive3 = nil
+						}
+						var values1 []string = nil
+						for _, valuesItem1 := range expressionsItem1.Filter.InListFilter.Values {
+							values1 = append(values1, valuesItem1.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter{
+							CaseSensitive: caseSensitive3,
+							Values:        values1,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter
+					if expressionsItem1.Filter.NumericFilter != nil {
+						var operation1 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValidEnums = nil
+						for _, operationItem1 := range expressionsItem1.Filter.NumericFilter.Operation {
+							operation1 = append(operation1, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValidEnums(operationItem1.ValueString()))
+						}
+						var value9 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value
+						if expressionsItem1.Filter.NumericFilter.Value.Int64Value != nil {
+							value10 := expressionsItem1.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value{
+								Value: value10,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value != nil {
+							value9 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue
+						if expressionsItem1.Filter.NumericFilter.Value.DoubleValue != nil {
+							value11, _ := expressionsItem1.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue{
+								Value: value11,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue != nil {
+							value9 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter{
+							Operation: operation1,
+							Value:     value9,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter
+					if expressionsItem1.Filter.BetweenFilter != nil {
+						var fromValue1 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFromValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value
+						if expressionsItem1.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value12 := expressionsItem1.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value{
+								Value: value12,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value != nil {
+							fromValue1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue
+						if expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value13, _ := expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue{
+								Value: value13,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue != nil {
+							fromValue1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue,
+							}
+						}
+						var toValue1 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterToValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value
+						if expressionsItem1.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value14 := expressionsItem1.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value{
+								Value: value14,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value != nil {
+							toValue1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue
+						if expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value15, _ := expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue{
+								Value: value15,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue != nil {
+							toValue1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter{
+							FromValue: fromValue1,
+							ToValue:   toValue1,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter,
+						}
+					}
+					expressions1 = append(expressions1, shared.SourceGoogleAnalyticsDataAPISchemasExpression{
+						FieldName: fieldName1,
+						Filter:    filter1,
+					})
+				}
+				sourceGoogleAnalyticsDataAPIOrGroup = &shared.SourceGoogleAnalyticsDataAPIOrGroup{
+					Expressions: expressions1,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIOrGroup != nil {
+				dimensionFilter = &shared.SourceGoogleAnalyticsDataAPIDimensionsFilter{
+					SourceGoogleAnalyticsDataAPIOrGroup: sourceGoogleAnalyticsDataAPIOrGroup,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPINotExpression *shared.SourceGoogleAnalyticsDataAPINotExpression
+			if customReportsArrayItem.DimensionFilter.NotExpression != nil {
+				var expression *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayExpression
+				if customReportsArrayItem.DimensionFilter.NotExpression.Expression != nil {
+					fieldName2 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.FieldName.ValueString()
+					var filter2 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive4 := new(bool)
+						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive4 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive4 = nil
+						}
+						var matchType2 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums = nil
+						for _, matchTypeItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
+							matchType2 = append(matchType2, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums(matchTypeItem2.ValueString()))
+						}
+						value16 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter{
+							CaseSensitive: caseSensitive4,
+							MatchType:     matchType2,
+							Value:         value16,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter != nil {
+						caseSensitive5 := new(bool)
+						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive5 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive5 = nil
+						}
+						var values2 []string = nil
+						for _, valuesItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values2 = append(values2, valuesItem2.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter{
+							CaseSensitive: caseSensitive5,
+							Values:        values2,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter != nil {
+						var operation2 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums = nil
+						for _, operationItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Operation {
+							operation2 = append(operation2, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums(operationItem2.ValueString()))
+						}
+						var value17 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value != nil {
+							value18 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value{
+								Value: value18,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value != nil {
+							value17 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
+							value19, _ := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue{
+								Value: value19,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue != nil {
+							value17 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter{
+							Operation: operation2,
+							Value:     value17,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter != nil {
+						var fromValue2 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value20 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value{
+								Value: value20,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value != nil {
+							fromValue2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value21, _ := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue{
+								Value: value21,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue != nil {
+							fromValue2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue,
+							}
+						}
+						var toValue2 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value22 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value{
+								Value: value22,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value != nil {
+							toValue2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value23, _ := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue{
+								Value: value23,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue != nil {
+							toValue2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter{
+							FromValue: fromValue2,
+							ToValue:   toValue2,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter,
+						}
+					}
+					expression = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayExpression{
+						FieldName: fieldName2,
+						Filter:    filter2,
+					}
+				}
+				sourceGoogleAnalyticsDataAPINotExpression = &shared.SourceGoogleAnalyticsDataAPINotExpression{
+					Expression: expression,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPINotExpression != nil {
+				dimensionFilter = &shared.SourceGoogleAnalyticsDataAPIDimensionsFilter{
+					SourceGoogleAnalyticsDataAPINotExpression: sourceGoogleAnalyticsDataAPINotExpression,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIFilter *shared.SourceGoogleAnalyticsDataAPIFilter
+			if customReportsArrayItem.DimensionFilter.Filter != nil {
+				fieldName3 := customReportsArrayItem.DimensionFilter.Filter.FieldName.ValueString()
+				var filter3 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter
+				var sourceGoogleAnalyticsDataAPIStringFilter *shared.SourceGoogleAnalyticsDataAPIStringFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive6 := new(bool)
+					if !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive6 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive6 = nil
+					}
+					var matchType3 []shared.SourceGoogleAnalyticsDataAPIValidEnums = nil
+					for _, matchTypeItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.MatchType {
+						matchType3 = append(matchType3, shared.SourceGoogleAnalyticsDataAPIValidEnums(matchTypeItem3.ValueString()))
+					}
+					value24 := customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.Value.ValueString()
+					sourceGoogleAnalyticsDataAPIStringFilter = &shared.SourceGoogleAnalyticsDataAPIStringFilter{
+						CaseSensitive: caseSensitive6,
+						MatchType:     matchType3,
+						Value:         value24,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIStringFilter != nil {
+					filter3 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIStringFilter: sourceGoogleAnalyticsDataAPIStringFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPIInListFilter *shared.SourceGoogleAnalyticsDataAPIInListFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter != nil {
+					caseSensitive7 := new(bool)
+					if !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
+						*caseSensitive7 = customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive7 = nil
+					}
+					var values3 []string = nil
+					for _, valuesItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.Values {
+						values3 = append(values3, valuesItem3.ValueString())
+					}
+					sourceGoogleAnalyticsDataAPIInListFilter = &shared.SourceGoogleAnalyticsDataAPIInListFilter{
+						CaseSensitive: caseSensitive7,
+						Values:        values3,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIInListFilter != nil {
+					filter3 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIInListFilter: sourceGoogleAnalyticsDataAPIInListFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPINumericFilter *shared.SourceGoogleAnalyticsDataAPINumericFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter != nil {
+					var operation3 []shared.SourceGoogleAnalyticsDataAPISchemasValidEnums = nil
+					for _, operationItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Operation {
+						operation3 = append(operation3, shared.SourceGoogleAnalyticsDataAPISchemasValidEnums(operationItem3.ValueString()))
+					}
+					var value25 shared.SourceGoogleAnalyticsDataAPIValue
+					var sourceGoogleAnalyticsDataAPIInt64Value *shared.SourceGoogleAnalyticsDataAPIInt64Value
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.Int64Value != nil {
+						value26 := customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIInt64Value = &shared.SourceGoogleAnalyticsDataAPIInt64Value{
+							Value: value26,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIInt64Value != nil {
+						value25 = shared.SourceGoogleAnalyticsDataAPIValue{
+							SourceGoogleAnalyticsDataAPIInt64Value: sourceGoogleAnalyticsDataAPIInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIDoubleValue *shared.SourceGoogleAnalyticsDataAPIDoubleValue
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
+						value27, _ := customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPIDoubleValue = &shared.SourceGoogleAnalyticsDataAPIDoubleValue{
+							Value: value27,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIDoubleValue != nil {
+						value25 = shared.SourceGoogleAnalyticsDataAPIValue{
+							SourceGoogleAnalyticsDataAPIDoubleValue: sourceGoogleAnalyticsDataAPIDoubleValue,
+						}
+					}
+					sourceGoogleAnalyticsDataAPINumericFilter = &shared.SourceGoogleAnalyticsDataAPINumericFilter{
+						Operation: operation3,
+						Value:     value25,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPINumericFilter != nil {
+					filter3 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPINumericFilter: sourceGoogleAnalyticsDataAPINumericFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPIBetweenFilter *shared.SourceGoogleAnalyticsDataAPIBetweenFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter != nil {
+					var fromValue3 shared.SourceGoogleAnalyticsDataAPIFromValue
+					var sourceGoogleAnalyticsDataAPISchemasInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasInt64Value
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value != nil {
+						value28 := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasInt64Value{
+							Value: value28,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasInt64Value != nil {
+						fromValue3 = shared.SourceGoogleAnalyticsDataAPIFromValue{
+							SourceGoogleAnalyticsDataAPISchemasInt64Value: sourceGoogleAnalyticsDataAPISchemasInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasDoubleValue
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+						value29, _ := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPISchemasDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasDoubleValue{
+							Value: value29,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasDoubleValue != nil {
+						fromValue3 = shared.SourceGoogleAnalyticsDataAPIFromValue{
+							SourceGoogleAnalyticsDataAPISchemasDoubleValue: sourceGoogleAnalyticsDataAPISchemasDoubleValue,
+						}
+					}
+					var toValue3 shared.SourceGoogleAnalyticsDataAPIToValue
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value != nil {
+						value30 := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value{
+							Value: value30,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value != nil {
+						toValue3 = shared.SourceGoogleAnalyticsDataAPIToValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+						value31, _ := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue{
+							Value: value31,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue != nil {
+						toValue3 = shared.SourceGoogleAnalyticsDataAPIToValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue,
+						}
+					}
+					sourceGoogleAnalyticsDataAPIBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIBetweenFilter{
+						FromValue: fromValue3,
+						ToValue:   toValue3,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIBetweenFilter != nil {
+					filter3 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIBetweenFilter: sourceGoogleAnalyticsDataAPIBetweenFilter,
+					}
+				}
+				sourceGoogleAnalyticsDataAPIFilter = &shared.SourceGoogleAnalyticsDataAPIFilter{
+					FieldName: fieldName3,
+					Filter:    filter3,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIFilter != nil {
+				dimensionFilter = &shared.SourceGoogleAnalyticsDataAPIDimensionsFilter{
+					SourceGoogleAnalyticsDataAPIFilter: sourceGoogleAnalyticsDataAPIFilter,
+				}
+			}
+		}
+		var dimensions []string = nil
+		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
+			dimensions = append(dimensions, dimensionsItem.ValueString())
+		}
+		var metricFilter *shared.SourceGoogleAnalyticsDataAPIMetricsFilter
+		if customReportsArrayItem.MetricFilter != nil {
+			var sourceGoogleAnalyticsDataAPISchemasAndGroup *shared.SourceGoogleAnalyticsDataAPISchemasAndGroup
+			if customReportsArrayItem.MetricFilter.AndGroup != nil {
+				var expressions2 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterExpression = nil
+				for _, expressionsItem2 := range customReportsArrayItem.MetricFilter.AndGroup.Expressions {
+					fieldName4 := expressionsItem2.FieldName.ValueString()
+					var filter4 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter
+					if expressionsItem2.Filter.StringFilter != nil {
+						caseSensitive8 := new(bool)
+						if !expressionsItem2.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive8 = expressionsItem2.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive8 = nil
+						}
+						var matchType4 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums = nil
+						for _, matchTypeItem4 := range expressionsItem2.Filter.StringFilter.MatchType {
+							matchType4 = append(matchType4, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums(matchTypeItem4.ValueString()))
+						}
+						value32 := expressionsItem2.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter{
+							CaseSensitive: caseSensitive8,
+							MatchType:     matchType4,
+							Value:         value32,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter != nil {
+						filter4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter
+					if expressionsItem2.Filter.InListFilter != nil {
+						caseSensitive9 := new(bool)
+						if !expressionsItem2.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive9 = expressionsItem2.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive9 = nil
+						}
+						var values4 []string = nil
+						for _, valuesItem4 := range expressionsItem2.Filter.InListFilter.Values {
+							values4 = append(values4, valuesItem4.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter{
+							CaseSensitive: caseSensitive9,
+							Values:        values4,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter != nil {
+						filter4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter
+					if expressionsItem2.Filter.NumericFilter != nil {
+						var operation4 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums = nil
+						for _, operationItem4 := range expressionsItem2.Filter.NumericFilter.Operation {
+							operation4 = append(operation4, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums(operationItem4.ValueString()))
+						}
+						var value33 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value
+						if expressionsItem2.Filter.NumericFilter.Value.Int64Value != nil {
+							value34 := expressionsItem2.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value{
+								Value: value34,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value != nil {
+							value33 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue
+						if expressionsItem2.Filter.NumericFilter.Value.DoubleValue != nil {
+							value35, _ := expressionsItem2.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue{
+								Value: value35,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue != nil {
+							value33 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter{
+							Operation: operation4,
+							Value:     value33,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter != nil {
+						filter4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter
+					if expressionsItem2.Filter.BetweenFilter != nil {
+						var fromValue4 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value
+						if expressionsItem2.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value36 := expressionsItem2.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value{
+								Value: value36,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value != nil {
+							fromValue4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue
+						if expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value37, _ := expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue{
+								Value: value37,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue != nil {
+							fromValue4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue,
+							}
+						}
+						var toValue4 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value
+						if expressionsItem2.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value38 := expressionsItem2.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value{
+								Value: value38,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value != nil {
+							toValue4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue
+						if expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value39, _ := expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue{
+								Value: value39,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue != nil {
+							toValue4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter{
+							FromValue: fromValue4,
+							ToValue:   toValue4,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter != nil {
+						filter4 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter,
+						}
+					}
+					expressions2 = append(expressions2, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterExpression{
+						FieldName: fieldName4,
+						Filter:    filter4,
+					})
+				}
+				sourceGoogleAnalyticsDataAPISchemasAndGroup = &shared.SourceGoogleAnalyticsDataAPISchemasAndGroup{
+					Expressions: expressions2,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPISchemasAndGroup != nil {
+				metricFilter = &shared.SourceGoogleAnalyticsDataAPIMetricsFilter{
+					SourceGoogleAnalyticsDataAPISchemasAndGroup: sourceGoogleAnalyticsDataAPISchemasAndGroup,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPISchemasOrGroup *shared.SourceGoogleAnalyticsDataAPISchemasOrGroup
+			if customReportsArrayItem.MetricFilter.OrGroup != nil {
+				var expressions3 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterExpression = nil
+				for _, expressionsItem3 := range customReportsArrayItem.MetricFilter.OrGroup.Expressions {
+					fieldName5 := expressionsItem3.FieldName.ValueString()
+					var filter5 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter
+					if expressionsItem3.Filter.StringFilter != nil {
+						caseSensitive10 := new(bool)
+						if !expressionsItem3.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive10 = expressionsItem3.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive10 = nil
+						}
+						var matchType5 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums = nil
+						for _, matchTypeItem5 := range expressionsItem3.Filter.StringFilter.MatchType {
+							matchType5 = append(matchType5, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums(matchTypeItem5.ValueString()))
+						}
+						value40 := expressionsItem3.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter{
+							CaseSensitive: caseSensitive10,
+							MatchType:     matchType5,
+							Value:         value40,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter
+					if expressionsItem3.Filter.InListFilter != nil {
+						caseSensitive11 := new(bool)
+						if !expressionsItem3.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive11 = expressionsItem3.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive11 = nil
+						}
+						var values5 []string = nil
+						for _, valuesItem5 := range expressionsItem3.Filter.InListFilter.Values {
+							values5 = append(values5, valuesItem5.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter{
+							CaseSensitive: caseSensitive11,
+							Values:        values5,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter
+					if expressionsItem3.Filter.NumericFilter != nil {
+						var operation5 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums = nil
+						for _, operationItem5 := range expressionsItem3.Filter.NumericFilter.Operation {
+							operation5 = append(operation5, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums(operationItem5.ValueString()))
+						}
+						var value41 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value
+						if expressionsItem3.Filter.NumericFilter.Value.Int64Value != nil {
+							value42 := expressionsItem3.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value{
+								Value: value42,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value != nil {
+							value41 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue
+						if expressionsItem3.Filter.NumericFilter.Value.DoubleValue != nil {
+							value43, _ := expressionsItem3.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue{
+								Value: value43,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue != nil {
+							value41 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter{
+							Operation: operation5,
+							Value:     value41,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter
+					if expressionsItem3.Filter.BetweenFilter != nil {
+						var fromValue5 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value
+						if expressionsItem3.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value44 := expressionsItem3.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value{
+								Value: value44,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value != nil {
+							fromValue5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue
+						if expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value45, _ := expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue{
+								Value: value45,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue != nil {
+							fromValue5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue,
+							}
+						}
+						var toValue5 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value
+						if expressionsItem3.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value46 := expressionsItem3.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value{
+								Value: value46,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value != nil {
+							toValue5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue
+						if expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value47, _ := expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue{
+								Value: value47,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue != nil {
+							toValue5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter{
+							FromValue: fromValue5,
+							ToValue:   toValue5,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter,
+						}
+					}
+					expressions3 = append(expressions3, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterExpression{
+						FieldName: fieldName5,
+						Filter:    filter5,
+					})
+				}
+				sourceGoogleAnalyticsDataAPISchemasOrGroup = &shared.SourceGoogleAnalyticsDataAPISchemasOrGroup{
+					Expressions: expressions3,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPISchemasOrGroup != nil {
+				metricFilter = &shared.SourceGoogleAnalyticsDataAPIMetricsFilter{
+					SourceGoogleAnalyticsDataAPISchemasOrGroup: sourceGoogleAnalyticsDataAPISchemasOrGroup,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPISchemasNotExpression *shared.SourceGoogleAnalyticsDataAPISchemasNotExpression
+			if customReportsArrayItem.MetricFilter.NotExpression != nil {
+				var expression1 *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Expression
+				if customReportsArrayItem.MetricFilter.NotExpression.Expression != nil {
+					fieldName6 := customReportsArrayItem.MetricFilter.NotExpression.Expression.FieldName.ValueString()
+					var filter6 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive12 := new(bool)
+						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive12 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive12 = nil
+						}
+						var matchType6 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums = nil
+						for _, matchTypeItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
+							matchType6 = append(matchType6, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums(matchTypeItem6.ValueString()))
+						}
+						value48 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter{
+							CaseSensitive: caseSensitive12,
+							MatchType:     matchType6,
+							Value:         value48,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter != nil {
+						caseSensitive13 := new(bool)
+						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive13 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive13 = nil
+						}
+						var values6 []string = nil
+						for _, valuesItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values6 = append(values6, valuesItem6.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter{
+							CaseSensitive: caseSensitive13,
+							Values:        values6,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter != nil {
+						var operation6 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums = nil
+						for _, operationItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Operation {
+							operation6 = append(operation6, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums(operationItem6.ValueString()))
+						}
+						var value49 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value != nil {
+							value50 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value{
+								Value: value50,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value != nil {
+							value49 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
+							value51, _ := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue{
+								Value: value51,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue != nil {
+							value49 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter{
+							Operation: operation6,
+							Value:     value49,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter != nil {
+						var fromValue6 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value52 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value{
+								Value: value52,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value != nil {
+							fromValue6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value53, _ := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue{
+								Value: value53,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue != nil {
+							fromValue6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue,
+							}
+						}
+						var toValue6 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value54 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value{
+								Value: value54,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value != nil {
+							toValue6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value55, _ := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue{
+								Value: value55,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue != nil {
+							toValue6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue{
+								SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter{
+							FromValue: fromValue6,
+							ToValue:   toValue6,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter,
+						}
+					}
+					expression1 = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Expression{
+						FieldName: fieldName6,
+						Filter:    filter6,
+					}
+				}
+				sourceGoogleAnalyticsDataAPISchemasNotExpression = &shared.SourceGoogleAnalyticsDataAPISchemasNotExpression{
+					Expression: expression1,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPISchemasNotExpression != nil {
+				metricFilter = &shared.SourceGoogleAnalyticsDataAPIMetricsFilter{
+					SourceGoogleAnalyticsDataAPISchemasNotExpression: sourceGoogleAnalyticsDataAPISchemasNotExpression,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPISchemasFilter *shared.SourceGoogleAnalyticsDataAPISchemasFilter
+			if customReportsArrayItem.MetricFilter.Filter != nil {
+				fieldName7 := customReportsArrayItem.MetricFilter.Filter.FieldName.ValueString()
+				var filter7 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter
+				var sourceGoogleAnalyticsDataAPISchemasStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasStringFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive14 := new(bool)
+					if !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive14 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive14 = nil
+					}
+					var matchType7 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums = nil
+					for _, matchTypeItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.MatchType {
+						matchType7 = append(matchType7, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums(matchTypeItem7.ValueString()))
+					}
+					value56 := customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.Value.ValueString()
+					sourceGoogleAnalyticsDataAPISchemasStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasStringFilter{
+						CaseSensitive: caseSensitive14,
+						MatchType:     matchType7,
+						Value:         value56,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPISchemasStringFilter != nil {
+					filter7 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter{
+						SourceGoogleAnalyticsDataAPISchemasStringFilter: sourceGoogleAnalyticsDataAPISchemasStringFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPISchemasInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasInListFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter != nil {
+					caseSensitive15 := new(bool)
+					if !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
+						*caseSensitive15 = customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive15 = nil
+					}
+					var values7 []string = nil
+					for _, valuesItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.Values {
+						values7 = append(values7, valuesItem7.ValueString())
+					}
+					sourceGoogleAnalyticsDataAPISchemasInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasInListFilter{
+						CaseSensitive: caseSensitive15,
+						Values:        values7,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPISchemasInListFilter != nil {
+					filter7 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter{
+						SourceGoogleAnalyticsDataAPISchemasInListFilter: sourceGoogleAnalyticsDataAPISchemasInListFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPISchemasNumericFilter *shared.SourceGoogleAnalyticsDataAPISchemasNumericFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter != nil {
+					var operation7 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValidEnums = nil
+					for _, operationItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Operation {
+						operation7 = append(operation7, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValidEnums(operationItem7.ValueString()))
+					}
+					var value57 shared.SourceGoogleAnalyticsDataAPISchemasValue
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value
+					if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.Int64Value != nil {
+						value58 := customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value{
+							Value: value58,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value != nil {
+						value57 = shared.SourceGoogleAnalyticsDataAPISchemasValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue
+					if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
+						value59, _ := customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue{
+							Value: value59,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue != nil {
+						value57 = shared.SourceGoogleAnalyticsDataAPISchemasValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue,
+						}
+					}
+					sourceGoogleAnalyticsDataAPISchemasNumericFilter = &shared.SourceGoogleAnalyticsDataAPISchemasNumericFilter{
+						Operation: operation7,
+						Value:     value57,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPISchemasNumericFilter != nil {
+					filter7 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter{
+						SourceGoogleAnalyticsDataAPISchemasNumericFilter: sourceGoogleAnalyticsDataAPISchemasNumericFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPISchemasBetweenFilter *shared.SourceGoogleAnalyticsDataAPISchemasBetweenFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter != nil {
+					var fromValue7 shared.SourceGoogleAnalyticsDataAPISchemasFromValue
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value != nil {
+						value60 := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value{
+							Value: value60,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value != nil {
+						fromValue7 = shared.SourceGoogleAnalyticsDataAPISchemasFromValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+						value61, _ := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue{
+							Value: value61,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue != nil {
+						fromValue7 = shared.SourceGoogleAnalyticsDataAPISchemasFromValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue,
+						}
+					}
+					var toValue7 shared.SourceGoogleAnalyticsDataAPISchemasToValue
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value != nil {
+						value62 := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value{
+							Value: value62,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value != nil {
+						toValue7 = shared.SourceGoogleAnalyticsDataAPISchemasToValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4Int64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+						value63, _ := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue{
+							Value: value63,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue != nil {
+						toValue7 = shared.SourceGoogleAnalyticsDataAPISchemasToValue{
+							SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue,
+						}
+					}
+					sourceGoogleAnalyticsDataAPISchemasBetweenFilter = &shared.SourceGoogleAnalyticsDataAPISchemasBetweenFilter{
+						FromValue: fromValue7,
+						ToValue:   toValue7,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPISchemasBetweenFilter != nil {
+					filter7 = shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter{
+						SourceGoogleAnalyticsDataAPISchemasBetweenFilter: sourceGoogleAnalyticsDataAPISchemasBetweenFilter,
+					}
+				}
+				sourceGoogleAnalyticsDataAPISchemasFilter = &shared.SourceGoogleAnalyticsDataAPISchemasFilter{
+					FieldName: fieldName7,
+					Filter:    filter7,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPISchemasFilter != nil {
+				metricFilter = &shared.SourceGoogleAnalyticsDataAPIMetricsFilter{
+					SourceGoogleAnalyticsDataAPISchemasFilter: sourceGoogleAnalyticsDataAPISchemasFilter,
+				}
+			}
+		}
+		var metrics []string = nil
+		for _, metricsItem := range customReportsArrayItem.Metrics {
+			metrics = append(metrics, metricsItem.ValueString())
+		}
+		name := customReportsArrayItem.Name.ValueString()
+		customReportsArray = append(customReportsArray, shared.SourceGoogleAnalyticsDataAPICustomReportConfig{
+			DimensionFilter: dimensionFilter,
+			Dimensions:      dimensions,
+			MetricFilter:    metricFilter,
+			Metrics:         metrics,
+			Name:            name,
+		})
 	}
-	dateRangesStartDate := customTypes.MustDateFromString(r.Configuration.DateRangesStartDate.ValueString())
-	propertyID := r.Configuration.PropertyID.ValueString()
-	sourceType := shared.SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI(r.Configuration.SourceType.ValueString())
+	dateRangesStartDate := new(customTypes.Date)
+	if !r.Configuration.DateRangesStartDate.IsUnknown() && !r.Configuration.DateRangesStartDate.IsNull() {
+		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
+	} else {
+		dateRangesStartDate = nil
+	}
+	var propertyIds []string = nil
+	for _, propertyIdsItem := range r.Configuration.PropertyIds {
+		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
+	}
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
 		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
@@ -78,13 +1430,18 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	}
 	configuration := shared.SourceGoogleAnalyticsDataAPI{
 		Credentials:         credentials,
-		CustomReports:       customReports,
+		CustomReportsArray:  customReportsArray,
 		DateRangesStartDate: dateRangesStartDate,
-		PropertyID:          propertyID,
-		SourceType:          sourceType,
+		PropertyIds:         propertyIds,
 		WindowInDays:        windowInDays,
 	}
-	name := r.Name.ValueString()
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
+	}
+	name1 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -94,7 +1451,8 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleAnalyticsDataAPICreateRequest{
 		Configuration: configuration,
-		Name:          name,
+		DefinitionID:  definitionID,
+		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
@@ -107,66 +1465,1419 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToGetSDKType() *shared.Sourc
 }
 
 func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.SourceGoogleAnalyticsDataAPIPutRequest {
-	var credentials *shared.SourceGoogleAnalyticsDataAPIUpdateCredentials
+	var credentials *shared.Credentials
 	if r.Configuration.Credentials != nil {
-		var sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth != nil {
+		var authenticateViaGoogleOauth *shared.AuthenticateViaGoogleOauth
+		if r.Configuration.Credentials.AuthenticateViaGoogleOauth != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AccessToken.ValueString()
+			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authType := new(shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AuthType.IsNull() {
-				*authType = shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauthAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth.RefreshToken.ValueString()
-			sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth{
+			clientID := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.AuthenticateViaGoogleOauth.RefreshToken.ValueString()
+			authenticateViaGoogleOauth = &shared.AuthenticateViaGoogleOauth{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth != nil {
-			credentials = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentials{
-				SourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth: sourceGoogleAnalyticsDataAPIUpdateCredentialsAuthenticateViaGoogleOauth,
+		if authenticateViaGoogleOauth != nil {
+			credentials = &shared.Credentials{
+				AuthenticateViaGoogleOauth: authenticateViaGoogleOauth,
 			}
 		}
-		var sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication
-		if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication != nil {
-			authType1 := new(shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType)
-			if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.AuthType.IsNull() {
-				*authType1 = shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
-			credentialsJSON := r.Configuration.Credentials.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
-			sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication{
-				AuthType:        authType1,
+		var serviceAccountKeyAuthentication *shared.ServiceAccountKeyAuthentication
+		if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
+			credentialsJSON := r.Configuration.Credentials.ServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
+			serviceAccountKeyAuthentication = &shared.ServiceAccountKeyAuthentication{
 				CredentialsJSON: credentialsJSON,
 			}
 		}
-		if sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication != nil {
-			credentials = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentials{
-				SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication,
+		if serviceAccountKeyAuthentication != nil {
+			credentials = &shared.Credentials{
+				ServiceAccountKeyAuthentication: serviceAccountKeyAuthentication,
 			}
 		}
 	}
-	customReports := new(string)
-	if !r.Configuration.CustomReports.IsUnknown() && !r.Configuration.CustomReports.IsNull() {
-		*customReports = r.Configuration.CustomReports.ValueString()
-	} else {
-		customReports = nil
+	var customReportsArray []shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig = nil
+	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
+		var dimensionFilter *shared.DimensionsFilter
+		if customReportsArrayItem.DimensionFilter != nil {
+			var andGroup *shared.AndGroup
+			if customReportsArrayItem.DimensionFilter.AndGroup != nil {
+				var expressions []shared.Expression = nil
+				for _, expressionsItem := range customReportsArrayItem.DimensionFilter.AndGroup.Expressions {
+					fieldName := expressionsItem.FieldName.ValueString()
+					var filter shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter
+					if expressionsItem.Filter.StringFilter != nil {
+						caseSensitive := new(bool)
+						if !expressionsItem.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive = expressionsItem.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive = nil
+						}
+						var matchType []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums = nil
+						for _, matchTypeItem := range expressionsItem.Filter.StringFilter.MatchType {
+							matchType = append(matchType, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums(matchTypeItem.ValueString()))
+						}
+						value := expressionsItem.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter{
+							CaseSensitive: caseSensitive,
+							MatchType:     matchType,
+							Value:         value,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter
+					if expressionsItem.Filter.InListFilter != nil {
+						caseSensitive1 := new(bool)
+						if !expressionsItem.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive1 = expressionsItem.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive1 = nil
+						}
+						var values []string = nil
+						for _, valuesItem := range expressionsItem.Filter.InListFilter.Values {
+							values = append(values, valuesItem.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter{
+							CaseSensitive: caseSensitive1,
+							Values:        values,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter
+					if expressionsItem.Filter.NumericFilter != nil {
+						var operation []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums = nil
+						for _, operationItem := range expressionsItem.Filter.NumericFilter.Operation {
+							operation = append(operation, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums(operationItem.ValueString()))
+						}
+						var value1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value
+						if expressionsItem.Filter.NumericFilter.Value.Int64Value != nil {
+							value2 := expressionsItem.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value{
+								Value: value2,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value != nil {
+							value1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue
+						if expressionsItem.Filter.NumericFilter.Value.DoubleValue != nil {
+							value3, _ := expressionsItem.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue{
+								Value: value3,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue != nil {
+							value1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter{
+							Operation: operation,
+							Value:     value1,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter
+					if expressionsItem.Filter.BetweenFilter != nil {
+						var fromValue shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFromValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value
+						if expressionsItem.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value4 := expressionsItem.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value{
+								Value: value4,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value != nil {
+							fromValue = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue
+						if expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value5, _ := expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue{
+								Value: value5,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue != nil {
+							fromValue = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue,
+							}
+						}
+						var toValue shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayToValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value
+						if expressionsItem.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value6 := expressionsItem.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value{
+								Value: value6,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value != nil {
+							toValue = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue
+						if expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value7, _ := expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue{
+								Value: value7,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue != nil {
+							toValue = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter{
+							FromValue: fromValue,
+							ToValue:   toValue,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter != nil {
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter,
+						}
+					}
+					expressions = append(expressions, shared.Expression{
+						FieldName: fieldName,
+						Filter:    filter,
+					})
+				}
+				andGroup = &shared.AndGroup{
+					Expressions: expressions,
+				}
+			}
+			if andGroup != nil {
+				dimensionFilter = &shared.DimensionsFilter{
+					AndGroup: andGroup,
+				}
+			}
+			var orGroup *shared.OrGroup
+			if customReportsArrayItem.DimensionFilter.OrGroup != nil {
+				var expressions1 []shared.SourceGoogleAnalyticsDataAPIUpdateExpression = nil
+				for _, expressionsItem1 := range customReportsArrayItem.DimensionFilter.OrGroup.Expressions {
+					fieldName1 := expressionsItem1.FieldName.ValueString()
+					var filter1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter
+					if expressionsItem1.Filter.StringFilter != nil {
+						caseSensitive2 := new(bool)
+						if !expressionsItem1.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive2 = expressionsItem1.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive2 = nil
+						}
+						var matchType1 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums = nil
+						for _, matchTypeItem1 := range expressionsItem1.Filter.StringFilter.MatchType {
+							matchType1 = append(matchType1, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums(matchTypeItem1.ValueString()))
+						}
+						value8 := expressionsItem1.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter{
+							CaseSensitive: caseSensitive2,
+							MatchType:     matchType1,
+							Value:         value8,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter
+					if expressionsItem1.Filter.InListFilter != nil {
+						caseSensitive3 := new(bool)
+						if !expressionsItem1.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive3 = expressionsItem1.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive3 = nil
+						}
+						var values1 []string = nil
+						for _, valuesItem1 := range expressionsItem1.Filter.InListFilter.Values {
+							values1 = append(values1, valuesItem1.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter{
+							CaseSensitive: caseSensitive3,
+							Values:        values1,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter
+					if expressionsItem1.Filter.NumericFilter != nil {
+						var operation1 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValidEnums = nil
+						for _, operationItem1 := range expressionsItem1.Filter.NumericFilter.Operation {
+							operation1 = append(operation1, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValidEnums(operationItem1.ValueString()))
+						}
+						var value9 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value
+						if expressionsItem1.Filter.NumericFilter.Value.Int64Value != nil {
+							value10 := expressionsItem1.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value{
+								Value: value10,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value != nil {
+							value9 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue
+						if expressionsItem1.Filter.NumericFilter.Value.DoubleValue != nil {
+							value11, _ := expressionsItem1.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue{
+								Value: value11,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue != nil {
+							value9 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter{
+							Operation: operation1,
+							Value:     value9,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter
+					if expressionsItem1.Filter.BetweenFilter != nil {
+						var fromValue1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFromValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value
+						if expressionsItem1.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value12 := expressionsItem1.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value{
+								Value: value12,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value != nil {
+							fromValue1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue
+						if expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value13, _ := expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue{
+								Value: value13,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue != nil {
+							fromValue1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue,
+							}
+						}
+						var toValue1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterToValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value
+						if expressionsItem1.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value14 := expressionsItem1.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value{
+								Value: value14,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value != nil {
+							toValue1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue
+						if expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value15, _ := expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue{
+								Value: value15,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue != nil {
+							toValue1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter{
+							FromValue: fromValue1,
+							ToValue:   toValue1,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter != nil {
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter,
+						}
+					}
+					expressions1 = append(expressions1, shared.SourceGoogleAnalyticsDataAPIUpdateExpression{
+						FieldName: fieldName1,
+						Filter:    filter1,
+					})
+				}
+				orGroup = &shared.OrGroup{
+					Expressions: expressions1,
+				}
+			}
+			if orGroup != nil {
+				dimensionFilter = &shared.DimensionsFilter{
+					OrGroup: orGroup,
+				}
+			}
+			var notExpression *shared.NotExpression
+			if customReportsArrayItem.DimensionFilter.NotExpression != nil {
+				var expression *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasExpression
+				if customReportsArrayItem.DimensionFilter.NotExpression.Expression != nil {
+					fieldName2 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.FieldName.ValueString()
+					var filter2 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive4 := new(bool)
+						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive4 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive4 = nil
+						}
+						var matchType2 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums = nil
+						for _, matchTypeItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
+							matchType2 = append(matchType2, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums(matchTypeItem2.ValueString()))
+						}
+						value16 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter{
+							CaseSensitive: caseSensitive4,
+							MatchType:     matchType2,
+							Value:         value16,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter != nil {
+						caseSensitive5 := new(bool)
+						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive5 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive5 = nil
+						}
+						var values2 []string = nil
+						for _, valuesItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values2 = append(values2, valuesItem2.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter{
+							CaseSensitive: caseSensitive5,
+							Values:        values2,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter != nil {
+						var operation2 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums = nil
+						for _, operationItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Operation {
+							operation2 = append(operation2, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums(operationItem2.ValueString()))
+						}
+						var value17 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value != nil {
+							value18 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value{
+								Value: value18,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value != nil {
+							value17 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
+							value19, _ := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue{
+								Value: value19,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue != nil {
+							value17 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter{
+							Operation: operation2,
+							Value:     value17,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter
+					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter != nil {
+						var fromValue2 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFromValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value20 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value{
+								Value: value20,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value != nil {
+							fromValue2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value21, _ := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue{
+								Value: value21,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue != nil {
+							fromValue2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue,
+							}
+						}
+						var toValue2 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasToValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value22 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value{
+								Value: value22,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value != nil {
+							toValue2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue
+						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value23, _ := customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue{
+								Value: value23,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue != nil {
+							toValue2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter{
+							FromValue: fromValue2,
+							ToValue:   toValue2,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter != nil {
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter,
+						}
+					}
+					expression = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasExpression{
+						FieldName: fieldName2,
+						Filter:    filter2,
+					}
+				}
+				notExpression = &shared.NotExpression{
+					Expression: expression,
+				}
+			}
+			if notExpression != nil {
+				dimensionFilter = &shared.DimensionsFilter{
+					NotExpression: notExpression,
+				}
+			}
+			var filter3 *shared.Filter
+			if customReportsArrayItem.DimensionFilter.Filter != nil {
+				fieldName3 := customReportsArrayItem.DimensionFilter.Filter.FieldName.ValueString()
+				var filter4 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter
+				var stringFilter *shared.StringFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive6 := new(bool)
+					if !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive6 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive6 = nil
+					}
+					var matchType3 []shared.SourceGoogleAnalyticsDataAPIUpdateValidEnums = nil
+					for _, matchTypeItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.MatchType {
+						matchType3 = append(matchType3, shared.SourceGoogleAnalyticsDataAPIUpdateValidEnums(matchTypeItem3.ValueString()))
+					}
+					value24 := customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.Value.ValueString()
+					stringFilter = &shared.StringFilter{
+						CaseSensitive: caseSensitive6,
+						MatchType:     matchType3,
+						Value:         value24,
+					}
+				}
+				if stringFilter != nil {
+					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+						StringFilter: stringFilter,
+					}
+				}
+				var inListFilter *shared.InListFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter != nil {
+					caseSensitive7 := new(bool)
+					if !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
+						*caseSensitive7 = customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive7 = nil
+					}
+					var values3 []string = nil
+					for _, valuesItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.Values {
+						values3 = append(values3, valuesItem3.ValueString())
+					}
+					inListFilter = &shared.InListFilter{
+						CaseSensitive: caseSensitive7,
+						Values:        values3,
+					}
+				}
+				if inListFilter != nil {
+					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+						InListFilter: inListFilter,
+					}
+				}
+				var numericFilter *shared.NumericFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter != nil {
+					var operation3 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasValidEnums = nil
+					for _, operationItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Operation {
+						operation3 = append(operation3, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasValidEnums(operationItem3.ValueString()))
+					}
+					var value25 shared.Value
+					var int64Value *shared.Int64Value
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.Int64Value != nil {
+						value26 := customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+						int64Value = &shared.Int64Value{
+							Value: value26,
+						}
+					}
+					if int64Value != nil {
+						value25 = shared.Value{
+							Int64Value: int64Value,
+						}
+					}
+					var doubleValue *shared.DoubleValue
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
+						value27, _ := customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+						doubleValue = &shared.DoubleValue{
+							Value: value27,
+						}
+					}
+					if doubleValue != nil {
+						value25 = shared.Value{
+							DoubleValue: doubleValue,
+						}
+					}
+					numericFilter = &shared.NumericFilter{
+						Operation: operation3,
+						Value:     value25,
+					}
+				}
+				if numericFilter != nil {
+					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+						NumericFilter: numericFilter,
+					}
+				}
+				var betweenFilter *shared.BetweenFilter
+				if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter != nil {
+					var fromValue3 shared.FromValue
+					var sourceGoogleAnalyticsDataAPIUpdateInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateInt64Value
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value != nil {
+						value28 := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateInt64Value{
+							Value: value28,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateInt64Value != nil {
+						fromValue3 = shared.FromValue{
+							SourceGoogleAnalyticsDataAPIUpdateInt64Value: sourceGoogleAnalyticsDataAPIUpdateInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateDoubleValue
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+						value29, _ := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPIUpdateDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateDoubleValue{
+							Value: value29,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateDoubleValue != nil {
+						fromValue3 = shared.FromValue{
+							SourceGoogleAnalyticsDataAPIUpdateDoubleValue: sourceGoogleAnalyticsDataAPIUpdateDoubleValue,
+						}
+					}
+					var toValue3 shared.ToValue
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value != nil {
+						value30 := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value{
+							Value: value30,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value != nil {
+						toValue3 = shared.ToValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue
+					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+						value31, _ := customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue{
+							Value: value31,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue != nil {
+						toValue3 = shared.ToValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue,
+						}
+					}
+					betweenFilter = &shared.BetweenFilter{
+						FromValue: fromValue3,
+						ToValue:   toValue3,
+					}
+				}
+				if betweenFilter != nil {
+					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+						BetweenFilter: betweenFilter,
+					}
+				}
+				filter3 = &shared.Filter{
+					FieldName: fieldName3,
+					Filter:    filter4,
+				}
+			}
+			if filter3 != nil {
+				dimensionFilter = &shared.DimensionsFilter{
+					Filter: filter3,
+				}
+			}
+		}
+		var dimensions []string = nil
+		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
+			dimensions = append(dimensions, dimensionsItem.ValueString())
+		}
+		var metricFilter *shared.MetricsFilter
+		if customReportsArrayItem.MetricFilter != nil {
+			var sourceGoogleAnalyticsDataAPIUpdateAndGroup *shared.SourceGoogleAnalyticsDataAPIUpdateAndGroup
+			if customReportsArrayItem.MetricFilter.AndGroup != nil {
+				var expressions2 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayExpression = nil
+				for _, expressionsItem2 := range customReportsArrayItem.MetricFilter.AndGroup.Expressions {
+					fieldName4 := expressionsItem2.FieldName.ValueString()
+					var filter5 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter
+					if expressionsItem2.Filter.StringFilter != nil {
+						caseSensitive8 := new(bool)
+						if !expressionsItem2.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive8 = expressionsItem2.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive8 = nil
+						}
+						var matchType4 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums = nil
+						for _, matchTypeItem4 := range expressionsItem2.Filter.StringFilter.MatchType {
+							matchType4 = append(matchType4, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums(matchTypeItem4.ValueString()))
+						}
+						value32 := expressionsItem2.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter{
+							CaseSensitive: caseSensitive8,
+							MatchType:     matchType4,
+							Value:         value32,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter
+					if expressionsItem2.Filter.InListFilter != nil {
+						caseSensitive9 := new(bool)
+						if !expressionsItem2.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive9 = expressionsItem2.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive9 = nil
+						}
+						var values4 []string = nil
+						for _, valuesItem4 := range expressionsItem2.Filter.InListFilter.Values {
+							values4 = append(values4, valuesItem4.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter{
+							CaseSensitive: caseSensitive9,
+							Values:        values4,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter
+					if expressionsItem2.Filter.NumericFilter != nil {
+						var operation4 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums = nil
+						for _, operationItem4 := range expressionsItem2.Filter.NumericFilter.Operation {
+							operation4 = append(operation4, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums(operationItem4.ValueString()))
+						}
+						var value33 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value
+						if expressionsItem2.Filter.NumericFilter.Value.Int64Value != nil {
+							value34 := expressionsItem2.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value{
+								Value: value34,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value != nil {
+							value33 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue
+						if expressionsItem2.Filter.NumericFilter.Value.DoubleValue != nil {
+							value35, _ := expressionsItem2.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue{
+								Value: value35,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue != nil {
+							value33 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter{
+							Operation: operation4,
+							Value:     value33,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter
+					if expressionsItem2.Filter.BetweenFilter != nil {
+						var fromValue4 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFromValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value
+						if expressionsItem2.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value36 := expressionsItem2.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value{
+								Value: value36,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value != nil {
+							fromValue4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue
+						if expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value37, _ := expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue{
+								Value: value37,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue != nil {
+							fromValue4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue,
+							}
+						}
+						var toValue4 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterToValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value
+						if expressionsItem2.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value38 := expressionsItem2.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value{
+								Value: value38,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value != nil {
+							toValue4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue
+						if expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value39, _ := expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue{
+								Value: value39,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue != nil {
+							toValue4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter{
+							FromValue: fromValue4,
+							ToValue:   toValue4,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter != nil {
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter,
+						}
+					}
+					expressions2 = append(expressions2, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayExpression{
+						FieldName: fieldName4,
+						Filter:    filter5,
+					})
+				}
+				sourceGoogleAnalyticsDataAPIUpdateAndGroup = &shared.SourceGoogleAnalyticsDataAPIUpdateAndGroup{
+					Expressions: expressions2,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateAndGroup != nil {
+				metricFilter = &shared.MetricsFilter{
+					SourceGoogleAnalyticsDataAPIUpdateAndGroup: sourceGoogleAnalyticsDataAPIUpdateAndGroup,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIUpdateOrGroup *shared.SourceGoogleAnalyticsDataAPIUpdateOrGroup
+			if customReportsArrayItem.MetricFilter.OrGroup != nil {
+				var expressions3 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterExpression = nil
+				for _, expressionsItem3 := range customReportsArrayItem.MetricFilter.OrGroup.Expressions {
+					fieldName5 := expressionsItem3.FieldName.ValueString()
+					var filter6 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter
+					if expressionsItem3.Filter.StringFilter != nil {
+						caseSensitive10 := new(bool)
+						if !expressionsItem3.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive10 = expressionsItem3.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive10 = nil
+						}
+						var matchType5 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums = nil
+						for _, matchTypeItem5 := range expressionsItem3.Filter.StringFilter.MatchType {
+							matchType5 = append(matchType5, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums(matchTypeItem5.ValueString()))
+						}
+						value40 := expressionsItem3.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter{
+							CaseSensitive: caseSensitive10,
+							MatchType:     matchType5,
+							Value:         value40,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter
+					if expressionsItem3.Filter.InListFilter != nil {
+						caseSensitive11 := new(bool)
+						if !expressionsItem3.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive11 = expressionsItem3.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive11 = nil
+						}
+						var values5 []string = nil
+						for _, valuesItem5 := range expressionsItem3.Filter.InListFilter.Values {
+							values5 = append(values5, valuesItem5.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter{
+							CaseSensitive: caseSensitive11,
+							Values:        values5,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter
+					if expressionsItem3.Filter.NumericFilter != nil {
+						var operation5 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums = nil
+						for _, operationItem5 := range expressionsItem3.Filter.NumericFilter.Operation {
+							operation5 = append(operation5, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums(operationItem5.ValueString()))
+						}
+						var value41 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value
+						if expressionsItem3.Filter.NumericFilter.Value.Int64Value != nil {
+							value42 := expressionsItem3.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value{
+								Value: value42,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value != nil {
+							value41 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue
+						if expressionsItem3.Filter.NumericFilter.Value.DoubleValue != nil {
+							value43, _ := expressionsItem3.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue{
+								Value: value43,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue != nil {
+							value41 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter{
+							Operation: operation5,
+							Value:     value41,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter
+					if expressionsItem3.Filter.BetweenFilter != nil {
+						var fromValue5 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFromValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value
+						if expressionsItem3.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value44 := expressionsItem3.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value{
+								Value: value44,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value != nil {
+							fromValue5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue
+						if expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value45, _ := expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue{
+								Value: value45,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue != nil {
+							fromValue5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue,
+							}
+						}
+						var toValue5 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterToValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value
+						if expressionsItem3.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value46 := expressionsItem3.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value{
+								Value: value46,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value != nil {
+							toValue5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue
+						if expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value47, _ := expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue{
+								Value: value47,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue != nil {
+							toValue5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter{
+							FromValue: fromValue5,
+							ToValue:   toValue5,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter != nil {
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter,
+						}
+					}
+					expressions3 = append(expressions3, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterExpression{
+						FieldName: fieldName5,
+						Filter:    filter6,
+					})
+				}
+				sourceGoogleAnalyticsDataAPIUpdateOrGroup = &shared.SourceGoogleAnalyticsDataAPIUpdateOrGroup{
+					Expressions: expressions3,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateOrGroup != nil {
+				metricFilter = &shared.MetricsFilter{
+					SourceGoogleAnalyticsDataAPIUpdateOrGroup: sourceGoogleAnalyticsDataAPIUpdateOrGroup,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIUpdateNotExpression *shared.SourceGoogleAnalyticsDataAPIUpdateNotExpression
+			if customReportsArrayItem.MetricFilter.NotExpression != nil {
+				var expression1 *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterExpression
+				if customReportsArrayItem.MetricFilter.NotExpression.Expression != nil {
+					fieldName6 := customReportsArrayItem.MetricFilter.NotExpression.Expression.FieldName.ValueString()
+					var filter7 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive12 := new(bool)
+						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive12 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive12 = nil
+						}
+						var matchType6 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums = nil
+						for _, matchTypeItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
+							matchType6 = append(matchType6, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums(matchTypeItem6.ValueString()))
+						}
+						value48 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter{
+							CaseSensitive: caseSensitive12,
+							MatchType:     matchType6,
+							Value:         value48,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter != nil {
+						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter != nil {
+						caseSensitive13 := new(bool)
+						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
+							*caseSensitive13 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive13 = nil
+						}
+						var values6 []string = nil
+						for _, valuesItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values6 = append(values6, valuesItem6.ValueString())
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter{
+							CaseSensitive: caseSensitive13,
+							Values:        values6,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter != nil {
+						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter != nil {
+						var operation6 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums = nil
+						for _, operationItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Operation {
+							operation6 = append(operation6, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums(operationItem6.ValueString()))
+						}
+						var value49 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Value
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value != nil {
+							value50 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value{
+								Value: value50,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value != nil {
+							value49 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Value{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Int64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
+							value51, _ := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue{
+								Value: value51,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue != nil {
+							value49 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Value{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter{
+							Operation: operation6,
+							Value:     value49,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter != nil {
+						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter
+					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter != nil {
+						var fromValue6 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value != nil {
+							value52 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value{
+								Value: value52,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value != nil {
+							fromValue6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+							value53, _ := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue{
+								Value: value53,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue != nil {
+							fromValue6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue,
+							}
+						}
+						var toValue6 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value != nil {
+							value54 := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value{
+								Value: value54,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value != nil {
+							toValue6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterInt64Value,
+							}
+						}
+						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue
+						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+							value55, _ := customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue{
+								Value: value55,
+							}
+						}
+						if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue != nil {
+							toValue6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue{
+								SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue,
+							}
+						}
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter{
+							FromValue: fromValue6,
+							ToValue:   toValue6,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter != nil {
+						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter,
+						}
+					}
+					expression1 = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterExpression{
+						FieldName: fieldName6,
+						Filter:    filter7,
+					}
+				}
+				sourceGoogleAnalyticsDataAPIUpdateNotExpression = &shared.SourceGoogleAnalyticsDataAPIUpdateNotExpression{
+					Expression: expression1,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateNotExpression != nil {
+				metricFilter = &shared.MetricsFilter{
+					SourceGoogleAnalyticsDataAPIUpdateNotExpression: sourceGoogleAnalyticsDataAPIUpdateNotExpression,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIUpdateFilter *shared.SourceGoogleAnalyticsDataAPIUpdateFilter
+			if customReportsArrayItem.MetricFilter.Filter != nil {
+				fieldName7 := customReportsArrayItem.MetricFilter.Filter.FieldName.ValueString()
+				var filter8 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter
+				var sourceGoogleAnalyticsDataAPIUpdateStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateStringFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive14 := new(bool)
+					if !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive14 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive14 = nil
+					}
+					var matchType7 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums = nil
+					for _, matchTypeItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.MatchType {
+						matchType7 = append(matchType7, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums(matchTypeItem7.ValueString()))
+					}
+					value56 := customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.Value.ValueString()
+					sourceGoogleAnalyticsDataAPIUpdateStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateStringFilter{
+						CaseSensitive: caseSensitive14,
+						MatchType:     matchType7,
+						Value:         value56,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIUpdateStringFilter != nil {
+					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIUpdateStringFilter: sourceGoogleAnalyticsDataAPIUpdateStringFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPIUpdateInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateInListFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter != nil {
+					caseSensitive15 := new(bool)
+					if !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
+						*caseSensitive15 = customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive15 = nil
+					}
+					var values7 []string = nil
+					for _, valuesItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.Values {
+						values7 = append(values7, valuesItem7.ValueString())
+					}
+					sourceGoogleAnalyticsDataAPIUpdateInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateInListFilter{
+						CaseSensitive: caseSensitive15,
+						Values:        values7,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIUpdateInListFilter != nil {
+					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIUpdateInListFilter: sourceGoogleAnalyticsDataAPIUpdateInListFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPIUpdateNumericFilter *shared.SourceGoogleAnalyticsDataAPIUpdateNumericFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter != nil {
+					var operation7 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValidEnums = nil
+					for _, operationItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Operation {
+						operation7 = append(operation7, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValidEnums(operationItem7.ValueString()))
+					}
+					var value57 shared.SourceGoogleAnalyticsDataAPIUpdateValue
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value
+					if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.Int64Value != nil {
+						value58 := customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value{
+							Value: value58,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value != nil {
+						value57 = shared.SourceGoogleAnalyticsDataAPIUpdateValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue
+					if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
+						value59, _ := customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue{
+							Value: value59,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue != nil {
+						value57 = shared.SourceGoogleAnalyticsDataAPIUpdateValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue,
+						}
+					}
+					sourceGoogleAnalyticsDataAPIUpdateNumericFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateNumericFilter{
+						Operation: operation7,
+						Value:     value57,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIUpdateNumericFilter != nil {
+					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIUpdateNumericFilter: sourceGoogleAnalyticsDataAPIUpdateNumericFilter,
+					}
+				}
+				var sourceGoogleAnalyticsDataAPIUpdateBetweenFilter *shared.SourceGoogleAnalyticsDataAPIUpdateBetweenFilter
+				if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter != nil {
+					var fromValue7 shared.SourceGoogleAnalyticsDataAPIUpdateFromValue
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value != nil {
+						value60 := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value{
+							Value: value60,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value != nil {
+						fromValue7 = shared.SourceGoogleAnalyticsDataAPIUpdateFromValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
+						value61, _ := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue{
+							Value: value61,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue != nil {
+						fromValue7 = shared.SourceGoogleAnalyticsDataAPIUpdateFromValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue,
+						}
+					}
+					var toValue7 shared.SourceGoogleAnalyticsDataAPIUpdateToValue
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value != nil {
+						value62 := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.Int64Value.Value.ValueString()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value{
+							Value: value62,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value != nil {
+						toValue7 = shared.SourceGoogleAnalyticsDataAPIUpdateToValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInt64Value,
+						}
+					}
+					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue
+					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
+						value63, _ := customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
+						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue{
+							Value: value63,
+						}
+					}
+					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue != nil {
+						toValue7 = shared.SourceGoogleAnalyticsDataAPIUpdateToValue{
+							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue,
+						}
+					}
+					sourceGoogleAnalyticsDataAPIUpdateBetweenFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateBetweenFilter{
+						FromValue: fromValue7,
+						ToValue:   toValue7,
+					}
+				}
+				if sourceGoogleAnalyticsDataAPIUpdateBetweenFilter != nil {
+					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+						SourceGoogleAnalyticsDataAPIUpdateBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateBetweenFilter,
+					}
+				}
+				sourceGoogleAnalyticsDataAPIUpdateFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateFilter{
+					FieldName: fieldName7,
+					Filter:    filter8,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateFilter != nil {
+				metricFilter = &shared.MetricsFilter{
+					SourceGoogleAnalyticsDataAPIUpdateFilter: sourceGoogleAnalyticsDataAPIUpdateFilter,
+				}
+			}
+		}
+		var metrics []string = nil
+		for _, metricsItem := range customReportsArrayItem.Metrics {
+			metrics = append(metrics, metricsItem.ValueString())
+		}
+		name := customReportsArrayItem.Name.ValueString()
+		customReportsArray = append(customReportsArray, shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig{
+			DimensionFilter: dimensionFilter,
+			Dimensions:      dimensions,
+			MetricFilter:    metricFilter,
+			Metrics:         metrics,
+			Name:            name,
+		})
 	}
-	dateRangesStartDate := customTypes.MustDateFromString(r.Configuration.DateRangesStartDate.ValueString())
-	propertyID := r.Configuration.PropertyID.ValueString()
+	dateRangesStartDate := new(customTypes.Date)
+	if !r.Configuration.DateRangesStartDate.IsUnknown() && !r.Configuration.DateRangesStartDate.IsNull() {
+		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
+	} else {
+		dateRangesStartDate = nil
+	}
+	var propertyIds []string = nil
+	for _, propertyIdsItem := range r.Configuration.PropertyIds {
+		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
+	}
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
 		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
@@ -175,16 +2886,16 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.So
 	}
 	configuration := shared.SourceGoogleAnalyticsDataAPIUpdate{
 		Credentials:         credentials,
-		CustomReports:       customReports,
+		CustomReportsArray:  customReportsArray,
 		DateRangesStartDate: dateRangesStartDate,
-		PropertyID:          propertyID,
+		PropertyIds:         propertyIds,
 		WindowInDays:        windowInDays,
 	}
-	name := r.Name.ValueString()
+	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleAnalyticsDataAPIPutRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

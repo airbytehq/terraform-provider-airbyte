@@ -11,3 +11,31 @@ type StreamConfiguration struct {
 	PrimaryKey [][]string              `json:"primaryKey,omitempty"`
 	SyncMode   *ConnectionSyncModeEnum `json:"syncMode,omitempty"`
 }
+
+func (o *StreamConfiguration) GetCursorField() []string {
+	if o == nil {
+		return nil
+	}
+	return o.CursorField
+}
+
+func (o *StreamConfiguration) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *StreamConfiguration) GetPrimaryKey() [][]string {
+	if o == nil {
+		return nil
+	}
+	return o.PrimaryKey
+}
+
+func (o *StreamConfiguration) GetSyncMode() *ConnectionSyncModeEnum {
+	if o == nil {
+		return nil
+	}
+	return o.SyncMode
+}

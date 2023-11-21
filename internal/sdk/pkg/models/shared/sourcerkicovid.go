@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceRkiCovidRkiCovid string
+type RkiCovid string
 
 const (
-	SourceRkiCovidRkiCovidRkiCovid SourceRkiCovidRkiCovid = "rki-covid"
+	RkiCovidRkiCovid RkiCovid = "rki-covid"
 )
 
-func (e SourceRkiCovidRkiCovid) ToPointer() *SourceRkiCovidRkiCovid {
+func (e RkiCovid) ToPointer() *RkiCovid {
 	return &e
 }
 
-func (e *SourceRkiCovidRkiCovid) UnmarshalJSON(data []byte) error {
+func (e *RkiCovid) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "rki-covid":
-		*e = SourceRkiCovidRkiCovid(v)
+		*e = RkiCovid(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRkiCovidRkiCovid: %v", v)
+		return fmt.Errorf("invalid value for RkiCovid: %v", v)
 	}
 }
 
 type SourceRkiCovid struct {
-	SourceType SourceRkiCovidRkiCovid `json:"sourceType"`
+	sourceType RkiCovid `const:"rki-covid" json:"sourceType"`
 	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
+}
+
+func (s SourceRkiCovid) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceRkiCovid) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceRkiCovid) GetSourceType() RkiCovid {
+	return RkiCovidRkiCovid
+}
+
+func (o *SourceRkiCovid) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

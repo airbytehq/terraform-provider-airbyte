@@ -4,9 +4,9 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     api_key      = "...my_api_key..."
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
-    source_type  = "google-webfonts"
   }
-  name         = "Donald Hyatt"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "81d6bb33-cfaa-4348-831b-f407ee4fcf0c"
+  definition_id = "77e51fa7-73fc-4f1a-8306-e082909d97bf"
+  name          = "Kerry Reinger"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3671a9ca-1d9c-4174-bee4-145562d27576"
 }

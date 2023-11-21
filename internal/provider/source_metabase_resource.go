@@ -3,18 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -35,6 +34,7 @@ type SourceMetabaseResource struct {
 // SourceMetabaseResourceModel describes the resource data model.
 type SourceMetabaseResourceModel struct {
 	Configuration SourceMetabase `tfsdk:"configuration"`
+	DefinitionID  types.String   `tfsdk:"definition_id"`
 	Name          types.String   `tfsdk:"name"`
 	SecretID      types.String   `tfsdk:"secret_id"`
 	SourceID      types.String   `tfsdk:"source_id"`
@@ -59,10 +59,12 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 						Description: `URL to your metabase instance API`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 					},
 					"session_token": schema.StringAttribute{
-						Optional: true,
+						Optional:  true,
+						Sensitive: true,
 						MarkdownDescription: `To generate your session token, you need to run the following command: ` + "```" + ` curl -X POST \` + "\n" +
 							`  -H "Content-Type: application/json" \` + "\n" +
 							`  -d '{"username": "person@metabase.com", "password": "fakepassword"}' \` + "\n" +
@@ -70,27 +72,29 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 							`` + "```" + ` Then copy the value of the ` + "`" + `id` + "`" + ` field returned by a successful call to that API.` + "\n" +
 							`Note that by default, sessions are good for 14 days and needs to be regenerated.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"metabase",
-							),
-						},
-						Description: `must be one of ["metabase"]`,
-					},
 					"username": schema.StringAttribute{
 						Optional: true,
 					},
 				},
 			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -154,7 +158,7 @@ func (r *SourceMetabaseResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceMetabase(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -330,5 +334,5 @@ func (r *SourceMetabaseResource) Delete(ctx context.Context, req resource.Delete
 }
 
 func (r *SourceMetabaseResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

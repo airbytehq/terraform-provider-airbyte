@@ -3,20 +3,24 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceShortioResourceModel) ToCreateSDKType() *shared.SourceShortioCreateRequest {
 	domainID := r.Configuration.DomainID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceShortioShortio(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceShortio{
-		DomainID:   domainID,
-		SecretKey:  secretKey,
-		SourceType: sourceType,
-		StartDate:  startDate,
+		DomainID:  domainID,
+		SecretKey: secretKey,
+		StartDate: startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -28,6 +32,7 @@ func (r *SourceShortioResourceModel) ToCreateSDKType() *shared.SourceShortioCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceShortioCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

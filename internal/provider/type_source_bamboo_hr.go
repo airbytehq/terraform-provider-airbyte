@@ -8,6 +8,5 @@ type SourceBambooHr struct {
 	APIKey                            types.String `tfsdk:"api_key"`
 	CustomReportsFields               types.String `tfsdk:"custom_reports_fields"`
 	CustomReportsIncludeDefaultFields types.Bool   `tfsdk:"custom_reports_include_default_fields"`
-	SourceType                        types.String `tfsdk:"source_type"`
 	Subdomain                         types.String `tfsdk:"subdomain"`
 }

@@ -5,38 +5,75 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationCumulioCumulio string
+type Cumulio string
 
 const (
-	DestinationCumulioCumulioCumulio DestinationCumulioCumulio = "cumulio"
+	CumulioCumulio Cumulio = "cumulio"
 )
 
-func (e DestinationCumulioCumulio) ToPointer() *DestinationCumulioCumulio {
+func (e Cumulio) ToPointer() *Cumulio {
 	return &e
 }
 
-func (e *DestinationCumulioCumulio) UnmarshalJSON(data []byte) error {
+func (e *Cumulio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cumulio":
-		*e = DestinationCumulioCumulio(v)
+		*e = Cumulio(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationCumulioCumulio: %v", v)
+		return fmt.Errorf("invalid value for Cumulio: %v", v)
 	}
 }
 
 type DestinationCumulio struct {
 	// URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
-	APIHost string `json:"api_host"`
+	APIHost *string `default:"https://api.cumul.io" json:"api_host"`
 	// An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
 	APIKey string `json:"api_key"`
 	// The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
-	APIToken        string                    `json:"api_token"`
-	DestinationType DestinationCumulioCumulio `json:"destinationType"`
+	APIToken        string  `json:"api_token"`
+	destinationType Cumulio `const:"cumulio" json:"destinationType"`
+}
+
+func (d DestinationCumulio) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationCumulio) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationCumulio) GetAPIHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIHost
+}
+
+func (o *DestinationCumulio) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *DestinationCumulio) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *DestinationCumulio) GetDestinationType() Cumulio {
+	return CumulioCumulio
 }

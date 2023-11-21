@@ -7,3 +7,24 @@ type SourceAmazonSellerPartnerPutRequest struct {
 	Name          string                          `json:"name"`
 	WorkspaceID   string                          `json:"workspaceId"`
 }
+
+func (o *SourceAmazonSellerPartnerPutRequest) GetConfiguration() SourceAmazonSellerPartnerUpdate {
+	if o == nil {
+		return SourceAmazonSellerPartnerUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAmazonSellerPartnerPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAmazonSellerPartnerPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -32,7 +32,6 @@ func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.Source
 	} else {
 		replicaSet = nil
 	}
-	sourceType := shared.SourceMongodbInternalPocMongodbInternalPoc(r.Configuration.SourceType.ValueString())
 	user := new(string)
 	if !r.Configuration.User.IsUnknown() && !r.Configuration.User.IsNull() {
 		*user = r.Configuration.User.ValueString()
@@ -44,8 +43,13 @@ func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.Source
 		ConnectionString: connectionString,
 		Password:         password,
 		ReplicaSet:       replicaSet,
-		SourceType:       sourceType,
 		User:             user,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -57,6 +61,7 @@ func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.Source
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceMongodbInternalPocCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

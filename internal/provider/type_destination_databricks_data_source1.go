@@ -3,10 +3,7 @@
 package provider
 
 type DestinationDatabricksDataSource1 struct {
-	DestinationDatabricksDataSourceRecommendedManagedTables       *DestinationDatabricksDataSourceRecommendedManagedTables `tfsdk:"destination_databricks_data_source_recommended_managed_tables"`
-	DestinationDatabricksDataSourceAmazonS3                       *DestinationDatabricksDataSourceAmazonS3                 `tfsdk:"destination_databricks_data_source_amazon_s3"`
-	DestinationDatabricksDataSourceAzureBlobStorage               *DestinationDatabricksDataSourceAzureBlobStorage         `tfsdk:"destination_databricks_data_source_azure_blob_storage"`
-	DestinationDatabricksUpdateDataSourceRecommendedManagedTables *DestinationDatabricksDataSourceRecommendedManagedTables `tfsdk:"destination_databricks_update_data_source_recommended_managed_tables"`
-	DestinationDatabricksUpdateDataSourceAmazonS3                 *DestinationDatabricksUpdateDataSourceAmazonS3           `tfsdk:"destination_databricks_update_data_source_amazon_s3"`
-	DestinationDatabricksUpdateDataSourceAzureBlobStorage         *DestinationDatabricksDataSourceAzureBlobStorage         `tfsdk:"destination_databricks_update_data_source_azure_blob_storage"`
+	RecommendedManagedTables *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"recommended_managed_tables"`
+	AmazonS3                 *AmazonS3                                                 `tfsdk:"amazon_s3"`
+	AzureBlobStorage         *DestinationDatabricksAzureBlobStorage                    `tfsdk:"azure_blob_storage"`
 }

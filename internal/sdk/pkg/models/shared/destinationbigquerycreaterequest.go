@@ -4,6 +4,37 @@ package shared
 
 type DestinationBigqueryCreateRequest struct {
 	Configuration DestinationBigquery `json:"configuration"`
-	Name          string              `json:"name"`
-	WorkspaceID   string              `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationBigqueryCreateRequest) GetConfiguration() DestinationBigquery {
+	if o == nil {
+		return DestinationBigquery{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationBigqueryCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationBigqueryCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationBigqueryCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

@@ -3,8 +3,9 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitudeCreateRequest {
@@ -22,15 +23,19 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 		requestTimeRange = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceAmplitudeAmplitude(r.Configuration.SourceType.ValueString())
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAmplitude{
 		APIKey:           apiKey,
 		DataRegion:       dataRegion,
 		RequestTimeRange: requestTimeRange,
 		SecretKey:        secretKey,
-		SourceType:       sourceType,
 		StartDate:        startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -42,6 +47,7 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceAmplitudeCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -56,9 +62,9 @@ func (r *SourceAmplitudeResourceModel) ToGetSDKType() *shared.SourceAmplitudeCre
 
 func (r *SourceAmplitudeResourceModel) ToUpdateSDKType() *shared.SourceAmplitudePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	dataRegion := new(shared.SourceAmplitudeUpdateDataRegion)
+	dataRegion := new(shared.DataRegion)
 	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
-		*dataRegion = shared.SourceAmplitudeUpdateDataRegion(r.Configuration.DataRegion.ValueString())
+		*dataRegion = shared.DataRegion(r.Configuration.DataRegion.ValueString())
 	} else {
 		dataRegion = nil
 	}
@@ -69,7 +75,7 @@ func (r *SourceAmplitudeResourceModel) ToUpdateSDKType() *shared.SourceAmplitude
 		requestTimeRange = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAmplitudeUpdate{
 		APIKey:           apiKey,
 		DataRegion:       dataRegion,

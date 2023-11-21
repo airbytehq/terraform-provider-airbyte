@@ -7,3 +7,24 @@ type SourceWhiskyHunterPutRequest struct {
 	Name          string                   `json:"name"`
 	WorkspaceID   string                   `json:"workspaceId"`
 }
+
+func (o *SourceWhiskyHunterPutRequest) GetConfiguration() SourceWhiskyHunterUpdate {
+	if o == nil {
+		return SourceWhiskyHunterUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceWhiskyHunterPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceWhiskyHunterPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

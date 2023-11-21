@@ -6,27 +6,23 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      source_postgres_update_method_detect_changes_with_xmin_system_column = {
-        method = "Xmin"
-      }
+      detect_changes_with_xmin_system_column = {}
     }
     schemas = [
       "...",
     ]
-    source_type = "postgres"
     ssl_mode = {
-      source_postgres_ssl_modes_allow = {
-        mode = "allow"
+      source_postgres_allow = {
+        additional_properties = "{ \"see\": \"documentation\" }"
       }
     }
     tunnel_method = {
-      source_postgres_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      source_postgres_no_tunnel = {}
     }
-    username = "Edwardo.Streich"
+    username = "Dagmar_Towne8"
   }
-  name         = "Roosevelt Cummings"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "480632b9-954b-46fa-a206-369828553cb1"
+  definition_id = "558e983f-33bb-4c2f-8e75-b95ee5dd11c7"
+  name          = "Brandi Gerhold"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "aa4d1c74-fcd7-4d93-9b8b-6b2c0920aa8b"
 }

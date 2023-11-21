@@ -16,3 +16,31 @@ type SourceTvmazeScheduleUpdate struct {
 	//
 	WebScheduleCountryCode *string `json:"web_schedule_country_code,omitempty"`
 }
+
+func (o *SourceTvmazeScheduleUpdate) GetDomesticScheduleCountryCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomesticScheduleCountryCode
+}
+
+func (o *SourceTvmazeScheduleUpdate) GetEndDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceTvmazeScheduleUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
+}
+
+func (o *SourceTvmazeScheduleUpdate) GetWebScheduleCountryCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WebScheduleCountryCode
+}

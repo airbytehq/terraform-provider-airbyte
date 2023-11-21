@@ -3,9 +3,9 @@ resource "airbyte_source_smaily" "my_source_smaily" {
     api_password  = "...my_api_password..."
     api_subdomain = "...my_api_subdomain..."
     api_username  = "...my_api_username..."
-    source_type   = "smaily"
   }
-  name         = "Donnie Hauck"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "b6902b88-1a94-4f64-b664-a8f0af8c691d"
+  definition_id = "0bc649fe-5b08-4c82-9c40-ca1ab7663971"
+  name          = "Ebony Carroll"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "331df025-a154-4586-87cd-fb558f87809d"
 }

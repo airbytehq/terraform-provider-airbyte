@@ -7,3 +7,24 @@ type DestinationAzureBlobStoragePutRequest struct {
 	Name          string                            `json:"name"`
 	WorkspaceID   string                            `json:"workspaceId"`
 }
+
+func (o *DestinationAzureBlobStoragePutRequest) GetConfiguration() DestinationAzureBlobStorageUpdate {
+	if o == nil {
+		return DestinationAzureBlobStorageUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationAzureBlobStoragePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationAzureBlobStoragePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

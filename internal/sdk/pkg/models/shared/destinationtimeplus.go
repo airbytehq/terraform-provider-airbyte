@@ -5,36 +5,66 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationTimeplusTimeplus string
+type Timeplus string
 
 const (
-	DestinationTimeplusTimeplusTimeplus DestinationTimeplusTimeplus = "timeplus"
+	TimeplusTimeplus Timeplus = "timeplus"
 )
 
-func (e DestinationTimeplusTimeplus) ToPointer() *DestinationTimeplusTimeplus {
+func (e Timeplus) ToPointer() *Timeplus {
 	return &e
 }
 
-func (e *DestinationTimeplusTimeplus) UnmarshalJSON(data []byte) error {
+func (e *Timeplus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "timeplus":
-		*e = DestinationTimeplusTimeplus(v)
+		*e = Timeplus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationTimeplusTimeplus: %v", v)
+		return fmt.Errorf("invalid value for Timeplus: %v", v)
 	}
 }
 
 type DestinationTimeplus struct {
 	// Personal API key
-	Apikey          string                      `json:"apikey"`
-	DestinationType DestinationTimeplusTimeplus `json:"destinationType"`
+	Apikey          string   `json:"apikey"`
+	destinationType Timeplus `const:"timeplus" json:"destinationType"`
 	// Timeplus workspace endpoint
-	Endpoint string `json:"endpoint"`
+	Endpoint *string `default:"https://us.timeplus.cloud/<workspace_id>" json:"endpoint"`
+}
+
+func (d DestinationTimeplus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationTimeplus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationTimeplus) GetApikey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Apikey
+}
+
+func (o *DestinationTimeplus) GetDestinationType() Timeplus {
+	return TimeplusTimeplus
+}
+
+func (o *DestinationTimeplus) GetEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Endpoint
 }

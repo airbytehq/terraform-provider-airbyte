@@ -3,13 +3,13 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
     environment = "sandbox"
-    limit       = 10
+    limit       = 8
     period      = "2MTH"
-    source_type = "coin-api"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  name         = "Francis Boyle"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "bc0b80a6-924d-43b2-acfc-c8f895010f5d"
+  definition_id = "f0e9a05e-994a-4ce4-9dc5-b42f2a228e88"
+  name          = "Rhonda Kunze"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "d4275060-42c1-4c65-a61b-2485a060238e"
 }

@@ -3,32 +3,33 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceSnapchatMarketingSnapchatMarketing string
+type SnapchatMarketing string
 
 const (
-	SourceSnapchatMarketingSnapchatMarketingSnapchatMarketing SourceSnapchatMarketingSnapchatMarketing = "snapchat-marketing"
+	SnapchatMarketingSnapchatMarketing SnapchatMarketing = "snapchat-marketing"
 )
 
-func (e SourceSnapchatMarketingSnapchatMarketing) ToPointer() *SourceSnapchatMarketingSnapchatMarketing {
+func (e SnapchatMarketing) ToPointer() *SnapchatMarketing {
 	return &e
 }
 
-func (e *SourceSnapchatMarketingSnapchatMarketing) UnmarshalJSON(data []byte) error {
+func (e *SnapchatMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "snapchat-marketing":
-		*e = SourceSnapchatMarketingSnapchatMarketing(v)
+		*e = SnapchatMarketing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnapchatMarketingSnapchatMarketing: %v", v)
+		return fmt.Errorf("invalid value for SnapchatMarketing: %v", v)
 	}
 }
 
@@ -40,8 +41,58 @@ type SourceSnapchatMarketing struct {
 	// Date in the format 2017-01-25. Any data after this date will not be replicated.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Refresh Token to renew the expired Access Token.
-	RefreshToken string                                   `json:"refresh_token"`
-	SourceType   SourceSnapchatMarketingSnapchatMarketing `json:"sourceType"`
+	RefreshToken string            `json:"refresh_token"`
+	sourceType   SnapchatMarketing `const:"snapchat-marketing" json:"sourceType"`
 	// Date in the format 2022-01-01. Any data before this date will not be replicated.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *types.Date `default:"2022-01-01" json:"start_date"`
+}
+
+func (s SourceSnapchatMarketing) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSnapchatMarketing) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSnapchatMarketing) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceSnapchatMarketing) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceSnapchatMarketing) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceSnapchatMarketing) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *SourceSnapchatMarketing) GetSourceType() SnapchatMarketing {
+	return SnapchatMarketingSnapchatMarketing
+}
+
+func (o *SourceSnapchatMarketing) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

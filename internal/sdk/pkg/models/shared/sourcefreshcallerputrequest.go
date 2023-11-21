@@ -7,3 +7,24 @@ type SourceFreshcallerPutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *SourceFreshcallerPutRequest) GetConfiguration() SourceFreshcallerUpdate {
+	if o == nil {
+		return SourceFreshcallerUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFreshcallerPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFreshcallerPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

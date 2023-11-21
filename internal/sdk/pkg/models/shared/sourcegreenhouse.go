@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGreenhouseGreenhouse string
+type Greenhouse string
 
 const (
-	SourceGreenhouseGreenhouseGreenhouse SourceGreenhouseGreenhouse = "greenhouse"
+	GreenhouseGreenhouse Greenhouse = "greenhouse"
 )
 
-func (e SourceGreenhouseGreenhouse) ToPointer() *SourceGreenhouseGreenhouse {
+func (e Greenhouse) ToPointer() *Greenhouse {
 	return &e
 }
 
-func (e *SourceGreenhouseGreenhouse) UnmarshalJSON(data []byte) error {
+func (e *Greenhouse) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "greenhouse":
-		*e = SourceGreenhouseGreenhouse(v)
+		*e = Greenhouse(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGreenhouseGreenhouse: %v", v)
+		return fmt.Errorf("invalid value for Greenhouse: %v", v)
 	}
 }
 
 type SourceGreenhouse struct {
 	// Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
-	APIKey     string                     `json:"api_key"`
-	SourceType SourceGreenhouseGreenhouse `json:"sourceType"`
+	APIKey     string     `json:"api_key"`
+	sourceType Greenhouse `const:"greenhouse" json:"sourceType"`
+}
+
+func (s SourceGreenhouse) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGreenhouse) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGreenhouse) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGreenhouse) GetSourceType() Greenhouse {
+	return GreenhouseGreenhouse
 }

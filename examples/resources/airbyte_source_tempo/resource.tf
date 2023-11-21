@@ -1,9 +1,9 @@
 resource "airbyte_source_tempo" "my_source_tempo" {
   configuration = {
-    api_token   = "...my_api_token..."
-    source_type = "tempo"
+    api_token = "...my_api_token..."
   }
-  name         = "Edwin Haley"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "7f69e2c9-e6d1-40e9-9b3a-d4c6b03108d9"
+  definition_id = "5f462d7c-8446-4197-ba1b-271a5b009f29"
+  name          = "Karen Kemmer"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "6dac9959-2aae-4b21-989b-3db558d4aa17"
 }

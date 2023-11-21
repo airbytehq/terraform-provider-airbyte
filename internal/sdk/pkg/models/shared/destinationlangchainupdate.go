@@ -3,342 +3,507 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type DestinationLangchainUpdateEmbeddingFakeMode string
+type DestinationLangchainUpdateMode string
 
 const (
-	DestinationLangchainUpdateEmbeddingFakeModeFake DestinationLangchainUpdateEmbeddingFakeMode = "fake"
+	DestinationLangchainUpdateModeFake DestinationLangchainUpdateMode = "fake"
 )
 
-func (e DestinationLangchainUpdateEmbeddingFakeMode) ToPointer() *DestinationLangchainUpdateEmbeddingFakeMode {
+func (e DestinationLangchainUpdateMode) ToPointer() *DestinationLangchainUpdateMode {
 	return &e
 }
 
-func (e *DestinationLangchainUpdateEmbeddingFakeMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationLangchainUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "fake":
-		*e = DestinationLangchainUpdateEmbeddingFakeMode(v)
+		*e = DestinationLangchainUpdateMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationLangchainUpdateEmbeddingFakeMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationLangchainUpdateMode: %v", v)
 	}
 }
 
-// DestinationLangchainUpdateEmbeddingFake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
-type DestinationLangchainUpdateEmbeddingFake struct {
-	Mode *DestinationLangchainUpdateEmbeddingFakeMode `json:"mode,omitempty"`
+// Fake - Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.
+type Fake struct {
+	mode *DestinationLangchainUpdateMode `const:"fake" json:"mode"`
 }
 
-type DestinationLangchainUpdateEmbeddingOpenAIMode string
+func (f Fake) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *Fake) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Fake) GetMode() *DestinationLangchainUpdateMode {
+	return DestinationLangchainUpdateModeFake.ToPointer()
+}
+
+type DestinationLangchainUpdateSchemasEmbeddingMode string
 
 const (
-	DestinationLangchainUpdateEmbeddingOpenAIModeOpenai DestinationLangchainUpdateEmbeddingOpenAIMode = "openai"
+	DestinationLangchainUpdateSchemasEmbeddingModeOpenai DestinationLangchainUpdateSchemasEmbeddingMode = "openai"
 )
 
-func (e DestinationLangchainUpdateEmbeddingOpenAIMode) ToPointer() *DestinationLangchainUpdateEmbeddingOpenAIMode {
+func (e DestinationLangchainUpdateSchemasEmbeddingMode) ToPointer() *DestinationLangchainUpdateSchemasEmbeddingMode {
 	return &e
 }
 
-func (e *DestinationLangchainUpdateEmbeddingOpenAIMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationLangchainUpdateSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "openai":
-		*e = DestinationLangchainUpdateEmbeddingOpenAIMode(v)
+		*e = DestinationLangchainUpdateSchemasEmbeddingMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationLangchainUpdateEmbeddingOpenAIMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationLangchainUpdateSchemasEmbeddingMode: %v", v)
 	}
 }
 
-// DestinationLangchainUpdateEmbeddingOpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
-type DestinationLangchainUpdateEmbeddingOpenAI struct {
-	Mode      *DestinationLangchainUpdateEmbeddingOpenAIMode `json:"mode,omitempty"`
-	OpenaiKey string                                         `json:"openai_key"`
+// OpenAI - Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
+type OpenAI struct {
+	mode      *DestinationLangchainUpdateSchemasEmbeddingMode `const:"openai" json:"mode"`
+	OpenaiKey string                                          `json:"openai_key"`
 }
 
-type DestinationLangchainUpdateEmbeddingType string
+func (o OpenAI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *OpenAI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *OpenAI) GetMode() *DestinationLangchainUpdateSchemasEmbeddingMode {
+	return DestinationLangchainUpdateSchemasEmbeddingModeOpenai.ToPointer()
+}
+
+func (o *OpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
+}
+
+type EmbeddingType string
 
 const (
-	DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingOpenAI DestinationLangchainUpdateEmbeddingType = "destination-langchain-update_Embedding_OpenAI"
-	DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingFake   DestinationLangchainUpdateEmbeddingType = "destination-langchain-update_Embedding_Fake"
+	EmbeddingTypeOpenAI EmbeddingType = "OpenAI"
+	EmbeddingTypeFake   EmbeddingType = "Fake"
 )
 
-type DestinationLangchainUpdateEmbedding struct {
-	DestinationLangchainUpdateEmbeddingOpenAI *DestinationLangchainUpdateEmbeddingOpenAI
-	DestinationLangchainUpdateEmbeddingFake   *DestinationLangchainUpdateEmbeddingFake
+type Embedding struct {
+	OpenAI *OpenAI
+	Fake   *Fake
 
-	Type DestinationLangchainUpdateEmbeddingType
+	Type EmbeddingType
 }
 
-func CreateDestinationLangchainUpdateEmbeddingDestinationLangchainUpdateEmbeddingOpenAI(destinationLangchainUpdateEmbeddingOpenAI DestinationLangchainUpdateEmbeddingOpenAI) DestinationLangchainUpdateEmbedding {
-	typ := DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingOpenAI
+func CreateEmbeddingOpenAI(openAI OpenAI) Embedding {
+	typ := EmbeddingTypeOpenAI
 
-	return DestinationLangchainUpdateEmbedding{
-		DestinationLangchainUpdateEmbeddingOpenAI: &destinationLangchainUpdateEmbeddingOpenAI,
+	return Embedding{
+		OpenAI: &openAI,
+		Type:   typ,
+	}
+}
+
+func CreateEmbeddingFake(fake Fake) Embedding {
+	typ := EmbeddingTypeFake
+
+	return Embedding{
+		Fake: &fake,
 		Type: typ,
 	}
 }
 
-func CreateDestinationLangchainUpdateEmbeddingDestinationLangchainUpdateEmbeddingFake(destinationLangchainUpdateEmbeddingFake DestinationLangchainUpdateEmbeddingFake) DestinationLangchainUpdateEmbedding {
-	typ := DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingFake
+func (u *Embedding) UnmarshalJSON(data []byte) error {
 
-	return DestinationLangchainUpdateEmbedding{
-		DestinationLangchainUpdateEmbeddingFake: &destinationLangchainUpdateEmbeddingFake,
-		Type:                                    typ,
-	}
-}
-
-func (u *DestinationLangchainUpdateEmbedding) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	destinationLangchainUpdateEmbeddingFake := new(DestinationLangchainUpdateEmbeddingFake)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateEmbeddingFake); err == nil {
-		u.DestinationLangchainUpdateEmbeddingFake = destinationLangchainUpdateEmbeddingFake
-		u.Type = DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingFake
+	fake := new(Fake)
+	if err := utils.UnmarshalJSON(data, &fake, "", true, true); err == nil {
+		u.Fake = fake
+		u.Type = EmbeddingTypeFake
 		return nil
 	}
 
-	destinationLangchainUpdateEmbeddingOpenAI := new(DestinationLangchainUpdateEmbeddingOpenAI)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateEmbeddingOpenAI); err == nil {
-		u.DestinationLangchainUpdateEmbeddingOpenAI = destinationLangchainUpdateEmbeddingOpenAI
-		u.Type = DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingOpenAI
+	openAI := new(OpenAI)
+	if err := utils.UnmarshalJSON(data, &openAI, "", true, true); err == nil {
+		u.OpenAI = openAI
+		u.Type = EmbeddingTypeOpenAI
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationLangchainUpdateEmbedding) MarshalJSON() ([]byte, error) {
-	if u.DestinationLangchainUpdateEmbeddingFake != nil {
-		return json.Marshal(u.DestinationLangchainUpdateEmbeddingFake)
+func (u Embedding) MarshalJSON() ([]byte, error) {
+	if u.OpenAI != nil {
+		return utils.MarshalJSON(u.OpenAI, "", true)
 	}
 
-	if u.DestinationLangchainUpdateEmbeddingOpenAI != nil {
-		return json.Marshal(u.DestinationLangchainUpdateEmbeddingOpenAI)
+	if u.Fake != nil {
+		return utils.MarshalJSON(u.Fake, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationLangchainUpdateIndexingChromaLocalPersistanceMode string
+type DestinationLangchainUpdateSchemasIndexingIndexingMode string
 
 const (
-	DestinationLangchainUpdateIndexingChromaLocalPersistanceModeChromaLocal DestinationLangchainUpdateIndexingChromaLocalPersistanceMode = "chroma_local"
+	DestinationLangchainUpdateSchemasIndexingIndexingModeChromaLocal DestinationLangchainUpdateSchemasIndexingIndexingMode = "chroma_local"
 )
 
-func (e DestinationLangchainUpdateIndexingChromaLocalPersistanceMode) ToPointer() *DestinationLangchainUpdateIndexingChromaLocalPersistanceMode {
+func (e DestinationLangchainUpdateSchemasIndexingIndexingMode) ToPointer() *DestinationLangchainUpdateSchemasIndexingIndexingMode {
 	return &e
 }
 
-func (e *DestinationLangchainUpdateIndexingChromaLocalPersistanceMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationLangchainUpdateSchemasIndexingIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "chroma_local":
-		*e = DestinationLangchainUpdateIndexingChromaLocalPersistanceMode(v)
+		*e = DestinationLangchainUpdateSchemasIndexingIndexingMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationLangchainUpdateIndexingChromaLocalPersistanceMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationLangchainUpdateSchemasIndexingIndexingMode: %v", v)
 	}
 }
 
-// DestinationLangchainUpdateIndexingChromaLocalPersistance - Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.
-type DestinationLangchainUpdateIndexingChromaLocalPersistance struct {
+// ChromaLocalPersistance - Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.
+type ChromaLocalPersistance struct {
 	// Name of the collection to use.
-	CollectionName *string `json:"collection_name,omitempty"`
+	CollectionName *string `default:"langchain" json:"collection_name"`
 	// Path to the directory where chroma files will be written. The files will be placed inside that local mount.
-	DestinationPath string                                                        `json:"destination_path"`
-	Mode            *DestinationLangchainUpdateIndexingChromaLocalPersistanceMode `json:"mode,omitempty"`
+	DestinationPath string                                                 `json:"destination_path"`
+	mode            *DestinationLangchainUpdateSchemasIndexingIndexingMode `const:"chroma_local" json:"mode"`
 }
 
-type DestinationLangchainUpdateIndexingDocArrayHnswSearchMode string
+func (c ChromaLocalPersistance) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ChromaLocalPersistance) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ChromaLocalPersistance) GetCollectionName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CollectionName
+}
+
+func (o *ChromaLocalPersistance) GetDestinationPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationPath
+}
+
+func (o *ChromaLocalPersistance) GetMode() *DestinationLangchainUpdateSchemasIndexingIndexingMode {
+	return DestinationLangchainUpdateSchemasIndexingIndexingModeChromaLocal.ToPointer()
+}
+
+type DestinationLangchainUpdateSchemasIndexingMode string
 
 const (
-	DestinationLangchainUpdateIndexingDocArrayHnswSearchModeDocArrayHnswSearch DestinationLangchainUpdateIndexingDocArrayHnswSearchMode = "DocArrayHnswSearch"
+	DestinationLangchainUpdateSchemasIndexingModeDocArrayHnswSearch DestinationLangchainUpdateSchemasIndexingMode = "DocArrayHnswSearch"
 )
 
-func (e DestinationLangchainUpdateIndexingDocArrayHnswSearchMode) ToPointer() *DestinationLangchainUpdateIndexingDocArrayHnswSearchMode {
+func (e DestinationLangchainUpdateSchemasIndexingMode) ToPointer() *DestinationLangchainUpdateSchemasIndexingMode {
 	return &e
 }
 
-func (e *DestinationLangchainUpdateIndexingDocArrayHnswSearchMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationLangchainUpdateSchemasIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "DocArrayHnswSearch":
-		*e = DestinationLangchainUpdateIndexingDocArrayHnswSearchMode(v)
+		*e = DestinationLangchainUpdateSchemasIndexingMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationLangchainUpdateIndexingDocArrayHnswSearchMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationLangchainUpdateSchemasIndexingMode: %v", v)
 	}
 }
 
-// DestinationLangchainUpdateIndexingDocArrayHnswSearch - DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.
-type DestinationLangchainUpdateIndexingDocArrayHnswSearch struct {
+// DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.
+type DocArrayHnswSearch struct {
 	// Path to the directory where hnswlib and meta data files will be written. The files will be placed inside that local mount. All files in the specified destination directory will be deleted on each run.
-	DestinationPath string                                                    `json:"destination_path"`
-	Mode            *DestinationLangchainUpdateIndexingDocArrayHnswSearchMode `json:"mode,omitempty"`
+	DestinationPath string                                         `json:"destination_path"`
+	mode            *DestinationLangchainUpdateSchemasIndexingMode `const:"DocArrayHnswSearch" json:"mode"`
 }
 
-type DestinationLangchainUpdateIndexingPineconeMode string
+func (d DocArrayHnswSearch) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DocArrayHnswSearch) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DocArrayHnswSearch) GetDestinationPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.DestinationPath
+}
+
+func (o *DocArrayHnswSearch) GetMode() *DestinationLangchainUpdateSchemasIndexingMode {
+	return DestinationLangchainUpdateSchemasIndexingModeDocArrayHnswSearch.ToPointer()
+}
+
+type DestinationLangchainUpdateSchemasMode string
 
 const (
-	DestinationLangchainUpdateIndexingPineconeModePinecone DestinationLangchainUpdateIndexingPineconeMode = "pinecone"
+	DestinationLangchainUpdateSchemasModePinecone DestinationLangchainUpdateSchemasMode = "pinecone"
 )
 
-func (e DestinationLangchainUpdateIndexingPineconeMode) ToPointer() *DestinationLangchainUpdateIndexingPineconeMode {
+func (e DestinationLangchainUpdateSchemasMode) ToPointer() *DestinationLangchainUpdateSchemasMode {
 	return &e
 }
 
-func (e *DestinationLangchainUpdateIndexingPineconeMode) UnmarshalJSON(data []byte) error {
+func (e *DestinationLangchainUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pinecone":
-		*e = DestinationLangchainUpdateIndexingPineconeMode(v)
+		*e = DestinationLangchainUpdateSchemasMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationLangchainUpdateIndexingPineconeMode: %v", v)
+		return fmt.Errorf("invalid value for DestinationLangchainUpdateSchemasMode: %v", v)
 	}
 }
 
-// DestinationLangchainUpdateIndexingPinecone - Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain.
-type DestinationLangchainUpdateIndexingPinecone struct {
+// DestinationLangchainUpdatePinecone - Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain.
+type DestinationLangchainUpdatePinecone struct {
 	// Pinecone index to use
-	Index string                                          `json:"index"`
-	Mode  *DestinationLangchainUpdateIndexingPineconeMode `json:"mode,omitempty"`
+	Index string                                 `json:"index"`
+	mode  *DestinationLangchainUpdateSchemasMode `const:"pinecone" json:"mode"`
 	// Pinecone environment to use
 	PineconeEnvironment string `json:"pinecone_environment"`
 	PineconeKey         string `json:"pinecone_key"`
 }
 
-type DestinationLangchainUpdateIndexingType string
+func (d DestinationLangchainUpdatePinecone) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationLangchainUpdatePinecone) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationLangchainUpdatePinecone) GetIndex() string {
+	if o == nil {
+		return ""
+	}
+	return o.Index
+}
+
+func (o *DestinationLangchainUpdatePinecone) GetMode() *DestinationLangchainUpdateSchemasMode {
+	return DestinationLangchainUpdateSchemasModePinecone.ToPointer()
+}
+
+func (o *DestinationLangchainUpdatePinecone) GetPineconeEnvironment() string {
+	if o == nil {
+		return ""
+	}
+	return o.PineconeEnvironment
+}
+
+func (o *DestinationLangchainUpdatePinecone) GetPineconeKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PineconeKey
+}
+
+type IndexingType string
 
 const (
-	DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingPinecone               DestinationLangchainUpdateIndexingType = "destination-langchain-update_Indexing_Pinecone"
-	DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingDocArrayHnswSearch     DestinationLangchainUpdateIndexingType = "destination-langchain-update_Indexing_DocArrayHnswSearch"
-	DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingChromaLocalPersistance DestinationLangchainUpdateIndexingType = "destination-langchain-update_Indexing_Chroma (local persistance)"
+	IndexingTypeDestinationLangchainUpdatePinecone IndexingType = "destination-langchain-update_Pinecone"
+	IndexingTypeDocArrayHnswSearch                 IndexingType = "DocArrayHnswSearch"
+	IndexingTypeChromaLocalPersistance             IndexingType = "Chroma (local persistance)"
 )
 
-type DestinationLangchainUpdateIndexing struct {
-	DestinationLangchainUpdateIndexingPinecone               *DestinationLangchainUpdateIndexingPinecone
-	DestinationLangchainUpdateIndexingDocArrayHnswSearch     *DestinationLangchainUpdateIndexingDocArrayHnswSearch
-	DestinationLangchainUpdateIndexingChromaLocalPersistance *DestinationLangchainUpdateIndexingChromaLocalPersistance
+type Indexing struct {
+	DestinationLangchainUpdatePinecone *DestinationLangchainUpdatePinecone
+	DocArrayHnswSearch                 *DocArrayHnswSearch
+	ChromaLocalPersistance             *ChromaLocalPersistance
 
-	Type DestinationLangchainUpdateIndexingType
+	Type IndexingType
 }
 
-func CreateDestinationLangchainUpdateIndexingDestinationLangchainUpdateIndexingPinecone(destinationLangchainUpdateIndexingPinecone DestinationLangchainUpdateIndexingPinecone) DestinationLangchainUpdateIndexing {
-	typ := DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingPinecone
+func CreateIndexingDestinationLangchainUpdatePinecone(destinationLangchainUpdatePinecone DestinationLangchainUpdatePinecone) Indexing {
+	typ := IndexingTypeDestinationLangchainUpdatePinecone
 
-	return DestinationLangchainUpdateIndexing{
-		DestinationLangchainUpdateIndexingPinecone: &destinationLangchainUpdateIndexingPinecone,
-		Type: typ,
+	return Indexing{
+		DestinationLangchainUpdatePinecone: &destinationLangchainUpdatePinecone,
+		Type:                               typ,
 	}
 }
 
-func CreateDestinationLangchainUpdateIndexingDestinationLangchainUpdateIndexingDocArrayHnswSearch(destinationLangchainUpdateIndexingDocArrayHnswSearch DestinationLangchainUpdateIndexingDocArrayHnswSearch) DestinationLangchainUpdateIndexing {
-	typ := DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingDocArrayHnswSearch
+func CreateIndexingDocArrayHnswSearch(docArrayHnswSearch DocArrayHnswSearch) Indexing {
+	typ := IndexingTypeDocArrayHnswSearch
 
-	return DestinationLangchainUpdateIndexing{
-		DestinationLangchainUpdateIndexingDocArrayHnswSearch: &destinationLangchainUpdateIndexingDocArrayHnswSearch,
-		Type: typ,
+	return Indexing{
+		DocArrayHnswSearch: &docArrayHnswSearch,
+		Type:               typ,
 	}
 }
 
-func CreateDestinationLangchainUpdateIndexingDestinationLangchainUpdateIndexingChromaLocalPersistance(destinationLangchainUpdateIndexingChromaLocalPersistance DestinationLangchainUpdateIndexingChromaLocalPersistance) DestinationLangchainUpdateIndexing {
-	typ := DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingChromaLocalPersistance
+func CreateIndexingChromaLocalPersistance(chromaLocalPersistance ChromaLocalPersistance) Indexing {
+	typ := IndexingTypeChromaLocalPersistance
 
-	return DestinationLangchainUpdateIndexing{
-		DestinationLangchainUpdateIndexingChromaLocalPersistance: &destinationLangchainUpdateIndexingChromaLocalPersistance,
-		Type: typ,
+	return Indexing{
+		ChromaLocalPersistance: &chromaLocalPersistance,
+		Type:                   typ,
 	}
 }
 
-func (u *DestinationLangchainUpdateIndexing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+func (u *Indexing) UnmarshalJSON(data []byte) error {
 
-	destinationLangchainUpdateIndexingDocArrayHnswSearch := new(DestinationLangchainUpdateIndexingDocArrayHnswSearch)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateIndexingDocArrayHnswSearch); err == nil {
-		u.DestinationLangchainUpdateIndexingDocArrayHnswSearch = destinationLangchainUpdateIndexingDocArrayHnswSearch
-		u.Type = DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingDocArrayHnswSearch
+	docArrayHnswSearch := new(DocArrayHnswSearch)
+	if err := utils.UnmarshalJSON(data, &docArrayHnswSearch, "", true, true); err == nil {
+		u.DocArrayHnswSearch = docArrayHnswSearch
+		u.Type = IndexingTypeDocArrayHnswSearch
 		return nil
 	}
 
-	destinationLangchainUpdateIndexingChromaLocalPersistance := new(DestinationLangchainUpdateIndexingChromaLocalPersistance)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateIndexingChromaLocalPersistance); err == nil {
-		u.DestinationLangchainUpdateIndexingChromaLocalPersistance = destinationLangchainUpdateIndexingChromaLocalPersistance
-		u.Type = DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingChromaLocalPersistance
+	chromaLocalPersistance := new(ChromaLocalPersistance)
+	if err := utils.UnmarshalJSON(data, &chromaLocalPersistance, "", true, true); err == nil {
+		u.ChromaLocalPersistance = chromaLocalPersistance
+		u.Type = IndexingTypeChromaLocalPersistance
 		return nil
 	}
 
-	destinationLangchainUpdateIndexingPinecone := new(DestinationLangchainUpdateIndexingPinecone)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateIndexingPinecone); err == nil {
-		u.DestinationLangchainUpdateIndexingPinecone = destinationLangchainUpdateIndexingPinecone
-		u.Type = DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingPinecone
+	destinationLangchainUpdatePinecone := new(DestinationLangchainUpdatePinecone)
+	if err := utils.UnmarshalJSON(data, &destinationLangchainUpdatePinecone, "", true, true); err == nil {
+		u.DestinationLangchainUpdatePinecone = destinationLangchainUpdatePinecone
+		u.Type = IndexingTypeDestinationLangchainUpdatePinecone
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u DestinationLangchainUpdateIndexing) MarshalJSON() ([]byte, error) {
-	if u.DestinationLangchainUpdateIndexingDocArrayHnswSearch != nil {
-		return json.Marshal(u.DestinationLangchainUpdateIndexingDocArrayHnswSearch)
+func (u Indexing) MarshalJSON() ([]byte, error) {
+	if u.DestinationLangchainUpdatePinecone != nil {
+		return utils.MarshalJSON(u.DestinationLangchainUpdatePinecone, "", true)
 	}
 
-	if u.DestinationLangchainUpdateIndexingChromaLocalPersistance != nil {
-		return json.Marshal(u.DestinationLangchainUpdateIndexingChromaLocalPersistance)
+	if u.DocArrayHnswSearch != nil {
+		return utils.MarshalJSON(u.DocArrayHnswSearch, "", true)
 	}
 
-	if u.DestinationLangchainUpdateIndexingPinecone != nil {
-		return json.Marshal(u.DestinationLangchainUpdateIndexingPinecone)
+	if u.ChromaLocalPersistance != nil {
+		return utils.MarshalJSON(u.ChromaLocalPersistance, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationLangchainUpdateProcessingConfigModel struct {
+type ProcessingConfigModel struct {
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
-	ChunkOverlap *int64 `json:"chunk_overlap,omitempty"`
+	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
 	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
 	ChunkSize int64 `json:"chunk_size"`
 	// List of fields in the record that should be used to calculate the embedding. All other fields are passed along as meta fields. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
 	TextFields []string `json:"text_fields"`
 }
 
+func (p ProcessingConfigModel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *ProcessingConfigModel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ProcessingConfigModel) GetChunkOverlap() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ChunkOverlap
+}
+
+func (o *ProcessingConfigModel) GetChunkSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ChunkSize
+}
+
+func (o *ProcessingConfigModel) GetTextFields() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.TextFields
+}
+
 type DestinationLangchainUpdate struct {
 	// Embedding configuration
-	Embedding DestinationLangchainUpdateEmbedding `json:"embedding"`
+	Embedding Embedding `json:"embedding"`
 	// Indexing configuration
-	Indexing   DestinationLangchainUpdateIndexing              `json:"indexing"`
-	Processing DestinationLangchainUpdateProcessingConfigModel `json:"processing"`
+	Indexing   Indexing              `json:"indexing"`
+	Processing ProcessingConfigModel `json:"processing"`
+}
+
+func (o *DestinationLangchainUpdate) GetEmbedding() Embedding {
+	if o == nil {
+		return Embedding{}
+	}
+	return o.Embedding
+}
+
+func (o *DestinationLangchainUpdate) GetIndexing() Indexing {
+	if o == nil {
+		return Indexing{}
+	}
+	return o.Indexing
+}
+
+func (o *DestinationLangchainUpdate) GetProcessing() ProcessingConfigModel {
+	if o == nil {
+		return ProcessingConfigModel{}
+	}
+	return o.Processing
 }

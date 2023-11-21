@@ -7,3 +7,24 @@ type SourceMongodbInternalPocPutRequest struct {
 	Name          string                         `json:"name"`
 	WorkspaceID   string                         `json:"workspaceId"`
 }
+
+func (o *SourceMongodbInternalPocPutRequest) GetConfiguration() SourceMongodbInternalPocUpdate {
+	if o == nil {
+		return SourceMongodbInternalPocUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMongodbInternalPocPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMongodbInternalPocPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -7,3 +7,24 @@ type SourceConvexPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceConvexPutRequest) GetConfiguration() SourceConvexUpdate {
+	if o == nil {
+		return SourceConvexUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceConvexPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceConvexPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

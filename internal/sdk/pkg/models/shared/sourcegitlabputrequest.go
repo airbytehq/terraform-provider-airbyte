@@ -7,3 +7,24 @@ type SourceGitlabPutRequest struct {
 	Name          string             `json:"name"`
 	WorkspaceID   string             `json:"workspaceId"`
 }
+
+func (o *SourceGitlabPutRequest) GetConfiguration() SourceGitlabUpdate {
+	if o == nil {
+		return SourceGitlabUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceGitlabPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceGitlabPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

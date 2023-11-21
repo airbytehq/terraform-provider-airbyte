@@ -3,18 +3,17 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -35,6 +34,7 @@ type DestinationKeenResource struct {
 // DestinationKeenResourceModel describes the resource data model.
 type DestinationKeenResourceModel struct {
 	Configuration   DestinationKeen `tfsdk:"configuration"`
+	DefinitionID    types.String    `tfsdk:"definition_id"`
 	DestinationID   types.String    `tfsdk:"destination_id"`
 	DestinationType types.String    `tfsdk:"destination_type"`
 	Name            types.String    `tfsdk:"name"`
@@ -55,26 +55,26 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"keen",
-							),
-						},
-						Description: `must be one of ["keen"]`,
-					},
 					"infer_timestamp": schema.BoolAttribute{
-						Optional:    true,
-						Description: `Allow connector to guess keen.timestamp value based on the streamed data.`,
+						Optional: true,
+						MarkdownDescription: `Default: true` + "\n" +
+							`Allow connector to guess keen.timestamp value based on the streamed data.`,
 					},
 					"project_id": schema.StringAttribute{
 						Required:    true,
 						Description: `To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -92,7 +92,8 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -142,7 +143,7 @@ func (r *DestinationKeenResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestinationKeen(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -318,5 +319,5 @@ func (r *DestinationKeenResource) Delete(ctx context.Context, req resource.Delet
 }
 
 func (r *DestinationKeenResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("destination_id"), req.ID)...)
 }

@@ -3,57 +3,53 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflakeCreateRequest {
 	var credentials *shared.SourceSnowflakeAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourceSnowflakeAuthorizationMethodOAuth20 *shared.SourceSnowflakeAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20 != nil {
+		var sourceSnowflakeOAuth20 *shared.SourceSnowflakeOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authType := shared.SourceSnowflakeAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
-			clientID := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			refreshToken := new(string)
-			if !r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.IsNull() {
-				*refreshToken = r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
+				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 			} else {
 				refreshToken = nil
 			}
-			sourceSnowflakeAuthorizationMethodOAuth20 = &shared.SourceSnowflakeAuthorizationMethodOAuth20{
+			sourceSnowflakeOAuth20 = &shared.SourceSnowflakeOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceSnowflakeAuthorizationMethodOAuth20 != nil {
+		if sourceSnowflakeOAuth20 != nil {
 			credentials = &shared.SourceSnowflakeAuthorizationMethod{
-				SourceSnowflakeAuthorizationMethodOAuth20: sourceSnowflakeAuthorizationMethodOAuth20,
+				SourceSnowflakeOAuth20: sourceSnowflakeOAuth20,
 			}
 		}
-		var sourceSnowflakeAuthorizationMethodUsernameAndPassword *shared.SourceSnowflakeAuthorizationMethodUsernameAndPassword
-		if r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-			authType1 := shared.SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
-			password := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
-			username := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username.ValueString()
-			sourceSnowflakeAuthorizationMethodUsernameAndPassword = &shared.SourceSnowflakeAuthorizationMethodUsernameAndPassword{
-				AuthType: authType1,
+		var sourceSnowflakeUsernameAndPassword *shared.SourceSnowflakeUsernameAndPassword
+		if r.Configuration.Credentials.UsernameAndPassword != nil {
+			password := r.Configuration.Credentials.UsernameAndPassword.Password.ValueString()
+			username := r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
+			sourceSnowflakeUsernameAndPassword = &shared.SourceSnowflakeUsernameAndPassword{
 				Password: password,
 				Username: username,
 			}
 		}
-		if sourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+		if sourceSnowflakeUsernameAndPassword != nil {
 			credentials = &shared.SourceSnowflakeAuthorizationMethod{
-				SourceSnowflakeAuthorizationMethodUsernameAndPassword: sourceSnowflakeAuthorizationMethodUsernameAndPassword,
+				SourceSnowflakeUsernameAndPassword: sourceSnowflakeUsernameAndPassword,
 			}
 		}
 	}
@@ -72,7 +68,6 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 	} else {
 		schema = nil
 	}
-	sourceType := shared.SourceSnowflakeSnowflake(r.Configuration.SourceType.ValueString())
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.SourceSnowflake{
 		Credentials:   credentials,
@@ -81,8 +76,13 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 		JdbcURLParams: jdbcURLParams,
 		Role:          role,
 		Schema:        schema,
-		SourceType:    sourceType,
 		Warehouse:     warehouse,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -94,6 +94,7 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceSnowflakeCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -109,50 +110,46 @@ func (r *SourceSnowflakeResourceModel) ToGetSDKType() *shared.SourceSnowflakeCre
 func (r *SourceSnowflakeResourceModel) ToUpdateSDKType() *shared.SourceSnowflakePutRequest {
 	var credentials *shared.SourceSnowflakeUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourceSnowflakeUpdateAuthorizationMethodOAuth20 *shared.SourceSnowflakeUpdateAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+		var sourceSnowflakeUpdateOAuth20 *shared.SourceSnowflakeUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			accessToken := new(string)
-			if !r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 			} else {
 				accessToken = nil
 			}
-			authType := shared.SourceSnowflakeUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
-			clientID := r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			refreshToken := new(string)
-			if !r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.RefreshToken.IsNull() {
-				*refreshToken = r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			if !r.Configuration.Credentials.OAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.RefreshToken.IsNull() {
+				*refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 			} else {
 				refreshToken = nil
 			}
-			sourceSnowflakeUpdateAuthorizationMethodOAuth20 = &shared.SourceSnowflakeUpdateAuthorizationMethodOAuth20{
+			sourceSnowflakeUpdateOAuth20 = &shared.SourceSnowflakeUpdateOAuth20{
 				AccessToken:  accessToken,
-				AuthType:     authType,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+		if sourceSnowflakeUpdateOAuth20 != nil {
 			credentials = &shared.SourceSnowflakeUpdateAuthorizationMethod{
-				SourceSnowflakeUpdateAuthorizationMethodOAuth20: sourceSnowflakeUpdateAuthorizationMethodOAuth20,
+				SourceSnowflakeUpdateOAuth20: sourceSnowflakeUpdateOAuth20,
 			}
 		}
-		var sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword *shared.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword
-		if r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
-			authType1 := shared.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
-			password := r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword.Password.ValueString()
-			username := r.Configuration.Credentials.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword.Username.ValueString()
-			sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword = &shared.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword{
-				AuthType: authType1,
+		var sourceSnowflakeUpdateUsernameAndPassword *shared.SourceSnowflakeUpdateUsernameAndPassword
+		if r.Configuration.Credentials.UsernameAndPassword != nil {
+			password := r.Configuration.Credentials.UsernameAndPassword.Password.ValueString()
+			username := r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
+			sourceSnowflakeUpdateUsernameAndPassword = &shared.SourceSnowflakeUpdateUsernameAndPassword{
 				Password: password,
 				Username: username,
 			}
 		}
-		if sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
+		if sourceSnowflakeUpdateUsernameAndPassword != nil {
 			credentials = &shared.SourceSnowflakeUpdateAuthorizationMethod{
-				SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword: sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword,
+				SourceSnowflakeUpdateUsernameAndPassword: sourceSnowflakeUpdateUsernameAndPassword,
 			}
 		}
 	}

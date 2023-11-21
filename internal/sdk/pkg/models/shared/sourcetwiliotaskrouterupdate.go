@@ -8,3 +8,17 @@ type SourceTwilioTaskrouterUpdate struct {
 	// Twilio Auth Token
 	AuthToken string `json:"auth_token"`
 }
+
+func (o *SourceTwilioTaskrouterUpdate) GetAccountSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountSid
+}
+
+func (o *SourceTwilioTaskrouterUpdate) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}

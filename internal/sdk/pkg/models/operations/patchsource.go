@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
 )
 
@@ -12,10 +12,55 @@ type PatchSourceRequest struct {
 	SourceID           string                     `pathParam:"style=simple,explode=false,name=sourceId"`
 }
 
+func (o *PatchSourceRequest) GetSourcePatchRequest() *shared.SourcePatchRequest {
+	if o == nil {
+		return nil
+	}
+	return o.SourcePatchRequest
+}
+
+func (o *PatchSourceRequest) GetSourceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceID
+}
+
 type PatchSourceResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// Update a Source
 	SourceResponse *shared.SourceResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+}
+
+func (o *PatchSourceResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PatchSourceResponse) GetSourceResponse() *shared.SourceResponse {
+	if o == nil {
+		return nil
+	}
+	return o.SourceResponse
+}
+
+func (o *PatchSourceResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PatchSourceResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

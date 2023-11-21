@@ -7,3 +7,24 @@ type SourceMailgunPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceMailgunPutRequest) GetConfiguration() SourceMailgunUpdate {
+	if o == nil {
+		return SourceMailgunUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceMailgunPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceMailgunPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

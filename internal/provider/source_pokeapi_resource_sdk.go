@@ -3,16 +3,20 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCreateRequest {
-	pokemonName := r.Configuration.PokemonName.ValueString()
-	sourceType := shared.SourcePokeapiPokeapi(r.Configuration.SourceType.ValueString())
+	pokemonName := shared.SourcePokeapiPokemonName(r.Configuration.PokemonName.ValueString())
 	configuration := shared.SourcePokeapi{
 		PokemonName: pokemonName,
-		SourceType:  sourceType,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -24,6 +28,7 @@ func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCrea
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePokeapiCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -37,7 +42,7 @@ func (r *SourcePokeapiResourceModel) ToGetSDKType() *shared.SourcePokeapiCreateR
 }
 
 func (r *SourcePokeapiResourceModel) ToUpdateSDKType() *shared.SourcePokeapiPutRequest {
-	pokemonName := r.Configuration.PokemonName.ValueString()
+	pokemonName := shared.PokemonName(r.Configuration.PokemonName.ValueString())
 	configuration := shared.SourcePokeapiUpdate{
 		PokemonName: pokemonName,
 	}

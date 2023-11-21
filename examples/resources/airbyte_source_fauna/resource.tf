@@ -2,19 +2,17 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        source_fauna_collection_deletion_mode_disabled = {
-          deletion_mode = "ignore"
-        }
+        disabled = {}
       }
-      page_size = 4
+      page_size = 0
     }
-    domain      = "...my_domain..."
-    port        = 5
-    scheme      = "...my_scheme..."
-    secret      = "...my_secret..."
-    source_type = "fauna"
+    domain = "...my_domain..."
+    port   = 10
+    scheme = "...my_scheme..."
+    secret = "...my_secret..."
   }
-  name         = "Irvin Klein"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "1ffc71dc-a163-4f2a-bc80-a97ff334cddf"
+  definition_id = "56112c1f-da02-410a-9cfb-ec287654f12b"
+  name          = "Mr. Willard Gislason"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "fbb0cddc-f802-4e3e-a016-5466352da9b0"
 }

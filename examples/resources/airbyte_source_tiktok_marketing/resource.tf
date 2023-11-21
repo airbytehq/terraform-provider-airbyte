@@ -1,21 +1,20 @@
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 5
+    attribution_window = 3
     credentials = {
-      source_tiktok_marketing_authentication_method_o_auth2_0 = {
+      source_tiktok_marketing_o_auth2_0 = {
         access_token  = "...my_access_token..."
         advertiser_id = "...my_advertiser_id..."
         app_id        = "...my_app_id..."
-        auth_type     = "oauth2.0"
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2021-10-08"
+    end_date        = "2022-10-15"
     include_deleted = false
-    source_type     = "tiktok-marketing"
-    start_date      = "2022-12-21"
+    start_date      = "2022-12-08"
   }
-  name         = "Mrs. Joey Mueller"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "4d93a74c-0252-4fe3-b4b4-db8b778ebb6e"
+  definition_id = "fd338f32-2856-4cd8-8e7e-494b9e5830e9"
+  name          = "Elijah Prosacco"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "12cdcae9-f85c-4701-b380-526f8856cdf3"
 }

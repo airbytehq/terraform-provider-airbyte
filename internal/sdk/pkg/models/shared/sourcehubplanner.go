@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceHubplannerHubplanner string
+type Hubplanner string
 
 const (
-	SourceHubplannerHubplannerHubplanner SourceHubplannerHubplanner = "hubplanner"
+	HubplannerHubplanner Hubplanner = "hubplanner"
 )
 
-func (e SourceHubplannerHubplanner) ToPointer() *SourceHubplannerHubplanner {
+func (e Hubplanner) ToPointer() *Hubplanner {
 	return &e
 }
 
-func (e *SourceHubplannerHubplanner) UnmarshalJSON(data []byte) error {
+func (e *Hubplanner) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "hubplanner":
-		*e = SourceHubplannerHubplanner(v)
+		*e = Hubplanner(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubplannerHubplanner: %v", v)
+		return fmt.Errorf("invalid value for Hubplanner: %v", v)
 	}
 }
 
 type SourceHubplanner struct {
 	// Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-	APIKey     string                     `json:"api_key"`
-	SourceType SourceHubplannerHubplanner `json:"sourceType"`
+	APIKey     string     `json:"api_key"`
+	sourceType Hubplanner `const:"hubplanner" json:"sourceType"`
+}
+
+func (s SourceHubplanner) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceHubplanner) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceHubplanner) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceHubplanner) GetSourceType() Hubplanner {
+	return HubplannerHubplanner
 }

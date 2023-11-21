@@ -3,19 +3,19 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -37,6 +37,7 @@ type SourceSonarCloudResource struct {
 // SourceSonarCloudResourceModel describes the resource data model.
 type SourceSonarCloudResourceModel struct {
 	Configuration SourceSonarCloud `tfsdk:"configuration"`
+	DefinitionID  types.String     `tfsdk:"definition_id"`
 	Name          types.String     `tfsdk:"name"`
 	SecretID      types.String     `tfsdk:"secret_id"`
 	SourceID      types.String     `tfsdk:"source_id"`
@@ -58,52 +59,56 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"component_keys": schema.ListAttribute{
 						Required:    true,
+						Sensitive:   true,
 						ElementType: types.StringType,
+						Description: `Comma-separated list of component keys.`,
 						Validators: []validator.List{
 							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
-						Description: `Comma-separated list of component keys.`,
 					},
 					"end_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `To retrieve issues created before the given date (inclusive).`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `To retrieve issues created before the given date (inclusive).`,
 					},
 					"organization": schema.StringAttribute{
 						Required:    true,
 						Description: `Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.`,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sonar-cloud",
-							),
-						},
-						Description: `must be one of ["sonar-cloud"]`,
-					},
 					"start_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `To retrieve issues created after the given date (inclusive).`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `To retrieve issues created after the given date (inclusive).`,
 					},
 					"user_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -167,7 +172,7 @@ func (r *SourceSonarCloudResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceSonarCloud(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -343,5 +348,5 @@ func (r *SourceSonarCloudResource) Delete(ctx context.Context, req resource.Dele
 }
 
 func (r *SourceSonarCloudResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

@@ -8,5 +8,4 @@ type SourceBigquery struct {
 	CredentialsJSON types.String `tfsdk:"credentials_json"`
 	DatasetID       types.String `tfsdk:"dataset_id"`
 	ProjectID       types.String `tfsdk:"project_id"`
-	SourceType      types.String `tfsdk:"source_type"`
 }

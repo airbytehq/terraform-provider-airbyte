@@ -7,3 +7,24 @@ type SourceZendeskSunshinePutRequest struct {
 	Name          string                      `json:"name"`
 	WorkspaceID   string                      `json:"workspaceId"`
 }
+
+func (o *SourceZendeskSunshinePutRequest) GetConfiguration() SourceZendeskSunshineUpdate {
+	if o == nil {
+		return SourceZendeskSunshineUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceZendeskSunshinePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceZendeskSunshinePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

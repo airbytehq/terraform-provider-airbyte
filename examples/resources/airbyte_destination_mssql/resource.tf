@@ -1,24 +1,20 @@
 resource "airbyte_destination_mssql" "my_destination_mssql" {
   configuration = {
-    database         = "...my_database..."
-    destination_type = "mssql"
-    host             = "...my_host..."
-    jdbc_url_params  = "...my_jdbc_url_params..."
-    password         = "...my_password..."
-    port             = 1433
-    schema           = "public"
+    database        = "...my_database..."
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 1433
+    schema          = "public"
     ssl_method = {
-      destination_mssql_ssl_method_encrypted_trust_server_certificate_ = {
-        ssl_method = "encrypted_trust_server_certificate"
-      }
+      encrypted_trust_server_certificate = {}
     }
     tunnel_method = {
-      destination_mssql_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      destination_mssql_no_tunnel = {}
     }
-    username = "Desiree_Yost"
+    username = "Amalia.Blick"
   }
-  name         = "Bert Treutel DVM"
-  workspace_id = "33317fe3-5b60-4eb1-aa42-6555ba3c2874"
+  definition_id = "90e1a2bc-7de0-4ff6-b737-4915d3efc2cd"
+  name          = "Jorge Beahan"
+  workspace_id  = "6acc1e6f-1291-4560-8b55-b326e06d2448"
 }

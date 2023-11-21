@@ -1,18 +1,16 @@
 resource "airbyte_source_clickhouse" "my_source_clickhouse" {
   configuration = {
-    database    = "default"
-    host        = "...my_host..."
-    password    = "...my_password..."
-    port        = 8123
-    source_type = "clickhouse"
+    database = "default"
+    host     = "...my_host..."
+    password = "...my_password..."
+    port     = 8123
     tunnel_method = {
-      source_clickhouse_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      source_clickhouse_no_tunnel = {}
     }
-    username = "Gerry81"
+    username = "Maximus28"
   }
-  name         = "Mr. Simon Altenwerth"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "c802e2ec-09ff-48f0-b816-ff3477c13e90"
+  definition_id = "54cb2418-93e1-4da4-ac4f-685d205011b8"
+  name          = "Milton Crooks"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "3b757391-0861-48e9-9445-d83c494a849c"
 }

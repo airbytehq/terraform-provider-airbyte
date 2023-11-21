@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,11 @@ type DestinationCumulioDataSource struct {
 
 // DestinationCumulioDataSourceModel describes the data model.
 type DestinationCumulioDataSourceModel struct {
-	Configuration DestinationCumulio `tfsdk:"configuration"`
-	DestinationID types.String       `tfsdk:"destination_id"`
-	Name          types.String       `tfsdk:"name"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,34 +47,16 @@ func (r *DestinationCumulioDataSource) Schema(ctx context.Context, req datasourc
 		MarkdownDescription: "DestinationCumulio DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"api_host": schema.StringAttribute{
-						Computed:    true,
-						Description: `URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.`,
-					},
-					"api_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).`,
-					},
-					"api_token": schema.StringAttribute{
-						Computed:    true,
-						Description: `The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"cumulio",
-							),
-						},
-						Description: `must be one of ["cumulio"]`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

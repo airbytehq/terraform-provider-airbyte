@@ -7,3 +7,24 @@ type DestinationS3GluePutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *DestinationS3GluePutRequest) GetConfiguration() DestinationS3GlueUpdate {
+	if o == nil {
+		return DestinationS3GlueUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationS3GluePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationS3GluePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

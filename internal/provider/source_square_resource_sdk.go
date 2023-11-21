@@ -3,44 +3,40 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreateRequest {
 	var credentials *shared.SourceSquareAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
-		if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-			authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
-			clientID := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken.ValueString()
-			sourceSquareAuthenticationOauthAuthentication = &shared.SourceSquareAuthenticationOauthAuthentication{
-				AuthType:     authType,
+		var sourceSquareOauthAuthentication *shared.SourceSquareOauthAuthentication
+		if r.Configuration.Credentials.OauthAuthentication != nil {
+			clientID := r.Configuration.Credentials.OauthAuthentication.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OauthAuthentication.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.OauthAuthentication.RefreshToken.ValueString()
+			sourceSquareOauthAuthentication = &shared.SourceSquareOauthAuthentication{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceSquareAuthenticationOauthAuthentication != nil {
+		if sourceSquareOauthAuthentication != nil {
 			credentials = &shared.SourceSquareAuthentication{
-				SourceSquareAuthenticationOauthAuthentication: sourceSquareAuthenticationOauthAuthentication,
+				SourceSquareOauthAuthentication: sourceSquareOauthAuthentication,
 			}
 		}
-		var sourceSquareAuthenticationAPIKey *shared.SourceSquareAuthenticationAPIKey
-		if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
-			apiKey := r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.APIKey.ValueString()
-			authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
-			sourceSquareAuthenticationAPIKey = &shared.SourceSquareAuthenticationAPIKey{
-				APIKey:   apiKey,
-				AuthType: authType1,
+		var sourceSquareAPIKey *shared.SourceSquareAPIKey
+		if r.Configuration.Credentials.APIKey != nil {
+			apiKey := r.Configuration.Credentials.APIKey.APIKey.ValueString()
+			sourceSquareAPIKey = &shared.SourceSquareAPIKey{
+				APIKey: apiKey,
 			}
 		}
-		if sourceSquareAuthenticationAPIKey != nil {
+		if sourceSquareAPIKey != nil {
 			credentials = &shared.SourceSquareAuthentication{
-				SourceSquareAuthenticationAPIKey: sourceSquareAuthenticationAPIKey,
+				SourceSquareAPIKey: sourceSquareAPIKey,
 			}
 		}
 	}
@@ -50,8 +46,12 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 	} else {
 		includeDeletedObjects = nil
 	}
-	isSandbox := r.Configuration.IsSandbox.ValueBool()
-	sourceType := shared.SourceSquareSquare(r.Configuration.SourceType.ValueString())
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -62,8 +62,13 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		Credentials:           credentials,
 		IncludeDeletedObjects: includeDeletedObjects,
 		IsSandbox:             isSandbox,
-		SourceType:            sourceType,
 		StartDate:             startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -75,6 +80,7 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceSquareCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -90,36 +96,32 @@ func (r *SourceSquareResourceModel) ToGetSDKType() *shared.SourceSquareCreateReq
 func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutRequest {
 	var credentials *shared.SourceSquareUpdateAuthentication
 	if r.Configuration.Credentials != nil {
-		var sourceSquareUpdateAuthenticationOauthAuthentication *shared.SourceSquareUpdateAuthenticationOauthAuthentication
-		if r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
-			authType := shared.SourceSquareUpdateAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.AuthType.ValueString())
-			clientID := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.RefreshToken.ValueString()
-			sourceSquareUpdateAuthenticationOauthAuthentication = &shared.SourceSquareUpdateAuthenticationOauthAuthentication{
-				AuthType:     authType,
+		var oauthAuthentication *shared.OauthAuthentication
+		if r.Configuration.Credentials.OauthAuthentication != nil {
+			clientID := r.Configuration.Credentials.OauthAuthentication.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OauthAuthentication.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.OauthAuthentication.RefreshToken.ValueString()
+			oauthAuthentication = &shared.OauthAuthentication{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourceSquareUpdateAuthenticationOauthAuthentication != nil {
+		if oauthAuthentication != nil {
 			credentials = &shared.SourceSquareUpdateAuthentication{
-				SourceSquareUpdateAuthenticationOauthAuthentication: sourceSquareUpdateAuthenticationOauthAuthentication,
+				OauthAuthentication: oauthAuthentication,
 			}
 		}
-		var sourceSquareUpdateAuthenticationAPIKey *shared.SourceSquareUpdateAuthenticationAPIKey
-		if r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey != nil {
-			apiKey := r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.APIKey.ValueString()
-			authType1 := shared.SourceSquareUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.AuthType.ValueString())
-			sourceSquareUpdateAuthenticationAPIKey = &shared.SourceSquareUpdateAuthenticationAPIKey{
-				APIKey:   apiKey,
-				AuthType: authType1,
+		var sourceSquareUpdateAPIKey *shared.SourceSquareUpdateAPIKey
+		if r.Configuration.Credentials.APIKey != nil {
+			apiKey := r.Configuration.Credentials.APIKey.APIKey.ValueString()
+			sourceSquareUpdateAPIKey = &shared.SourceSquareUpdateAPIKey{
+				APIKey: apiKey,
 			}
 		}
-		if sourceSquareUpdateAuthenticationAPIKey != nil {
+		if sourceSquareUpdateAPIKey != nil {
 			credentials = &shared.SourceSquareUpdateAuthentication{
-				SourceSquareUpdateAuthenticationAPIKey: sourceSquareUpdateAuthenticationAPIKey,
+				SourceSquareUpdateAPIKey: sourceSquareUpdateAPIKey,
 			}
 		}
 	}
@@ -129,7 +131,12 @@ func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutReq
 	} else {
 		includeDeletedObjects = nil
 	}
-	isSandbox := r.Configuration.IsSandbox.ValueBool()
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())

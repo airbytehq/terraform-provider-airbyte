@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceTodoistTodoist string
+type Todoist string
 
 const (
-	SourceTodoistTodoistTodoist SourceTodoistTodoist = "todoist"
+	TodoistTodoist Todoist = "todoist"
 )
 
-func (e SourceTodoistTodoist) ToPointer() *SourceTodoistTodoist {
+func (e Todoist) ToPointer() *Todoist {
 	return &e
 }
 
-func (e *SourceTodoistTodoist) UnmarshalJSON(data []byte) error {
+func (e *Todoist) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "todoist":
-		*e = SourceTodoistTodoist(v)
+		*e = Todoist(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTodoistTodoist: %v", v)
+		return fmt.Errorf("invalid value for Todoist: %v", v)
 	}
 }
 
 type SourceTodoist struct {
-	SourceType SourceTodoistTodoist `json:"sourceType"`
+	sourceType Todoist `const:"todoist" json:"sourceType"`
 	// Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 	Token string `json:"token"`
+}
+
+func (s SourceTodoist) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTodoist) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceTodoist) GetSourceType() Todoist {
+	return TodoistTodoist
+}
+
+func (o *SourceTodoist) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }

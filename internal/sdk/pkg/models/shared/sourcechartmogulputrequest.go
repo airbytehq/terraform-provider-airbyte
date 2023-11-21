@@ -7,3 +7,24 @@ type SourceChartmogulPutRequest struct {
 	Name          string                 `json:"name"`
 	WorkspaceID   string                 `json:"workspaceId"`
 }
+
+func (o *SourceChartmogulPutRequest) GetConfiguration() SourceChartmogulUpdate {
+	if o == nil {
+		return SourceChartmogulUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceChartmogulPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceChartmogulPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

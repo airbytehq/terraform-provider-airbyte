@@ -7,3 +7,24 @@ type SourceLeverHiringPutRequest struct {
 	Name          string                  `json:"name"`
 	WorkspaceID   string                  `json:"workspaceId"`
 }
+
+func (o *SourceLeverHiringPutRequest) GetConfiguration() SourceLeverHiringUpdate {
+	if o == nil {
+		return SourceLeverHiringUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceLeverHiringPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceLeverHiringPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

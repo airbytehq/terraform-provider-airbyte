@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -12,7 +12,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	var credentials *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		authMethod := shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod(r.Configuration.Credentials.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -27,7 +26,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 		}
 		credentials = &shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod{
 			AccessToken:  accessToken,
-			AuthMethod:   authMethod,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 		}
@@ -38,7 +36,6 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	} else {
 		origin = nil
 	}
-	sourceType := shared.SourceSurveymonkeySurveymonkey(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var surveyIds []string = nil
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
@@ -47,9 +44,14 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	configuration := shared.SourceSurveymonkey{
 		Credentials: credentials,
 		Origin:      origin,
-		SourceType:  sourceType,
 		StartDate:   startDate,
 		SurveyIds:   surveyIds,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -61,6 +63,7 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceSurveymonkeyCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -74,10 +77,9 @@ func (r *SourceSurveymonkeyResourceModel) ToGetSDKType() *shared.SourceSurveymon
 }
 
 func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurveymonkeyPutRequest {
-	var credentials *shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod
+	var credentials *shared.SurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		authMethod := shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethodAuthMethod(r.Configuration.Credentials.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -90,16 +92,15 @@ func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurvey
 		} else {
 			clientSecret = nil
 		}
-		credentials = &shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod{
+		credentials = &shared.SurveyMonkeyAuthorizationMethod{
 			AccessToken:  accessToken,
-			AuthMethod:   authMethod,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 		}
 	}
-	origin := new(shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount)
+	origin := new(shared.OriginDatacenterOfTheSurveyMonkeyAccount)
 	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
-		*origin = shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
+		*origin = shared.OriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
 	} else {
 		origin = nil
 	}

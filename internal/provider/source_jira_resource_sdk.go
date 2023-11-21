@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -24,6 +24,16 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	} else {
 		expandIssueChangelog = nil
 	}
+	expandIssueTransition := new(bool)
+	if !r.Configuration.ExpandIssueTransition.IsUnknown() && !r.Configuration.ExpandIssueTransition.IsNull() {
+		*expandIssueTransition = r.Configuration.ExpandIssueTransition.ValueBool()
+	} else {
+		expandIssueTransition = nil
+	}
+	var issuesStreamExpandWith []shared.SourceJiraIssuesStreamExpandWith = nil
+	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
+		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.SourceJiraIssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
+	}
 	var projects []string = nil
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
@@ -34,7 +44,6 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	} else {
 		renderFields = nil
 	}
-	sourceType := shared.SourceJiraJira(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -47,10 +56,17 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 		Email:                     email,
 		EnableExperimentalStreams: enableExperimentalStreams,
 		ExpandIssueChangelog:      expandIssueChangelog,
+		ExpandIssueTransition:     expandIssueTransition,
+		IssuesStreamExpandWith:    issuesStreamExpandWith,
 		Projects:                  projects,
 		RenderFields:              renderFields,
-		SourceType:                sourceType,
 		StartDate:                 startDate,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -62,6 +78,7 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceJiraCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
@@ -90,6 +107,16 @@ func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest
 	} else {
 		expandIssueChangelog = nil
 	}
+	expandIssueTransition := new(bool)
+	if !r.Configuration.ExpandIssueTransition.IsUnknown() && !r.Configuration.ExpandIssueTransition.IsNull() {
+		*expandIssueTransition = r.Configuration.ExpandIssueTransition.ValueBool()
+	} else {
+		expandIssueTransition = nil
+	}
+	var issuesStreamExpandWith []shared.IssuesStreamExpandWith = nil
+	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
+		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.IssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
+	}
 	var projects []string = nil
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
@@ -112,6 +139,8 @@ func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest
 		Email:                     email,
 		EnableExperimentalStreams: enableExperimentalStreams,
 		ExpandIssueChangelog:      expandIssueChangelog,
+		ExpandIssueTransition:     expandIssueTransition,
+		IssuesStreamExpandWith:    issuesStreamExpandWith,
 		Projects:                  projects,
 		RenderFields:              renderFields,
 		StartDate:                 startDate,

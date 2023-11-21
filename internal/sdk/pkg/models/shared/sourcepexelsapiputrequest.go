@@ -7,3 +7,24 @@ type SourcePexelsAPIPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourcePexelsAPIPutRequest) GetConfiguration() SourcePexelsAPIUpdate {
+	if o == nil {
+		return SourcePexelsAPIUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePexelsAPIPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePexelsAPIPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

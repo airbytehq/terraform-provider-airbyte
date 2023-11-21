@@ -3,8 +3,6 @@
 package provider
 
 type SourceSftpAuthenticationWildcard struct {
-	SourceSftpAuthenticationWildcardPasswordAuthentication       *SourceSftpAuthenticationWildcardPasswordAuthentication `tfsdk:"source_sftp_authentication_wildcard_password_authentication"`
-	SourceSftpAuthenticationWildcardSSHKeyAuthentication         *SourceSftpAuthenticationWildcardSSHKeyAuthentication   `tfsdk:"source_sftp_authentication_wildcard_ssh_key_authentication"`
-	SourceSftpUpdateAuthenticationWildcardPasswordAuthentication *SourceSftpAuthenticationWildcardPasswordAuthentication `tfsdk:"source_sftp_update_authentication_wildcard_password_authentication"`
-	SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication   *SourceSftpAuthenticationWildcardSSHKeyAuthentication   `tfsdk:"source_sftp_update_authentication_wildcard_ssh_key_authentication"`
+	PasswordAuthentication *SourceSftpPasswordAuthentication `tfsdk:"password_authentication"`
+	SSHKeyAuthentication   *SourceSftpSSHKeyAuthentication   `tfsdk:"ssh_key_authentication"`
 }

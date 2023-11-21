@@ -7,3 +7,24 @@ type SourceAmplitudePutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceAmplitudePutRequest) GetConfiguration() SourceAmplitudeUpdate {
+	if o == nil {
+		return SourceAmplitudeUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAmplitudePutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAmplitudePutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

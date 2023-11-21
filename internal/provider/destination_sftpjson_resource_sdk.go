@@ -3,12 +3,11 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationSftpJSONResourceModel) ToCreateSDKType() *shared.DestinationSftpJSONCreateRequest {
-	destinationType := shared.DestinationSftpJSONSftpJSON(r.Configuration.DestinationType.ValueString())
 	destinationPath := r.Configuration.DestinationPath.ValueString()
 	host := r.Configuration.Host.ValueString()
 	password := r.Configuration.Password.ValueString()
@@ -20,17 +19,23 @@ func (r *DestinationSftpJSONResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationSftpJSON{
-		DestinationType: destinationType,
 		DestinationPath: destinationPath,
 		Host:            host,
 		Password:        password,
 		Port:            port,
 		Username:        username,
 	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
+	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationSftpJSONCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}

@@ -3,6 +3,5 @@
 package provider
 
 type DestinationDevNullTestDestination struct {
-	DestinationDevNullTestDestinationSilent       *DestinationDevNullTestDestinationSilent `tfsdk:"destination_dev_null_test_destination_silent"`
-	DestinationDevNullUpdateTestDestinationSilent *DestinationDevNullTestDestinationSilent `tfsdk:"destination_dev_null_update_test_destination_silent"`
+	Silent *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"silent"`
 }

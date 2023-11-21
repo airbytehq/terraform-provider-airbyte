@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,17 +14,21 @@ func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.Source
 	country := r.Configuration.Country.ValueString()
 	end := r.Configuration.End.ValueString()
 	project := r.Configuration.Project.ValueString()
-	sourceType := shared.SourceWikipediaPageviewsWikipediaPageviews(r.Configuration.SourceType.ValueString())
 	start := r.Configuration.Start.ValueString()
 	configuration := shared.SourceWikipediaPageviews{
-		Access:     access,
-		Agent:      agent,
-		Article:    article,
-		Country:    country,
-		End:        end,
-		Project:    project,
-		SourceType: sourceType,
-		Start:      start,
+		Access:  access,
+		Agent:   agent,
+		Article: article,
+		Country: country,
+		End:     end,
+		Project: project,
+		Start:   start,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -36,6 +40,7 @@ func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.Source
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceWikipediaPageviewsCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

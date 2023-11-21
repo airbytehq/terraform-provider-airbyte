@@ -7,3 +7,24 @@ type SourcePokeapiPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourcePokeapiPutRequest) GetConfiguration() SourcePokeapiUpdate {
+	if o == nil {
+		return SourcePokeapiUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourcePokeapiPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourcePokeapiPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

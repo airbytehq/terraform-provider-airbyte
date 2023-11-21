@@ -7,3 +7,24 @@ type DestinationGcsPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *DestinationGcsPutRequest) GetConfiguration() DestinationGcsUpdate {
+	if o == nil {
+		return DestinationGcsUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationGcsPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationGcsPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

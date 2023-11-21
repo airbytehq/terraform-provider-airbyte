@@ -5,35 +5,65 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceGridlyGridly string
+type Gridly string
 
 const (
-	SourceGridlyGridlyGridly SourceGridlyGridly = "gridly"
+	GridlyGridly Gridly = "gridly"
 )
 
-func (e SourceGridlyGridly) ToPointer() *SourceGridlyGridly {
+func (e Gridly) ToPointer() *Gridly {
 	return &e
 }
 
-func (e *SourceGridlyGridly) UnmarshalJSON(data []byte) error {
+func (e *Gridly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gridly":
-		*e = SourceGridlyGridly(v)
+		*e = Gridly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGridlyGridly: %v", v)
+		return fmt.Errorf("invalid value for Gridly: %v", v)
 	}
 }
 
 type SourceGridly struct {
 	APIKey string `json:"api_key"`
 	// ID of a grid, or can be ID of a branch
-	GridID     string             `json:"grid_id"`
-	SourceType SourceGridlyGridly `json:"sourceType"`
+	GridID     string `json:"grid_id"`
+	sourceType Gridly `const:"gridly" json:"sourceType"`
+}
+
+func (s SourceGridly) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGridly) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGridly) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceGridly) GetGridID() string {
+	if o == nil {
+		return ""
+	}
+	return o.GridID
+}
+
+func (o *SourceGridly) GetSourceType() Gridly {
+	return GridlyGridly
 }

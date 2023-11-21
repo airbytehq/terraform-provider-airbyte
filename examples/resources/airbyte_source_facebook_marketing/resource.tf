@@ -8,33 +8,32 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_destination",
+          "action_video_sound",
         ]
-        action_report_time = "conversion"
+        action_report_time = "mixed"
         breakdowns = [
-          "frequency_value",
+          "mmm",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "account_name",
+          "cpp",
         ]
-        insights_lookback_window = 6
+        insights_lookback_window = 7
         level                    = "ad"
-        name                     = "Jesus Batz"
+        name                     = "Julio Beier"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 8
+        time_increment           = 9
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    include_deleted          = true
-    insights_lookback_window = 4
-    max_batch_size           = 7
+    include_deleted          = false
+    insights_lookback_window = 2
     page_size                = 3
-    source_type              = "facebook-marketing"
     start_date               = "2017-01-25T00:00:00Z"
   }
-  name         = "Ms. Wilbert McGlynn"
-  secret_id    = "...my_secret_id..."
-  workspace_id = "04f926ba-d255-4381-9b47-4b0ed20e5624"
+  definition_id = "7eb149e6-fe9a-476b-9271-d6f7a77e51b0"
+  name          = "Olivia MacGyver"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "2e6bc1e2-2381-4cdc-ae96-42f3c2fe19c3"
 }

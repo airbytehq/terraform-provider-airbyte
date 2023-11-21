@@ -7,3 +7,24 @@ type SourceAlloydbPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceAlloydbPutRequest) GetConfiguration() SourceAlloydbUpdate {
+	if o == nil {
+		return SourceAlloydbUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceAlloydbPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceAlloydbPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

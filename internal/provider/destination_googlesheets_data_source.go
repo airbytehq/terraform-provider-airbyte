@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,10 +29,11 @@ type DestinationGoogleSheetsDataSource struct {
 
 // DestinationGoogleSheetsDataSourceModel describes the data model.
 type DestinationGoogleSheetsDataSourceModel struct {
-	Configuration DestinationGoogleSheets `tfsdk:"configuration"`
-	DestinationID types.String            `tfsdk:"destination_id"`
-	Name          types.String            `tfsdk:"name"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration   types.String `tfsdk:"configuration"`
+	DestinationID   types.String `tfsdk:"destination_id"`
+	DestinationType types.String `tfsdk:"destination_type"`
+	Name            types.String `tfsdk:"name"`
+	WorkspaceID     types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -48,44 +47,16 @@ func (r *DestinationGoogleSheetsDataSource) Schema(ctx context.Context, req data
 		MarkdownDescription: "DestinationGoogleSheets DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"client_id": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Client ID of your Google Sheets developer application.`,
-							},
-							"client_secret": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Client Secret of your Google Sheets developer application.`,
-							},
-							"refresh_token": schema.StringAttribute{
-								Computed:    true,
-								Description: `The token for obtaining new access token.`,
-							},
-						},
-						Description: `Google API Credentials for connecting to Google Sheets and Google Drive APIs`,
-					},
-					"destination_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-sheets",
-							),
-						},
-						Description: `must be one of ["google-sheets"]`,
-					},
-					"spreadsheet_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the destination.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

@@ -7,3 +7,24 @@ type SourceDixaPutRequest struct {
 	Name          string           `json:"name"`
 	WorkspaceID   string           `json:"workspaceId"`
 }
+
+func (o *SourceDixaPutRequest) GetConfiguration() SourceDixaUpdate {
+	if o == nil {
+		return SourceDixaUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceDixaPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDixaPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,15 +3,13 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
-	"airbyte/internal/sdk/pkg/models/operations"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -31,11 +29,11 @@ type SourceDynamodbDataSource struct {
 
 // SourceDynamodbDataSourceModel describes the data model.
 type SourceDynamodbDataSourceModel struct {
-	Configuration SourceDynamodb1 `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration types.String `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,80 +47,19 @@ func (r *SourceDynamodbDataSource) Schema(ctx context.Context, req datasource.Sc
 		MarkdownDescription: "SourceDynamodb DataSource",
 
 		Attributes: map[string]schema.Attribute{
-			"configuration": schema.SingleNestedAttribute{
+			"configuration": schema.StringAttribute{
 				Computed: true,
-				Attributes: map[string]schema.Attribute{
-					"access_key_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The access key id to access Dynamodb. Airbyte requires read permissions to the database`,
-					},
-					"endpoint": schema.StringAttribute{
-						Computed:    true,
-						Description: `the URL of the Dynamodb database`,
-					},
-					"region": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"",
-								"us-east-1",
-								"us-east-2",
-								"us-west-1",
-								"us-west-2",
-								"af-south-1",
-								"ap-east-1",
-								"ap-south-1",
-								"ap-northeast-1",
-								"ap-northeast-2",
-								"ap-northeast-3",
-								"ap-southeast-1",
-								"ap-southeast-2",
-								"ca-central-1",
-								"cn-north-1",
-								"cn-northwest-1",
-								"eu-central-1",
-								"eu-north-1",
-								"eu-south-1",
-								"eu-west-1",
-								"eu-west-2",
-								"eu-west-3",
-								"sa-east-1",
-								"me-south-1",
-								"us-gov-east-1",
-								"us-gov-west-1",
-							),
-						},
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-							`The region of the Dynamodb database`,
-					},
-					"reserved_attribute_names": schema.StringAttribute{
-						Computed:    true,
-						Description: `Comma separated reserved attribute names present in your tables`,
-					},
-					"secret_access_key": schema.StringAttribute{
-						Computed:    true,
-						Description: `The corresponding secret to the access key id.`,
-					},
-					"source_type": schema.StringAttribute{
-						Computed: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dynamodb",
-							),
-						},
-						Description: `must be one of ["dynamodb"]`,
-					},
-				},
+				MarkdownDescription: `Parsed as JSON.` + "\n" +
+					`The values required to configure the source.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 			},
-			"secret_id": schema.StringAttribute{
-				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
-			},
 			"source_id": schema.StringAttribute{
 				Required: true,
+			},
+			"source_type": schema.StringAttribute{
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

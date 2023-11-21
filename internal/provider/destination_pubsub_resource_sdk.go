@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,7 +20,12 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 	} else {
 		batchingElementCountThreshold = nil
 	}
-	batchingEnabled := r.Configuration.BatchingEnabled.ValueBool()
+	batchingEnabled := new(bool)
+	if !r.Configuration.BatchingEnabled.IsUnknown() && !r.Configuration.BatchingEnabled.IsNull() {
+		*batchingEnabled = r.Configuration.BatchingEnabled.ValueBool()
+	} else {
+		batchingEnabled = nil
+	}
 	batchingRequestBytesThreshold := new(int64)
 	if !r.Configuration.BatchingRequestBytesThreshold.IsUnknown() && !r.Configuration.BatchingRequestBytesThreshold.IsNull() {
 		*batchingRequestBytesThreshold = r.Configuration.BatchingRequestBytesThreshold.ValueInt64()
@@ -28,8 +33,12 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 		batchingRequestBytesThreshold = nil
 	}
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
-	destinationType := shared.DestinationPubsubPubsub(r.Configuration.DestinationType.ValueString())
-	orderingEnabled := r.Configuration.OrderingEnabled.ValueBool()
+	orderingEnabled := new(bool)
+	if !r.Configuration.OrderingEnabled.IsUnknown() && !r.Configuration.OrderingEnabled.IsNull() {
+		*orderingEnabled = r.Configuration.OrderingEnabled.ValueBool()
+	} else {
+		orderingEnabled = nil
+	}
 	projectID := r.Configuration.ProjectID.ValueString()
 	topicID := r.Configuration.TopicID.ValueString()
 	configuration := shared.DestinationPubsub{
@@ -38,15 +47,21 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 		BatchingEnabled:               batchingEnabled,
 		BatchingRequestBytesThreshold: batchingRequestBytesThreshold,
 		CredentialsJSON:               credentialsJSON,
-		DestinationType:               destinationType,
 		OrderingEnabled:               orderingEnabled,
 		ProjectID:                     projectID,
 		TopicID:                       topicID,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationPubsubCreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
@@ -71,7 +86,12 @@ func (r *DestinationPubsubResourceModel) ToUpdateSDKType() *shared.DestinationPu
 	} else {
 		batchingElementCountThreshold = nil
 	}
-	batchingEnabled := r.Configuration.BatchingEnabled.ValueBool()
+	batchingEnabled := new(bool)
+	if !r.Configuration.BatchingEnabled.IsUnknown() && !r.Configuration.BatchingEnabled.IsNull() {
+		*batchingEnabled = r.Configuration.BatchingEnabled.ValueBool()
+	} else {
+		batchingEnabled = nil
+	}
 	batchingRequestBytesThreshold := new(int64)
 	if !r.Configuration.BatchingRequestBytesThreshold.IsUnknown() && !r.Configuration.BatchingRequestBytesThreshold.IsNull() {
 		*batchingRequestBytesThreshold = r.Configuration.BatchingRequestBytesThreshold.ValueInt64()
@@ -79,7 +99,12 @@ func (r *DestinationPubsubResourceModel) ToUpdateSDKType() *shared.DestinationPu
 		batchingRequestBytesThreshold = nil
 	}
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
-	orderingEnabled := r.Configuration.OrderingEnabled.ValueBool()
+	orderingEnabled := new(bool)
+	if !r.Configuration.OrderingEnabled.IsUnknown() && !r.Configuration.OrderingEnabled.IsNull() {
+		*orderingEnabled = r.Configuration.OrderingEnabled.ValueBool()
+	} else {
+		orderingEnabled = nil
+	}
 	projectID := r.Configuration.ProjectID.ValueString()
 	topicID := r.Configuration.TopicID.ValueString()
 	configuration := shared.DestinationPubsubUpdate{

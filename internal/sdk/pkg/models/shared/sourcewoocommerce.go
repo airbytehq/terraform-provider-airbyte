@@ -3,32 +3,33 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceWoocommerceWoocommerce string
+type Woocommerce string
 
 const (
-	SourceWoocommerceWoocommerceWoocommerce SourceWoocommerceWoocommerce = "woocommerce"
+	WoocommerceWoocommerce Woocommerce = "woocommerce"
 )
 
-func (e SourceWoocommerceWoocommerce) ToPointer() *SourceWoocommerceWoocommerce {
+func (e Woocommerce) ToPointer() *Woocommerce {
 	return &e
 }
 
-func (e *SourceWoocommerceWoocommerce) UnmarshalJSON(data []byte) error {
+func (e *Woocommerce) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "woocommerce":
-		*e = SourceWoocommerceWoocommerce(v)
+		*e = Woocommerce(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWoocommerceWoocommerce: %v", v)
+		return fmt.Errorf("invalid value for Woocommerce: %v", v)
 	}
 }
 
@@ -38,8 +39,51 @@ type SourceWoocommerce struct {
 	// Customer Secret for API in WooCommerce shop
 	APISecret string `json:"api_secret"`
 	// The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
-	Shop       string                       `json:"shop"`
-	SourceType SourceWoocommerceWoocommerce `json:"sourceType"`
+	Shop       string      `json:"shop"`
+	sourceType Woocommerce `const:"woocommerce" json:"sourceType"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceWoocommerce) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceWoocommerce) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceWoocommerce) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceWoocommerce) GetAPISecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.APISecret
+}
+
+func (o *SourceWoocommerce) GetShop() string {
+	if o == nil {
+		return ""
+	}
+	return o.Shop
+}
+
+func (o *SourceWoocommerce) GetSourceType() Woocommerce {
+	return WoocommerceWoocommerce
+}
+
+func (o *SourceWoocommerce) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -27,7 +27,6 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	} else {
 		listID = nil
 	}
-	sourceType := shared.SourceClickupAPIClickupAPI(r.Configuration.SourceType.ValueString())
 	spaceID := new(string)
 	if !r.Configuration.SpaceID.IsUnknown() && !r.Configuration.SpaceID.IsNull() {
 		*spaceID = r.Configuration.SpaceID.ValueString()
@@ -45,9 +44,14 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 		FolderID:           folderID,
 		IncludeClosedTasks: includeClosedTasks,
 		ListID:             listID,
-		SourceType:         sourceType,
 		SpaceID:            spaceID,
 		TeamID:             teamID,
+	}
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -59,6 +63,7 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceClickupAPICreateRequest{
 		Configuration: configuration,
+		DefinitionID:  definitionID,
 		Name:          name,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,

@@ -3,8 +3,6 @@
 package provider
 
 type SourceMssqlUpdateMethod struct {
-	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC       *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC `tfsdk:"source_mssql_update_method_read_changes_using_change_data_capture_cdc"`
-	SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor           *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor     `tfsdk:"source_mssql_update_method_scan_changes_with_user_defined_cursor"`
-	SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC `tfsdk:"source_mssql_update_update_method_read_changes_using_change_data_capture_cdc"`
-	SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor     *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor     `tfsdk:"source_mssql_update_update_method_scan_changes_with_user_defined_cursor"`
+	ReadChangesUsingChangeDataCaptureCDC *ReadChangesUsingChangeDataCaptureCDC                     `tfsdk:"read_changes_using_change_data_capture_cdc"`
+	ScanChangesWithUserDefinedCursor     *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"scan_changes_with_user_defined_cursor"`
 }

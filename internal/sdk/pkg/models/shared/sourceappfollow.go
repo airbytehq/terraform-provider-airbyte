@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceAppfollowAppfollow string
+type Appfollow string
 
 const (
-	SourceAppfollowAppfollowAppfollow SourceAppfollowAppfollow = "appfollow"
+	AppfollowAppfollow Appfollow = "appfollow"
 )
 
-func (e SourceAppfollowAppfollow) ToPointer() *SourceAppfollowAppfollow {
+func (e Appfollow) ToPointer() *Appfollow {
 	return &e
 }
 
-func (e *SourceAppfollowAppfollow) UnmarshalJSON(data []byte) error {
+func (e *Appfollow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "appfollow":
-		*e = SourceAppfollowAppfollow(v)
+		*e = Appfollow(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAppfollowAppfollow: %v", v)
+		return fmt.Errorf("invalid value for Appfollow: %v", v)
 	}
 }
 
 type SourceAppfollow struct {
 	// API Key provided by Appfollow
-	APISecret  *string                  `json:"api_secret,omitempty"`
-	SourceType SourceAppfollowAppfollow `json:"sourceType"`
+	APISecret  *string   `json:"api_secret,omitempty"`
+	sourceType Appfollow `const:"appfollow" json:"sourceType"`
+}
+
+func (s SourceAppfollow) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAppfollow) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAppfollow) GetAPISecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APISecret
+}
+
+func (o *SourceAppfollow) GetSourceType() Appfollow {
+	return AppfollowAppfollow
 }

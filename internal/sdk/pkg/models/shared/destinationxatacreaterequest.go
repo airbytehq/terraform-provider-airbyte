@@ -4,6 +4,37 @@ package shared
 
 type DestinationXataCreateRequest struct {
 	Configuration DestinationXata `json:"configuration"`
-	Name          string          `json:"name"`
-	WorkspaceID   string          `json:"workspaceId"`
+	// The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+	DefinitionID *string `json:"definitionId,omitempty"`
+	// Name of the destination e.g. dev-mysql-instance.
+	Name        string `json:"name"`
+	WorkspaceID string `json:"workspaceId"`
+}
+
+func (o *DestinationXataCreateRequest) GetConfiguration() DestinationXata {
+	if o == nil {
+		return DestinationXata{}
+	}
+	return o.Configuration
+}
+
+func (o *DestinationXataCreateRequest) GetDefinitionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefinitionID
+}
+
+func (o *DestinationXataCreateRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DestinationXataCreateRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
 }

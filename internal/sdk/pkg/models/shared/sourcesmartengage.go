@@ -5,34 +5,57 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-type SourceSmartengageSmartengage string
+type Smartengage string
 
 const (
-	SourceSmartengageSmartengageSmartengage SourceSmartengageSmartengage = "smartengage"
+	SmartengageSmartengage Smartengage = "smartengage"
 )
 
-func (e SourceSmartengageSmartengage) ToPointer() *SourceSmartengageSmartengage {
+func (e Smartengage) ToPointer() *Smartengage {
 	return &e
 }
 
-func (e *SourceSmartengageSmartengage) UnmarshalJSON(data []byte) error {
+func (e *Smartengage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "smartengage":
-		*e = SourceSmartengageSmartengage(v)
+		*e = Smartengage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmartengageSmartengage: %v", v)
+		return fmt.Errorf("invalid value for Smartengage: %v", v)
 	}
 }
 
 type SourceSmartengage struct {
 	// API Key
-	APIKey     string                       `json:"api_key"`
-	SourceType SourceSmartengageSmartengage `json:"sourceType"`
+	APIKey     string      `json:"api_key"`
+	sourceType Smartengage `const:"smartengage" json:"sourceType"`
+}
+
+func (s SourceSmartengage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSmartengage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSmartengage) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceSmartengage) GetSourceType() Smartengage {
+	return SmartengageSmartengage
 }

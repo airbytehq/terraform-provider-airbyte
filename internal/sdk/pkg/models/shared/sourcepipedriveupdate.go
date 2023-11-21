@@ -2,44 +2,23 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-	"time"
-)
-
-type SourcePipedriveUpdateAPIKeyAuthenticationAuthType string
-
-const (
-	SourcePipedriveUpdateAPIKeyAuthenticationAuthTypeToken SourcePipedriveUpdateAPIKeyAuthenticationAuthType = "Token"
-)
-
-func (e SourcePipedriveUpdateAPIKeyAuthenticationAuthType) ToPointer() *SourcePipedriveUpdateAPIKeyAuthenticationAuthType {
-	return &e
-}
-
-func (e *SourcePipedriveUpdateAPIKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Token":
-		*e = SourcePipedriveUpdateAPIKeyAuthenticationAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePipedriveUpdateAPIKeyAuthenticationAuthType: %v", v)
-	}
-}
-
-type SourcePipedriveUpdateAPIKeyAuthentication struct {
-	// The Pipedrive API Token.
-	APIToken string                                            `json:"api_token"`
-	AuthType SourcePipedriveUpdateAPIKeyAuthenticationAuthType `json:"auth_type"`
-}
-
 type SourcePipedriveUpdate struct {
-	Authorization *SourcePipedriveUpdateAPIKeyAuthentication `json:"authorization,omitempty"`
+	// The Pipedrive API Token.
+	APIToken string `json:"api_token"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-	ReplicationStartDate time.Time `json:"replication_start_date"`
+	ReplicationStartDate string `json:"replication_start_date"`
+}
+
+func (o *SourcePipedriveUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
+func (o *SourcePipedriveUpdate) GetReplicationStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.ReplicationStartDate
 }

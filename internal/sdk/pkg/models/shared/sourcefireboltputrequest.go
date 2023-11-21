@@ -7,3 +7,24 @@ type SourceFireboltPutRequest struct {
 	Name          string               `json:"name"`
 	WorkspaceID   string               `json:"workspaceId"`
 }
+
+func (o *SourceFireboltPutRequest) GetConfiguration() SourceFireboltUpdate {
+	if o == nil {
+		return SourceFireboltUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceFireboltPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceFireboltPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

@@ -3,18 +3,18 @@
 package provider
 
 import (
-	"airbyte/internal/sdk"
 	"context"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 
-	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
-	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -36,6 +36,7 @@ type SourceGoogleAnalyticsDataAPIResource struct {
 // SourceGoogleAnalyticsDataAPIResourceModel describes the resource data model.
 type SourceGoogleAnalyticsDataAPIResourceModel struct {
 	Configuration SourceGoogleAnalyticsDataAPI `tfsdk:"configuration"`
+	DefinitionID  types.String                 `tfsdk:"definition_id"`
 	Name          types.String                 `tfsdk:"name"`
 	SecretID      types.String                 `tfsdk:"secret_id"`
 	SourceID      types.String                 `tfsdk:"source_id"`
@@ -58,21 +59,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_analytics_data_api_credentials_authenticate_via_google_oauth": schema.SingleNestedAttribute{
+							"authenticate_via_google_oauth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -84,73 +77,15 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The token for obtaining a new access token.`,
 									},
 								},
 								Description: `Credentials for the service`,
 							},
-							"source_google_analytics_data_api_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
+							"service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
-									"credentials_json": schema.StringAttribute{
-										Required:    true,
-										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Optional:    true,
-										Description: `Access Token for making authenticated requests.`,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-										Description: `must be one of ["Client"]`,
-									},
-									"client_id": schema.StringAttribute{
-										Required:    true,
-										Description: `The Client ID of your Google Analytics developer application.`,
-									},
-									"client_secret": schema.StringAttribute{
-										Required:    true,
-										Description: `The Client Secret of your Google Analytics developer application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
-										Description: `The token for obtaining a new access token.`,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_data_api_update_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-										Description: `must be one of ["Service"]`,
-									},
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
 										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
@@ -159,48 +94,1166 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								Description: `Credentials for the service`,
 							},
 						},
+						Description: `Credentials for the service`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Credentials for the service`,
 					},
-					"custom_reports": schema.StringAttribute{
-						Optional:    true,
-						Description: `A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#custom-reports">the documentation</a> for more information about the exact format you can use to fill out this field.`,
+					"custom_reports_array": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"dimension_filter": schema.SingleNestedAttribute{
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"and_group": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"expressions": schema.ListNestedAttribute{
+													Required: true,
+													NestedObject: schema.NestedAttributeObject{
+														Attributes: map[string]schema.Attribute{
+															"field_name": schema.StringAttribute{
+																Required: true,
+															},
+															"filter": schema.SingleNestedAttribute{
+																Required: true,
+																Attributes: map[string]schema.Attribute{
+																	"between_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"from_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																			"to_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"in_list_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"values": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																		},
+																	},
+																	"numeric_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"operation": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"string_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"match_type": schema.ListAttribute{
+																				Optional:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.StringAttribute{
+																				Required: true,
+																			},
+																		},
+																	},
+																},
+																Validators: []validator.Object{
+																	validators.ExactlyOneChild(),
+																},
+															},
+														},
+													},
+												},
+											},
+											Description: `The FilterExpressions in andGroup have an AND relationship.`,
+										},
+										"filter": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"field_name": schema.StringAttribute{
+													Required: true,
+												},
+												"filter": schema.SingleNestedAttribute{
+													Required: true,
+													Attributes: map[string]schema.Attribute{
+														"between_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"from_value": schema.SingleNestedAttribute{
+																	Required: true,
+																	Attributes: map[string]schema.Attribute{
+																		"double_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.NumberAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																		"int64_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.StringAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																	},
+																	Validators: []validator.Object{
+																		validators.ExactlyOneChild(),
+																	},
+																},
+																"to_value": schema.SingleNestedAttribute{
+																	Required: true,
+																	Attributes: map[string]schema.Attribute{
+																		"double_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.NumberAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																		"int64_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.StringAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																	},
+																	Validators: []validator.Object{
+																		validators.ExactlyOneChild(),
+																	},
+																},
+															},
+														},
+														"in_list_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"case_sensitive": schema.BoolAttribute{
+																	Optional: true,
+																},
+																"values": schema.ListAttribute{
+																	Required:    true,
+																	ElementType: types.StringType,
+																},
+															},
+														},
+														"numeric_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"operation": schema.ListAttribute{
+																	Required:    true,
+																	ElementType: types.StringType,
+																},
+																"value": schema.SingleNestedAttribute{
+																	Required: true,
+																	Attributes: map[string]schema.Attribute{
+																		"double_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.NumberAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																		"int64_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.StringAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																	},
+																	Validators: []validator.Object{
+																		validators.ExactlyOneChild(),
+																	},
+																},
+															},
+														},
+														"string_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"case_sensitive": schema.BoolAttribute{
+																	Optional: true,
+																},
+																"match_type": schema.ListAttribute{
+																	Optional:    true,
+																	ElementType: types.StringType,
+																},
+																"value": schema.StringAttribute{
+																	Required: true,
+																},
+															},
+														},
+													},
+													Validators: []validator.Object{
+														validators.ExactlyOneChild(),
+													},
+												},
+											},
+											Description: `A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all dimensions.`,
+										},
+										"not_expression": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"expression": schema.SingleNestedAttribute{
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"field_name": schema.StringAttribute{
+															Required: true,
+														},
+														"filter": schema.SingleNestedAttribute{
+															Required: true,
+															Attributes: map[string]schema.Attribute{
+																"between_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"from_value": schema.SingleNestedAttribute{
+																			Required: true,
+																			Attributes: map[string]schema.Attribute{
+																				"double_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.NumberAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																				"int64_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.StringAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																			},
+																			Validators: []validator.Object{
+																				validators.ExactlyOneChild(),
+																			},
+																		},
+																		"to_value": schema.SingleNestedAttribute{
+																			Required: true,
+																			Attributes: map[string]schema.Attribute{
+																				"double_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.NumberAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																				"int64_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.StringAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																			},
+																			Validators: []validator.Object{
+																				validators.ExactlyOneChild(),
+																			},
+																		},
+																	},
+																},
+																"in_list_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"case_sensitive": schema.BoolAttribute{
+																			Optional: true,
+																		},
+																		"values": schema.ListAttribute{
+																			Required:    true,
+																			ElementType: types.StringType,
+																		},
+																	},
+																},
+																"numeric_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"operation": schema.ListAttribute{
+																			Required:    true,
+																			ElementType: types.StringType,
+																		},
+																		"value": schema.SingleNestedAttribute{
+																			Required: true,
+																			Attributes: map[string]schema.Attribute{
+																				"double_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.NumberAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																				"int64_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.StringAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																			},
+																			Validators: []validator.Object{
+																				validators.ExactlyOneChild(),
+																			},
+																		},
+																	},
+																},
+																"string_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"case_sensitive": schema.BoolAttribute{
+																			Optional: true,
+																		},
+																		"match_type": schema.ListAttribute{
+																			Optional:    true,
+																			ElementType: types.StringType,
+																		},
+																		"value": schema.StringAttribute{
+																			Required: true,
+																		},
+																	},
+																},
+															},
+															Validators: []validator.Object{
+																validators.ExactlyOneChild(),
+															},
+														},
+													},
+												},
+											},
+											Description: `The FilterExpression is NOT of notExpression.`,
+										},
+										"or_group": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"expressions": schema.ListNestedAttribute{
+													Required: true,
+													NestedObject: schema.NestedAttributeObject{
+														Attributes: map[string]schema.Attribute{
+															"field_name": schema.StringAttribute{
+																Required: true,
+															},
+															"filter": schema.SingleNestedAttribute{
+																Required: true,
+																Attributes: map[string]schema.Attribute{
+																	"between_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"from_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																			"to_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"in_list_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"values": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																		},
+																	},
+																	"numeric_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"operation": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"string_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"match_type": schema.ListAttribute{
+																				Optional:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.StringAttribute{
+																				Required: true,
+																			},
+																		},
+																	},
+																},
+																Validators: []validator.Object{
+																	validators.ExactlyOneChild(),
+																},
+															},
+														},
+													},
+												},
+											},
+											Description: `The FilterExpressions in orGroup have an OR relationship.`,
+										},
+									},
+									Description: `Dimensions filter`,
+									Validators: []validator.Object{
+										validators.ExactlyOneChild(),
+									},
+								},
+								"dimensions": schema.ListAttribute{
+									Required:    true,
+									ElementType: types.StringType,
+									Description: `A list of dimensions.`,
+								},
+								"metric_filter": schema.SingleNestedAttribute{
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"and_group": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"expressions": schema.ListNestedAttribute{
+													Required: true,
+													NestedObject: schema.NestedAttributeObject{
+														Attributes: map[string]schema.Attribute{
+															"field_name": schema.StringAttribute{
+																Required: true,
+															},
+															"filter": schema.SingleNestedAttribute{
+																Required: true,
+																Attributes: map[string]schema.Attribute{
+																	"between_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"from_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																			"to_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"in_list_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"values": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																		},
+																	},
+																	"numeric_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"operation": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"string_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"match_type": schema.ListAttribute{
+																				Optional:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.StringAttribute{
+																				Required: true,
+																			},
+																		},
+																	},
+																},
+																Validators: []validator.Object{
+																	validators.ExactlyOneChild(),
+																},
+															},
+														},
+													},
+												},
+											},
+											Description: `The FilterExpressions in andGroup have an AND relationship.`,
+										},
+										"filter": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"field_name": schema.StringAttribute{
+													Required: true,
+												},
+												"filter": schema.SingleNestedAttribute{
+													Required: true,
+													Attributes: map[string]schema.Attribute{
+														"between_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"from_value": schema.SingleNestedAttribute{
+																	Required: true,
+																	Attributes: map[string]schema.Attribute{
+																		"double_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.NumberAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																		"int64_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.StringAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																	},
+																	Validators: []validator.Object{
+																		validators.ExactlyOneChild(),
+																	},
+																},
+																"to_value": schema.SingleNestedAttribute{
+																	Required: true,
+																	Attributes: map[string]schema.Attribute{
+																		"double_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.NumberAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																		"int64_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.StringAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																	},
+																	Validators: []validator.Object{
+																		validators.ExactlyOneChild(),
+																	},
+																},
+															},
+														},
+														"in_list_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"case_sensitive": schema.BoolAttribute{
+																	Optional: true,
+																},
+																"values": schema.ListAttribute{
+																	Required:    true,
+																	ElementType: types.StringType,
+																},
+															},
+														},
+														"numeric_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"operation": schema.ListAttribute{
+																	Required:    true,
+																	ElementType: types.StringType,
+																},
+																"value": schema.SingleNestedAttribute{
+																	Required: true,
+																	Attributes: map[string]schema.Attribute{
+																		"double_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.NumberAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																		"int64_value": schema.SingleNestedAttribute{
+																			Optional: true,
+																			Attributes: map[string]schema.Attribute{
+																				"value": schema.StringAttribute{
+																					Required: true,
+																				},
+																			},
+																		},
+																	},
+																	Validators: []validator.Object{
+																		validators.ExactlyOneChild(),
+																	},
+																},
+															},
+														},
+														"string_filter": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"case_sensitive": schema.BoolAttribute{
+																	Optional: true,
+																},
+																"match_type": schema.ListAttribute{
+																	Optional:    true,
+																	ElementType: types.StringType,
+																},
+																"value": schema.StringAttribute{
+																	Required: true,
+																},
+															},
+														},
+													},
+													Validators: []validator.Object{
+														validators.ExactlyOneChild(),
+													},
+												},
+											},
+											Description: `A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all metrics.`,
+										},
+										"not_expression": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"expression": schema.SingleNestedAttribute{
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"field_name": schema.StringAttribute{
+															Required: true,
+														},
+														"filter": schema.SingleNestedAttribute{
+															Required: true,
+															Attributes: map[string]schema.Attribute{
+																"between_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"from_value": schema.SingleNestedAttribute{
+																			Required: true,
+																			Attributes: map[string]schema.Attribute{
+																				"double_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.NumberAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																				"int64_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.StringAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																			},
+																			Validators: []validator.Object{
+																				validators.ExactlyOneChild(),
+																			},
+																		},
+																		"to_value": schema.SingleNestedAttribute{
+																			Required: true,
+																			Attributes: map[string]schema.Attribute{
+																				"double_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.NumberAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																				"int64_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.StringAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																			},
+																			Validators: []validator.Object{
+																				validators.ExactlyOneChild(),
+																			},
+																		},
+																	},
+																},
+																"in_list_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"case_sensitive": schema.BoolAttribute{
+																			Optional: true,
+																		},
+																		"values": schema.ListAttribute{
+																			Required:    true,
+																			ElementType: types.StringType,
+																		},
+																	},
+																},
+																"numeric_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"operation": schema.ListAttribute{
+																			Required:    true,
+																			ElementType: types.StringType,
+																		},
+																		"value": schema.SingleNestedAttribute{
+																			Required: true,
+																			Attributes: map[string]schema.Attribute{
+																				"double_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.NumberAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																				"int64_value": schema.SingleNestedAttribute{
+																					Optional: true,
+																					Attributes: map[string]schema.Attribute{
+																						"value": schema.StringAttribute{
+																							Required: true,
+																						},
+																					},
+																				},
+																			},
+																			Validators: []validator.Object{
+																				validators.ExactlyOneChild(),
+																			},
+																		},
+																	},
+																},
+																"string_filter": schema.SingleNestedAttribute{
+																	Optional: true,
+																	Attributes: map[string]schema.Attribute{
+																		"case_sensitive": schema.BoolAttribute{
+																			Optional: true,
+																		},
+																		"match_type": schema.ListAttribute{
+																			Optional:    true,
+																			ElementType: types.StringType,
+																		},
+																		"value": schema.StringAttribute{
+																			Required: true,
+																		},
+																	},
+																},
+															},
+															Validators: []validator.Object{
+																validators.ExactlyOneChild(),
+															},
+														},
+													},
+												},
+											},
+											Description: `The FilterExpression is NOT of notExpression.`,
+										},
+										"or_group": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"expressions": schema.ListNestedAttribute{
+													Required: true,
+													NestedObject: schema.NestedAttributeObject{
+														Attributes: map[string]schema.Attribute{
+															"field_name": schema.StringAttribute{
+																Required: true,
+															},
+															"filter": schema.SingleNestedAttribute{
+																Required: true,
+																Attributes: map[string]schema.Attribute{
+																	"between_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"from_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																			"to_value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"in_list_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"values": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																		},
+																	},
+																	"numeric_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"operation": schema.ListAttribute{
+																				Required:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.SingleNestedAttribute{
+																				Required: true,
+																				Attributes: map[string]schema.Attribute{
+																					"double_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.NumberAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																					"int64_value": schema.SingleNestedAttribute{
+																						Optional: true,
+																						Attributes: map[string]schema.Attribute{
+																							"value": schema.StringAttribute{
+																								Required: true,
+																							},
+																						},
+																					},
+																				},
+																				Validators: []validator.Object{
+																					validators.ExactlyOneChild(),
+																				},
+																			},
+																		},
+																	},
+																	"string_filter": schema.SingleNestedAttribute{
+																		Optional: true,
+																		Attributes: map[string]schema.Attribute{
+																			"case_sensitive": schema.BoolAttribute{
+																				Optional: true,
+																			},
+																			"match_type": schema.ListAttribute{
+																				Optional:    true,
+																				ElementType: types.StringType,
+																			},
+																			"value": schema.StringAttribute{
+																				Required: true,
+																			},
+																		},
+																	},
+																},
+																Validators: []validator.Object{
+																	validators.ExactlyOneChild(),
+																},
+															},
+														},
+													},
+												},
+											},
+											Description: `The FilterExpressions in orGroup have an OR relationship.`,
+										},
+									},
+									Description: `Metrics filter`,
+									Validators: []validator.Object{
+										validators.ExactlyOneChild(),
+									},
+								},
+								"metrics": schema.ListAttribute{
+									Required:    true,
+									ElementType: types.StringType,
+									Description: `A list of metrics.`,
+								},
+								"name": schema.StringAttribute{
+									Required:    true,
+									Description: `The name of the custom report, this name would be used as stream name.`,
+								},
+							},
+						},
+						Description: `You can add your Custom Analytics report by creating one.`,
 					},
 					"date_ranges_start_date": schema.StringAttribute{
-						Required: true,
+						Optional:    true,
+						Description: `The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.`,
 					},
-					"property_id": schema.StringAttribute{
+					"property_ids": schema.ListAttribute{
 						Required:    true,
-						Description: `The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-analytics-data-api",
-							),
-						},
-						Description: `must be one of ["google-analytics-data-api"]`,
+						ElementType: types.StringType,
+						Description: `A list of your Property IDs. The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.`,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Optional:    true,
-						Description: `The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.`,
+						Optional: true,
+						MarkdownDescription: `Default: 1` + "\n" +
+							`The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.`,
 					},
 				},
+			},
+			"definition_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional:    true,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Optional:    true,
 				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
@@ -264,7 +1317,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req r
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := data.ToCreateSDKType()
 	res, err := r.client.Sources.CreateSourceGoogleAnalyticsDataAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -440,5 +1493,5 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Delete(ctx context.Context, req r
 }
 
 func (r *SourceGoogleAnalyticsDataAPIResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("source_id"), req.ID)...)
 }

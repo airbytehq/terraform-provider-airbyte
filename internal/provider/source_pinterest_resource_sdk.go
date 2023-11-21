@@ -3,70 +3,130 @@
 package provider
 
 import (
-	"airbyte/internal/sdk/pkg/models/shared"
-	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterestCreateRequest {
 	var credentials *shared.SourcePinterestAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourcePinterestAuthorizationMethodOAuth20 *shared.SourcePinterestAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
-			authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
+		var sourcePinterestOAuth20 *shared.SourcePinterestOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			clientID := new(string)
-			if !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 			} else {
 				clientID = nil
 			}
 			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			} else {
 				clientSecret = nil
 			}
-			refreshToken := r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.RefreshToken.ValueString()
-			sourcePinterestAuthorizationMethodOAuth20 = &shared.SourcePinterestAuthorizationMethodOAuth20{
-				AuthMethod:   authMethod,
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			sourcePinterestOAuth20 = &shared.SourcePinterestOAuth20{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourcePinterestAuthorizationMethodOAuth20 != nil {
+		if sourcePinterestOAuth20 != nil {
 			credentials = &shared.SourcePinterestAuthorizationMethod{
-				SourcePinterestAuthorizationMethodOAuth20: sourcePinterestAuthorizationMethodOAuth20,
-			}
-		}
-		var sourcePinterestAuthorizationMethodAccessToken *shared.SourcePinterestAuthorizationMethodAccessToken
-		if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
-			accessToken := r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken.ValueString()
-			authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
-			sourcePinterestAuthorizationMethodAccessToken = &shared.SourcePinterestAuthorizationMethodAccessToken{
-				AccessToken: accessToken,
-				AuthMethod:  authMethod1,
-			}
-		}
-		if sourcePinterestAuthorizationMethodAccessToken != nil {
-			credentials = &shared.SourcePinterestAuthorizationMethod{
-				SourcePinterestAuthorizationMethodAccessToken: sourcePinterestAuthorizationMethodAccessToken,
+				SourcePinterestOAuth20: sourcePinterestOAuth20,
 			}
 		}
 	}
-	sourceType := shared.SourcePinterestPinterest(r.Configuration.SourceType.ValueString())
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	var customReports []shared.SourcePinterestReportConfig = nil
+	for _, customReportsItem := range r.Configuration.CustomReports {
+		var attributionTypes []shared.SourcePinterestValidEnums = nil
+		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
+			attributionTypes = append(attributionTypes, shared.SourcePinterestValidEnums(attributionTypesItem.ValueString()))
+		}
+		clickWindowDays := new(shared.SourcePinterestClickWindowDays)
+		if !customReportsItem.ClickWindowDays.IsUnknown() && !customReportsItem.ClickWindowDays.IsNull() {
+			*clickWindowDays = shared.SourcePinterestClickWindowDays(customReportsItem.ClickWindowDays.ValueInt64())
+		} else {
+			clickWindowDays = nil
+		}
+		var columns []shared.SourcePinterestSchemasValidEnums = nil
+		for _, columnsItem := range customReportsItem.Columns {
+			columns = append(columns, shared.SourcePinterestSchemasValidEnums(columnsItem.ValueString()))
+		}
+		conversionReportTime := new(shared.SourcePinterestConversionReportTime)
+		if !customReportsItem.ConversionReportTime.IsUnknown() && !customReportsItem.ConversionReportTime.IsNull() {
+			*conversionReportTime = shared.SourcePinterestConversionReportTime(customReportsItem.ConversionReportTime.ValueString())
+		} else {
+			conversionReportTime = nil
+		}
+		engagementWindowDays := new(shared.SourcePinterestEngagementWindowDays)
+		if !customReportsItem.EngagementWindowDays.IsUnknown() && !customReportsItem.EngagementWindowDays.IsNull() {
+			*engagementWindowDays = shared.SourcePinterestEngagementWindowDays(customReportsItem.EngagementWindowDays.ValueInt64())
+		} else {
+			engagementWindowDays = nil
+		}
+		granularity := new(shared.SourcePinterestGranularity)
+		if !customReportsItem.Granularity.IsUnknown() && !customReportsItem.Granularity.IsNull() {
+			*granularity = shared.SourcePinterestGranularity(customReportsItem.Granularity.ValueString())
+		} else {
+			granularity = nil
+		}
+		level := new(shared.SourcePinterestLevel)
+		if !customReportsItem.Level.IsUnknown() && !customReportsItem.Level.IsNull() {
+			*level = shared.SourcePinterestLevel(customReportsItem.Level.ValueString())
+		} else {
+			level = nil
+		}
+		name := customReportsItem.Name.ValueString()
+		startDate := new(customTypes.Date)
+		if !customReportsItem.StartDate.IsUnknown() && !customReportsItem.StartDate.IsNull() {
+			startDate = customTypes.MustNewDateFromString(customReportsItem.StartDate.ValueString())
+		} else {
+			startDate = nil
+		}
+		viewWindowDays := new(shared.SourcePinterestViewWindowDays)
+		if !customReportsItem.ViewWindowDays.IsUnknown() && !customReportsItem.ViewWindowDays.IsNull() {
+			*viewWindowDays = shared.SourcePinterestViewWindowDays(customReportsItem.ViewWindowDays.ValueInt64())
+		} else {
+			viewWindowDays = nil
+		}
+		customReports = append(customReports, shared.SourcePinterestReportConfig{
+			AttributionTypes:     attributionTypes,
+			ClickWindowDays:      clickWindowDays,
+			Columns:              columns,
+			ConversionReportTime: conversionReportTime,
+			EngagementWindowDays: engagementWindowDays,
+			Granularity:          granularity,
+			Level:                level,
+			Name:                 name,
+			StartDate:            startDate,
+			ViewWindowDays:       viewWindowDays,
+		})
+	}
+	startDate1 := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate1 = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate1 = nil
+	}
 	var status []shared.SourcePinterestStatus = nil
 	for _, statusItem := range r.Configuration.Status {
 		status = append(status, shared.SourcePinterestStatus(statusItem.ValueString()))
 	}
 	configuration := shared.SourcePinterest{
-		Credentials: credentials,
-		SourceType:  sourceType,
-		StartDate:   startDate,
-		Status:      status,
+		Credentials:   credentials,
+		CustomReports: customReports,
+		StartDate:     startDate1,
+		Status:        status,
 	}
-	name := r.Name.ValueString()
+	definitionID := new(string)
+	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
+		*definitionID = r.DefinitionID.ValueString()
+	} else {
+		definitionID = nil
+	}
+	name1 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -76,7 +136,8 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePinterestCreateRequest{
 		Configuration: configuration,
-		Name:          name,
+		DefinitionID:  definitionID,
+		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
@@ -91,64 +152,120 @@ func (r *SourcePinterestResourceModel) ToGetSDKType() *shared.SourcePinterestCre
 func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterestPutRequest {
 	var credentials *shared.SourcePinterestUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var sourcePinterestUpdateAuthorizationMethodOAuth20 *shared.SourcePinterestUpdateAuthorizationMethodOAuth20
-		if r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
-			authMethod := shared.SourcePinterestUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.AuthMethod.ValueString())
+		var sourcePinterestUpdateOAuth20 *shared.SourcePinterestUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
 			clientID := new(string)
-			if !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 			} else {
 				clientID = nil
 			}
 			clientSecret := new(string)
-			if !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 			} else {
 				clientSecret = nil
 			}
-			refreshToken := r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
-			sourcePinterestUpdateAuthorizationMethodOAuth20 = &shared.SourcePinterestUpdateAuthorizationMethodOAuth20{
-				AuthMethod:   authMethod,
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			sourcePinterestUpdateOAuth20 = &shared.SourcePinterestUpdateOAuth20{
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
 			}
 		}
-		if sourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+		if sourcePinterestUpdateOAuth20 != nil {
 			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-				SourcePinterestUpdateAuthorizationMethodOAuth20: sourcePinterestUpdateAuthorizationMethodOAuth20,
-			}
-		}
-		var sourcePinterestUpdateAuthorizationMethodAccessToken *shared.SourcePinterestUpdateAuthorizationMethodAccessToken
-		if r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken != nil {
-			accessToken := r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken.AccessToken.ValueString()
-			authMethod1 := shared.SourcePinterestUpdateAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken.AuthMethod.ValueString())
-			sourcePinterestUpdateAuthorizationMethodAccessToken = &shared.SourcePinterestUpdateAuthorizationMethodAccessToken{
-				AccessToken: accessToken,
-				AuthMethod:  authMethod1,
-			}
-		}
-		if sourcePinterestUpdateAuthorizationMethodAccessToken != nil {
-			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-				SourcePinterestUpdateAuthorizationMethodAccessToken: sourcePinterestUpdateAuthorizationMethodAccessToken,
+				SourcePinterestUpdateOAuth20: sourcePinterestUpdateOAuth20,
 			}
 		}
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
-	var status []shared.SourcePinterestUpdateStatus = nil
+	var customReports []shared.ReportConfig = nil
+	for _, customReportsItem := range r.Configuration.CustomReports {
+		var attributionTypes []shared.SourcePinterestUpdateValidEnums = nil
+		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
+			attributionTypes = append(attributionTypes, shared.SourcePinterestUpdateValidEnums(attributionTypesItem.ValueString()))
+		}
+		clickWindowDays := new(shared.ClickWindowDays)
+		if !customReportsItem.ClickWindowDays.IsUnknown() && !customReportsItem.ClickWindowDays.IsNull() {
+			*clickWindowDays = shared.ClickWindowDays(customReportsItem.ClickWindowDays.ValueInt64())
+		} else {
+			clickWindowDays = nil
+		}
+		var columns []shared.SourcePinterestUpdateSchemasValidEnums = nil
+		for _, columnsItem := range customReportsItem.Columns {
+			columns = append(columns, shared.SourcePinterestUpdateSchemasValidEnums(columnsItem.ValueString()))
+		}
+		conversionReportTime := new(shared.ConversionReportTime)
+		if !customReportsItem.ConversionReportTime.IsUnknown() && !customReportsItem.ConversionReportTime.IsNull() {
+			*conversionReportTime = shared.ConversionReportTime(customReportsItem.ConversionReportTime.ValueString())
+		} else {
+			conversionReportTime = nil
+		}
+		engagementWindowDays := new(shared.EngagementWindowDays)
+		if !customReportsItem.EngagementWindowDays.IsUnknown() && !customReportsItem.EngagementWindowDays.IsNull() {
+			*engagementWindowDays = shared.EngagementWindowDays(customReportsItem.EngagementWindowDays.ValueInt64())
+		} else {
+			engagementWindowDays = nil
+		}
+		granularity := new(shared.Granularity)
+		if !customReportsItem.Granularity.IsUnknown() && !customReportsItem.Granularity.IsNull() {
+			*granularity = shared.Granularity(customReportsItem.Granularity.ValueString())
+		} else {
+			granularity = nil
+		}
+		level := new(shared.SourcePinterestUpdateLevel)
+		if !customReportsItem.Level.IsUnknown() && !customReportsItem.Level.IsNull() {
+			*level = shared.SourcePinterestUpdateLevel(customReportsItem.Level.ValueString())
+		} else {
+			level = nil
+		}
+		name := customReportsItem.Name.ValueString()
+		startDate := new(customTypes.Date)
+		if !customReportsItem.StartDate.IsUnknown() && !customReportsItem.StartDate.IsNull() {
+			startDate = customTypes.MustNewDateFromString(customReportsItem.StartDate.ValueString())
+		} else {
+			startDate = nil
+		}
+		viewWindowDays := new(shared.ViewWindowDays)
+		if !customReportsItem.ViewWindowDays.IsUnknown() && !customReportsItem.ViewWindowDays.IsNull() {
+			*viewWindowDays = shared.ViewWindowDays(customReportsItem.ViewWindowDays.ValueInt64())
+		} else {
+			viewWindowDays = nil
+		}
+		customReports = append(customReports, shared.ReportConfig{
+			AttributionTypes:     attributionTypes,
+			ClickWindowDays:      clickWindowDays,
+			Columns:              columns,
+			ConversionReportTime: conversionReportTime,
+			EngagementWindowDays: engagementWindowDays,
+			Granularity:          granularity,
+			Level:                level,
+			Name:                 name,
+			StartDate:            startDate,
+			ViewWindowDays:       viewWindowDays,
+		})
+	}
+	startDate1 := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate1 = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate1 = nil
+	}
+	var status []shared.Status = nil
 	for _, statusItem := range r.Configuration.Status {
-		status = append(status, shared.SourcePinterestUpdateStatus(statusItem.ValueString()))
+		status = append(status, shared.Status(statusItem.ValueString()))
 	}
 	configuration := shared.SourcePinterestUpdate{
-		Credentials: credentials,
-		StartDate:   startDate,
-		Status:      status,
+		Credentials:   credentials,
+		CustomReports: customReports,
+		StartDate:     startDate1,
+		Status:        status,
 	}
-	name := r.Name.ValueString()
+	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePinterestPutRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

@@ -11,3 +11,24 @@ type WorkspaceOAuthCredentialsRequest struct {
 	// The name of the source i.e. google-ads
 	Name string `json:"name"`
 }
+
+func (o *WorkspaceOAuthCredentialsRequest) GetActorType() ActorTypeEnum {
+	if o == nil {
+		return ActorTypeEnum("")
+	}
+	return o.ActorType
+}
+
+func (o *WorkspaceOAuthCredentialsRequest) GetConfiguration() OAuthCredentialsConfiguration {
+	if o == nil {
+		return OAuthCredentialsConfiguration{}
+	}
+	return o.Configuration
+}
+
+func (o *WorkspaceOAuthCredentialsRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}

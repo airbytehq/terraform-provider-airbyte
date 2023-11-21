@@ -3,25 +3,26 @@
 package shared
 
 import (
-	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceNytimesUpdatePeriodUsedForMostPopularStreams - Period of time (in days)
-type SourceNytimesUpdatePeriodUsedForMostPopularStreams int64
+// PeriodUsedForMostPopularStreams - Period of time (in days)
+type PeriodUsedForMostPopularStreams int64
 
 const (
-	SourceNytimesUpdatePeriodUsedForMostPopularStreamsOne    SourceNytimesUpdatePeriodUsedForMostPopularStreams = 1
-	SourceNytimesUpdatePeriodUsedForMostPopularStreamsSeven  SourceNytimesUpdatePeriodUsedForMostPopularStreams = 7
-	SourceNytimesUpdatePeriodUsedForMostPopularStreamsThirty SourceNytimesUpdatePeriodUsedForMostPopularStreams = 30
+	PeriodUsedForMostPopularStreamsOne    PeriodUsedForMostPopularStreams = 1
+	PeriodUsedForMostPopularStreamsSeven  PeriodUsedForMostPopularStreams = 7
+	PeriodUsedForMostPopularStreamsThirty PeriodUsedForMostPopularStreams = 30
 )
 
-func (e SourceNytimesUpdatePeriodUsedForMostPopularStreams) ToPointer() *SourceNytimesUpdatePeriodUsedForMostPopularStreams {
+func (e PeriodUsedForMostPopularStreams) ToPointer() *PeriodUsedForMostPopularStreams {
 	return &e
 }
 
-func (e *SourceNytimesUpdatePeriodUsedForMostPopularStreams) UnmarshalJSON(data []byte) error {
+func (e *PeriodUsedForMostPopularStreams) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -32,35 +33,35 @@ func (e *SourceNytimesUpdatePeriodUsedForMostPopularStreams) UnmarshalJSON(data 
 	case 7:
 		fallthrough
 	case 30:
-		*e = SourceNytimesUpdatePeriodUsedForMostPopularStreams(v)
+		*e = PeriodUsedForMostPopularStreams(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNytimesUpdatePeriodUsedForMostPopularStreams: %v", v)
+		return fmt.Errorf("invalid value for PeriodUsedForMostPopularStreams: %v", v)
 	}
 }
 
-// SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream - Share Type
-type SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream string
+// ShareTypeUsedForMostPopularSharedStream - Share Type
+type ShareTypeUsedForMostPopularSharedStream string
 
 const (
-	SourceNytimesUpdateShareTypeUsedForMostPopularSharedStreamFacebook SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream = "facebook"
+	ShareTypeUsedForMostPopularSharedStreamFacebook ShareTypeUsedForMostPopularSharedStream = "facebook"
 )
 
-func (e SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream) ToPointer() *SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream {
+func (e ShareTypeUsedForMostPopularSharedStream) ToPointer() *ShareTypeUsedForMostPopularSharedStream {
 	return &e
 }
 
-func (e *SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream) UnmarshalJSON(data []byte) error {
+func (e *ShareTypeUsedForMostPopularSharedStream) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "facebook":
-		*e = SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream(v)
+		*e = ShareTypeUsedForMostPopularSharedStream(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream: %v", v)
+		return fmt.Errorf("invalid value for ShareTypeUsedForMostPopularSharedStream: %v", v)
 	}
 }
 
@@ -70,9 +71,55 @@ type SourceNytimesUpdate struct {
 	// End date to stop the article retrieval (format YYYY-MM)
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Period of time (in days)
-	Period SourceNytimesUpdatePeriodUsedForMostPopularStreams `json:"period"`
+	Period PeriodUsedForMostPopularStreams `json:"period"`
 	// Share Type
-	ShareType *SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
+	ShareType *ShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
 	// Start date to begin the article retrieval (format YYYY-MM)
 	StartDate types.Date `json:"start_date"`
+}
+
+func (s SourceNytimesUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNytimesUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNytimesUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
+func (o *SourceNytimesUpdate) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceNytimesUpdate) GetPeriod() PeriodUsedForMostPopularStreams {
+	if o == nil {
+		return PeriodUsedForMostPopularStreams(0)
+	}
+	return o.Period
+}
+
+func (o *SourceNytimesUpdate) GetShareType() *ShareTypeUsedForMostPopularSharedStream {
+	if o == nil {
+		return nil
+	}
+	return o.ShareType
+}
+
+func (o *SourceNytimesUpdate) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }

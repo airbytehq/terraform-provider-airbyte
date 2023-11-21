@@ -1,19 +1,18 @@
 resource "airbyte_source_smartsheets" "my_source_smartsheets" {
   configuration = {
     credentials = {
-      source_smartsheets_authorization_method_api_access_token = {
+      api_access_token = {
         access_token = "...my_access_token..."
-        auth_type    = "access_token"
       }
     }
     metadata_fields = [
-      "row_access_level",
+      "row_number",
     ]
-    source_type    = "smartsheets"
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00-07:00"
+    start_datetime = "2000-01-01T13:00:00"
   }
-  name         = "Joann Bechtelar Jr."
-  secret_id    = "...my_secret_id..."
-  workspace_id = "e966ec73-6d43-4194-b98c-783c92398ed3"
+  definition_id = "a6744848-ac2b-404b-aae9-e175304065f6"
+  name          = "Tara King"
+  secret_id     = "...my_secret_id..."
+  workspace_id  = "901f87c9-df1a-4f8f-9013-d5d0cf403b28"
 }

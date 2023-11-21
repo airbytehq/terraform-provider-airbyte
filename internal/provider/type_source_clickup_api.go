@@ -9,7 +9,6 @@ type SourceClickupAPI struct {
 	FolderID           types.String `tfsdk:"folder_id"`
 	IncludeClosedTasks types.Bool   `tfsdk:"include_closed_tasks"`
 	ListID             types.String `tfsdk:"list_id"`
-	SourceType         types.String `tfsdk:"source_type"`
 	SpaceID            types.String `tfsdk:"space_id"`
 	TeamID             types.String `tfsdk:"team_id"`
 }

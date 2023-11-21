@@ -7,3 +7,24 @@ type SourceOnesignalPutRequest struct {
 	Name          string                `json:"name"`
 	WorkspaceID   string                `json:"workspaceId"`
 }
+
+func (o *SourceOnesignalPutRequest) GetConfiguration() SourceOnesignalUpdate {
+	if o == nil {
+		return SourceOnesignalUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceOnesignalPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceOnesignalPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

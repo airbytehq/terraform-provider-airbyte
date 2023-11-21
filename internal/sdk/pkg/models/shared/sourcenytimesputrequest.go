@@ -7,3 +7,24 @@ type SourceNytimesPutRequest struct {
 	Name          string              `json:"name"`
 	WorkspaceID   string              `json:"workspaceId"`
 }
+
+func (o *SourceNytimesPutRequest) GetConfiguration() SourceNytimesUpdate {
+	if o == nil {
+		return SourceNytimesUpdate{}
+	}
+	return o.Configuration
+}
+
+func (o *SourceNytimesPutRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceNytimesPutRequest) GetWorkspaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceID
+}

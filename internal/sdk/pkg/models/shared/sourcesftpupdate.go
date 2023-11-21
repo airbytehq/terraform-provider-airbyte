@@ -3,128 +3,167 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
-// SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod - Connect through ssh key
-type SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod string
+// SourceSftpUpdateSchemasAuthMethod - Connect through ssh key
+type SourceSftpUpdateSchemasAuthMethod string
 
 const (
-	SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethodSSHKeyAuth SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod = "SSH_KEY_AUTH"
+	SourceSftpUpdateSchemasAuthMethodSSHKeyAuth SourceSftpUpdateSchemasAuthMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod) ToPointer() *SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod {
+func (e SourceSftpUpdateSchemasAuthMethod) ToPointer() *SourceSftpUpdateSchemasAuthMethod {
 	return &e
 }
 
-func (e *SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceSftpUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod(v)
+		*e = SourceSftpUpdateSchemasAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceSftpUpdateSchemasAuthMethod: %v", v)
 	}
 }
 
-// SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication - The server authentication method
-type SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication struct {
+// SourceSftpUpdateSSHKeyAuthentication - The server authentication method
+type SourceSftpUpdateSSHKeyAuthentication struct {
 	// Connect through ssh key
-	AuthMethod SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod `json:"auth_method"`
+	authMethod SourceSftpUpdateSchemasAuthMethod `const:"SSH_KEY_AUTH" json:"auth_method"`
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	AuthSSHKey string `json:"auth_ssh_key"`
 }
 
-// SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod - Connect through password authentication
-type SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod string
+func (s SourceSftpUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSftpUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSftpUpdateSSHKeyAuthentication) GetAuthMethod() SourceSftpUpdateSchemasAuthMethod {
+	return SourceSftpUpdateSchemasAuthMethodSSHKeyAuth
+}
+
+func (o *SourceSftpUpdateSSHKeyAuthentication) GetAuthSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthSSHKey
+}
+
+// SourceSftpUpdateAuthMethod - Connect through password authentication
+type SourceSftpUpdateAuthMethod string
 
 const (
-	SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethodSSHPasswordAuth SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod = "SSH_PASSWORD_AUTH"
+	SourceSftpUpdateAuthMethodSSHPasswordAuth SourceSftpUpdateAuthMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod) ToPointer() *SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod {
+func (e SourceSftpUpdateAuthMethod) ToPointer() *SourceSftpUpdateAuthMethod {
 	return &e
 }
 
-func (e *SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceSftpUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod(v)
+		*e = SourceSftpUpdateAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceSftpUpdateAuthMethod: %v", v)
 	}
 }
 
-// SourceSftpUpdateAuthenticationWildcardPasswordAuthentication - The server authentication method
-type SourceSftpUpdateAuthenticationWildcardPasswordAuthentication struct {
+// SourceSftpUpdatePasswordAuthentication - The server authentication method
+type SourceSftpUpdatePasswordAuthentication struct {
 	// Connect through password authentication
-	AuthMethod SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod `json:"auth_method"`
+	authMethod SourceSftpUpdateAuthMethod `const:"SSH_PASSWORD_AUTH" json:"auth_method"`
 	// OS-level password for logging into the jump server host
 	AuthUserPassword string `json:"auth_user_password"`
+}
+
+func (s SourceSftpUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSftpUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSftpUpdatePasswordAuthentication) GetAuthMethod() SourceSftpUpdateAuthMethod {
+	return SourceSftpUpdateAuthMethodSSHPasswordAuth
+}
+
+func (o *SourceSftpUpdatePasswordAuthentication) GetAuthUserPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthUserPassword
 }
 
 type SourceSftpUpdateAuthenticationWildcardType string
 
 const (
-	SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateAuthenticationWildcardPasswordAuthentication SourceSftpUpdateAuthenticationWildcardType = "source-sftp-update_Authentication *_Password Authentication"
-	SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication   SourceSftpUpdateAuthenticationWildcardType = "source-sftp-update_Authentication *_SSH Key Authentication"
+	SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdatePasswordAuthentication SourceSftpUpdateAuthenticationWildcardType = "source-sftp-update_Password Authentication"
+	SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateSSHKeyAuthentication   SourceSftpUpdateAuthenticationWildcardType = "source-sftp-update_SSH Key Authentication"
 )
 
 type SourceSftpUpdateAuthenticationWildcard struct {
-	SourceSftpUpdateAuthenticationWildcardPasswordAuthentication *SourceSftpUpdateAuthenticationWildcardPasswordAuthentication
-	SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication   *SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
+	SourceSftpUpdatePasswordAuthentication *SourceSftpUpdatePasswordAuthentication
+	SourceSftpUpdateSSHKeyAuthentication   *SourceSftpUpdateSSHKeyAuthentication
 
 	Type SourceSftpUpdateAuthenticationWildcardType
 }
 
-func CreateSourceSftpUpdateAuthenticationWildcardSourceSftpUpdateAuthenticationWildcardPasswordAuthentication(sourceSftpUpdateAuthenticationWildcardPasswordAuthentication SourceSftpUpdateAuthenticationWildcardPasswordAuthentication) SourceSftpUpdateAuthenticationWildcard {
-	typ := SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateAuthenticationWildcardPasswordAuthentication
+func CreateSourceSftpUpdateAuthenticationWildcardSourceSftpUpdatePasswordAuthentication(sourceSftpUpdatePasswordAuthentication SourceSftpUpdatePasswordAuthentication) SourceSftpUpdateAuthenticationWildcard {
+	typ := SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdatePasswordAuthentication
 
 	return SourceSftpUpdateAuthenticationWildcard{
-		SourceSftpUpdateAuthenticationWildcardPasswordAuthentication: &sourceSftpUpdateAuthenticationWildcardPasswordAuthentication,
-		Type: typ,
+		SourceSftpUpdatePasswordAuthentication: &sourceSftpUpdatePasswordAuthentication,
+		Type:                                   typ,
 	}
 }
 
-func CreateSourceSftpUpdateAuthenticationWildcardSourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication(sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication) SourceSftpUpdateAuthenticationWildcard {
-	typ := SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
+func CreateSourceSftpUpdateAuthenticationWildcardSourceSftpUpdateSSHKeyAuthentication(sourceSftpUpdateSSHKeyAuthentication SourceSftpUpdateSSHKeyAuthentication) SourceSftpUpdateAuthenticationWildcard {
+	typ := SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateSSHKeyAuthentication
 
 	return SourceSftpUpdateAuthenticationWildcard{
-		SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication: &sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication,
-		Type: typ,
+		SourceSftpUpdateSSHKeyAuthentication: &sourceSftpUpdateSSHKeyAuthentication,
+		Type:                                 typ,
 	}
 }
 
 func (u *SourceSftpUpdateAuthenticationWildcard) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	sourceSftpUpdateAuthenticationWildcardPasswordAuthentication := new(SourceSftpUpdateAuthenticationWildcardPasswordAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSftpUpdateAuthenticationWildcardPasswordAuthentication); err == nil {
-		u.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication = sourceSftpUpdateAuthenticationWildcardPasswordAuthentication
-		u.Type = SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateAuthenticationWildcardPasswordAuthentication
+	sourceSftpUpdatePasswordAuthentication := new(SourceSftpUpdatePasswordAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceSftpUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.SourceSftpUpdatePasswordAuthentication = sourceSftpUpdatePasswordAuthentication
+		u.Type = SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdatePasswordAuthentication
 		return nil
 	}
 
-	sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication := new(SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication); err == nil {
-		u.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication = sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
-		u.Type = SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
+	sourceSftpUpdateSSHKeyAuthentication := new(SourceSftpUpdateSSHKeyAuthentication)
+	if err := utils.UnmarshalJSON(data, &sourceSftpUpdateSSHKeyAuthentication, "", true, true); err == nil {
+		u.SourceSftpUpdateSSHKeyAuthentication = sourceSftpUpdateSSHKeyAuthentication
+		u.Type = SourceSftpUpdateAuthenticationWildcardTypeSourceSftpUpdateSSHKeyAuthentication
 		return nil
 	}
 
@@ -132,30 +171,90 @@ func (u *SourceSftpUpdateAuthenticationWildcard) UnmarshalJSON(data []byte) erro
 }
 
 func (u SourceSftpUpdateAuthenticationWildcard) MarshalJSON() ([]byte, error) {
-	if u.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
-		return json.Marshal(u.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication)
+	if u.SourceSftpUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSftpUpdatePasswordAuthentication, "", true)
 	}
 
-	if u.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
-		return json.Marshal(u.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication)
+	if u.SourceSftpUpdateSSHKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceSftpUpdateSSHKeyAuthentication, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type SourceSftpUpdate struct {
 	// The server authentication method
 	Credentials *SourceSftpUpdateAuthenticationWildcard `json:"credentials,omitempty"`
 	// The regular expression to specify files for sync in a chosen Folder Path
-	FilePattern *string `json:"file_pattern,omitempty"`
+	FilePattern *string `default:"" json:"file_pattern"`
 	// Coma separated file types. Currently only 'csv' and 'json' types are supported.
-	FileTypes *string `json:"file_types,omitempty"`
+	FileTypes *string `default:"csv,json" json:"file_types"`
 	// The directory to search files for sync
-	FolderPath *string `json:"folder_path,omitempty"`
+	FolderPath *string `default:"" json:"folder_path"`
 	// The server host address
 	Host string `json:"host"`
 	// The server port
-	Port int64 `json:"port"`
+	Port *int64 `default:"22" json:"port"`
 	// The server user
 	User string `json:"user"`
+}
+
+func (s SourceSftpUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSftpUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSftpUpdate) GetCredentials() *SourceSftpUpdateAuthenticationWildcard {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
+}
+
+func (o *SourceSftpUpdate) GetFilePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FilePattern
+}
+
+func (o *SourceSftpUpdate) GetFileTypes() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileTypes
+}
+
+func (o *SourceSftpUpdate) GetFolderPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderPath
+}
+
+func (o *SourceSftpUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceSftpUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceSftpUpdate) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
 }
