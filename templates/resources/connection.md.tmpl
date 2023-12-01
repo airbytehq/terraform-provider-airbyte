@@ -1,0 +1,48 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.ProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+{{ .Description | trimspace }}
+
+{{ if .HasExample -}}
+## Example Usage
+
+{{ tffile "examples/resources/airbyte_connection/resource.tf" }}
+{{- end }}
+
+Example using [Stream Module](#nestedatt--stream-module)
+
+```terraform
+module "source_postgres_streams" {
+  source = "airbytehq/stream-discovery/airbyte"
+  airbyte_api_token = var.airbyte_api_token
+  source_id = airbyte_source_postgres.my_source_postgres.source_id
+  destination_id = airbyte_destination_bigquery.my_destination_bigquery.destination_id
+}
+locals {
+  full_refresh_streams = [for stream in module.source_postgres_streams.streams : 
+    { 
+      name = stream.streamName
+      sync_mode = "full_refresh_overwrite"
+    }
+  ]
+}
+resource "airbyte_connection" "postgres_to_bigquery_full_refresh" {
+  name           = "Postgres to BigQuery Full Refresh"
+  source_id = airbyte_source_postgres.my_source_postgres.source_id
+  destination_id = airbyte_destination_bigquery.my_destination_bigquery.destination_id
+  schedule = {
+    schedule_type = "manual"
+  }
+  configurations = {
+    streams = local.full_refresh_streams
+  }
+}
+```
+
+{{ .SchemaMarkdown | trimspace }}

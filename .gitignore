@@ -3,3 +3,5 @@
 *.tfstate*
 .DS_Store
 *.tfvars
+*.iml
+airbyte_overlayed.yaml
