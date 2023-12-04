@@ -1,0 +1,8 @@
+overlay: 1.0.0
+info:
+  title: AirByte Overlay
+  version: 0.1
+actions:
+  - target: $.components.schemas["destination-s3"].properties.s3_path_format.examples[0]
+    update:
+      "$${NAMESPACE}/$${STREAM_NAME}/$${YEAR}_$${MONTH}_$${DAY}_$${EPOCH}_"
