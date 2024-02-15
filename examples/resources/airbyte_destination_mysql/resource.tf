@@ -6,11 +6,11 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
     password        = "...my_password..."
     port            = 3306
     tunnel_method = {
-      destination_mysql_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Elissa16"
+    username = "Katrine_Wehner29"
   }
-  definition_id = "a53050a9-afbc-466c-913a-5b78062a6a13"
-  name          = "Nick Rogahn"
-  workspace_id  = "63598ffb-0429-424f-aeae-5018c3193740"
+  definition_id = "356f389a-d49d-4bc4-babb-f1994382023b"
+  name          = "Angelina Tremblay"
+  workspace_id  = "1a7f288a-d3cd-4e3c-9d6f-a94b74b938f8"
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.DestinationFirestoreCreateRequest {
+func (r *DestinationFirestoreResourceModel) ToSharedDestinationFirestoreCreateRequest() *shared.DestinationFirestoreCreateRequest {
 	credentialsJSON := new(string)
 	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
 		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
@@ -36,12 +36,14 @@ func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
-func (r *DestinationFirestoreResourceModel) ToGetSDKType() *shared.DestinationFirestoreCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationFirestoreResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationFirestoreResourceModel) ToUpdateSDKType() *shared.DestinationFirestorePutRequest {
+func (r *DestinationFirestoreResourceModel) ToSharedDestinationFirestorePutRequest() *shared.DestinationFirestorePutRequest {
 	credentialsJSON := new(string)
 	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
 		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
@@ -61,20 +63,4 @@ func (r *DestinationFirestoreResourceModel) ToUpdateSDKType() *shared.Destinatio
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationFirestoreResourceModel) ToDeleteSDKType() *shared.DestinationFirestoreCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationFirestoreResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationFirestoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

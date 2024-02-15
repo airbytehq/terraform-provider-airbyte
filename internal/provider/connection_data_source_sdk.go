@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ConnectionDataSourceModel) RefreshFromGetResponse(resp *shared.ConnectionResponse) {
+func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *shared.ConnectionResponse) {
 	if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
 		r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
 	}
@@ -54,31 +54,15 @@ func (r *ConnectionDataSourceModel) RefreshFromGetResponse(resp *shared.Connecti
 	} else {
 		r.NamespaceDefinition = types.StringNull()
 	}
-	if resp.NamespaceFormat != nil {
-		r.NamespaceFormat = types.StringValue(*resp.NamespaceFormat)
-	} else {
-		r.NamespaceFormat = types.StringNull()
-	}
+	r.NamespaceFormat = types.StringPointerValue(resp.NamespaceFormat)
 	if resp.NonBreakingSchemaUpdatesBehavior != nil {
 		r.NonBreakingSchemaUpdatesBehavior = types.StringValue(string(*resp.NonBreakingSchemaUpdatesBehavior))
 	} else {
 		r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
 	}
-	if resp.Prefix != nil {
-		r.Prefix = types.StringValue(*resp.Prefix)
-	} else {
-		r.Prefix = types.StringNull()
-	}
-	if resp.Schedule.BasicTiming != nil {
-		r.Schedule.BasicTiming = types.StringValue(*resp.Schedule.BasicTiming)
-	} else {
-		r.Schedule.BasicTiming = types.StringNull()
-	}
-	if resp.Schedule.CronExpression != nil {
-		r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
-	} else {
-		r.Schedule.CronExpression = types.StringNull()
-	}
+	r.Prefix = types.StringPointerValue(resp.Prefix)
+	r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
+	r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
 	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.Status = types.StringValue(string(resp.Status))

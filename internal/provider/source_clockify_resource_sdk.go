@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceClockifyResourceModel) ToCreateSDKType() *shared.SourceClockifyCreateRequest {
+func (r *SourceClockifyResourceModel) ToSharedSourceClockifyCreateRequest() *shared.SourceClockifyCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
@@ -45,12 +45,14 @@ func (r *SourceClockifyResourceModel) ToCreateSDKType() *shared.SourceClockifyCr
 	return &out
 }
 
-func (r *SourceClockifyResourceModel) ToGetSDKType() *shared.SourceClockifyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceClockifyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceClockifyResourceModel) ToUpdateSDKType() *shared.SourceClockifyPutRequest {
+func (r *SourceClockifyResourceModel) ToSharedSourceClockifyPutRequest() *shared.SourceClockifyPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
@@ -72,20 +74,4 @@ func (r *SourceClockifyResourceModel) ToUpdateSDKType() *shared.SourceClockifyPu
 		WorkspaceID:   workspaceId1,
 	}
 	return &out
-}
-
-func (r *SourceClockifyResourceModel) ToDeleteSDKType() *shared.SourceClockifyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceClockifyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceClockifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

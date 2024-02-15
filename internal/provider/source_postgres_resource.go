@@ -5,16 +5,19 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -55,6 +58,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
@@ -75,9 +81,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 5432` + "\n" +
-							`Port of the database.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(5432),
+						Description: `Port of the database. Default: 5432`,
 					},
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -97,15 +104,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 											validators.IsValidJSON(),
 										},
 									},
+									"heartbeat_action_query": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(""),
+										Description: `Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""`,
+									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 300` + "\n" +
-											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(1200),
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>. Default: 1200`,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"` + "\n" +
-											`Determines when Airbyte should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("After loading Data in the destination"),
+										Description: `Determines when Airbyte should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"While reading Data",
@@ -114,9 +129,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"plugin": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["pgoutput"]; Default: "pgoutput"` + "\n" +
-											`A logical decoding plugin installed on the PostgreSQL server.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("pgoutput"),
+										Description: `A logical decoding plugin installed on the PostgreSQL server. must be one of ["pgoutput"]; Default: "pgoutput"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"pgoutput",
@@ -128,9 +144,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
 									"queue_size": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 10000` + "\n" +
-											`The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(10000),
+										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000`,
 									},
 									"replication_slot": schema.StringAttribute{
 										Required:    true,
@@ -154,6 +171,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `The list of schemas (case sensitive) to sync from. Defaults to public.`,
+						Validators: []validator.List{
+							listvalidator.UniqueValues(),
+						},
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
@@ -283,9 +303,8 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"no_tunnel": schema.SingleNestedAttribute{
-								Optional:    true,
-								Attributes:  map[string]schema.Attribute{},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+								Optional:   true,
+								Attributes: map[string]schema.Attribute{},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -295,9 +314,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 22` + "\n" +
-											`Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(22),
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -309,7 +329,6 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -324,16 +343,16 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 22` + "\n" +
-											`Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(22),
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 						},
 						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -349,40 +368,40 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -412,14 +431,14 @@ func (r *SourcePostgresResource) Configure(ctx context.Context, req resource.Con
 
 func (r *SourcePostgresResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourcePostgresResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -428,7 +447,7 @@ func (r *SourcePostgresResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourcePostgresCreateRequest()
 	res, err := r.client.Sources.CreateSourcePostgres(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -449,7 +468,34 @@ func (r *SourcePostgresResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourcePostgresRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourcePostgres(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -497,7 +543,7 @@ func (r *SourcePostgresResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -505,12 +551,19 @@ func (r *SourcePostgresResource) Read(ctx context.Context, req resource.ReadRequ
 
 func (r *SourcePostgresResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourcePostgresResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourcePostgresPutRequest := data.ToUpdateSDKType()
+	sourcePostgresPutRequest := data.ToSharedSourcePostgresPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourcePostgresRequest{
 		SourcePostgresPutRequest: sourcePostgresPutRequest,
@@ -532,31 +585,33 @@ func (r *SourcePostgresResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourcePostgresRequest{
+	request1 := operations.GetSourcePostgresRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourcePostgres(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourcePostgres(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

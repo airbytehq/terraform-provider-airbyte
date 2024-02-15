@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceFileResourceModel) ToCreateSDKType() *shared.SourceFileCreateRequest {
+func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.SourceFileCreateRequest {
 	datasetName := r.Configuration.DatasetName.ValueString()
 	format := new(shared.SourceFileFileFormat)
 	if !r.Configuration.Format.IsUnknown() && !r.Configuration.Format.IsNull() {
@@ -222,12 +222,14 @@ func (r *SourceFileResourceModel) ToCreateSDKType() *shared.SourceFileCreateRequ
 	return &out
 }
 
-func (r *SourceFileResourceModel) ToGetSDKType() *shared.SourceFileCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFileResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFileResourceModel) ToUpdateSDKType() *shared.SourceFilePutRequest {
+func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceFilePutRequest {
 	datasetName := r.Configuration.DatasetName.ValueString()
 	format := new(shared.FileFormat)
 	if !r.Configuration.Format.IsUnknown() && !r.Configuration.Format.IsNull() {
@@ -426,20 +428,4 @@ func (r *SourceFileResourceModel) ToUpdateSDKType() *shared.SourceFilePutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFileResourceModel) ToDeleteSDKType() *shared.SourceFileCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFileResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFileResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -3,7 +3,7 @@
 package provider
 
 type DestinationDatabricksDataSource1 struct {
-	RecommendedManagedTables *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"recommended_managed_tables"`
-	AmazonS3                 *AmazonS3                                                 `tfsdk:"amazon_s3"`
-	AzureBlobStorage         *DestinationDatabricksAzureBlobStorage                    `tfsdk:"azure_blob_storage"`
+	RecommendedManagedTables *Fake                                  `tfsdk:"recommended_managed_tables"`
+	AmazonS3                 *AmazonS3                              `tfsdk:"amazon_s3"`
+	AzureBlobStorage         *DestinationDatabricksAzureBlobStorage `tfsdk:"azure_blob_storage"`
 }

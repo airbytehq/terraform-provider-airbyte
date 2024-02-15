@@ -10,11 +10,11 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
       encrypted_trust_server_certificate = {}
     }
     tunnel_method = {
-      destination_mssql_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Amalia.Blick"
+    username = "Orville59"
   }
-  definition_id = "90e1a2bc-7de0-4ff6-b737-4915d3efc2cd"
-  name          = "Jorge Beahan"
-  workspace_id  = "6acc1e6f-1291-4560-8b55-b326e06d2448"
+  definition_id = "374090ef-b22d-4b6f-a086-4a856a04170f"
+  name          = "Bob Hamill"
+  workspace_id  = "dc323359-77b0-47bf-8728-b7077558c673"
 }

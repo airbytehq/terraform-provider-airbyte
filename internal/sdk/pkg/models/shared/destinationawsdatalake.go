@@ -34,7 +34,6 @@ func (e *DestinationAwsDatalakeSchemasCredentialsTitle) UnmarshalJSON(data []byt
 	}
 }
 
-// DestinationAwsDatalakeIAMUser - Choose How to Authenticate to AWS.
 type DestinationAwsDatalakeIAMUser struct {
 	// AWS User Access Key Id
 	AwsAccessKeyID string `json:"aws_access_key_id"`
@@ -98,7 +97,6 @@ func (e *DestinationAwsDatalakeCredentialsTitle) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// DestinationAwsDatalakeIAMRole - Choose How to Authenticate to AWS.
 type DestinationAwsDatalakeIAMRole struct {
 	// Name of the credentials
 	credentialsTitle *DestinationAwsDatalakeCredentialsTitle `const:"IAM Role" json:"credentials_title"`
@@ -135,6 +133,7 @@ const (
 	DestinationAwsDatalakeAuthenticationModeTypeDestinationAwsDatalakeIAMUser DestinationAwsDatalakeAuthenticationModeType = "destination-aws-datalake_IAM User"
 )
 
+// DestinationAwsDatalakeAuthenticationMode - Choose How to Authenticate to AWS.
 type DestinationAwsDatalakeAuthenticationMode struct {
 	DestinationAwsDatalakeIAMRole *DestinationAwsDatalakeIAMRole
 	DestinationAwsDatalakeIAMUser *DestinationAwsDatalakeIAMUser
@@ -273,7 +272,6 @@ func (e *DestinationAwsDatalakeSchemasFormatTypeWildcard) UnmarshalJSON(data []b
 	}
 }
 
-// DestinationAwsDatalakeParquetColumnarStorage - Format of the data output.
 type DestinationAwsDatalakeParquetColumnarStorage struct {
 	// The compression algorithm used to compress data.
 	CompressionCodec *DestinationAwsDatalakeSchemasCompressionCodecOptional `default:"SNAPPY" json:"compression_codec"`
@@ -357,7 +355,6 @@ func (e *DestinationAwsDatalakeFormatTypeWildcard) UnmarshalJSON(data []byte) er
 	}
 }
 
-// DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON - Format of the data output.
 type DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON struct {
 	// The compression algorithm used to compress data.
 	CompressionCodec *DestinationAwsDatalakeCompressionCodecOptional `default:"UNCOMPRESSED" json:"compression_codec"`
@@ -396,6 +393,7 @@ const (
 	DestinationAwsDatalakeOutputFormatWildcardTypeDestinationAwsDatalakeParquetColumnarStorage        DestinationAwsDatalakeOutputFormatWildcardType = "destination-aws-datalake_Parquet: Columnar Storage"
 )
 
+// DestinationAwsDatalakeOutputFormatWildcard - Format of the data output.
 type DestinationAwsDatalakeOutputFormatWildcard struct {
 	DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON *DestinationAwsDatalakeJSONLinesNewlineDelimitedJSON
 	DestinationAwsDatalakeParquetColumnarStorage        *DestinationAwsDatalakeParquetColumnarStorage
@@ -500,31 +498,39 @@ type DestinationAwsDatalakeS3BucketRegion string
 
 const (
 	DestinationAwsDatalakeS3BucketRegionUnknown      DestinationAwsDatalakeS3BucketRegion = ""
-	DestinationAwsDatalakeS3BucketRegionUsEast1      DestinationAwsDatalakeS3BucketRegion = "us-east-1"
-	DestinationAwsDatalakeS3BucketRegionUsEast2      DestinationAwsDatalakeS3BucketRegion = "us-east-2"
-	DestinationAwsDatalakeS3BucketRegionUsWest1      DestinationAwsDatalakeS3BucketRegion = "us-west-1"
-	DestinationAwsDatalakeS3BucketRegionUsWest2      DestinationAwsDatalakeS3BucketRegion = "us-west-2"
 	DestinationAwsDatalakeS3BucketRegionAfSouth1     DestinationAwsDatalakeS3BucketRegion = "af-south-1"
 	DestinationAwsDatalakeS3BucketRegionApEast1      DestinationAwsDatalakeS3BucketRegion = "ap-east-1"
-	DestinationAwsDatalakeS3BucketRegionApSouth1     DestinationAwsDatalakeS3BucketRegion = "ap-south-1"
 	DestinationAwsDatalakeS3BucketRegionApNortheast1 DestinationAwsDatalakeS3BucketRegion = "ap-northeast-1"
 	DestinationAwsDatalakeS3BucketRegionApNortheast2 DestinationAwsDatalakeS3BucketRegion = "ap-northeast-2"
 	DestinationAwsDatalakeS3BucketRegionApNortheast3 DestinationAwsDatalakeS3BucketRegion = "ap-northeast-3"
+	DestinationAwsDatalakeS3BucketRegionApSouth1     DestinationAwsDatalakeS3BucketRegion = "ap-south-1"
+	DestinationAwsDatalakeS3BucketRegionApSouth2     DestinationAwsDatalakeS3BucketRegion = "ap-south-2"
 	DestinationAwsDatalakeS3BucketRegionApSoutheast1 DestinationAwsDatalakeS3BucketRegion = "ap-southeast-1"
 	DestinationAwsDatalakeS3BucketRegionApSoutheast2 DestinationAwsDatalakeS3BucketRegion = "ap-southeast-2"
+	DestinationAwsDatalakeS3BucketRegionApSoutheast3 DestinationAwsDatalakeS3BucketRegion = "ap-southeast-3"
+	DestinationAwsDatalakeS3BucketRegionApSoutheast4 DestinationAwsDatalakeS3BucketRegion = "ap-southeast-4"
 	DestinationAwsDatalakeS3BucketRegionCaCentral1   DestinationAwsDatalakeS3BucketRegion = "ca-central-1"
+	DestinationAwsDatalakeS3BucketRegionCaWest1      DestinationAwsDatalakeS3BucketRegion = "ca-west-1"
 	DestinationAwsDatalakeS3BucketRegionCnNorth1     DestinationAwsDatalakeS3BucketRegion = "cn-north-1"
 	DestinationAwsDatalakeS3BucketRegionCnNorthwest1 DestinationAwsDatalakeS3BucketRegion = "cn-northwest-1"
 	DestinationAwsDatalakeS3BucketRegionEuCentral1   DestinationAwsDatalakeS3BucketRegion = "eu-central-1"
+	DestinationAwsDatalakeS3BucketRegionEuCentral2   DestinationAwsDatalakeS3BucketRegion = "eu-central-2"
 	DestinationAwsDatalakeS3BucketRegionEuNorth1     DestinationAwsDatalakeS3BucketRegion = "eu-north-1"
 	DestinationAwsDatalakeS3BucketRegionEuSouth1     DestinationAwsDatalakeS3BucketRegion = "eu-south-1"
+	DestinationAwsDatalakeS3BucketRegionEuSouth2     DestinationAwsDatalakeS3BucketRegion = "eu-south-2"
 	DestinationAwsDatalakeS3BucketRegionEuWest1      DestinationAwsDatalakeS3BucketRegion = "eu-west-1"
 	DestinationAwsDatalakeS3BucketRegionEuWest2      DestinationAwsDatalakeS3BucketRegion = "eu-west-2"
 	DestinationAwsDatalakeS3BucketRegionEuWest3      DestinationAwsDatalakeS3BucketRegion = "eu-west-3"
-	DestinationAwsDatalakeS3BucketRegionSaEast1      DestinationAwsDatalakeS3BucketRegion = "sa-east-1"
+	DestinationAwsDatalakeS3BucketRegionIlCentral1   DestinationAwsDatalakeS3BucketRegion = "il-central-1"
+	DestinationAwsDatalakeS3BucketRegionMeCentral1   DestinationAwsDatalakeS3BucketRegion = "me-central-1"
 	DestinationAwsDatalakeS3BucketRegionMeSouth1     DestinationAwsDatalakeS3BucketRegion = "me-south-1"
+	DestinationAwsDatalakeS3BucketRegionSaEast1      DestinationAwsDatalakeS3BucketRegion = "sa-east-1"
+	DestinationAwsDatalakeS3BucketRegionUsEast1      DestinationAwsDatalakeS3BucketRegion = "us-east-1"
+	DestinationAwsDatalakeS3BucketRegionUsEast2      DestinationAwsDatalakeS3BucketRegion = "us-east-2"
 	DestinationAwsDatalakeS3BucketRegionUsGovEast1   DestinationAwsDatalakeS3BucketRegion = "us-gov-east-1"
 	DestinationAwsDatalakeS3BucketRegionUsGovWest1   DestinationAwsDatalakeS3BucketRegion = "us-gov-west-1"
+	DestinationAwsDatalakeS3BucketRegionUsWest1      DestinationAwsDatalakeS3BucketRegion = "us-west-1"
+	DestinationAwsDatalakeS3BucketRegionUsWest2      DestinationAwsDatalakeS3BucketRegion = "us-west-2"
 )
 
 func (e DestinationAwsDatalakeS3BucketRegion) ToPointer() *DestinationAwsDatalakeS3BucketRegion {
@@ -539,19 +545,9 @@ func (e *DestinationAwsDatalakeS3BucketRegion) UnmarshalJSON(data []byte) error 
 	switch v {
 	case "":
 		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -559,11 +555,21 @@ func (e *DestinationAwsDatalakeS3BucketRegion) UnmarshalJSON(data []byte) error 
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -571,9 +577,13 @@ func (e *DestinationAwsDatalakeS3BucketRegion) UnmarshalJSON(data []byte) error 
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -581,13 +591,25 @@ func (e *DestinationAwsDatalakeS3BucketRegion) UnmarshalJSON(data []byte) error 
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
 		fallthrough
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = DestinationAwsDatalakeS3BucketRegion(v)
 		return nil
 	default:

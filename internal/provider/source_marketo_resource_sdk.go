@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceMarketoResourceModel) ToCreateSDKType() *shared.SourceMarketoCreateRequest {
+func (r *SourceMarketoResourceModel) ToSharedSourceMarketoCreateRequest() *shared.SourceMarketoCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	domainURL := r.Configuration.DomainURL.ValueString()
@@ -43,12 +43,14 @@ func (r *SourceMarketoResourceModel) ToCreateSDKType() *shared.SourceMarketoCrea
 	return &out
 }
 
-func (r *SourceMarketoResourceModel) ToGetSDKType() *shared.SourceMarketoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMarketoResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMarketoResourceModel) ToUpdateSDKType() *shared.SourceMarketoPutRequest {
+func (r *SourceMarketoResourceModel) ToSharedSourceMarketoPutRequest() *shared.SourceMarketoPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	domainURL := r.Configuration.DomainURL.ValueString()
@@ -67,20 +69,4 @@ func (r *SourceMarketoResourceModel) ToUpdateSDKType() *shared.SourceMarketoPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMarketoResourceModel) ToDeleteSDKType() *shared.SourceMarketoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMarketoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMarketoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -177,19 +177,209 @@ func (e *AWSRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type OptionsList struct {
+	OptionName  string `json:"option_name"`
+	OptionValue string `json:"option_value"`
+}
+
+func (o *OptionsList) GetOptionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.OptionName
+}
+
+func (o *OptionsList) GetOptionValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.OptionValue
+}
+
+type StreamName string
+
+const (
+	StreamNameGetAfnInventoryData                              StreamName = "GET_AFN_INVENTORY_DATA"
+	StreamNameGetAfnInventoryDataByCountry                     StreamName = "GET_AFN_INVENTORY_DATA_BY_COUNTRY"
+	StreamNameGetAmazonFulfilledShipmentsDataGeneral           StreamName = "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL"
+	StreamNameGetBrandAnalyticsMarketBasketReport              StreamName = "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT"
+	StreamNameGetBrandAnalyticsRepeatPurchaseReport            StreamName = "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT"
+	StreamNameGetBrandAnalyticsSearchTermsReport               StreamName = "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT"
+	StreamNameGetFbaEstimatedFbaFeesTxtData                    StreamName = "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA"
+	StreamNameGetFbaFulfillmentCustomerReturnsData             StreamName = "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA"
+	StreamNameGetFbaFulfillmentCustomerShipmentPromotionData   StreamName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA"
+	StreamNameGetFbaFulfillmentCustomerShipmentReplacementData StreamName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA"
+	StreamNameGetFbaFulfillmentRemovalOrderDetailData          StreamName = "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA"
+	StreamNameGetFbaFulfillmentRemovalShipmentDetailData       StreamName = "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA"
+	StreamNameGetFbaInventoryPlanningData                      StreamName = "GET_FBA_INVENTORY_PLANNING_DATA"
+	StreamNameGetFbaMyiUnsuppressedInventoryData               StreamName = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
+	StreamNameGetFbaReimbursementsData                         StreamName = "GET_FBA_REIMBURSEMENTS_DATA"
+	StreamNameGetFbaSnsForecastData                            StreamName = "GET_FBA_SNS_FORECAST_DATA"
+	StreamNameGetFbaSnsPerformanceData                         StreamName = "GET_FBA_SNS_PERFORMANCE_DATA"
+	StreamNameGetFbaStorageFeeChargesData                      StreamName = "GET_FBA_STORAGE_FEE_CHARGES_DATA"
+	StreamNameGetFlatFileActionableOrderDataShipping           StreamName = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
+	StreamNameGetFlatFileAllOrdersDataByLastUpdateGeneral      StreamName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL"
+	StreamNameGetFlatFileAllOrdersDataByOrderDateGeneral       StreamName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+	StreamNameGetFlatFileArchivedOrdersDataByOrderDate         StreamName = "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE"
+	StreamNameGetFlatFileOpenListingsData                      StreamName = "GET_FLAT_FILE_OPEN_LISTINGS_DATA"
+	StreamNameGetFlatFileReturnsDataByReturnDate               StreamName = "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE"
+	StreamNameGetLedgerDetailViewData                          StreamName = "GET_LEDGER_DETAIL_VIEW_DATA"
+	StreamNameGetLedgerSummaryViewData                         StreamName = "GET_LEDGER_SUMMARY_VIEW_DATA"
+	StreamNameGetMerchantCancelledListingsData                 StreamName = "GET_MERCHANT_CANCELLED_LISTINGS_DATA"
+	StreamNameGetMerchantListingsAllData                       StreamName = "GET_MERCHANT_LISTINGS_ALL_DATA"
+	StreamNameGetMerchantListingsData                          StreamName = "GET_MERCHANT_LISTINGS_DATA"
+	StreamNameGetMerchantListingsDataBackCompat                StreamName = "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT"
+	StreamNameGetMerchantListingsInactiveData                  StreamName = "GET_MERCHANT_LISTINGS_INACTIVE_DATA"
+	StreamNameGetMerchantsListingsFypReport                    StreamName = "GET_MERCHANTS_LISTINGS_FYP_REPORT"
+	StreamNameGetOrderReportDataShipping                       StreamName = "GET_ORDER_REPORT_DATA_SHIPPING"
+	StreamNameGetRestockInventoryRecommendationsReport         StreamName = "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT"
+	StreamNameGetSalesAndTrafficReport                         StreamName = "GET_SALES_AND_TRAFFIC_REPORT"
+	StreamNameGetSellerFeedbackData                            StreamName = "GET_SELLER_FEEDBACK_DATA"
+	StreamNameGetStrandedInventoryUIData                       StreamName = "GET_STRANDED_INVENTORY_UI_DATA"
+	StreamNameGetV2SettlementReportDataFlatFile                StreamName = "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE"
+	StreamNameGetVendorInventoryReport                         StreamName = "GET_VENDOR_INVENTORY_REPORT"
+	StreamNameGetVendorNetPureProductMarginReport              StreamName = "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT"
+	StreamNameGetVendorTrafficReport                           StreamName = "GET_VENDOR_TRAFFIC_REPORT"
+	StreamNameGetVendorSalesReport                             StreamName = "GET_VENDOR_SALES_REPORT"
+	StreamNameGetXMLAllOrdersDataByOrderDateGeneral            StreamName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+	StreamNameGetXMLBrowseTreeData                             StreamName = "GET_XML_BROWSE_TREE_DATA"
+)
+
+func (e StreamName) ToPointer() *StreamName {
+	return &e
+}
+
+func (e *StreamName) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "GET_AFN_INVENTORY_DATA":
+		fallthrough
+	case "GET_AFN_INVENTORY_DATA_BY_COUNTRY":
+		fallthrough
+	case "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT":
+		fallthrough
+	case "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA":
+		fallthrough
+	case "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA":
+		fallthrough
+	case "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA":
+		fallthrough
+	case "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA":
+		fallthrough
+	case "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA":
+		fallthrough
+	case "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA":
+		fallthrough
+	case "GET_FBA_INVENTORY_PLANNING_DATA":
+		fallthrough
+	case "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA":
+		fallthrough
+	case "GET_FBA_REIMBURSEMENTS_DATA":
+		fallthrough
+	case "GET_FBA_SNS_FORECAST_DATA":
+		fallthrough
+	case "GET_FBA_SNS_PERFORMANCE_DATA":
+		fallthrough
+	case "GET_FBA_STORAGE_FEE_CHARGES_DATA":
+		fallthrough
+	case "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING":
+		fallthrough
+	case "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL":
+		fallthrough
+	case "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL":
+		fallthrough
+	case "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE":
+		fallthrough
+	case "GET_FLAT_FILE_OPEN_LISTINGS_DATA":
+		fallthrough
+	case "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE":
+		fallthrough
+	case "GET_LEDGER_DETAIL_VIEW_DATA":
+		fallthrough
+	case "GET_LEDGER_SUMMARY_VIEW_DATA":
+		fallthrough
+	case "GET_MERCHANT_CANCELLED_LISTINGS_DATA":
+		fallthrough
+	case "GET_MERCHANT_LISTINGS_ALL_DATA":
+		fallthrough
+	case "GET_MERCHANT_LISTINGS_DATA":
+		fallthrough
+	case "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT":
+		fallthrough
+	case "GET_MERCHANT_LISTINGS_INACTIVE_DATA":
+		fallthrough
+	case "GET_MERCHANTS_LISTINGS_FYP_REPORT":
+		fallthrough
+	case "GET_ORDER_REPORT_DATA_SHIPPING":
+		fallthrough
+	case "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT":
+		fallthrough
+	case "GET_SALES_AND_TRAFFIC_REPORT":
+		fallthrough
+	case "GET_SELLER_FEEDBACK_DATA":
+		fallthrough
+	case "GET_STRANDED_INVENTORY_UI_DATA":
+		fallthrough
+	case "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE":
+		fallthrough
+	case "GET_VENDOR_INVENTORY_REPORT":
+		fallthrough
+	case "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT":
+		fallthrough
+	case "GET_VENDOR_TRAFFIC_REPORT":
+		fallthrough
+	case "GET_VENDOR_SALES_REPORT":
+		fallthrough
+	case "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL":
+		fallthrough
+	case "GET_XML_BROWSE_TREE_DATA":
+		*e = StreamName(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for StreamName: %v", v)
+	}
+}
+
+type ReportOptions struct {
+	// List of options
+	OptionsList []OptionsList `json:"options_list"`
+	StreamName  StreamName    `json:"stream_name"`
+}
+
+func (o *ReportOptions) GetOptionsList() []OptionsList {
+	if o == nil {
+		return []OptionsList{}
+	}
+	return o.OptionsList
+}
+
+func (o *ReportOptions) GetStreamName() StreamName {
+	if o == nil {
+		return StreamName("")
+	}
+	return o.StreamName
+}
+
 type SourceAmazonSellerPartnerUpdate struct {
 	// Type of the Account you're going to authorize the Airbyte application by
-	AccountType *AWSSellerPartnerAccountType `default:"Seller" json:"account_type"`
-	// Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.
-	AdvancedStreamOptions *string                                  `json:"advanced_stream_options,omitempty"`
-	authType              *SourceAmazonSellerPartnerUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	AccountType *AWSSellerPartnerAccountType             `default:"Seller" json:"account_type"`
+	authType    *SourceAmazonSellerPartnerUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Select the AWS Environment.
 	AwsEnvironment *AWSEnvironment `default:"PRODUCTION" json:"aws_environment"`
 	// Your Login with Amazon Client ID.
 	LwaAppID string `json:"lwa_app_id"`
 	// Your Login with Amazon Client Secret.
 	LwaClientSecret string `json:"lwa_client_secret"`
-	// Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
+	// For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day.
 	PeriodInDays *int64 `default:"90" json:"period_in_days"`
 	// The Refresh Token obtained via OAuth flow authorization.
 	RefreshToken string `json:"refresh_token"`
@@ -197,10 +387,10 @@ type SourceAmazonSellerPartnerUpdate struct {
 	Region *AWSRegion `default:"US" json:"region"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	ReplicationStartDate time.Time `json:"replication_start_date"`
-	// Additional information passed to reports. This varies by report type. Must be a valid json string.
-	ReportOptions *string `json:"report_options,omitempty"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.
+	ReplicationStartDate *time.Time `json:"replication_start_date,omitempty"`
+	// Additional information passed to reports. This varies by report type.
+	ReportOptionsList []ReportOptions `json:"report_options_list,omitempty"`
 }
 
 func (s SourceAmazonSellerPartnerUpdate) MarshalJSON() ([]byte, error) {
@@ -219,13 +409,6 @@ func (o *SourceAmazonSellerPartnerUpdate) GetAccountType() *AWSSellerPartnerAcco
 		return nil
 	}
 	return o.AccountType
-}
-
-func (o *SourceAmazonSellerPartnerUpdate) GetAdvancedStreamOptions() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AdvancedStreamOptions
 }
 
 func (o *SourceAmazonSellerPartnerUpdate) GetAuthType() *SourceAmazonSellerPartnerUpdateAuthType {
@@ -281,16 +464,16 @@ func (o *SourceAmazonSellerPartnerUpdate) GetReplicationEndDate() *time.Time {
 	return o.ReplicationEndDate
 }
 
-func (o *SourceAmazonSellerPartnerUpdate) GetReplicationStartDate() time.Time {
+func (o *SourceAmazonSellerPartnerUpdate) GetReplicationStartDate() *time.Time {
 	if o == nil {
-		return time.Time{}
+		return nil
 	}
 	return o.ReplicationStartDate
 }
 
-func (o *SourceAmazonSellerPartnerUpdate) GetReportOptions() *string {
+func (o *SourceAmazonSellerPartnerUpdate) GetReportOptionsList() []ReportOptions {
 	if o == nil {
 		return nil
 	}
-	return o.ReportOptions
+	return o.ReportOptionsList
 }

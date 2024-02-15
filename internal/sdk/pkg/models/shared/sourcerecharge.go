@@ -39,6 +39,8 @@ type SourceRecharge struct {
 	sourceType  Recharge `const:"recharge" json:"sourceType"`
 	// The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
+	// Define whether or not the `Orders` stream should use the deprecated `2021-01` API version, or use `2021-11`, otherwise.
+	UseOrdersDeprecatedAPI *bool `default:"true" json:"use_orders_deprecated_api"`
 }
 
 func (s SourceRecharge) MarshalJSON() ([]byte, error) {
@@ -68,4 +70,11 @@ func (o *SourceRecharge) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceRecharge) GetUseOrdersDeprecatedAPI() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UseOrdersDeprecatedAPI
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDuckdbResourceModel) ToCreateSDKType() *shared.DestinationDuckdbCreateRequest {
+func (r *DestinationDuckdbResourceModel) ToSharedDestinationDuckdbCreateRequest() *shared.DestinationDuckdbCreateRequest {
 	destinationPath := r.Configuration.DestinationPath.ValueString()
 	motherduckAPIKey := new(string)
 	if !r.Configuration.MotherduckAPIKey.IsUnknown() && !r.Configuration.MotherduckAPIKey.IsNull() {
@@ -43,12 +43,14 @@ func (r *DestinationDuckdbResourceModel) ToCreateSDKType() *shared.DestinationDu
 	return &out
 }
 
-func (r *DestinationDuckdbResourceModel) ToGetSDKType() *shared.DestinationDuckdbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationDuckdbResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDuckdbResourceModel) ToUpdateSDKType() *shared.DestinationDuckdbPutRequest {
+func (r *DestinationDuckdbResourceModel) ToSharedDestinationDuckdbPutRequest() *shared.DestinationDuckdbPutRequest {
 	destinationPath := r.Configuration.DestinationPath.ValueString()
 	motherduckAPIKey := new(string)
 	if !r.Configuration.MotherduckAPIKey.IsUnknown() && !r.Configuration.MotherduckAPIKey.IsNull() {
@@ -75,20 +77,4 @@ func (r *DestinationDuckdbResourceModel) ToUpdateSDKType() *shared.DestinationDu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationDuckdbResourceModel) ToDeleteSDKType() *shared.DestinationDuckdbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationDuckdbResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationDuckdbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

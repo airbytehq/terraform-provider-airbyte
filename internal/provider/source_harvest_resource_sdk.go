@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCreateRequest {
+func (r *SourceHarvestResourceModel) ToSharedSourceHarvestCreateRequest() *shared.SourceHarvestCreateRequest {
 	accountID := r.Configuration.AccountID.ValueString()
 	var credentials *shared.SourceHarvestAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
@@ -89,12 +89,14 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 	return &out
 }
 
-func (r *SourceHarvestResourceModel) ToGetSDKType() *shared.SourceHarvestCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceHarvestResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceHarvestResourceModel) ToUpdateSDKType() *shared.SourceHarvestPutRequest {
+func (r *SourceHarvestResourceModel) ToSharedSourceHarvestPutRequest() *shared.SourceHarvestPutRequest {
 	accountID := r.Configuration.AccountID.ValueString()
 	var credentials *shared.SourceHarvestUpdateAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
@@ -158,20 +160,4 @@ func (r *SourceHarvestResourceModel) ToUpdateSDKType() *shared.SourceHarvestPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceHarvestResourceModel) ToDeleteSDKType() *shared.SourceHarvestCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceHarvestResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceHarvestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

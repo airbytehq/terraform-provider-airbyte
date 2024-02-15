@@ -18,6 +18,7 @@ const (
 	SourceFileFileFormatJsonl       SourceFileFileFormat = "jsonl"
 	SourceFileFileFormatExcel       SourceFileFileFormat = "excel"
 	SourceFileFileFormatExcelBinary SourceFileFileFormat = "excel_binary"
+	SourceFileFileFormatFwf         SourceFileFileFormat = "fwf"
 	SourceFileFileFormatFeather     SourceFileFileFormat = "feather"
 	SourceFileFileFormatParquet     SourceFileFileFormat = "parquet"
 	SourceFileFileFormatYaml        SourceFileFileFormat = "yaml"
@@ -42,6 +43,8 @@ func (e *SourceFileFileFormat) UnmarshalJSON(data []byte) error {
 	case "excel":
 		fallthrough
 	case "excel_binary":
+		fallthrough
+	case "fwf":
 		fallthrough
 	case "feather":
 		fallthrough
@@ -79,7 +82,6 @@ func (e *SourceFileSchemasProviderStorageProvider7Storage) UnmarshalJSON(data []
 	}
 }
 
-// SourceFileSFTPSecureFileTransferProtocol - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSFTPSecureFileTransferProtocol struct {
 	Host     string                                           `json:"host"`
 	Password *string                                          `json:"password,omitempty"`
@@ -155,7 +157,6 @@ func (e *SourceFileSchemasProviderStorageProvider6Storage) UnmarshalJSON(data []
 	}
 }
 
-// SourceFileSCPSecureCopyProtocol - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSCPSecureCopyProtocol struct {
 	Host     string                                           `json:"host"`
 	Password *string                                          `json:"password,omitempty"`
@@ -231,7 +232,6 @@ func (e *SourceFileSchemasProviderStorageProvider5Storage) UnmarshalJSON(data []
 	}
 }
 
-// SourceFileSSHSecureShell - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSSHSecureShell struct {
 	Host     string                                           `json:"host"`
 	Password *string                                          `json:"password,omitempty"`
@@ -307,7 +307,6 @@ func (e *SourceFileSchemasProviderStorageProviderStorage) UnmarshalJSON(data []b
 	}
 }
 
-// SourceFileAzBlobAzureBlobStorage - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileAzBlobAzureBlobStorage struct {
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.
 	SasToken *string `json:"sas_token,omitempty"`
@@ -378,7 +377,6 @@ func (e *SourceFileSchemasProviderStorage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFileS3AmazonWebServices - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileS3AmazonWebServices struct {
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
@@ -440,7 +438,6 @@ func (e *SourceFileSchemasStorage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFileGCSGoogleCloudStorage - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileGCSGoogleCloudStorage struct {
 	// In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
 	ServiceAccountJSON *string                  `json:"service_account_json,omitempty"`
@@ -493,7 +490,6 @@ func (e *SourceFileStorage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFileHTTPSPublicWeb - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileHTTPSPublicWeb struct {
 	storage SourceFileStorage `const:"HTTPS" json:"storage"`
 	// Add User-Agent to request
@@ -534,6 +530,7 @@ const (
 	SourceFileStorageProviderTypeSourceFileSFTPSecureFileTransferProtocol SourceFileStorageProviderType = "source-file_SFTP: Secure File Transfer Protocol"
 )
 
+// SourceFileStorageProvider - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileStorageProvider struct {
 	SourceFileHTTPSPublicWeb                 *SourceFileHTTPSPublicWeb
 	SourceFileGCSGoogleCloudStorage          *SourceFileGCSGoogleCloudStorage

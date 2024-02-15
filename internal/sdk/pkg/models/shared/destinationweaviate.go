@@ -449,6 +449,7 @@ const (
 	DestinationWeaviateEmbeddingTypeDestinationWeaviateOpenAICompatible    DestinationWeaviateEmbeddingType = "destination-weaviate_OpenAI-compatible"
 )
 
+// DestinationWeaviateEmbedding - Embedding configuration
 type DestinationWeaviateEmbedding struct {
 	DestinationWeaviateNoExternalEmbedding *DestinationWeaviateNoExternalEmbedding
 	DestinationWeaviateAzureOpenAI         *DestinationWeaviateAzureOpenAI
@@ -796,6 +797,7 @@ const (
 	DestinationWeaviateAuthenticationTypeDestinationWeaviateNoAuthentication DestinationWeaviateAuthenticationType = "destination-weaviate_No Authentication"
 )
 
+// DestinationWeaviateAuthentication - Authentication method
 type DestinationWeaviateAuthentication struct {
 	DestinationWeaviateAPIToken         *DestinationWeaviateAPIToken
 	DestinationWeaviateUsernamePassword *DestinationWeaviateUsernamePassword
@@ -931,6 +933,8 @@ type DestinationWeaviateIndexing struct {
 	DefaultVectorizer *DestinationWeaviateDefaultVectorizer `default:"none" json:"default_vectorizer"`
 	// The public endpoint of the Weaviate cluster.
 	Host string `json:"host"`
+	// The tenant ID to use for multi tenancy
+	TenantID *string `default:"" json:"tenant_id"`
 	// The field in the object that contains the embedded text
 	TextField *string `default:"text" json:"text_field"`
 }
@@ -979,6 +983,13 @@ func (o *DestinationWeaviateIndexing) GetHost() string {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *DestinationWeaviateIndexing) GetTenantID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TenantID
 }
 
 func (o *DestinationWeaviateIndexing) GetTextField() *string {
@@ -1255,6 +1266,7 @@ const (
 	DestinationWeaviateTextSplitterTypeDestinationWeaviateByProgrammingLanguage DestinationWeaviateTextSplitterType = "destination-weaviate_By Programming Language"
 )
 
+// DestinationWeaviateTextSplitter - Split text fields into chunks based on the specified method.
 type DestinationWeaviateTextSplitter struct {
 	DestinationWeaviateBySeparator           *DestinationWeaviateBySeparator
 	DestinationWeaviateByMarkdownHeader      *DestinationWeaviateByMarkdownHeader
@@ -1400,13 +1412,25 @@ func (o *DestinationWeaviateProcessingConfigModel) GetTextSplitter() *Destinatio
 	return o.TextSplitter
 }
 
+// DestinationWeaviate - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+// as well as to provide type safety for the configuration passed to the destination.
+//
+// The configuration model is composed of four parts:
+// * Processing configuration
+// * Embedding configuration
+// * Indexing configuration
+// * Advanced configuration
+//
+// Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationWeaviate struct {
 	destinationType Weaviate `const:"weaviate" json:"destinationType"`
 	// Embedding configuration
 	Embedding DestinationWeaviateEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing   DestinationWeaviateIndexing              `json:"indexing"`
-	Processing DestinationWeaviateProcessingConfigModel `json:"processing"`
+	Indexing DestinationWeaviateIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                    `default:"false" json:"omit_raw_text"`
+	Processing  DestinationWeaviateProcessingConfigModel `json:"processing"`
 }
 
 func (d DestinationWeaviate) MarshalJSON() ([]byte, error) {
@@ -1436,6 +1460,13 @@ func (o *DestinationWeaviate) GetIndexing() DestinationWeaviateIndexing {
 		return DestinationWeaviateIndexing{}
 	}
 	return o.Indexing
+}
+
+func (o *DestinationWeaviate) GetOmitRawText() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OmitRawText
 }
 
 func (o *DestinationWeaviate) GetProcessing() DestinationWeaviateProcessingConfigModel {

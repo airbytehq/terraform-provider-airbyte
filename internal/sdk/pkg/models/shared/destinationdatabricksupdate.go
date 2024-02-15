@@ -33,7 +33,6 @@ func (e *DestinationDatabricksUpdateSchemasDataSourceType) UnmarshalJSON(data []
 	}
 }
 
-// DestinationDatabricksUpdateAzureBlobStorage - Storage on which the delta lake is built.
 type DestinationDatabricksUpdateAzureBlobStorage struct {
 	// The account's name of the Azure Blob Storage.
 	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
@@ -213,7 +212,6 @@ func (e *DestinationDatabricksUpdateS3BucketRegion) UnmarshalJSON(data []byte) e
 	}
 }
 
-// AmazonS3 - Storage on which the delta lake is built.
 type AmazonS3 struct {
 	dataSourceType DestinationDatabricksUpdateDataSourceType `const:"S3_STORAGE" json:"data_source_type"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
@@ -311,7 +309,6 @@ func (e *DataSourceType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// RecommendedManagedTables - Storage on which the delta lake is built.
 type RecommendedManagedTables struct {
 	dataSourceType DataSourceType `const:"MANAGED_TABLES_STORAGE" json:"data_source_type"`
 }
@@ -339,6 +336,7 @@ const (
 	DataSourceUnionTypeDestinationDatabricksUpdateAzureBlobStorage DataSourceUnionType = "destination-databricks-update_Azure Blob Storage"
 )
 
+// DataSource - Storage on which the delta lake is built.
 type DataSource struct {
 	RecommendedManagedTables                    *RecommendedManagedTables
 	AmazonS3                                    *AmazonS3

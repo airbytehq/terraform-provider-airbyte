@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceShortioResourceModel) ToCreateSDKType() *shared.SourceShortioCreateRequest {
+func (r *SourceShortioResourceModel) ToSharedSourceShortioCreateRequest() *shared.SourceShortioCreateRequest {
 	domainID := r.Configuration.DomainID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -40,12 +40,14 @@ func (r *SourceShortioResourceModel) ToCreateSDKType() *shared.SourceShortioCrea
 	return &out
 }
 
-func (r *SourceShortioResourceModel) ToGetSDKType() *shared.SourceShortioCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceShortioResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceShortioResourceModel) ToUpdateSDKType() *shared.SourceShortioPutRequest {
+func (r *SourceShortioResourceModel) ToSharedSourceShortioPutRequest() *shared.SourceShortioPutRequest {
 	domainID := r.Configuration.DomainID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -62,20 +64,4 @@ func (r *SourceShortioResourceModel) ToUpdateSDKType() *shared.SourceShortioPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceShortioResourceModel) ToDeleteSDKType() *shared.SourceShortioCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceShortioResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceShortioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

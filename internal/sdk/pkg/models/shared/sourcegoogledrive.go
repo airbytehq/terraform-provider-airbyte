@@ -34,7 +34,6 @@ func (e *SourceGoogleDriveSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleDriveServiceAccountKeyAuthentication - Credentials for connecting to the Google Drive API
 type SourceGoogleDriveServiceAccountKeyAuthentication struct {
 	authType *SourceGoogleDriveSchemasAuthType `const:"Service" json:"auth_type"`
 	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
@@ -87,7 +86,6 @@ func (e *SourceGoogleDriveAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleDriveAuthenticateViaGoogleOAuth - Credentials for connecting to the Google Drive API
 type SourceGoogleDriveAuthenticateViaGoogleOAuth struct {
 	authType *SourceGoogleDriveAuthType `const:"Client" json:"auth_type"`
 	// Client ID for the Google Drive API
@@ -141,6 +139,7 @@ const (
 	SourceGoogleDriveAuthenticationTypeSourceGoogleDriveServiceAccountKeyAuthentication SourceGoogleDriveAuthenticationType = "source-google-drive_Service Account Key Authentication"
 )
 
+// SourceGoogleDriveAuthentication - Credentials for connecting to the Google Drive API
 type SourceGoogleDriveAuthentication struct {
 	SourceGoogleDriveAuthenticateViaGoogleOAuth      *SourceGoogleDriveAuthenticateViaGoogleOAuth
 	SourceGoogleDriveServiceAccountKeyAuthentication *SourceGoogleDriveServiceAccountKeyAuthentication
@@ -245,11 +244,135 @@ func (e *SourceGoogleDriveSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data
 	}
 }
 
+type SourceGoogleDriveMode string
+
+const (
+	SourceGoogleDriveModeLocal SourceGoogleDriveMode = "local"
+)
+
+func (e SourceGoogleDriveMode) ToPointer() *SourceGoogleDriveMode {
+	return &e
+}
+
+func (e *SourceGoogleDriveMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceGoogleDriveMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleDriveMode: %v", v)
+	}
+}
+
+// SourceGoogleDriveLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
+type SourceGoogleDriveLocal struct {
+	mode *SourceGoogleDriveMode `const:"local" json:"mode"`
+}
+
+func (s SourceGoogleDriveLocal) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleDriveLocal) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleDriveLocal) GetMode() *SourceGoogleDriveMode {
+	return SourceGoogleDriveModeLocal.ToPointer()
+}
+
+type SourceGoogleDriveProcessingType string
+
+const (
+	SourceGoogleDriveProcessingTypeSourceGoogleDriveLocal SourceGoogleDriveProcessingType = "source-google-drive_Local"
+)
+
+// SourceGoogleDriveProcessing - Processing configuration
+type SourceGoogleDriveProcessing struct {
+	SourceGoogleDriveLocal *SourceGoogleDriveLocal
+
+	Type SourceGoogleDriveProcessingType
+}
+
+func CreateSourceGoogleDriveProcessingSourceGoogleDriveLocal(sourceGoogleDriveLocal SourceGoogleDriveLocal) SourceGoogleDriveProcessing {
+	typ := SourceGoogleDriveProcessingTypeSourceGoogleDriveLocal
+
+	return SourceGoogleDriveProcessing{
+		SourceGoogleDriveLocal: &sourceGoogleDriveLocal,
+		Type:                   typ,
+	}
+}
+
+func (u *SourceGoogleDriveProcessing) UnmarshalJSON(data []byte) error {
+
+	sourceGoogleDriveLocal := new(SourceGoogleDriveLocal)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleDriveLocal, "", true, true); err == nil {
+		u.SourceGoogleDriveLocal = sourceGoogleDriveLocal
+		u.Type = SourceGoogleDriveProcessingTypeSourceGoogleDriveLocal
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceGoogleDriveProcessing) MarshalJSON() ([]byte, error) {
+	if u.SourceGoogleDriveLocal != nil {
+		return utils.MarshalJSON(u.SourceGoogleDriveLocal, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+// SourceGoogleDriveParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceGoogleDriveParsingStrategy string
+
+const (
+	SourceGoogleDriveParsingStrategyAuto    SourceGoogleDriveParsingStrategy = "auto"
+	SourceGoogleDriveParsingStrategyFast    SourceGoogleDriveParsingStrategy = "fast"
+	SourceGoogleDriveParsingStrategyOcrOnly SourceGoogleDriveParsingStrategy = "ocr_only"
+	SourceGoogleDriveParsingStrategyHiRes   SourceGoogleDriveParsingStrategy = "hi_res"
+)
+
+func (e SourceGoogleDriveParsingStrategy) ToPointer() *SourceGoogleDriveParsingStrategy {
+	return &e
+}
+
+func (e *SourceGoogleDriveParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceGoogleDriveParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleDriveParsingStrategy: %v", v)
+	}
+}
+
 // SourceGoogleDriveDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceGoogleDriveDocumentFileTypeFormatExperimental struct {
 	filetype *SourceGoogleDriveSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
-	// If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
-	SkipUnprocessableFileTypes *bool `default:"true" json:"skip_unprocessable_file_types"`
+	// Processing configuration
+	Processing *SourceGoogleDriveProcessing `json:"processing,omitempty"`
+	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
+	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
+	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+	Strategy *SourceGoogleDriveParsingStrategy `default:"auto" json:"strategy"`
 }
 
 func (s SourceGoogleDriveDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
@@ -267,11 +390,25 @@ func (o *SourceGoogleDriveDocumentFileTypeFormatExperimental) GetFiletype() *Sou
 	return SourceGoogleDriveSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceGoogleDriveDocumentFileTypeFormatExperimental) GetSkipUnprocessableFileTypes() *bool {
+func (o *SourceGoogleDriveDocumentFileTypeFormatExperimental) GetProcessing() *SourceGoogleDriveProcessing {
 	if o == nil {
 		return nil
 	}
-	return o.SkipUnprocessableFileTypes
+	return o.Processing
+}
+
+func (o *SourceGoogleDriveDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipUnprocessableFiles
+}
+
+func (o *SourceGoogleDriveDocumentFileTypeFormatExperimental) GetStrategy() *SourceGoogleDriveParsingStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.Strategy
 }
 
 type SourceGoogleDriveSchemasStreamsFormatFiletype string
@@ -298,7 +435,6 @@ func (e *SourceGoogleDriveSchemasStreamsFormatFiletype) UnmarshalJSON(data []byt
 	}
 }
 
-// SourceGoogleDriveParquetFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGoogleDriveParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 	DecimalAsFloat *bool                                          `default:"false" json:"decimal_as_float"`
@@ -351,7 +487,6 @@ func (e *SourceGoogleDriveSchemasStreamsFiletype) UnmarshalJSON(data []byte) err
 	}
 }
 
-// SourceGoogleDriveJsonlFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGoogleDriveJsonlFormat struct {
 	filetype *SourceGoogleDriveSchemasStreamsFiletype `const:"jsonl" json:"filetype"`
 }
@@ -419,7 +554,6 @@ func (e *SourceGoogleDriveSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data
 	}
 }
 
-// SourceGoogleDriveUserProvided - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceGoogleDriveUserProvided struct {
 	// The column names that will be used while emitting the CSV records
 	ColumnNames          []string                                             `json:"column_names"`
@@ -472,7 +606,6 @@ func (e *SourceGoogleDriveSchemasHeaderDefinitionType) UnmarshalJSON(data []byte
 	}
 }
 
-// SourceGoogleDriveAutogenerated - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceGoogleDriveAutogenerated struct {
 	headerDefinitionType *SourceGoogleDriveSchemasHeaderDefinitionType `const:"Autogenerated" json:"header_definition_type"`
 }
@@ -516,7 +649,6 @@ func (e *SourceGoogleDriveHeaderDefinitionType) UnmarshalJSON(data []byte) error
 	}
 }
 
-// SourceGoogleDriveFromCSV - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceGoogleDriveFromCSV struct {
 	headerDefinitionType *SourceGoogleDriveHeaderDefinitionType `const:"From CSV" json:"header_definition_type"`
 }
@@ -544,6 +676,7 @@ const (
 	SourceGoogleDriveCSVHeaderDefinitionTypeSourceGoogleDriveUserProvided  SourceGoogleDriveCSVHeaderDefinitionType = "source-google-drive_User Provided"
 )
 
+// SourceGoogleDriveCSVHeaderDefinition - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceGoogleDriveCSVHeaderDefinition struct {
 	SourceGoogleDriveFromCSV       *SourceGoogleDriveFromCSV
 	SourceGoogleDriveAutogenerated *SourceGoogleDriveAutogenerated
@@ -621,7 +754,6 @@ func (u SourceGoogleDriveCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// SourceGoogleDriveCSVFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGoogleDriveCSVFormat struct {
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
@@ -639,7 +771,7 @@ type SourceGoogleDriveCSVFormat struct {
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:""" json:"quote_char"`
+	QuoteChar *string `default:"\"" json:"quote_char"`
 	// The number of rows to skip after the header row.
 	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
 	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
@@ -773,7 +905,6 @@ func (e *SourceGoogleDriveFiletype) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleDriveAvroFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGoogleDriveAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
 	DoubleAsString *bool                      `default:"false" json:"double_as_string"`
@@ -812,6 +943,7 @@ const (
 	SourceGoogleDriveFormatTypeSourceGoogleDriveDocumentFileTypeFormatExperimental SourceGoogleDriveFormatType = "source-google-drive_Document File Type Format (Experimental)"
 )
 
+// SourceGoogleDriveFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGoogleDriveFormat struct {
 	SourceGoogleDriveAvroFormat                         *SourceGoogleDriveAvroFormat
 	SourceGoogleDriveCSVFormat                          *SourceGoogleDriveCSVFormat
@@ -973,7 +1105,7 @@ type SourceGoogleDriveFileBasedStreamConfig struct {
 	InputSchema *string `json:"input_schema,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record.
+	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 	PrimaryKey *string `json:"primary_key,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`

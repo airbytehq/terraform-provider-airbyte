@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCreateRequest {
+func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrCreateRequest() *shared.SourceBambooHrCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	customReportsFields := new(string)
 	if !r.Configuration.CustomReportsFields.IsUnknown() && !r.Configuration.CustomReportsFields.IsNull() {
@@ -52,12 +52,14 @@ func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCr
 	return &out
 }
 
-func (r *SourceBambooHrResourceModel) ToGetSDKType() *shared.SourceBambooHrCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceBambooHrResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBambooHrResourceModel) ToUpdateSDKType() *shared.SourceBambooHrPutRequest {
+func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrPutRequest() *shared.SourceBambooHrPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	customReportsFields := new(string)
 	if !r.Configuration.CustomReportsFields.IsUnknown() && !r.Configuration.CustomReportsFields.IsNull() {
@@ -86,20 +88,4 @@ func (r *SourceBambooHrResourceModel) ToUpdateSDKType() *shared.SourceBambooHrPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceBambooHrResourceModel) ToDeleteSDKType() *shared.SourceBambooHrCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceBambooHrResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceBambooHrResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

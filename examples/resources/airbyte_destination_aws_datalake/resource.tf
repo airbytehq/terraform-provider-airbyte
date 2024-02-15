@@ -19,10 +19,10 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
     lakeformation_database_default_tag_values = "private,public"
     lakeformation_database_name               = "...my_lakeformation_database_name..."
     lakeformation_governed_tables             = false
-    partitioning                              = "YEAR/MONTH/DAY"
-    region                                    = "eu-west-1"
+    partitioning                              = "DAY"
+    region                                    = "ap-southeast-3"
   }
-  definition_id = "635b80f2-a9b0-4de1-897a-c8629f5a79ed"
-  name          = "Blanche MacGyver"
-  workspace_id  = "e76a2f8d-fb9a-4ea6-8f38-6615e68b5c3f"
+  definition_id = "c3f592b3-8acf-43b2-bea4-e36bf4ba0e7a"
+  name          = "Charlie Fisher"
+  workspace_id  = "aaebb5cd-76c9-4fd0-bc96-8decb9cb44c8"
 }

@@ -11,8 +11,8 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  definition_id = "58a542d5-17fc-488b-8499-8d75efedea33"
-  name          = "Krystal Hamill"
+  definition_id = "ee5b7122-5778-4f7a-823c-1e08d80f694c"
+  name          = "Nora Torphy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "15598db9-2c72-4d54-9f53-8928a50561c1"
+  workspace_id  = "0f84ccba-d71d-4ab0-b801-4a124b6e7b20"
 }

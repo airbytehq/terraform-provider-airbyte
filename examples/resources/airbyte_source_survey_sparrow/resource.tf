@@ -8,8 +8,8 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "4b91c615-d128-4040-ba03-eb3c0afcc3c8"
-  name          = "Gerard Kerluke"
+  definition_id = "ccb1d39d-dfc6-449b-ba58-a563641fd338"
+  name          = "Tony Collier"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fbbc8e3e-7db5-4a3e-846f-c1e0fa91f7ef"
+  workspace_id  = "56cd88e7-e494-4b9e-9830-e9efbf412cdc"
 }

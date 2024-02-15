@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreateRequest {
+func (r *SourceKlarnaResourceModel) ToSharedSourceKlarnaCreateRequest() *shared.SourceKlarnaCreateRequest {
 	password := r.Configuration.Password.ValueString()
 	playground := new(bool)
 	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
@@ -47,12 +47,14 @@ func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreate
 	return &out
 }
 
-func (r *SourceKlarnaResourceModel) ToGetSDKType() *shared.SourceKlarnaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceKlarnaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceKlarnaResourceModel) ToUpdateSDKType() *shared.SourceKlarnaPutRequest {
+func (r *SourceKlarnaResourceModel) ToSharedSourceKlarnaPutRequest() *shared.SourceKlarnaPutRequest {
 	password := r.Configuration.Password.ValueString()
 	playground := new(bool)
 	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
@@ -76,20 +78,4 @@ func (r *SourceKlarnaResourceModel) ToUpdateSDKType() *shared.SourceKlarnaPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceKlarnaResourceModel) ToDeleteSDKType() *shared.SourceKlarnaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceKlarnaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceKlarnaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

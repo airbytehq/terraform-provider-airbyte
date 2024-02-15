@@ -5,6 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceBingAds struct {
+	AccountNames     []AccountNames       `tfsdk:"account_names"`
 	ClientID         types.String         `tfsdk:"client_id"`
 	ClientSecret     types.String         `tfsdk:"client_secret"`
 	CustomReports    []CustomReportConfig `tfsdk:"custom_reports"`

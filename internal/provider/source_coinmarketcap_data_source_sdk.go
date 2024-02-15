@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceCoinmarketcapDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceCoinmarketcapDataSourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	configurationResult, _ := json.Marshal(resp.Configuration)
 	r.Configuration = types.StringValue(string(configurationResult))
 	r.Name = types.StringValue(resp.Name)

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRequest {
+func (r *SourceFakerResourceModel) ToSharedSourceFakerCreateRequest() *shared.SourceFakerCreateRequest {
 	alwaysUpdated := new(bool)
 	if !r.Configuration.AlwaysUpdated.IsUnknown() && !r.Configuration.AlwaysUpdated.IsNull() {
 		*alwaysUpdated = r.Configuration.AlwaysUpdated.ValueBool()
@@ -69,12 +69,14 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	return &out
 }
 
-func (r *SourceFakerResourceModel) ToGetSDKType() *shared.SourceFakerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFakerResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutRequest {
+func (r *SourceFakerResourceModel) ToSharedSourceFakerPutRequest() *shared.SourceFakerPutRequest {
 	alwaysUpdated := new(bool)
 	if !r.Configuration.AlwaysUpdated.IsUnknown() && !r.Configuration.AlwaysUpdated.IsNull() {
 		*alwaysUpdated = r.Configuration.AlwaysUpdated.ValueBool()
@@ -120,20 +122,4 @@ func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFakerResourceModel) ToDeleteSDKType() *shared.SourceFakerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFakerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFakerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

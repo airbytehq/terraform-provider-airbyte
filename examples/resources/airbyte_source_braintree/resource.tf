@@ -6,8 +6,8 @@ resource "airbyte_source_braintree" "my_source_braintree" {
     public_key  = "...my_public_key..."
     start_date  = "2020-12-30"
   }
-  definition_id = "12fcb5a7-fdd8-454e-8c39-c22fe17df57a"
-  name          = "Ms. Tommie Bins"
+  definition_id = "686308ea-db73-4c36-9be0-c12ece59b9fb"
+  name          = "Cornelius Weissnat"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5ff7f1a2-7e8f-4d2f-993d-4f9ab29a2f83"
+  workspace_id  = "47490588-d0e2-4939-974a-681eea74b87a"
 }

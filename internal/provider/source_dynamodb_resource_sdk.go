@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceDynamodbResourceModel) ToCreateSDKType() *shared.SourceDynamodbCreateRequest {
+func (r *SourceDynamodbResourceModel) ToSharedSourceDynamodbCreateRequest() *shared.SourceDynamodbCreateRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
 	endpoint := new(string)
 	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
@@ -59,12 +59,14 @@ func (r *SourceDynamodbResourceModel) ToCreateSDKType() *shared.SourceDynamodbCr
 	return &out
 }
 
-func (r *SourceDynamodbResourceModel) ToGetSDKType() *shared.SourceDynamodbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceDynamodbResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceDynamodbResourceModel) ToUpdateSDKType() *shared.SourceDynamodbPutRequest {
+func (r *SourceDynamodbResourceModel) ToSharedSourceDynamodbPutRequest() *shared.SourceDynamodbPutRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
 	endpoint := new(string)
 	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
@@ -100,20 +102,4 @@ func (r *SourceDynamodbResourceModel) ToUpdateSDKType() *shared.SourceDynamodbPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceDynamodbResourceModel) ToDeleteSDKType() *shared.SourceDynamodbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceDynamodbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

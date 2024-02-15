@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceTwilioResourceModel) ToCreateSDKType() *shared.SourceTwilioCreateRequest {
+func (r *SourceTwilioResourceModel) ToSharedSourceTwilioCreateRequest() *shared.SourceTwilioCreateRequest {
 	accountSid := r.Configuration.AccountSid.ValueString()
 	authToken := r.Configuration.AuthToken.ValueString()
 	lookbackWindow := new(int64)
@@ -48,12 +48,14 @@ func (r *SourceTwilioResourceModel) ToCreateSDKType() *shared.SourceTwilioCreate
 	return &out
 }
 
-func (r *SourceTwilioResourceModel) ToGetSDKType() *shared.SourceTwilioCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTwilioResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTwilioResourceModel) ToUpdateSDKType() *shared.SourceTwilioPutRequest {
+func (r *SourceTwilioResourceModel) ToSharedSourceTwilioPutRequest() *shared.SourceTwilioPutRequest {
 	accountSid := r.Configuration.AccountSid.ValueString()
 	authToken := r.Configuration.AuthToken.ValueString()
 	lookbackWindow := new(int64)
@@ -77,20 +79,4 @@ func (r *SourceTwilioResourceModel) ToUpdateSDKType() *shared.SourceTwilioPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTwilioResourceModel) ToDeleteSDKType() *shared.SourceTwilioCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTwilioResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTwilioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

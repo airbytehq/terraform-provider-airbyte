@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreateRequest {
+func (r *SourcePocketResourceModel) ToSharedSourcePocketCreateRequest() *shared.SourcePocketCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	contentType := new(shared.SourcePocketContentType)
@@ -101,12 +101,14 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 	return &out
 }
 
-func (r *SourcePocketResourceModel) ToGetSDKType() *shared.SourcePocketCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePocketResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePocketResourceModel) ToUpdateSDKType() *shared.SourcePocketPutRequest {
+func (r *SourcePocketResourceModel) ToSharedSourcePocketPutRequest() *shared.SourcePocketPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	contentType := new(shared.ContentType)
@@ -184,20 +186,4 @@ func (r *SourcePocketResourceModel) ToUpdateSDKType() *shared.SourcePocketPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePocketResourceModel) ToDeleteSDKType() *shared.SourcePocketCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePocketResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePocketResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

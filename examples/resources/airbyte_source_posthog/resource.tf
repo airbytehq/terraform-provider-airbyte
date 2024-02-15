@@ -2,11 +2,11 @@ resource "airbyte_source_posthog" "my_source_posthog" {
   configuration = {
     api_key          = "...my_api_key..."
     base_url         = "https://posthog.example.com"
-    events_time_step = 5
+    events_time_step = 10
     start_date       = "2021-01-01T00:00:00Z"
   }
-  definition_id = "07521b21-ea9b-4c9d-9c88-f1ee12f8a7db"
-  name          = "Daisy Ledner"
+  definition_id = "3ddb2a95-937c-4ed0-862e-7b59a4e78152"
+  name          = "Ira Strosin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "41266a87-d389-4094-afa6-7bbea9f5a35d"
+  workspace_id  = "6e4c12d0-5e7f-458d-8a06-25cbff5b31f2"
 }

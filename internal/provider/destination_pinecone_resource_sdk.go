@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.DestinationPineconeCreateRequest {
+func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconeCreateRequest() *shared.DestinationPineconeCreateRequest {
 	var embedding shared.DestinationPineconeEmbedding
 	var destinationPineconeOpenAI *shared.DestinationPineconeOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -93,6 +93,12 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 		Index:               index,
 		PineconeEnvironment: pineconeEnvironment,
 		PineconeKey:         pineconeKey,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -181,9 +187,10 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationPinecone{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -202,12 +209,14 @@ func (r *DestinationPineconeResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationPineconeResourceModel) ToGetSDKType() *shared.DestinationPineconeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationPineconeResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.DestinationPineconePutRequest {
+func (r *DestinationPineconeResourceModel) ToSharedDestinationPineconePutRequest() *shared.DestinationPineconePutRequest {
 	var embedding shared.DestinationPineconeUpdateEmbedding
 	var destinationPineconeUpdateOpenAI *shared.DestinationPineconeUpdateOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -293,6 +302,12 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 		Index:               index,
 		PineconeEnvironment: pineconeEnvironment,
 		PineconeKey:         pineconeKey,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -381,9 +396,10 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationPineconeUpdate{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -393,20 +409,4 @@ func (r *DestinationPineconeResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationPineconeResourceModel) ToDeleteSDKType() *shared.DestinationPineconeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationPineconeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationPineconeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

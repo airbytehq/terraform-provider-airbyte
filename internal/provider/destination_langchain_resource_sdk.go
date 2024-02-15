@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.DestinationLangchainCreateRequest {
+func (r *DestinationLangchainResourceModel) ToSharedDestinationLangchainCreateRequest() *shared.DestinationLangchainCreateRequest {
 	var embedding shared.DestinationLangchainEmbedding
 	var destinationLangchainOpenAI *shared.DestinationLangchainOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -116,35 +116,37 @@ func (r *DestinationLangchainResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
-func (r *DestinationLangchainResourceModel) ToGetSDKType() *shared.DestinationLangchainCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationLangchainResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.DestinationLangchainPutRequest {
-	var embedding shared.Embedding
-	var openAI *shared.OpenAI
+func (r *DestinationLangchainResourceModel) ToSharedDestinationLangchainPutRequest() *shared.DestinationLangchainPutRequest {
+	var embedding shared.DestinationLangchainUpdateEmbedding
+	var destinationLangchainUpdateOpenAI *shared.DestinationLangchainUpdateOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
 		openaiKey := r.Configuration.Embedding.OpenAI.OpenaiKey.ValueString()
-		openAI = &shared.OpenAI{
+		destinationLangchainUpdateOpenAI = &shared.DestinationLangchainUpdateOpenAI{
 			OpenaiKey: openaiKey,
 		}
 	}
-	if openAI != nil {
-		embedding = shared.Embedding{
-			OpenAI: openAI,
+	if destinationLangchainUpdateOpenAI != nil {
+		embedding = shared.DestinationLangchainUpdateEmbedding{
+			DestinationLangchainUpdateOpenAI: destinationLangchainUpdateOpenAI,
 		}
 	}
-	var fake *shared.Fake
+	var destinationLangchainUpdateFake *shared.DestinationLangchainUpdateFake
 	if r.Configuration.Embedding.Fake != nil {
-		fake = &shared.Fake{}
+		destinationLangchainUpdateFake = &shared.DestinationLangchainUpdateFake{}
 	}
-	if fake != nil {
-		embedding = shared.Embedding{
-			Fake: fake,
+	if destinationLangchainUpdateFake != nil {
+		embedding = shared.DestinationLangchainUpdateEmbedding{
+			DestinationLangchainUpdateFake: destinationLangchainUpdateFake,
 		}
 	}
-	var indexing shared.Indexing
+	var indexing shared.DestinationLangchainUpdateIndexing
 	var destinationLangchainUpdatePinecone *shared.DestinationLangchainUpdatePinecone
 	if r.Configuration.Indexing.Pinecone != nil {
 		index := r.Configuration.Indexing.Pinecone.Index.ValueString()
@@ -157,7 +159,7 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 		}
 	}
 	if destinationLangchainUpdatePinecone != nil {
-		indexing = shared.Indexing{
+		indexing = shared.DestinationLangchainUpdateIndexing{
 			DestinationLangchainUpdatePinecone: destinationLangchainUpdatePinecone,
 		}
 	}
@@ -169,7 +171,7 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 		}
 	}
 	if docArrayHnswSearch != nil {
-		indexing = shared.Indexing{
+		indexing = shared.DestinationLangchainUpdateIndexing{
 			DocArrayHnswSearch: docArrayHnswSearch,
 		}
 	}
@@ -188,7 +190,7 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 		}
 	}
 	if chromaLocalPersistance != nil {
-		indexing = shared.Indexing{
+		indexing = shared.DestinationLangchainUpdateIndexing{
 			ChromaLocalPersistance: chromaLocalPersistance,
 		}
 	}
@@ -203,7 +205,7 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}
-	processing := shared.ProcessingConfigModel{
+	processing := shared.DestinationLangchainUpdateProcessingConfigModel{
 		ChunkOverlap: chunkOverlap,
 		ChunkSize:    chunkSize,
 		TextFields:   textFields,
@@ -221,20 +223,4 @@ func (r *DestinationLangchainResourceModel) ToUpdateSDKType() *shared.Destinatio
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationLangchainResourceModel) ToDeleteSDKType() *shared.DestinationLangchainCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationLangchainResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationLangchainResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

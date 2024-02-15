@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRequest {
+func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.SourceSlackCreateRequest {
 	var channelFilter []string = nil
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
 		channelFilter = append(channelFilter, channelFilterItem.ValueString())
@@ -88,12 +88,14 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 	return &out
 }
 
-func (r *SourceSlackResourceModel) ToGetSDKType() *shared.SourceSlackCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSlackResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutRequest {
+func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.SourceSlackPutRequest {
 	var channelFilter []string = nil
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
 		channelFilter = append(channelFilter, channelFilterItem.ValueString())
@@ -157,20 +159,4 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSlackResourceModel) ToDeleteSDKType() *shared.SourceSlackCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSlackResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSlackResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

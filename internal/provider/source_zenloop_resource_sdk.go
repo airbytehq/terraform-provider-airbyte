@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCreateRequest {
+func (r *SourceZenloopResourceModel) ToSharedSourceZenloopCreateRequest() *shared.SourceZenloopCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	dateFrom := new(string)
 	if !r.Configuration.DateFrom.IsUnknown() && !r.Configuration.DateFrom.IsNull() {
@@ -57,12 +57,14 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 	return &out
 }
 
-func (r *SourceZenloopResourceModel) ToGetSDKType() *shared.SourceZenloopCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceZenloopResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZenloopResourceModel) ToUpdateSDKType() *shared.SourceZenloopPutRequest {
+func (r *SourceZenloopResourceModel) ToSharedSourceZenloopPutRequest() *shared.SourceZenloopPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	dateFrom := new(string)
 	if !r.Configuration.DateFrom.IsUnknown() && !r.Configuration.DateFrom.IsNull() {
@@ -96,20 +98,4 @@ func (r *SourceZenloopResourceModel) ToUpdateSDKType() *shared.SourceZenloopPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceZenloopResourceModel) ToDeleteSDKType() *shared.SourceZenloopCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceZenloopResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceZenloopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

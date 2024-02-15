@@ -7,7 +7,7 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     start_date                        = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 8
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
             double_as_string = true
@@ -18,15 +18,15 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Angelina Armstrong"
+        name              = "Pablo White"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        schemaless        = false
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "e16b8da7-b814-43f8-91cf-99c7fd70e504"
-  name          = "Joy Sipes"
+  definition_id = "deb7264d-ad9e-45fb-9312-6691bfb5db9e"
+  name          = "Eugene Goyette"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4f64874e-62c5-48d8-b92f-d48887cb19c4"
+  workspace_id  = "51fb73f4-72f2-4e8b-bfe1-8227a33308df"
 }

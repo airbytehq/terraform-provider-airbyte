@@ -7,7 +7,7 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     }
     spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  definition_id = "a78cf13c-3589-4bc3-aaba-63d3987f09ed"
-  name          = "Manuel Cronin IV"
-  workspace_id  = "dddbef1f-87bb-4506-9e16-a5a735a4e180"
+  definition_id = "283384bd-87b5-4cce-b614-854333df23c5"
+  name          = "Corey Abbott"
+  workspace_id  = "452521a0-4787-48c2-94cd-184fd116e75f"
 }

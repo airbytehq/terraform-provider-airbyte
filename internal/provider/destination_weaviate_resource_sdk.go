@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationWeaviateResourceModel) ToCreateSDKType() *shared.DestinationWeaviateCreateRequest {
+func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequest() *shared.DestinationWeaviateCreateRequest {
 	var embedding shared.DestinationWeaviateEmbedding
 	var destinationWeaviateNoExternalEmbedding *shared.DestinationWeaviateNoExternalEmbedding
 	if r.Configuration.Embedding.NoExternalEmbedding != nil {
@@ -167,6 +167,12 @@ func (r *DestinationWeaviateResourceModel) ToCreateSDKType() *shared.Destination
 		defaultVectorizer = nil
 	}
 	host := r.Configuration.Indexing.Host.ValueString()
+	tenantID := new(string)
+	if !r.Configuration.Indexing.TenantID.IsUnknown() && !r.Configuration.Indexing.TenantID.IsNull() {
+		*tenantID = r.Configuration.Indexing.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
 	textField := new(string)
 	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
 		*textField = r.Configuration.Indexing.TextField.ValueString()
@@ -179,7 +185,14 @@ func (r *DestinationWeaviateResourceModel) ToCreateSDKType() *shared.Destination
 		BatchSize:         batchSize,
 		DefaultVectorizer: defaultVectorizer,
 		Host:              host,
+		TenantID:          tenantID,
 		TextField:         textField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -268,9 +281,10 @@ func (r *DestinationWeaviateResourceModel) ToCreateSDKType() *shared.Destination
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationWeaviate{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -289,12 +303,14 @@ func (r *DestinationWeaviateResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationWeaviateResourceModel) ToGetSDKType() *shared.DestinationWeaviateCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationWeaviateResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.DestinationWeaviatePutRequest {
+func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviatePutRequest() *shared.DestinationWeaviatePutRequest {
 	var embedding shared.DestinationWeaviateUpdateEmbedding
 	var noExternalEmbedding *shared.NoExternalEmbedding
 	if r.Configuration.Embedding.NoExternalEmbedding != nil {
@@ -345,18 +361,18 @@ func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.Destination
 			DestinationWeaviateUpdateCohere: destinationWeaviateUpdateCohere,
 		}
 	}
-	var destinationWeaviateUpdateFromField *shared.DestinationWeaviateUpdateFromField
+	var fromField *shared.FromField
 	if r.Configuration.Embedding.FromField != nil {
 		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
 		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
-		destinationWeaviateUpdateFromField = &shared.DestinationWeaviateUpdateFromField{
+		fromField = &shared.FromField{
 			Dimensions: dimensions,
 			FieldName:  fieldName,
 		}
 	}
-	if destinationWeaviateUpdateFromField != nil {
+	if fromField != nil {
 		embedding = shared.DestinationWeaviateUpdateEmbedding{
-			DestinationWeaviateUpdateFromField: destinationWeaviateUpdateFromField,
+			FromField: fromField,
 		}
 	}
 	var destinationWeaviateUpdateFake *shared.DestinationWeaviateUpdateFake
@@ -454,6 +470,12 @@ func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.Destination
 		defaultVectorizer = nil
 	}
 	host := r.Configuration.Indexing.Host.ValueString()
+	tenantID := new(string)
+	if !r.Configuration.Indexing.TenantID.IsUnknown() && !r.Configuration.Indexing.TenantID.IsNull() {
+		*tenantID = r.Configuration.Indexing.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
 	textField := new(string)
 	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
 		*textField = r.Configuration.Indexing.TextField.ValueString()
@@ -466,7 +488,14 @@ func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.Destination
 		BatchSize:         batchSize,
 		DefaultVectorizer: defaultVectorizer,
 		Host:              host,
+		TenantID:          tenantID,
 		TextField:         textField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -477,10 +506,10 @@ func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.Destination
 	chunkSize := r.Configuration.Processing.ChunkSize.ValueInt64()
 	var fieldNameMappings []shared.DestinationWeaviateUpdateFieldNameMappingConfigModel = nil
 	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		fromField := fieldNameMappingsItem.FromField.ValueString()
+		fromField1 := fieldNameMappingsItem.FromField.ValueString()
 		toField := fieldNameMappingsItem.ToField.ValueString()
 		fieldNameMappings = append(fieldNameMappings, shared.DestinationWeaviateUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
+			FromField: fromField1,
 			ToField:   toField,
 		})
 	}
@@ -555,9 +584,10 @@ func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.Destination
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationWeaviateUpdate{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -567,20 +597,4 @@ func (r *DestinationWeaviateResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationWeaviateResourceModel) ToDeleteSDKType() *shared.DestinationWeaviateCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationWeaviateResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationWeaviateResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

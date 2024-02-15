@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3GlueCreateRequest {
+func (r *DestinationS3GlueResourceModel) ToSharedDestinationS3GlueCreateRequest() *shared.DestinationS3GlueCreateRequest {
 	accessKeyID := new(string)
 	if !r.Configuration.AccessKeyID.IsUnknown() && !r.Configuration.AccessKeyID.IsNull() {
 		*accessKeyID = r.Configuration.AccessKeyID.ValueString()
@@ -146,12 +146,14 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 	return &out
 }
 
-func (r *DestinationS3GlueResourceModel) ToGetSDKType() *shared.DestinationS3GlueCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationS3GlueResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3GluePutRequest {
+func (r *DestinationS3GlueResourceModel) ToSharedDestinationS3GluePutRequest() *shared.DestinationS3GluePutRequest {
 	accessKeyID := new(string)
 	if !r.Configuration.AccessKeyID.IsUnknown() && !r.Configuration.AccessKeyID.IsNull() {
 		*accessKeyID = r.Configuration.AccessKeyID.ValueString()
@@ -281,20 +283,4 @@ func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationS3GlueResourceModel) ToDeleteSDKType() *shared.DestinationS3GlueCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationS3GlueResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationS3GlueResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

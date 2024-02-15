@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCreateRequest {
+func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *shared.SourceMixpanelCreateRequest {
 	attributionWindow := new(int64)
 	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
 		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
@@ -114,12 +114,14 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	return &out
 }
 
-func (r *SourceMixpanelResourceModel) ToGetSDKType() *shared.SourceMixpanelCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMixpanelResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMixpanelResourceModel) ToUpdateSDKType() *shared.SourceMixpanelPutRequest {
+func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared.SourceMixpanelPutRequest {
 	attributionWindow := new(int64)
 	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
 		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
@@ -209,20 +211,4 @@ func (r *SourceMixpanelResourceModel) ToUpdateSDKType() *shared.SourceMixpanelPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMixpanelResourceModel) ToDeleteSDKType() *shared.SourceMixpanelCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMixpanelResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMixpanelResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

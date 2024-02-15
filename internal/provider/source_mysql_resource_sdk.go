@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRequest {
+func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.SourceMysqlCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -243,12 +243,14 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	return &out
 }
 
-func (r *SourceMysqlResourceModel) ToGetSDKType() *shared.SourceMysqlCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMysqlResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutRequest {
+func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.SourceMysqlPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -468,20 +470,4 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMysqlResourceModel) ToDeleteSDKType() *shared.SourceMysqlCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMysqlResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMysqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

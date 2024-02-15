@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *WorkspaceResourceModel) ToCreateSDKType() *shared.WorkspaceCreateRequest {
+func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest() *shared.WorkspaceCreateRequest {
 	name := r.Name.ValueString()
 	out := shared.WorkspaceCreateRequest{
 		Name: name,
@@ -15,25 +15,7 @@ func (r *WorkspaceResourceModel) ToCreateSDKType() *shared.WorkspaceCreateReques
 	return &out
 }
 
-func (r *WorkspaceResourceModel) ToGetSDKType() *shared.WorkspaceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *WorkspaceResourceModel) ToUpdateSDKType() *shared.WorkspaceUpdateRequest {
-	name := r.Name.ValueString()
-	out := shared.WorkspaceUpdateRequest{
-		Name: name,
-	}
-	return &out
-}
-
-func (r *WorkspaceResourceModel) ToDeleteSDKType() *shared.WorkspaceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *WorkspaceResourceModel) RefreshFromGetResponse(resp *shared.WorkspaceResponse) {
+func (r *WorkspaceResourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
 	if resp.DataResidency != nil {
 		r.DataResidency = types.StringValue(string(*resp.DataResidency))
 	} else {
@@ -43,10 +25,10 @@ func (r *WorkspaceResourceModel) RefreshFromGetResponse(resp *shared.WorkspaceRe
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *WorkspaceResourceModel) RefreshFromCreateResponse(resp *shared.WorkspaceResponse) {
-	r.RefreshFromGetResponse(resp)
-}
-
-func (r *WorkspaceResourceModel) RefreshFromUpdateResponse(resp *shared.WorkspaceResponse) {
-	r.RefreshFromGetResponse(resp)
+func (r *WorkspaceResourceModel) ToSharedWorkspaceUpdateRequest() *shared.WorkspaceUpdateRequest {
+	name := r.Name.ValueString()
+	out := shared.WorkspaceUpdateRequest{
+		Name: name,
+	}
+	return &out
 }

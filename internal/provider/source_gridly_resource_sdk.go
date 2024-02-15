@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGridlyResourceModel) ToCreateSDKType() *shared.SourceGridlyCreateRequest {
+func (r *SourceGridlyResourceModel) ToSharedSourceGridlyCreateRequest() *shared.SourceGridlyCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	gridID := r.Configuration.GridID.ValueString()
 	configuration := shared.SourceGridly{
@@ -38,12 +38,14 @@ func (r *SourceGridlyResourceModel) ToCreateSDKType() *shared.SourceGridlyCreate
 	return &out
 }
 
-func (r *SourceGridlyResourceModel) ToGetSDKType() *shared.SourceGridlyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGridlyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGridlyResourceModel) ToUpdateSDKType() *shared.SourceGridlyPutRequest {
+func (r *SourceGridlyResourceModel) ToSharedSourceGridlyPutRequest() *shared.SourceGridlyPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	gridID := r.Configuration.GridID.ValueString()
 	configuration := shared.SourceGridlyUpdate{
@@ -58,20 +60,4 @@ func (r *SourceGridlyResourceModel) ToUpdateSDKType() *shared.SourceGridlyPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGridlyResourceModel) ToDeleteSDKType() *shared.SourceGridlyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGridlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGridlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

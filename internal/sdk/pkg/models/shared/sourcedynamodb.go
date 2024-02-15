@@ -13,31 +13,39 @@ type SourceDynamodbDynamodbRegion string
 
 const (
 	SourceDynamodbDynamodbRegionUnknown      SourceDynamodbDynamodbRegion = ""
-	SourceDynamodbDynamodbRegionUsEast1      SourceDynamodbDynamodbRegion = "us-east-1"
-	SourceDynamodbDynamodbRegionUsEast2      SourceDynamodbDynamodbRegion = "us-east-2"
-	SourceDynamodbDynamodbRegionUsWest1      SourceDynamodbDynamodbRegion = "us-west-1"
-	SourceDynamodbDynamodbRegionUsWest2      SourceDynamodbDynamodbRegion = "us-west-2"
 	SourceDynamodbDynamodbRegionAfSouth1     SourceDynamodbDynamodbRegion = "af-south-1"
 	SourceDynamodbDynamodbRegionApEast1      SourceDynamodbDynamodbRegion = "ap-east-1"
-	SourceDynamodbDynamodbRegionApSouth1     SourceDynamodbDynamodbRegion = "ap-south-1"
 	SourceDynamodbDynamodbRegionApNortheast1 SourceDynamodbDynamodbRegion = "ap-northeast-1"
 	SourceDynamodbDynamodbRegionApNortheast2 SourceDynamodbDynamodbRegion = "ap-northeast-2"
 	SourceDynamodbDynamodbRegionApNortheast3 SourceDynamodbDynamodbRegion = "ap-northeast-3"
+	SourceDynamodbDynamodbRegionApSouth1     SourceDynamodbDynamodbRegion = "ap-south-1"
+	SourceDynamodbDynamodbRegionApSouth2     SourceDynamodbDynamodbRegion = "ap-south-2"
 	SourceDynamodbDynamodbRegionApSoutheast1 SourceDynamodbDynamodbRegion = "ap-southeast-1"
 	SourceDynamodbDynamodbRegionApSoutheast2 SourceDynamodbDynamodbRegion = "ap-southeast-2"
+	SourceDynamodbDynamodbRegionApSoutheast3 SourceDynamodbDynamodbRegion = "ap-southeast-3"
+	SourceDynamodbDynamodbRegionApSoutheast4 SourceDynamodbDynamodbRegion = "ap-southeast-4"
 	SourceDynamodbDynamodbRegionCaCentral1   SourceDynamodbDynamodbRegion = "ca-central-1"
+	SourceDynamodbDynamodbRegionCaWest1      SourceDynamodbDynamodbRegion = "ca-west-1"
 	SourceDynamodbDynamodbRegionCnNorth1     SourceDynamodbDynamodbRegion = "cn-north-1"
 	SourceDynamodbDynamodbRegionCnNorthwest1 SourceDynamodbDynamodbRegion = "cn-northwest-1"
 	SourceDynamodbDynamodbRegionEuCentral1   SourceDynamodbDynamodbRegion = "eu-central-1"
+	SourceDynamodbDynamodbRegionEuCentral2   SourceDynamodbDynamodbRegion = "eu-central-2"
 	SourceDynamodbDynamodbRegionEuNorth1     SourceDynamodbDynamodbRegion = "eu-north-1"
 	SourceDynamodbDynamodbRegionEuSouth1     SourceDynamodbDynamodbRegion = "eu-south-1"
+	SourceDynamodbDynamodbRegionEuSouth2     SourceDynamodbDynamodbRegion = "eu-south-2"
 	SourceDynamodbDynamodbRegionEuWest1      SourceDynamodbDynamodbRegion = "eu-west-1"
 	SourceDynamodbDynamodbRegionEuWest2      SourceDynamodbDynamodbRegion = "eu-west-2"
 	SourceDynamodbDynamodbRegionEuWest3      SourceDynamodbDynamodbRegion = "eu-west-3"
-	SourceDynamodbDynamodbRegionSaEast1      SourceDynamodbDynamodbRegion = "sa-east-1"
+	SourceDynamodbDynamodbRegionIlCentral1   SourceDynamodbDynamodbRegion = "il-central-1"
+	SourceDynamodbDynamodbRegionMeCentral1   SourceDynamodbDynamodbRegion = "me-central-1"
 	SourceDynamodbDynamodbRegionMeSouth1     SourceDynamodbDynamodbRegion = "me-south-1"
+	SourceDynamodbDynamodbRegionSaEast1      SourceDynamodbDynamodbRegion = "sa-east-1"
+	SourceDynamodbDynamodbRegionUsEast1      SourceDynamodbDynamodbRegion = "us-east-1"
+	SourceDynamodbDynamodbRegionUsEast2      SourceDynamodbDynamodbRegion = "us-east-2"
 	SourceDynamodbDynamodbRegionUsGovEast1   SourceDynamodbDynamodbRegion = "us-gov-east-1"
 	SourceDynamodbDynamodbRegionUsGovWest1   SourceDynamodbDynamodbRegion = "us-gov-west-1"
+	SourceDynamodbDynamodbRegionUsWest1      SourceDynamodbDynamodbRegion = "us-west-1"
+	SourceDynamodbDynamodbRegionUsWest2      SourceDynamodbDynamodbRegion = "us-west-2"
 )
 
 func (e SourceDynamodbDynamodbRegion) ToPointer() *SourceDynamodbDynamodbRegion {
@@ -52,19 +60,9 @@ func (e *SourceDynamodbDynamodbRegion) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "":
 		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -72,11 +70,21 @@ func (e *SourceDynamodbDynamodbRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -84,9 +92,13 @@ func (e *SourceDynamodbDynamodbRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -94,13 +106,25 @@ func (e *SourceDynamodbDynamodbRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
 		fallthrough
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = SourceDynamodbDynamodbRegion(v)
 		return nil
 	default:

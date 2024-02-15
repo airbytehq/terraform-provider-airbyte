@@ -34,7 +34,6 @@ func (e *DestinationAwsDatalakeUpdateCredentialsTitle) UnmarshalJSON(data []byte
 	}
 }
 
-// IAMUser - Choose How to Authenticate to AWS.
 type IAMUser struct {
 	// AWS User Access Key Id
 	AwsAccessKeyID string `json:"aws_access_key_id"`
@@ -98,7 +97,6 @@ func (e *CredentialsTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// IAMRole - Choose How to Authenticate to AWS.
 type IAMRole struct {
 	// Name of the credentials
 	credentialsTitle *CredentialsTitle `const:"IAM Role" json:"credentials_title"`
@@ -135,6 +133,7 @@ const (
 	AuthenticationModeTypeIAMUser AuthenticationModeType = "IAM User"
 )
 
+// AuthenticationMode - Choose How to Authenticate to AWS.
 type AuthenticationMode struct {
 	IAMRole *IAMRole
 	IAMUser *IAMUser
@@ -249,7 +248,6 @@ func (e *DestinationAwsDatalakeUpdateFormatTypeWildcard) UnmarshalJSON(data []by
 	}
 }
 
-// ParquetColumnarStorage - Format of the data output.
 type ParquetColumnarStorage struct {
 	// The compression algorithm used to compress data.
 	CompressionCodec *DestinationAwsDatalakeUpdateCompressionCodecOptional `default:"SNAPPY" json:"compression_codec"`
@@ -333,7 +331,6 @@ func (e *FormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// JSONLinesNewlineDelimitedJSON - Format of the data output.
 type JSONLinesNewlineDelimitedJSON struct {
 	// The compression algorithm used to compress data.
 	CompressionCodec *CompressionCodecOptional `default:"UNCOMPRESSED" json:"compression_codec"`
@@ -372,6 +369,7 @@ const (
 	OutputFormatWildcardTypeParquetColumnarStorage        OutputFormatWildcardType = "Parquet: Columnar Storage"
 )
 
+// OutputFormatWildcard - Format of the data output.
 type OutputFormatWildcard struct {
 	JSONLinesNewlineDelimitedJSON *JSONLinesNewlineDelimitedJSON
 	ParquetColumnarStorage        *ParquetColumnarStorage
@@ -476,31 +474,39 @@ type S3BucketRegion string
 
 const (
 	S3BucketRegionUnknown      S3BucketRegion = ""
-	S3BucketRegionUsEast1      S3BucketRegion = "us-east-1"
-	S3BucketRegionUsEast2      S3BucketRegion = "us-east-2"
-	S3BucketRegionUsWest1      S3BucketRegion = "us-west-1"
-	S3BucketRegionUsWest2      S3BucketRegion = "us-west-2"
 	S3BucketRegionAfSouth1     S3BucketRegion = "af-south-1"
 	S3BucketRegionApEast1      S3BucketRegion = "ap-east-1"
-	S3BucketRegionApSouth1     S3BucketRegion = "ap-south-1"
 	S3BucketRegionApNortheast1 S3BucketRegion = "ap-northeast-1"
 	S3BucketRegionApNortheast2 S3BucketRegion = "ap-northeast-2"
 	S3BucketRegionApNortheast3 S3BucketRegion = "ap-northeast-3"
+	S3BucketRegionApSouth1     S3BucketRegion = "ap-south-1"
+	S3BucketRegionApSouth2     S3BucketRegion = "ap-south-2"
 	S3BucketRegionApSoutheast1 S3BucketRegion = "ap-southeast-1"
 	S3BucketRegionApSoutheast2 S3BucketRegion = "ap-southeast-2"
+	S3BucketRegionApSoutheast3 S3BucketRegion = "ap-southeast-3"
+	S3BucketRegionApSoutheast4 S3BucketRegion = "ap-southeast-4"
 	S3BucketRegionCaCentral1   S3BucketRegion = "ca-central-1"
+	S3BucketRegionCaWest1      S3BucketRegion = "ca-west-1"
 	S3BucketRegionCnNorth1     S3BucketRegion = "cn-north-1"
 	S3BucketRegionCnNorthwest1 S3BucketRegion = "cn-northwest-1"
 	S3BucketRegionEuCentral1   S3BucketRegion = "eu-central-1"
+	S3BucketRegionEuCentral2   S3BucketRegion = "eu-central-2"
 	S3BucketRegionEuNorth1     S3BucketRegion = "eu-north-1"
 	S3BucketRegionEuSouth1     S3BucketRegion = "eu-south-1"
+	S3BucketRegionEuSouth2     S3BucketRegion = "eu-south-2"
 	S3BucketRegionEuWest1      S3BucketRegion = "eu-west-1"
 	S3BucketRegionEuWest2      S3BucketRegion = "eu-west-2"
 	S3BucketRegionEuWest3      S3BucketRegion = "eu-west-3"
-	S3BucketRegionSaEast1      S3BucketRegion = "sa-east-1"
+	S3BucketRegionIlCentral1   S3BucketRegion = "il-central-1"
+	S3BucketRegionMeCentral1   S3BucketRegion = "me-central-1"
 	S3BucketRegionMeSouth1     S3BucketRegion = "me-south-1"
+	S3BucketRegionSaEast1      S3BucketRegion = "sa-east-1"
+	S3BucketRegionUsEast1      S3BucketRegion = "us-east-1"
+	S3BucketRegionUsEast2      S3BucketRegion = "us-east-2"
 	S3BucketRegionUsGovEast1   S3BucketRegion = "us-gov-east-1"
 	S3BucketRegionUsGovWest1   S3BucketRegion = "us-gov-west-1"
+	S3BucketRegionUsWest1      S3BucketRegion = "us-west-1"
+	S3BucketRegionUsWest2      S3BucketRegion = "us-west-2"
 )
 
 func (e S3BucketRegion) ToPointer() *S3BucketRegion {
@@ -515,19 +521,9 @@ func (e *S3BucketRegion) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "":
 		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -535,11 +531,21 @@ func (e *S3BucketRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -547,9 +553,13 @@ func (e *S3BucketRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -557,13 +567,25 @@ func (e *S3BucketRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
 		fallthrough
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = S3BucketRegion(v)
 		return nil
 	default:

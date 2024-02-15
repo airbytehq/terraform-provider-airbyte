@@ -4,8 +4,8 @@ resource "airbyte_source_railz" "my_source_railz" {
     secret_key = "...my_secret_key..."
     start_date = "...my_start_date..."
   }
-  definition_id = "ae1d217c-0fcb-4e7d-ad34-33ea862799ca"
-  name          = "Alvin Roob"
+  definition_id = "c463b838-dc5f-4976-935f-73a45535fff5"
+  name          = "Gerald Swift"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "833469d3-410e-4395-a0aa-c55dc9d09788"
+  workspace_id  = "f0cce548-6a3a-4161-9c53-f64148acb8b4"
 }

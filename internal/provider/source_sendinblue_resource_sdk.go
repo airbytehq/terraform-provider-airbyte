@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSendinblueResourceModel) ToCreateSDKType() *shared.SourceSendinblueCreateRequest {
+func (r *SourceSendinblueResourceModel) ToSharedSourceSendinblueCreateRequest() *shared.SourceSendinblueCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSendinblue{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceSendinblueResourceModel) ToCreateSDKType() *shared.SourceSendinbl
 	return &out
 }
 
-func (r *SourceSendinblueResourceModel) ToGetSDKType() *shared.SourceSendinblueCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSendinblueResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSendinblueResourceModel) ToUpdateSDKType() *shared.SourceSendinbluePutRequest {
+func (r *SourceSendinblueResourceModel) ToSharedSourceSendinbluePutRequest() *shared.SourceSendinbluePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSendinblueUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceSendinblueResourceModel) ToUpdateSDKType() *shared.SourceSendinbl
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSendinblueResourceModel) ToDeleteSDKType() *shared.SourceSendinblueCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSendinblueResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSendinblueResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

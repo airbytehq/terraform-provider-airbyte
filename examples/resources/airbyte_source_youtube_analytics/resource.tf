@@ -7,8 +7,8 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "bb8c2a23-b3c0-4134-a218-66cf518dbd5e"
-  name          = "Mr. Clay Terry"
+  definition_id = "c9bce387-d664-444a-9867-97a763e10f99"
+  name          = "Donald Beahan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e07eadc6-f53d-4253-9b8b-1e39d437be8f"
+  workspace_id  = "9e49484a-7485-4520-a44a-ee427f93df9b"
 }

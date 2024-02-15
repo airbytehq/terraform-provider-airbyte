@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.DestinationDatabricksCreateRequest {
+func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksCreateRequest() *shared.DestinationDatabricksCreateRequest {
 	acceptTerms := new(bool)
 	if !r.Configuration.AcceptTerms.IsUnknown() && !r.Configuration.AcceptTerms.IsNull() {
 		*acceptTerms = r.Configuration.AcceptTerms.ValueBool()
@@ -141,12 +141,14 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	return &out
 }
 
-func (r *DestinationDatabricksResourceModel) ToGetSDKType() *shared.DestinationDatabricksCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationDatabricksResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.DestinationDatabricksPutRequest {
+func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksPutRequest() *shared.DestinationDatabricksPutRequest {
 	acceptTerms := new(bool)
 	if !r.Configuration.AcceptTerms.IsUnknown() && !r.Configuration.AcceptTerms.IsNull() {
 		*acceptTerms = r.Configuration.AcceptTerms.ValueBool()
@@ -271,20 +273,4 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationDatabricksResourceModel) ToDeleteSDKType() *shared.DestinationDatabricksCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationDatabricksResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationDatabricksResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

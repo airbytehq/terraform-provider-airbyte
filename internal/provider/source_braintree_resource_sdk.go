@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintreeCreateRequest {
+func (r *SourceBraintreeResourceModel) ToSharedSourceBraintreeCreateRequest() *shared.SourceBraintreeCreateRequest {
 	environment := shared.SourceBraintreeEnvironment(r.Configuration.Environment.ValueString())
 	merchantID := r.Configuration.MerchantID.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
@@ -50,12 +50,14 @@ func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintree
 	return &out
 }
 
-func (r *SourceBraintreeResourceModel) ToGetSDKType() *shared.SourceBraintreeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceBraintreeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBraintreeResourceModel) ToUpdateSDKType() *shared.SourceBraintreePutRequest {
+func (r *SourceBraintreeResourceModel) ToSharedSourceBraintreePutRequest() *shared.SourceBraintreePutRequest {
 	environment := shared.SourceBraintreeUpdateEnvironment(r.Configuration.Environment.ValueString())
 	merchantID := r.Configuration.MerchantID.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
@@ -81,20 +83,4 @@ func (r *SourceBraintreeResourceModel) ToUpdateSDKType() *shared.SourceBraintree
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceBraintreeResourceModel) ToDeleteSDKType() *shared.SourceBraintreeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceBraintreeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceBraintreeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSmailyResourceModel) ToCreateSDKType() *shared.SourceSmailyCreateRequest {
+func (r *SourceSmailyResourceModel) ToSharedSourceSmailyCreateRequest() *shared.SourceSmailyCreateRequest {
 	apiPassword := r.Configuration.APIPassword.ValueString()
 	apiSubdomain := r.Configuration.APISubdomain.ValueString()
 	apiUsername := r.Configuration.APIUsername.ValueString()
@@ -40,12 +40,14 @@ func (r *SourceSmailyResourceModel) ToCreateSDKType() *shared.SourceSmailyCreate
 	return &out
 }
 
-func (r *SourceSmailyResourceModel) ToGetSDKType() *shared.SourceSmailyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSmailyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSmailyResourceModel) ToUpdateSDKType() *shared.SourceSmailyPutRequest {
+func (r *SourceSmailyResourceModel) ToSharedSourceSmailyPutRequest() *shared.SourceSmailyPutRequest {
 	apiPassword := r.Configuration.APIPassword.ValueString()
 	apiSubdomain := r.Configuration.APISubdomain.ValueString()
 	apiUsername := r.Configuration.APIUsername.ValueString()
@@ -62,20 +64,4 @@ func (r *SourceSmailyResourceModel) ToUpdateSDKType() *shared.SourceSmailyPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSmailyResourceModel) ToDeleteSDKType() *shared.SourceSmailyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSmailyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSmailyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

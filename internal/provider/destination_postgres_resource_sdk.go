@@ -7,8 +7,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.DestinationPostgresCreateRequest {
+func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequest() *shared.DestinationPostgresCreateRequest {
 	database := r.Configuration.Database.ValueString()
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -27,6 +33,12 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -175,15 +187,17 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationPostgres{
-		Database:      database,
-		Host:          host,
-		JdbcURLParams: jdbcURLParams,
-		Password:      password,
-		Port:          port,
-		Schema:        schema,
-		SslMode:       sslMode,
-		TunnelMethod:  tunnelMethod,
-		Username:      username,
+		Database:          database,
+		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		Schema:            schema,
+		SslMode:           sslMode,
+		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -202,13 +216,21 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationPostgresResourceModel) ToGetSDKType() *shared.DestinationPostgresCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationPostgresResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.DestinationPostgresPutRequest {
+func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest() *shared.DestinationPostgresPutRequest {
 	database := r.Configuration.Database.ValueString()
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -227,6 +249,12 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -375,15 +403,17 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationPostgresUpdate{
-		Database:      database,
-		Host:          host,
-		JdbcURLParams: jdbcURLParams,
-		Password:      password,
-		Port:          port,
-		Schema:        schema,
-		SslMode:       sslMode,
-		TunnelMethod:  tunnelMethod,
-		Username:      username,
+		Database:          database,
+		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		Schema:            schema,
+		SslMode:           sslMode,
+		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -393,20 +423,4 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationPostgresResourceModel) ToDeleteSDKType() *shared.DestinationPostgresCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationPostgresResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationPostgresResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

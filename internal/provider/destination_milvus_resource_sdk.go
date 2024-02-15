@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMilvusCreateRequest {
+func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusCreateRequest() *shared.DestinationMilvusCreateRequest {
 	var embedding shared.DestinationMilvusEmbedding
 	var destinationMilvusOpenAI *shared.DestinationMilvusOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -42,20 +42,6 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 			DestinationMilvusFake: destinationMilvusFake,
 		}
 	}
-	var destinationMilvusFromField *shared.DestinationMilvusFromField
-	if r.Configuration.Embedding.FromField != nil {
-		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
-		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
-		destinationMilvusFromField = &shared.DestinationMilvusFromField{
-			Dimensions: dimensions,
-			FieldName:  fieldName,
-		}
-	}
-	if destinationMilvusFromField != nil {
-		embedding = shared.DestinationMilvusEmbedding{
-			DestinationMilvusFromField: destinationMilvusFromField,
-		}
-	}
 	var destinationMilvusAzureOpenAI *shared.DestinationMilvusAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
 		apiBase := r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
@@ -81,7 +67,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 			apiKey = nil
 		}
 		baseURL := r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
-		dimensions1 := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+		dimensions := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
@@ -91,7 +77,7 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 		destinationMilvusOpenAICompatible = &shared.DestinationMilvusOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			Dimensions: dimensions1,
+			Dimensions: dimensions,
 			ModelName:  modelName,
 		}
 	}
@@ -163,6 +149,12 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 		Host:        host,
 		TextField:   textField,
 		VectorField: vectorField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -251,9 +243,10 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationMilvus{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -272,12 +265,14 @@ func (r *DestinationMilvusResourceModel) ToCreateSDKType() *shared.DestinationMi
 	return &out
 }
 
-func (r *DestinationMilvusResourceModel) ToGetSDKType() *shared.DestinationMilvusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationMilvusResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMilvusPutRequest {
+func (r *DestinationMilvusResourceModel) ToSharedDestinationMilvusPutRequest() *shared.DestinationMilvusPutRequest {
 	var embedding shared.DestinationMilvusUpdateEmbedding
 	var destinationMilvusUpdateOpenAI *shared.DestinationMilvusUpdateOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -291,16 +286,16 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 			DestinationMilvusUpdateOpenAI: destinationMilvusUpdateOpenAI,
 		}
 	}
-	var cohere *shared.Cohere
+	var destinationMilvusUpdateCohere *shared.DestinationMilvusUpdateCohere
 	if r.Configuration.Embedding.Cohere != nil {
 		cohereKey := r.Configuration.Embedding.Cohere.CohereKey.ValueString()
-		cohere = &shared.Cohere{
+		destinationMilvusUpdateCohere = &shared.DestinationMilvusUpdateCohere{
 			CohereKey: cohereKey,
 		}
 	}
-	if cohere != nil {
+	if destinationMilvusUpdateCohere != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			Cohere: cohere,
+			DestinationMilvusUpdateCohere: destinationMilvusUpdateCohere,
 		}
 	}
 	var destinationMilvusUpdateFake *shared.DestinationMilvusUpdateFake
@@ -312,37 +307,23 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 			DestinationMilvusUpdateFake: destinationMilvusUpdateFake,
 		}
 	}
-	var fromField *shared.FromField
-	if r.Configuration.Embedding.FromField != nil {
-		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
-		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
-		fromField = &shared.FromField{
-			Dimensions: dimensions,
-			FieldName:  fieldName,
-		}
-	}
-	if fromField != nil {
-		embedding = shared.DestinationMilvusUpdateEmbedding{
-			FromField: fromField,
-		}
-	}
-	var azureOpenAI *shared.AzureOpenAI
+	var destinationMilvusUpdateAzureOpenAI *shared.DestinationMilvusUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
 		apiBase := r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 		deployment := r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 		openaiKey1 := r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-		azureOpenAI = &shared.AzureOpenAI{
+		destinationMilvusUpdateAzureOpenAI = &shared.DestinationMilvusUpdateAzureOpenAI{
 			APIBase:    apiBase,
 			Deployment: deployment,
 			OpenaiKey:  openaiKey1,
 		}
 	}
-	if azureOpenAI != nil {
+	if destinationMilvusUpdateAzureOpenAI != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			AzureOpenAI: azureOpenAI,
+			DestinationMilvusUpdateAzureOpenAI: destinationMilvusUpdateAzureOpenAI,
 		}
 	}
-	var openAICompatible *shared.OpenAICompatible
+	var destinationMilvusUpdateOpenAICompatible *shared.DestinationMilvusUpdateOpenAICompatible
 	if r.Configuration.Embedding.OpenAICompatible != nil {
 		apiKey := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.APIKey.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.APIKey.IsNull() {
@@ -351,23 +332,23 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 			apiKey = nil
 		}
 		baseURL := r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
-		dimensions1 := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+		dimensions := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		openAICompatible = &shared.OpenAICompatible{
+		destinationMilvusUpdateOpenAICompatible = &shared.DestinationMilvusUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			Dimensions: dimensions1,
+			Dimensions: dimensions,
 			ModelName:  modelName,
 		}
 	}
-	if openAICompatible != nil {
+	if destinationMilvusUpdateOpenAICompatible != nil {
 		embedding = shared.DestinationMilvusUpdateEmbedding{
-			OpenAICompatible: openAICompatible,
+			DestinationMilvusUpdateOpenAICompatible: destinationMilvusUpdateOpenAICompatible,
 		}
 	}
 	var auth shared.DestinationMilvusUpdateAuthentication
@@ -434,6 +415,12 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 		TextField:   textField,
 		VectorField: vectorField,
 	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
@@ -441,12 +428,12 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 		chunkOverlap = nil
 	}
 	chunkSize := r.Configuration.Processing.ChunkSize.ValueInt64()
-	var fieldNameMappings []shared.FieldNameMappingConfigModel = nil
+	var fieldNameMappings []shared.DestinationMilvusUpdateFieldNameMappingConfigModel = nil
 	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		fromField1 := fieldNameMappingsItem.FromField.ValueString()
+		fromField := fieldNameMappingsItem.FromField.ValueString()
 		toField := fieldNameMappingsItem.ToField.ValueString()
-		fieldNameMappings = append(fieldNameMappings, shared.FieldNameMappingConfigModel{
-			FromField: fromField1,
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationMilvusUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
 			ToField:   toField,
 		})
 	}
@@ -458,9 +445,9 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}
-	var textSplitter *shared.TextSplitter
+	var textSplitter *shared.DestinationMilvusUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
-		var bySeparator *shared.BySeparator
+		var destinationMilvusUpdateBySeparator *shared.DestinationMilvusUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
@@ -472,17 +459,17 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
 				separators = append(separators, separatorsItem.ValueString())
 			}
-			bySeparator = &shared.BySeparator{
+			destinationMilvusUpdateBySeparator = &shared.DestinationMilvusUpdateBySeparator{
 				KeepSeparator: keepSeparator,
 				Separators:    separators,
 			}
 		}
-		if bySeparator != nil {
-			textSplitter = &shared.TextSplitter{
-				BySeparator: bySeparator,
+		if destinationMilvusUpdateBySeparator != nil {
+			textSplitter = &shared.DestinationMilvusUpdateTextSplitter{
+				DestinationMilvusUpdateBySeparator: destinationMilvusUpdateBySeparator,
 			}
 		}
-		var byMarkdownHeader *shared.ByMarkdownHeader
+		var destinationMilvusUpdateByMarkdownHeader *shared.DestinationMilvusUpdateByMarkdownHeader
 		if r.Configuration.Processing.TextSplitter.ByMarkdownHeader != nil {
 			splitLevel := new(int64)
 			if !r.Configuration.Processing.TextSplitter.ByMarkdownHeader.SplitLevel.IsUnknown() && !r.Configuration.Processing.TextSplitter.ByMarkdownHeader.SplitLevel.IsNull() {
@@ -490,25 +477,25 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 			} else {
 				splitLevel = nil
 			}
-			byMarkdownHeader = &shared.ByMarkdownHeader{
+			destinationMilvusUpdateByMarkdownHeader = &shared.DestinationMilvusUpdateByMarkdownHeader{
 				SplitLevel: splitLevel,
 			}
 		}
-		if byMarkdownHeader != nil {
-			textSplitter = &shared.TextSplitter{
-				ByMarkdownHeader: byMarkdownHeader,
+		if destinationMilvusUpdateByMarkdownHeader != nil {
+			textSplitter = &shared.DestinationMilvusUpdateTextSplitter{
+				DestinationMilvusUpdateByMarkdownHeader: destinationMilvusUpdateByMarkdownHeader,
 			}
 		}
-		var byProgrammingLanguage *shared.ByProgrammingLanguage
+		var destinationMilvusUpdateByProgrammingLanguage *shared.DestinationMilvusUpdateByProgrammingLanguage
 		if r.Configuration.Processing.TextSplitter.ByProgrammingLanguage != nil {
 			language := shared.DestinationMilvusUpdateLanguage(r.Configuration.Processing.TextSplitter.ByProgrammingLanguage.Language.ValueString())
-			byProgrammingLanguage = &shared.ByProgrammingLanguage{
+			destinationMilvusUpdateByProgrammingLanguage = &shared.DestinationMilvusUpdateByProgrammingLanguage{
 				Language: language,
 			}
 		}
-		if byProgrammingLanguage != nil {
-			textSplitter = &shared.TextSplitter{
-				ByProgrammingLanguage: byProgrammingLanguage,
+		if destinationMilvusUpdateByProgrammingLanguage != nil {
+			textSplitter = &shared.DestinationMilvusUpdateTextSplitter{
+				DestinationMilvusUpdateByProgrammingLanguage: destinationMilvusUpdateByProgrammingLanguage,
 			}
 		}
 	}
@@ -521,9 +508,10 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationMilvusUpdate{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -533,20 +521,4 @@ func (r *DestinationMilvusResourceModel) ToUpdateSDKType() *shared.DestinationMi
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationMilvusResourceModel) ToDeleteSDKType() *shared.DestinationMilvusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationMilvusResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationMilvusResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

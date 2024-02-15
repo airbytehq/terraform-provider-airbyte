@@ -5,16 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,20 +56,23 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"accept_terms": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: false` + "\n" +
-							`You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector. Default: false`,
 					},
 					"data_source": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"recommended_managed_tables": schema.SingleNestedAttribute{
-								Optional:    true,
-								Attributes:  map[string]schema.Attribute{},
-								Description: `Storage on which the delta lake is built.`,
+								Optional:   true,
+								Attributes: map[string]schema.Attribute{},
 							},
 							"amazon_s3": schema.SingleNestedAttribute{
 								Optional: true,
@@ -90,9 +95,10 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The directory under the S3 bucket where data will be written.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
-											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(""),
+										Description: `The region of the S3 staging bucket to use if utilising a copy strategy. must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -130,7 +136,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The corresponding secret to the above access key id.`,
 									},
 								},
-								Description: `Storage on which the delta lake is built.`,
 							},
 							"azure_blob_storage": schema.SingleNestedAttribute{
 								Optional: true,
@@ -144,9 +149,10 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The name of the Azure blob storage container.`,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: "blob.core.windows.net"` + "\n" +
-											`This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("blob.core.windows.net"),
+										Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"`,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
 										Required:    true,
@@ -154,7 +160,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
 									},
 								},
-								Description: `Storage on which the delta lake is built.`,
 							},
 						},
 						Description: `Storage on which the delta lake is built.`,
@@ -176,60 +181,64 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Description: `Databricks Personal Access Token for making authenticated requests.`,
 					},
 					"databricks_port": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: "443"` + "\n" +
-							`Databricks Cluster Port.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("443"),
+						Description: `Databricks Cluster Port. Default: "443"`,
 					},
 					"databricks_server_hostname": schema.StringAttribute{
 						Required:    true,
 						Description: `Databricks Cluster Server Hostname.`,
 					},
 					"enable_schema_evolution": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: false` + "\n" +
-							`Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes. Default: false`,
 					},
 					"purge_staging_data": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: true` + "\n" +
-							`Default to 'true'. Switch it to 'false' for debugging purpose.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(true),
+						Description: `Default to 'true'. Switch it to 'false' for debugging purpose. Default: true`,
 					},
 					"schema": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: "default"` + "\n" +
-							`The default schema tables are written. If not specified otherwise, the "default" will be used.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("default"),
+						Description: `The default schema tables are written. If not specified otherwise, the "default" will be used. Default: "default"`,
 					},
 				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -259,14 +268,14 @@ func (r *DestinationDatabricksResource) Configure(ctx context.Context, req resou
 
 func (r *DestinationDatabricksResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *DestinationDatabricksResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -275,7 +284,7 @@ func (r *DestinationDatabricksResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedDestinationDatabricksCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationDatabricks(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -296,7 +305,34 @@ func (r *DestinationDatabricksResource) Create(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	destinationID := data.DestinationID.ValueString()
+	request1 := operations.GetDestinationDatabricksRequest{
+		DestinationID: destinationID,
+	}
+	res1, err := r.client.Destinations.GetDestinationDatabricks(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -344,7 +380,7 @@ func (r *DestinationDatabricksResource) Read(ctx context.Context, req resource.R
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -352,12 +388,19 @@ func (r *DestinationDatabricksResource) Read(ctx context.Context, req resource.R
 
 func (r *DestinationDatabricksResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationDatabricksResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	destinationDatabricksPutRequest := data.ToUpdateSDKType()
+	destinationDatabricksPutRequest := data.ToSharedDestinationDatabricksPutRequest()
 	destinationID := data.DestinationID.ValueString()
 	request := operations.PutDestinationDatabricksRequest{
 		DestinationDatabricksPutRequest: destinationDatabricksPutRequest,
@@ -379,31 +422,33 @@ func (r *DestinationDatabricksResource) Update(ctx context.Context, req resource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	destinationId1 := data.DestinationID.ValueString()
-	getRequest := operations.GetDestinationDatabricksRequest{
+	request1 := operations.GetDestinationDatabricksRequest{
 		DestinationID: destinationId1,
 	}
-	getResponse, err := r.client.Destinations.GetDestinationDatabricks(ctx, getRequest)
+	res1, err := r.client.Destinations.GetDestinationDatabricks(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

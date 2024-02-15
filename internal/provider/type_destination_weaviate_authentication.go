@@ -3,7 +3,7 @@
 package provider
 
 type DestinationWeaviateAuthentication struct {
-	APIToken         *DestinationMilvusAPIToken                                `tfsdk:"api_token"`
-	NoAuthentication *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"no_authentication"`
-	UsernamePassword *UsernamePassword                                         `tfsdk:"username_password"`
+	APIToken         *DestinationMilvusAPIToken `tfsdk:"api_token"`
+	NoAuthentication *Fake                      `tfsdk:"no_authentication"`
+	UsernamePassword *UsernamePassword          `tfsdk:"username_password"`
 }

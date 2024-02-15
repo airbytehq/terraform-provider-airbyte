@@ -2,8 +2,11 @@
 
 package provider
 
+import "github.com/hashicorp/terraform-plugin-framework/types"
+
 type DestinationPinecone struct {
-	Embedding  DestinationPineconeEmbedding           `tfsdk:"embedding"`
-	Indexing   DestinationLangchainPinecone           `tfsdk:"indexing"`
-	Processing DestinationMilvusProcessingConfigModel `tfsdk:"processing"`
+	Embedding   DestinationAstraEmbedding             `tfsdk:"embedding"`
+	Indexing    DestinationLangchainPinecone          `tfsdk:"indexing"`
+	OmitRawText types.Bool                            `tfsdk:"omit_raw_text"`
+	Processing  DestinationAstraProcessingConfigModel `tfsdk:"processing"`
 }

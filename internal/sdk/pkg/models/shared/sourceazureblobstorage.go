@@ -58,11 +58,135 @@ func (e *SourceAzureBlobStorageSchemasStreamsFormatFormatFiletype) UnmarshalJSON
 	}
 }
 
+type SourceAzureBlobStorageMode string
+
+const (
+	SourceAzureBlobStorageModeLocal SourceAzureBlobStorageMode = "local"
+)
+
+func (e SourceAzureBlobStorageMode) ToPointer() *SourceAzureBlobStorageMode {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageMode: %v", v)
+	}
+}
+
+// SourceAzureBlobStorageLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
+type SourceAzureBlobStorageLocal struct {
+	mode *SourceAzureBlobStorageMode `const:"local" json:"mode"`
+}
+
+func (s SourceAzureBlobStorageLocal) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAzureBlobStorageLocal) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAzureBlobStorageLocal) GetMode() *SourceAzureBlobStorageMode {
+	return SourceAzureBlobStorageModeLocal.ToPointer()
+}
+
+type SourceAzureBlobStorageProcessingType string
+
+const (
+	SourceAzureBlobStorageProcessingTypeSourceAzureBlobStorageLocal SourceAzureBlobStorageProcessingType = "source-azure-blob-storage_Local"
+)
+
+// SourceAzureBlobStorageProcessing - Processing configuration
+type SourceAzureBlobStorageProcessing struct {
+	SourceAzureBlobStorageLocal *SourceAzureBlobStorageLocal
+
+	Type SourceAzureBlobStorageProcessingType
+}
+
+func CreateSourceAzureBlobStorageProcessingSourceAzureBlobStorageLocal(sourceAzureBlobStorageLocal SourceAzureBlobStorageLocal) SourceAzureBlobStorageProcessing {
+	typ := SourceAzureBlobStorageProcessingTypeSourceAzureBlobStorageLocal
+
+	return SourceAzureBlobStorageProcessing{
+		SourceAzureBlobStorageLocal: &sourceAzureBlobStorageLocal,
+		Type:                        typ,
+	}
+}
+
+func (u *SourceAzureBlobStorageProcessing) UnmarshalJSON(data []byte) error {
+
+	sourceAzureBlobStorageLocal := new(SourceAzureBlobStorageLocal)
+	if err := utils.UnmarshalJSON(data, &sourceAzureBlobStorageLocal, "", true, true); err == nil {
+		u.SourceAzureBlobStorageLocal = sourceAzureBlobStorageLocal
+		u.Type = SourceAzureBlobStorageProcessingTypeSourceAzureBlobStorageLocal
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceAzureBlobStorageProcessing) MarshalJSON() ([]byte, error) {
+	if u.SourceAzureBlobStorageLocal != nil {
+		return utils.MarshalJSON(u.SourceAzureBlobStorageLocal, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+// SourceAzureBlobStorageParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceAzureBlobStorageParsingStrategy string
+
+const (
+	SourceAzureBlobStorageParsingStrategyAuto    SourceAzureBlobStorageParsingStrategy = "auto"
+	SourceAzureBlobStorageParsingStrategyFast    SourceAzureBlobStorageParsingStrategy = "fast"
+	SourceAzureBlobStorageParsingStrategyOcrOnly SourceAzureBlobStorageParsingStrategy = "ocr_only"
+	SourceAzureBlobStorageParsingStrategyHiRes   SourceAzureBlobStorageParsingStrategy = "hi_res"
+)
+
+func (e SourceAzureBlobStorageParsingStrategy) ToPointer() *SourceAzureBlobStorageParsingStrategy {
+	return &e
+}
+
+func (e *SourceAzureBlobStorageParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceAzureBlobStorageParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageParsingStrategy: %v", v)
+	}
+}
+
 // SourceAzureBlobStorageDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceAzureBlobStorageDocumentFileTypeFormatExperimental struct {
 	filetype *SourceAzureBlobStorageSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
-	// If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
-	SkipUnprocessableFileTypes *bool `default:"true" json:"skip_unprocessable_file_types"`
+	// Processing configuration
+	Processing *SourceAzureBlobStorageProcessing `json:"processing,omitempty"`
+	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
+	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
+	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+	Strategy *SourceAzureBlobStorageParsingStrategy `default:"auto" json:"strategy"`
 }
 
 func (s SourceAzureBlobStorageDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
@@ -80,11 +204,25 @@ func (o *SourceAzureBlobStorageDocumentFileTypeFormatExperimental) GetFiletype()
 	return SourceAzureBlobStorageSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceAzureBlobStorageDocumentFileTypeFormatExperimental) GetSkipUnprocessableFileTypes() *bool {
+func (o *SourceAzureBlobStorageDocumentFileTypeFormatExperimental) GetProcessing() *SourceAzureBlobStorageProcessing {
 	if o == nil {
 		return nil
 	}
-	return o.SkipUnprocessableFileTypes
+	return o.Processing
+}
+
+func (o *SourceAzureBlobStorageDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipUnprocessableFiles
+}
+
+func (o *SourceAzureBlobStorageDocumentFileTypeFormatExperimental) GetStrategy() *SourceAzureBlobStorageParsingStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.Strategy
 }
 
 type SourceAzureBlobStorageSchemasStreamsFormatFiletype string
@@ -111,7 +249,6 @@ func (e *SourceAzureBlobStorageSchemasStreamsFormatFiletype) UnmarshalJSON(data 
 	}
 }
 
-// SourceAzureBlobStorageParquetFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceAzureBlobStorageParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 	DecimalAsFloat *bool                                               `default:"false" json:"decimal_as_float"`
@@ -164,7 +301,6 @@ func (e *SourceAzureBlobStorageSchemasStreamsFiletype) UnmarshalJSON(data []byte
 	}
 }
 
-// SourceAzureBlobStorageJsonlFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceAzureBlobStorageJsonlFormat struct {
 	filetype *SourceAzureBlobStorageSchemasStreamsFiletype `const:"jsonl" json:"filetype"`
 }
@@ -232,7 +368,6 @@ func (e *SourceAzureBlobStorageSchemasStreamsHeaderDefinitionType) UnmarshalJSON
 	}
 }
 
-// SourceAzureBlobStorageUserProvided - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceAzureBlobStorageUserProvided struct {
 	// The column names that will be used while emitting the CSV records
 	ColumnNames          []string                                                  `json:"column_names"`
@@ -285,7 +420,6 @@ func (e *SourceAzureBlobStorageSchemasHeaderDefinitionType) UnmarshalJSON(data [
 	}
 }
 
-// SourceAzureBlobStorageAutogenerated - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceAzureBlobStorageAutogenerated struct {
 	headerDefinitionType *SourceAzureBlobStorageSchemasHeaderDefinitionType `const:"Autogenerated" json:"header_definition_type"`
 }
@@ -329,7 +463,6 @@ func (e *SourceAzureBlobStorageHeaderDefinitionType) UnmarshalJSON(data []byte) 
 	}
 }
 
-// SourceAzureBlobStorageFromCSV - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceAzureBlobStorageFromCSV struct {
 	headerDefinitionType *SourceAzureBlobStorageHeaderDefinitionType `const:"From CSV" json:"header_definition_type"`
 }
@@ -357,6 +490,7 @@ const (
 	SourceAzureBlobStorageCSVHeaderDefinitionTypeSourceAzureBlobStorageUserProvided  SourceAzureBlobStorageCSVHeaderDefinitionType = "source-azure-blob-storage_User Provided"
 )
 
+// SourceAzureBlobStorageCSVHeaderDefinition - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceAzureBlobStorageCSVHeaderDefinition struct {
 	SourceAzureBlobStorageFromCSV       *SourceAzureBlobStorageFromCSV
 	SourceAzureBlobStorageAutogenerated *SourceAzureBlobStorageAutogenerated
@@ -462,7 +596,6 @@ func (e *SourceAzureBlobStorageInferenceType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAzureBlobStorageCSVFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceAzureBlobStorageCSVFormat struct {
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
@@ -482,7 +615,7 @@ type SourceAzureBlobStorageCSVFormat struct {
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:""" json:"quote_char"`
+	QuoteChar *string `default:"\"" json:"quote_char"`
 	// The number of rows to skip after the header row.
 	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
 	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
@@ -623,7 +756,6 @@ func (e *SourceAzureBlobStorageFiletype) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAzureBlobStorageAvroFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceAzureBlobStorageAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
 	DoubleAsString *bool                           `default:"false" json:"double_as_string"`
@@ -662,6 +794,7 @@ const (
 	SourceAzureBlobStorageFormatTypeSourceAzureBlobStorageDocumentFileTypeFormatExperimental SourceAzureBlobStorageFormatType = "source-azure-blob-storage_Document File Type Format (Experimental)"
 )
 
+// SourceAzureBlobStorageFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceAzureBlobStorageFormat struct {
 	SourceAzureBlobStorageAvroFormat                         *SourceAzureBlobStorageAvroFormat
 	SourceAzureBlobStorageCSVFormat                          *SourceAzureBlobStorageCSVFormat
@@ -825,7 +958,7 @@ type SourceAzureBlobStorageFileBasedStreamConfig struct {
 	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record.
+	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 	PrimaryKey *string `json:"primary_key,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`

@@ -9,8 +9,8 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "79345d14-4630-4331-8f29-cf10b0742b93"
-  name          = "Jesus Marquardt Sr."
+  definition_id = "74976dbe-116c-4781-96c7-0bfb32667c47"
+  name          = "Derek Bauch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1a320cca-d5ad-4c13-b0ef-57488395b5ae"
+  workspace_id  = "16107c03-f839-4206-b4c9-db1c42670928"
 }

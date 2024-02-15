@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMailjetSmsResourceModel) ToCreateSDKType() *shared.SourceMailjetSmsCreateRequest {
+func (r *SourceMailjetSmsResourceModel) ToSharedSourceMailjetSmsCreateRequest() *shared.SourceMailjetSmsCreateRequest {
 	endDate := new(int64)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueInt64()
@@ -50,12 +50,14 @@ func (r *SourceMailjetSmsResourceModel) ToCreateSDKType() *shared.SourceMailjetS
 	return &out
 }
 
-func (r *SourceMailjetSmsResourceModel) ToGetSDKType() *shared.SourceMailjetSmsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMailjetSmsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMailjetSmsResourceModel) ToUpdateSDKType() *shared.SourceMailjetSmsPutRequest {
+func (r *SourceMailjetSmsResourceModel) ToSharedSourceMailjetSmsPutRequest() *shared.SourceMailjetSmsPutRequest {
 	endDate := new(int64)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueInt64()
@@ -82,20 +84,4 @@ func (r *SourceMailjetSmsResourceModel) ToUpdateSDKType() *shared.SourceMailjetS
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMailjetSmsResourceModel) ToDeleteSDKType() *shared.SourceMailjetSmsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMailjetSmsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMailjetSmsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

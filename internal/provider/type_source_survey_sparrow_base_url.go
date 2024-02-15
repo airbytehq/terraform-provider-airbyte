@@ -3,6 +3,6 @@
 package provider
 
 type SourceSurveySparrowBaseURL struct {
-	EUBasedAccount *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"eu_based_account"`
-	GlobalAccount  *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"global_account"`
+	EUBasedAccount *Fake `tfsdk:"eu_based_account"`
+	GlobalAccount  *Fake `tfsdk:"global_account"`
 }

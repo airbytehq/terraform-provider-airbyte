@@ -33,7 +33,6 @@ func (e *SourceMicrosoftTeamsSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMicrosoftTeamsAuthenticateViaMicrosoft - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsAuthenticateViaMicrosoft struct {
 	authType *SourceMicrosoftTeamsSchemasAuthType `const:"Token" json:"auth_type"`
 	// The Client ID of your Microsoft Teams developer application.
@@ -104,7 +103,6 @@ func (e *SourceMicrosoftTeamsAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 struct {
 	authType *SourceMicrosoftTeamsAuthType `const:"Client" json:"auth_type"`
 	// The Client ID of your Microsoft Teams developer application.
@@ -167,6 +165,7 @@ const (
 	SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticateViaMicrosoft        SourceMicrosoftTeamsAuthenticationMechanismType = "source-microsoft-teams_Authenticate via Microsoft"
 )
 
+// SourceMicrosoftTeamsAuthenticationMechanism - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsAuthenticationMechanism struct {
 	SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 *SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
 	SourceMicrosoftTeamsAuthenticateViaMicrosoft        *SourceMicrosoftTeamsAuthenticateViaMicrosoft

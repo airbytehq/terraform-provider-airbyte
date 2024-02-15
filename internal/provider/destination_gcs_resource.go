@@ -5,16 +5,19 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,6 +57,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credential": schema.SingleNestedAttribute{
@@ -63,7 +69,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("HMAC_KEY"),
 										Description: `must be one of ["HMAC_KEY"]; Default: "HMAC_KEY"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -82,7 +90,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.`,
 									},
 								},
-								Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
 							},
 						},
 						Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -103,7 +110,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("bzip2"),
 														Description: `must be one of ["bzip2"]; Default: "bzip2"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -112,13 +121,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"deflate": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("Deflate"),
 														Description: `must be one of ["Deflate"]; Default: "Deflate"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -127,18 +137,20 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
-														MarkdownDescription: `Default: 0` + "\n" +
-															`0: no compression & fastest, 9: best compression & slowest.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     int64default.StaticInt64(0),
+														Description: `0: no compression & fastest, 9: best compression & slowest. Default: 0`,
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("no compression"),
 														Description: `must be one of ["no compression"]; Default: "no compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -147,13 +159,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"snappy": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("snappy"),
 														Description: `must be one of ["snappy"]; Default: "snappy"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -162,13 +175,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"xz": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("xz"),
 														Description: `must be one of ["xz"]; Default: "xz"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -177,18 +191,20 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
-														MarkdownDescription: `Default: 6` + "\n" +
-															`The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     int64default.StaticInt64(6),
+														Description: `The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details. Default: 6`,
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"zstandard": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("zstandard"),
 														Description: `must be one of ["zstandard"]; Default: "zstandard"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -197,17 +213,18 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
-														MarkdownDescription: `Default: 3` + "\n" +
-															`Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     int64default.StaticInt64(3),
+														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory. Default: 3`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Optional: true,
-														MarkdownDescription: `Default: false` + "\n" +
-															`If true, include a checksum with each data block.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     booldefault.StaticBool(false),
+														Description: `If true, include a checksum with each data block. Default: false`,
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 										},
 										Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -216,7 +233,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("Avro"),
 										Description: `must be one of ["Avro"]; Default: "Avro"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -225,7 +244,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 								},
-								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"csv_comma_separated_values": schema.SingleNestedAttribute{
 								Optional: true,
@@ -237,7 +255,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("GZIP"),
 														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -246,13 +266,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("No Compression"),
 														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -261,7 +282,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 										},
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -270,9 +290,10 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
-											`Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("No flattening"),
+										Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
@@ -281,7 +302,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("CSV"),
 										Description: `must be one of ["CSV"]; Default: "CSV"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -290,7 +313,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 								},
-								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
@@ -302,7 +324,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("GZIP"),
 														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -311,13 +335,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("No Compression"),
 														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -326,7 +351,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 										},
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -335,7 +359,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("JSONL"),
 										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -344,20 +370,21 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 								},
-								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"parquet_columnar_storage": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 128` + "\n" +
-											`This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(128),
+										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB. Default: 128`,
 									},
 									"compression_codec": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"` + "\n" +
-											`The compression algorithm used to compress data pages.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("UNCOMPRESSED"),
+										Description: `The compression algorithm used to compress data pages. must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"UNCOMPRESSED",
@@ -371,17 +398,21 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: true` + "\n" +
-											`Default: true.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(true),
+										Description: `Default: true. Default: true`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 1024` + "\n" +
-											`There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(1024),
+										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB. Default: 1024`,
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("Parquet"),
 										Description: `must be one of ["Parquet"]; Default: "Parquet"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -390,17 +421,18 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 8` + "\n" +
-											`Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(8),
+										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB. Default: 8`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 1024` + "\n" +
-											`The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(1024),
+										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB. Default: 1024`,
 									},
 								},
-								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 						},
 						Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -417,9 +449,10 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Description: `GCS Bucket Path string Subdirectory under the above bucket to sync the data into.`,
 					},
 					"gcs_bucket_region": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]; Default: "us"` + "\n" +
-							`Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("us"),
+						Description: `Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>. must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]; Default: "us"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"northamerica-northeast1",
@@ -464,33 +497,33 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -520,14 +553,14 @@ func (r *DestinationGcsResource) Configure(ctx context.Context, req resource.Con
 
 func (r *DestinationGcsResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *DestinationGcsResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -536,7 +569,7 @@ func (r *DestinationGcsResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedDestinationGcsCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationGcs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -557,7 +590,34 @@ func (r *DestinationGcsResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	destinationID := data.DestinationID.ValueString()
+	request1 := operations.GetDestinationGcsRequest{
+		DestinationID: destinationID,
+	}
+	res1, err := r.client.Destinations.GetDestinationGcs(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -605,7 +665,7 @@ func (r *DestinationGcsResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -613,12 +673,19 @@ func (r *DestinationGcsResource) Read(ctx context.Context, req resource.ReadRequ
 
 func (r *DestinationGcsResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationGcsResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	destinationGcsPutRequest := data.ToUpdateSDKType()
+	destinationGcsPutRequest := data.ToSharedDestinationGcsPutRequest()
 	destinationID := data.DestinationID.ValueString()
 	request := operations.PutDestinationGcsRequest{
 		DestinationGcsPutRequest: destinationGcsPutRequest,
@@ -640,31 +707,33 @@ func (r *DestinationGcsResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	destinationId1 := data.DestinationID.ValueString()
-	getRequest := operations.GetDestinationGcsRequest{
+	request1 := operations.GetDestinationGcsRequest{
 		DestinationID: destinationId1,
 	}
-	getResponse, err := r.client.Destinations.GetDestinationGcs(ctx, getRequest)
+	res1, err := r.client.Destinations.GetDestinationGcs(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

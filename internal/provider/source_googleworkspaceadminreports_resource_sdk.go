@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToSharedSourceGoogleWorkspaceAdminReportsCreateRequest() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	email := r.Configuration.Email.ValueString()
 	lookback := new(int64)
@@ -45,12 +45,14 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shar
 	return &out
 }
 
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToGetSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToUpdateSDKType() *shared.SourceGoogleWorkspaceAdminReportsPutRequest {
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToSharedSourceGoogleWorkspaceAdminReportsPutRequest() *shared.SourceGoogleWorkspaceAdminReportsPutRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	email := r.Configuration.Email.ValueString()
 	lookback := new(int64)
@@ -72,20 +74,4 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToUpdateSDKType() *shar
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToDeleteSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

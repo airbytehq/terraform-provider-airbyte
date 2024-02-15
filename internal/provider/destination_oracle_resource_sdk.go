@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOracleCreateRequest {
+func (r *DestinationOracleResourceModel) ToSharedDestinationOracleCreateRequest() *shared.DestinationOracleCreateRequest {
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -120,12 +120,14 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 	return &out
 }
 
-func (r *DestinationOracleResourceModel) ToGetSDKType() *shared.DestinationOracleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationOracleResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOraclePutRequest {
+func (r *DestinationOracleResourceModel) ToSharedDestinationOraclePutRequest() *shared.DestinationOraclePutRequest {
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -229,20 +231,4 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationOracleResourceModel) ToDeleteSDKType() *shared.DestinationOracleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationOracleResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationOracleResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

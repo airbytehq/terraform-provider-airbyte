@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMongodbV2ResourceModel) ToCreateSDKType() *shared.SourceMongodbV2CreateRequest {
+func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *shared.SourceMongodbV2CreateRequest {
 	var databaseConfig shared.SourceMongodbV2ClusterType
 	var sourceMongodbV2MongoDBAtlasReplicaSet *shared.SourceMongodbV2MongoDBAtlasReplicaSet
 	if r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet != nil {
@@ -25,6 +25,12 @@ func (r *SourceMongodbV2ResourceModel) ToCreateSDKType() *shared.SourceMongodbV2
 		connectionString := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.ConnectionString.ValueString()
 		database := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Database.ValueString()
 		password := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Password.ValueString()
+		schemaEnforced := new(bool)
+		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsNull() {
+			*schemaEnforced = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.ValueBool()
+		} else {
+			schemaEnforced = nil
+		}
 		username := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Username.ValueString()
 		sourceMongodbV2MongoDBAtlasReplicaSet = &shared.SourceMongodbV2MongoDBAtlasReplicaSet{
 			AdditionalProperties: additionalProperties,
@@ -32,6 +38,7 @@ func (r *SourceMongodbV2ResourceModel) ToCreateSDKType() *shared.SourceMongodbV2
 			ConnectionString:     connectionString,
 			Database:             database,
 			Password:             password,
+			SchemaEnforced:       schemaEnforced,
 			Username:             username,
 		}
 	}
@@ -60,6 +67,12 @@ func (r *SourceMongodbV2ResourceModel) ToCreateSDKType() *shared.SourceMongodbV2
 		} else {
 			password1 = nil
 		}
+		schemaEnforced1 := new(bool)
+		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsNull() {
+			*schemaEnforced1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.ValueBool()
+		} else {
+			schemaEnforced1 = nil
+		}
 		username1 := new(string)
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsNull() {
 			*username1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.ValueString()
@@ -72,6 +85,7 @@ func (r *SourceMongodbV2ResourceModel) ToCreateSDKType() *shared.SourceMongodbV2
 			ConnectionString:     connectionString1,
 			Database:             database1,
 			Password:             password1,
+			SchemaEnforced:       schemaEnforced1,
 			Username:             username1,
 		}
 	}
@@ -128,12 +142,14 @@ func (r *SourceMongodbV2ResourceModel) ToCreateSDKType() *shared.SourceMongodbV2
 	return &out
 }
 
-func (r *SourceMongodbV2ResourceModel) ToGetSDKType() *shared.SourceMongodbV2CreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMongodbV2ResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMongodbV2ResourceModel) ToUpdateSDKType() *shared.SourceMongodbV2PutRequest {
+func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shared.SourceMongodbV2PutRequest {
 	var databaseConfig shared.ClusterType
 	var mongoDBAtlasReplicaSet *shared.MongoDBAtlasReplicaSet
 	if r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet != nil {
@@ -150,6 +166,12 @@ func (r *SourceMongodbV2ResourceModel) ToUpdateSDKType() *shared.SourceMongodbV2
 		connectionString := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.ConnectionString.ValueString()
 		database := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Database.ValueString()
 		password := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Password.ValueString()
+		schemaEnforced := new(bool)
+		if !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.IsNull() {
+			*schemaEnforced = r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.SchemaEnforced.ValueBool()
+		} else {
+			schemaEnforced = nil
+		}
 		username := r.Configuration.DatabaseConfig.MongoDBAtlasReplicaSet.Username.ValueString()
 		mongoDBAtlasReplicaSet = &shared.MongoDBAtlasReplicaSet{
 			AdditionalProperties: additionalProperties,
@@ -157,6 +179,7 @@ func (r *SourceMongodbV2ResourceModel) ToUpdateSDKType() *shared.SourceMongodbV2
 			ConnectionString:     connectionString,
 			Database:             database,
 			Password:             password,
+			SchemaEnforced:       schemaEnforced,
 			Username:             username,
 		}
 	}
@@ -185,6 +208,12 @@ func (r *SourceMongodbV2ResourceModel) ToUpdateSDKType() *shared.SourceMongodbV2
 		} else {
 			password1 = nil
 		}
+		schemaEnforced1 := new(bool)
+		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.IsNull() {
+			*schemaEnforced1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.SchemaEnforced.ValueBool()
+		} else {
+			schemaEnforced1 = nil
+		}
 		username1 := new(string)
 		if !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsUnknown() && !r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.IsNull() {
 			*username1 = r.Configuration.DatabaseConfig.SelfManagedReplicaSet.Username.ValueString()
@@ -197,6 +226,7 @@ func (r *SourceMongodbV2ResourceModel) ToUpdateSDKType() *shared.SourceMongodbV2
 			ConnectionString:     connectionString1,
 			Database:             database1,
 			Password:             password1,
+			SchemaEnforced:       schemaEnforced1,
 			Username:             username1,
 		}
 	}
@@ -237,20 +267,4 @@ func (r *SourceMongodbV2ResourceModel) ToUpdateSDKType() *shared.SourceMongodbV2
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMongodbV2ResourceModel) ToDeleteSDKType() *shared.SourceMongodbV2CreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMongodbV2ResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMongodbV2ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

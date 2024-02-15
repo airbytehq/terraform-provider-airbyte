@@ -57,7 +57,6 @@ func (e *DestinationAzureBlobStorageSchemasFormatType) UnmarshalJSON(data []byte
 	}
 }
 
-// DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON - Output data format
 type DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON struct {
 	formatType DestinationAzureBlobStorageSchemasFormatType `const:"JSONL" json:"format_type"`
 }
@@ -129,7 +128,6 @@ func (e *DestinationAzureBlobStorageFormatType) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationAzureBlobStorageCSVCommaSeparatedValues - Output data format
 type DestinationAzureBlobStorageCSVCommaSeparatedValues struct {
 	// Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 	Flattening *DestinationAzureBlobStorageNormalizationFlattening `default:"No flattening" json:"flattening"`
@@ -165,6 +163,7 @@ const (
 	DestinationAzureBlobStorageOutputFormatTypeDestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON DestinationAzureBlobStorageOutputFormatType = "destination-azure-blob-storage_JSON Lines: newline-delimited JSON"
 )
 
+// DestinationAzureBlobStorageOutputFormat - Output data format
 type DestinationAzureBlobStorageOutputFormat struct {
 	DestinationAzureBlobStorageCSVCommaSeparatedValues       *DestinationAzureBlobStorageCSVCommaSeparatedValues
 	DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON

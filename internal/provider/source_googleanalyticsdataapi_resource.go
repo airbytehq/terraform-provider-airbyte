@@ -5,14 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,8 +58,17 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"convert_conversions_event": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Enables conversion of ` + "`" + `conversions:*` + "`" + ` event metrics from integers to floats. This is beneficial for preventing data rounding when the API returns float values for any ` + "`" + `conversions:*` + "`" + ` fields. Default: false`,
+					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
@@ -81,7 +94,6 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 										Description: `The token for obtaining a new access token.`,
 									},
 								},
-								Description: `Credentials for the service`,
 							},
 							"service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -91,7 +103,6 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
 									},
 								},
-								Description: `Credentials for the service`,
 							},
 						},
 						Description: `Credentials for the service`,
@@ -103,6 +114,96 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
+								"cohort_spec": schema.SingleNestedAttribute{
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"disabled": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+										},
+										"enabled": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"cohort_report_settings": schema.SingleNestedAttribute{
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"accumulate": schema.BoolAttribute{
+															Optional:    true,
+															Description: `If true, accumulates the result from first touch day to the end day`,
+														},
+													},
+													Description: `Optional settings for a cohort report.`,
+												},
+												"cohorts": schema.ListNestedAttribute{
+													Optional: true,
+													NestedObject: schema.NestedAttributeObject{
+														Attributes: map[string]schema.Attribute{
+															"date_range": schema.SingleNestedAttribute{
+																Required: true,
+																Attributes: map[string]schema.Attribute{
+																	"end_date": schema.StringAttribute{
+																		Required: true,
+																		Validators: []validator.String{
+																			validators.IsValidDate(),
+																		},
+																	},
+																	"start_date": schema.StringAttribute{
+																		Required: true,
+																		Validators: []validator.String{
+																			validators.IsValidDate(),
+																		},
+																	},
+																},
+															},
+															"dimension": schema.StringAttribute{
+																Required:    true,
+																Description: `Dimension used by the cohort. Required and only supports ` + "`" + `firstSessionDate` + "`" + `. must be one of ["firstSessionDate"]`,
+																Validators: []validator.String{
+																	stringvalidator.OneOf(
+																		"firstSessionDate",
+																	),
+																},
+															},
+															"name": schema.StringAttribute{
+																Optional:    true,
+																Description: `Assigns a name to this cohort. If not set, cohorts are named by their zero based index cohort_0, cohort_1, etc.`,
+															},
+														},
+													},
+												},
+												"cohorts_range": schema.SingleNestedAttribute{
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"end_offset": schema.Int64Attribute{
+															Required:    true,
+															Description: `Specifies the end date of the extended reporting date range for a cohort report.`,
+														},
+														"granularity": schema.StringAttribute{
+															Required:    true,
+															Description: `The granularity used to interpret the startOffset and endOffset for the extended reporting date range for a cohort report. must be one of ["GRANULARITY_UNSPECIFIED", "DAILY", "WEEKLY", "MONTHLY"]`,
+															Validators: []validator.String{
+																stringvalidator.OneOf(
+																	"GRANULARITY_UNSPECIFIED",
+																	"DAILY",
+																	"WEEKLY",
+																	"MONTHLY",
+																),
+															},
+														},
+														"start_offset": schema.Int64Attribute{
+															Optional:    true,
+															Description: `Specifies the start date of the extended reporting date range for a cohort report.`,
+														},
+													},
+												},
+											},
+										},
+									},
+									Description: `Cohort reports creates a time series of user retention for the cohort.`,
+									Validators: []validator.Object{
+										validators.ExactlyOneChild(),
+									},
+								},
 								"dimension_filter": schema.SingleNestedAttribute{
 									Optional: true,
 									Attributes: map[string]schema.Attribute{
@@ -181,6 +282,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																			"values": schema.ListAttribute{
 																				Required:    true,
 																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.SizeAtLeast(1),
+																				},
 																			},
 																		},
 																	},
@@ -314,6 +418,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																"values": schema.ListAttribute{
 																	Required:    true,
 																	ElementType: types.StringType,
+																	Validators: []validator.List{
+																		listvalidator.SizeAtLeast(1),
+																	},
 																},
 															},
 														},
@@ -447,6 +554,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"values": schema.ListAttribute{
 																			Required:    true,
 																			ElementType: types.StringType,
+																			Validators: []validator.List{
+																				listvalidator.SizeAtLeast(1),
+																			},
 																		},
 																	},
 																},
@@ -583,6 +693,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																			"values": schema.ListAttribute{
 																				Required:    true,
 																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.SizeAtLeast(1),
+																				},
 																			},
 																		},
 																	},
@@ -655,6 +768,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 									Required:    true,
 									ElementType: types.StringType,
 									Description: `A list of dimensions.`,
+									Validators: []validator.List{
+										listvalidator.SizeAtLeast(1),
+									},
 								},
 								"metric_filter": schema.SingleNestedAttribute{
 									Optional: true,
@@ -734,6 +850,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																			"values": schema.ListAttribute{
 																				Required:    true,
 																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.SizeAtLeast(1),
+																				},
 																			},
 																		},
 																	},
@@ -867,6 +986,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																"values": schema.ListAttribute{
 																	Required:    true,
 																	ElementType: types.StringType,
+																	Validators: []validator.List{
+																		listvalidator.SizeAtLeast(1),
+																	},
 																},
 															},
 														},
@@ -1000,6 +1122,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"values": schema.ListAttribute{
 																			Required:    true,
 																			ElementType: types.StringType,
+																			Validators: []validator.List{
+																				listvalidator.SizeAtLeast(1),
+																			},
 																		},
 																	},
 																},
@@ -1136,6 +1261,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																			"values": schema.ListAttribute{
 																				Required:    true,
 																				ElementType: types.StringType,
+																				Validators: []validator.List{
+																					listvalidator.SizeAtLeast(1),
+																				},
 																			},
 																		},
 																	},
@@ -1208,6 +1336,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 									Required:    true,
 									ElementType: types.StringType,
 									Description: `A list of metrics.`,
+									Validators: []validator.List{
+										listvalidator.SizeAtLeast(1),
+									},
 								},
 								"name": schema.StringAttribute{
 									Required:    true,
@@ -1224,54 +1355,61 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 							validators.IsValidDate(),
 						},
 					},
+					"keep_empty_rows": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `If false, each row with all metrics equal to 0 will not be returned. If true, these rows will be returned if they are not separately removed by a filter. More information is available in <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#request-body">the documentation</a>. Default: false`,
+					},
 					"property_ids": schema.ListAttribute{
 						Required:    true,
 						ElementType: types.StringType,
 						Description: `A list of your Property IDs. The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.`,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 1` + "\n" +
-							`The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(1),
+						Description: `The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>. Default: 1`,
 					},
 				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -1301,14 +1439,14 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Configure(ctx context.Context, re
 
 func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceGoogleAnalyticsDataAPIResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -1317,7 +1455,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req r
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceGoogleAnalyticsDataAPICreateRequest()
 	res, err := r.client.Sources.CreateSourceGoogleAnalyticsDataAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -1338,7 +1476,34 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req r
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceGoogleAnalyticsDataAPIRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -1386,7 +1551,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Read(ctx context.Context, req res
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -1394,12 +1559,19 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Read(ctx context.Context, req res
 
 func (r *SourceGoogleAnalyticsDataAPIResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceGoogleAnalyticsDataAPIResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceGoogleAnalyticsDataAPIPutRequest := data.ToUpdateSDKType()
+	sourceGoogleAnalyticsDataAPIPutRequest := data.ToSharedSourceGoogleAnalyticsDataAPIPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceGoogleAnalyticsDataAPIRequest{
 		SourceGoogleAnalyticsDataAPIPutRequest: sourceGoogleAnalyticsDataAPIPutRequest,
@@ -1421,31 +1593,33 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Update(ctx context.Context, req r
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceGoogleAnalyticsDataAPIRequest{
+	request1 := operations.GetSourceGoogleAnalyticsDataAPIRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

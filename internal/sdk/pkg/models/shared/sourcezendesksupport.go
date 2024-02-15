@@ -34,7 +34,6 @@ func (e *SourceZendeskSupportSchemasCredentials) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceZendeskSupportAPIToken - Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 type SourceZendeskSupportAPIToken struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.
@@ -104,7 +103,6 @@ func (e *SourceZendeskSupportCredentials) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZendeskSupportOAuth20 - Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 type SourceZendeskSupportOAuth20 struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.
@@ -166,6 +164,7 @@ const (
 	SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAPIToken SourceZendeskSupportAuthenticationType = "source-zendesk-support_API Token"
 )
 
+// SourceZendeskSupportAuthentication - Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 type SourceZendeskSupportAuthentication struct {
 	SourceZendeskSupportOAuth20  *SourceZendeskSupportOAuth20
 	SourceZendeskSupportAPIToken *SourceZendeskSupportAPIToken

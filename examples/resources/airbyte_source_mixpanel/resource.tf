@@ -1,20 +1,20 @@
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 0
+    attribution_window = 1
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
     }
-    date_window_size             = 3
+    date_window_size             = 10
     end_date                     = "2021-11-16"
-    project_timezone             = "UTC"
+    project_timezone             = "US/Pacific"
     region                       = "US"
-    select_properties_by_default = true
+    select_properties_by_default = false
     start_date                   = "2021-11-16"
   }
-  definition_id = "a514955f-a2ea-425a-91d7-622e389cc420"
-  name          = "Cecilia Gerlach"
+  definition_id = "8729ff50-24b6-490b-a736-f2f7a3b95d4a"
+  name          = "Lucas Reichert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b3299a61-1cc7-4be3-a8ba-7188dc05c92c"
+  workspace_id  = "dfbbab6a-d0e4-44a4-9c97-0c078573a20a"
 }

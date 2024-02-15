@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.DestinationAzureBlobStorageCreateRequest {
+func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobStorageCreateRequest() *shared.DestinationAzureBlobStorageCreateRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
 	azureBlobStorageContainerName := new(string)
@@ -87,12 +87,14 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 	return &out
 }
 
-func (r *DestinationAzureBlobStorageResourceModel) ToGetSDKType() *shared.DestinationAzureBlobStorageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationAzureBlobStorageResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.DestinationAzureBlobStoragePutRequest {
+func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobStoragePutRequest() *shared.DestinationAzureBlobStoragePutRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
 	azureBlobStorageContainerName := new(string)
@@ -163,20 +165,4 @@ func (r *DestinationAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.Des
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.DestinationAzureBlobStorageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationAzureBlobStorageResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

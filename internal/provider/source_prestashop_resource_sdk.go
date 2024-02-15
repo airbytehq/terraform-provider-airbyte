@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestashopCreateRequest {
+func (r *SourcePrestashopResourceModel) ToSharedSourcePrestashopCreateRequest() *shared.SourcePrestashopCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
@@ -41,12 +41,14 @@ func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestash
 	return &out
 }
 
-func (r *SourcePrestashopResourceModel) ToGetSDKType() *shared.SourcePrestashopCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePrestashopResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePrestashopResourceModel) ToUpdateSDKType() *shared.SourcePrestashopPutRequest {
+func (r *SourcePrestashopResourceModel) ToSharedSourcePrestashopPutRequest() *shared.SourcePrestashopPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
@@ -63,20 +65,4 @@ func (r *SourcePrestashopResourceModel) ToUpdateSDKType() *shared.SourcePrestash
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePrestashopResourceModel) ToDeleteSDKType() *shared.SourcePrestashopCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePrestashopResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePrestashopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

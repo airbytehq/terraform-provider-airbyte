@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMssqlCreateRequest {
+func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() *shared.DestinationMssqlCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -150,12 +150,14 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 	return &out
 }
 
-func (r *DestinationMssqlResourceModel) ToGetSDKType() *shared.DestinationMssqlCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationMssqlResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationMssqlResourceModel) ToUpdateSDKType() *shared.DestinationMssqlPutRequest {
+func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *shared.DestinationMssqlPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -289,20 +291,4 @@ func (r *DestinationMssqlResourceModel) ToUpdateSDKType() *shared.DestinationMss
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationMssqlResourceModel) ToDeleteSDKType() *shared.DestinationMssqlCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationMssqlResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationMssqlResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

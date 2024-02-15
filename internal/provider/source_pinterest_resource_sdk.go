@@ -8,34 +8,16 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterestCreateRequest {
-	var credentials *shared.SourcePinterestAuthorizationMethod
+func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *shared.SourcePinterestCreateRequest {
+	var credentials *shared.SourcePinterestOAuth20
 	if r.Configuration.Credentials != nil {
-		var sourcePinterestOAuth20 *shared.SourcePinterestOAuth20
-		if r.Configuration.Credentials.OAuth20 != nil {
-			clientID := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-			} else {
-				clientID = nil
-			}
-			clientSecret := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-			} else {
-				clientSecret = nil
-			}
-			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
-			sourcePinterestOAuth20 = &shared.SourcePinterestOAuth20{
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
-				RefreshToken: refreshToken,
-			}
-		}
-		if sourcePinterestOAuth20 != nil {
-			credentials = &shared.SourcePinterestAuthorizationMethod{
-				SourcePinterestOAuth20: sourcePinterestOAuth20,
-			}
+		clientID := r.Configuration.Credentials.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
+		credentials = &shared.SourcePinterestOAuth20{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
 		}
 	}
 	var customReports []shared.SourcePinterestReportConfig = nil
@@ -144,39 +126,23 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 	return &out
 }
 
-func (r *SourcePinterestResourceModel) ToGetSDKType() *shared.SourcePinterestCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePinterestResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterestPutRequest {
-	var credentials *shared.SourcePinterestUpdateAuthorizationMethod
+func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shared.SourcePinterestPutRequest {
+	var credentials *shared.OAuth20
 	if r.Configuration.Credentials != nil {
-		var sourcePinterestUpdateOAuth20 *shared.SourcePinterestUpdateOAuth20
-		if r.Configuration.Credentials.OAuth20 != nil {
-			clientID := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-			} else {
-				clientID = nil
-			}
-			clientSecret := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-			} else {
-				clientSecret = nil
-			}
-			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
-			sourcePinterestUpdateOAuth20 = &shared.SourcePinterestUpdateOAuth20{
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
-				RefreshToken: refreshToken,
-			}
-		}
-		if sourcePinterestUpdateOAuth20 != nil {
-			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-				SourcePinterestUpdateOAuth20: sourcePinterestUpdateOAuth20,
-			}
+		clientID := r.Configuration.Credentials.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
+		credentials = &shared.OAuth20{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
 		}
 	}
 	var customReports []shared.ReportConfig = nil
@@ -269,20 +235,4 @@ func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePinterestResourceModel) ToDeleteSDKType() *shared.SourcePinterestCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePinterestResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePinterestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

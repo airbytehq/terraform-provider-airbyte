@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZendeskSupportCreateRequest {
+func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRequest() *shared.SourceZendeskSupportCreateRequest {
 	var credentials *shared.SourceZendeskSupportAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSupportOAuth20 *shared.SourceZendeskSupportOAuth20
@@ -106,12 +106,14 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 	return &out
 }
 
-func (r *SourceZendeskSupportResourceModel) ToGetSDKType() *shared.SourceZendeskSupportCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceZendeskSupportResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZendeskSupportPutRequest {
+func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportPutRequest() *shared.SourceZendeskSupportPutRequest {
 	var credentials *shared.SourceZendeskSupportUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSupportUpdateOAuth20 *shared.SourceZendeskSupportUpdateOAuth20
@@ -192,20 +194,4 @@ func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZend
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceZendeskSupportResourceModel) ToDeleteSDKType() *shared.SourceZendeskSupportCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceZendeskSupportResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceZendeskSupportResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

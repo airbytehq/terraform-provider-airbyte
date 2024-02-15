@@ -33,27 +33,27 @@ func (e *Qdrant) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationQdrantSchemasEmbeddingEmbedding6Mode string
+type DestinationQdrantSchemasEmbeddingEmbedding5Mode string
 
 const (
-	DestinationQdrantSchemasEmbeddingEmbedding6ModeOpenaiCompatible DestinationQdrantSchemasEmbeddingEmbedding6Mode = "openai_compatible"
+	DestinationQdrantSchemasEmbeddingEmbedding5ModeOpenaiCompatible DestinationQdrantSchemasEmbeddingEmbedding5Mode = "openai_compatible"
 )
 
-func (e DestinationQdrantSchemasEmbeddingEmbedding6Mode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbedding6Mode {
+func (e DestinationQdrantSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
 
-func (e *DestinationQdrantSchemasEmbeddingEmbedding6Mode) UnmarshalJSON(data []byte) error {
+func (e *DestinationQdrantSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "openai_compatible":
-		*e = DestinationQdrantSchemasEmbeddingEmbedding6Mode(v)
+		*e = DestinationQdrantSchemasEmbeddingEmbedding5Mode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasEmbeddingEmbedding6Mode: %v", v)
+		return fmt.Errorf("invalid value for DestinationQdrantSchemasEmbeddingEmbedding5Mode: %v", v)
 	}
 }
 
@@ -64,7 +64,7 @@ type DestinationQdrantOpenAICompatible struct {
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
 	Dimensions int64                                            `json:"dimensions"`
-	mode       *DestinationQdrantSchemasEmbeddingEmbedding6Mode `const:"openai_compatible" json:"mode"`
+	mode       *DestinationQdrantSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -101,8 +101,8 @@ func (o *DestinationQdrantOpenAICompatible) GetDimensions() int64 {
 	return o.Dimensions
 }
 
-func (o *DestinationQdrantOpenAICompatible) GetMode() *DestinationQdrantSchemasEmbeddingEmbedding6Mode {
-	return DestinationQdrantSchemasEmbeddingEmbedding6ModeOpenaiCompatible.ToPointer()
+func (o *DestinationQdrantOpenAICompatible) GetMode() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
+	return DestinationQdrantSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationQdrantOpenAICompatible) GetModelName() *string {
@@ -112,27 +112,27 @@ func (o *DestinationQdrantOpenAICompatible) GetModelName() *string {
 	return o.ModelName
 }
 
-type DestinationQdrantSchemasEmbeddingEmbedding5Mode string
+type DestinationQdrantSchemasEmbeddingEmbeddingMode string
 
 const (
-	DestinationQdrantSchemasEmbeddingEmbedding5ModeAzureOpenai DestinationQdrantSchemasEmbeddingEmbedding5Mode = "azure_openai"
+	DestinationQdrantSchemasEmbeddingEmbeddingModeAzureOpenai DestinationQdrantSchemasEmbeddingEmbeddingMode = "azure_openai"
 )
 
-func (e DestinationQdrantSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
+func (e DestinationQdrantSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
 	return &e
 }
 
-func (e *DestinationQdrantSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
+func (e *DestinationQdrantSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "azure_openai":
-		*e = DestinationQdrantSchemasEmbeddingEmbedding5Mode(v)
+		*e = DestinationQdrantSchemasEmbeddingEmbeddingMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasEmbeddingEmbedding5Mode: %v", v)
+		return fmt.Errorf("invalid value for DestinationQdrantSchemasEmbeddingEmbeddingMode: %v", v)
 	}
 }
 
@@ -141,8 +141,8 @@ type DestinationQdrantAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                                           `json:"deployment"`
-	mode       *DestinationQdrantSchemasEmbeddingEmbedding5Mode `const:"azure_openai" json:"mode"`
+	Deployment string                                          `json:"deployment"`
+	mode       *DestinationQdrantSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -172,8 +172,8 @@ func (o *DestinationQdrantAzureOpenAI) GetDeployment() string {
 	return o.Deployment
 }
 
-func (o *DestinationQdrantAzureOpenAI) GetMode() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
-	return DestinationQdrantSchemasEmbeddingEmbedding5ModeAzureOpenai.ToPointer()
+func (o *DestinationQdrantAzureOpenAI) GetMode() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
+	return DestinationQdrantSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
 }
 
 func (o *DestinationQdrantAzureOpenAI) GetOpenaiKey() string {
@@ -181,68 +181,6 @@ func (o *DestinationQdrantAzureOpenAI) GetOpenaiKey() string {
 		return ""
 	}
 	return o.OpenaiKey
-}
-
-type DestinationQdrantSchemasEmbeddingEmbeddingMode string
-
-const (
-	DestinationQdrantSchemasEmbeddingEmbeddingModeFromField DestinationQdrantSchemasEmbeddingEmbeddingMode = "from_field"
-)
-
-func (e DestinationQdrantSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
-	return &e
-}
-
-func (e *DestinationQdrantSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "from_field":
-		*e = DestinationQdrantSchemasEmbeddingEmbeddingMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasEmbeddingEmbeddingMode: %v", v)
-	}
-}
-
-// DestinationQdrantFromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
-type DestinationQdrantFromField struct {
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
-	// Name of the field in the record that contains the embedding
-	FieldName string                                          `json:"field_name"`
-	mode      *DestinationQdrantSchemasEmbeddingEmbeddingMode `const:"from_field" json:"mode"`
-}
-
-func (d DestinationQdrantFromField) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantFromField) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantFromField) GetDimensions() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Dimensions
-}
-
-func (o *DestinationQdrantFromField) GetFieldName() string {
-	if o == nil {
-		return ""
-	}
-	return o.FieldName
-}
-
-func (o *DestinationQdrantFromField) GetMode() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
-	return DestinationQdrantSchemasEmbeddingEmbeddingModeFromField.ToPointer()
 }
 
 type DestinationQdrantSchemasEmbeddingMode string
@@ -399,16 +337,15 @@ const (
 	DestinationQdrantEmbeddingTypeDestinationQdrantOpenAI           DestinationQdrantEmbeddingType = "destination-qdrant_OpenAI"
 	DestinationQdrantEmbeddingTypeDestinationQdrantCohere           DestinationQdrantEmbeddingType = "destination-qdrant_Cohere"
 	DestinationQdrantEmbeddingTypeDestinationQdrantFake             DestinationQdrantEmbeddingType = "destination-qdrant_Fake"
-	DestinationQdrantEmbeddingTypeDestinationQdrantFromField        DestinationQdrantEmbeddingType = "destination-qdrant_From Field"
 	DestinationQdrantEmbeddingTypeDestinationQdrantAzureOpenAI      DestinationQdrantEmbeddingType = "destination-qdrant_Azure OpenAI"
 	DestinationQdrantEmbeddingTypeDestinationQdrantOpenAICompatible DestinationQdrantEmbeddingType = "destination-qdrant_OpenAI-compatible"
 )
 
+// DestinationQdrantEmbedding - Embedding configuration
 type DestinationQdrantEmbedding struct {
 	DestinationQdrantOpenAI           *DestinationQdrantOpenAI
 	DestinationQdrantCohere           *DestinationQdrantCohere
 	DestinationQdrantFake             *DestinationQdrantFake
-	DestinationQdrantFromField        *DestinationQdrantFromField
 	DestinationQdrantAzureOpenAI      *DestinationQdrantAzureOpenAI
 	DestinationQdrantOpenAICompatible *DestinationQdrantOpenAICompatible
 
@@ -439,15 +376,6 @@ func CreateDestinationQdrantEmbeddingDestinationQdrantFake(destinationQdrantFake
 	return DestinationQdrantEmbedding{
 		DestinationQdrantFake: &destinationQdrantFake,
 		Type:                  typ,
-	}
-}
-
-func CreateDestinationQdrantEmbeddingDestinationQdrantFromField(destinationQdrantFromField DestinationQdrantFromField) DestinationQdrantEmbedding {
-	typ := DestinationQdrantEmbeddingTypeDestinationQdrantFromField
-
-	return DestinationQdrantEmbedding{
-		DestinationQdrantFromField: &destinationQdrantFromField,
-		Type:                       typ,
 	}
 }
 
@@ -492,13 +420,6 @@ func (u *DestinationQdrantEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	destinationQdrantFromField := new(DestinationQdrantFromField)
-	if err := utils.UnmarshalJSON(data, &destinationQdrantFromField, "", true, true); err == nil {
-		u.DestinationQdrantFromField = destinationQdrantFromField
-		u.Type = DestinationQdrantEmbeddingTypeDestinationQdrantFromField
-		return nil
-	}
-
 	destinationQdrantAzureOpenAI := new(DestinationQdrantAzureOpenAI)
 	if err := utils.UnmarshalJSON(data, &destinationQdrantAzureOpenAI, "", true, true); err == nil {
 		u.DestinationQdrantAzureOpenAI = destinationQdrantAzureOpenAI
@@ -527,10 +448,6 @@ func (u DestinationQdrantEmbedding) MarshalJSON() ([]byte, error) {
 
 	if u.DestinationQdrantFake != nil {
 		return utils.MarshalJSON(u.DestinationQdrantFake, "", true)
-	}
-
-	if u.DestinationQdrantFromField != nil {
-		return utils.MarshalJSON(u.DestinationQdrantFromField, "", true)
 	}
 
 	if u.DestinationQdrantAzureOpenAI != nil {
@@ -568,7 +485,6 @@ func (e *DestinationQdrantSchemasIndexingAuthMethodMode) UnmarshalJSON(data []by
 	}
 }
 
-// DestinationQdrantNoAuth - Method to authenticate with the Qdrant Instance
 type DestinationQdrantNoAuth struct {
 	mode *DestinationQdrantSchemasIndexingAuthMethodMode `const:"no_auth" json:"mode"`
 }
@@ -612,7 +528,6 @@ func (e *DestinationQdrantSchemasIndexingMode) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// DestinationQdrantAPIKeyAuth - Method to authenticate with the Qdrant Instance
 type DestinationQdrantAPIKeyAuth struct {
 	// API Key for the Qdrant instance
 	APIKey string                                `json:"api_key"`
@@ -648,6 +563,7 @@ const (
 	DestinationQdrantAuthenticationMethodTypeDestinationQdrantNoAuth     DestinationQdrantAuthenticationMethodType = "destination-qdrant_NoAuth"
 )
 
+// DestinationQdrantAuthenticationMethod - Method to authenticate with the Qdrant Instance
 type DestinationQdrantAuthenticationMethod struct {
 	DestinationQdrantAPIKeyAuth *DestinationQdrantAPIKeyAuth
 	DestinationQdrantNoAuth     *DestinationQdrantNoAuth
@@ -704,221 +620,35 @@ func (u DestinationQdrantAuthenticationMethod) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric string
+// DestinationQdrantDistanceMetric - The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
+type DestinationQdrantDistanceMetric string
 
 const (
-	DestinationQdrantSchemasIndexingDistanceMetricDistanceMetricEuc DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric = "euc"
+	DestinationQdrantDistanceMetricDot DestinationQdrantDistanceMetric = "dot"
+	DestinationQdrantDistanceMetricCos DestinationQdrantDistanceMetric = "cos"
+	DestinationQdrantDistanceMetricEuc DestinationQdrantDistanceMetric = "euc"
 )
 
-func (e DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric) ToPointer() *DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric {
+func (e DestinationQdrantDistanceMetric) ToPointer() *DestinationQdrantDistanceMetric {
 	return &e
 }
 
-func (e *DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "euc":
-		*e = DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric: %v", v)
-	}
-}
-
-// DestinationQdrantEuc - The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
-type DestinationQdrantEuc struct {
-	distanceMetric *DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric `const:"euc" json:"distance_metric"`
-}
-
-func (d DestinationQdrantEuc) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantEuc) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantEuc) GetDistanceMetric() *DestinationQdrantSchemasIndexingDistanceMetricDistanceMetric {
-	return DestinationQdrantSchemasIndexingDistanceMetricDistanceMetricEuc.ToPointer()
-}
-
-type DestinationQdrantSchemasIndexingDistanceMetric string
-
-const (
-	DestinationQdrantSchemasIndexingDistanceMetricCos DestinationQdrantSchemasIndexingDistanceMetric = "cos"
-)
-
-func (e DestinationQdrantSchemasIndexingDistanceMetric) ToPointer() *DestinationQdrantSchemasIndexingDistanceMetric {
-	return &e
-}
-
-func (e *DestinationQdrantSchemasIndexingDistanceMetric) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "cos":
-		*e = DestinationQdrantSchemasIndexingDistanceMetric(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasIndexingDistanceMetric: %v", v)
-	}
-}
-
-// DestinationQdrantCos - The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
-type DestinationQdrantCos struct {
-	distanceMetric *DestinationQdrantSchemasIndexingDistanceMetric `const:"cos" json:"distance_metric"`
-}
-
-func (d DestinationQdrantCos) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantCos) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantCos) GetDistanceMetric() *DestinationQdrantSchemasIndexingDistanceMetric {
-	return DestinationQdrantSchemasIndexingDistanceMetricCos.ToPointer()
-}
-
-type DestinationQdrantSchemasDistanceMetric string
-
-const (
-	DestinationQdrantSchemasDistanceMetricDot DestinationQdrantSchemasDistanceMetric = "dot"
-)
-
-func (e DestinationQdrantSchemasDistanceMetric) ToPointer() *DestinationQdrantSchemasDistanceMetric {
-	return &e
-}
-
-func (e *DestinationQdrantSchemasDistanceMetric) UnmarshalJSON(data []byte) error {
+func (e *DestinationQdrantDistanceMetric) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dot":
-		*e = DestinationQdrantSchemasDistanceMetric(v)
+		fallthrough
+	case "cos":
+		fallthrough
+	case "euc":
+		*e = DestinationQdrantDistanceMetric(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationQdrantSchemasDistanceMetric: %v", v)
+		return fmt.Errorf("invalid value for DestinationQdrantDistanceMetric: %v", v)
 	}
-}
-
-// DestinationQdrantDot - The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
-type DestinationQdrantDot struct {
-	distanceMetric *DestinationQdrantSchemasDistanceMetric `const:"dot" json:"distance_metric"`
-}
-
-func (d DestinationQdrantDot) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationQdrantDot) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationQdrantDot) GetDistanceMetric() *DestinationQdrantSchemasDistanceMetric {
-	return DestinationQdrantSchemasDistanceMetricDot.ToPointer()
-}
-
-type DestinationQdrantDistanceMetricType string
-
-const (
-	DestinationQdrantDistanceMetricTypeDestinationQdrantDot DestinationQdrantDistanceMetricType = "destination-qdrant_dot"
-	DestinationQdrantDistanceMetricTypeDestinationQdrantCos DestinationQdrantDistanceMetricType = "destination-qdrant_cos"
-	DestinationQdrantDistanceMetricTypeDestinationQdrantEuc DestinationQdrantDistanceMetricType = "destination-qdrant_euc"
-)
-
-type DestinationQdrantDistanceMetric struct {
-	DestinationQdrantDot *DestinationQdrantDot
-	DestinationQdrantCos *DestinationQdrantCos
-	DestinationQdrantEuc *DestinationQdrantEuc
-
-	Type DestinationQdrantDistanceMetricType
-}
-
-func CreateDestinationQdrantDistanceMetricDestinationQdrantDot(destinationQdrantDot DestinationQdrantDot) DestinationQdrantDistanceMetric {
-	typ := DestinationQdrantDistanceMetricTypeDestinationQdrantDot
-
-	return DestinationQdrantDistanceMetric{
-		DestinationQdrantDot: &destinationQdrantDot,
-		Type:                 typ,
-	}
-}
-
-func CreateDestinationQdrantDistanceMetricDestinationQdrantCos(destinationQdrantCos DestinationQdrantCos) DestinationQdrantDistanceMetric {
-	typ := DestinationQdrantDistanceMetricTypeDestinationQdrantCos
-
-	return DestinationQdrantDistanceMetric{
-		DestinationQdrantCos: &destinationQdrantCos,
-		Type:                 typ,
-	}
-}
-
-func CreateDestinationQdrantDistanceMetricDestinationQdrantEuc(destinationQdrantEuc DestinationQdrantEuc) DestinationQdrantDistanceMetric {
-	typ := DestinationQdrantDistanceMetricTypeDestinationQdrantEuc
-
-	return DestinationQdrantDistanceMetric{
-		DestinationQdrantEuc: &destinationQdrantEuc,
-		Type:                 typ,
-	}
-}
-
-func (u *DestinationQdrantDistanceMetric) UnmarshalJSON(data []byte) error {
-
-	destinationQdrantDot := new(DestinationQdrantDot)
-	if err := utils.UnmarshalJSON(data, &destinationQdrantDot, "", true, true); err == nil {
-		u.DestinationQdrantDot = destinationQdrantDot
-		u.Type = DestinationQdrantDistanceMetricTypeDestinationQdrantDot
-		return nil
-	}
-
-	destinationQdrantCos := new(DestinationQdrantCos)
-	if err := utils.UnmarshalJSON(data, &destinationQdrantCos, "", true, true); err == nil {
-		u.DestinationQdrantCos = destinationQdrantCos
-		u.Type = DestinationQdrantDistanceMetricTypeDestinationQdrantCos
-		return nil
-	}
-
-	destinationQdrantEuc := new(DestinationQdrantEuc)
-	if err := utils.UnmarshalJSON(data, &destinationQdrantEuc, "", true, true); err == nil {
-		u.DestinationQdrantEuc = destinationQdrantEuc
-		u.Type = DestinationQdrantDistanceMetricTypeDestinationQdrantEuc
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u DestinationQdrantDistanceMetric) MarshalJSON() ([]byte, error) {
-	if u.DestinationQdrantDot != nil {
-		return utils.MarshalJSON(u.DestinationQdrantDot, "", true)
-	}
-
-	if u.DestinationQdrantCos != nil {
-		return utils.MarshalJSON(u.DestinationQdrantCos, "", true)
-	}
-
-	if u.DestinationQdrantEuc != nil {
-		return utils.MarshalJSON(u.DestinationQdrantEuc, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // DestinationQdrantIndexing - Indexing configuration
@@ -928,7 +658,7 @@ type DestinationQdrantIndexing struct {
 	// The collection to load data into
 	Collection string `json:"collection"`
 	// The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
-	DistanceMetric *DestinationQdrantDistanceMetric `json:"distance_metric,omitempty"`
+	DistanceMetric *DestinationQdrantDistanceMetric `default:"cos" json:"distance_metric"`
 	// Whether to prefer gRPC over HTTP. Set to true for Qdrant cloud clusters
 	PreferGrpc *bool `default:"true" json:"prefer_grpc"`
 	// The field in the payload that contains the embedded text
@@ -1257,6 +987,7 @@ const (
 	DestinationQdrantTextSplitterTypeDestinationQdrantByProgrammingLanguage DestinationQdrantTextSplitterType = "destination-qdrant_By Programming Language"
 )
 
+// DestinationQdrantTextSplitter - Split text fields into chunks based on the specified method.
 type DestinationQdrantTextSplitter struct {
 	DestinationQdrantBySeparator           *DestinationQdrantBySeparator
 	DestinationQdrantByMarkdownHeader      *DestinationQdrantByMarkdownHeader
@@ -1402,13 +1133,25 @@ func (o *DestinationQdrantProcessingConfigModel) GetTextSplitter() *DestinationQ
 	return o.TextSplitter
 }
 
+// DestinationQdrant - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+// as well as to provide type safety for the configuration passed to the destination.
+//
+// The configuration model is composed of four parts:
+// * Processing configuration
+// * Embedding configuration
+// * Indexing configuration
+// * Advanced configuration
+//
+// Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationQdrant struct {
 	destinationType Qdrant `const:"qdrant" json:"destinationType"`
 	// Embedding configuration
 	Embedding DestinationQdrantEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing   DestinationQdrantIndexing              `json:"indexing"`
-	Processing DestinationQdrantProcessingConfigModel `json:"processing"`
+	Indexing DestinationQdrantIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                  `default:"false" json:"omit_raw_text"`
+	Processing  DestinationQdrantProcessingConfigModel `json:"processing"`
 }
 
 func (d DestinationQdrant) MarshalJSON() ([]byte, error) {
@@ -1438,6 +1181,13 @@ func (o *DestinationQdrant) GetIndexing() DestinationQdrantIndexing {
 		return DestinationQdrantIndexing{}
 	}
 	return o.Indexing
+}
+
+func (o *DestinationQdrant) GetOmitRawText() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OmitRawText
 }
 
 func (o *DestinationQdrant) GetProcessing() DestinationQdrantProcessingConfigModel {

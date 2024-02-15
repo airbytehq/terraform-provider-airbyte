@@ -57,7 +57,6 @@ func (e *DestinationDevNullTestDestinationType) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationDevNullSilent - The type of destination to be used
 type DestinationDevNullSilent struct {
 	testDestinationType *DestinationDevNullTestDestinationType `const:"SILENT" json:"test_destination_type"`
 }
@@ -83,6 +82,7 @@ const (
 	DestinationDevNullTestDestinationUnionTypeDestinationDevNullSilent DestinationDevNullTestDestinationUnionType = "destination-dev-null_Silent"
 )
 
+// DestinationDevNullTestDestination - The type of destination to be used
 type DestinationDevNullTestDestination struct {
 	DestinationDevNullSilent *DestinationDevNullSilent
 

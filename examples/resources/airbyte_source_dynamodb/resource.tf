@@ -2,12 +2,12 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
     access_key_id            = "A012345678910EXAMPLE"
     endpoint                 = "https://{aws_dynamo_db_url}.com"
-    region                   = "us-west-1"
+    region                   = "eu-south-1"
     reserved_attribute_names = "name, field_name, field-name"
     secret_access_key        = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "44c5465b-457a-42c2-a18f-e1b91dcce8e6"
-  name          = "Faye Streich"
+  definition_id = "642f3c2f-e19c-432e-9fee-92bc3373ad2c"
+  name          = "Ken Kihn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "75fb5812-2af6-4a8a-8655-36a205f1e4d3"
+  workspace_id  = "8ef975a7-b102-4e54-8791-5a2f449e5b0b"
 }

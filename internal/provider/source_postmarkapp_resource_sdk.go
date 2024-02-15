@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePostmarkappResourceModel) ToCreateSDKType() *shared.SourcePostmarkappCreateRequest {
+func (r *SourcePostmarkappResourceModel) ToSharedSourcePostmarkappCreateRequest() *shared.SourcePostmarkappCreateRequest {
 	xPostmarkAccountToken := r.Configuration.XPostmarkAccountToken.ValueString()
 	xPostmarkServerToken := r.Configuration.XPostmarkServerToken.ValueString()
 	configuration := shared.SourcePostmarkapp{
@@ -38,12 +38,14 @@ func (r *SourcePostmarkappResourceModel) ToCreateSDKType() *shared.SourcePostmar
 	return &out
 }
 
-func (r *SourcePostmarkappResourceModel) ToGetSDKType() *shared.SourcePostmarkappCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePostmarkappResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePostmarkappResourceModel) ToUpdateSDKType() *shared.SourcePostmarkappPutRequest {
+func (r *SourcePostmarkappResourceModel) ToSharedSourcePostmarkappPutRequest() *shared.SourcePostmarkappPutRequest {
 	xPostmarkAccountToken := r.Configuration.XPostmarkAccountToken.ValueString()
 	xPostmarkServerToken := r.Configuration.XPostmarkServerToken.ValueString()
 	configuration := shared.SourcePostmarkappUpdate{
@@ -58,20 +60,4 @@ func (r *SourcePostmarkappResourceModel) ToUpdateSDKType() *shared.SourcePostmar
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePostmarkappResourceModel) ToDeleteSDKType() *shared.SourcePostmarkappCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePostmarkappResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePostmarkappResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

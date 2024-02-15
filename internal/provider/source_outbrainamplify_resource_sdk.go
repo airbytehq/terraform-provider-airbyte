@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOutbrainAmplifyCreateRequest {
+func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyCreateRequest() *shared.SourceOutbrainAmplifyCreateRequest {
 	var credentials shared.SourceOutbrainAmplifyAuthenticationMethod
 	var sourceOutbrainAmplifyAccessToken *shared.SourceOutbrainAmplifyAccessToken
 	if r.Configuration.Credentials.AccessToken != nil {
@@ -85,12 +85,14 @@ func (r *SourceOutbrainAmplifyResourceModel) ToCreateSDKType() *shared.SourceOut
 	return &out
 }
 
-func (r *SourceOutbrainAmplifyResourceModel) ToGetSDKType() *shared.SourceOutbrainAmplifyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOutbrainAmplifyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOutbrainAmplifyPutRequest {
+func (r *SourceOutbrainAmplifyResourceModel) ToSharedSourceOutbrainAmplifyPutRequest() *shared.SourceOutbrainAmplifyPutRequest {
 	var credentials shared.SourceOutbrainAmplifyUpdateAuthenticationMethod
 	var sourceOutbrainAmplifyUpdateAccessToken *shared.SourceOutbrainAmplifyUpdateAccessToken
 	if r.Configuration.Credentials.AccessToken != nil {
@@ -152,20 +154,4 @@ func (r *SourceOutbrainAmplifyResourceModel) ToUpdateSDKType() *shared.SourceOut
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOutbrainAmplifyResourceModel) ToDeleteSDKType() *shared.SourceOutbrainAmplifyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOutbrainAmplifyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOutbrainAmplifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

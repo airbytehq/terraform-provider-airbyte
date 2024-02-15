@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceCodaResourceModel) ToCreateSDKType() *shared.SourceCodaCreateRequest {
+func (r *SourceCodaResourceModel) ToSharedSourceCodaCreateRequest() *shared.SourceCodaCreateRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	configuration := shared.SourceCoda{
 		AuthToken: authToken,
@@ -36,12 +36,14 @@ func (r *SourceCodaResourceModel) ToCreateSDKType() *shared.SourceCodaCreateRequ
 	return &out
 }
 
-func (r *SourceCodaResourceModel) ToGetSDKType() *shared.SourceCodaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceCodaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceCodaResourceModel) ToUpdateSDKType() *shared.SourceCodaPutRequest {
+func (r *SourceCodaResourceModel) ToSharedSourceCodaPutRequest() *shared.SourceCodaPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	configuration := shared.SourceCodaUpdate{
 		AuthToken: authToken,
@@ -54,20 +56,4 @@ func (r *SourceCodaResourceModel) ToUpdateSDKType() *shared.SourceCodaPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceCodaResourceModel) ToDeleteSDKType() *shared.SourceCodaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceCodaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceCodaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

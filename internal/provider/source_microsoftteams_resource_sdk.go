@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicrosoftTeamsCreateRequest {
+func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsCreateRequest() *shared.SourceMicrosoftTeamsCreateRequest {
 	var credentials *shared.SourceMicrosoftTeamsAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var sourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20 *shared.SourceMicrosoftTeamsAuthenticateViaMicrosoftOAuth20
@@ -74,12 +74,14 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 	return &out
 }
 
-func (r *SourceMicrosoftTeamsResourceModel) ToGetSDKType() *shared.SourceMicrosoftTeamsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMicrosoftTeamsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMicrosoftTeamsResourceModel) ToUpdateSDKType() *shared.SourceMicrosoftTeamsPutRequest {
+func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsPutRequest() *shared.SourceMicrosoftTeamsPutRequest {
 	var credentials *shared.SourceMicrosoftTeamsUpdateAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var authenticateViaMicrosoftOAuth20 *shared.AuthenticateViaMicrosoftOAuth20
@@ -130,20 +132,4 @@ func (r *SourceMicrosoftTeamsResourceModel) ToUpdateSDKType() *shared.SourceMicr
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMicrosoftTeamsResourceModel) ToDeleteSDKType() *shared.SourceMicrosoftTeamsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMicrosoftTeamsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMicrosoftTeamsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

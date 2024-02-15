@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRequest {
+func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.SourceGnewsCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	country := new(shared.SourceGnewsCountry)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
@@ -97,12 +97,14 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	return &out
 }
 
-func (r *SourceGnewsResourceModel) ToGetSDKType() *shared.SourceGnewsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGnewsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutRequest {
+func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.SourceGnewsPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	country := new(shared.Country)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
@@ -176,20 +178,4 @@ func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGnewsResourceModel) ToDeleteSDKType() *shared.SourceGnewsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGnewsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGnewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCreateRequest {
+func (r *SourceLemlistResourceModel) ToSharedSourceLemlistCreateRequest() *shared.SourceLemlistCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceLemlist{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCrea
 	return &out
 }
 
-func (r *SourceLemlistResourceModel) ToGetSDKType() *shared.SourceLemlistCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceLemlistResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLemlistResourceModel) ToUpdateSDKType() *shared.SourceLemlistPutRequest {
+func (r *SourceLemlistResourceModel) ToSharedSourceLemlistPutRequest() *shared.SourceLemlistPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceLemlistUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceLemlistResourceModel) ToUpdateSDKType() *shared.SourceLemlistPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceLemlistResourceModel) ToDeleteSDKType() *shared.SourceLemlistCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceLemlistResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceLemlistResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

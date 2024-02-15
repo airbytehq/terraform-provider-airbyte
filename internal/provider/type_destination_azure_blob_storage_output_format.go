@@ -3,6 +3,6 @@
 package provider
 
 type DestinationAzureBlobStorageOutputFormat struct {
-	CSVCommaSeparatedValues       *CSVCommaSeparatedValues                                  `tfsdk:"csv_comma_separated_values"`
-	JSONLinesNewlineDelimitedJSON *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json"`
+	CSVCommaSeparatedValues       *CSVCommaSeparatedValues `tfsdk:"csv_comma_separated_values"`
+	JSONLinesNewlineDelimitedJSON *Fake                    `tfsdk:"json_lines_newline_delimited_json"`
 }

@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// SourceChargebeeProductCatalog - Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
+// SourceChargebeeProductCatalog - Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
 type SourceChargebeeProductCatalog string
 
 const (
@@ -62,14 +62,14 @@ func (e *Chargebee) UnmarshalJSON(data []byte) error {
 }
 
 type SourceChargebee struct {
-	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
-	ProductCatalog SourceChargebeeProductCatalog `json:"product_catalog"`
+	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
+	ProductCatalog *SourceChargebeeProductCatalog `default:"2.0" json:"product_catalog"`
 	// The site prefix for your Chargebee instance.
 	Site string `json:"site"`
 	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
 	SiteAPIKey string    `json:"site_api_key"`
 	sourceType Chargebee `const:"chargebee" json:"sourceType"`
-	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
+	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }
 
@@ -84,9 +84,9 @@ func (s *SourceChargebee) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceChargebee) GetProductCatalog() SourceChargebeeProductCatalog {
+func (o *SourceChargebee) GetProductCatalog() *SourceChargebeeProductCatalog {
 	if o == nil {
-		return SourceChargebeeProductCatalog("")
+		return nil
 	}
 	return o.ProductCatalog
 }

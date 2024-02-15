@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitudeCreateRequest {
+func (r *SourceAmplitudeResourceModel) ToSharedSourceAmplitudeCreateRequest() *shared.SourceAmplitudeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataRegion := new(shared.SourceAmplitudeDataRegion)
 	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
@@ -55,12 +55,14 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 	return &out
 }
 
-func (r *SourceAmplitudeResourceModel) ToGetSDKType() *shared.SourceAmplitudeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAmplitudeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmplitudeResourceModel) ToUpdateSDKType() *shared.SourceAmplitudePutRequest {
+func (r *SourceAmplitudeResourceModel) ToSharedSourceAmplitudePutRequest() *shared.SourceAmplitudePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataRegion := new(shared.DataRegion)
 	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
@@ -91,20 +93,4 @@ func (r *SourceAmplitudeResourceModel) ToUpdateSDKType() *shared.SourceAmplitude
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAmplitudeResourceModel) ToDeleteSDKType() *shared.SourceAmplitudeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAmplitudeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAmplitudeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

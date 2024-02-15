@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.DestinationAwsDatalakeCreateRequest {
+func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakeCreateRequest() *shared.DestinationAwsDatalakeCreateRequest {
 	awsAccountID := new(string)
 	if !r.Configuration.AwsAccountID.IsUnknown() && !r.Configuration.AwsAccountID.IsNull() {
 		*awsAccountID = r.Configuration.AwsAccountID.ValueString()
@@ -167,12 +167,14 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	return &out
 }
 
-func (r *DestinationAwsDatalakeResourceModel) ToGetSDKType() *shared.DestinationAwsDatalakeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationAwsDatalakeResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationAwsDatalakeResourceModel) ToUpdateSDKType() *shared.DestinationAwsDatalakePutRequest {
+func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakePutRequest() *shared.DestinationAwsDatalakePutRequest {
 	awsAccountID := new(string)
 	if !r.Configuration.AwsAccountID.IsUnknown() && !r.Configuration.AwsAccountID.IsNull() {
 		*awsAccountID = r.Configuration.AwsAccountID.ValueString()
@@ -323,20 +325,4 @@ func (r *DestinationAwsDatalakeResourceModel) ToUpdateSDKType() *shared.Destinat
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationAwsDatalakeResourceModel) ToDeleteSDKType() *shared.DestinationAwsDatalakeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationAwsDatalakeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationAwsDatalakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

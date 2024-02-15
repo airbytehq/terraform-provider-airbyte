@@ -122,6 +122,7 @@ const (
 	AuthorizationTypeTypeLoginPassword AuthorizationTypeType = "Login/Password"
 )
 
+// AuthorizationType - Authorization type.
 type AuthorizationType struct {
 	None          *None
 	LoginPassword *LoginPassword
@@ -202,7 +203,6 @@ func (e *DestinationMongodbUpdateSchemasInstance) UnmarshalJSON(data []byte) err
 	}
 }
 
-// MongoDBAtlas - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type MongoDBAtlas struct {
 	// URL of a cluster to connect to.
 	ClusterURL string                                   `json:"cluster_url"`
@@ -258,7 +258,6 @@ func (e *DestinationMongodbUpdateInstance) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ReplicaSet - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type ReplicaSet struct {
 	Instance *DestinationMongodbUpdateInstance `default:"replica" json:"instance"`
 	// A replica set name.
@@ -323,7 +322,6 @@ func (e *Instance) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// StandaloneMongoDbInstance - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type StandaloneMongoDbInstance struct {
 	// The Host of a Mongo database to be replicated.
 	Host     string    `json:"host"`
@@ -372,6 +370,7 @@ const (
 	MongoDbInstanceTypeTypeMongoDBAtlas              MongoDbInstanceTypeType = "MongoDB Atlas"
 )
 
+// MongoDbInstanceType - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type MongoDbInstanceType struct {
 	StandaloneMongoDbInstance *StandaloneMongoDbInstance
 	ReplicaSet                *ReplicaSet
@@ -474,7 +473,6 @@ func (e *DestinationMongodbUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(
 	}
 }
 
-// DestinationMongodbUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -556,7 +554,6 @@ func (e *DestinationMongodbUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte)
 	}
 }
 
-// DestinationMongodbUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -638,7 +635,6 @@ func (e *DestinationMongodbUpdateTunnelMethod) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// DestinationMongodbUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationMongodbUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -667,6 +663,7 @@ const (
 	DestinationMongodbUpdateSSHTunnelMethodTypeDestinationMongodbUpdatePasswordAuthentication DestinationMongodbUpdateSSHTunnelMethodType = "destination-mongodb-update_Password Authentication"
 )
 
+// DestinationMongodbUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbUpdateSSHTunnelMethod struct {
 	DestinationMongodbUpdateNoTunnel               *DestinationMongodbUpdateNoTunnel
 	DestinationMongodbUpdateSSHKeyAuthentication   *DestinationMongodbUpdateSSHKeyAuthentication

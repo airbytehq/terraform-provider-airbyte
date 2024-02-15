@@ -5,16 +5,20 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -55,6 +59,9 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
@@ -77,7 +84,6 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 										Description: `Refresh Token for the Google Drive API`,
 									},
 								},
-								Description: `Credentials for connecting to the Google Drive API`,
 							},
 							"service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -87,7 +93,6 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
 								},
-								Description: `Credentials for connecting to the Google Drive API`,
 							},
 						},
 						Description: `Credentials for connecting to the Google Drive API`,
@@ -111,9 +116,10 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"days_to_sync_if_history_is_full": schema.Int64Attribute{
-									Optional: true,
-									MarkdownDescription: `Default: 3` + "\n" +
-										`When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.`,
+									Computed:    true,
+									Optional:    true,
+									Default:     int64default.StaticInt64(3),
+									Description: `When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3`,
 								},
 								"format": schema.SingleNestedAttribute{
 									Required: true,
@@ -122,30 +128,33 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"double_as_string": schema.BoolAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: false` + "\n" +
-														`Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers. Default: false`,
 												},
 											},
-											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 										"csv_format": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"delimiter": schema.StringAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: ","` + "\n" +
-														`The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     stringdefault.StaticString(","),
+													Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'. Default: ","`,
 												},
 												"double_quote": schema.BoolAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: true` + "\n" +
-														`Whether two quotes in a quoted CSV value denote a single quote in the data.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(true),
+													Description: `Whether two quotes in a quoted CSV value denote a single quote in the data. Default: true`,
 												},
 												"encoding": schema.StringAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: "utf8"` + "\n" +
-														`The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     stringdefault.StaticString("utf8"),
+													Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"`,
 												},
 												"escape_char": schema.StringAttribute{
 													Optional:    true,
@@ -155,19 +164,20 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 													Optional:    true,
 													ElementType: types.StringType,
 													Description: `A set of case-sensitive strings that should be interpreted as false values.`,
+													Validators: []validator.List{
+														listvalidator.UniqueValues(),
+													},
 												},
 												"header_definition": schema.SingleNestedAttribute{
 													Optional: true,
 													Attributes: map[string]schema.Attribute{
 														"autogenerated": schema.SingleNestedAttribute{
-															Optional:    true,
-															Attributes:  map[string]schema.Attribute{},
-															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
+															Optional:   true,
+															Attributes: map[string]schema.Attribute{},
 														},
 														"from_csv": schema.SingleNestedAttribute{
-															Optional:    true,
-															Attributes:  map[string]schema.Attribute{},
-															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
+															Optional:   true,
+															Attributes: map[string]schema.Attribute{},
 														},
 														"user_provided": schema.SingleNestedAttribute{
 															Optional: true,
@@ -178,7 +188,6 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 																	Description: `The column names that will be used while emitting the CSV records`,
 																},
 															},
-															Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 														},
 													},
 													Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
@@ -190,61 +199,98 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 													Optional:    true,
 													ElementType: types.StringType,
 													Description: `A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.`,
+													Validators: []validator.List{
+														listvalidator.UniqueValues(),
+													},
 												},
 												"quote_char": schema.StringAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: "\""` + "\n" +
-														`The character used for quoting CSV values. To disallow quoting, make this field blank.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     stringdefault.StaticString("\""),
+													Description: `The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""`,
 												},
 												"skip_rows_after_header": schema.Int64Attribute{
-													Optional: true,
-													MarkdownDescription: `Default: 0` + "\n" +
-														`The number of rows to skip after the header row.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     int64default.StaticInt64(0),
+													Description: `The number of rows to skip after the header row. Default: 0`,
 												},
 												"skip_rows_before_header": schema.Int64Attribute{
-													Optional: true,
-													MarkdownDescription: `Default: 0` + "\n" +
-														`The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     int64default.StaticInt64(0),
+													Description: `The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field. Default: 0`,
 												},
 												"strings_can_be_null": schema.BoolAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: true` + "\n" +
-														`Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(true),
+													Description: `Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself. Default: true`,
 												},
 												"true_values": schema.ListAttribute{
 													Optional:    true,
 													ElementType: types.StringType,
 													Description: `A set of case-sensitive strings that should be interpreted as true values.`,
+													Validators: []validator.List{
+														listvalidator.UniqueValues(),
+													},
 												},
 											},
-											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 										"document_file_type_format_experimental": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
-												"skip_unprocessable_file_types": schema.BoolAttribute{
+												"processing": schema.SingleNestedAttribute{
 													Optional: true,
-													MarkdownDescription: `Default: true` + "\n" +
-														`If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.`,
+													Attributes: map[string]schema.Attribute{
+														"local": schema.SingleNestedAttribute{
+															Optional:    true,
+															Attributes:  map[string]schema.Attribute{},
+															Description: `Process files locally, supporting ` + "`" + `fast` + "`" + ` and ` + "`" + `ocr` + "`" + ` modes. This is the default option.`,
+														},
+													},
+													Description: `Processing configuration`,
+													Validators: []validator.Object{
+														validators.ExactlyOneChild(),
+													},
+												},
+												"skip_unprocessable_files": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(true),
+													Description: `If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true`,
+												},
+												"strategy": schema.StringAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     stringdefault.StaticString("auto"),
+													Description: `The strategy used to parse documents. ` + "`" + `fast` + "`" + ` extracts text directly from the document which doesn't work for all files. ` + "`" + `ocr_only` + "`" + ` is more reliable, but slower. ` + "`" + `hi_res` + "`" + ` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"`,
+													Validators: []validator.String{
+														stringvalidator.OneOf(
+															"auto",
+															"fast",
+															"ocr_only",
+															"hi_res",
+														),
+													},
 												},
 											},
 											Description: `Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.`,
 										},
 										"jsonl_format": schema.SingleNestedAttribute{
-											Optional:    true,
-											Attributes:  map[string]schema.Attribute{},
-											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
 										},
 										"parquet_format": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"decimal_as_float": schema.BoolAttribute{
-													Optional: true,
-													MarkdownDescription: `Default: false` + "\n" +
-														`Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.`,
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
 												},
 											},
-											Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 										},
 									},
 									Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
@@ -268,17 +314,19 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 								"primary_key": schema.StringAttribute{
 									Optional:    true,
 									Sensitive:   true,
-									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record.`,
+									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
 								},
 								"schemaless": schema.BoolAttribute{
-									Optional: true,
-									MarkdownDescription: `Default: false` + "\n" +
-										`When enabled, syncs will not validate or structure records against the stream's schema.`,
+									Computed:    true,
+									Optional:    true,
+									Default:     booldefault.StaticBool(false),
+									Description: `When enabled, syncs will not validate or structure records against the stream's schema. Default: false`,
 								},
 								"validation_policy": schema.StringAttribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"` + "\n" +
-										`The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.`,
+									Computed:    true,
+									Optional:    true,
+									Default:     stringdefault.StaticString("Emit Record"),
+									Description: `The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"Emit Record",
@@ -297,40 +345,40 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -360,14 +408,14 @@ func (r *SourceGoogleDriveResource) Configure(ctx context.Context, req resource.
 
 func (r *SourceGoogleDriveResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceGoogleDriveResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -376,7 +424,7 @@ func (r *SourceGoogleDriveResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceGoogleDriveCreateRequest()
 	res, err := r.client.Sources.CreateSourceGoogleDrive(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -397,7 +445,34 @@ func (r *SourceGoogleDriveResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceGoogleDriveRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceGoogleDrive(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -445,7 +520,7 @@ func (r *SourceGoogleDriveResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -453,12 +528,19 @@ func (r *SourceGoogleDriveResource) Read(ctx context.Context, req resource.ReadR
 
 func (r *SourceGoogleDriveResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceGoogleDriveResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceGoogleDrivePutRequest := data.ToUpdateSDKType()
+	sourceGoogleDrivePutRequest := data.ToSharedSourceGoogleDrivePutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceGoogleDriveRequest{
 		SourceGoogleDrivePutRequest: sourceGoogleDrivePutRequest,
@@ -480,31 +562,33 @@ func (r *SourceGoogleDriveResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceGoogleDriveRequest{
+	request1 := operations.GetSourceGoogleDriveRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceGoogleDrive(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceGoogleDrive(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

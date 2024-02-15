@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
+func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConsoleCreateRequest() *shared.SourceGoogleSearchConsoleCreateRequest {
 	var authorization shared.SourceGoogleSearchConsoleAuthenticationType
 	var sourceGoogleSearchConsoleOAuth *shared.SourceGoogleSearchConsoleOAuth
 	if r.Configuration.Authorization.OAuth != nil {
@@ -120,12 +120,14 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	return &out
 }
 
-func (r *SourceGoogleSearchConsoleResourceModel) ToGetSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.SourceGoogleSearchConsolePutRequest {
+func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConsolePutRequest() *shared.SourceGoogleSearchConsolePutRequest {
 	var authorization shared.AuthenticationType
 	var sourceGoogleSearchConsoleUpdateOAuth *shared.SourceGoogleSearchConsoleUpdateOAuth
 	if r.Configuration.Authorization.OAuth != nil {
@@ -221,20 +223,4 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.Sourc
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleSearchConsoleResourceModel) ToDeleteSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceZoomResourceModel) ToCreateSDKType() *shared.SourceZoomCreateRequest {
+func (r *SourceZoomResourceModel) ToSharedSourceZoomCreateRequest() *shared.SourceZoomCreateRequest {
 	jwtToken := r.Configuration.JwtToken.ValueString()
 	configuration := shared.SourceZoom{
 		JwtToken: jwtToken,
@@ -36,12 +36,14 @@ func (r *SourceZoomResourceModel) ToCreateSDKType() *shared.SourceZoomCreateRequ
 	return &out
 }
 
-func (r *SourceZoomResourceModel) ToGetSDKType() *shared.SourceZoomCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceZoomResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZoomResourceModel) ToUpdateSDKType() *shared.SourceZoomPutRequest {
+func (r *SourceZoomResourceModel) ToSharedSourceZoomPutRequest() *shared.SourceZoomPutRequest {
 	jwtToken := r.Configuration.JwtToken.ValueString()
 	configuration := shared.SourceZoomUpdate{
 		JwtToken: jwtToken,
@@ -54,20 +56,4 @@ func (r *SourceZoomResourceModel) ToUpdateSDKType() *shared.SourceZoomPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceZoomResourceModel) ToDeleteSDKType() *shared.SourceZoomCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceZoomResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceZoomResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

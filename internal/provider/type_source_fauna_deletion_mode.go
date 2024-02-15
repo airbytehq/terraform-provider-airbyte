@@ -3,6 +3,6 @@
 package provider
 
 type SourceFaunaDeletionMode struct {
-	Disabled *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"disabled"`
-	Enabled  *Enabled                                                  `tfsdk:"enabled"`
+	Disabled *Fake    `tfsdk:"disabled"`
+	Enabled  *Enabled `tfsdk:"enabled"`
 }

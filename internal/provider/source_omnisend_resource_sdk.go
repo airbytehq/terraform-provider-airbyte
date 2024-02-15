@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOmnisendResourceModel) ToCreateSDKType() *shared.SourceOmnisendCreateRequest {
+func (r *SourceOmnisendResourceModel) ToSharedSourceOmnisendCreateRequest() *shared.SourceOmnisendCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceOmnisend{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceOmnisendResourceModel) ToCreateSDKType() *shared.SourceOmnisendCr
 	return &out
 }
 
-func (r *SourceOmnisendResourceModel) ToGetSDKType() *shared.SourceOmnisendCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOmnisendResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOmnisendResourceModel) ToUpdateSDKType() *shared.SourceOmnisendPutRequest {
+func (r *SourceOmnisendResourceModel) ToSharedSourceOmnisendPutRequest() *shared.SourceOmnisendPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceOmnisendUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceOmnisendResourceModel) ToUpdateSDKType() *shared.SourceOmnisendPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOmnisendResourceModel) ToDeleteSDKType() *shared.SourceOmnisendCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOmnisendResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOmnisendResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

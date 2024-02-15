@@ -34,7 +34,6 @@ func (e *DestinationOracleUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(d
 	}
 }
 
-// DestinationOracleUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationOracleUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -116,7 +115,6 @@ func (e *DestinationOracleUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) 
 	}
 }
 
-// DestinationOracleUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationOracleUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -198,7 +196,6 @@ func (e *DestinationOracleUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationOracleUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationOracleUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationOracleUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -227,6 +224,7 @@ const (
 	DestinationOracleUpdateSSHTunnelMethodTypeDestinationOracleUpdatePasswordAuthentication DestinationOracleUpdateSSHTunnelMethodType = "destination-oracle-update_Password Authentication"
 )
 
+// DestinationOracleUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationOracleUpdateSSHTunnelMethod struct {
 	DestinationOracleUpdateNoTunnel               *DestinationOracleUpdateNoTunnel
 	DestinationOracleUpdateSSHKeyAuthentication   *DestinationOracleUpdateSSHKeyAuthentication

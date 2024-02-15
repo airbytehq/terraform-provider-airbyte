@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCreateRequest {
+func (r *SourcePaystackResourceModel) ToSharedSourcePaystackCreateRequest() *shared.SourcePaystackCreateRequest {
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
@@ -46,12 +46,14 @@ func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCr
 	return &out
 }
 
-func (r *SourcePaystackResourceModel) ToGetSDKType() *shared.SourcePaystackCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePaystackResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePaystackResourceModel) ToUpdateSDKType() *shared.SourcePaystackPutRequest {
+func (r *SourcePaystackResourceModel) ToSharedSourcePaystackPutRequest() *shared.SourcePaystackPutRequest {
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
@@ -73,20 +75,4 @@ func (r *SourcePaystackResourceModel) ToUpdateSDKType() *shared.SourcePaystackPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePaystackResourceModel) ToDeleteSDKType() *shared.SourcePaystackCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePaystackResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePaystackResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -33,27 +33,27 @@ func (e *Milvus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationMilvusSchemasEmbeddingEmbedding6Mode string
+type DestinationMilvusSchemasEmbeddingEmbedding5Mode string
 
 const (
-	DestinationMilvusSchemasEmbeddingEmbedding6ModeOpenaiCompatible DestinationMilvusSchemasEmbeddingEmbedding6Mode = "openai_compatible"
+	DestinationMilvusSchemasEmbeddingEmbedding5ModeOpenaiCompatible DestinationMilvusSchemasEmbeddingEmbedding5Mode = "openai_compatible"
 )
 
-func (e DestinationMilvusSchemasEmbeddingEmbedding6Mode) ToPointer() *DestinationMilvusSchemasEmbeddingEmbedding6Mode {
+func (e DestinationMilvusSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationMilvusSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
 
-func (e *DestinationMilvusSchemasEmbeddingEmbedding6Mode) UnmarshalJSON(data []byte) error {
+func (e *DestinationMilvusSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "openai_compatible":
-		*e = DestinationMilvusSchemasEmbeddingEmbedding6Mode(v)
+		*e = DestinationMilvusSchemasEmbeddingEmbedding5Mode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMilvusSchemasEmbeddingEmbedding6Mode: %v", v)
+		return fmt.Errorf("invalid value for DestinationMilvusSchemasEmbeddingEmbedding5Mode: %v", v)
 	}
 }
 
@@ -64,7 +64,7 @@ type DestinationMilvusOpenAICompatible struct {
 	BaseURL string `json:"base_url"`
 	// The number of dimensions the embedding model is generating
 	Dimensions int64                                            `json:"dimensions"`
-	mode       *DestinationMilvusSchemasEmbeddingEmbedding6Mode `const:"openai_compatible" json:"mode"`
+	mode       *DestinationMilvusSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
 }
@@ -101,8 +101,8 @@ func (o *DestinationMilvusOpenAICompatible) GetDimensions() int64 {
 	return o.Dimensions
 }
 
-func (o *DestinationMilvusOpenAICompatible) GetMode() *DestinationMilvusSchemasEmbeddingEmbedding6Mode {
-	return DestinationMilvusSchemasEmbeddingEmbedding6ModeOpenaiCompatible.ToPointer()
+func (o *DestinationMilvusOpenAICompatible) GetMode() *DestinationMilvusSchemasEmbeddingEmbedding5Mode {
+	return DestinationMilvusSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationMilvusOpenAICompatible) GetModelName() *string {
@@ -112,27 +112,27 @@ func (o *DestinationMilvusOpenAICompatible) GetModelName() *string {
 	return o.ModelName
 }
 
-type DestinationMilvusSchemasEmbeddingEmbedding5Mode string
+type DestinationMilvusSchemasEmbeddingEmbeddingMode string
 
 const (
-	DestinationMilvusSchemasEmbeddingEmbedding5ModeAzureOpenai DestinationMilvusSchemasEmbeddingEmbedding5Mode = "azure_openai"
+	DestinationMilvusSchemasEmbeddingEmbeddingModeAzureOpenai DestinationMilvusSchemasEmbeddingEmbeddingMode = "azure_openai"
 )
 
-func (e DestinationMilvusSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationMilvusSchemasEmbeddingEmbedding5Mode {
+func (e DestinationMilvusSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationMilvusSchemasEmbeddingEmbeddingMode {
 	return &e
 }
 
-func (e *DestinationMilvusSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
+func (e *DestinationMilvusSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "azure_openai":
-		*e = DestinationMilvusSchemasEmbeddingEmbedding5Mode(v)
+		*e = DestinationMilvusSchemasEmbeddingEmbeddingMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMilvusSchemasEmbeddingEmbedding5Mode: %v", v)
+		return fmt.Errorf("invalid value for DestinationMilvusSchemasEmbeddingEmbeddingMode: %v", v)
 	}
 }
 
@@ -141,8 +141,8 @@ type DestinationMilvusAzureOpenAI struct {
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string                                           `json:"deployment"`
-	mode       *DestinationMilvusSchemasEmbeddingEmbedding5Mode `const:"azure_openai" json:"mode"`
+	Deployment string                                          `json:"deployment"`
+	mode       *DestinationMilvusSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
 	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	OpenaiKey string `json:"openai_key"`
 }
@@ -172,8 +172,8 @@ func (o *DestinationMilvusAzureOpenAI) GetDeployment() string {
 	return o.Deployment
 }
 
-func (o *DestinationMilvusAzureOpenAI) GetMode() *DestinationMilvusSchemasEmbeddingEmbedding5Mode {
-	return DestinationMilvusSchemasEmbeddingEmbedding5ModeAzureOpenai.ToPointer()
+func (o *DestinationMilvusAzureOpenAI) GetMode() *DestinationMilvusSchemasEmbeddingEmbeddingMode {
+	return DestinationMilvusSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
 }
 
 func (o *DestinationMilvusAzureOpenAI) GetOpenaiKey() string {
@@ -181,68 +181,6 @@ func (o *DestinationMilvusAzureOpenAI) GetOpenaiKey() string {
 		return ""
 	}
 	return o.OpenaiKey
-}
-
-type DestinationMilvusSchemasEmbeddingEmbeddingMode string
-
-const (
-	DestinationMilvusSchemasEmbeddingEmbeddingModeFromField DestinationMilvusSchemasEmbeddingEmbeddingMode = "from_field"
-)
-
-func (e DestinationMilvusSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationMilvusSchemasEmbeddingEmbeddingMode {
-	return &e
-}
-
-func (e *DestinationMilvusSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "from_field":
-		*e = DestinationMilvusSchemasEmbeddingEmbeddingMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMilvusSchemasEmbeddingEmbeddingMode: %v", v)
-	}
-}
-
-// DestinationMilvusFromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
-type DestinationMilvusFromField struct {
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
-	// Name of the field in the record that contains the embedding
-	FieldName string                                          `json:"field_name"`
-	mode      *DestinationMilvusSchemasEmbeddingEmbeddingMode `const:"from_field" json:"mode"`
-}
-
-func (d DestinationMilvusFromField) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMilvusFromField) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMilvusFromField) GetDimensions() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Dimensions
-}
-
-func (o *DestinationMilvusFromField) GetFieldName() string {
-	if o == nil {
-		return ""
-	}
-	return o.FieldName
-}
-
-func (o *DestinationMilvusFromField) GetMode() *DestinationMilvusSchemasEmbeddingEmbeddingMode {
-	return DestinationMilvusSchemasEmbeddingEmbeddingModeFromField.ToPointer()
 }
 
 type DestinationMilvusSchemasEmbeddingMode string
@@ -399,16 +337,15 @@ const (
 	DestinationMilvusEmbeddingTypeDestinationMilvusOpenAI           DestinationMilvusEmbeddingType = "destination-milvus_OpenAI"
 	DestinationMilvusEmbeddingTypeDestinationMilvusCohere           DestinationMilvusEmbeddingType = "destination-milvus_Cohere"
 	DestinationMilvusEmbeddingTypeDestinationMilvusFake             DestinationMilvusEmbeddingType = "destination-milvus_Fake"
-	DestinationMilvusEmbeddingTypeDestinationMilvusFromField        DestinationMilvusEmbeddingType = "destination-milvus_From Field"
 	DestinationMilvusEmbeddingTypeDestinationMilvusAzureOpenAI      DestinationMilvusEmbeddingType = "destination-milvus_Azure OpenAI"
 	DestinationMilvusEmbeddingTypeDestinationMilvusOpenAICompatible DestinationMilvusEmbeddingType = "destination-milvus_OpenAI-compatible"
 )
 
+// DestinationMilvusEmbedding - Embedding configuration
 type DestinationMilvusEmbedding struct {
 	DestinationMilvusOpenAI           *DestinationMilvusOpenAI
 	DestinationMilvusCohere           *DestinationMilvusCohere
 	DestinationMilvusFake             *DestinationMilvusFake
-	DestinationMilvusFromField        *DestinationMilvusFromField
 	DestinationMilvusAzureOpenAI      *DestinationMilvusAzureOpenAI
 	DestinationMilvusOpenAICompatible *DestinationMilvusOpenAICompatible
 
@@ -439,15 +376,6 @@ func CreateDestinationMilvusEmbeddingDestinationMilvusFake(destinationMilvusFake
 	return DestinationMilvusEmbedding{
 		DestinationMilvusFake: &destinationMilvusFake,
 		Type:                  typ,
-	}
-}
-
-func CreateDestinationMilvusEmbeddingDestinationMilvusFromField(destinationMilvusFromField DestinationMilvusFromField) DestinationMilvusEmbedding {
-	typ := DestinationMilvusEmbeddingTypeDestinationMilvusFromField
-
-	return DestinationMilvusEmbedding{
-		DestinationMilvusFromField: &destinationMilvusFromField,
-		Type:                       typ,
 	}
 }
 
@@ -492,13 +420,6 @@ func (u *DestinationMilvusEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	destinationMilvusFromField := new(DestinationMilvusFromField)
-	if err := utils.UnmarshalJSON(data, &destinationMilvusFromField, "", true, true); err == nil {
-		u.DestinationMilvusFromField = destinationMilvusFromField
-		u.Type = DestinationMilvusEmbeddingTypeDestinationMilvusFromField
-		return nil
-	}
-
 	destinationMilvusAzureOpenAI := new(DestinationMilvusAzureOpenAI)
 	if err := utils.UnmarshalJSON(data, &destinationMilvusAzureOpenAI, "", true, true); err == nil {
 		u.DestinationMilvusAzureOpenAI = destinationMilvusAzureOpenAI
@@ -527,10 +448,6 @@ func (u DestinationMilvusEmbedding) MarshalJSON() ([]byte, error) {
 
 	if u.DestinationMilvusFake != nil {
 		return utils.MarshalJSON(u.DestinationMilvusFake, "", true)
-	}
-
-	if u.DestinationMilvusFromField != nil {
-		return utils.MarshalJSON(u.DestinationMilvusFromField, "", true)
 	}
 
 	if u.DestinationMilvusAzureOpenAI != nil {
@@ -711,6 +628,7 @@ const (
 	DestinationMilvusAuthenticationTypeDestinationMilvusNoAuth           DestinationMilvusAuthenticationType = "destination-milvus_No auth"
 )
 
+// DestinationMilvusAuthentication - Authentication method
 type DestinationMilvusAuthentication struct {
 	DestinationMilvusAPIToken         *DestinationMilvusAPIToken
 	DestinationMilvusUsernamePassword *DestinationMilvusUsernamePassword
@@ -1124,6 +1042,7 @@ const (
 	DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage DestinationMilvusTextSplitterType = "destination-milvus_By Programming Language"
 )
 
+// DestinationMilvusTextSplitter - Split text fields into chunks based on the specified method.
 type DestinationMilvusTextSplitter struct {
 	DestinationMilvusBySeparator           *DestinationMilvusBySeparator
 	DestinationMilvusByMarkdownHeader      *DestinationMilvusByMarkdownHeader
@@ -1269,13 +1188,25 @@ func (o *DestinationMilvusProcessingConfigModel) GetTextSplitter() *DestinationM
 	return o.TextSplitter
 }
 
+// DestinationMilvus - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+// as well as to provide type safety for the configuration passed to the destination.
+//
+// The configuration model is composed of four parts:
+// * Processing configuration
+// * Embedding configuration
+// * Indexing configuration
+// * Advanced configuration
+//
+// Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationMilvus struct {
 	destinationType Milvus `const:"milvus" json:"destinationType"`
 	// Embedding configuration
 	Embedding DestinationMilvusEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing   DestinationMilvusIndexing              `json:"indexing"`
-	Processing DestinationMilvusProcessingConfigModel `json:"processing"`
+	Indexing DestinationMilvusIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                  `default:"false" json:"omit_raw_text"`
+	Processing  DestinationMilvusProcessingConfigModel `json:"processing"`
 }
 
 func (d DestinationMilvus) MarshalJSON() ([]byte, error) {
@@ -1305,6 +1236,13 @@ func (o *DestinationMilvus) GetIndexing() DestinationMilvusIndexing {
 		return DestinationMilvusIndexing{}
 	}
 	return o.Indexing
+}
+
+func (o *DestinationMilvus) GetOmitRawText() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OmitRawText
 }
 
 func (o *DestinationMilvus) GetProcessing() DestinationMilvusProcessingConfigModel {

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCreateRequest {
+func (r *SourceMyHoursResourceModel) ToSharedSourceMyHoursCreateRequest() *shared.SourceMyHoursCreateRequest {
 	email := r.Configuration.Email.ValueString()
 	logsBatchSize := new(int64)
 	if !r.Configuration.LogsBatchSize.IsUnknown() && !r.Configuration.LogsBatchSize.IsNull() {
@@ -47,12 +47,14 @@ func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCrea
 	return &out
 }
 
-func (r *SourceMyHoursResourceModel) ToGetSDKType() *shared.SourceMyHoursCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMyHoursResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMyHoursResourceModel) ToUpdateSDKType() *shared.SourceMyHoursPutRequest {
+func (r *SourceMyHoursResourceModel) ToSharedSourceMyHoursPutRequest() *shared.SourceMyHoursPutRequest {
 	email := r.Configuration.Email.ValueString()
 	logsBatchSize := new(int64)
 	if !r.Configuration.LogsBatchSize.IsUnknown() && !r.Configuration.LogsBatchSize.IsNull() {
@@ -76,20 +78,4 @@ func (r *SourceMyHoursResourceModel) ToUpdateSDKType() *shared.SourceMyHoursPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMyHoursResourceModel) ToDeleteSDKType() *shared.SourceMyHoursCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMyHoursResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMyHoursResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

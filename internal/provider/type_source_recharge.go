@@ -5,6 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRecharge struct {
-	AccessToken types.String `tfsdk:"access_token"`
-	StartDate   types.String `tfsdk:"start_date"`
+	AccessToken            types.String `tfsdk:"access_token"`
+	StartDate              types.String `tfsdk:"start_date"`
+	UseOrdersDeprecatedAPI types.Bool   `tfsdk:"use_orders_deprecated_api"`
 }

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreateRequest {
+func (r *SourceStravaResourceModel) ToSharedSourceStravaCreateRequest() *shared.SourceStravaCreateRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -45,12 +45,14 @@ func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreate
 	return &out
 }
 
-func (r *SourceStravaResourceModel) ToGetSDKType() *shared.SourceStravaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceStravaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceStravaResourceModel) ToUpdateSDKType() *shared.SourceStravaPutRequest {
+func (r *SourceStravaResourceModel) ToSharedSourceStravaPutRequest() *shared.SourceStravaPutRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -71,20 +73,4 @@ func (r *SourceStravaResourceModel) ToUpdateSDKType() *shared.SourceStravaPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceStravaResourceModel) ToDeleteSDKType() *shared.SourceStravaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceStravaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceStravaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

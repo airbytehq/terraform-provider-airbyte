@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTiktokMarketingCreateRequest {
+func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingCreateRequest() *shared.SourceTiktokMarketingCreateRequest {
 	attributionWindow := new(int64)
 	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
 		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
@@ -104,12 +104,14 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 	return &out
 }
 
-func (r *SourceTiktokMarketingResourceModel) ToGetSDKType() *shared.SourceTiktokMarketingCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTiktokMarketingResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTiktokMarketingPutRequest {
+func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingPutRequest() *shared.SourceTiktokMarketingPutRequest {
 	attributionWindow := new(int64)
 	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
 		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
@@ -189,20 +191,4 @@ func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTik
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTiktokMarketingResourceModel) ToDeleteSDKType() *shared.SourceTiktokMarketingCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTiktokMarketingResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTiktokMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

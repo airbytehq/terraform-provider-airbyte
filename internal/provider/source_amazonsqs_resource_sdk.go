@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqsCreateRequest {
+func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsCreateRequest() *shared.SourceAmazonSqsCreateRequest {
 	accessKey := new(string)
 	if !r.Configuration.AccessKey.IsUnknown() && !r.Configuration.AccessKey.IsNull() {
 		*accessKey = r.Configuration.AccessKey.ValueString()
@@ -87,12 +87,14 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 	return &out
 }
 
-func (r *SourceAmazonSqsResourceModel) ToGetSDKType() *shared.SourceAmazonSqsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAmazonSqsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmazonSqsResourceModel) ToUpdateSDKType() *shared.SourceAmazonSqsPutRequest {
+func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsPutRequest() *shared.SourceAmazonSqsPutRequest {
 	accessKey := new(string)
 	if !r.Configuration.AccessKey.IsUnknown() && !r.Configuration.AccessKey.IsNull() {
 		*accessKey = r.Configuration.AccessKey.ValueString()
@@ -156,20 +158,4 @@ func (r *SourceAmazonSqsResourceModel) ToUpdateSDKType() *shared.SourceAmazonSqs
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAmazonSqsResourceModel) ToDeleteSDKType() *shared.SourceAmazonSqsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAmazonSqsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

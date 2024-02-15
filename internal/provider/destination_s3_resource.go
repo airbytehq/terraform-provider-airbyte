@@ -5,16 +5,19 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,6 +57,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
@@ -78,7 +84,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("bzip2"),
 														Description: `must be one of ["bzip2"]; Default: "bzip2"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -87,13 +95,14 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"deflate": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("Deflate"),
 														Description: `must be one of ["Deflate"]; Default: "Deflate"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -102,18 +111,20 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
-														MarkdownDescription: `Default: 0` + "\n" +
-															`0: no compression & fastest, 9: best compression & slowest.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     int64default.StaticInt64(0),
+														Description: `0: no compression & fastest, 9: best compression & slowest. Default: 0`,
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("no compression"),
 														Description: `must be one of ["no compression"]; Default: "no compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -122,13 +133,14 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"snappy": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("snappy"),
 														Description: `must be one of ["snappy"]; Default: "snappy"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -137,13 +149,14 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"xz": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("xz"),
 														Description: `must be one of ["xz"]; Default: "xz"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -152,18 +165,20 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
-														MarkdownDescription: `Default: 6` + "\n" +
-															`See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     int64default.StaticInt64(6),
+														Description: `See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details. Default: 6`,
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"zstandard": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("zstandard"),
 														Description: `must be one of ["zstandard"]; Default: "zstandard"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -172,17 +187,18 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
-														MarkdownDescription: `Default: 3` + "\n" +
-															`Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     int64default.StaticInt64(3),
+														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory. Default: 3`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Optional: true,
-														MarkdownDescription: `Default: false` + "\n" +
-															`If true, include a checksum with each data block.`,
+														Computed:    true,
+														Optional:    true,
+														Default:     booldefault.StaticBool(false),
+														Description: `If true, include a checksum with each data block. Default: false`,
 													},
 												},
-												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 										},
 										Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -191,7 +207,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("Avro"),
 										Description: `must be one of ["Avro"]; Default: "Avro"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -200,7 +218,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 							"csv_comma_separated_values": schema.SingleNestedAttribute{
 								Optional: true,
@@ -212,7 +229,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("GZIP"),
 														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -221,13 +240,14 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("No Compression"),
 														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -236,7 +256,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 										},
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -245,9 +264,10 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
-											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("No flattening"),
+										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
@@ -256,7 +276,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("CSV"),
 										Description: `must be one of ["CSV"]; Default: "CSV"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -265,7 +287,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
@@ -277,7 +298,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("GZIP"),
 														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -286,13 +309,14 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("No Compression"),
 														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -301,7 +325,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 										},
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -310,9 +333,10 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"` + "\n" +
-											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("No flattening"),
+										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
@@ -321,7 +345,9 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("JSONL"),
 										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -330,20 +356,21 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 							"parquet_columnar_storage": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 128` + "\n" +
-											`This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(128),
+										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB. Default: 128`,
 									},
 									"compression_codec": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"` + "\n" +
-											`The compression algorithm used to compress data pages.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("UNCOMPRESSED"),
+										Description: `The compression algorithm used to compress data pages. must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"UNCOMPRESSED",
@@ -357,17 +384,21 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: true` + "\n" +
-											`Default: true.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(true),
+										Description: `Default: true. Default: true`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 1024` + "\n" +
-											`There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(1024),
+										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB. Default: 1024`,
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("Parquet"),
 										Description: `must be one of ["Parquet"]; Default: "Parquet"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -376,17 +407,18 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 8` + "\n" +
-											`Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(8),
+										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB. Default: 8`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 1024` + "\n" +
-											`The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(1024),
+										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB. Default: 1024`,
 									},
 								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 						},
 						Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -403,44 +435,54 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>`,
 					},
 					"s3_bucket_region": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
-							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(""),
+						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"",
-								"us-east-1",
-								"us-east-2",
-								"us-west-1",
-								"us-west-2",
 								"af-south-1",
 								"ap-east-1",
-								"ap-south-1",
 								"ap-northeast-1",
 								"ap-northeast-2",
 								"ap-northeast-3",
+								"ap-south-1",
+								"ap-south-2",
 								"ap-southeast-1",
 								"ap-southeast-2",
+								"ap-southeast-3",
+								"ap-southeast-4",
 								"ca-central-1",
+								"ca-west-1",
 								"cn-north-1",
 								"cn-northwest-1",
 								"eu-central-1",
+								"eu-central-2",
 								"eu-north-1",
 								"eu-south-1",
+								"eu-south-2",
 								"eu-west-1",
 								"eu-west-2",
 								"eu-west-3",
-								"sa-east-1",
+								"il-central-1",
+								"me-central-1",
 								"me-south-1",
+								"sa-east-1",
+								"us-east-1",
+								"us-east-2",
 								"us-gov-east-1",
 								"us-gov-west-1",
+								"us-west-1",
+								"us-west-2",
 							),
 						},
 					},
 					"s3_endpoint": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: ""` + "\n" +
-							`Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(""),
+						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>. Default: ""`,
 					},
 					"s3_path_format": schema.StringAttribute{
 						Optional:    true,
@@ -455,33 +497,33 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -511,14 +553,14 @@ func (r *DestinationS3Resource) Configure(ctx context.Context, req resource.Conf
 
 func (r *DestinationS3Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *DestinationS3ResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -527,7 +569,7 @@ func (r *DestinationS3Resource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedDestinationS3CreateRequest()
 	res, err := r.client.Destinations.CreateDestinationS3(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -548,7 +590,34 @@ func (r *DestinationS3Resource) Create(ctx context.Context, req resource.CreateR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	destinationID := data.DestinationID.ValueString()
+	request1 := operations.GetDestinationS3Request{
+		DestinationID: destinationID,
+	}
+	res1, err := r.client.Destinations.GetDestinationS3(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -596,7 +665,7 @@ func (r *DestinationS3Resource) Read(ctx context.Context, req resource.ReadReque
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -604,12 +673,19 @@ func (r *DestinationS3Resource) Read(ctx context.Context, req resource.ReadReque
 
 func (r *DestinationS3Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationS3ResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	destinationS3PutRequest := data.ToUpdateSDKType()
+	destinationS3PutRequest := data.ToSharedDestinationS3PutRequest()
 	destinationID := data.DestinationID.ValueString()
 	request := operations.PutDestinationS3Request{
 		DestinationS3PutRequest: destinationS3PutRequest,
@@ -631,31 +707,33 @@ func (r *DestinationS3Resource) Update(ctx context.Context, req resource.UpdateR
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	destinationId1 := data.DestinationID.ValueString()
-	getRequest := operations.GetDestinationS3Request{
+	request1 := operations.GetDestinationS3Request{
 		DestinationID: destinationId1,
 	}
-	getResponse, err := r.client.Destinations.GetDestinationS3(ctx, getRequest)
+	res1, err := r.client.Destinations.GetDestinationS3(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

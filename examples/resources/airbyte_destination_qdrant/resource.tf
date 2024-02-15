@@ -1,7 +1,7 @@
 resource "airbyte_destination_qdrant" "my_destination_qdrant" {
   configuration = {
     embedding = {
-      destination_qdrant_azure_open_ai = {
+      azure_open_ai = {
         api_base   = "https://your-resource-name.openai.azure.com"
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
@@ -13,17 +13,16 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
           api_key = "...my_api_key..."
         }
       }
-      collection = "...my_collection..."
-      distance_metric = {
-        cos = {}
-      }
-      prefer_grpc = true
-      text_field  = "...my_text_field..."
-      url         = "...my_url..."
+      collection      = "...my_collection..."
+      distance_metric = "dot"
+      prefer_grpc     = false
+      text_field      = "...my_text_field..."
+      url             = "...my_url..."
     }
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 8
-      chunk_size    = 9
+      chunk_overlap = 5
+      chunk_size    = 1
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -37,13 +36,13 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
         "...",
       ]
       text_splitter = {
-        destination_qdrant_by_markdown_header = {
-          split_level = 9
+        by_markdown_header = {
+          split_level = 4
         }
       }
     }
   }
-  definition_id = "8f8d8392-aab1-45fb-858b-ad9ea7671d58"
-  name          = "Kathryn O'Keefe"
-  workspace_id  = "9de520ce-3420-4a29-9e5c-09962877b187"
+  definition_id = "ed560cd3-f9e1-4f9e-af9a-8e2157a8560c"
+  name          = "Austin Vandervort"
+  workspace_id  = "fd0c2020-86d3-496d-a60f-942f937a3c59"
 }

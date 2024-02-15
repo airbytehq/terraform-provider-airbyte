@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHiringCreateRequest {
+func (r *SourceLeverHiringResourceModel) ToSharedSourceLeverHiringCreateRequest() *shared.SourceLeverHiringCreateRequest {
 	var credentials *shared.SourceLeverHiringAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var sourceLeverHiringAuthenticateViaLeverOAuth *shared.SourceLeverHiringAuthenticateViaLeverOAuth
@@ -85,12 +85,14 @@ func (r *SourceLeverHiringResourceModel) ToCreateSDKType() *shared.SourceLeverHi
 	return &out
 }
 
-func (r *SourceLeverHiringResourceModel) ToGetSDKType() *shared.SourceLeverHiringCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceLeverHiringResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLeverHiringResourceModel) ToUpdateSDKType() *shared.SourceLeverHiringPutRequest {
+func (r *SourceLeverHiringResourceModel) ToSharedSourceLeverHiringPutRequest() *shared.SourceLeverHiringPutRequest {
 	var credentials *shared.SourceLeverHiringUpdateAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var authenticateViaLeverOAuth *shared.AuthenticateViaLeverOAuth
@@ -152,20 +154,4 @@ func (r *SourceLeverHiringResourceModel) ToUpdateSDKType() *shared.SourceLeverHi
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceLeverHiringResourceModel) ToDeleteSDKType() *shared.SourceLeverHiringCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceLeverHiringResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceLeverHiringResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

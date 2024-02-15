@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeenCreateRequest {
+func (r *DestinationKeenResourceModel) ToSharedDestinationKeenCreateRequest() *shared.DestinationKeenCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	inferTimestamp := new(bool)
 	if !r.Configuration.InferTimestamp.IsUnknown() && !r.Configuration.InferTimestamp.IsNull() {
@@ -38,12 +38,14 @@ func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeen
 	return &out
 }
 
-func (r *DestinationKeenResourceModel) ToGetSDKType() *shared.DestinationKeenCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationKeenResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationKeenResourceModel) ToUpdateSDKType() *shared.DestinationKeenPutRequest {
+func (r *DestinationKeenResourceModel) ToSharedDestinationKeenPutRequest() *shared.DestinationKeenPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	inferTimestamp := new(bool)
 	if !r.Configuration.InferTimestamp.IsUnknown() && !r.Configuration.InferTimestamp.IsNull() {
@@ -65,20 +67,4 @@ func (r *DestinationKeenResourceModel) ToUpdateSDKType() *shared.DestinationKeen
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationKeenResourceModel) ToDeleteSDKType() *shared.DestinationKeenCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationKeenResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationKeenResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

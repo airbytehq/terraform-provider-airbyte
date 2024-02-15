@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.SourceWikipediaPageviewsCreateRequest {
+func (r *SourceWikipediaPageviewsResourceModel) ToSharedSourceWikipediaPageviewsCreateRequest() *shared.SourceWikipediaPageviewsCreateRequest {
 	access := r.Configuration.Access.ValueString()
 	agent := r.Configuration.Agent.ValueString()
 	article := r.Configuration.Article.ValueString()
@@ -48,12 +48,14 @@ func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.Source
 	return &out
 }
 
-func (r *SourceWikipediaPageviewsResourceModel) ToGetSDKType() *shared.SourceWikipediaPageviewsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceWikipediaPageviewsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWikipediaPageviewsResourceModel) ToUpdateSDKType() *shared.SourceWikipediaPageviewsPutRequest {
+func (r *SourceWikipediaPageviewsResourceModel) ToSharedSourceWikipediaPageviewsPutRequest() *shared.SourceWikipediaPageviewsPutRequest {
 	access := r.Configuration.Access.ValueString()
 	agent := r.Configuration.Agent.ValueString()
 	article := r.Configuration.Article.ValueString()
@@ -78,20 +80,4 @@ func (r *SourceWikipediaPageviewsResourceModel) ToUpdateSDKType() *shared.Source
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceWikipediaPageviewsResourceModel) ToDeleteSDKType() *shared.SourceWikipediaPageviewsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceWikipediaPageviewsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceWikipediaPageviewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

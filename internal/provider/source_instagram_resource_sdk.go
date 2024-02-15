@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceInstagramResourceModel) ToCreateSDKType() *shared.SourceInstagramCreateRequest {
+func (r *SourceInstagramResourceModel) ToSharedSourceInstagramCreateRequest() *shared.SourceInstagramCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
@@ -58,12 +58,14 @@ func (r *SourceInstagramResourceModel) ToCreateSDKType() *shared.SourceInstagram
 	return &out
 }
 
-func (r *SourceInstagramResourceModel) ToGetSDKType() *shared.SourceInstagramCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceInstagramResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceInstagramResourceModel) ToUpdateSDKType() *shared.SourceInstagramPutRequest {
+func (r *SourceInstagramResourceModel) ToSharedSourceInstagramPutRequest() *shared.SourceInstagramPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
@@ -97,20 +99,4 @@ func (r *SourceInstagramResourceModel) ToUpdateSDKType() *shared.SourceInstagram
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceInstagramResourceModel) ToDeleteSDKType() *shared.SourceInstagramCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceInstagramResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceInstagramResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

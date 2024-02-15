@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOrbitResourceModel) ToCreateSDKType() *shared.SourceOrbitCreateRequest {
+func (r *SourceOrbitResourceModel) ToSharedSourceOrbitCreateRequest() *shared.SourceOrbitCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -45,12 +45,14 @@ func (r *SourceOrbitResourceModel) ToCreateSDKType() *shared.SourceOrbitCreateRe
 	return &out
 }
 
-func (r *SourceOrbitResourceModel) ToGetSDKType() *shared.SourceOrbitCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOrbitResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOrbitResourceModel) ToUpdateSDKType() *shared.SourceOrbitPutRequest {
+func (r *SourceOrbitResourceModel) ToSharedSourceOrbitPutRequest() *shared.SourceOrbitPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -72,20 +74,4 @@ func (r *SourceOrbitResourceModel) ToUpdateSDKType() *shared.SourceOrbitPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOrbitResourceModel) ToDeleteSDKType() *shared.SourceOrbitCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOrbitResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOrbitResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourcePaypalTransactionCreateRequest {
+func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCreateRequest() *shared.SourcePaypalTransactionCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	isSandbox := new(bool)
@@ -62,12 +62,14 @@ func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourceP
 	return &out
 }
 
-func (r *SourcePaypalTransactionResourceModel) ToGetSDKType() *shared.SourcePaypalTransactionCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePaypalTransactionResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePaypalTransactionResourceModel) ToUpdateSDKType() *shared.SourcePaypalTransactionPutRequest {
+func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionPutRequest() *shared.SourcePaypalTransactionPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	isSandbox := new(bool)
@@ -105,20 +107,4 @@ func (r *SourcePaypalTransactionResourceModel) ToUpdateSDKType() *shared.SourceP
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePaypalTransactionResourceModel) ToDeleteSDKType() *shared.SourcePaypalTransactionCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePaypalTransactionResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePaypalTransactionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

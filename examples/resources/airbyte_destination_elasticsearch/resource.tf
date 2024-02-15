@@ -10,7 +10,7 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     endpoint       = "...my_endpoint..."
     upsert         = false
   }
-  definition_id = "da65ed46-5e75-48af-92ad-38ed7ed0e5e2"
-  name          = "Katherine Considine"
-  workspace_id  = "7d0e4e50-95ed-494b-8ecb-397d064562ef"
+  definition_id = "56553a4e-50cd-4de3-bcff-11f630fa923b"
+  name          = "Elisa Lakin"
+  workspace_id  = "15f868bf-0372-497d-8d66-bcb9a13f0bea"
 }

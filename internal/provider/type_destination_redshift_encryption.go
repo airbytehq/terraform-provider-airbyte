@@ -3,6 +3,6 @@
 package provider
 
 type DestinationRedshiftEncryption struct {
-	AESCBCEnvelopeEncryption *AESCBCEnvelopeEncryption                                 `tfsdk:"aescbc_envelope_encryption"`
-	NoEncryption             *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"no_encryption"`
+	AESCBCEnvelopeEncryption *AESCBCEnvelopeEncryption `tfsdk:"aescbc_envelope_encryption"`
+	NoEncryption             *Fake                     `tfsdk:"no_encryption"`
 }

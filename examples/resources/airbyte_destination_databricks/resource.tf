@@ -1,6 +1,6 @@
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = false
+    accept_terms = true
     data_source = {
       recommended_managed_tables = {}
     }
@@ -10,10 +10,10 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     databricks_port                  = "443"
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
     enable_schema_evolution          = true
-    purge_staging_data               = false
+    purge_staging_data               = true
     schema                           = "default"
   }
-  definition_id = "05d7306c-fa6f-460b-bc11-e74f736d7a95"
-  name          = "Meghan Mitchell"
-  workspace_id  = "4c049945-edd6-4e95-a416-d119e802e071"
+  definition_id = "eca9f91e-b58c-4332-9745-6993f0626846"
+  name          = "Ms. Betty Shanahan"
+  workspace_id  = "7ed52cbf-f018-4589-b5bd-fe2750539f4b"
 }

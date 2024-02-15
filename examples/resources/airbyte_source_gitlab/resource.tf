@@ -1,13 +1,13 @@
 resource "airbyte_source_gitlab" "my_source_gitlab" {
   configuration = {
-    api_url = "gitlab.com"
+    api_url = "https://gitlab.com"
     credentials = {
-      source_gitlab_o_auth2_0 = {
+      o_auth20 = {
         access_token      = "...my_access_token..."
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-01-24T13:56:19.954Z"
+        token_expiry_date = "2022-11-28T11:02:53.211Z"
       }
     }
     groups = "airbyte.io"
@@ -20,8 +20,8 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "e4cb55c6-95e2-4f08-ab76-e351cef20de4"
-  name          = "Winston Schroeder"
+  definition_id = "13a52314-031f-4d7b-82b3-c164c1950da3"
+  name          = "Leigh Rempel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2b42c84c-d8bc-4607-ae71-4fbf0cfd3aed"
+  workspace_id  = "d9b5a75a-7c5f-4c21-9722-b310b676fb73"
 }

@@ -7,7 +7,7 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     port            = 3306
     replication_method = {
       read_changes_using_binary_log_cdc = {
-        initial_waiting_seconds = 7
+        initial_waiting_seconds = 2
         server_time_zone        = "...my_server_time_zone..."
       }
     }
@@ -15,12 +15,12 @@ resource "airbyte_source_mysql" "my_source_mysql" {
       preferred = {}
     }
     tunnel_method = {
-      source_mysql_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Eino_White"
+    username = "Fernando_Kuhn18"
   }
-  definition_id = "aba25784-141a-421c-8938-ad6fcbb78bed"
-  name          = "Mr. Ross Cole"
+  definition_id = "6398e6ec-d841-4e72-a766-a686faa512d8"
+  name          = "Valerie Greenfelder II"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "704ae193-8752-47d5-a3ef-7246d0c0b796"
+  workspace_id  = "c5b71123-61f2-46d4-bb86-cdec1a2bc2b8"
 }

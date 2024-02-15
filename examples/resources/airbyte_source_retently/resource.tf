@@ -9,8 +9,8 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "2c041244-3656-49fd-a4cd-2bcf08a635d7"
-  name          = "Dave Schinner"
+  definition_id = "0427d23a-4e1d-48c7-a3c8-e5e259fe4ef6"
+  name          = "Kristina Donnelly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6ceccfae-93f7-4f0f-8c4b-4f8d4f6833e1"
+  workspace_id  = "5b5a324c-6128-4aab-bad0-730782c3e822"
 }

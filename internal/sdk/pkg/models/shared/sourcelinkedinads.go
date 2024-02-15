@@ -28,9 +28,9 @@ const (
 	SourceLinkedinAdsPivotCategoryMemberCompanySize           SourceLinkedinAdsPivotCategory = "MEMBER_COMPANY_SIZE"
 	SourceLinkedinAdsPivotCategoryMemberIndustry              SourceLinkedinAdsPivotCategory = "MEMBER_INDUSTRY"
 	SourceLinkedinAdsPivotCategoryMemberSeniority             SourceLinkedinAdsPivotCategory = "MEMBER_SENIORITY"
-	SourceLinkedinAdsPivotCategoryMemberJobTitle              SourceLinkedinAdsPivotCategory = "MEMBER_JOB_TITLE "
-	SourceLinkedinAdsPivotCategoryMemberJobFunction           SourceLinkedinAdsPivotCategory = "MEMBER_JOB_FUNCTION "
-	SourceLinkedinAdsPivotCategoryMemberCountryV2             SourceLinkedinAdsPivotCategory = "MEMBER_COUNTRY_V2 "
+	SourceLinkedinAdsPivotCategoryMemberJobTitle              SourceLinkedinAdsPivotCategory = "MEMBER_JOB_TITLE"
+	SourceLinkedinAdsPivotCategoryMemberJobFunction           SourceLinkedinAdsPivotCategory = "MEMBER_JOB_FUNCTION"
+	SourceLinkedinAdsPivotCategoryMemberCountryV2             SourceLinkedinAdsPivotCategory = "MEMBER_COUNTRY_V2"
 	SourceLinkedinAdsPivotCategoryMemberRegionV2              SourceLinkedinAdsPivotCategory = "MEMBER_REGION_V2"
 	SourceLinkedinAdsPivotCategoryMemberCompany               SourceLinkedinAdsPivotCategory = "MEMBER_COMPANY"
 	SourceLinkedinAdsPivotCategoryPlacementName               SourceLinkedinAdsPivotCategory = "PLACEMENT_NAME"
@@ -75,11 +75,11 @@ func (e *SourceLinkedinAdsPivotCategory) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "MEMBER_SENIORITY":
 		fallthrough
-	case "MEMBER_JOB_TITLE ":
+	case "MEMBER_JOB_TITLE":
 		fallthrough
-	case "MEMBER_JOB_FUNCTION ":
+	case "MEMBER_JOB_FUNCTION":
 		fallthrough
-	case "MEMBER_COUNTRY_V2 ":
+	case "MEMBER_COUNTRY_V2":
 		fallthrough
 	case "MEMBER_REGION_V2":
 		fallthrough

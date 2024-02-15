@@ -165,6 +165,9 @@ const (
 	DestinationRedisUpdateSSLModesTypeDestinationRedisUpdateVerifyFull DestinationRedisUpdateSSLModesType = "destination-redis-update_verify-full"
 )
 
+// DestinationRedisUpdateSSLModes - SSL connection modes.
+//
+//	<li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
 type DestinationRedisUpdateSSLModes struct {
 	DestinationRedisUpdateDisable    *DestinationRedisUpdateDisable
 	DestinationRedisUpdateVerifyFull *DestinationRedisUpdateVerifyFull
@@ -246,7 +249,6 @@ func (e *DestinationRedisUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(da
 	}
 }
 
-// DestinationRedisUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedisUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -328,7 +330,6 @@ func (e *DestinationRedisUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) e
 	}
 }
 
-// DestinationRedisUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedisUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -410,7 +411,6 @@ func (e *DestinationRedisUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationRedisUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedisUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationRedisUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -439,6 +439,7 @@ const (
 	DestinationRedisUpdateSSHTunnelMethodTypeDestinationRedisUpdatePasswordAuthentication DestinationRedisUpdateSSHTunnelMethodType = "destination-redis-update_Password Authentication"
 )
 
+// DestinationRedisUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedisUpdateSSHTunnelMethod struct {
 	DestinationRedisUpdateNoTunnel               *DestinationRedisUpdateNoTunnel
 	DestinationRedisUpdateSSHKeyAuthentication   *DestinationRedisUpdateSSHKeyAuthentication

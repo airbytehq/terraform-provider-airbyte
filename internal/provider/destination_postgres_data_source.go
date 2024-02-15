@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
-
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -48,9 +47,8 @@ func (r *DestinationPostgresDataSource) Schema(ctx context.Context, req datasour
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.StringAttribute{
-				Computed: true,
-				MarkdownDescription: `Parsed as JSON.` + "\n" +
-					`The values required to configure the destination.`,
+				Computed:    true,
+				Description: `The values required to configure the destination. Parsed as JSON.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
@@ -130,7 +128,7 @@ func (r *DestinationPostgresDataSource) Read(ctx context.Context, req datasource
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -3,6 +3,6 @@
 package provider
 
 type DestinationMssqlSSLMethod struct {
-	EncryptedTrustServerCertificate *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"encrypted_trust_server_certificate"`
-	EncryptedVerifyCertificate      *EncryptedVerifyCertificate                               `tfsdk:"encrypted_verify_certificate"`
+	EncryptedTrustServerCertificate *Fake                       `tfsdk:"encrypted_trust_server_certificate"`
+	EncryptedVerifyCertificate      *EncryptedVerifyCertificate `tfsdk:"encrypted_verify_certificate"`
 }

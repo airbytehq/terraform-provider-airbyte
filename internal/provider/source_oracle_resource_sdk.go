@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreateRequest {
+func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.SourceOracleCreateRequest {
 	var connectionData *shared.SourceOracleConnectBy
 	if r.Configuration.ConnectionData != nil {
 		var sourceOracleServiceName *shared.SourceOracleServiceName
@@ -182,12 +182,14 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	return &out
 }
 
-func (r *SourceOracleResourceModel) ToGetSDKType() *shared.SourceOracleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOracleResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOracleResourceModel) ToUpdateSDKType() *shared.SourceOraclePutRequest {
+func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.SourceOraclePutRequest {
 	var connectionData *shared.ConnectBy
 	if r.Configuration.ConnectionData != nil {
 		var serviceName *shared.ServiceName
@@ -346,20 +348,4 @@ func (r *SourceOracleResourceModel) ToUpdateSDKType() *shared.SourceOraclePutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOracleResourceModel) ToDeleteSDKType() *shared.SourceOracleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOracleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOracleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

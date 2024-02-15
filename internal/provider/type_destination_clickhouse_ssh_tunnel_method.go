@@ -3,7 +3,7 @@
 package provider
 
 type DestinationClickhouseSSHTunnelMethod struct {
-	NoTunnel               *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"no_tunnel"`
-	PasswordAuthentication *PasswordAuthentication                                   `tfsdk:"password_authentication"`
-	SSHKeyAuthentication   *SSHKeyAuthentication                                     `tfsdk:"ssh_key_authentication"`
+	NoTunnel               *Fake                   `tfsdk:"no_tunnel"`
+	PasswordAuthentication *PasswordAuthentication `tfsdk:"password_authentication"`
+	SSHKeyAuthentication   *SSHKeyAuthentication   `tfsdk:"ssh_key_authentication"`
 }

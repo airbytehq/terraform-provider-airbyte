@@ -12,7 +12,7 @@ import (
 type DestinationSnowflakeUpdateSchemasAuthType string
 
 const (
-	DestinationSnowflakeUpdateSchemasAuthTypeUsernameAndPassword DestinationSnowflakeUpdateSchemasAuthType = "Username and Password"
+	DestinationSnowflakeUpdateSchemasAuthTypeOAuth20 DestinationSnowflakeUpdateSchemasAuthType = "OAuth2.0"
 )
 
 func (e DestinationSnowflakeUpdateSchemasAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasAuthType {
@@ -25,7 +25,7 @@ func (e *DestinationSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) e
 		return err
 	}
 	switch v {
-	case "Username and Password":
+	case "OAuth2.0":
 		*e = DestinationSnowflakeUpdateSchemasAuthType(v)
 		return nil
 	default:
@@ -33,8 +33,87 @@ func (e *DestinationSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) e
 	}
 }
 
+type DestinationSnowflakeUpdateOAuth20 struct {
+	// Enter you application's Access Token
+	AccessToken string                                     `json:"access_token"`
+	authType    *DestinationSnowflakeUpdateSchemasAuthType `const:"OAuth2.0" json:"auth_type"`
+	// Enter your application's Client ID
+	ClientID *string `json:"client_id,omitempty"`
+	// Enter your application's Client secret
+	ClientSecret *string `json:"client_secret,omitempty"`
+	// Enter your application's Refresh Token
+	RefreshToken string `json:"refresh_token"`
+}
+
+func (d DestinationSnowflakeUpdateOAuth20) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationSnowflakeUpdateOAuth20) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationSnowflakeUpdateOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *DestinationSnowflakeUpdateOAuth20) GetAuthType() *DestinationSnowflakeUpdateSchemasAuthType {
+	return DestinationSnowflakeUpdateSchemasAuthTypeOAuth20.ToPointer()
+}
+
+func (o *DestinationSnowflakeUpdateOAuth20) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *DestinationSnowflakeUpdateOAuth20) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *DestinationSnowflakeUpdateOAuth20) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+type DestinationSnowflakeUpdateAuthType string
+
+const (
+	DestinationSnowflakeUpdateAuthTypeUsernameAndPassword DestinationSnowflakeUpdateAuthType = "Username and Password"
+)
+
+func (e DestinationSnowflakeUpdateAuthType) ToPointer() *DestinationSnowflakeUpdateAuthType {
+	return &e
+}
+
+func (e *DestinationSnowflakeUpdateAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Username and Password":
+		*e = DestinationSnowflakeUpdateAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateAuthType: %v", v)
+	}
+}
+
 type UsernameAndPassword struct {
-	authType *DestinationSnowflakeUpdateSchemasAuthType `const:"Username and Password" json:"auth_type"`
+	authType *DestinationSnowflakeUpdateAuthType `const:"Username and Password" json:"auth_type"`
 	// Enter the password associated with the username.
 	Password string `json:"password"`
 }
@@ -50,8 +129,8 @@ func (u *UsernameAndPassword) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UsernameAndPassword) GetAuthType() *DestinationSnowflakeUpdateSchemasAuthType {
-	return DestinationSnowflakeUpdateSchemasAuthTypeUsernameAndPassword.ToPointer()
+func (o *UsernameAndPassword) GetAuthType() *DestinationSnowflakeUpdateAuthType {
+	return DestinationSnowflakeUpdateAuthTypeUsernameAndPassword.ToPointer()
 }
 
 func (o *UsernameAndPassword) GetPassword() string {
@@ -61,32 +140,32 @@ func (o *UsernameAndPassword) GetPassword() string {
 	return o.Password
 }
 
-type DestinationSnowflakeUpdateAuthType string
+type DestinationSnowflakeUpdateSchemasCredentialsAuthType string
 
 const (
-	DestinationSnowflakeUpdateAuthTypeKeyPairAuthentication DestinationSnowflakeUpdateAuthType = "Key Pair Authentication"
+	DestinationSnowflakeUpdateSchemasCredentialsAuthTypeKeyPairAuthentication DestinationSnowflakeUpdateSchemasCredentialsAuthType = "Key Pair Authentication"
 )
 
-func (e DestinationSnowflakeUpdateAuthType) ToPointer() *DestinationSnowflakeUpdateAuthType {
+func (e DestinationSnowflakeUpdateSchemasCredentialsAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
 	return &e
 }
 
-func (e *DestinationSnowflakeUpdateAuthType) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Key Pair Authentication":
-		*e = DestinationSnowflakeUpdateAuthType(v)
+		*e = DestinationSnowflakeUpdateSchemasCredentialsAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateAuthType: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateSchemasCredentialsAuthType: %v", v)
 	}
 }
 
 type KeyPairAuthentication struct {
-	authType *DestinationSnowflakeUpdateAuthType `const:"Key Pair Authentication" json:"auth_type"`
+	authType *DestinationSnowflakeUpdateSchemasCredentialsAuthType `const:"Key Pair Authentication" json:"auth_type"`
 	// RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Passphrase for private key
@@ -104,8 +183,8 @@ func (k *KeyPairAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *KeyPairAuthentication) GetAuthType() *DestinationSnowflakeUpdateAuthType {
-	return DestinationSnowflakeUpdateAuthTypeKeyPairAuthentication.ToPointer()
+func (o *KeyPairAuthentication) GetAuthType() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
+	return DestinationSnowflakeUpdateSchemasCredentialsAuthTypeKeyPairAuthentication.ToPointer()
 }
 
 func (o *KeyPairAuthentication) GetPrivateKey() string {
@@ -122,108 +201,20 @@ func (o *KeyPairAuthentication) GetPrivateKeyPassword() *string {
 	return o.PrivateKeyPassword
 }
 
-type DestinationSnowflakeUpdateSchemasCredentialsAuthType string
-
-const (
-	DestinationSnowflakeUpdateSchemasCredentialsAuthTypeOAuth20 DestinationSnowflakeUpdateSchemasCredentialsAuthType = "OAuth2.0"
-)
-
-func (e DestinationSnowflakeUpdateSchemasCredentialsAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
-	return &e
-}
-
-func (e *DestinationSnowflakeUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "OAuth2.0":
-		*e = DestinationSnowflakeUpdateSchemasCredentialsAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateSchemasCredentialsAuthType: %v", v)
-	}
-}
-
-type OAuth20 struct {
-	// Enter you application's Access Token
-	AccessToken string                                                `json:"access_token"`
-	authType    *DestinationSnowflakeUpdateSchemasCredentialsAuthType `const:"OAuth2.0" json:"auth_type"`
-	// Enter your application's Client ID
-	ClientID *string `json:"client_id,omitempty"`
-	// Enter your application's Client secret
-	ClientSecret *string `json:"client_secret,omitempty"`
-	// Enter your application's Refresh Token
-	RefreshToken string `json:"refresh_token"`
-}
-
-func (o OAuth20) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(o, "", false)
-}
-
-func (o *OAuth20) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *OAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
-}
-
-func (o *OAuth20) GetAuthType() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
-	return DestinationSnowflakeUpdateSchemasCredentialsAuthTypeOAuth20.ToPointer()
-}
-
-func (o *OAuth20) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
-}
-
-func (o *OAuth20) GetClientSecret() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecret
-}
-
-func (o *OAuth20) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
 type AuthorizationMethodType string
 
 const (
-	AuthorizationMethodTypeOAuth20               AuthorizationMethodType = "OAuth2.0"
-	AuthorizationMethodTypeKeyPairAuthentication AuthorizationMethodType = "Key Pair Authentication"
-	AuthorizationMethodTypeUsernameAndPassword   AuthorizationMethodType = "Username and Password"
+	AuthorizationMethodTypeKeyPairAuthentication             AuthorizationMethodType = "Key Pair Authentication"
+	AuthorizationMethodTypeUsernameAndPassword               AuthorizationMethodType = "Username and Password"
+	AuthorizationMethodTypeDestinationSnowflakeUpdateOAuth20 AuthorizationMethodType = "destination-snowflake-update_OAuth2.0"
 )
 
 type AuthorizationMethod struct {
-	OAuth20               *OAuth20
-	KeyPairAuthentication *KeyPairAuthentication
-	UsernameAndPassword   *UsernameAndPassword
+	KeyPairAuthentication             *KeyPairAuthentication
+	UsernameAndPassword               *UsernameAndPassword
+	DestinationSnowflakeUpdateOAuth20 *DestinationSnowflakeUpdateOAuth20
 
 	Type AuthorizationMethodType
-}
-
-func CreateAuthorizationMethodOAuth20(oAuth20 OAuth20) AuthorizationMethod {
-	typ := AuthorizationMethodTypeOAuth20
-
-	return AuthorizationMethod{
-		OAuth20: &oAuth20,
-		Type:    typ,
-	}
 }
 
 func CreateAuthorizationMethodKeyPairAuthentication(keyPairAuthentication KeyPairAuthentication) AuthorizationMethod {
@@ -244,6 +235,15 @@ func CreateAuthorizationMethodUsernameAndPassword(usernameAndPassword UsernameAn
 	}
 }
 
+func CreateAuthorizationMethodDestinationSnowflakeUpdateOAuth20(destinationSnowflakeUpdateOAuth20 DestinationSnowflakeUpdateOAuth20) AuthorizationMethod {
+	typ := AuthorizationMethodTypeDestinationSnowflakeUpdateOAuth20
+
+	return AuthorizationMethod{
+		DestinationSnowflakeUpdateOAuth20: &destinationSnowflakeUpdateOAuth20,
+		Type:                              typ,
+	}
+}
+
 func (u *AuthorizationMethod) UnmarshalJSON(data []byte) error {
 
 	usernameAndPassword := new(UsernameAndPassword)
@@ -260,10 +260,10 @@ func (u *AuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	oAuth20 := new(OAuth20)
-	if err := utils.UnmarshalJSON(data, &oAuth20, "", true, true); err == nil {
-		u.OAuth20 = oAuth20
-		u.Type = AuthorizationMethodTypeOAuth20
+	destinationSnowflakeUpdateOAuth20 := new(DestinationSnowflakeUpdateOAuth20)
+	if err := utils.UnmarshalJSON(data, &destinationSnowflakeUpdateOAuth20, "", true, true); err == nil {
+		u.DestinationSnowflakeUpdateOAuth20 = destinationSnowflakeUpdateOAuth20
+		u.Type = AuthorizationMethodTypeDestinationSnowflakeUpdateOAuth20
 		return nil
 	}
 
@@ -271,16 +271,16 @@ func (u *AuthorizationMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u AuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.OAuth20 != nil {
-		return utils.MarshalJSON(u.OAuth20, "", true)
-	}
-
 	if u.KeyPairAuthentication != nil {
 		return utils.MarshalJSON(u.KeyPairAuthentication, "", true)
 	}
 
 	if u.UsernameAndPassword != nil {
 		return utils.MarshalJSON(u.UsernameAndPassword, "", true)
+	}
+
+	if u.DestinationSnowflakeUpdateOAuth20 != nil {
+		return utils.MarshalJSON(u.DestinationSnowflakeUpdateOAuth20, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -292,6 +292,8 @@ type DestinationSnowflakeUpdate struct {
 	Database string `json:"database"`
 	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
 	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables
+	EnableIncrementalFinalTableUpdates *bool `default:"false" json:"enable_incremental_final_table_updates"`
 	// Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 	Host string `json:"host"`
 	// Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
@@ -338,6 +340,13 @@ func (o *DestinationSnowflakeUpdate) GetDisableTypeDedupe() *bool {
 		return nil
 	}
 	return o.DisableTypeDedupe
+}
+
+func (o *DestinationSnowflakeUpdate) GetEnableIncrementalFinalTableUpdates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnableIncrementalFinalTableUpdates
 }
 
 func (o *DestinationSnowflakeUpdate) GetHost() string {

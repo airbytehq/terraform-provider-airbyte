@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequest {
+func (r *SourceOktaResourceModel) ToSharedSourceOktaCreateRequest() *shared.SourceOktaCreateRequest {
 	var credentials *shared.SourceOktaAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceOktaOAuth20 *shared.SourceOktaOAuth20
@@ -80,12 +80,14 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 	return &out
 }
 
-func (r *SourceOktaResourceModel) ToGetSDKType() *shared.SourceOktaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOktaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOktaResourceModel) ToUpdateSDKType() *shared.SourceOktaPutRequest {
+func (r *SourceOktaResourceModel) ToSharedSourceOktaPutRequest() *shared.SourceOktaPutRequest {
 	var credentials *shared.SourceOktaUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceOktaUpdateOAuth20 *shared.SourceOktaUpdateOAuth20
@@ -142,20 +144,4 @@ func (r *SourceOktaResourceModel) ToUpdateSDKType() *shared.SourceOktaPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOktaResourceModel) ToDeleteSDKType() *shared.SourceOktaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOktaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOktaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

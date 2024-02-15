@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightlyCreateRequest {
+func (r *SourceInsightlyResourceModel) ToSharedSourceInsightlyCreateRequest() *shared.SourceInsightlyCreateRequest {
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -48,12 +48,14 @@ func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightly
 	return &out
 }
 
-func (r *SourceInsightlyResourceModel) ToGetSDKType() *shared.SourceInsightlyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceInsightlyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceInsightlyResourceModel) ToUpdateSDKType() *shared.SourceInsightlyPutRequest {
+func (r *SourceInsightlyResourceModel) ToSharedSourceInsightlyPutRequest() *shared.SourceInsightlyPutRequest {
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -78,20 +80,4 @@ func (r *SourceInsightlyResourceModel) ToUpdateSDKType() *shared.SourceInsightly
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceInsightlyResourceModel) ToDeleteSDKType() *shared.SourceInsightlyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceInsightlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceInsightlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -9,6 +9,56 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
+// An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
+type Operator string
+
+const (
+	OperatorContains Operator = "Contains"
+	OperatorEquals   Operator = "Equals"
+)
+
+func (e Operator) ToPointer() *Operator {
+	return &e
+}
+
+func (e *Operator) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Contains":
+		fallthrough
+	case "Equals":
+		*e = Operator(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Operator: %v", v)
+	}
+}
+
+// AccountNames - Account Names Predicates Config.
+type AccountNames struct {
+	// Account Name is a string value for comparing with the specified predicate.
+	Name string `json:"name"`
+	// An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
+	Operator Operator `json:"operator"`
+}
+
+func (o *AccountNames) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *AccountNames) GetOperator() Operator {
+	if o == nil {
+		return Operator("")
+	}
+	return o.Operator
+}
+
 type AuthMethod string
 
 const (
@@ -208,7 +258,9 @@ func (o *CustomReportConfig) GetReportingObject() ReportingDataObject {
 }
 
 type SourceBingAdsUpdate struct {
-	authMethod *AuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
+	// Predicates that will be used to sync data by specific accounts.
+	AccountNames []AccountNames `json:"account_names,omitempty"`
+	authMethod   *AuthMethod    `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Advertising developer application.
@@ -236,6 +288,13 @@ func (s *SourceBingAdsUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceBingAdsUpdate) GetAccountNames() []AccountNames {
+	if o == nil {
+		return nil
+	}
+	return o.AccountNames
 }
 
 func (o *SourceBingAdsUpdate) GetAuthMethod() *AuthMethod {

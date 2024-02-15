@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCreateRequest {
+func (r *SourceUsCensusResourceModel) ToSharedSourceUsCensusCreateRequest() *shared.SourceUsCensusCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	queryParams := new(string)
 	if !r.Configuration.QueryParams.IsUnknown() && !r.Configuration.QueryParams.IsNull() {
@@ -45,12 +45,14 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 	return &out
 }
 
-func (r *SourceUsCensusResourceModel) ToGetSDKType() *shared.SourceUsCensusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceUsCensusResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceUsCensusResourceModel) ToUpdateSDKType() *shared.SourceUsCensusPutRequest {
+func (r *SourceUsCensusResourceModel) ToSharedSourceUsCensusPutRequest() *shared.SourceUsCensusPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	queryParams := new(string)
 	if !r.Configuration.QueryParams.IsUnknown() && !r.Configuration.QueryParams.IsNull() {
@@ -72,20 +74,4 @@ func (r *SourceUsCensusResourceModel) ToUpdateSDKType() *shared.SourceUsCensusPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceUsCensusResourceModel) ToDeleteSDKType() *shared.SourceUsCensusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceUsCensusResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceUsCensusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

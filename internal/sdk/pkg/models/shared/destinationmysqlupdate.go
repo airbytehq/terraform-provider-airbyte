@@ -34,7 +34,6 @@ func (e *DestinationMysqlUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(da
 	}
 }
 
-// DestinationMysqlUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMysqlUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -116,7 +115,6 @@ func (e *DestinationMysqlUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) e
 	}
 }
 
-// DestinationMysqlUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMysqlUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -198,7 +196,6 @@ func (e *DestinationMysqlUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationMysqlUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMysqlUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationMysqlUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -227,6 +224,7 @@ const (
 	DestinationMysqlUpdateSSHTunnelMethodTypeDestinationMysqlUpdatePasswordAuthentication DestinationMysqlUpdateSSHTunnelMethodType = "destination-mysql-update_Password Authentication"
 )
 
+// DestinationMysqlUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMysqlUpdateSSHTunnelMethod struct {
 	DestinationMysqlUpdateNoTunnel               *DestinationMysqlUpdateNoTunnel
 	DestinationMysqlUpdateSSHKeyAuthentication   *DestinationMysqlUpdateSSHKeyAuthentication

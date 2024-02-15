@@ -34,7 +34,6 @@ func (e *SourceHarvestUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHarvestUpdateAuthenticateWithPersonalAccessToken - Choose how to authenticate to Harvest.
 type SourceHarvestUpdateAuthenticateWithPersonalAccessToken struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
@@ -95,7 +94,6 @@ func (e *SourceHarvestUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AuthenticateViaHarvestOAuth - Choose how to authenticate to Harvest.
 type AuthenticateViaHarvestOAuth struct {
 	AdditionalProperties interface{}                  `additionalProperties:"true" json:"-"`
 	authType             *SourceHarvestUpdateAuthType `const:"Client" json:"auth_type,omitempty"`
@@ -157,6 +155,7 @@ const (
 	SourceHarvestUpdateAuthenticationMechanismTypeSourceHarvestUpdateAuthenticateWithPersonalAccessToken SourceHarvestUpdateAuthenticationMechanismType = "source-harvest-update_Authenticate with Personal Access Token"
 )
 
+// SourceHarvestUpdateAuthenticationMechanism - Choose how to authenticate to Harvest.
 type SourceHarvestUpdateAuthenticationMechanism struct {
 	AuthenticateViaHarvestOAuth                            *AuthenticateViaHarvestOAuth
 	SourceHarvestUpdateAuthenticateWithPersonalAccessToken *SourceHarvestUpdateAuthenticateWithPersonalAccessToken

@@ -58,7 +58,6 @@ func (e *DestinationVerticaSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data [
 	}
 }
 
-// DestinationVerticaPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationVerticaPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -140,7 +139,6 @@ func (e *DestinationVerticaSchemasTunnelMethod) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationVerticaSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationVerticaSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -222,7 +220,6 @@ func (e *DestinationVerticaTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationVerticaNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationVerticaNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationVerticaTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -251,6 +248,7 @@ const (
 	DestinationVerticaSSHTunnelMethodTypeDestinationVerticaPasswordAuthentication DestinationVerticaSSHTunnelMethodType = "destination-vertica_Password Authentication"
 )
 
+// DestinationVerticaSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationVerticaSSHTunnelMethod struct {
 	DestinationVerticaNoTunnel               *DestinationVerticaNoTunnel
 	DestinationVerticaSSHKeyAuthentication   *DestinationVerticaSSHKeyAuthentication

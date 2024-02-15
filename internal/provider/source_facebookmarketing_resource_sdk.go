@@ -8,9 +8,12 @@ import (
 	"time"
 )
 
-func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceFacebookMarketingCreateRequest {
+func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCreateRequest() *shared.SourceFacebookMarketingCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	accountID := r.Configuration.AccountID.ValueString()
+	var accountIds []string = nil
+	for _, accountIdsItem := range r.Configuration.AccountIds {
+		accountIds = append(accountIds, accountIdsItem.ValueString())
+	}
 	actionBreakdownsAllowEmpty := new(bool)
 	if !r.Configuration.ActionBreakdownsAllowEmpty.IsUnknown() && !r.Configuration.ActionBreakdownsAllowEmpty.IsNull() {
 		*actionBreakdownsAllowEmpty = r.Configuration.ActionBreakdownsAllowEmpty.ValueBool()
@@ -55,6 +58,12 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		for _, fieldsItem := range customInsightsItem.Fields {
 			fields = append(fields, shared.SourceFacebookMarketingValidEnums(fieldsItem.ValueString()))
 		}
+		insightsJobTimeout := new(int64)
+		if !customInsightsItem.InsightsJobTimeout.IsUnknown() && !customInsightsItem.InsightsJobTimeout.IsNull() {
+			*insightsJobTimeout = customInsightsItem.InsightsJobTimeout.ValueInt64()
+		} else {
+			insightsJobTimeout = nil
+		}
 		insightsLookbackWindow := new(int64)
 		if !customInsightsItem.InsightsLookbackWindow.IsUnknown() && !customInsightsItem.InsightsLookbackWindow.IsNull() {
 			*insightsLookbackWindow = customInsightsItem.InsightsLookbackWindow.ValueInt64()
@@ -86,6 +95,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 			Breakdowns:             breakdowns,
 			EndDate:                endDate,
 			Fields:                 fields,
+			InsightsJobTimeout:     insightsJobTimeout,
 			InsightsLookbackWindow: insightsLookbackWindow,
 			Level:                  level,
 			Name:                   name,
@@ -111,6 +121,12 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	} else {
 		includeDeleted = nil
 	}
+	insightsJobTimeout1 := new(int64)
+	if !r.Configuration.InsightsJobTimeout.IsUnknown() && !r.Configuration.InsightsJobTimeout.IsNull() {
+		*insightsJobTimeout1 = r.Configuration.InsightsJobTimeout.ValueInt64()
+	} else {
+		insightsJobTimeout1 = nil
+	}
 	insightsLookbackWindow1 := new(int64)
 	if !r.Configuration.InsightsLookbackWindow.IsUnknown() && !r.Configuration.InsightsLookbackWindow.IsNull() {
 		*insightsLookbackWindow1 = r.Configuration.InsightsLookbackWindow.ValueInt64()
@@ -131,7 +147,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	}
 	configuration := shared.SourceFacebookMarketing{
 		AccessToken:                accessToken,
-		AccountID:                  accountID,
+		AccountIds:                 accountIds,
 		ActionBreakdownsAllowEmpty: actionBreakdownsAllowEmpty,
 		ClientID:                   clientID,
 		ClientSecret:               clientSecret,
@@ -139,6 +155,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		EndDate:                    endDate1,
 		FetchThumbnailImages:       fetchThumbnailImages,
 		IncludeDeleted:             includeDeleted,
+		InsightsJobTimeout:         insightsJobTimeout1,
 		InsightsLookbackWindow:     insightsLookbackWindow1,
 		PageSize:                   pageSize,
 		StartDate:                  startDate1,
@@ -167,14 +184,19 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	return &out
 }
 
-func (r *SourceFacebookMarketingResourceModel) ToGetSDKType() *shared.SourceFacebookMarketingCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFacebookMarketingResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceFacebookMarketingPutRequest {
+func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPutRequest() *shared.SourceFacebookMarketingPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	accountID := r.Configuration.AccountID.ValueString()
+	var accountIds []string = nil
+	for _, accountIdsItem := range r.Configuration.AccountIds {
+		accountIds = append(accountIds, accountIdsItem.ValueString())
+	}
 	actionBreakdownsAllowEmpty := new(bool)
 	if !r.Configuration.ActionBreakdownsAllowEmpty.IsUnknown() && !r.Configuration.ActionBreakdownsAllowEmpty.IsNull() {
 		*actionBreakdownsAllowEmpty = r.Configuration.ActionBreakdownsAllowEmpty.ValueBool()
@@ -219,6 +241,12 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		for _, fieldsItem := range customInsightsItem.Fields {
 			fields = append(fields, shared.SourceFacebookMarketingUpdateValidEnums(fieldsItem.ValueString()))
 		}
+		insightsJobTimeout := new(int64)
+		if !customInsightsItem.InsightsJobTimeout.IsUnknown() && !customInsightsItem.InsightsJobTimeout.IsNull() {
+			*insightsJobTimeout = customInsightsItem.InsightsJobTimeout.ValueInt64()
+		} else {
+			insightsJobTimeout = nil
+		}
 		insightsLookbackWindow := new(int64)
 		if !customInsightsItem.InsightsLookbackWindow.IsUnknown() && !customInsightsItem.InsightsLookbackWindow.IsNull() {
 			*insightsLookbackWindow = customInsightsItem.InsightsLookbackWindow.ValueInt64()
@@ -250,6 +278,7 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 			Breakdowns:             breakdowns,
 			EndDate:                endDate,
 			Fields:                 fields,
+			InsightsJobTimeout:     insightsJobTimeout,
 			InsightsLookbackWindow: insightsLookbackWindow,
 			Level:                  level,
 			Name:                   name,
@@ -275,6 +304,12 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 	} else {
 		includeDeleted = nil
 	}
+	insightsJobTimeout1 := new(int64)
+	if !r.Configuration.InsightsJobTimeout.IsUnknown() && !r.Configuration.InsightsJobTimeout.IsNull() {
+		*insightsJobTimeout1 = r.Configuration.InsightsJobTimeout.ValueInt64()
+	} else {
+		insightsJobTimeout1 = nil
+	}
 	insightsLookbackWindow1 := new(int64)
 	if !r.Configuration.InsightsLookbackWindow.IsUnknown() && !r.Configuration.InsightsLookbackWindow.IsNull() {
 		*insightsLookbackWindow1 = r.Configuration.InsightsLookbackWindow.ValueInt64()
@@ -295,7 +330,7 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 	}
 	configuration := shared.SourceFacebookMarketingUpdate{
 		AccessToken:                accessToken,
-		AccountID:                  accountID,
+		AccountIds:                 accountIds,
 		ActionBreakdownsAllowEmpty: actionBreakdownsAllowEmpty,
 		ClientID:                   clientID,
 		ClientSecret:               clientSecret,
@@ -303,6 +338,7 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		EndDate:                    endDate1,
 		FetchThumbnailImages:       fetchThumbnailImages,
 		IncludeDeleted:             includeDeleted,
+		InsightsJobTimeout:         insightsJobTimeout1,
 		InsightsLookbackWindow:     insightsLookbackWindow1,
 		PageSize:                   pageSize,
 		StartDate:                  startDate1,
@@ -315,20 +351,4 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFacebookMarketingResourceModel) ToDeleteSDKType() *shared.SourceFacebookMarketingCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFacebookMarketingResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFacebookMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,9 +7,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhouseCreateRequest {
+func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() *shared.SourceClickhouseCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -82,12 +88,13 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceClickhouse{
-		Database:     database,
-		Host:         host,
-		Password:     password,
-		Port:         port,
-		TunnelMethod: tunnelMethod,
-		Username:     username,
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
+		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -113,14 +120,22 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 	return &out
 }
 
-func (r *SourceClickhouseResourceModel) ToGetSDKType() *shared.SourceClickhouseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceClickhouseResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhousePutRequest {
+func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *shared.SourceClickhousePutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -193,12 +208,13 @@ func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhou
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceClickhouseUpdate{
-		Database:     database,
-		Host:         host,
-		Password:     password,
-		Port:         port,
-		TunnelMethod: tunnelMethod,
-		Username:     username,
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
+		TunnelMethod:  tunnelMethod,
+		Username:      username,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -208,20 +224,4 @@ func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhou
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceClickhouseResourceModel) ToDeleteSDKType() *shared.SourceClickhouseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceClickhouseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceClickhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -3,7 +3,7 @@
 package provider
 
 type DestinationMilvusAuthentication struct {
-	APIToken         *DestinationMilvusAPIToken                                `tfsdk:"api_token"`
-	NoAuth           *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"no_auth"`
-	UsernamePassword *UsernamePassword                                         `tfsdk:"username_password"`
+	APIToken         *DestinationMilvusAPIToken `tfsdk:"api_token"`
+	NoAuth           *Fake                      `tfsdk:"no_auth"`
+	UsernamePassword *UsernamePassword          `tfsdk:"username_password"`
 }

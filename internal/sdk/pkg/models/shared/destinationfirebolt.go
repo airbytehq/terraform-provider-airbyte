@@ -57,7 +57,6 @@ func (e *DestinationFireboltSchemasMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationFireboltExternalTableViaS3 - Loading method used to select the way data will be uploaded to Firebolt
 type DestinationFireboltExternalTableViaS3 struct {
 	// AWS access key granting read and write access to S3.
 	AwsKeyID string `json:"aws_key_id"`
@@ -137,7 +136,6 @@ func (e *DestinationFireboltMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationFireboltSQLInserts - Loading method used to select the way data will be uploaded to Firebolt
 type DestinationFireboltSQLInserts struct {
 	method DestinationFireboltMethod `const:"SQL" json:"method"`
 }
@@ -164,6 +162,7 @@ const (
 	DestinationFireboltLoadingMethodTypeDestinationFireboltExternalTableViaS3 DestinationFireboltLoadingMethodType = "destination-firebolt_External Table via S3"
 )
 
+// DestinationFireboltLoadingMethod - Loading method used to select the way data will be uploaded to Firebolt
 type DestinationFireboltLoadingMethod struct {
 	DestinationFireboltSQLInserts         *DestinationFireboltSQLInserts
 	DestinationFireboltExternalTableViaS3 *DestinationFireboltExternalTableViaS3

@@ -136,6 +136,7 @@ const (
 	DestinationLangchainEmbeddingTypeDestinationLangchainFake   DestinationLangchainEmbeddingType = "destination-langchain_Fake"
 )
 
+// DestinationLangchainEmbedding - Embedding configuration
 type DestinationLangchainEmbedding struct {
 	DestinationLangchainOpenAI *DestinationLangchainOpenAI
 	DestinationLangchainFake   *DestinationLangchainFake
@@ -385,6 +386,7 @@ const (
 	DestinationLangchainIndexingTypeDestinationLangchainChromaLocalPersistance DestinationLangchainIndexingType = "destination-langchain_Chroma (local persistance)"
 )
 
+// DestinationLangchainIndexing - Indexing configuration
 type DestinationLangchainIndexing struct {
 	DestinationLangchainPinecone               *DestinationLangchainPinecone
 	DestinationLangchainDocArrayHnswSearch     *DestinationLangchainDocArrayHnswSearch

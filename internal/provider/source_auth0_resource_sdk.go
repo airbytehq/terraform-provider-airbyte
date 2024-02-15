@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRequest {
+func (r *SourceAuth0ResourceModel) ToSharedSourceAuth0CreateRequest() *shared.SourceAuth0CreateRequest {
 	baseURL := r.Configuration.BaseURL.ValueString()
 	var credentials shared.SourceAuth0AuthenticationMethod
 	var sourceAuth0OAuth2ConfidentialApplication *shared.SourceAuth0OAuth2ConfidentialApplication
@@ -73,12 +73,14 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	return &out
 }
 
-func (r *SourceAuth0ResourceModel) ToGetSDKType() *shared.SourceAuth0CreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAuth0ResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAuth0ResourceModel) ToUpdateSDKType() *shared.SourceAuth0PutRequest {
+func (r *SourceAuth0ResourceModel) ToSharedSourceAuth0PutRequest() *shared.SourceAuth0PutRequest {
 	baseURL := r.Configuration.BaseURL.ValueString()
 	var credentials shared.SourceAuth0UpdateAuthenticationMethod
 	var oAuth2ConfidentialApplication *shared.OAuth2ConfidentialApplication
@@ -128,20 +130,4 @@ func (r *SourceAuth0ResourceModel) ToUpdateSDKType() *shared.SourceAuth0PutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAuth0ResourceModel) ToDeleteSDKType() *shared.SourceAuth0CreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAuth0ResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAuth0ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePendoResourceModel) ToCreateSDKType() *shared.SourcePendoCreateRequest {
+func (r *SourcePendoResourceModel) ToSharedSourcePendoCreateRequest() *shared.SourcePendoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourcePendo{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourcePendoResourceModel) ToCreateSDKType() *shared.SourcePendoCreateRe
 	return &out
 }
 
-func (r *SourcePendoResourceModel) ToGetSDKType() *shared.SourcePendoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePendoResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePendoResourceModel) ToUpdateSDKType() *shared.SourcePendoPutRequest {
+func (r *SourcePendoResourceModel) ToSharedSourcePendoPutRequest() *shared.SourcePendoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourcePendoUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourcePendoResourceModel) ToUpdateSDKType() *shared.SourcePendoPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePendoResourceModel) ToDeleteSDKType() *shared.SourcePendoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePendoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePendoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

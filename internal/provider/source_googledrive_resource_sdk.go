@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceGoogleDriveResourceModel) ToCreateSDKType() *shared.SourceGoogleDriveCreateRequest {
+func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest() *shared.SourceGoogleDriveCreateRequest {
 	var credentials shared.SourceGoogleDriveAuthentication
 	var sourceGoogleDriveAuthenticateViaGoogleOAuth *shared.SourceGoogleDriveAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -217,14 +217,34 @@ func (r *SourceGoogleDriveResourceModel) ToCreateSDKType() *shared.SourceGoogleD
 		}
 		var sourceGoogleDriveDocumentFileTypeFormatExperimental *shared.SourceGoogleDriveDocumentFileTypeFormatExperimental
 		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
-			skipUnprocessableFileTypes := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
-				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			var processing *shared.SourceGoogleDriveProcessing
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+				var sourceGoogleDriveLocal *shared.SourceGoogleDriveLocal
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+					sourceGoogleDriveLocal = &shared.SourceGoogleDriveLocal{}
+				}
+				if sourceGoogleDriveLocal != nil {
+					processing = &shared.SourceGoogleDriveProcessing{
+						SourceGoogleDriveLocal: sourceGoogleDriveLocal,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
-				skipUnprocessableFileTypes = nil
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceGoogleDriveParsingStrategy)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceGoogleDriveParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			} else {
+				strategy = nil
 			}
 			sourceGoogleDriveDocumentFileTypeFormatExperimental = &shared.SourceGoogleDriveDocumentFileTypeFormatExperimental{
-				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
 			}
 		}
 		if sourceGoogleDriveDocumentFileTypeFormatExperimental != nil {
@@ -302,12 +322,14 @@ func (r *SourceGoogleDriveResourceModel) ToCreateSDKType() *shared.SourceGoogleD
 	return &out
 }
 
-func (r *SourceGoogleDriveResourceModel) ToGetSDKType() *shared.SourceGoogleDriveCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleDriveResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleDriveResourceModel) ToUpdateSDKType() *shared.SourceGoogleDrivePutRequest {
+func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *shared.SourceGoogleDrivePutRequest {
 	var credentials shared.SourceGoogleDriveUpdateAuthentication
 	var sourceGoogleDriveUpdateAuthenticateViaGoogleOAuth *shared.SourceGoogleDriveUpdateAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -516,14 +538,34 @@ func (r *SourceGoogleDriveResourceModel) ToUpdateSDKType() *shared.SourceGoogleD
 		}
 		var sourceGoogleDriveUpdateDocumentFileTypeFormatExperimental *shared.SourceGoogleDriveUpdateDocumentFileTypeFormatExperimental
 		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
-			skipUnprocessableFileTypes := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
-				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			var processing *shared.SourceGoogleDriveUpdateProcessing
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+				var sourceGoogleDriveUpdateLocal *shared.SourceGoogleDriveUpdateLocal
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+					sourceGoogleDriveUpdateLocal = &shared.SourceGoogleDriveUpdateLocal{}
+				}
+				if sourceGoogleDriveUpdateLocal != nil {
+					processing = &shared.SourceGoogleDriveUpdateProcessing{
+						SourceGoogleDriveUpdateLocal: sourceGoogleDriveUpdateLocal,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
-				skipUnprocessableFileTypes = nil
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceGoogleDriveUpdateParsingStrategy)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceGoogleDriveUpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			} else {
+				strategy = nil
 			}
 			sourceGoogleDriveUpdateDocumentFileTypeFormatExperimental = &shared.SourceGoogleDriveUpdateDocumentFileTypeFormatExperimental{
-				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
 			}
 		}
 		if sourceGoogleDriveUpdateDocumentFileTypeFormatExperimental != nil {
@@ -585,20 +627,4 @@ func (r *SourceGoogleDriveResourceModel) ToUpdateSDKType() *shared.SourceGoogleD
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleDriveResourceModel) ToDeleteSDKType() *shared.SourceGoogleDriveCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleDriveResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleDriveResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

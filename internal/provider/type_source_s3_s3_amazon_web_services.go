@@ -10,5 +10,6 @@ type SourceS3S3AmazonWebServices struct {
 	Bucket             types.String `tfsdk:"bucket"`
 	Endpoint           types.String `tfsdk:"endpoint"`
 	PathPrefix         types.String `tfsdk:"path_prefix"`
+	RoleArn            types.String `tfsdk:"role_arn"`
 	StartDate          types.String `tfsdk:"start_date"`
 }

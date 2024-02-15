@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRequest {
+func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.SourceMssqlCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -16,39 +16,20 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 	} else {
 		jdbcURLParams = nil
 	}
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
+	password := r.Configuration.Password.ValueString()
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceMssqlUpdateMethod
 	if r.Configuration.ReplicationMethod != nil {
 		var sourceMssqlReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlReadChangesUsingChangeDataCaptureCDC
 		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
-			dataToSync := new(shared.SourceMssqlDataToSync)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.DataToSync.IsNull() {
-				*dataToSync = shared.SourceMssqlDataToSync(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.DataToSync.ValueString())
-			} else {
-				dataToSync = nil
-			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			snapshotIsolation := new(shared.SourceMssqlInitialSnapshotIsolationLevel)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsNull() {
-				*snapshotIsolation = shared.SourceMssqlInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.ValueString())
-			} else {
-				snapshotIsolation = nil
-			}
 			sourceMssqlReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlReadChangesUsingChangeDataCaptureCDC{
-				DataToSync:            dataToSync,
 				InitialWaitingSeconds: initialWaitingSeconds,
-				SnapshotIsolation:     snapshotIsolation,
 			}
 		}
 		if sourceMssqlReadChangesUsingChangeDataCaptureCDC != nil {
@@ -72,6 +53,15 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 	}
 	var sslMethod *shared.SourceMssqlSSLMethod
 	if r.Configuration.SslMethod != nil {
+		var sourceMssqlUnencrypted *shared.SourceMssqlUnencrypted
+		if r.Configuration.SslMethod.Unencrypted != nil {
+			sourceMssqlUnencrypted = &shared.SourceMssqlUnencrypted{}
+		}
+		if sourceMssqlUnencrypted != nil {
+			sslMethod = &shared.SourceMssqlSSLMethod{
+				SourceMssqlUnencrypted: sourceMssqlUnencrypted,
+			}
+		}
 		var sourceMssqlEncryptedTrustServerCertificate *shared.SourceMssqlEncryptedTrustServerCertificate
 		if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
 			sourceMssqlEncryptedTrustServerCertificate = &shared.SourceMssqlEncryptedTrustServerCertificate{}
@@ -83,6 +73,12 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 		var sourceMssqlEncryptedVerifyCertificate *shared.SourceMssqlEncryptedVerifyCertificate
 		if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
+			certificate := new(string)
+			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsNull() {
+				*certificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.ValueString()
+			} else {
+				certificate = nil
+			}
 			hostNameInCertificate := new(string)
 			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
 				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
@@ -90,6 +86,7 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 				hostNameInCertificate = nil
 			}
 			sourceMssqlEncryptedVerifyCertificate = &shared.SourceMssqlEncryptedVerifyCertificate{
+				Certificate:           certificate,
 				HostNameInCertificate: hostNameInCertificate,
 			}
 		}
@@ -194,12 +191,14 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 	return &out
 }
 
-func (r *SourceMssqlResourceModel) ToGetSDKType() *shared.SourceMssqlCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMssqlResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutRequest {
+func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.SourceMssqlPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -208,39 +207,20 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 	} else {
 		jdbcURLParams = nil
 	}
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
+	password := r.Configuration.Password.ValueString()
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.UpdateMethod
 	if r.Configuration.ReplicationMethod != nil {
 		var readChangesUsingChangeDataCaptureCDC *shared.ReadChangesUsingChangeDataCaptureCDC
 		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
-			dataToSync := new(shared.DataToSync)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.DataToSync.IsNull() {
-				*dataToSync = shared.DataToSync(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.DataToSync.ValueString())
-			} else {
-				dataToSync = nil
-			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			snapshotIsolation := new(shared.InitialSnapshotIsolationLevel)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsNull() {
-				*snapshotIsolation = shared.InitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.ValueString())
-			} else {
-				snapshotIsolation = nil
-			}
 			readChangesUsingChangeDataCaptureCDC = &shared.ReadChangesUsingChangeDataCaptureCDC{
-				DataToSync:            dataToSync,
 				InitialWaitingSeconds: initialWaitingSeconds,
-				SnapshotIsolation:     snapshotIsolation,
 			}
 		}
 		if readChangesUsingChangeDataCaptureCDC != nil {
@@ -264,6 +244,15 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 	}
 	var sslMethod *shared.SourceMssqlUpdateSSLMethod
 	if r.Configuration.SslMethod != nil {
+		var unencrypted *shared.Unencrypted
+		if r.Configuration.SslMethod.Unencrypted != nil {
+			unencrypted = &shared.Unencrypted{}
+		}
+		if unencrypted != nil {
+			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
+				Unencrypted: unencrypted,
+			}
+		}
 		var sourceMssqlUpdateEncryptedTrustServerCertificate *shared.SourceMssqlUpdateEncryptedTrustServerCertificate
 		if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
 			sourceMssqlUpdateEncryptedTrustServerCertificate = &shared.SourceMssqlUpdateEncryptedTrustServerCertificate{}
@@ -275,6 +264,12 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 		var sourceMssqlUpdateEncryptedVerifyCertificate *shared.SourceMssqlUpdateEncryptedVerifyCertificate
 		if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
+			certificate := new(string)
+			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.IsNull() {
+				*certificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.Certificate.ValueString()
+			} else {
+				certificate = nil
+			}
 			hostNameInCertificate := new(string)
 			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
 				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
@@ -282,6 +277,7 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 				hostNameInCertificate = nil
 			}
 			sourceMssqlUpdateEncryptedVerifyCertificate = &shared.SourceMssqlUpdateEncryptedVerifyCertificate{
+				Certificate:           certificate,
 				HostNameInCertificate: hostNameInCertificate,
 			}
 		}
@@ -370,20 +366,4 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMssqlResourceModel) ToDeleteSDKType() *shared.SourceMssqlCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMssqlResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMssqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

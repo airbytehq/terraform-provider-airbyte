@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationVerticaResourceModel) ToCreateSDKType() *shared.DestinationVerticaCreateRequest {
+func (r *DestinationVerticaResourceModel) ToSharedDestinationVerticaCreateRequest() *shared.DestinationVerticaCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -115,12 +115,14 @@ func (r *DestinationVerticaResourceModel) ToCreateSDKType() *shared.DestinationV
 	return &out
 }
 
-func (r *DestinationVerticaResourceModel) ToGetSDKType() *shared.DestinationVerticaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationVerticaResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationVerticaResourceModel) ToUpdateSDKType() *shared.DestinationVerticaPutRequest {
+func (r *DestinationVerticaResourceModel) ToSharedDestinationVerticaPutRequest() *shared.DestinationVerticaPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -219,20 +221,4 @@ func (r *DestinationVerticaResourceModel) ToUpdateSDKType() *shared.DestinationV
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationVerticaResourceModel) ToDeleteSDKType() *shared.DestinationVerticaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationVerticaResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationVerticaResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

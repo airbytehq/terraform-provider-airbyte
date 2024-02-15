@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceK6CloudResourceModel) ToCreateSDKType() *shared.SourceK6CloudCreateRequest {
+func (r *SourceK6CloudResourceModel) ToSharedSourceK6CloudCreateRequest() *shared.SourceK6CloudCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	configuration := shared.SourceK6Cloud{
 		APIToken: apiToken,
@@ -36,12 +36,14 @@ func (r *SourceK6CloudResourceModel) ToCreateSDKType() *shared.SourceK6CloudCrea
 	return &out
 }
 
-func (r *SourceK6CloudResourceModel) ToGetSDKType() *shared.SourceK6CloudCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceK6CloudResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceK6CloudResourceModel) ToUpdateSDKType() *shared.SourceK6CloudPutRequest {
+func (r *SourceK6CloudResourceModel) ToSharedSourceK6CloudPutRequest() *shared.SourceK6CloudPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	configuration := shared.SourceK6CloudUpdate{
 		APIToken: apiToken,
@@ -54,20 +56,4 @@ func (r *SourceK6CloudResourceModel) ToUpdateSDKType() *shared.SourceK6CloudPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceK6CloudResourceModel) ToDeleteSDKType() *shared.SourceK6CloudCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceK6CloudResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceK6CloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

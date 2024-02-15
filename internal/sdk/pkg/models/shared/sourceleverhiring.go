@@ -33,7 +33,6 @@ func (e *SourceLeverHiringSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLeverHiringAuthenticateViaLeverAPIKey - Choose how to authenticate to Lever Hiring.
 type SourceLeverHiringAuthenticateViaLeverAPIKey struct {
 	// The Api Key of your Lever Hiring account.
 	APIKey   string                            `json:"api_key"`
@@ -86,7 +85,6 @@ func (e *SourceLeverHiringAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLeverHiringAuthenticateViaLeverOAuth - Choose how to authenticate to Lever Hiring.
 type SourceLeverHiringAuthenticateViaLeverOAuth struct {
 	authType *SourceLeverHiringAuthType `const:"Client" json:"auth_type,omitempty"`
 	// The Client ID of your Lever Hiring developer application.
@@ -140,6 +138,7 @@ const (
 	SourceLeverHiringAuthenticationMechanismTypeSourceLeverHiringAuthenticateViaLeverAPIKey SourceLeverHiringAuthenticationMechanismType = "source-lever-hiring_Authenticate via Lever (Api Key)"
 )
 
+// SourceLeverHiringAuthenticationMechanism - Choose how to authenticate to Lever Hiring.
 type SourceLeverHiringAuthenticationMechanism struct {
 	SourceLeverHiringAuthenticateViaLeverOAuth  *SourceLeverHiringAuthenticateViaLeverOAuth
 	SourceLeverHiringAuthenticateViaLeverAPIKey *SourceLeverHiringAuthenticateViaLeverAPIKey

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICreateRequest {
+func (r *SourcePunkAPIResourceModel) ToSharedSourcePunkAPICreateRequest() *shared.SourcePunkAPICreateRequest {
 	brewedAfter := r.Configuration.BrewedAfter.ValueString()
 	brewedBefore := r.Configuration.BrewedBefore.ValueString()
 	id := new(string)
@@ -45,12 +45,14 @@ func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICrea
 	return &out
 }
 
-func (r *SourcePunkAPIResourceModel) ToGetSDKType() *shared.SourcePunkAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePunkAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePunkAPIResourceModel) ToUpdateSDKType() *shared.SourcePunkAPIPutRequest {
+func (r *SourcePunkAPIResourceModel) ToSharedSourcePunkAPIPutRequest() *shared.SourcePunkAPIPutRequest {
 	brewedAfter := r.Configuration.BrewedAfter.ValueString()
 	brewedBefore := r.Configuration.BrewedBefore.ValueString()
 	id := new(string)
@@ -72,20 +74,4 @@ func (r *SourcePunkAPIResourceModel) ToUpdateSDKType() *shared.SourcePunkAPIPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePunkAPIResourceModel) ToDeleteSDKType() *shared.SourcePunkAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePunkAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePunkAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

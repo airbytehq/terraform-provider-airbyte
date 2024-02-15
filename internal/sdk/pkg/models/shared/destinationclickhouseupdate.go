@@ -34,7 +34,6 @@ func (e *DestinationClickhouseUpdateSchemasTunnelMethod) UnmarshalJSON(data []by
 	}
 }
 
-// PasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type PasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -116,7 +115,6 @@ func (e *DestinationClickhouseUpdateTunnelMethod) UnmarshalJSON(data []byte) err
 	}
 }
 
-// SSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -198,7 +196,6 @@ func (e *TunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// NoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type NoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod TunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -227,6 +224,7 @@ const (
 	SSHTunnelMethodTypePasswordAuthentication SSHTunnelMethodType = "Password Authentication"
 )
 
+// SSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SSHTunnelMethod struct {
 	NoTunnel               *NoTunnel
 	SSHKeyAuthentication   *SSHKeyAuthentication

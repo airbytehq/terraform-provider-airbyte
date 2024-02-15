@@ -8,10 +8,10 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     schemas = [
       "...",
     ]
-    username = "Elton_Morissette"
+    username = "Laury_Towne"
   }
-  definition_id = "b974a7d8-001c-4be4-b7da-a2d7b021550a"
-  name          = "Jake Ondricka"
+  definition_id = "bace4005-a630-4727-ac58-b5da21f73986"
+  name          = "Ron Block"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f01cf56e-e294-4adb-85bd-340789cf0b8d"
+  workspace_id  = "92c2b810-56bc-4977-a3bf-4dff8dd835d8"
 }

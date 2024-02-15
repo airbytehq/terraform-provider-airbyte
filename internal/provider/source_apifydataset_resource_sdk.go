@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyDatasetCreateRequest {
+func (r *SourceApifyDatasetResourceModel) ToSharedSourceApifyDatasetCreateRequest() *shared.SourceApifyDatasetCreateRequest {
 	datasetID := r.Configuration.DatasetID.ValueString()
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDataset{
@@ -38,12 +38,14 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 	return &out
 }
 
-func (r *SourceApifyDatasetResourceModel) ToGetSDKType() *shared.SourceApifyDatasetCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceApifyDatasetResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceApifyDatasetResourceModel) ToUpdateSDKType() *shared.SourceApifyDatasetPutRequest {
+func (r *SourceApifyDatasetResourceModel) ToSharedSourceApifyDatasetPutRequest() *shared.SourceApifyDatasetPutRequest {
 	datasetID := r.Configuration.DatasetID.ValueString()
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDatasetUpdate{
@@ -58,20 +60,4 @@ func (r *SourceApifyDatasetResourceModel) ToUpdateSDKType() *shared.SourceApifyD
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceApifyDatasetResourceModel) ToDeleteSDKType() *shared.SourceApifyDatasetCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceApifyDatasetResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceApifyDatasetResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

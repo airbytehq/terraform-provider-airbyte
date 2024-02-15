@@ -6,13 +6,13 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "row_number",
+      "sheetid",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00"
+    start_datetime = "2000-01-01T13:00:00-07:00"
   }
-  definition_id = "a6744848-ac2b-404b-aae9-e175304065f6"
-  name          = "Tara King"
+  definition_id = "14e9ed57-541c-4361-ab0e-8c8cf11a0d25"
+  name          = "Jeremiah Fritsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "901f87c9-df1a-4f8f-9013-d5d0cf403b28"
+  workspace_id  = "fa52a9e4-75ab-4ffb-a2c1-e7b6908ecd76"
 }

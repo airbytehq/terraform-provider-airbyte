@@ -10,5 +10,6 @@ type DestinationWeaviateIndexing struct {
 	BatchSize         types.Int64                       `tfsdk:"batch_size"`
 	DefaultVectorizer types.String                      `tfsdk:"default_vectorizer"`
 	Host              types.String                      `tfsdk:"host"`
+	TenantID          types.String                      `tfsdk:"tenant_id"`
 	TextField         types.String                      `tfsdk:"text_field"`
 }

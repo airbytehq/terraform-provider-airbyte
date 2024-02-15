@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickbooksCreateRequest {
+func (r *SourceQuickbooksResourceModel) ToSharedSourceQuickbooksCreateRequest() *shared.SourceQuickbooksCreateRequest {
 	var credentials shared.SourceQuickbooksAuthorizationMethod
 	var sourceQuickbooksOAuth20 *shared.SourceQuickbooksOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
@@ -68,12 +68,14 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 	return &out
 }
 
-func (r *SourceQuickbooksResourceModel) ToGetSDKType() *shared.SourceQuickbooksCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceQuickbooksResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceQuickbooksResourceModel) ToUpdateSDKType() *shared.SourceQuickbooksPutRequest {
+func (r *SourceQuickbooksResourceModel) ToSharedSourceQuickbooksPutRequest() *shared.SourceQuickbooksPutRequest {
 	var credentials shared.SourceQuickbooksUpdateAuthorizationMethod
 	var sourceQuickbooksUpdateOAuth20 *shared.SourceQuickbooksUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
@@ -117,20 +119,4 @@ func (r *SourceQuickbooksResourceModel) ToUpdateSDKType() *shared.SourceQuickboo
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceQuickbooksResourceModel) ToDeleteSDKType() *shared.SourceQuickbooksCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceQuickbooksResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceQuickbooksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

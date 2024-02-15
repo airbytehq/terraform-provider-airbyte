@@ -3,10 +3,10 @@
 package provider
 
 type DestinationPostgresSSLModes struct {
-	Allow      *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"allow"`
-	Disable    *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"disable"`
-	Prefer     *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"prefer"`
-	Require    *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"require"`
-	VerifyCa   *VerifyCa                                                 `tfsdk:"verify_ca"`
-	VerifyFull *VerifyFull                                               `tfsdk:"verify_full"`
+	Allow      *Fake       `tfsdk:"allow"`
+	Disable    *Fake       `tfsdk:"disable"`
+	Prefer     *Fake       `tfsdk:"prefer"`
+	Require    *Fake       `tfsdk:"require"`
+	VerifyCa   *VerifyCa   `tfsdk:"verify_ca"`
+	VerifyFull *VerifyFull `tfsdk:"verify_full"`
 }

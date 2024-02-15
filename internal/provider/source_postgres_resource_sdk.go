@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCreateRequest {
+func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *shared.SourcePostgresCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -36,6 +36,12 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 			var additionalProperties interface{}
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties)
+			}
+			heartbeatActionQuery := new(string)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsNull() {
+				*heartbeatActionQuery = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.ValueString()
+			} else {
+				heartbeatActionQuery = nil
 			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
@@ -65,6 +71,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 			replicationSlot := r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
 			sourcePostgresReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresReadChangesUsingWriteAheadLogCDC{
 				AdditionalProperties:  additionalProperties,
+				HeartbeatActionQuery:  heartbeatActionQuery,
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
 				Plugin:                plugin,
@@ -335,12 +342,14 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	return &out
 }
 
-func (r *SourcePostgresResourceModel) ToGetSDKType() *shared.SourcePostgresCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePostgresResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPutRequest {
+func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared.SourcePostgresPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -369,21 +378,27 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties)
 			}
+			heartbeatActionQuery := new(string)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsNull() {
+				*heartbeatActionQuery = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.ValueString()
+			} else {
+				heartbeatActionQuery = nil
+			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			lsnCommitBehaviour := new(shared.SourcePostgresUpdateLSNCommitBehaviour)
+			lsnCommitBehaviour := new(shared.LSNCommitBehaviour)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.SourcePostgresUpdateLSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
+				*lsnCommitBehaviour = shared.LSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
 			} else {
 				lsnCommitBehaviour = nil
 			}
-			plugin := new(shared.SourcePostgresUpdatePlugin)
+			plugin := new(shared.Plugin)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
-				*plugin = shared.SourcePostgresUpdatePlugin(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
+				*plugin = shared.Plugin(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
 			} else {
 				plugin = nil
 			}
@@ -397,6 +412,7 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 			replicationSlot := r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
 			readChangesUsingWriteAheadLogCDC = &shared.ReadChangesUsingWriteAheadLogCDC{
 				AdditionalProperties:  additionalProperties,
+				HeartbeatActionQuery:  heartbeatActionQuery,
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
 				Plugin:                plugin,
@@ -651,20 +667,4 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePostgresResourceModel) ToDeleteSDKType() *shared.SourcePostgresCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePostgresResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePostgresResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

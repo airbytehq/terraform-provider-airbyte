@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceIntercomResourceModel) ToCreateSDKType() *shared.SourceIntercomCreateRequest {
+func (r *SourceIntercomResourceModel) ToSharedSourceIntercomCreateRequest() *shared.SourceIntercomCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
@@ -53,12 +53,14 @@ func (r *SourceIntercomResourceModel) ToCreateSDKType() *shared.SourceIntercomCr
 	return &out
 }
 
-func (r *SourceIntercomResourceModel) ToGetSDKType() *shared.SourceIntercomCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceIntercomResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceIntercomResourceModel) ToUpdateSDKType() *shared.SourceIntercomPutRequest {
+func (r *SourceIntercomResourceModel) ToSharedSourceIntercomPutRequest() *shared.SourceIntercomPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
@@ -87,20 +89,4 @@ func (r *SourceIntercomResourceModel) ToUpdateSDKType() *shared.SourceIntercomPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceIntercomResourceModel) ToDeleteSDKType() *shared.SourceIntercomCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceIntercomResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceIntercomResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

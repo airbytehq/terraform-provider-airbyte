@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRequest {
+func (r *SourceFaunaResourceModel) ToSharedSourceFaunaCreateRequest() *shared.SourceFaunaCreateRequest {
 	var collection *shared.SourceFaunaCollection
 	if r.Configuration.Collection != nil {
 		var deletions shared.SourceFaunaDeletionMode
@@ -98,12 +98,14 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 	return &out
 }
 
-func (r *SourceFaunaResourceModel) ToGetSDKType() *shared.SourceFaunaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFaunaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutRequest {
+func (r *SourceFaunaResourceModel) ToSharedSourceFaunaPutRequest() *shared.SourceFaunaPutRequest {
 	var collection *shared.Collection
 	if r.Configuration.Collection != nil {
 		var deletions shared.DeletionMode
@@ -178,20 +180,4 @@ func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFaunaResourceModel) ToDeleteSDKType() *shared.SourceFaunaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFaunaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFaunaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

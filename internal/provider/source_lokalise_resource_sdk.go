@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceLokaliseResourceModel) ToCreateSDKType() *shared.SourceLokaliseCreateRequest {
+func (r *SourceLokaliseResourceModel) ToSharedSourceLokaliseCreateRequest() *shared.SourceLokaliseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	projectID := r.Configuration.ProjectID.ValueString()
 	configuration := shared.SourceLokalise{
@@ -38,12 +38,14 @@ func (r *SourceLokaliseResourceModel) ToCreateSDKType() *shared.SourceLokaliseCr
 	return &out
 }
 
-func (r *SourceLokaliseResourceModel) ToGetSDKType() *shared.SourceLokaliseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceLokaliseResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLokaliseResourceModel) ToUpdateSDKType() *shared.SourceLokalisePutRequest {
+func (r *SourceLokaliseResourceModel) ToSharedSourceLokalisePutRequest() *shared.SourceLokalisePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	projectID := r.Configuration.ProjectID.ValueString()
 	configuration := shared.SourceLokaliseUpdate{
@@ -58,20 +60,4 @@ func (r *SourceLokaliseResourceModel) ToUpdateSDKType() *shared.SourceLokalisePu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceLokaliseResourceModel) ToDeleteSDKType() *shared.SourceLokaliseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceLokaliseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceLokaliseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

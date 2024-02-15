@@ -4,8 +4,8 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
     brewed_before = "MM-YYYY"
     id            = 1
   }
-  definition_id = "0c173d4d-6113-43dd-b2a9-5937ced0062e"
-  name          = "Shelia Hettinger"
+  definition_id = "001e515b-2e74-4052-aa67-dad65e8ae1d2"
+  name          = "Dr. Bessie Rolfson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4e78152c-bd26-46e4-812d-05e7f58d4a06"
+  workspace_id  = "be7d2d34-33ea-4862-b99c-ad5c4b833469"
 }

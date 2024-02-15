@@ -3,7 +3,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
     auth_type = {
       login_password = {
         password = "...my_password..."
-        username = "Emmalee.Towne89"
+        username = "Selina_Armstrong"
       }
     }
     database = "...my_database..."
@@ -14,10 +14,10 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       }
     }
     tunnel_method = {
-      destination_mongodb_no_tunnel = {}
+      no_tunnel = {}
     }
   }
-  definition_id = "895c9212-6184-452d-9432-f33897fec4ca"
-  name          = "Adrienne Lockman"
-  workspace_id  = "bf882725-c3c6-4bc3-9a6d-3f396b39ea0e"
+  definition_id = "2448e4e4-2a53-4050-a9af-bc66c913a5b7"
+  name          = "Donald Jast"
+  workspace_id  = "6a13d9b7-f635-498f-bb04-2924faeae501"
 }

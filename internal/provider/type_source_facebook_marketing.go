@@ -6,7 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFacebookMarketing struct {
 	AccessToken                types.String    `tfsdk:"access_token"`
-	AccountID                  types.String    `tfsdk:"account_id"`
+	AccountIds                 []types.String  `tfsdk:"account_ids"`
 	ActionBreakdownsAllowEmpty types.Bool      `tfsdk:"action_breakdowns_allow_empty"`
 	ClientID                   types.String    `tfsdk:"client_id"`
 	ClientSecret               types.String    `tfsdk:"client_secret"`
@@ -14,6 +14,7 @@ type SourceFacebookMarketing struct {
 	EndDate                    types.String    `tfsdk:"end_date"`
 	FetchThumbnailImages       types.Bool      `tfsdk:"fetch_thumbnail_images"`
 	IncludeDeleted             types.Bool      `tfsdk:"include_deleted"`
+	InsightsJobTimeout         types.Int64     `tfsdk:"insights_job_timeout"`
 	InsightsLookbackWindow     types.Int64     `tfsdk:"insights_lookback_window"`
 	PageSize                   types.Int64     `tfsdk:"page_size"`
 	StartDate                  types.String    `tfsdk:"start_date"`

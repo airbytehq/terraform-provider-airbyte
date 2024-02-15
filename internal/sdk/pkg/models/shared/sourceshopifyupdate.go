@@ -141,6 +141,7 @@ const (
 	ShopifyAuthorizationMethodTypeAPIPassword                ShopifyAuthorizationMethodType = "API Password"
 )
 
+// ShopifyAuthorizationMethod - The authorization method to use to retrieve data from Shopify
 type ShopifyAuthorizationMethod struct {
 	SourceShopifyUpdateOAuth20 *SourceShopifyUpdateOAuth20
 	APIPassword                *APIPassword

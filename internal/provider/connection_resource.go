@@ -5,17 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	speakeasy_stringvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/stringvalidators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -64,14 +65,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"configurations": schema.SingleNestedAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.SuppressDiff(),
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"streams": schema.ListNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.SuppressDiff(),
+							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
@@ -79,22 +80,27 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"cursor_field": schema.ListAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(),
+										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 									},
 									Optional:    true,
 									ElementType: types.StringType,
 									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
 								},
 								"name": schema.StringAttribute{
+									Computed: true,
 									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.SuppressDiff(),
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 									},
-									Required: true,
+									Optional:    true,
+									Description: `Not Null`,
+									Validators: []validator.String{
+										speakeasy_stringvalidators.NotNull(),
+									},
 								},
 								"primary_key": schema.ListAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(),
+										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 									},
 									Optional: true,
 									ElementType: types.ListType{
@@ -105,7 +111,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"sync_mode": schema.StringAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.SuppressDiff(),
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 									},
 									Optional:    true,
 									Description: `must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]`,
@@ -127,15 +133,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"connection_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"data_residency": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
+				Default:     stringdefault.StaticString("auto"),
 				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -147,15 +154,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
 				Description: `Optional name of the connection`,
@@ -163,11 +171,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"namespace_definition": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Optional: true,
-				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]; Default: "destination"` + "\n" +
-					`Define the location where the data will be stored in the destination`,
+				Optional:    true,
+				Default:     stringdefault.StaticString("destination"),
+				Description: `Define the location where the data will be stored in the destination. must be one of ["source", "destination", "custom_format"]; Default: "destination"`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"source",
@@ -179,20 +187,19 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"namespace_format": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Optional: true,
-				MarkdownDescription: `Default: null` + "\n" +
-					`Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
+				Optional:    true,
+				Description: `Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'. Default: null`,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Optional: true,
-				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"` + "\n" +
-					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
+				Optional:    true,
+				Default:     stringdefault.StaticString("ignore"),
+				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"ignore",
@@ -205,7 +212,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"prefix": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
 				Description: `Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).`,
@@ -213,30 +220,32 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.SuppressDiff(),
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"basic_timing": schema.StringAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.SuppressDiff(),
+							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 						},
 					},
 					"cron_expression": schema.StringAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.SuppressDiff(),
+							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
 					},
 					"schedule_type": schema.StringAttribute{
+						Computed: true,
 						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.SuppressDiff(),
+							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 						},
-						Required:    true,
-						Description: `must be one of ["manual", "cron"]`,
+						Optional:    true,
+						Description: `Not Null; must be one of ["manual", "cron"]`,
 						Validators: []validator.String{
+							speakeasy_stringvalidators.NotNull(),
 							stringvalidator.OneOf(
 								"manual",
 								"cron",
@@ -248,15 +257,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"source_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required: true,
+				Required:    true,
+				Description: `Requires replacement if changed. `,
 			},
 			"status": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
 				Description: `must be one of ["active", "inactive", "deprecated"]`,
@@ -271,7 +281,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 		},
@@ -300,14 +310,14 @@ func (r *ConnectionResource) Configure(ctx context.Context, req resource.Configu
 
 func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *ConnectionResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -316,7 +326,7 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToCreateSDKType()
+	request := *data.ToSharedConnectionCreateRequest()
 	res, err := r.client.Connections.CreateConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -337,7 +347,8 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.ConnectionResponse)
+	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -385,7 +396,7 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.ConnectionResponse)
+	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -393,12 +404,19 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 
 func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *ConnectionResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	connectionPatchRequest := *data.ToUpdateSDKType()
+	connectionPatchRequest := *data.ToSharedConnectionPatchRequest()
 	connectionID := data.ConnectionID.ValueString()
 	request := operations.PatchConnectionRequest{
 		ConnectionPatchRequest: connectionPatchRequest,
@@ -424,7 +442,8 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromUpdateResponse(res.ConnectionResponse)
+	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

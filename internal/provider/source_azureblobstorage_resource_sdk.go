@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAzureBlobStorageCreateRequest {
+func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCreateRequest() *shared.SourceAzureBlobStorageCreateRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
 	azureBlobStorageContainerName := r.Configuration.AzureBlobStorageContainerName.ValueString()
@@ -203,14 +203,34 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 		}
 		var sourceAzureBlobStorageDocumentFileTypeFormatExperimental *shared.SourceAzureBlobStorageDocumentFileTypeFormatExperimental
 		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
-			skipUnprocessableFileTypes := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
-				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			var processing *shared.SourceAzureBlobStorageProcessing
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+				var sourceAzureBlobStorageLocal *shared.SourceAzureBlobStorageLocal
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+					sourceAzureBlobStorageLocal = &shared.SourceAzureBlobStorageLocal{}
+				}
+				if sourceAzureBlobStorageLocal != nil {
+					processing = &shared.SourceAzureBlobStorageProcessing{
+						SourceAzureBlobStorageLocal: sourceAzureBlobStorageLocal,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
-				skipUnprocessableFileTypes = nil
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceAzureBlobStorageParsingStrategy)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceAzureBlobStorageParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			} else {
+				strategy = nil
 			}
 			sourceAzureBlobStorageDocumentFileTypeFormatExperimental = &shared.SourceAzureBlobStorageDocumentFileTypeFormatExperimental{
-				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
 			}
 		}
 		if sourceAzureBlobStorageDocumentFileTypeFormatExperimental != nil {
@@ -297,12 +317,14 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	return &out
 }
 
-func (r *SourceAzureBlobStorageResourceModel) ToGetSDKType() *shared.SourceAzureBlobStorageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAzureBlobStorageResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAzureBlobStoragePutRequest {
+func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutRequest() *shared.SourceAzureBlobStoragePutRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
 	azureBlobStorageContainerName := r.Configuration.AzureBlobStorageContainerName.ValueString()
@@ -497,14 +519,34 @@ func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAz
 		}
 		var documentFileTypeFormatExperimental *shared.DocumentFileTypeFormatExperimental
 		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
-			skipUnprocessableFileTypes := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
-				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			var processing *shared.Processing
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+				var local *shared.Local
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+					local = &shared.Local{}
+				}
+				if local != nil {
+					processing = &shared.Processing{
+						Local: local,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
-				skipUnprocessableFileTypes = nil
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.ParsingStrategy)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.ParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			} else {
+				strategy = nil
 			}
 			documentFileTypeFormatExperimental = &shared.DocumentFileTypeFormatExperimental{
-				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
 			}
 		}
 		if documentFileTypeFormatExperimental != nil {
@@ -575,20 +617,4 @@ func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAz
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.SourceAzureBlobStorageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAzureBlobStorageResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

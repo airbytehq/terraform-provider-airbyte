@@ -57,7 +57,6 @@ func (e *DestinationS3GlueSchemasCompressionType) UnmarshalJSON(data []byte) err
 	}
 }
 
-// DestinationS3GlueGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueGZIP struct {
 	CompressionType *DestinationS3GlueSchemasCompressionType `default:"GZIP" json:"compression_type"`
 }
@@ -104,7 +103,6 @@ func (e *DestinationS3GlueCompressionType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationS3GlueNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueNoCompression struct {
 	CompressionType *DestinationS3GlueCompressionType `default:"No Compression" json:"compression_type"`
 }
@@ -134,6 +132,7 @@ const (
 	DestinationS3GlueCompressionUnionTypeDestinationS3GlueGZIP          DestinationS3GlueCompressionUnionType = "destination-s3-glue_GZIP"
 )
 
+// DestinationS3GlueCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueCompression struct {
 	DestinationS3GlueNoCompression *DestinationS3GlueNoCompression
 	DestinationS3GlueGZIP          *DestinationS3GlueGZIP
@@ -242,7 +241,6 @@ func (e *DestinationS3GlueFormatType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationS3GlueJSONLinesNewlineDelimitedJSON - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
 type DestinationS3GlueJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationS3GlueCompression `json:"compression,omitempty"`
@@ -289,6 +287,7 @@ const (
 	DestinationS3GlueOutputFormatTypeDestinationS3GlueJSONLinesNewlineDelimitedJSON DestinationS3GlueOutputFormatType = "destination-s3-glue_JSON Lines: Newline-delimited JSON"
 )
 
+// DestinationS3GlueOutputFormat - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
 type DestinationS3GlueOutputFormat struct {
 	DestinationS3GlueJSONLinesNewlineDelimitedJSON *DestinationS3GlueJSONLinesNewlineDelimitedJSON
 
@@ -357,31 +356,39 @@ type DestinationS3GlueS3BucketRegion string
 
 const (
 	DestinationS3GlueS3BucketRegionUnknown      DestinationS3GlueS3BucketRegion = ""
-	DestinationS3GlueS3BucketRegionUsEast1      DestinationS3GlueS3BucketRegion = "us-east-1"
-	DestinationS3GlueS3BucketRegionUsEast2      DestinationS3GlueS3BucketRegion = "us-east-2"
-	DestinationS3GlueS3BucketRegionUsWest1      DestinationS3GlueS3BucketRegion = "us-west-1"
-	DestinationS3GlueS3BucketRegionUsWest2      DestinationS3GlueS3BucketRegion = "us-west-2"
 	DestinationS3GlueS3BucketRegionAfSouth1     DestinationS3GlueS3BucketRegion = "af-south-1"
 	DestinationS3GlueS3BucketRegionApEast1      DestinationS3GlueS3BucketRegion = "ap-east-1"
-	DestinationS3GlueS3BucketRegionApSouth1     DestinationS3GlueS3BucketRegion = "ap-south-1"
 	DestinationS3GlueS3BucketRegionApNortheast1 DestinationS3GlueS3BucketRegion = "ap-northeast-1"
 	DestinationS3GlueS3BucketRegionApNortheast2 DestinationS3GlueS3BucketRegion = "ap-northeast-2"
 	DestinationS3GlueS3BucketRegionApNortheast3 DestinationS3GlueS3BucketRegion = "ap-northeast-3"
+	DestinationS3GlueS3BucketRegionApSouth1     DestinationS3GlueS3BucketRegion = "ap-south-1"
+	DestinationS3GlueS3BucketRegionApSouth2     DestinationS3GlueS3BucketRegion = "ap-south-2"
 	DestinationS3GlueS3BucketRegionApSoutheast1 DestinationS3GlueS3BucketRegion = "ap-southeast-1"
 	DestinationS3GlueS3BucketRegionApSoutheast2 DestinationS3GlueS3BucketRegion = "ap-southeast-2"
+	DestinationS3GlueS3BucketRegionApSoutheast3 DestinationS3GlueS3BucketRegion = "ap-southeast-3"
+	DestinationS3GlueS3BucketRegionApSoutheast4 DestinationS3GlueS3BucketRegion = "ap-southeast-4"
 	DestinationS3GlueS3BucketRegionCaCentral1   DestinationS3GlueS3BucketRegion = "ca-central-1"
+	DestinationS3GlueS3BucketRegionCaWest1      DestinationS3GlueS3BucketRegion = "ca-west-1"
 	DestinationS3GlueS3BucketRegionCnNorth1     DestinationS3GlueS3BucketRegion = "cn-north-1"
 	DestinationS3GlueS3BucketRegionCnNorthwest1 DestinationS3GlueS3BucketRegion = "cn-northwest-1"
 	DestinationS3GlueS3BucketRegionEuCentral1   DestinationS3GlueS3BucketRegion = "eu-central-1"
+	DestinationS3GlueS3BucketRegionEuCentral2   DestinationS3GlueS3BucketRegion = "eu-central-2"
 	DestinationS3GlueS3BucketRegionEuNorth1     DestinationS3GlueS3BucketRegion = "eu-north-1"
 	DestinationS3GlueS3BucketRegionEuSouth1     DestinationS3GlueS3BucketRegion = "eu-south-1"
+	DestinationS3GlueS3BucketRegionEuSouth2     DestinationS3GlueS3BucketRegion = "eu-south-2"
 	DestinationS3GlueS3BucketRegionEuWest1      DestinationS3GlueS3BucketRegion = "eu-west-1"
 	DestinationS3GlueS3BucketRegionEuWest2      DestinationS3GlueS3BucketRegion = "eu-west-2"
 	DestinationS3GlueS3BucketRegionEuWest3      DestinationS3GlueS3BucketRegion = "eu-west-3"
-	DestinationS3GlueS3BucketRegionSaEast1      DestinationS3GlueS3BucketRegion = "sa-east-1"
+	DestinationS3GlueS3BucketRegionIlCentral1   DestinationS3GlueS3BucketRegion = "il-central-1"
+	DestinationS3GlueS3BucketRegionMeCentral1   DestinationS3GlueS3BucketRegion = "me-central-1"
 	DestinationS3GlueS3BucketRegionMeSouth1     DestinationS3GlueS3BucketRegion = "me-south-1"
+	DestinationS3GlueS3BucketRegionSaEast1      DestinationS3GlueS3BucketRegion = "sa-east-1"
+	DestinationS3GlueS3BucketRegionUsEast1      DestinationS3GlueS3BucketRegion = "us-east-1"
+	DestinationS3GlueS3BucketRegionUsEast2      DestinationS3GlueS3BucketRegion = "us-east-2"
 	DestinationS3GlueS3BucketRegionUsGovEast1   DestinationS3GlueS3BucketRegion = "us-gov-east-1"
 	DestinationS3GlueS3BucketRegionUsGovWest1   DestinationS3GlueS3BucketRegion = "us-gov-west-1"
+	DestinationS3GlueS3BucketRegionUsWest1      DestinationS3GlueS3BucketRegion = "us-west-1"
+	DestinationS3GlueS3BucketRegionUsWest2      DestinationS3GlueS3BucketRegion = "us-west-2"
 )
 
 func (e DestinationS3GlueS3BucketRegion) ToPointer() *DestinationS3GlueS3BucketRegion {
@@ -396,19 +403,9 @@ func (e *DestinationS3GlueS3BucketRegion) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "":
 		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -416,11 +413,21 @@ func (e *DestinationS3GlueS3BucketRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -428,9 +435,13 @@ func (e *DestinationS3GlueS3BucketRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -438,13 +449,25 @@ func (e *DestinationS3GlueS3BucketRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
 		fallthrough
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = DestinationS3GlueS3BucketRegion(v)
 		return nil
 	default:

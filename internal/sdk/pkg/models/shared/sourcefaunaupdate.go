@@ -33,10 +33,6 @@ func (e *SourceFaunaUpdateSchemasDeletionMode) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// Enabled - <b>This only applies to incremental syncs.</b> <br>
-// Enabling deletion mode informs your destination of deleted documents.<br>
-// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type Enabled struct {
 	// Name of the "deleted at" column.
 	Column       *string                              `default:"deleted_at" json:"column"`
@@ -89,10 +85,6 @@ func (e *SourceFaunaUpdateDeletionMode) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Disabled - <b>This only applies to incremental syncs.</b> <br>
-// Enabling deletion mode informs your destination of deleted documents.<br>
-// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type Disabled struct {
 	deletionMode SourceFaunaUpdateDeletionMode `const:"ignore" json:"deletion_mode"`
 }
@@ -119,6 +111,10 @@ const (
 	DeletionModeTypeEnabled  DeletionModeType = "Enabled"
 )
 
+// DeletionMode - <b>This only applies to incremental syncs.</b> <br>
+// Enabling deletion mode informs your destination of deleted documents.<br>
+// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
+// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type DeletionMode struct {
 	Disabled *Disabled
 	Enabled  *Enabled

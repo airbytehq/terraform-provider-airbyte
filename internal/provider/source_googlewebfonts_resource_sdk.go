@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoogleWebfontsCreateRequest {
+func (r *SourceGoogleWebfontsResourceModel) ToSharedSourceGoogleWebfontsCreateRequest() *shared.SourceGoogleWebfontsCreateRequest {
 	alt := new(string)
 	if !r.Configuration.Alt.IsUnknown() && !r.Configuration.Alt.IsNull() {
 		*alt = r.Configuration.Alt.ValueString()
@@ -57,12 +57,14 @@ func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoog
 	return &out
 }
 
-func (r *SourceGoogleWebfontsResourceModel) ToGetSDKType() *shared.SourceGoogleWebfontsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleWebfontsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleWebfontsResourceModel) ToUpdateSDKType() *shared.SourceGoogleWebfontsPutRequest {
+func (r *SourceGoogleWebfontsResourceModel) ToSharedSourceGoogleWebfontsPutRequest() *shared.SourceGoogleWebfontsPutRequest {
 	alt := new(string)
 	if !r.Configuration.Alt.IsUnknown() && !r.Configuration.Alt.IsNull() {
 		*alt = r.Configuration.Alt.ValueString()
@@ -96,20 +98,4 @@ func (r *SourceGoogleWebfontsResourceModel) ToUpdateSDKType() *shared.SourceGoog
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleWebfontsResourceModel) ToDeleteSDKType() *shared.SourceGoogleWebfontsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleWebfontsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleWebfontsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -273,7 +273,7 @@ type Csv struct {
 	// Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
 	NewlinesInValues *bool `default:"false" json:"newlines_in_values"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:""" json:"quote_char"`
+	QuoteChar *string `default:"\"" json:"quote_char"`
 }
 
 func (c Csv) MarshalJSON() ([]byte, error) {
@@ -370,6 +370,7 @@ const (
 	SourceS3UpdateFileFormatTypeJsonl   SourceS3UpdateFileFormatType = "Jsonl"
 )
 
+// SourceS3UpdateFileFormat - Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
 type SourceS3UpdateFileFormat struct {
 	Csv     *Csv
 	Parquet *Parquet
@@ -480,6 +481,8 @@ type S3AmazonWebServices struct {
 	Endpoint *string `default:"" json:"endpoint"`
 	// By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
 	PathPrefix *string `default:"" json:"path_prefix"`
+	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
+	RoleArn *string `json:"role_arn,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -530,6 +533,13 @@ func (o *S3AmazonWebServices) GetPathPrefix() *string {
 	return o.PathPrefix
 }
 
+func (o *S3AmazonWebServices) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
+}
+
 func (o *S3AmazonWebServices) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
@@ -561,11 +571,135 @@ func (e *SourceS3UpdateSchemasStreamsFormatFormat5Filetype) UnmarshalJSON(data [
 	}
 }
 
+type SourceS3UpdateMode string
+
+const (
+	SourceS3UpdateModeLocal SourceS3UpdateMode = "local"
+)
+
+func (e SourceS3UpdateMode) ToPointer() *SourceS3UpdateMode {
+	return &e
+}
+
+func (e *SourceS3UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceS3UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3UpdateMode: %v", v)
+	}
+}
+
+// SourceS3UpdateLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
+type SourceS3UpdateLocal struct {
+	mode *SourceS3UpdateMode `const:"local" json:"mode"`
+}
+
+func (s SourceS3UpdateLocal) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceS3UpdateLocal) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceS3UpdateLocal) GetMode() *SourceS3UpdateMode {
+	return SourceS3UpdateModeLocal.ToPointer()
+}
+
+type SourceS3UpdateProcessingType string
+
+const (
+	SourceS3UpdateProcessingTypeSourceS3UpdateLocal SourceS3UpdateProcessingType = "source-s3-update_Local"
+)
+
+// SourceS3UpdateProcessing - Processing configuration
+type SourceS3UpdateProcessing struct {
+	SourceS3UpdateLocal *SourceS3UpdateLocal
+
+	Type SourceS3UpdateProcessingType
+}
+
+func CreateSourceS3UpdateProcessingSourceS3UpdateLocal(sourceS3UpdateLocal SourceS3UpdateLocal) SourceS3UpdateProcessing {
+	typ := SourceS3UpdateProcessingTypeSourceS3UpdateLocal
+
+	return SourceS3UpdateProcessing{
+		SourceS3UpdateLocal: &sourceS3UpdateLocal,
+		Type:                typ,
+	}
+}
+
+func (u *SourceS3UpdateProcessing) UnmarshalJSON(data []byte) error {
+
+	sourceS3UpdateLocal := new(SourceS3UpdateLocal)
+	if err := utils.UnmarshalJSON(data, &sourceS3UpdateLocal, "", true, true); err == nil {
+		u.SourceS3UpdateLocal = sourceS3UpdateLocal
+		u.Type = SourceS3UpdateProcessingTypeSourceS3UpdateLocal
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceS3UpdateProcessing) MarshalJSON() ([]byte, error) {
+	if u.SourceS3UpdateLocal != nil {
+		return utils.MarshalJSON(u.SourceS3UpdateLocal, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+// SourceS3UpdateParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceS3UpdateParsingStrategy string
+
+const (
+	SourceS3UpdateParsingStrategyAuto    SourceS3UpdateParsingStrategy = "auto"
+	SourceS3UpdateParsingStrategyFast    SourceS3UpdateParsingStrategy = "fast"
+	SourceS3UpdateParsingStrategyOcrOnly SourceS3UpdateParsingStrategy = "ocr_only"
+	SourceS3UpdateParsingStrategyHiRes   SourceS3UpdateParsingStrategy = "hi_res"
+)
+
+func (e SourceS3UpdateParsingStrategy) ToPointer() *SourceS3UpdateParsingStrategy {
+	return &e
+}
+
+func (e *SourceS3UpdateParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceS3UpdateParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3UpdateParsingStrategy: %v", v)
+	}
+}
+
 // SourceS3UpdateDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceS3UpdateDocumentFileTypeFormatExperimental struct {
 	filetype *SourceS3UpdateSchemasStreamsFormatFormat5Filetype `const:"unstructured" json:"filetype"`
-	// If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
-	SkipUnprocessableFileTypes *bool `default:"true" json:"skip_unprocessable_file_types"`
+	// Processing configuration
+	Processing *SourceS3UpdateProcessing `json:"processing,omitempty"`
+	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
+	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
+	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+	Strategy *SourceS3UpdateParsingStrategy `default:"auto" json:"strategy"`
 }
 
 func (s SourceS3UpdateDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
@@ -583,11 +717,25 @@ func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetFiletype() *Source
 	return SourceS3UpdateSchemasStreamsFormatFormat5FiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetSkipUnprocessableFileTypes() *bool {
+func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetProcessing() *SourceS3UpdateProcessing {
 	if o == nil {
 		return nil
 	}
-	return o.SkipUnprocessableFileTypes
+	return o.Processing
+}
+
+func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipUnprocessableFiles
+}
+
+func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetStrategy() *SourceS3UpdateParsingStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.Strategy
 }
 
 type SourceS3UpdateSchemasStreamsFormatFormat4Filetype string
@@ -614,7 +762,6 @@ func (e *SourceS3UpdateSchemasStreamsFormatFormat4Filetype) UnmarshalJSON(data [
 	}
 }
 
-// SourceS3UpdateParquetFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceS3UpdateParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
 	DecimalAsFloat *bool                                              `default:"false" json:"decimal_as_float"`
@@ -667,7 +814,6 @@ func (e *SourceS3UpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []
 	}
 }
 
-// SourceS3UpdateJsonlFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceS3UpdateJsonlFormat struct {
 	filetype *SourceS3UpdateSchemasStreamsFormatFormatFiletype `const:"jsonl" json:"filetype"`
 }
@@ -735,7 +881,6 @@ func (e *SourceS3UpdateSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []
 	}
 }
 
-// SourceS3UpdateUserProvided - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceS3UpdateUserProvided struct {
 	// The column names that will be used while emitting the CSV records
 	ColumnNames          []string                                          `json:"column_names"`
@@ -788,7 +933,6 @@ func (e *SourceS3UpdateSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) e
 	}
 }
 
-// SourceS3UpdateAutogenerated - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceS3UpdateAutogenerated struct {
 	headerDefinitionType *SourceS3UpdateSchemasHeaderDefinitionType `const:"Autogenerated" json:"header_definition_type"`
 }
@@ -832,7 +976,6 @@ func (e *SourceS3UpdateHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceS3UpdateFromCSV - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceS3UpdateFromCSV struct {
 	headerDefinitionType *SourceS3UpdateHeaderDefinitionType `const:"From CSV" json:"header_definition_type"`
 }
@@ -860,6 +1003,7 @@ const (
 	SourceS3UpdateCSVHeaderDefinitionTypeSourceS3UpdateUserProvided  SourceS3UpdateCSVHeaderDefinitionType = "source-s3-update_User Provided"
 )
 
+// SourceS3UpdateCSVHeaderDefinition - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 type SourceS3UpdateCSVHeaderDefinition struct {
 	SourceS3UpdateFromCSV       *SourceS3UpdateFromCSV
 	SourceS3UpdateAutogenerated *SourceS3UpdateAutogenerated
@@ -965,7 +1109,6 @@ func (e *SourceS3UpdateInferenceType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceS3UpdateCSVFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceS3UpdateCSVFormat struct {
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
@@ -985,7 +1128,7 @@ type SourceS3UpdateCSVFormat struct {
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:""" json:"quote_char"`
+	QuoteChar *string `default:"\"" json:"quote_char"`
 	// The number of rows to skip after the header row.
 	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
 	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
@@ -1126,7 +1269,6 @@ func (e *SourceS3UpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceS3UpdateAvroFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceS3UpdateAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
 	DoubleAsString *bool                                 `default:"false" json:"double_as_string"`
@@ -1165,6 +1307,7 @@ const (
 	SourceS3UpdateFormatTypeSourceS3UpdateDocumentFileTypeFormatExperimental SourceS3UpdateFormatType = "source-s3-update_Document File Type Format (Experimental)"
 )
 
+// SourceS3UpdateFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceS3UpdateFormat struct {
 	SourceS3UpdateAvroFormat                         *SourceS3UpdateAvroFormat
 	SourceS3UpdateCSVFormat                          *SourceS3UpdateCSVFormat
@@ -1328,7 +1471,7 @@ type SourceS3UpdateFileBasedStreamConfig struct {
 	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record.
+	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 	PrimaryKey *string `json:"primary_key,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
@@ -1429,6 +1572,8 @@ type SourceS3Update struct {
 	PathPattern *string `json:"path_pattern,omitempty"`
 	// Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services
 	Provider *S3AmazonWebServices `json:"provider,omitempty"`
+	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
+	RoleArn *string `json:"role_arn,omitempty"`
 	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
 	Schema *string `default:"{}" json:"schema"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
@@ -1502,6 +1647,13 @@ func (o *SourceS3Update) GetProvider() *S3AmazonWebServices {
 		return nil
 	}
 	return o.Provider
+}
+
+func (o *SourceS3Update) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
 }
 
 func (o *SourceS3Update) GetSchema() *string {

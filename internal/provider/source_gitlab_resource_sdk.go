@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreateRequest {
+func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.SourceGitlabCreateRequest {
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
@@ -107,12 +107,14 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	return &out
 }
 
-func (r *SourceGitlabResourceModel) ToGetSDKType() *shared.SourceGitlabCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGitlabResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutRequest {
+func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.SourceGitlabPutRequest {
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
@@ -195,20 +197,4 @@ func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGitlabResourceModel) ToDeleteSDKType() *shared.SourceGitlabCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGitlabResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGitlabResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

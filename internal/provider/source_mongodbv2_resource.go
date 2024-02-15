@@ -5,15 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,6 +57,9 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database_config": schema.SingleNestedAttribute{
@@ -70,9 +76,10 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 										},
 									},
 									"auth_source": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: "admin"` + "\n" +
-											`The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("admin"),
+										Description: `The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details. Default: "admin"`,
 									},
 									"connection_string": schema.StringAttribute{
 										Required:    true,
@@ -86,6 +93,12 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 										Required:    true,
 										Sensitive:   true,
 										Description: `The password associated with this username.`,
+									},
+									"schema_enforced": schema.BoolAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(true),
+										Description: `When enabled, syncs will validate and structure records against the stream's schema. Default: true`,
 									},
 									"username": schema.StringAttribute{
 										Required:    true,
@@ -105,9 +118,10 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 										},
 									},
 									"auth_source": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: "admin"` + "\n" +
-											`The authentication source where the user information is stored.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("admin"),
+										Description: `The authentication source where the user information is stored. Default: "admin"`,
 									},
 									"connection_string": schema.StringAttribute{
 										Required:    true,
@@ -121,6 +135,12 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 										Optional:    true,
 										Sensitive:   true,
 										Description: `The password associated with this username.`,
+									},
+									"schema_enforced": schema.BoolAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(true),
+										Description: `When enabled, syncs will validate and structure records against the stream's schema. Default: true`,
 									},
 									"username": schema.StringAttribute{
 										Optional:    true,
@@ -136,58 +156,61 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"discover_sample_size": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 10000` + "\n" +
-							`The maximum number of documents to sample when attempting to discover the unique fields for a collection.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(10000),
+						Description: `The maximum number of documents to sample when attempting to discover the unique fields for a collection. Default: 10000`,
 					},
 					"initial_waiting_seconds": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 300` + "\n" +
-							`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(300),
+						Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Default: 300`,
 					},
 					"queue_size": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 10000` + "\n" +
-							`The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(10000),
+						Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000`,
 					},
 				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -217,14 +240,14 @@ func (r *SourceMongodbV2Resource) Configure(ctx context.Context, req resource.Co
 
 func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceMongodbV2ResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -233,7 +256,7 @@ func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceMongodbV2CreateRequest()
 	res, err := r.client.Sources.CreateSourceMongodbV2(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -254,7 +277,34 @@ func (r *SourceMongodbV2Resource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceMongodbV2Request{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceMongodbV2(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -302,7 +352,7 @@ func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -310,12 +360,19 @@ func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadReq
 
 func (r *SourceMongodbV2Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceMongodbV2ResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceMongodbV2PutRequest := data.ToUpdateSDKType()
+	sourceMongodbV2PutRequest := data.ToSharedSourceMongodbV2PutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceMongodbV2Request{
 		SourceMongodbV2PutRequest: sourceMongodbV2PutRequest,
@@ -337,31 +394,33 @@ func (r *SourceMongodbV2Resource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceMongodbV2Request{
+	request1 := operations.GetSourceMongodbV2Request{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceMongodbV2(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceMongodbV2(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

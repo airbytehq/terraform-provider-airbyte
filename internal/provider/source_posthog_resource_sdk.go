@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourcePosthogResourceModel) ToCreateSDKType() *shared.SourcePosthogCreateRequest {
+func (r *SourcePosthogResourceModel) ToSharedSourcePosthogCreateRequest() *shared.SourcePosthogCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	baseURL := new(string)
 	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
@@ -53,12 +53,14 @@ func (r *SourcePosthogResourceModel) ToCreateSDKType() *shared.SourcePosthogCrea
 	return &out
 }
 
-func (r *SourcePosthogResourceModel) ToGetSDKType() *shared.SourcePosthogCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePosthogResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePosthogResourceModel) ToUpdateSDKType() *shared.SourcePosthogPutRequest {
+func (r *SourcePosthogResourceModel) ToSharedSourcePosthogPutRequest() *shared.SourcePosthogPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	baseURL := new(string)
 	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
@@ -87,20 +89,4 @@ func (r *SourcePosthogResourceModel) ToUpdateSDKType() *shared.SourcePosthogPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePosthogResourceModel) ToDeleteSDKType() *shared.SourcePosthogCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePosthogResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePosthogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

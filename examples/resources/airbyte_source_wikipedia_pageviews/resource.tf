@@ -1,15 +1,15 @@
 resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
   configuration = {
-    access  = "mobile-app"
-    agent   = "automated"
+    access  = "all-access"
+    agent   = "user"
     article = "Are_You_the_One%3F"
     country = "IN"
     end     = "...my_end..."
     project = "www.mediawiki.org"
     start   = "...my_start..."
   }
-  definition_id = "ecaf35c1-5b37-479d-be3d-ccb9fd6e1ad7"
-  name          = "Stella Balistreri"
+  definition_id = "54523f36-dab5-4122-890f-3e992c2a3f4c"
+  name          = "Mr. Dominick Rowe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "320ef50a-8ca7-46b0-83ea-280df1804a67"
+  workspace_id  = "c7cc4eaf-dab4-4c1b-8af6-6c12869f984d"
 }

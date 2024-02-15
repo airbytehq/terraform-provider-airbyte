@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGlassfrogResourceModel) ToCreateSDKType() *shared.SourceGlassfrogCreateRequest {
+func (r *SourceGlassfrogResourceModel) ToSharedSourceGlassfrogCreateRequest() *shared.SourceGlassfrogCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGlassfrog{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceGlassfrogResourceModel) ToCreateSDKType() *shared.SourceGlassfrog
 	return &out
 }
 
-func (r *SourceGlassfrogResourceModel) ToGetSDKType() *shared.SourceGlassfrogCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGlassfrogResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGlassfrogResourceModel) ToUpdateSDKType() *shared.SourceGlassfrogPutRequest {
+func (r *SourceGlassfrogResourceModel) ToSharedSourceGlassfrogPutRequest() *shared.SourceGlassfrogPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGlassfrogUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceGlassfrogResourceModel) ToUpdateSDKType() *shared.SourceGlassfrog
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGlassfrogResourceModel) ToDeleteSDKType() *shared.SourceGlassfrogCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGlassfrogResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGlassfrogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

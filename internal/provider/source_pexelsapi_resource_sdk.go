@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPICreateRequest {
+func (r *SourcePexelsAPIResourceModel) ToSharedSourcePexelsAPICreateRequest() *shared.SourcePexelsAPICreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	color := new(string)
 	if !r.Configuration.Color.IsUnknown() && !r.Configuration.Color.IsNull() {
@@ -66,12 +66,14 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 	return &out
 }
 
-func (r *SourcePexelsAPIResourceModel) ToGetSDKType() *shared.SourcePexelsAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePexelsAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePexelsAPIResourceModel) ToUpdateSDKType() *shared.SourcePexelsAPIPutRequest {
+func (r *SourcePexelsAPIResourceModel) ToSharedSourcePexelsAPIPutRequest() *shared.SourcePexelsAPIPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	color := new(string)
 	if !r.Configuration.Color.IsUnknown() && !r.Configuration.Color.IsNull() {
@@ -114,20 +116,4 @@ func (r *SourcePexelsAPIResourceModel) ToUpdateSDKType() *shared.SourcePexelsAPI
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePexelsAPIResourceModel) ToDeleteSDKType() *shared.SourcePexelsAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePexelsAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePexelsAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedriveCreateRequest {
+func (r *SourcePipedriveResourceModel) ToSharedSourcePipedriveCreateRequest() *shared.SourcePipedriveCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	replicationStartDate := r.Configuration.ReplicationStartDate.ValueString()
 	configuration := shared.SourcePipedrive{
@@ -38,12 +38,14 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	return &out
 }
 
-func (r *SourcePipedriveResourceModel) ToGetSDKType() *shared.SourcePipedriveCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourcePipedriveResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrivePutRequest {
+func (r *SourcePipedriveResourceModel) ToSharedSourcePipedrivePutRequest() *shared.SourcePipedrivePutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	replicationStartDate := r.Configuration.ReplicationStartDate.ValueString()
 	configuration := shared.SourcePipedriveUpdate{
@@ -58,20 +60,4 @@ func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrive
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourcePipedriveResourceModel) ToDeleteSDKType() *shared.SourcePipedriveCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourcePipedriveResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourcePipedriveResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -33,7 +33,6 @@ func (e *SourceSurveySparrowSchemasURLBase) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSurveySparrowGlobalAccount - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowGlobalAccount struct {
 	urlBase *SourceSurveySparrowSchemasURLBase `const:"https://api.surveysparrow.com/v3" json:"url_base,omitempty"`
 }
@@ -77,7 +76,6 @@ func (e *SourceSurveySparrowURLBase) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSurveySparrowEUBasedAccount - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowEUBasedAccount struct {
 	urlBase *SourceSurveySparrowURLBase `const:"https://eu-api.surveysparrow.com/v3" json:"url_base,omitempty"`
 }
@@ -104,6 +102,7 @@ const (
 	SourceSurveySparrowBaseURLTypeSourceSurveySparrowGlobalAccount  SourceSurveySparrowBaseURLType = "source-survey-sparrow_Global account"
 )
 
+// SourceSurveySparrowBaseURL - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowBaseURL struct {
 	SourceSurveySparrowEUBasedAccount *SourceSurveySparrowEUBasedAccount
 	SourceSurveySparrowGlobalAccount  *SourceSurveySparrowGlobalAccount

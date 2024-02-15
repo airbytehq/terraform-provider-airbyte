@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSenseforceCreateRequest {
+func (r *SourceSenseforceResourceModel) ToSharedSourceSenseforceCreateRequest() *shared.SourceSenseforceCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	backendURL := r.Configuration.BackendURL.ValueString()
 	datasetID := r.Configuration.DatasetID.ValueString()
@@ -50,12 +50,14 @@ func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSensefor
 	return &out
 }
 
-func (r *SourceSenseforceResourceModel) ToGetSDKType() *shared.SourceSenseforceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSenseforceResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSenseforceResourceModel) ToUpdateSDKType() *shared.SourceSenseforcePutRequest {
+func (r *SourceSenseforceResourceModel) ToSharedSourceSenseforcePutRequest() *shared.SourceSenseforcePutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	backendURL := r.Configuration.BackendURL.ValueString()
 	datasetID := r.Configuration.DatasetID.ValueString()
@@ -81,20 +83,4 @@ func (r *SourceSenseforceResourceModel) ToUpdateSDKType() *shared.SourceSensefor
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSenseforceResourceModel) ToDeleteSDKType() *shared.SourceSenseforceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSenseforceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSenseforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

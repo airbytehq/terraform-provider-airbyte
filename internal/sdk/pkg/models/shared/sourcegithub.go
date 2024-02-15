@@ -34,7 +34,6 @@ func (e *SourceGithubSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGithubPersonalAccessToken - Choose how to authenticate to GitHub
 type SourceGithubPersonalAccessToken struct {
 	optionTitle *SourceGithubSchemasOptionTitle `const:"PAT Credentials" json:"option_title,omitempty"`
 	// Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
@@ -87,7 +86,6 @@ func (e *SourceGithubOptionTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGithubOAuth - Choose how to authenticate to GitHub
 type SourceGithubOAuth struct {
 	// OAuth access token
 	AccessToken string `json:"access_token"`
@@ -141,6 +139,7 @@ const (
 	SourceGithubAuthenticationTypeSourceGithubPersonalAccessToken SourceGithubAuthenticationType = "source-github_Personal Access Token"
 )
 
+// SourceGithubAuthentication - Choose how to authenticate to GitHub
 type SourceGithubAuthentication struct {
 	SourceGithubOAuth               *SourceGithubOAuth
 	SourceGithubPersonalAccessToken *SourceGithubPersonalAccessToken
@@ -234,9 +233,7 @@ type SourceGithub struct {
 	Repositories []string `json:"repositories"`
 	// (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
 	Repository *string `json:"repository,omitempty"`
-	// The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.
-	RequestsPerHour *int64 `json:"requests_per_hour,omitempty"`
-	sourceType      Github `const:"github" json:"sourceType"`
+	sourceType Github  `const:"github" json:"sourceType"`
 	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -292,13 +289,6 @@ func (o *SourceGithub) GetRepository() *string {
 		return nil
 	}
 	return o.Repository
-}
-
-func (o *SourceGithub) GetRequestsPerHour() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.RequestsPerHour
 }
 
 func (o *SourceGithub) GetSourceType() Github {

@@ -5,16 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -55,6 +57,9 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"dataset_name": schema.StringAttribute{
@@ -62,9 +67,10 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Description: `The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).`,
 					},
 					"format": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "feather", "parquet", "yaml"]; Default: "csv"` + "\n" +
-							`The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("csv"),
+						Description: `The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs). must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "fwf", "feather", "parquet", "yaml"]; Default: "csv"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"csv",
@@ -72,6 +78,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"jsonl",
 								"excel",
 								"excel_binary",
+								"fwf",
 								"feather",
 								"parquet",
 								"yaml",
@@ -99,7 +106,6 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Description: `The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.`,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"gcs_google_cloud_storage": schema.SingleNestedAttribute{
 								Optional: true,
@@ -109,18 +115,17 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"https_public_web": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"user_agent": schema.BoolAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: false` + "\n" +
-											`Add User-Agent to request`,
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(false),
+										Description: `Add User-Agent to request. Default: false`,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"s3_amazon_web_services": schema.SingleNestedAttribute{
 								Optional: true,
@@ -136,7 +141,6 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"scp_secure_copy_protocol": schema.SingleNestedAttribute{
 								Optional: true,
@@ -149,14 +153,15 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Sensitive: true,
 									},
 									"port": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("22"),
 										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
 								Optional: true,
@@ -169,14 +174,15 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Sensitive: true,
 									},
 									"port": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("22"),
 										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"ssh_secure_shell": schema.SingleNestedAttribute{
 								Optional: true,
@@ -189,14 +195,15 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Sensitive: true,
 									},
 									"port": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("22"),
 										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
 									},
 								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 						},
 						Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -216,40 +223,40 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -279,14 +286,14 @@ func (r *SourceFileResource) Configure(ctx context.Context, req resource.Configu
 
 func (r *SourceFileResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceFileResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -295,7 +302,7 @@ func (r *SourceFileResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceFileCreateRequest()
 	res, err := r.client.Sources.CreateSourceFile(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -316,7 +323,34 @@ func (r *SourceFileResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceFileRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceFile(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -364,7 +398,7 @@ func (r *SourceFileResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -372,12 +406,19 @@ func (r *SourceFileResource) Read(ctx context.Context, req resource.ReadRequest,
 
 func (r *SourceFileResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceFileResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceFilePutRequest := data.ToUpdateSDKType()
+	sourceFilePutRequest := data.ToSharedSourceFilePutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceFileRequest{
 		SourceFilePutRequest: sourceFilePutRequest,
@@ -399,31 +440,33 @@ func (r *SourceFileResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceFileRequest{
+	request1 := operations.GetSourceFileRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceFile(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceFile(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

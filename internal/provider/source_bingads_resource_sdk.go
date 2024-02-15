@@ -8,7 +8,16 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCreateRequest {
+func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *shared.SourceBingAdsCreateRequest {
+	var accountNames []shared.SourceBingAdsAccountNames = nil
+	for _, accountNamesItem := range r.Configuration.AccountNames {
+		name := accountNamesItem.Name.ValueString()
+		operator := shared.SourceBingAdsOperator(accountNamesItem.Operator.ValueString())
+		accountNames = append(accountNames, shared.SourceBingAdsAccountNames{
+			Name:     name,
+			Operator: operator,
+		})
+	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := new(string)
 	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
@@ -18,7 +27,7 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 	}
 	var customReports []shared.SourceBingAdsCustomReportConfig = nil
 	for _, customReportsItem := range r.Configuration.CustomReports {
-		name := customReportsItem.Name.ValueString()
+		name1 := customReportsItem.Name.ValueString()
 		reportAggregation := new(string)
 		if !customReportsItem.ReportAggregation.IsUnknown() && !customReportsItem.ReportAggregation.IsNull() {
 			*reportAggregation = customReportsItem.ReportAggregation.ValueString()
@@ -31,7 +40,7 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 		}
 		reportingObject := shared.SourceBingAdsReportingDataObject(customReportsItem.ReportingObject.ValueString())
 		customReports = append(customReports, shared.SourceBingAdsCustomReportConfig{
-			Name:              name,
+			Name:              name1,
 			ReportAggregation: reportAggregation,
 			ReportColumns:     reportColumns,
 			ReportingObject:   reportingObject,
@@ -58,6 +67,7 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 		tenantID = nil
 	}
 	configuration := shared.SourceBingAds{
+		AccountNames:     accountNames,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
 		CustomReports:    customReports,
@@ -73,7 +83,7 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 	} else {
 		definitionID = nil
 	}
-	name1 := r.Name.ValueString()
+	name2 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -84,19 +94,30 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 	out := shared.SourceBingAdsCreateRequest{
 		Configuration: configuration,
 		DefinitionID:  definitionID,
-		Name:          name1,
+		Name:          name2,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
 	return &out
 }
 
-func (r *SourceBingAdsResourceModel) ToGetSDKType() *shared.SourceBingAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceBingAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutRequest {
+func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsPutRequest() *shared.SourceBingAdsPutRequest {
+	var accountNames []shared.AccountNames = nil
+	for _, accountNamesItem := range r.Configuration.AccountNames {
+		name := accountNamesItem.Name.ValueString()
+		operator := shared.Operator(accountNamesItem.Operator.ValueString())
+		accountNames = append(accountNames, shared.AccountNames{
+			Name:     name,
+			Operator: operator,
+		})
+	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := new(string)
 	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
@@ -106,7 +127,7 @@ func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutR
 	}
 	var customReports []shared.CustomReportConfig = nil
 	for _, customReportsItem := range r.Configuration.CustomReports {
-		name := customReportsItem.Name.ValueString()
+		name1 := customReportsItem.Name.ValueString()
 		reportAggregation := new(string)
 		if !customReportsItem.ReportAggregation.IsUnknown() && !customReportsItem.ReportAggregation.IsNull() {
 			*reportAggregation = customReportsItem.ReportAggregation.ValueString()
@@ -119,7 +140,7 @@ func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutR
 		}
 		reportingObject := shared.ReportingDataObject(customReportsItem.ReportingObject.ValueString())
 		customReports = append(customReports, shared.CustomReportConfig{
-			Name:              name,
+			Name:              name1,
 			ReportAggregation: reportAggregation,
 			ReportColumns:     reportColumns,
 			ReportingObject:   reportingObject,
@@ -146,6 +167,7 @@ func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutR
 		tenantID = nil
 	}
 	configuration := shared.SourceBingAdsUpdate{
+		AccountNames:     accountNames,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
 		CustomReports:    customReports,
@@ -155,28 +177,12 @@ func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutR
 		ReportsStartDate: reportsStartDate,
 		TenantID:         tenantID,
 	}
-	name1 := r.Name.ValueString()
+	name2 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceBingAdsPutRequest{
 		Configuration: configuration,
-		Name:          name1,
+		Name:          name2,
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceBingAdsResourceModel) ToDeleteSDKType() *shared.SourceBingAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceBingAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceBingAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -3,6 +3,6 @@
 package provider
 
 type SourceMicrosoftTeamsAuthenticationMechanism struct {
-	AuthenticateViaMicrosoft        *AuthenticateViaMicrosoft        `tfsdk:"authenticate_via_microsoft"`
-	AuthenticateViaMicrosoftOAuth20 *AuthenticateViaMicrosoftOAuth20 `tfsdk:"authenticate_via_microsoft_o_auth20"`
+	AuthenticateViaMicrosoft        *AuthenticateViaMicrosoft      `tfsdk:"authenticate_via_microsoft"`
+	AuthenticateViaMicrosoftOAuth20 *AuthenticateViaMicrosoftOAuth `tfsdk:"authenticate_via_microsoft_o_auth20"`
 }

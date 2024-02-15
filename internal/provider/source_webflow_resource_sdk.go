@@ -7,12 +7,19 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceWebflowResourceModel) ToCreateSDKType() *shared.SourceWebflowCreateRequest {
+func (r *SourceWebflowResourceModel) ToSharedSourceWebflowCreateRequest() *shared.SourceWebflowCreateRequest {
+	acceptVersion := new(string)
+	if !r.Configuration.AcceptVersion.IsUnknown() && !r.Configuration.AcceptVersion.IsNull() {
+		*acceptVersion = r.Configuration.AcceptVersion.ValueString()
+	} else {
+		acceptVersion = nil
+	}
 	apiKey := r.Configuration.APIKey.ValueString()
 	siteID := r.Configuration.SiteID.ValueString()
 	configuration := shared.SourceWebflow{
-		APIKey: apiKey,
-		SiteID: siteID,
+		AcceptVersion: acceptVersion,
+		APIKey:        apiKey,
+		SiteID:        siteID,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -38,17 +45,26 @@ func (r *SourceWebflowResourceModel) ToCreateSDKType() *shared.SourceWebflowCrea
 	return &out
 }
 
-func (r *SourceWebflowResourceModel) ToGetSDKType() *shared.SourceWebflowCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceWebflowResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWebflowResourceModel) ToUpdateSDKType() *shared.SourceWebflowPutRequest {
+func (r *SourceWebflowResourceModel) ToSharedSourceWebflowPutRequest() *shared.SourceWebflowPutRequest {
+	acceptVersion := new(string)
+	if !r.Configuration.AcceptVersion.IsUnknown() && !r.Configuration.AcceptVersion.IsNull() {
+		*acceptVersion = r.Configuration.AcceptVersion.ValueString()
+	} else {
+		acceptVersion = nil
+	}
 	apiKey := r.Configuration.APIKey.ValueString()
 	siteID := r.Configuration.SiteID.ValueString()
 	configuration := shared.SourceWebflowUpdate{
-		APIKey: apiKey,
-		SiteID: siteID,
+		AcceptVersion: acceptVersion,
+		APIKey:        apiKey,
+		SiteID:        siteID,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -58,20 +74,4 @@ func (r *SourceWebflowResourceModel) ToUpdateSDKType() *shared.SourceWebflowPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceWebflowResourceModel) ToDeleteSDKType() *shared.SourceWebflowCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceWebflowResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceWebflowResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

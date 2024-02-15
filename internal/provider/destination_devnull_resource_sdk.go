@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationDevNullCreateRequest {
+func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateRequest() *shared.DestinationDevNullCreateRequest {
 	var testDestination shared.DestinationDevNullTestDestination
 	var destinationDevNullSilent *shared.DestinationDevNullSilent
 	if r.Configuration.TestDestination.Silent != nil {
@@ -38,12 +38,14 @@ func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationD
 	return &out
 }
 
-func (r *DestinationDevNullResourceModel) ToGetSDKType() *shared.DestinationDevNullCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationDevNullResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDevNullResourceModel) ToUpdateSDKType() *shared.DestinationDevNullPutRequest {
+func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest() *shared.DestinationDevNullPutRequest {
 	var testDestination shared.TestDestination
 	var silent *shared.Silent
 	if r.Configuration.TestDestination.Silent != nil {
@@ -65,20 +67,4 @@ func (r *DestinationDevNullResourceModel) ToUpdateSDKType() *shared.DestinationD
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationDevNullResourceModel) ToDeleteSDKType() *shared.DestinationDevNullCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationDevNullResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationDevNullResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

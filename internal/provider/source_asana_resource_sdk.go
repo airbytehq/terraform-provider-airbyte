@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRequest {
+func (r *SourceAsanaResourceModel) ToSharedSourceAsanaCreateRequest() *shared.SourceAsanaCreateRequest {
 	var credentials *shared.SourceAsanaAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var sourceAsanaAuthenticateViaAsanaOauth *shared.SourceAsanaAuthenticateViaAsanaOauth
@@ -81,12 +81,14 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 	return &out
 }
 
-func (r *SourceAsanaResourceModel) ToGetSDKType() *shared.SourceAsanaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAsanaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAsanaResourceModel) ToUpdateSDKType() *shared.SourceAsanaPutRequest {
+func (r *SourceAsanaResourceModel) ToSharedSourceAsanaPutRequest() *shared.SourceAsanaPutRequest {
 	var credentials *shared.AuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var authenticateViaAsanaOauth *shared.AuthenticateViaAsanaOauth
@@ -143,20 +145,4 @@ func (r *SourceAsanaResourceModel) ToUpdateSDKType() *shared.SourceAsanaPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAsanaResourceModel) ToDeleteSDKType() *shared.SourceAsanaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAsanaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAsanaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationCumulioResourceModel) ToCreateSDKType() *shared.DestinationCumulioCreateRequest {
+func (r *DestinationCumulioResourceModel) ToSharedDestinationCumulioCreateRequest() *shared.DestinationCumulioCreateRequest {
 	apiHost := new(string)
 	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
 		*apiHost = r.Configuration.APIHost.ValueString()
@@ -38,12 +38,14 @@ func (r *DestinationCumulioResourceModel) ToCreateSDKType() *shared.DestinationC
 	return &out
 }
 
-func (r *DestinationCumulioResourceModel) ToGetSDKType() *shared.DestinationCumulioCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationCumulioResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationCumulioResourceModel) ToUpdateSDKType() *shared.DestinationCumulioPutRequest {
+func (r *DestinationCumulioResourceModel) ToSharedDestinationCumulioPutRequest() *shared.DestinationCumulioPutRequest {
 	apiHost := new(string)
 	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
 		*apiHost = r.Configuration.APIHost.ValueString()
@@ -65,20 +67,4 @@ func (r *DestinationCumulioResourceModel) ToUpdateSDKType() *shared.DestinationC
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationCumulioResourceModel) ToDeleteSDKType() *shared.DestinationCumulioCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationCumulioResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationCumulioResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

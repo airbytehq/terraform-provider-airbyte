@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
-
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -92,7 +91,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 			},
 			"data_residency": schema.StringAttribute{
 				Computed:    true,
-				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
+				Description: `must be one of ["auto", "us", "eu"]`,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
@@ -101,17 +100,15 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 				Computed: true,
 			},
 			"namespace_definition": schema.StringAttribute{
-				Computed: true,
-				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]; Default: "destination"` + "\n" +
-					`Define the location where the data will be stored in the destination`,
+				Computed:    true,
+				Description: `Define the location where the data will be stored in the destination. must be one of ["source", "destination", "custom_format"]`,
 			},
 			"namespace_format": schema.StringAttribute{
 				Computed: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
-				Computed: true,
-				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"` + "\n" +
-					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
+				Computed:    true,
+				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]`,
 			},
 			"prefix": schema.StringAttribute{
 				Computed: true,
@@ -208,7 +205,7 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.ConnectionResponse)
+	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

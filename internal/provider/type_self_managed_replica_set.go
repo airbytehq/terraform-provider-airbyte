@@ -10,5 +10,6 @@ type SelfManagedReplicaSet struct {
 	ConnectionString     types.String `tfsdk:"connection_string"`
 	Database             types.String `tfsdk:"database"`
 	Password             types.String `tfsdk:"password"`
+	SchemaEnforced       types.Bool   `tfsdk:"schema_enforced"`
 	Username             types.String `tfsdk:"username"`
 }

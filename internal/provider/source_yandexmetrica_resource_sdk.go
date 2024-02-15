@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYandexMetricaCreateRequest {
+func (r *SourceYandexMetricaResourceModel) ToSharedSourceYandexMetricaCreateRequest() *shared.SourceYandexMetricaCreateRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	counterID := r.Configuration.CounterID.ValueString()
 	endDate := new(customTypes.Date)
@@ -48,12 +48,14 @@ func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYande
 	return &out
 }
 
-func (r *SourceYandexMetricaResourceModel) ToGetSDKType() *shared.SourceYandexMetricaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceYandexMetricaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceYandexMetricaResourceModel) ToUpdateSDKType() *shared.SourceYandexMetricaPutRequest {
+func (r *SourceYandexMetricaResourceModel) ToSharedSourceYandexMetricaPutRequest() *shared.SourceYandexMetricaPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	counterID := r.Configuration.CounterID.ValueString()
 	endDate := new(customTypes.Date)
@@ -77,20 +79,4 @@ func (r *SourceYandexMetricaResourceModel) ToUpdateSDKType() *shared.SourceYande
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceYandexMetricaResourceModel) ToDeleteSDKType() *shared.SourceYandexMetricaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceYandexMetricaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceYandexMetricaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunchdarklyCreateRequest {
+func (r *SourceLaunchdarklyResourceModel) ToSharedSourceLaunchdarklyCreateRequest() *shared.SourceLaunchdarklyCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	configuration := shared.SourceLaunchdarkly{
 		AccessToken: accessToken,
@@ -36,12 +36,14 @@ func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunch
 	return &out
 }
 
-func (r *SourceLaunchdarklyResourceModel) ToGetSDKType() *shared.SourceLaunchdarklyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceLaunchdarklyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLaunchdarklyResourceModel) ToUpdateSDKType() *shared.SourceLaunchdarklyPutRequest {
+func (r *SourceLaunchdarklyResourceModel) ToSharedSourceLaunchdarklyPutRequest() *shared.SourceLaunchdarklyPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	configuration := shared.SourceLaunchdarklyUpdate{
 		AccessToken: accessToken,
@@ -54,20 +56,4 @@ func (r *SourceLaunchdarklyResourceModel) ToUpdateSDKType() *shared.SourceLaunch
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceLaunchdarklyResourceModel) ToDeleteSDKType() *shared.SourceLaunchdarklyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceLaunchdarklyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceLaunchdarklyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -9,13 +9,22 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )
 
+const (
+	// ExplicitSuppress strategy suppresses "(known after changes)" messages unless we're in the initial creation
+	ExplicitSuppress = iota
+)
+
 // SuppressDiff returns a plan modifier that propagates a state value into the planned value, when it is Known, and the Plan Value is Unknown
-func SuppressDiff() planmodifier.String {
-	return suppressDiff{}
+func SuppressDiff(strategy int) planmodifier.String {
+	return suppressDiff{
+		strategy: strategy,
+	}
 }
 
 // suppressDiff implements the plan modifier.
-type suppressDiff struct{}
+type suppressDiff struct {
+	strategy int
+}
 
 // Description returns a human-readable description of the plan modifier.
 func (m suppressDiff) Description(_ context.Context) string {

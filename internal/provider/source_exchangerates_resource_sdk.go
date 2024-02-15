@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExchangeRatesCreateRequest {
+func (r *SourceExchangeRatesResourceModel) ToSharedSourceExchangeRatesCreateRequest() *shared.SourceExchangeRatesCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	base := new(string)
 	if !r.Configuration.Base.IsUnknown() && !r.Configuration.Base.IsNull() {
@@ -53,12 +53,14 @@ func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExcha
 	return &out
 }
 
-func (r *SourceExchangeRatesResourceModel) ToGetSDKType() *shared.SourceExchangeRatesCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceExchangeRatesResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceExchangeRatesResourceModel) ToUpdateSDKType() *shared.SourceExchangeRatesPutRequest {
+func (r *SourceExchangeRatesResourceModel) ToSharedSourceExchangeRatesPutRequest() *shared.SourceExchangeRatesPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	base := new(string)
 	if !r.Configuration.Base.IsUnknown() && !r.Configuration.Base.IsNull() {
@@ -87,20 +89,4 @@ func (r *SourceExchangeRatesResourceModel) ToUpdateSDKType() *shared.SourceExcha
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceExchangeRatesResourceModel) ToDeleteSDKType() *shared.SourceExchangeRatesCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceExchangeRatesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceExchangeRatesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

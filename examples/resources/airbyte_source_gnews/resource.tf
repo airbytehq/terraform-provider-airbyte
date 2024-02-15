@@ -1,23 +1,23 @@
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "es"
+    country  = "au"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "description",
+      "title",
     ]
     language = "ta"
     nullable = [
       "content",
     ]
-    query               = "Intel AND (i7 OR i9)"
-    sortby              = "relevance"
+    query               = "Apple AND NOT iPhone"
+    sortby              = "publishedAt"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Apple AND NOT iPhone"
-    top_headlines_topic = "world"
+    top_headlines_query = "Apple OR Microsoft"
+    top_headlines_topic = "business"
   }
-  definition_id = "df3c14a3-49fd-4e89-ab27-6cbad00caee1"
-  name          = "Sadie Gleichner"
+  definition_id = "956c03ec-7b8b-468f-9fc0-692b4fd673f5"
+  name          = "Oliver MacGyver MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5b57e54a-27b6-417a-812e-6bf68e1922df"
+  workspace_id  = "cc9948b0-0610-459f-ac1d-6c9b0f0f35d9"
 }

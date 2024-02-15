@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAdsCreateRequest {
+func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest() *shared.SourceGoogleAdsCreateRequest {
 	conversionWindowDays := new(int64)
 	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
 		*conversionWindowDays = r.Configuration.ConversionWindowDays.ValueInt64()
@@ -32,27 +32,30 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueries []shared.SourceGoogleAdsCustomQueries = nil
-	for _, customQueriesItem := range r.Configuration.CustomQueries {
-		query := customQueriesItem.Query.ValueString()
-		tableName := customQueriesItem.TableName.ValueString()
-		customQueries = append(customQueries, shared.SourceGoogleAdsCustomQueries{
+	var customQueriesArray []shared.SourceGoogleAdsCustomQueriesArray = nil
+	for _, customQueriesArrayItem := range r.Configuration.CustomQueriesArray {
+		query := customQueriesArrayItem.Query.ValueString()
+		tableName := customQueriesArrayItem.TableName.ValueString()
+		customQueriesArray = append(customQueriesArray, shared.SourceGoogleAdsCustomQueriesArray{
 			Query:     query,
 			TableName: tableName,
 		})
 	}
-	customerID := r.Configuration.CustomerID.ValueString()
+	customerID := new(string)
+	if !r.Configuration.CustomerID.IsUnknown() && !r.Configuration.CustomerID.IsNull() {
+		*customerID = r.Configuration.CustomerID.ValueString()
+	} else {
+		customerID = nil
+	}
+	var customerStatusFilter []shared.SourceGoogleAdsCustomerStatus = nil
+	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
+		customerStatusFilter = append(customerStatusFilter, shared.SourceGoogleAdsCustomerStatus(customerStatusFilterItem.ValueString()))
+	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
-	}
-	loginCustomerID := new(string)
-	if !r.Configuration.LoginCustomerID.IsUnknown() && !r.Configuration.LoginCustomerID.IsNull() {
-		*loginCustomerID = r.Configuration.LoginCustomerID.ValueString()
-	} else {
-		loginCustomerID = nil
 	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -63,10 +66,10 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 	configuration := shared.SourceGoogleAds{
 		ConversionWindowDays: conversionWindowDays,
 		Credentials:          credentials,
-		CustomQueries:        customQueries,
+		CustomQueriesArray:   customQueriesArray,
 		CustomerID:           customerID,
+		CustomerStatusFilter: customerStatusFilter,
 		EndDate:              endDate,
-		LoginCustomerID:      loginCustomerID,
 		StartDate:            startDate,
 	}
 	definitionID := new(string)
@@ -93,12 +96,14 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 	return &out
 }
 
-func (r *SourceGoogleAdsResourceModel) ToGetSDKType() *shared.SourceGoogleAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAdsPutRequest {
+func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest() *shared.SourceGoogleAdsPutRequest {
 	conversionWindowDays := new(int64)
 	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
 		*conversionWindowDays = r.Configuration.ConversionWindowDays.ValueInt64()
@@ -122,27 +127,30 @@ func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAds
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueries []shared.CustomQueries = nil
-	for _, customQueriesItem := range r.Configuration.CustomQueries {
-		query := customQueriesItem.Query.ValueString()
-		tableName := customQueriesItem.TableName.ValueString()
-		customQueries = append(customQueries, shared.CustomQueries{
+	var customQueriesArray []shared.CustomQueriesArray = nil
+	for _, customQueriesArrayItem := range r.Configuration.CustomQueriesArray {
+		query := customQueriesArrayItem.Query.ValueString()
+		tableName := customQueriesArrayItem.TableName.ValueString()
+		customQueriesArray = append(customQueriesArray, shared.CustomQueriesArray{
 			Query:     query,
 			TableName: tableName,
 		})
 	}
-	customerID := r.Configuration.CustomerID.ValueString()
+	customerID := new(string)
+	if !r.Configuration.CustomerID.IsUnknown() && !r.Configuration.CustomerID.IsNull() {
+		*customerID = r.Configuration.CustomerID.ValueString()
+	} else {
+		customerID = nil
+	}
+	var customerStatusFilter []shared.CustomerStatus = nil
+	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
+		customerStatusFilter = append(customerStatusFilter, shared.CustomerStatus(customerStatusFilterItem.ValueString()))
+	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
-	}
-	loginCustomerID := new(string)
-	if !r.Configuration.LoginCustomerID.IsUnknown() && !r.Configuration.LoginCustomerID.IsNull() {
-		*loginCustomerID = r.Configuration.LoginCustomerID.ValueString()
-	} else {
-		loginCustomerID = nil
 	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -153,10 +161,10 @@ func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAds
 	configuration := shared.SourceGoogleAdsUpdate{
 		ConversionWindowDays: conversionWindowDays,
 		Credentials:          credentials,
-		CustomQueries:        customQueries,
+		CustomQueriesArray:   customQueriesArray,
 		CustomerID:           customerID,
+		CustomerStatusFilter: customerStatusFilter,
 		EndDate:              endDate,
-		LoginCustomerID:      loginCustomerID,
 		StartDate:            startDate,
 	}
 	name := r.Name.ValueString()
@@ -167,20 +175,4 @@ func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAds
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleAdsResourceModel) ToDeleteSDKType() *shared.SourceGoogleAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -3,6 +3,6 @@
 package provider
 
 type DestinationMongodbAuthorizationType struct {
-	LoginPassword *UsernamePassword                                         `tfsdk:"login_password"`
-	None          *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"none"`
+	LoginPassword *UsernamePassword `tfsdk:"login_password"`
+	None          *Fake             `tfsdk:"none"`
 }

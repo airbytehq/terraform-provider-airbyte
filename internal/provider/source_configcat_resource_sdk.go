@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcatCreateRequest {
+func (r *SourceConfigcatResourceModel) ToSharedSourceConfigcatCreateRequest() *shared.SourceConfigcatCreateRequest {
 	password := r.Configuration.Password.ValueString()
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceConfigcat{
@@ -38,12 +38,14 @@ func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcat
 	return &out
 }
 
-func (r *SourceConfigcatResourceModel) ToGetSDKType() *shared.SourceConfigcatCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceConfigcatResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceConfigcatResourceModel) ToUpdateSDKType() *shared.SourceConfigcatPutRequest {
+func (r *SourceConfigcatResourceModel) ToSharedSourceConfigcatPutRequest() *shared.SourceConfigcatPutRequest {
 	password := r.Configuration.Password.ValueString()
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceConfigcatUpdate{
@@ -58,20 +60,4 @@ func (r *SourceConfigcatResourceModel) ToUpdateSDKType() *shared.SourceConfigcat
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceConfigcatResourceModel) ToDeleteSDKType() *shared.SourceConfigcatCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceConfigcatResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceConfigcatResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

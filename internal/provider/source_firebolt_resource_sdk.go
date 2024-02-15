@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCreateRequest {
+func (r *SourceFireboltResourceModel) ToSharedSourceFireboltCreateRequest() *shared.SourceFireboltCreateRequest {
 	account := new(string)
 	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
 		*account = r.Configuration.Account.ValueString()
@@ -61,12 +61,14 @@ func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCr
 	return &out
 }
 
-func (r *SourceFireboltResourceModel) ToGetSDKType() *shared.SourceFireboltCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFireboltResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFireboltResourceModel) ToUpdateSDKType() *shared.SourceFireboltPutRequest {
+func (r *SourceFireboltResourceModel) ToSharedSourceFireboltPutRequest() *shared.SourceFireboltPutRequest {
 	account := new(string)
 	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
 		*account = r.Configuration.Account.ValueString()
@@ -104,20 +106,4 @@ func (r *SourceFireboltResourceModel) ToUpdateSDKType() *shared.SourceFireboltPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFireboltResourceModel) ToDeleteSDKType() *shared.SourceFireboltCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFireboltResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFireboltResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

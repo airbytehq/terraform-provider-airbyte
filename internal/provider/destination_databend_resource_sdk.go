@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.DestinationDatabendCreateRequest {
+func (r *DestinationDatabendResourceModel) ToSharedDestinationDatabendCreateRequest() *shared.DestinationDatabendCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	password := new(string)
@@ -54,12 +54,14 @@ func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationDatabendResourceModel) ToGetSDKType() *shared.DestinationDatabendCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationDatabendResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDatabendResourceModel) ToUpdateSDKType() *shared.DestinationDatabendPutRequest {
+func (r *DestinationDatabendResourceModel) ToSharedDestinationDatabendPutRequest() *shared.DestinationDatabendPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	password := new(string)
@@ -97,20 +99,4 @@ func (r *DestinationDatabendResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationDatabendResourceModel) ToDeleteSDKType() *shared.DestinationDatabendCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationDatabendResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationDatabendResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -33,7 +33,6 @@ func (e *BothUsernameAndPasswordIsRequiredForAuthenticationRequest) UnmarshalJSO
 	}
 }
 
-// SourceOutbrainAmplifyUpdateUsernamePassword - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyUpdateUsernamePassword struct {
 	// Add Password for authentication.
 	Password string                                                    `json:"password"`
@@ -95,7 +94,6 @@ func (e *AccessTokenIsRequiredForAuthenticationRequests) UnmarshalJSON(data []by
 	}
 }
 
-// SourceOutbrainAmplifyUpdateAccessToken - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyUpdateAccessToken struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                         `json:"access_token"`
@@ -131,6 +129,7 @@ const (
 	SourceOutbrainAmplifyUpdateAuthenticationMethodTypeSourceOutbrainAmplifyUpdateUsernamePassword SourceOutbrainAmplifyUpdateAuthenticationMethodType = "source-outbrain-amplify-update_Username Password"
 )
 
+// SourceOutbrainAmplifyUpdateAuthenticationMethod - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyUpdateAuthenticationMethod struct {
 	SourceOutbrainAmplifyUpdateAccessToken      *SourceOutbrainAmplifyUpdateAccessToken
 	SourceOutbrainAmplifyUpdateUsernamePassword *SourceOutbrainAmplifyUpdateUsernamePassword

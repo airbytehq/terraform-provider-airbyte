@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarCloudCreateRequest {
+func (r *SourceSonarCloudResourceModel) ToSharedSourceSonarCloudCreateRequest() *shared.SourceSonarCloudCreateRequest {
 	var componentKeys []interface{} = nil
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
 		var componentKeysTmp interface{}
@@ -61,12 +61,14 @@ func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarClo
 	return &out
 }
 
-func (r *SourceSonarCloudResourceModel) ToGetSDKType() *shared.SourceSonarCloudCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSonarCloudResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSonarCloudResourceModel) ToUpdateSDKType() *shared.SourceSonarCloudPutRequest {
+func (r *SourceSonarCloudResourceModel) ToSharedSourceSonarCloudPutRequest() *shared.SourceSonarCloudPutRequest {
 	var componentKeys []interface{} = nil
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
 		var componentKeysTmp interface{}
@@ -102,20 +104,4 @@ func (r *SourceSonarCloudResourceModel) ToUpdateSDKType() *shared.SourceSonarClo
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSonarCloudResourceModel) ToDeleteSDKType() *shared.SourceSonarCloudCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSonarCloudResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSonarCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

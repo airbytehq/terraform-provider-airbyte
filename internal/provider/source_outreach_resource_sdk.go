@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCreateRequest {
+func (r *SourceOutreachResourceModel) ToSharedSourceOutreachCreateRequest() *shared.SourceOutreachCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	redirectURI := r.Configuration.RedirectURI.ValueString()
@@ -44,12 +44,14 @@ func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCr
 	return &out
 }
 
-func (r *SourceOutreachResourceModel) ToGetSDKType() *shared.SourceOutreachCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOutreachResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOutreachResourceModel) ToUpdateSDKType() *shared.SourceOutreachPutRequest {
+func (r *SourceOutreachResourceModel) ToSharedSourceOutreachPutRequest() *shared.SourceOutreachPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	redirectURI := r.Configuration.RedirectURI.ValueString()
@@ -70,20 +72,4 @@ func (r *SourceOutreachResourceModel) ToUpdateSDKType() *shared.SourceOutreachPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOutreachResourceModel) ToDeleteSDKType() *shared.SourceOutreachCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOutreachResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOutreachResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

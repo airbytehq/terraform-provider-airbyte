@@ -6,10 +6,10 @@ resource "airbyte_source_shopify" "my_source_shopify" {
       }
     }
     shop       = "my-store"
-    start_date = "2022-08-02"
+    start_date = "2022-01-27"
   }
-  definition_id = "4e1dc4a0-1d44-4fb9-b610-a4d0de91eaa4"
-  name          = "Clinton Baumbach"
+  definition_id = "b02fd25c-7727-4b36-b542-81d3e7f0bc64"
+  name          = "Moses Thiel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb870eb9-8050-4c39-a745-0657bfd1cb4d"
+  workspace_id  = "08c82dc4-0ca1-4ab7-a639-716f1b8331df"
 }

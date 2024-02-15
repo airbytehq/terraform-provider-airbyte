@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluenceCreateRequest {
+func (r *SourceConfluenceResourceModel) ToSharedSourceConfluenceCreateRequest() *shared.SourceConfluenceCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
 	email := r.Configuration.Email.ValueString()
@@ -40,12 +40,14 @@ func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluen
 	return &out
 }
 
-func (r *SourceConfluenceResourceModel) ToGetSDKType() *shared.SourceConfluenceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceConfluenceResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceConfluenceResourceModel) ToUpdateSDKType() *shared.SourceConfluencePutRequest {
+func (r *SourceConfluenceResourceModel) ToSharedSourceConfluencePutRequest() *shared.SourceConfluencePutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
 	email := r.Configuration.Email.ValueString()
@@ -62,20 +64,4 @@ func (r *SourceConfluenceResourceModel) ToUpdateSDKType() *shared.SourceConfluen
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceConfluenceResourceModel) ToDeleteSDKType() *shared.SourceConfluenceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceConfluenceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceConfluenceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

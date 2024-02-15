@@ -34,7 +34,6 @@ func (e *SourceAsanaSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAsanaAuthenticateWithPersonalAccessToken - Choose how to authenticate to Github
 type SourceAsanaAuthenticateWithPersonalAccessToken struct {
 	// PAT Credentials
 	optionTitle *SourceAsanaSchemasCredentialsTitle `const:"PAT Credentials" json:"option_title,omitempty"`
@@ -89,7 +88,6 @@ func (e *SourceAsanaCredentialsTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAsanaAuthenticateViaAsanaOauth - Choose how to authenticate to Github
 type SourceAsanaAuthenticateViaAsanaOauth struct {
 	ClientID     string `json:"client_id"`
 	ClientSecret string `json:"client_secret"`
@@ -141,6 +139,7 @@ const (
 	SourceAsanaAuthenticationMechanismTypeSourceAsanaAuthenticateWithPersonalAccessToken SourceAsanaAuthenticationMechanismType = "source-asana_Authenticate with Personal Access Token"
 )
 
+// SourceAsanaAuthenticationMechanism - Choose how to authenticate to Github
 type SourceAsanaAuthenticationMechanism struct {
 	SourceAsanaAuthenticateViaAsanaOauth           *SourceAsanaAuthenticateViaAsanaOauth
 	SourceAsanaAuthenticateWithPersonalAccessToken *SourceAsanaAuthenticateWithPersonalAccessToken
