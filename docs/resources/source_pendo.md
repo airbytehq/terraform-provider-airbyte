@@ -17,10 +17,10 @@ resource "airbyte_source_pendo" "my_source_pendo" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "6503c474-3ee7-49bd-93e2-04659bbdc56c"
-  name          = "Mandy Conroy"
+  definition_id = "ef588ac5-48be-48a7-a9db-f52c79293e28"
+  name          = "Miss Shannon Lakin I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0259c6b1-3998-4d3f-8543-0ae066d4a91b"
+  workspace_id  = "348b38fe-3b52-4011-a5b2-9252a784d2d0"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_pendo" "my_source_pendo" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

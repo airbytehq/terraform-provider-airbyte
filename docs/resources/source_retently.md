@@ -24,10 +24,10 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "2c041244-3656-49fd-a4cd-2bcf08a635d7"
-  name          = "Dave Schinner"
+  definition_id = "0427d23a-4e1d-48c7-a3c8-e5e259fe4ef6"
+  name          = "Kristina Donnelly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6ceccfae-93f7-4f0f-8c4b-4f8d4f6833e1"
+  workspace_id  = "5b5a324c-6128-4aab-bad0-730782c3e822"
 }
 ```
 
@@ -42,8 +42,8 @@ resource "airbyte_source_retently" "my_source_retently" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,8 +62,8 @@ Optional:
 
 Optional:
 
-- `authenticate_via_retently_o_auth` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_retently_o_auth))
-- `authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_api_token))
+- `authenticate_via_retently_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_retently_o_auth))
+- `authenticate_with_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_api_token))
 
 <a id="nestedatt--configuration--credentials--authenticate_via_retently_o_auth"></a>
 ### Nested Schema for `configuration.credentials.authenticate_via_retently_o_auth`

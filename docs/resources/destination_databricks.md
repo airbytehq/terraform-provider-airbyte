@@ -15,7 +15,7 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = false
+    accept_terms = true
     data_source = {
       recommended_managed_tables = {}
     }
@@ -25,12 +25,12 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     databricks_port                  = "443"
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
     enable_schema_evolution          = true
-    purge_staging_data               = false
+    purge_staging_data               = true
     schema                           = "default"
   }
-  definition_id = "05d7306c-fa6f-460b-bc11-e74f736d7a95"
-  name          = "Meghan Mitchell"
-  workspace_id  = "4c049945-edd6-4e95-a416-d119e802e071"
+  definition_id = "eca9f91e-b58c-4332-9745-6993f0626846"
+  name          = "Ms. Betty Shanahan"
+  workspace_id  = "7ed52cbf-f018-4589-b5bd-fe2750539f4b"
 }
 ```
 
@@ -45,7 +45,7 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,26 +64,21 @@ Required:
 
 Optional:
 
-- `accept_terms` (Boolean) Default: false
-You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.
+- `accept_terms` (Boolean) You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector. Default: false
 - `database` (String) The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.
-- `databricks_port` (String) Default: "443"
-Databricks Cluster Port.
-- `enable_schema_evolution` (Boolean) Default: false
-Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
-- `purge_staging_data` (Boolean) Default: true
-Default to 'true'. Switch it to 'false' for debugging purpose.
-- `schema` (String) Default: "default"
-The default schema tables are written. If not specified otherwise, the "default" will be used.
+- `databricks_port` (String) Databricks Cluster Port. Default: "443"
+- `enable_schema_evolution` (Boolean) Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes. Default: false
+- `purge_staging_data` (Boolean) Default to 'true'. Switch it to 'false' for debugging purpose. Default: true
+- `schema` (String) The default schema tables are written. If not specified otherwise, the "default" will be used. Default: "default"
 
 <a id="nestedatt--configuration--data_source"></a>
 ### Nested Schema for `configuration.data_source`
 
 Optional:
 
-- `amazon_s3` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--amazon_s3))
-- `azure_blob_storage` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--azure_blob_storage))
-- `recommended_managed_tables` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--recommended_managed_tables))
+- `amazon_s3` (Attributes) (see [below for nested schema](#nestedatt--configuration--data_source--amazon_s3))
+- `azure_blob_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--data_source--azure_blob_storage))
+- `recommended_managed_tables` (Attributes) (see [below for nested schema](#nestedatt--configuration--data_source--recommended_managed_tables))
 
 <a id="nestedatt--configuration--data_source--amazon_s3"></a>
 ### Nested Schema for `configuration.data_source.amazon_s3`
@@ -98,8 +93,7 @@ Required:
 Optional:
 
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
-The region of the S3 staging bucket to use if utilising a copy strategy.
+- `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a copy strategy. must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
 
 
 <a id="nestedatt--configuration--data_source--azure_blob_storage"></a>
@@ -113,8 +107,7 @@ Required:
 
 Optional:
 
-- `azure_blob_storage_endpoint_domain_name` (String) Default: "blob.core.windows.net"
-This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"
 
 
 <a id="nestedatt--configuration--data_source--recommended_managed_tables"></a>

@@ -22,10 +22,10 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     password = "...my_password..."
     username = "username@email.com"
   }
-  definition_id = "e1d4b428-b10c-462a-aeab-6a16bc0f1be5"
-  name          = "Laurie Kuhlman"
+  definition_id = "bba48ed6-d0ea-4f7f-94c7-c369f9cb0a3d"
+  name          = "Ms. Paul Beer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7324c6ca-7fcd-4ac6-b878-54b69c42e8b9"
+  workspace_id  = "aef770c8-1f95-4c5b-8dd2-d32b37f6fec5"
 }
 ```
 
@@ -40,8 +40,8 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

@@ -23,21 +23,23 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
       developer_token = "...my_developer_token..."
       refresh_token   = "...my_refresh_token..."
     }
-    custom_queries = [
+    custom_queries_array = [
       {
         query      = "SELECT segments.ad_destination_type, campaign.advertising_channel_sub_type FROM campaign WHERE campaign.status = 'PAUSED'"
         table_name = "...my_table_name..."
       },
     ]
-    customer_id       = "6783948572,5839201945"
-    end_date          = "2017-01-30"
-    login_customer_id = "7349206847"
-    start_date        = "2017-01-25"
+    customer_id = "6783948572,5839201945"
+    customer_status_filter = [
+      "UNKNOWN",
+    ]
+    end_date   = "2017-01-30"
+    start_date = "2017-01-25"
   }
-  definition_id = "14313a52-3140-431f-97b8-2b3c164c1950"
-  name          = "Dr. Matt Feeney"
+  definition_id = "93ebb36d-8aae-4a00-b0c4-c84b89e625ba"
+  name          = "Johnnie Kiehn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ecd9b5a7-5a7c-45fc-a1d7-22b310b676fb"
+  workspace_id  = "32dc31e1-b4b6-47e9-93bf-2defea2fd145"
 }
 ```
 
@@ -52,8 +54,8 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -66,15 +68,14 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `customer_id` (String) Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 
 Optional:
 
-- `conversion_window_days` (Number) Default: 14
-A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.
-- `custom_queries` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_queries))
+- `conversion_window_days` (Number) A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>. Default: 14
+- `custom_queries_array` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_queries_array))
+- `customer_id` (String) Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `customer_status_filter` (List of String) A list of customer statuses to filter on. For detailed info about what each status mean refer to Google Ads <a href="https://developers.google.com/google-ads/api/reference/rpc/v15/CustomerStatusEnum.CustomerStatus">documentation</a>.
 - `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
-- `login_customer_id` (String) If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
 - `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -92,8 +93,8 @@ Optional:
 - `access_token` (String, Sensitive) The Access Token for making authenticated requests. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 
 
-<a id="nestedatt--configuration--custom_queries"></a>
-### Nested Schema for `configuration.custom_queries`
+<a id="nestedatt--configuration--custom_queries_array"></a>
+### Nested Schema for `configuration.custom_queries_array`
 
 Required:
 

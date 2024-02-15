@@ -18,9 +18,9 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
     apikey   = "...my_apikey..."
     endpoint = "https://us.timeplus.cloud/workspace_id"
   }
-  definition_id = "32a47524-bb49-40aa-b53a-d11902ba1888"
-  name          = "Kimberly Cole V"
-  workspace_id  = "d193af49-1985-4c92-933c-ae7edb401c23"
+  definition_id = "01e67689-a46f-4396-87c6-bf73724213ca"
+  name          = "Melissa Harber"
+  workspace_id  = "1e30360f-c0ea-4a50-a81b-c3adb090c013"
 }
 ```
 
@@ -35,7 +35,7 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -51,7 +51,6 @@ Required:
 
 Optional:
 
-- `endpoint` (String) Default: "https://us.timeplus.cloud/<workspace_id>"
-Timeplus workspace endpoint
+- `endpoint` (String) Timeplus workspace endpoint. Default: "https://us.timeplus.cloud/<workspace_id>"
 
 

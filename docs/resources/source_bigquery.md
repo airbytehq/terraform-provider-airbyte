@@ -19,10 +19,10 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     dataset_id       = "...my_dataset_id..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "9baf3821-deb7-4264-9ad9-e5fb53126691"
-  name          = "Darrin Rogahn"
+  definition_id = "b29a2f83-17de-4c4e-beab-02ccb908523d"
+  name          = "Willie Jacobs DDS"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b9ea24da-51fb-473f-872f-2e8bbfe18227"
+  workspace_id  = "c4991982-a682-4b0a-b074-f016f72127f3"
 }
 ```
 
@@ -37,8 +37,8 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

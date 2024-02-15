@@ -17,10 +17,10 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "47c0f9ce-33c0-4f29-8c11-e4e993d29474"
-  name          = "Cassandra Carroll"
+  definition_id = "1e868df1-f2c5-4ad8-8a46-153eb240d626"
+  name          = "Ricky Lakin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "54dff6cf-9b79-4e23-a888-b6bde25154a5"
+  workspace_id  = "ccaaf58e-0f5c-4115-9d60-149910eecfc7"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

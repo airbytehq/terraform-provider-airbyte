@@ -17,14 +17,14 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
     access_key_id            = "A012345678910EXAMPLE"
     endpoint                 = "https://{aws_dynamo_db_url}.com"
-    region                   = "us-west-1"
+    region                   = "eu-south-1"
     reserved_attribute_names = "name, field_name, field-name"
     secret_access_key        = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "44c5465b-457a-42c2-a18f-e1b91dcce8e6"
-  name          = "Faye Streich"
+  definition_id = "642f3c2f-e19c-432e-9fee-92bc3373ad2c"
+  name          = "Ken Kihn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "75fb5812-2af6-4a8a-8655-36a205f1e4d3"
+  workspace_id  = "8ef975a7-b102-4e54-8791-5a2f449e5b0b"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -57,10 +57,8 @@ Required:
 
 Optional:
 
-- `endpoint` (String) Default: ""
-the URL of the Dynamodb database
-- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
-The region of the Dynamodb database
+- `endpoint` (String) the URL of the Dynamodb database. Default: ""
+- `region` (String) The region of the Dynamodb database. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
 - `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
 
 

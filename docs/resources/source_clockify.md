@@ -19,10 +19,10 @@ resource "airbyte_source_clockify" "my_source_clockify" {
     api_url      = "...my_api_url..."
     workspace_id = "...my_workspace_id..."
   }
-  definition_id = "a5ff53c6-fc10-4ca6-ba82-7c3d349f444d"
-  name          = "Julius Lockman"
+  definition_id = "4ace41dc-5b42-4f2a-a28e-88647f2d4275"
+  name          = "Sue Adams"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9d8494dc-faea-4550-8380-1e9f446900c8"
+  workspace_id  = "c1c65661-b248-45a0-a023-8eba1361d3c0"
 }
 ```
 
@@ -37,8 +37,8 @@ resource "airbyte_source_clockify" "my_source_clockify" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -55,7 +55,6 @@ Required:
 
 Optional:
 
-- `api_url` (String) Default: "https://api.clockify.me"
-The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify.
+- `api_url` (String) The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify. Default: "https://api.clockify.me"
 
 

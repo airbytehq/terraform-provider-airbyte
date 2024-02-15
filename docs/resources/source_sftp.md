@@ -16,7 +16,7 @@ SourceSftp Resource
 resource "airbyte_source_sftp" "my_source_sftp" {
   configuration = {
     credentials = {
-      source_sftp_password_authentication = {
+      password_authentication = {
         auth_user_password = "...my_auth_user_password..."
       }
     }
@@ -27,10 +27,10 @@ resource "airbyte_source_sftp" "my_source_sftp" {
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "8a56e1f7-b10c-46dd-9e62-eb5fcf365dcc"
-  name          = "Rogelio Schoen"
+  definition_id = "0c9cb870-eb98-4050-839e-7450657bfd1c"
+  name          = "Jesus Schultz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e41cbe1d-2ecd-4015-81d5-2f6c56d3cf89"
+  workspace_id  = "aae6c20a-c9c1-49db-be1c-883c55acce5c"
 }
 ```
 
@@ -45,8 +45,8 @@ resource "airbyte_source_sftp" "my_source_sftp" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,22 +64,18 @@ Required:
 Optional:
 
 - `credentials` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
-- `file_pattern` (String) Default: ""
-The regular expression to specify files for sync in a chosen Folder Path
-- `file_types` (String) Default: "csv,json"
-Coma separated file types. Currently only 'csv' and 'json' types are supported.
-- `folder_path` (String) Default: ""
-The directory to search files for sync
-- `port` (Number) Default: 22
-The server port
+- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path. Default: ""
+- `file_types` (String) Coma separated file types. Currently only 'csv' and 'json' types are supported. Default: "csv,json"
+- `folder_path` (String) The directory to search files for sync. Default: ""
+- `port` (Number) The server port. Default: 22
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `password_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--password_authentication))
-- `ssh_key_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--ssh_key_authentication))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--ssh_key_authentication))
 
 <a id="nestedatt--configuration--credentials--password_authentication"></a>
 ### Nested Schema for `configuration.credentials.password_authentication`

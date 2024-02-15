@@ -19,14 +19,14 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "impressionable-honesty.org"
+    hostname     = "linear-carnival.net"
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "72778d5d-b92d-416e-9dcb-06fc1f7a171f"
-  name          = "Brooke Breitenberg"
+  definition_id = "40ec9291-353f-4954-9bcc-34d389bbf5d2"
+  name          = "Essie Hane Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bfddb09b-9a90-43f6-8eb4-a54b7cf533c5"
+  workspace_id  = "64e1dc4a-01d4-44fb-9761-0a4d0de91eaa"
 }
 ```
 
@@ -41,8 +41,8 @@ resource "airbyte_source_sentry" "my_source_sentry" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -61,7 +61,6 @@ Required:
 Optional:
 
 - `discover_fields` (List of String) Fields to retrieve when fetching discover events
-- `hostname` (String) Default: "sentry.io"
-Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.
+- `hostname` (String) Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty. Default: "sentry.io"
 
 

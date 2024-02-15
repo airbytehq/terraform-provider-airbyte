@@ -20,10 +20,10 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
     end_date   = "2022-01-01"
     start_date = "2022-01-01"
   }
-  definition_id = "71a16fff-1f04-4aee-bc30-6c4f3397c204"
-  name          = "June Williamson"
+  definition_id = "725c6d5a-5da3-4503-9f4e-4098bb8c2a23"
+  name          = "Mr. Travis Roob"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "deba481e-413d-4d76-8cc3-ae1d775ee978"
+  workspace_id  = "4621866c-f518-4dbd-9ebe-e014e07eadc6"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

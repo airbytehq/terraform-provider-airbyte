@@ -18,9 +18,9 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
     credentials_json = "...my_credentials_json..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "53a4e50c-dde3-4bcf-b11f-630fa923b2f8"
-  name          = "Sheldon Bernhard"
-  workspace_id  = "868bf037-297d-4cd6-abcb-9a13f0bea64a"
+  definition_id = "8cf13c35-89bc-43ea-ba63-d3987f09ed83"
+  name          = "Rosemarie Bradtke"
+  workspace_id  = "ddbef1f8-7bb5-4069-a16a-5a735a4e1801"
 }
 ```
 
@@ -35,7 +35,7 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 

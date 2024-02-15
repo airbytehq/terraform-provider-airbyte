@@ -18,10 +18,10 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
     api_key    = "...my_api_key..."
     project_id = "...my_project_id..."
   }
-  definition_id = "8830aabe-ffb8-4d97-a510-59b440a5f2f6"
-  name          = "Inez Gottlieb"
+  definition_id = "ccdd2e95-af6e-4d3c-87c1-4160113c2d3c"
+  name          = "Derek Thiel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "66849f7b-beaa-4ef5-a404-3cb4c473e8c7"
+  workspace_id  = "64b86a42-dbbb-4853-ac4b-5e6a18b0d790"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

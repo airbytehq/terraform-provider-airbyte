@@ -16,19 +16,19 @@ SourceZendeskTalk Resource
 resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
   configuration = {
     credentials = {
-      source_zendesk_talk_api_token = {
+      api_token = {
         additional_properties = "{ \"see\": \"documentation\" }"
         api_token             = "...my_api_token..."
-        email                 = "Brain88@gmail.com"
+        email                 = "Jessica.Predovic@gmail.com"
       }
     }
     start_date = "2020-10-15T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "9a97873e-c6ec-423f-8936-834bb7f256aa"
-  name          = "Gwen Towne"
+  definition_id = "0ba64daf-2cd7-4c8f-a575-7a306443a75b"
+  name          = "Boyd Haag"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7a7ac93c-e210-41f6-92ef-f8de56504728"
+  workspace_id  = "e1378db0-1d76-4f7d-927a-a6e51f0c20e4"
 }
 ```
 
@@ -43,8 +43,8 @@ resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -68,8 +68,8 @@ Optional:
 
 Optional:
 
-- `api_token` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
-- `o_auth20` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
 <a id="nestedatt--configuration--credentials--api_token"></a>
 ### Nested Schema for `configuration.credentials.api_token`

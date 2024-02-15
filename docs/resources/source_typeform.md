@@ -16,12 +16,12 @@ SourceTypeform Resource
 resource "airbyte_source_typeform" "my_source_typeform" {
   configuration = {
     credentials = {
-      source_typeform_o_auth2_0 = {
+      o_auth20 = {
         access_token      = "...my_access_token..."
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-10-02T21:15:25.365Z"
+        token_expiry_date = "2022-09-15T17:47:30.655Z"
       }
     }
     form_ids = [
@@ -29,10 +29,10 @@ resource "airbyte_source_typeform" "my_source_typeform" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "dbbaeb9b-5c2e-42ee-8b85-f41cf2efd5ed"
-  name          = "Nancy Hansen"
+  definition_id = "819ff393-429d-4316-9dd8-595e9c61e20d"
+  name          = "Pedro West"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e4deda30-dd3c-4fb0-aa2f-ad0584130837"
+  workspace_id  = "b11c60c3-a7ba-4336-a48b-e45dfad9324f"
 }
 ```
 
@@ -47,8 +47,8 @@ resource "airbyte_source_typeform" "my_source_typeform" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

@@ -16,7 +16,7 @@ DestinationWeaviate Resource
 resource "airbyte_destination_weaviate" "my_destination_weaviate" {
   configuration = {
     embedding = {
-      destination_weaviate_azure_open_ai = {
+      azure_open_ai = {
         api_base   = "https://your-resource-name.openai.azure.com"
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
@@ -30,18 +30,20 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
         },
       ]
       auth = {
-        destination_weaviate_api_token = {
+        api_token = {
           token = "...my_token..."
         }
       }
-      batch_size         = 6
-      default_vectorizer = "text2vec-huggingface"
+      batch_size         = 9
+      default_vectorizer = "text2vec-contextionary"
       host               = "https://my-cluster.weaviate.network"
+      tenant_id          = "...my_tenant_id..."
       text_field         = "...my_text_field..."
     }
+    omit_raw_text = true
     processing = {
-      chunk_overlap = 4
-      chunk_size    = 5
+      chunk_overlap = 2
+      chunk_size    = 9
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -55,15 +57,15 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
         "...",
       ]
       text_splitter = {
-        destination_weaviate_by_markdown_header = {
-          split_level = 4
+        by_markdown_header = {
+          split_level = 2
         }
       }
     }
   }
-  definition_id = "97e801e6-7689-4a46-b396-c7c6bf737242"
-  name          = "Diana Runte Jr."
-  workspace_id  = "59f1e303-60fc-40ea-a506-81bc3adb090c"
+  definition_id = "bbde9f2b-b80c-4d3f-a4ad-282938c45275"
+  name          = "April Friesen IV"
+  workspace_id  = "930ed8d4-3c0d-4abb-a6ef-9fc3c3744fd2"
 }
 ```
 
@@ -72,13 +74,22 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
 
 ### Required
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (Attributes) The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+as well as to provide type safety for the configuration passed to the destination.
+
+The configuration model is composed of four parts:
+* Processing configuration
+* Embedding configuration
+* Indexing configuration
+* Advanced configuration
+
+Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class. (see [below for nested schema](#nestedatt--configuration))
 - `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -93,6 +104,10 @@ Required:
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Indexing configuration (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
+
+Optional:
+
+- `omit_raw_text` (Boolean) Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source. Default: false
 
 <a id="nestedatt--configuration--embedding"></a>
 ### Nested Schema for `configuration.embedding`
@@ -161,8 +176,7 @@ Required:
 Optional:
 
 - `api_key` (String, Sensitive) Default: ""
-- `model_name` (String) Default: "text-embedding-ada-002"
-The name of the model to use for embedding
+- `model_name` (String) The name of the model to use for embedding. Default: "text-embedding-ada-002"
 
 
 
@@ -177,12 +191,10 @@ Required:
 Optional:
 
 - `additional_headers` (Attributes List) Additional HTTP headers to send with every request. (see [below for nested schema](#nestedatt--configuration--indexing--additional_headers))
-- `batch_size` (Number) Default: 128
-The number of records to send to Weaviate in each batch
-- `default_vectorizer` (String) must be one of ["none", "text2vec-cohere", "text2vec-huggingface", "text2vec-openai", "text2vec-palm", "text2vec-contextionary", "text2vec-transformers", "text2vec-gpt4all"]; Default: "none"
-The vectorizer to use if new classes need to be created
-- `text_field` (String) Default: "text"
-The field in the object that contains the embedded text
+- `batch_size` (Number) The number of records to send to Weaviate in each batch. Default: 128
+- `default_vectorizer` (String) The vectorizer to use if new classes need to be created. must be one of ["none", "text2vec-cohere", "text2vec-huggingface", "text2vec-openai", "text2vec-palm", "text2vec-contextionary", "text2vec-transformers", "text2vec-gpt4all"]; Default: "none"
+- `tenant_id` (String) The tenant ID to use for multi tenancy. Default: ""
+- `text_field` (String) The field in the object that contains the embedded text. Default: "text"
 
 <a id="nestedatt--configuration--indexing--auth"></a>
 ### Nested Schema for `configuration.indexing.auth`
@@ -234,8 +246,7 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Default: 0
-Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context. Default: 0
 - `field_name_mappings` (Attributes List) List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation. (see [below for nested schema](#nestedatt--configuration--processing--field_name_mappings))
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
@@ -264,8 +275,7 @@ Optional:
 
 Optional:
 
-- `split_level` (Number) Default: 1
-Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+- `split_level` (Number) Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points. Default: 1
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
@@ -273,8 +283,7 @@ Level of markdown headers to split text fields by. Headings down to the specifie
 
 Required:
 
-- `language` (String) must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
-Split code in suitable places based on the programming language
+- `language` (String) Split code in suitable places based on the programming language. must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_separator"></a>
@@ -282,8 +291,7 @@ Split code in suitable places based on the programming language
 
 Optional:
 
-- `keep_separator` (Boolean) Default: false
-Whether to keep the separator in the resulting chunks
+- `keep_separator` (Boolean) Whether to keep the separator in the resulting chunks. Default: false
 - `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
 

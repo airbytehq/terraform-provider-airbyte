@@ -20,10 +20,10 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     password        = "...my_password..."
     start_date      = "%Y-%m-%d"
   }
-  definition_id = "95261555-3a71-4349-8a3f-9799a12d6e33"
-  name          = "Franklin Jerde"
+  definition_id = "bee3dbad-c477-4cb6-ab59-b9f1ee424957"
+  name          = "Hubert Hilpert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "00d47724-56d0-4d26-9914-7bb3566ca647"
+  workspace_id  = "bbc2cb83-b2c4-4dd4-9429-07741ee0bbab"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -57,7 +57,6 @@ Required:
 
 Optional:
 
-- `logs_batch_size` (Number) Default: 30
-Pagination size used for retrieving logs in days
+- `logs_batch_size` (Number) Pagination size used for retrieving logs in days. Default: 30
 
 

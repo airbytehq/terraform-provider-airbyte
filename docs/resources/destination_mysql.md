@@ -21,13 +21,13 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
     password        = "...my_password..."
     port            = 3306
     tunnel_method = {
-      destination_mysql_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Elissa16"
+    username = "Katrine_Wehner29"
   }
-  definition_id = "a53050a9-afbc-466c-913a-5b78062a6a13"
-  name          = "Nick Rogahn"
-  workspace_id  = "63598ffb-0429-424f-aeae-5018c3193740"
+  definition_id = "356f389a-d49d-4bc4-babb-f1994382023b"
+  name          = "Angelina Tremblay"
+  workspace_id  = "1a7f288a-d3cd-4e3c-9d6f-a94b74b938f8"
 }
 ```
 
@@ -42,7 +42,7 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,8 +62,7 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) Password associated with the username.
-- `port` (Number) Default: 3306
-Port of the database.
+- `port` (Number) Port of the database. Default: 3306
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
@@ -71,9 +70,9 @@ Port of the database.
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -90,8 +89,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -105,7 +103,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

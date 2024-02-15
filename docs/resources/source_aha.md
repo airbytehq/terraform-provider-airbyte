@@ -18,10 +18,10 @@ resource "airbyte_source_aha" "my_source_aha" {
     api_key = "...my_api_key..."
     url     = "...my_url..."
   }
-  definition_id = "1bb0550b-4e34-4412-ae7f-29336e237818"
-  name          = "Samuel Hammes"
+  definition_id = "1ff934df-0d75-46d8-b0d9-0daf9186ab63"
+  name          = "Lance Pollich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3da8d6ee-f047-4576-b0dd-bc2dbf188dfa"
+  workspace_id  = "3879ec56-6b1d-41d8-bb57-bf001ddb3cf0"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_aha" "my_source_aha" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

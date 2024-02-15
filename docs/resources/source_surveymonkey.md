@@ -20,16 +20,16 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
       client_id     = "...my_client_id..."
       client_secret = "...my_client_secret..."
     }
-    origin     = "USA"
+    origin     = "Europe"
     start_date = "2021-01-01T00:00:00Z"
     survey_ids = [
       "...",
     ]
   }
-  definition_id = "147e293c-7a4b-42d7-bbc2-90ef00ad5372"
-  name          = "Renee Howe"
+  definition_id = "21d89b3d-b558-4d4a-a177-0fe21a7b03b3"
+  name          = "Vivian Nader V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "50a2e7cf-e6f3-44ac-865c-56f5fa6778e4"
+  workspace_id  = "bc4a1418-c27e-42e4-9fbe-84753d48e30c"
 }
 ```
 
@@ -44,8 +44,8 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,8 +62,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) The authorization method to use to retrieve data from SurveyMonkey (see [below for nested schema](#nestedatt--configuration--credentials))
-- `origin` (String) must be one of ["USA", "Europe", "Canada"]; Default: "USA"
-Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
+- `origin` (String) Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different. must be one of ["USA", "Europe", "Canada"]; Default: "USA"
 - `survey_ids` (List of String) IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>

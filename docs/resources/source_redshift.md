@@ -23,12 +23,12 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     schemas = [
       "...",
     ]
-    username = "Elton_Morissette"
+    username = "Laury_Towne"
   }
-  definition_id = "b974a7d8-001c-4be4-b7da-a2d7b021550a"
-  name          = "Jake Ondricka"
+  definition_id = "bace4005-a630-4727-ac58-b5da21f73986"
+  name          = "Ron Block"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f01cf56e-e294-4adb-85bd-340789cf0b8d"
+  workspace_id  = "92c2b810-56bc-4977-a3bf-4dff8dd835d8"
 }
 ```
 
@@ -43,8 +43,8 @@ resource "airbyte_source_redshift" "my_source_redshift" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,8 +64,7 @@ Required:
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `port` (Number) Default: 5439
-Port of the database.
+- `port` (Number) Port of the database. Default: 5439
 - `schemas` (List of String) The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
 
 

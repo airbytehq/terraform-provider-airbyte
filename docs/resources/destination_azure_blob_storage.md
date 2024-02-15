@@ -23,13 +23,13 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_spill_size           = 500
     format = {
       csv_comma_separated_values = {
-        flattening = "No flattening"
+        flattening = "Root level flattening"
       }
     }
   }
-  definition_id = "b38acf3b-23ea-44e3-abf4-ba0e7ac63cda"
-  name          = "Rogelio Purdy"
-  workspace_id  = "cd76c9fd-07c9-468d-acb9-cb44c87d9163"
+  definition_id = "163ca2e9-2d14-4284-ac5e-975e40d11a3c"
+  name          = "Betsy Mann"
+  workspace_id  = "cc05b91a-72d2-4700-9cd4-3ac809ede88b"
 }
 ```
 
@@ -44,7 +44,7 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -63,28 +63,24 @@ Required:
 Optional:
 
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp
-- `azure_blob_storage_endpoint_domain_name` (String) Default: "blob.core.windows.net"
-This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-- `azure_blob_storage_output_buffer_size` (Number) Default: 5
-The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.
-- `azure_blob_storage_spill_size` (Number) Default: 500
-The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable
+- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"
+- `azure_blob_storage_output_buffer_size` (Number) The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure. Default: 5
+- `azure_blob_storage_spill_size` (Number) The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable. Default: 500
 
 <a id="nestedatt--configuration--format"></a>
 ### Nested Schema for `configuration.format`
 
 Optional:
 
-- `csv_comma_separated_values` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values))
-- `json_lines_newline_delimited_json` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
+- `csv_comma_separated_values` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values))
+- `json_lines_newline_delimited_json` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
 
 <a id="nestedatt--configuration--format--csv_comma_separated_values"></a>
 ### Nested Schema for `configuration.format.csv_comma_separated_values`
 
 Optional:
 
-- `flattening` (String) must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
-Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
+- `flattening` (String) Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
 
 
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>

@@ -16,14 +16,14 @@ SourceExchangeRates Resource
 resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
   configuration = {
     access_key      = "...my_access_key..."
-    base            = "EUR"
-    ignore_weekends = true
+    base            = "USD"
+    ignore_weekends = false
     start_date      = "YYYY-MM-DD"
   }
-  definition_id = "a5bbba82-d4c0-4a2c-af78-12475bca9a48"
-  name          = "Amber Osinski"
+  definition_id = "6e3c2d33-082a-4b84-8e56-112c1fda0210"
+  name          = "Darrell Schaefer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0ddc3156-b2ff-4d5d-ac69-da5497add71f"
+  workspace_id  = "ec287654-f12b-4c84-828f-bb0cddcf802e"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -57,7 +57,6 @@ Required:
 Optional:
 
 - `base` (String) ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR
-- `ignore_weekends` (Boolean) Default: true
-Ignore weekends? (Exchanges don't run on weekends)
+- `ignore_weekends` (Boolean) Ignore weekends? (Exchanges don't run on weekends). Default: true
 
 

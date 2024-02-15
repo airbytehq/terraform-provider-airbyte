@@ -18,10 +18,10 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
     apikey     = "...my_apikey..."
     start_time = "2020-01-01T01:01:01Z"
   }
-  definition_id = "37ec3d2a-b419-48d2-afe5-e34c931e7a72"
-  name          = "Toby McGlynn"
+  definition_id = "51f6c544-c20e-473f-a3dc-46e62d66e727"
+  name          = "Christy Stoltenberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "22c4d080-cde0-439d-95e8-c5778ddd1091"
+  workspace_id  = "b92d16e1-dcb0-46fc-9f7a-171f7c1d8bfd"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

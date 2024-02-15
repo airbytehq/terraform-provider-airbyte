@@ -15,9 +15,11 @@ SourceFacebookMarketing Resource
 ```terraform
 resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
   configuration = {
-    access_token                  = "...my_access_token..."
-    account_id                    = "111111111111111"
-    action_breakdowns_allow_empty = true
+    access_token = "...my_access_token..."
+    account_ids = [
+      "...",
+    ]
+    action_breakdowns_allow_empty = false
     client_id                     = "...my_client_id..."
     client_secret                 = "...my_client_secret..."
     custom_insights = [
@@ -25,32 +27,34 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         action_breakdowns = [
           "action_video_sound",
         ]
-        action_report_time = "mixed"
+        action_report_time = "impression"
         breakdowns = [
-          "mmm",
+          "age",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "cpp",
+          "cost_per_thruplay",
         ]
-        insights_lookback_window = 7
-        level                    = "ad"
-        name                     = "Julio Beier"
+        insights_job_timeout     = 3
+        insights_lookback_window = 4
+        level                    = "adset"
+        name                     = "Sally Collier"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 9
+        time_increment           = 0
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
-    fetch_thumbnail_images   = false
-    include_deleted          = false
-    insights_lookback_window = 2
-    page_size                = 3
+    fetch_thumbnail_images   = true
+    include_deleted          = true
+    insights_job_timeout     = 8
+    insights_lookback_window = 4
+    page_size                = 9
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "7eb149e6-fe9a-476b-9271-d6f7a77e51b0"
-  name          = "Olivia MacGyver"
+  definition_id = "f50fbf71-3464-4ed5-bf6d-67306cc548e6"
+  name          = "Garrett Yost"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2e6bc1e2-2381-4cdc-ae96-42f3c2fe19c3"
+  workspace_id  = "ff480df1-43ee-410f-8279-e427b2c340e1"
 }
 ```
 
@@ -65,8 +69,8 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -79,24 +83,20 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
 Required:
 
 - `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-- `account_id` (String) The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
+- `account_ids` (List of String) The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
 
 Optional:
 
-- `action_breakdowns_allow_empty` (Boolean) Default: true
-Allows action_breakdowns to be an empty list
+- `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list. Default: true
 - `client_id` (String) The Client Id for your OAuth app
 - `client_secret` (String) The Client Secret for your OAuth app
 - `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
-- `fetch_thumbnail_images` (Boolean) Default: false
-Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
-- `include_deleted` (Boolean) Default: false
-Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.
-- `insights_lookback_window` (Number) Default: 28
-The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
-- `page_size` (Number) Default: 100
-Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
+- `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false
+- `include_deleted` (Boolean) Set to active if you want to include data from deleted Campaigns, Ads, and AdSets. Default: false
+- `insights_job_timeout` (Number) Insights Job Timeout establishes the maximum amount of time (in minutes) of waiting for the report job to complete. When timeout is reached the job is considered failed and we are trying to request smaller amount of data by breaking the job to few smaller ones. If you definitely know that 60 minutes is not enough for your report to be processed then you can decrease the timeout value, so we start breaking job to smaller parts faster. Default: 60
+- `insights_lookback_window` (Number) The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here. Default: 28
+- `page_size` (Number) Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases. Default: 100
 - `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. If not set then all data will be replicated for usual streams and only last 2 years for insight streams.
 
 <a id="nestedatt--configuration--custom_insights"></a>
@@ -109,17 +109,14 @@ Required:
 Optional:
 
 - `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns
-- `action_report_time` (String) must be one of ["conversion", "impression", "mixed"]; Default: "mixed"
-Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
+- `action_report_time` (String) Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. must be one of ["conversion", "impression", "mixed"]; Default: "mixed"
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter
-- `insights_lookback_window` (Number) Default: 28
-The attribution window
-- `level` (String) must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"
-Chosen level for API
+- `insights_job_timeout` (Number) The insights job timeout. Default: 60
+- `insights_lookback_window` (Number) The attribution window. Default: 28
+- `level` (String) Chosen level for API. must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"
 - `start_date` (String) The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
-- `time_increment` (Number) Default: 1
-Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).
+- `time_increment` (Number) Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). Default: 1
 
 

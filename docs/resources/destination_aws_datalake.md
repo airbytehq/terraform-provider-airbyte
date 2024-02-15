@@ -34,12 +34,12 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
     lakeformation_database_default_tag_values = "private,public"
     lakeformation_database_name               = "...my_lakeformation_database_name..."
     lakeformation_governed_tables             = false
-    partitioning                              = "YEAR/MONTH/DAY"
-    region                                    = "eu-west-1"
+    partitioning                              = "DAY"
+    region                                    = "ap-southeast-3"
   }
-  definition_id = "635b80f2-a9b0-4de1-897a-c8629f5a79ed"
-  name          = "Blanche MacGyver"
-  workspace_id  = "e76a2f8d-fb9a-4ea6-8f38-6615e68b5c3f"
+  definition_id = "c3f592b3-8acf-43b2-bea4-e36bf4ba0e7a"
+  name          = "Charlie Fisher"
+  workspace_id  = "aaebb5cd-76c9-4fd0-bc96-8decb9cb44c8"
 }
 ```
 
@@ -54,7 +54,7 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -75,24 +75,20 @@ Optional:
 - `aws_account_id` (String) target aws account id
 - `bucket_prefix` (String) S3 prefix
 - `format` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format))
-- `glue_catalog_float_as_decimal` (Boolean) Default: false
-Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.
+- `glue_catalog_float_as_decimal` (Boolean) Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source. Default: false
 - `lakeformation_database_default_tag_key` (String, Sensitive) Add a default tag key to databases created by this destination
 - `lakeformation_database_default_tag_values` (String) Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
-- `lakeformation_governed_tables` (Boolean) Default: false
-Whether to create tables as LF governed tables.
-- `partitioning` (String) must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]; Default: "NO PARTITIONING"
-Partition data by cursor fields when a cursor field is a date
-- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
-The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
+- `lakeformation_governed_tables` (Boolean) Whether to create tables as LF governed tables. Default: false
+- `partitioning` (String) Partition data by cursor fields when a cursor field is a date. must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]; Default: "NO PARTITIONING"
+- `region` (String) The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `iam_role` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials--iam_role))
-- `iam_user` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials--iam_user))
+- `iam_role` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--iam_role))
+- `iam_user` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--iam_user))
 
 <a id="nestedatt--configuration--credentials--iam_role"></a>
 ### Nested Schema for `configuration.credentials.iam_role`
@@ -117,16 +113,15 @@ Required:
 
 Optional:
 
-- `json_lines_newline_delimited_json` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
-- `parquet_columnar_storage` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format--parquet_columnar_storage))
+- `json_lines_newline_delimited_json` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json))
+- `parquet_columnar_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--parquet_columnar_storage))
 
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.json_lines_newline_delimited_json`
 
 Optional:
 
-- `compression_codec` (String) must be one of ["UNCOMPRESSED", "GZIP"]; Default: "UNCOMPRESSED"
-The compression algorithm used to compress data.
+- `compression_codec` (String) The compression algorithm used to compress data. must be one of ["UNCOMPRESSED", "GZIP"]; Default: "UNCOMPRESSED"
 - `format_type` (String) must be one of ["JSONL"]; Default: "JSONL"
 
 
@@ -135,8 +130,7 @@ The compression algorithm used to compress data.
 
 Optional:
 
-- `compression_codec` (String) must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]; Default: "SNAPPY"
-The compression algorithm used to compress data.
+- `compression_codec` (String) The compression algorithm used to compress data. must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]; Default: "SNAPPY"
 - `format_type` (String) must be one of ["Parquet"]; Default: "Parquet"
 
 

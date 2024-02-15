@@ -16,15 +16,15 @@ SourceNytimes Resource
 resource "airbyte_source_nytimes" "my_source_nytimes" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "1851-01"
-    period     = "30"
+    end_date   = "2022-08"
+    period     = "1"
     share_type = "facebook"
     start_date = "2022-08"
   }
-  definition_id = "83b2c4dd-4d42-4907-b41e-e0bbab0457d9"
-  name          = "Sue Durgan"
+  definition_id = "db92c72d-541f-4538-928a-50561c1cc629"
+  name          = "Sandy Boyle"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e6ecd841-e72a-4766-a686-faa512d8044b"
+  workspace_id  = "7b3d761e-29ef-426a-a07d-2b59ab56edb5"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -53,14 +53,12 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
 Required:
 
 - `api_key` (String, Sensitive) API Key
-- `period` (Number) must be one of ["1", "7", "30"]
-Period of time (in days)
+- `period` (Number) Period of time (in days). must be one of ["1", "7", "30"]
 - `start_date` (String) Start date to begin the article retrieval (format YYYY-MM)
 
 Optional:
 
 - `end_date` (String) End date to stop the article retrieval (format YYYY-MM)
-- `share_type` (String) must be one of ["facebook"]
-Share Type
+- `share_type` (String) Share Type. must be one of ["facebook"]
 
 

@@ -17,27 +17,27 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
   configuration = {
     client_id        = "...my_client_id..."
     client_secret    = "...my_client_secret..."
-    look_back_window = 3
+    look_back_window = 10
     marketplace_ids = [
       "...",
     ]
     profiles = [
-      2,
+      3,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "FE"
+    region        = "NA"
     report_record_types = [
-      "adGroups",
+      "asins",
     ]
     start_date = "2022-10-10"
     state_filter = [
-      "paused",
+      "enabled",
     ]
   }
-  definition_id = "34df0d75-6d8b-40d9-8daf-9186ab63a7b2"
-  name          = "Chris Littel"
+  definition_id = "945c4336-0526-4ae8-aa3c-4f287913b866"
+  name          = "Willie Bayer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ec566b1d-1d8b-4b57-bf00-1ddb3cf074d6"
+  workspace_id  = "1180fb2a-875a-41ca-990e-95bd1182a17e"
 }
 ```
 
@@ -52,8 +52,8 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -71,12 +71,10 @@ Required:
 
 Optional:
 
-- `look_back_window` (Number) Default: 3
-The amount of days to go back in time to get the updated data from Amazon Ads
+- `look_back_window` (Number) The amount of days to go back in time to get the updated data from Amazon Ads. Default: 3
 - `marketplace_ids` (List of String) Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 - `profiles` (List of Number) Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
-- `region` (String) must be one of ["NA", "EU", "FE"]; Default: "NA"
-Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
+- `region` (String) Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details. must be one of ["NA", "EU", "FE"]; Default: "NA"
 - `report_record_types` (List of String) Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
 - `start_date` (String) The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
 - `state_filter` (List of String) Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.

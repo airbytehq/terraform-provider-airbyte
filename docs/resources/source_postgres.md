@@ -27,19 +27,19 @@ resource "airbyte_source_postgres" "my_source_postgres" {
       "...",
     ]
     ssl_mode = {
-      source_postgres_allow = {
+      allow = {
         additional_properties = "{ \"see\": \"documentation\" }"
       }
     }
     tunnel_method = {
-      source_postgres_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Dagmar_Towne8"
+    username = "Lee8"
   }
-  definition_id = "558e983f-33bb-4c2f-8e75-b95ee5dd11c7"
-  name          = "Brandi Gerhold"
+  definition_id = "ebcafaa2-ee7a-41e0-8b61-97095b91e126"
+  name          = "Patricia Beatty V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aa4d1c74-fcd7-4d93-9b8b-6b2c0920aa8b"
+  workspace_id  = "eb706bb0-16ea-40ac-abfa-e2b40c173d4d"
 }
 ```
 
@@ -54,8 +54,8 @@ resource "airbyte_source_postgres" "my_source_postgres" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -75,8 +75,7 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
 - `password` (String, Sensitive) Password associated with the username.
-- `port` (Number) Default: 5432
-Port of the database.
+- `port` (Number) Port of the database. Default: 5432
 - `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas (case sensitive) to sync from. Defaults to public.
 - `ssl_mode` (Attributes) SSL connection modes. 
@@ -107,14 +106,11 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number) Default: 300
-The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
-Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of ["pgoutput"]; Default: "pgoutput"
-A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number) Default: 10000
-The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+- `heartbeat_action_query` (String) Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""
+- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>. Default: 1200
+- `lsn_commit_behaviour` (String) Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
+- `plugin` (String) A logical decoding plugin installed on the PostgreSQL server. must be one of ["pgoutput"]; Default: "pgoutput"
+- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
 
 
 <a id="nestedatt--configuration--replication_method--scan_changes_with_user_defined_cursor"></a>
@@ -202,9 +198,9 @@ Optional:
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -221,8 +217,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -236,7 +231,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

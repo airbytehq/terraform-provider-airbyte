@@ -18,10 +18,10 @@ resource "airbyte_source_gridly" "my_source_gridly" {
     api_key = "...my_api_key..."
     grid_id = "...my_grid_id..."
   }
-  definition_id = "2da80f2b-fa49-4853-a695-0935ad536c50"
-  name          = "Megan Kshlerin"
+  definition_id = "f384ec60-4057-4d04-9191-8db5cccbbbdb"
+  name          = "Rebecca Boehm"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e30b46b9-59e4-4e75-8ac0-9227119b95b6"
+  workspace_id  = "4f99d677-45af-4b65-b172-0bd7a7ec1916"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_gridly" "my_source_gridly" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

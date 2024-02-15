@@ -15,37 +15,40 @@ DestinationRedshift Resource
 ```terraform
 resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
-    database        = "...my_database..."
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 5439
-    schema          = "public"
+    database                               = "...my_database..."
+    disable_type_dedupe                    = true
+    enable_incremental_final_table_updates = true
+    host                                   = "...my_host..."
+    jdbc_url_params                        = "...my_jdbc_url_params..."
+    password                               = "...my_password..."
+    port                                   = 5439
+    raw_data_schema                        = "...my_raw_data_schema..."
+    schema                                 = "public"
     tunnel_method = {
-      destination_redshift_no_tunnel = {}
+      no_tunnel = {}
     }
     uploading_method = {
-      s3_staging = {
+      awss3_staging = {
         access_key_id = "...my_access_key_id..."
         encryption = {
-          aes_cbc_envelope_encryption = {
+          aescbc_envelope_encryption = {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
         file_buffer_count  = 10
-        file_name_pattern  = "{date:yyyy_MM}"
+        file_name_pattern  = "{date}"
         purge_staging_data = true
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "eu-west-1"
+        s3_bucket_region   = "sa-east-1"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Rollin_Ernser87"
+    username = "Tatyana.Spinka"
   }
-  definition_id = "1f9eaf9a-8e21-457a-8560-c89e77fd0c20"
-  name          = "Linda Langworth"
-  workspace_id  = "396de60f-942f-4937-a3c5-9508dd11c7ed"
+  definition_id = "f8e06ef6-fed3-4651-a7d5-496735da213c"
+  name          = "Milton Ondricka"
+  workspace_id  = "9fef8f53-876e-43de-b0a8-6e4df19faac8"
 }
 ```
 
@@ -60,7 +63,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -79,11 +82,12 @@ Required:
 
 Optional:
 
+- `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
+- `enable_incremental_final_table_updates` (Boolean) When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `port` (Number) Default: 5439
-Port of the database.
-- `schema` (String) Default: "public"
-The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".
+- `port` (Number) Port of the database. Default: 5439
+- `raw_data_schema` (String) The schema to write raw tables into
+- `schema` (String) The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public". Default: "public"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `uploading_method` (Attributes) The way data will be uploaded to Redshift. (see [below for nested schema](#nestedatt--configuration--uploading_method))
 
@@ -92,9 +96,9 @@ The default schema tables are written to if the source does not specify a namesp
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -111,8 +115,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -126,8 +129,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 
@@ -136,11 +138,11 @@ Port on the proxy/jump server that accepts inbound ssh connections.
 
 Optional:
 
-- `s3_staging` (Attributes) <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details. (see [below for nested schema](#nestedatt--configuration--uploading_method--s3_staging))
+- `awss3_staging` (Attributes) <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details. (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging))
 - `standard` (Attributes) <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use S3 uploading. (see [below for nested schema](#nestedatt--configuration--uploading_method--standard))
 
-<a id="nestedatt--configuration--uploading_method--s3_staging"></a>
-### Nested Schema for `configuration.uploading_method.s3_staging`
+<a id="nestedatt--configuration--uploading_method--awss3_staging"></a>
+### Nested Schema for `configuration.uploading_method.awss3_staging`
 
 Required:
 
@@ -150,34 +152,31 @@ Required:
 
 Optional:
 
-- `encryption` (Attributes) How to encrypt the staging data (see [below for nested schema](#nestedatt--configuration--uploading_method--s3_staging--encryption))
-- `file_buffer_count` (Number) Default: 10
-Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
+- `encryption` (Attributes) How to encrypt the staging data (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--encryption))
+- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects. Default: 10
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-- `purge_staging_data` (Boolean) Default: true
-Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
+- `purge_staging_data` (Boolean) Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details. Default: true
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
-- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]; Default: ""
-The region of the S3 staging bucket.
+- `s3_bucket_region` (String) The region of the S3 staging bucket. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
 
-<a id="nestedatt--configuration--uploading_method--s3_staging--encryption"></a>
-### Nested Schema for `configuration.uploading_method.s3_staging.s3_bucket_region`
+<a id="nestedatt--configuration--uploading_method--awss3_staging--encryption"></a>
+### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region`
 
 Optional:
 
-- `aescbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--uploading_method--s3_staging--s3_bucket_region--aescbc_envelope_encryption))
-- `no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--uploading_method--s3_staging--s3_bucket_region--no_encryption))
+- `aescbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--aescbc_envelope_encryption))
+- `no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--no_encryption))
 
-<a id="nestedatt--configuration--uploading_method--s3_staging--s3_bucket_region--aescbc_envelope_encryption"></a>
-### Nested Schema for `configuration.uploading_method.s3_staging.s3_bucket_region.aescbc_envelope_encryption`
+<a id="nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--aescbc_envelope_encryption"></a>
+### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region.aescbc_envelope_encryption`
 
 Optional:
 
 - `key_encrypting_key` (String, Sensitive) The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
 
 
-<a id="nestedatt--configuration--uploading_method--s3_staging--s3_bucket_region--no_encryption"></a>
-### Nested Schema for `configuration.uploading_method.s3_staging.s3_bucket_region.no_encryption`
+<a id="nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--no_encryption"></a>
+### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region.no_encryption`
 
 
 

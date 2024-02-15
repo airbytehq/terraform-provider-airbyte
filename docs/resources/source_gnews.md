@@ -16,25 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "es"
+    country  = "au"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "description",
+      "title",
     ]
     language = "ta"
     nullable = [
       "content",
     ]
-    query               = "Intel AND (i7 OR i9)"
-    sortby              = "relevance"
+    query               = "Apple AND NOT iPhone"
+    sortby              = "publishedAt"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Apple AND NOT iPhone"
-    top_headlines_topic = "world"
+    top_headlines_query = "Apple OR Microsoft"
+    top_headlines_topic = "business"
   }
-  definition_id = "df3c14a3-49fd-4e89-ab27-6cbad00caee1"
-  name          = "Sadie Gleichner"
+  definition_id = "956c03ec-7b8b-468f-9fc0-692b4fd673f5"
+  name          = "Oliver MacGyver MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5b57e54a-27b6-417a-812e-6bf68e1922df"
+  workspace_id  = "cc9948b0-0610-459f-ac1d-6c9b0f0f35d9"
 }
 ```
 
@@ -49,8 +49,8 @@ resource "airbyte_source_gnews" "my_source_gnews" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -80,16 +80,15 @@ Required:
 
 Optional:
 
-- `country` (String) must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]
-This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
+- `country` (String) This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter. must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]
 - `end_date` (String) This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 - `in` (List of String) This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
 - `language` (String) must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]
 - `nullable` (List of String) This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
-- `sortby` (String) must be one of ["publishedAt", "relevance"]
-This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
+- `sortby` (String) This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
   - relevance = sort by best match to keywords, the articles with the best match are returned first
+must be one of ["publishedAt", "relevance"]
 - `start_date` (String) This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 - `top_headlines_query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
   quotation marks are used to search for articles with the exact same keyword sequence. 
@@ -105,7 +104,6 @@ This parameter allows you to choose with which type of sorting the articles shou
   specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
   For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
   iPhone
-- `top_headlines_topic` (String) must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]
-This parameter allows you to change the category for the request.
+- `top_headlines_topic` (String) This parameter allows you to change the category for the request. must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]
 
 

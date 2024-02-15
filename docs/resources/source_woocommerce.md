@@ -20,10 +20,10 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "f3e58149-5129-457c-a986-96756fe05881"
-  name          = "Julia Cole"
+  definition_id = "3828542b-b37a-4458-bacd-1771a16fff1f"
+  name          = "Eva O'Reilly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ad45dc07-8875-4452-bf36-dab5122890f3"
+  workspace_id  = "bc306c4f-3397-4c20-875f-aadeba481e41"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

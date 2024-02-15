@@ -18,10 +18,10 @@ resource "airbyte_source_close_com" "my_source_closecom" {
     api_key    = "...my_api_key..."
     start_date = "2021-01-01"
   }
-  definition_id = "ba7b45cf-ea08-4abd-9a32-8f6c373e0666"
-  name          = "Miss Eva Collier"
+  definition_id = "fe1ba68d-3405-402b-9602-9febd39e6abf"
+  name          = "Maureen Roob"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a3ab4d44-755b-4910-a5c9-99e89cbd0e8f"
+  workspace_id  = "50cb6e6f-f332-4bdf-9457-75fcbb81a746"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_close_com" "my_source_closecom" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -53,7 +53,6 @@ Required:
 
 Optional:
 
-- `start_date` (String) Default: "2021-01-01"
-The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.
+- `start_date` (String) The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD. Default: "2021-01-01"
 
 

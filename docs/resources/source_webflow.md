@@ -15,13 +15,14 @@ SourceWebflow Resource
 ```terraform
 resource "airbyte_source_webflow" "my_source_webflow" {
   configuration = {
-    api_key = "a very long hex sequence"
-    site_id = "a relatively long hex sequence"
+    accept_version = "1.0.0"
+    api_key        = "a very long hex sequence"
+    site_id        = "a relatively long hex sequence"
   }
-  definition_id = "9d7dd0bf-2f57-4219-978f-bbe9226a954f"
-  name          = "Cary Mitchell"
+  definition_id = "4c2d04c6-ceb0-4e44-8965-9dbf6ecaf35c"
+  name          = "Lorraine Predovic"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "12e392ce-90b9-4169-bb30-db2efb21ef2b"
+  workspace_id  = "79d7e3dc-cb9f-4d6e-9ad7-470b8320ef50"
 }
 ```
 
@@ -36,8 +37,8 @@ resource "airbyte_source_webflow" "my_source_webflow" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -51,5 +52,9 @@ Required:
 
 - `api_key` (String, Sensitive) The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 - `site_id` (String) The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
+
+Optional:
+
+- `accept_version` (String) The version of the Webflow API to use. See https://developers.webflow.com/#versioning
 
 

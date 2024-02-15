@@ -16,14 +16,14 @@ DestinationTypesense Resource
 resource "airbyte_destination_typesense" "my_destination_typesense" {
   configuration = {
     api_key    = "...my_api_key..."
-    batch_size = 6
+    batch_size = 5
     host       = "...my_host..."
     port       = "...my_port..."
     protocol   = "...my_protocol..."
   }
-  definition_id = "e69c6f21-d654-4173-8ccb-bc51a3caa62e"
-  name          = "Lorraine Kiehn"
-  workspace_id  = "a0d33800-2a57-467f-8f37-9fa4011eae8d"
+  definition_id = "42c101e2-65ee-4bc2-b0b1-5094cc21854e"
+  name          = "Jonathon Kshlerin"
+  workspace_id  = "7d1c9ddc-2da3-462f-af1b-28fe26cb1bb0"
 }
 ```
 
@@ -38,7 +38,7 @@ resource "airbyte_destination_typesense" "my_destination_typesense" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 

@@ -17,10 +17,10 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "bbc35ba8-92b6-4d58-85ab-7b9331a5ddaf"
-  name          = "Taylor Keeling"
+  definition_id = "f1707475-e2d6-4a49-b80b-a1d6a28c6eef"
+  name          = "Dustin Medhurst"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5ec8caac-d8d2-4abf-9c0f-33811ddad7d7"
+  workspace_id  = "2db22407-ce31-40da-b633-150acfec241f"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

@@ -16,16 +16,16 @@ SourceNotion Resource
 resource "airbyte_source_notion" "my_source_notion" {
   configuration = {
     credentials = {
-      source_notion_access_token = {
+      access_token = {
         token = "...my_token..."
       }
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }
-  definition_id = "fe0e5e5f-386d-40ac-9af3-c6558d9b03d2"
-  name          = "Jeannette Ward"
+  definition_id = "c9c1a8da-b7e7-43a5-9718-14e4dc1f633a"
+  name          = "Salvatore Hermann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dbadc477-cb62-4b59-b9f1-ee4249578a5b"
+  workspace_id  = "542d517f-c88b-4c49-98d7-5efedea337d5"
 }
 ```
 
@@ -40,8 +40,8 @@ resource "airbyte_source_notion" "my_source_notion" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,8 +64,8 @@ Optional:
 
 Optional:
 
-- `access_token` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
-- `o_auth20` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
 <a id="nestedatt--configuration--credentials--access_token"></a>
 ### Nested Schema for `configuration.credentials.access_token`

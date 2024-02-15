@@ -21,10 +21,10 @@ resource "airbyte_source_braintree" "my_source_braintree" {
     public_key  = "...my_public_key..."
     start_date  = "2020-12-30"
   }
-  definition_id = "12fcb5a7-fdd8-454e-8c39-c22fe17df57a"
-  name          = "Ms. Tommie Bins"
+  definition_id = "686308ea-db73-4c36-9be0-c12ece59b9fb"
+  name          = "Cornelius Weissnat"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5ff7f1a2-7e8f-4d2f-993d-4f9ab29a2f83"
+  workspace_id  = "47490588-d0e2-4939-974a-681eea74b87a"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_braintree" "my_source_braintree" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -52,8 +52,7 @@ resource "airbyte_source_braintree" "my_source_braintree" {
 
 Required:
 
-- `environment` (String) must be one of ["Development", "Sandbox", "Qa", "Production"]
-Environment specifies where the data will come from.
+- `environment` (String) Environment specifies where the data will come from. must be one of ["Development", "Sandbox", "Qa", "Production"]
 - `merchant_id` (String) The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
 - `private_key` (String, Sensitive) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 - `public_key` (String, Sensitive) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.

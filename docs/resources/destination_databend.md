@@ -20,11 +20,11 @@ resource "airbyte_destination_databend" "my_destination_databend" {
     password = "...my_password..."
     port     = 443
     table    = "default"
-    username = "Kira78"
+    username = "Anjali_McLaughlin1"
   }
-  definition_id = "006aecee-7c88-4461-9655-998ae24eec56"
-  name          = "Josefina Rosenbaum"
-  workspace_id  = "48d71917-bd77-4158-87e0-4c579843cbfb"
+  definition_id = "2e07129d-4644-4f9d-93d5-4c7cfb82ef1e"
+  name          = "Doris Ward"
+  workspace_id  = "7477c9e2-c85c-4904-a203-ff157a47112d"
 }
 ```
 
@@ -39,7 +39,7 @@ resource "airbyte_destination_databend" "my_destination_databend" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -58,9 +58,7 @@ Required:
 Optional:
 
 - `password` (String, Sensitive) Password associated with the username.
-- `port` (Number) Default: 443
-Port of the database.
-- `table` (String) Default: "default"
-The default  table was written to.
+- `port` (Number) Port of the database. Default: 443
+- `table` (String) The default  table was written to. Default: "default"
 
 

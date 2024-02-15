@@ -22,26 +22,24 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     port            = 1433
     replication_method = {
       read_changes_using_change_data_capture_cdc = {
-        data_to_sync            = "New Changes Only"
         initial_waiting_seconds = 2
-        snapshot_isolation      = "Read Committed"
       }
     }
     schemas = [
       "...",
     ]
     ssl_method = {
-      source_mssql_encrypted_trust_server_certificate = {}
+      encrypted_trust_server_certificate = {}
     }
     tunnel_method = {
-      source_mssql_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Salvatore_Weissnat66"
+    username = "Winnifred_Borer93"
   }
-  definition_id = "b6ad0e44-a4dc-4970-8078-573a20ac990f"
-  name          = "Wm Corkery"
+  definition_id = "3b1f2904-4775-4738-8765-c77418014d1f"
+  name          = "Gina Fahey"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7a67a851-50ea-4861-a0cd-618d74280681"
+  workspace_id  = "1b77f9fe-0e5e-45f3-86d0-ac5af3c6558d"
 }
 ```
 
@@ -56,8 +54,8 @@ resource "airbyte_source_mssql" "my_source_mssql" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -71,13 +69,13 @@ Required:
 
 - `database` (String) The name of the database.
 - `host` (String) The hostname of the database.
+- `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) The port of the database.
 - `username` (String) The username which is used to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String, Sensitive) The password associated with the username.
 - `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas to sync from. Defaults to user. Case sensitive.
 - `ssl_method` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
@@ -96,12 +94,7 @@ Optional:
 
 Optional:
 
-- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"
-What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-- `initial_waiting_seconds` (Number) Default: 300
-The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"
-Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
+- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300
 
 
 <a id="nestedatt--configuration--replication_method--scan_changes_with_user_defined_cursor"></a>
@@ -116,6 +109,7 @@ Optional:
 
 - `encrypted_trust_server_certificate` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--encrypted_trust_server_certificate))
 - `encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--encrypted_verify_certificate))
+- `unencrypted` (Attributes) Data transfer will not be encrypted. (see [below for nested schema](#nestedatt--configuration--ssl_method--unencrypted))
 
 <a id="nestedatt--configuration--ssl_method--encrypted_trust_server_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.encrypted_trust_server_certificate`
@@ -126,7 +120,12 @@ Optional:
 
 Optional:
 
+- `certificate` (String) certificate of the server, or of the CA that signed the server certificate
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
+
+
+<a id="nestedatt--configuration--ssl_method--unencrypted"></a>
+### Nested Schema for `configuration.ssl_method.unencrypted`
 
 
 
@@ -135,9 +134,9 @@ Optional:
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -154,8 +153,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -169,7 +167,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

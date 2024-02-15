@@ -17,13 +17,13 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "myaccount.freshdesk.com"
-    requests_per_minute = 1
+    requests_per_minute = 7
     start_date          = "2020-12-01T00:00:00Z"
   }
-  definition_id = "9fe1bd22-2412-41e6-b15b-e306a4e83994"
-  name          = "Frances Farrell"
+  definition_id = "6d7c2fca-a386-4da1-92dd-f0351c49c686"
+  name          = "Robert Abernathy III"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c75d4c70-b588-42c8-81a0-878bfdf7e2fa"
+  workspace_id  = "41425e4d-38a3-40ea-96cd-fa27fbf6225b"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

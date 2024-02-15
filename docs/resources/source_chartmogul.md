@@ -18,10 +18,10 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "87a1fb18-7d33-4223-980b-b99362d2f459"
-  name          = "Monica Pagac"
+  definition_id = "10ca67a8-27c3-4d34-9f44-4d8a8589d849"
+  name          = "Hope Russel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bc3680ab-b376-4bce-a6a7-c0ce20da3e9a"
+  workspace_id  = "ea550038-01e9-4f44-a900-c8feba7b45cf"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

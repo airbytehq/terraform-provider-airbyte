@@ -27,8 +27,7 @@ data "airbyte_source_mailchimp" "my_source_mailchimp" {
 
 ### Read-Only
 
-- `configuration` (String) Parsed as JSON.
-The values required to configure the source.
+- `configuration` (String) The values required to configure the source. Parsed as JSON.
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)

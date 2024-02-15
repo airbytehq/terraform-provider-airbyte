@@ -19,10 +19,10 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
     private_key   = "...my_private_key..."
     start_date    = "2023-08-01T00:00:00Z"
   }
-  definition_id = "c1488faa-411d-49d9-a226-9c9d648f0bcc"
-  name          = "Ervin Deckow"
+  definition_id = "9c61d27b-bad3-4f0b-b8ca-743bfb1506e5"
+  name          = "Rafael Schumm"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5af6ed3c-47c1-4416-8113-c2d3cb5eaa64"
+  workspace_id  = "8b49c82f-283f-4df1-b362-a3ef9cacc879"
 }
 ```
 
@@ -37,8 +37,8 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -54,8 +54,7 @@ Required:
 
 Optional:
 
-- `domain_region` (String) Default: "US"
-Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'. Default: "US"
 - `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 

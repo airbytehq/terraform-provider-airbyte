@@ -18,10 +18,10 @@ resource "airbyte_source_freshsales" "my_source_freshsales" {
     api_key     = "...my_api_key..."
     domain_name = "mydomain.myfreshworks.com"
   }
-  definition_id = "4a63623e-34bb-4a48-ad6d-0eaf7f54c7c3"
-  name          = "Shelly Wolf"
+  definition_id = "4bae6111-2211-43e8-bb49-0ecc6bf75161"
+  name          = "Beth Windler"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b0a3dd00-07da-4ef7-b0c8-1f95c5b8dd2d"
+  workspace_id  = "03c8311a-97a1-4ae8-9496-29432a02ceac"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_freshsales" "my_source_freshsales" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

@@ -17,10 +17,10 @@ resource "airbyte_source_instatus" "my_source_instatus" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "d842954b-d759-4bdc-8b93-f80b7f557094"
-  name          = "Enrique Kovacek"
+  definition_id = "126eb569-4431-42d5-95e6-a2d83c0cc98d"
+  name          = "Mr. Leo Greenfelder"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "356d5339-1630-4fd2-b131-d4fbef253f33"
+  workspace_id  = "56513936-1b04-4889-a6ab-9cfe2e85afcc"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_instatus" "my_source_instatus" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

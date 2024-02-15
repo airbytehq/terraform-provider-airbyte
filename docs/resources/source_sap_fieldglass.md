@@ -17,10 +17,10 @@ resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "d703a4ee-b23f-4e55-b942-b58b6d0d2093"
-  name          = "Krystal Krajcik"
+  definition_id = "080cde03-9dd5-4e8c-9778-ddd10910de87"
+  name          = "Randal Walsh Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8d8619ec-3981-4178-ae44-e5272c20971d"
+  workspace_id  = "edbd0d10-cf57-4eb6-b2b8-aa55d63fb2a6"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

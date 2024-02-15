@@ -27,10 +27,10 @@ resource "airbyte_source_asana" "my_source_asana" {
     ]
     test_mode = true
   }
-  definition_id = "f5896557-ce17-4ccd-ab10-d6388d4fdfb9"
-  name          = "Ms. Irvin Anderson"
+  definition_id = "0de16b8d-a7b8-4143-b851-cf99c7fd70e5"
+  name          = "Esther Heaney"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c04191be-b057-4f07-8546-621bdba90354"
+  workspace_id  = "cf4f6487-4e62-4c58-9879-2fd48887cb19"
 }
 ```
 
@@ -45,8 +45,8 @@ resource "airbyte_source_asana" "my_source_asana" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -67,8 +67,8 @@ Optional:
 
 Optional:
 
-- `authenticate_via_asana_oauth` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_asana_oauth))
-- `authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_personal_access_token))
+- `authenticate_via_asana_oauth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_asana_oauth))
+- `authenticate_with_personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_with_personal_access_token))
 
 <a id="nestedatt--configuration--credentials--authenticate_via_asana_oauth"></a>
 ### Nested Schema for `configuration.credentials.authenticate_via_asana_oauth`

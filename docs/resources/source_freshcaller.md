@@ -17,14 +17,14 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "snaptravel"
-    requests_per_minute = 7
+    requests_per_minute = 8
     start_date          = "2022-01-01T12:00:00Z"
-    sync_lag_minutes    = 2
+    sync_lag_minutes    = 7
   }
-  definition_id = "c06fe5a2-e94e-4ff2-91ad-fc721dd1f802"
-  name          = "Margarita Nitzsche"
+  definition_id = "4fda52f6-9543-4b86-a0d9-bb50480aaaf7"
+  name          = "Ms. Inez Veum"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9660c93e-b114-448c-9cd3-afe5ef85381e"
+  workspace_id  = "d2caf83f-0459-410a-bc57-0570b889169d"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

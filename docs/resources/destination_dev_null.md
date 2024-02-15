@@ -19,9 +19,9 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
       silent = {}
     }
   }
-  definition_id = "29d4644f-9dd3-4d54-87cf-b82ef1e01ef5"
-  name          = "Megan King"
-  workspace_id  = "9e2c85c9-04a2-403f-b157-a47112db1eec"
+  definition_id = "807f993e-fae2-4dca-b865-89dab1153f46"
+  name          = "Marta Kirlin DDS"
+  workspace_id  = "0855aa0d-b797-4942-be7e-5f1f78855663"
 }
 ```
 
@@ -36,7 +36,7 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -55,7 +55,7 @@ Required:
 
 Optional:
 
-- `silent` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination--silent))
+- `silent` (Attributes) (see [below for nested schema](#nestedatt--configuration--test_destination--silent))
 
 <a id="nestedatt--configuration--test_destination--silent"></a>
 ### Nested Schema for `configuration.test_destination.silent`

@@ -21,10 +21,10 @@ resource "airbyte_source_monday" "my_source_monday" {
       }
     }
   }
-  definition_id = "2050fdf2-ba7d-443d-a0d3-384e15ed5352"
-  name          = "Stella Lubowitz"
+  definition_id = "c990f9b2-ce7a-467a-8515-0ea86120cd61"
+  name          = "Woodrow Kuphal"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aeabadeb-93c7-4728-b9b6-069b6a28df31"
+  workspace_id  = "806812ca-7b26-4952-a155-53a713498a3f"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_monday" "my_source_monday" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -81,7 +81,6 @@ Required:
 
 Optional:
 
-- `subdomain` (String) Default: ""
-Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com. Default: ""
 
 

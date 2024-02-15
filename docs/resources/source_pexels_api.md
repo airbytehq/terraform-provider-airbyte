@@ -16,16 +16,16 @@ SourcePexelsAPI Resource
 resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
-    color       = "orange"
-    locale      = "pt-BR"
-    orientation = "landscape"
+    color       = "red"
+    locale      = "en-US"
+    orientation = "square"
     query       = "people"
-    size        = "small"
+    size        = "large"
   }
-  definition_id = "f68e00dc-dadd-4479-a116-8b4fa7262d2a"
-  name          = "Brandy Weimann"
+  definition_id = "e1c87958-3a59-4a82-9531-0140178456a4"
+  name          = "Jonathan Bode"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6dd11df0-9849-4375-b622-7890d41f1391"
+  workspace_id  = "de2c277a-8e23-488f-9012-0f62c51a2676"
 }
 ```
 
@@ -40,8 +40,8 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

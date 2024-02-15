@@ -16,15 +16,15 @@ SourceFaker Resource
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
     always_updated    = false
-    count             = 9
+    count             = 3
     parallelism       = 8
-    records_per_slice = 1
-    seed              = 5
+    records_per_slice = 2
+    seed              = 1
   }
-  definition_id = "33c76bbd-55f5-466b-8ade-0498ec40fd8a"
-  name          = "Kirk Braun MD"
+  definition_id = "8b10c62a-eeab-46a1-abc0-f1be55677773"
+  name          = "Rhonda Schmidt"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "05c5e889-977e-4ae0-86e3-c2d33082ab84"
+  workspace_id  = "a7fcdac6-3878-454b-a9c4-2e8b9a534c06"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_faker" "my_source_faker" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -52,15 +52,10 @@ resource "airbyte_source_faker" "my_source_faker" {
 
 Optional:
 
-- `always_updated` (Boolean) Default: true
-Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.
-- `count` (Number) Default: 1000
-How many users should be generated in total.  This setting does not apply to the purchases or products stream.
-- `parallelism` (Number) Default: 4
-How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
-- `records_per_slice` (Number) Default: 1000
-How many fake records will be in each page (stream slice), before a state message is emitted?
-- `seed` (Number) Default: -1
-Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
+- `always_updated` (Boolean) Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted. Default: true
+- `count` (Number) How many users should be generated in total.  This setting does not apply to the purchases or products stream. Default: 1000
+- `parallelism` (Number) How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source. Default: 4
+- `records_per_slice` (Number) How many fake records will be in each page (stream slice), before a state message is emitted?. Default: 1000
+- `seed` (Number) Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random). Default: -1
 
 

@@ -16,12 +16,12 @@ SourceDelighted Resource
 resource "airbyte_source_delighted" "my_source_delighted" {
   configuration = {
     api_key = "...my_api_key..."
-    since   = "2022-05-30 04:50:23"
+    since   = "2022-05-30T04:50:23Z"
   }
-  definition_id = "b8f8f6af-bf36-45d6-87e0-87e3905b6a41"
-  name          = "Elsa Osinski"
+  definition_id = "a2c2618f-e1b9-41dc-8e8e-649d7675fb58"
+  name          = "Rachel Champlin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4f73b7e8-dc37-41ec-bee1-0511b439ed17"
+  workspace_id  = "6a8ac655-36a2-405f-9e4d-309ea5800594"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_delighted" "my_source_delighted" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

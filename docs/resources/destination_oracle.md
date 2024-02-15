@@ -22,13 +22,13 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     schema          = "airbyte"
     sid             = "...my_sid..."
     tunnel_method = {
-      destination_oracle_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Abdullah_Ward15"
+    username = "Pearl82"
   }
-  definition_id = "2db6fe08-64a8-456a-8417-0ff8566dc323"
-  name          = "Brittany Mohr"
-  workspace_id  = "b07bf072-8b70-4775-98c6-7348eaa4356f"
+  definition_id = "fc1b2798-db19-4e64-b83f-63d348370e17"
+  name          = "Lorena Schowalter"
+  workspace_id  = "4f32d3e1-92a8-4a43-80f2-9f7cbd12b320"
 }
 ```
 
@@ -43,7 +43,7 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -63,10 +63,8 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with the username.
-- `port` (Number) Default: 1521
-The port of the database.
-- `schema` (String) Default: "airbyte"
-The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema.
+- `port` (Number) The port of the database. Default: 1521
+- `schema` (String) The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema. Default: "airbyte"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
@@ -74,9 +72,9 @@ The default schema is used as the target schema for all statements issued from t
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -93,8 +91,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -108,7 +105,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

@@ -18,10 +18,10 @@ resource "airbyte_source_recreation" "my_source_recreation" {
     apikey          = "...my_apikey..."
     query_campsites = "...my_query_campsites..."
   }
-  definition_id = "e6c8bd1c-ccad-43b1-8406-5293193648ca"
-  name          = "Naomi Dietrich"
+  definition_id = "56ee294a-dbc5-4bd3-8078-9cf0b8d2c041"
+  name          = "Ellen Funk"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8652384b-db82-41f9-88ef-a40dc207c50e"
+  workspace_id  = "569fd64c-d2bc-4f08-a635-d7a8c386cecc"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_recreation" "my_source_recreation" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

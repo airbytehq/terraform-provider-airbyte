@@ -19,11 +19,11 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
     host             = "...my_host..."
     password         = "...my_password..."
     port             = 22
-    username         = "Deshawn10"
+    username         = "Agustin14"
   }
-  definition_id = "846ef364-4196-4a04-bb96-66e7d15e7eed"
-  name          = "Frederick Howell"
-  workspace_id  = "586b689f-dc13-4c29-afcf-ab73b9ba5d30"
+  definition_id = "a47524bb-490a-4a75-bad1-1902ba188860"
+  name          = "Sylvia Bode"
+  workspace_id  = "193af491-985c-492d-b3ca-e7edb401c239"
 }
 ```
 
@@ -38,7 +38,7 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -57,7 +57,6 @@ Required:
 
 Optional:
 
-- `port` (Number) Default: 22
-Port of the SFTP server.
+- `port` (Number) Port of the SFTP server. Default: 22
 
 

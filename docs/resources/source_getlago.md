@@ -18,10 +18,10 @@ resource "airbyte_source_getlago" "my_source_getlago" {
     api_key = "...my_api_key..."
     api_url = "...my_api_url..."
   }
-  definition_id = "25b4bae6-1112-4211-be87-b490ecc6bf75"
-  name          = "Mrs. Willie Bins"
+  definition_id = "0de80e3d-b905-4020-95d2-de4b8db33d2b"
+  name          = "Cecilia Cremin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c803c831-1a97-4a1a-a894-9629432a02ce"
+  workspace_id  = "0b342a10-fbc4-47ca-b061-39037c7eef97"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_getlago" "my_source_getlago" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -53,7 +53,6 @@ Required:
 
 Optional:
 
-- `api_url` (String) Default: "https://api.getlago.com/api/v1"
-Your Lago API URL
+- `api_url` (String) Your Lago API URL. Default: "https://api.getlago.com/api/v1"
 
 

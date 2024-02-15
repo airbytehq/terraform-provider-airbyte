@@ -16,7 +16,7 @@ SourceGoogleSheets Resource
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
     credentials = {
-      source_google_sheets_authenticate_via_google_o_auth = {
+      authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
@@ -25,10 +25,10 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
     names_conversion = true
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  definition_id = "d7698733-386b-453a-879a-0805ff1793bf"
-  name          = "Roderick Kutch"
+  definition_id = "6950935a-d536-4c50-8473-4e30b46b959e"
+  name          = "Kerry Kulas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d63199bd-6b46-48c8-9ec2-1a9ab567f13c"
+  workspace_id  = "ac092271-19b9-45b6-8c98-bb7037ab5561"
 }
 ```
 
@@ -43,8 +43,8 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -61,16 +61,15 @@ Required:
 
 Optional:
 
-- `names_conversion` (Boolean) Default: false
-Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.
+- `names_conversion` (Boolean) Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based. Default: false
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `authenticate_via_google_o_auth` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_o_auth))
-- `service_account_key_authentication` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
+- `authenticate_via_google_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_o_auth))
+- `service_account_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
 
 <a id="nestedatt--configuration--credentials--authenticate_via_google_o_auth"></a>
 ### Nested Schema for `configuration.credentials.authenticate_via_google_o_auth`
